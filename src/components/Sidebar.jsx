@@ -1,7 +1,7 @@
 function Sidebar({ lessons, currentLesson, onSelect }) {
   return (
     <aside className="bg-white rounded-xl shadow p-4">
-      <h2 className="font-semibold text-lg mb-4">บทเรียนhhhhhhh</h2>
+      <h2 className="font-semibold text-lg mb-4">บทเรียน</h2>
 
       <ul className="space-y-2">
         {lessons.map((lesson, index) => (
