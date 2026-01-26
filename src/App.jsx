@@ -1,29 +1,21 @@
-import { useState } from "react"
-import Header from "./components/Header"
-import Sidebar from "./components/Sidebar"
-import LessonContent from "./components/LessonContent"
-import lessons from "./data/lessons"
+// import { useState } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Start from "./pages/Start";
+import SelectGrade from "./pages/SelectGrade";
 
-function App() {
-  const [currentLesson, setCurrentLesson] = useState(0)
-
+export default function App() {
   return (
-    <div className="min-h-screen bg-slate-100">
-      <Header />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Start />} />
+        <Route path="/grades" element={<SelectGrade />} />
 
-      <div className="max-w-6xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-4 gap-6 px-4">
-        <Sidebar
-          lessons={lessons}
-          currentLesson={currentLesson}
-          onSelect={setCurrentLesson}
-        />
-
-        <div className="md:col-span-3">
-          <LessonContent lesson={lessons[currentLesson]} />
-        </div>
-      </div>
-    </div>
-  )
+        {/* เผื่อไว้ต่อยอด */}
+        <Route path="/p4" element={<div style={{padding:40}}>หน้า ป.4 (กำลังทำ)</div>} />
+        <Route path="/p5" element={<div style={{padding:40}}>หน้า ป.5 (กำลังทำ)</div>} />
+        <Route path="/p6" element={<div style={{padding:40}}>หน้า ป.6 (กำลังทำ)</div>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App

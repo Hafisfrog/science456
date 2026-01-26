@@ -2,8 +2,16 @@
 @config "../tailwind.config.cjs";
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
   body {
     min-height: 100vh;
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    background-color: #eaf7fb; /* พื้นหลังฟ้าอ่อนแบบหน้า Start */
   }
 
   #root {
