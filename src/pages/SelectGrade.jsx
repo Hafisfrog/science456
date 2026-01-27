@@ -13,7 +13,6 @@ export default function SelectGrade() {
 
       <h1 className="grade-title">เลือกชั้นเรียน</h1>
       <p className="grade-sub">เลือกชั้นเพื่อเริ่มการทดลองวิทยาศาสตร์</p>
-
       <div className="grade-grid">
         <div className="grade-card" onClick={() => navigate("/p4")}>
           <img src="/images/p4.png" alt="ป.4" className="grade-image" />
