@@ -1,0 +1,212 @@
+.sim-page{
+  min-height:100vh;
+  padding:18px;
+  background: radial-gradient(circle at 20% 10%, #ffffff 0%, #e8f6ff 35%, #d8efff 100%);
+  font-family: 'Prompt', sans-serif;
+}
+
+/* เวที */
+.sim-stage{
+  position:relative;
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 18px 40px rgba(0,0,0,.16);
+  background:#cfe9f6;
+  aspect-ratio: 16 / 9;
+}
+
+/* พื้นหลัง */
+.sim-bg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:saturate(1.05);
+}
+
+/* ปุ่มกลับ */
+.sim-back{
+  position:absolute;
+  top:16px;
+  left:16px;
+  z-index:20;
+  border:none;
+  cursor:pointer;
+  padding:10px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.92);
+  font-size:16px;
+  font-weight:900;
+  box-shadow:0 10px 22px rgba(0,0,0,.14);
+  transition:transform .12s ease;
+}
+
+.sim-back:hover{
+  transform:translateY(-2px);
+}
+
+/* กล่องข้อความ */
+.sim-bubble{
+  position:absolute;
+  top:12%;
+  left:7%;
+  right:7%;
+  z-index:15;
+  padding:18px 18px;
+  border-radius:20px;
+  background:rgba(191, 219, 240, 0.92);
+  color:#0b1020;
+  box-shadow:0 14px 28px rgba(0,0,0,.20);
+  backdrop-filter: blur(4px);
+}
+
+.sim-bubble-row{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.sim-bubble-text{
+  font-size:26px;
+  font-weight:900;
+  line-height:1.25;
+  flex:1;
+}
+
+.sim-bubble-hint{
+  margin-top:10px;
+  font-size:15px;
+  font-weight:800;
+  opacity:.92;
+}
+
+/* ✅ ปุ่มเสียงในกล่องข้อความ */
+.sim-sound-inbubble{
+  border:none;
+  cursor:pointer;
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  font-size:20px;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 10px 18px rgba(0,0,0,.16);
+  transition:transform .12s ease, box-shadow .12s ease;
+  flex:0 0 auto;
+}
+
+.sim-sound-inbubble:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 22px rgba(0,0,0,.20);
+}
+
+/* ✅ รูปให้อยู่กลาง */
+.sim-prop-center{
+  position:absolute;
+  left:50%;
+  top:81%;              /* 🔽 ลงมา */
+  transform:translate(-50%, -50%);
+  z-index:12;
+  width:min(12%, 120px);
+  height:auto;
+  filter: drop-shadow(0 16px 18px rgba(0,0,0,.20));
+  user-select:none;
+  pointer-events:none;
+}
+
+/* ✅ ปุ่มเริ่มการทดลอง เลื่อนลงมาหน่อย */
+.sim-play{
+  position:absolute;
+  left:50%;
+  top:58%;              /* ⬆️ ขึ้นมาแทนลูกบอล */
+  transform:translate(-50%, -50%);
+  width:130px;          /* ขยายให้เด่นขึ้น */
+  height:130px;
+  border-radius:999px;
+  border: 3px solid rgba(255,255,255,.55);
+  cursor:pointer;
+  background:rgba(170, 220, 255, .96);
+  box-shadow:0 18px 34px rgba(0,0,0,.20);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:16;
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.sim-play:hover{
+  transform:translate(-50%, -52%);
+  box-shadow:0 22px 40px rgba(0,0,0,.22);
+}
+
+.sim-play-icon{
+  font-size:54px;
+  font-weight:900;
+  line-height:1;
+}
+
+/* ข้อความใต้ปุ่ม */
+.sim-caption{
+  position:absolute;
+  left:50%;
+  top:68%;
+  transform:translateX(-50%);
+  z-index:16;
+  font-size:22px;
+  font-weight:900;
+  color:#0b1020;
+  text-shadow:0 2px 0 rgba(255,255,255,.75);
+}
+
+/* Toolbar ล่างซ้าย (ภาษา) */
+.sim-toolbar{
+  position:absolute;
+  left:16px;
+  bottom:16px;
+  z-index:20;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  background:rgba(255,255,255,.92);
+  padding:10px 12px;
+  border-radius:18px;
+  box-shadow:0 12px 24px rgba(0,0,0,.14);
+}
+
+.sim-lang{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.sim-chip{
+  border:none;
+  cursor:pointer;
+  padding:10px 14px;
+  border-radius:14px;
+  background:#e6f2ff;
+  font-size:16px;
+  font-weight:900;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.sim-chip:hover{
+  transform:translateY(-2px);
+}
+
+.sim-chip.active{
+  background:#bfe0ff;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .sim-stage{ aspect-ratio: 4 / 3; }
+  .sim-bubble-text{ font-size:20px; }
+  .sim-prop-center{ width:min(16%, 120px); top:56%; }
+  .sim-play{ width:104px; height:104px; top:78%; }
+  .sim-play-icon{ font-size:46px; }
+  .sim-caption{ font-size:18px; top:88%; }
+}

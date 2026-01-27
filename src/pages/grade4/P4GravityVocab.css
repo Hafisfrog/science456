@@ -1,0 +1,184 @@
+/* หน้า */
+.vocab-page {
+  min-height: 100vh;
+  padding: 50px 20px;
+  background: linear-gradient(180deg, #f0f9ff, #e6f4ff);
+  font-family: 'Prompt', sans-serif;
+}
+
+/* Header */
+.vocab-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.vocab-header h1 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 800;
+  color: #e85a6b;
+}
+
+.vocab-header p {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #374151;
+}
+
+/* Card */
+.vocab-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Table */
+.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 20px;
+}
+
+.vocab-table th,
+.vocab-table td {
+  padding: 20px 18px;
+  text-align: left;
+}
+
+/* Header colors */
+.col-th {
+  background: #a7c7e7;
+}
+
+.col-ms {
+  background: #f6cc6b;
+}
+
+.col-en {
+  background: #c084b3;
+}
+
+.col-audio {
+  background: #d1fae5;
+  text-align: center;
+}
+
+/* Body cells */
+.cell-th {
+  background: #eaf4ff;
+  font-weight: 600;
+}
+
+.cell-ms {
+  background: #fff3d6;
+}
+
+.cell-en {
+  background: #f9d9ec;
+}
+
+.cell-audio {
+  background: #ecfdf5;
+  text-align: center;
+}
+
+/* เส้นคั่น */
+.vocab-table tr:not(:last-child) td {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ปุ่มเสียง */
+.audio-btn {
+  border: none;
+  cursor: pointer;
+  margin: 0 4px;
+  padding: 8px 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.audio-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+}
+
+.audio-btn.th {
+  background: #dbeafe;
+}
+
+.audio-btn.ms {
+  background: #fde68a;
+}
+
+.audio-btn.en {
+  background: #fbcfe8;
+}
+
+/* Footer */
+.vocab-footer {
+  max-width: 1000px;
+  margin: 26px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+/* ปุ่มล่าง */
+.btn-back,
+.btn-next {
+  border: none;
+  cursor: pointer;
+  padding: 14px 22px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease;
+  font-family: 'Prompt', sans-serif;
+}
+
+.btn-back {
+  background: white;
+  color: #111827;
+}
+
+.btn-next {
+  background: #2563eb;
+  color: white;
+}
+
+.btn-back:hover,
+.btn-next:hover {
+  transform: translateY(-2px);
+}
+
+/* ปุ่มย้อนกลับ */      
+.back-home-btn{
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff, #f0f9ff);
+  color: #1e3a8a;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  font-family: 'Prompt', sans-serif;
+  transition: all .15s ease;
+}
+
+.back-home-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,.2);
+  background: linear-gradient(135deg, #e0f2fe, #ffffff);
+}
+
+.back-home-btn:active{
+  transform: translateY(1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}

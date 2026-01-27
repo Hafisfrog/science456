@@ -6,6 +6,11 @@ export default function SelectGrade() {
 
   return (
     <div className="grade-wrap">
+        <button className="back-home-btn" onClick={() => navigate("/")}>
+            ← กลับหน้าเริ่มต้น
+        </button>
+
+
       <h1 className="grade-title">เลือกชั้นเรียน</h1>
       <p className="grade-sub">เลือกชั้นเพื่อเริ่มการทดลองวิทยาศาสตร์</p>
 
