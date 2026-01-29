@@ -6,6 +6,10 @@ import P4Gravity from "./pages/grade4/P4Gravity";
 import P4GravityVocab from "./pages/grade4/P4GravityVocab";
 import P4GravitySim1 from "./pages/grade4/P4GravitySim1";
 import P4GravityObjectives from "./pages/grade4/P4GravityObjectives";
+import P4GravityExp1Materials from "./pages/grade4/P4GravityExp1Materials";
+import P4GravityExp1Steps from "./pages/grade4/P4GravityExp1Steps";
+import P4GravityExp1Question from "./pages/grade4/P4GravityExp1Question";
+
 
 import Grade6 from "./pages/grade6";
 
@@ -22,6 +26,10 @@ export default function App() {
         <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />
         <Route path="/p4/gravity/sim1" element={<P4GravitySim1 />} />
         <Route path="/p4/gravity/objectives" element={<P4GravityObjectives />} />
+        <Route path="/p4/gravity/exp1/materials" element={<P4GravityExp1Materials />} />
+        {/* <Route path="/p4/gravity/exp1/step1" element={<div style={{padding:40}}>Step 1 (กำลังทำ)</div>} /> */}
+        <Route path="/p4/gravity/exp1/steps" element={<P4GravityExp1Steps />} />
+        <Route path="/p4/gravity/exp1/question" element={<P4GravityExp1Question />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
