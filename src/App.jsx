@@ -1,25 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Start from "./pages/Start";
 import SelectGrade from "./pages/SelectGrade";
-<<<<<<< HEAD
 import Grade6 from "./pages/grade6";
-=======
->>>>>>> 9a357c6e7ea9ffbd76bd7733887ff83c9c2a1309
 import P4 from "./pages/grade4/P4";
 import P4Gravity from "./pages/grade4/P4Gravity";
 import P4GravityVocab from "./pages/grade4/P4GravityVocab";
 import P4GravitySim1 from "./pages/grade4/P4GravitySim1";
 import P4GravityObjectives from "./pages/grade4/P4GravityObjectives";
-<<<<<<< HEAD
-=======
 import P4GravityExp1Materials from "./pages/grade4/P4GravityExp1Materials";
 import P4GravityExp1Steps from "./pages/grade4/P4GravityExp1Steps";
 import P4GravityExp1Question from "./pages/grade4/P4GravityExp1Question";
-
-
 import Grade6 from "./pages/grade6";
 
->>>>>>> 9a357c6e7ea9ffbd76bd7733887ff83c9c2a1309
 
 export default function App() {
   return (
@@ -27,10 +19,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/grades" element={<SelectGrade />} />
-
-<<<<<<< HEAD
-
-=======
         <Route path="/p4" element={<P4 />} />
         <Route path="/p4/gravity" element={<P4Gravity />} />
         <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />
@@ -43,7 +31,6 @@ export default function App() {
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
->>>>>>> 9a357c6e7ea9ffbd76bd7733887ff83c9c2a1309
         {/* เผื่อไว้ต่อยอด */}
         <Route
           path="/p4"
@@ -53,7 +40,6 @@ export default function App() {
           path="/p5"
           element={<div style={{ padding: 40 }}>หน้า ป.5 (กำลังทำ)</div>}
         />
-<<<<<<< HEAD
         <Route path="/p6" element={<Grade6 />} />
         <Route
           path="/p6/experiment/electric-generation"
@@ -75,10 +61,9 @@ export default function App() {
     </BrowserRouter>
   );
 }
-=======
-        <Route path="/p6" element={<Grade6 />} />b882feda5974c2c
+
+        <Route path="/p6" element={<Grade6 />} />
       </Routes>
     </BrowserRouter>
   );
 }
->>>>>>> 9a357c6e7ea9ffbd76bd7733887ff83c9c2a1309
