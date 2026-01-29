@@ -26,6 +26,14 @@ export default function App() {
           element={<div style={{ padding: 40 }}>หน้า ป.5 (กำลังทำ)</div>}
         />
         <Route path="/p6" element={<Grade6 />} />
+        <Route
+          path="/p6/experiment/electric-generation"
+          element={<div style={{ padding: 40 }}>หน้าการทดลอง: การเกิดไฟฟ้า</div>}
+        />
+        <Route
+          path="/p6/experiment/electric-force-effect"
+          element={<div style={{ padding: 40 }}>หน้าการทดลอง: ผลของแรงไฟฟ้า</div>}
+        />
         <Route path="/p4" element={<P4 />} />
         <Route path="/p4/gravity" element={<P4Gravity />} />
         <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />

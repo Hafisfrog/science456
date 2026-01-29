@@ -1,8 +1,55 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Grade6.css";
 
+const VOCAB = [
+  {
+    th: "แรงดึงดูด",
+    ms: "gaya tarikan",
+    en: "Gravitational Force",
+  },
+  {
+    th: "แรงผลัก",
+    ms: "gaya tolakan",
+    en: "Push Force",
+  },
+  {
+    th: "แรงไม่มีสัมผัส",
+    ms: "daya tanpa sentuhan",
+    en: "Non-contact Force",
+  },
+  {
+    th: "ประจุไฟฟ้า",
+    ms: "caj elektrik",
+    en: "Electric Charge",
+  },
+  {
+    th: "แรงไฟฟ้า",
+    ms: "daya elektrik",
+    en: "Electric Force",
+  },
+  {
+    th: "ความชื้น",
+    ms: "kelembapan",
+    en: "Humidity",
+  },
+];
+
+const LAB_OPTIONS = [
+  { id: "exp-1", label: "การเกิดไฟฟ้า", path: "/p6/experiment/electric-generation" },
+  { id: "exp-2", label: "ผลของแรงไฟฟ้า", path: "/p6/experiment/electric-force-effect" },
+];
+
 export default function Grade6() {
   const navigate = useNavigate();
+  const [isLabMenuOpen, setIsLabMenuOpen] = useState(false);
+  const [selectedLab, setSelectedLab] = useState("");
+
+  const handleSelectLab = (option) => {
+    setSelectedLab(option.label);
+    setIsLabMenuOpen(false);
+    navigate(option.path);
+  };
 
   return (
     <div className="grade6-wrap">
@@ -28,7 +75,7 @@ export default function Grade6() {
         </div>
       </header>
 
-      <section id="grade6-content" className="grade6-content">
+      {/* <section id="grade6-content" className="grade6-content">
         <div className="grade6-section-title">
           <h2>หัวข้อสำคัญ</h2>
           <p>สรุปเนื้อหาที่จะได้เรียนในบทนี้</p>
@@ -71,20 +118,70 @@ export default function Grade6() {
             </ul>
           </article>
         </div>
+      </section> */}
+
+      <section className="grade6-vocab">
+        <div className="grade6-section-title">
+          <h2>คำศัพท์น่ารู้</h2>
+          <p>คำศัพท์สำคัญเกี่ยวกับแรงไฟฟ้าและวงจรไฟฟ้า</p>
+        </div>
+
+        <div className="grade6-vocab-grid">
+          {[VOCAB.slice(0, 3), VOCAB.slice(3)].map((group, index) => (
+            <div className="grade6-vocab-card" key={index}>
+              <div className="grade6-vocab-banner">คำศัพท์น่ารู้</div>
+              <div className="grade6-vocab-table-wrap">
+                <table className="grade6-vocab-table">
+                  <thead>
+                    <tr>
+                      <th>ภาษาไทย</th>
+                      <th>ภาษามลายู</th>
+                      <th>ภาษาอังกฤษ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {group.map((row, rowIndex) => (
+                      <tr key={`${index}-${rowIndex}`}>
+                        <td>{row.th}</td>
+                        <td>{row.ms}</td>
+                        <td>{row.en}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="grade6-lab">
         <div className="grade6-lab-card">
-          <div>
-            <h2>กิจกรรมแนะนำ</h2>
-            <p>
-              ทดลองต่อวงจรง่ายๆ และสังเกตผลของการต่อแบบอนุกรม/ขนาน
-              พร้อมฝึกแยกตัวนำและฉนวนจากวัสดุรอบตัว
-            </p>
+          <div className="grade6-lab-select">
+            <button
+              className="grade6-lab-btn"
+              type="button"
+              onClick={() => setIsLabMenuOpen((prev) => !prev)}
+              aria-haspopup="listbox"
+              aria-expanded={isLabMenuOpen}
+            >
+              {selectedLab || "เริ่มการทดลองงงงงงงงง"}
+            </button>
+            {isLabMenuOpen && (
+              <div className="grade6-lab-menu" role="listbox">
+                {LAB_OPTIONS.map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    className="grade6-lab-option"
+                    onClick={() => handleSelectLab(option)}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-          <a className="grade6-lab-btn" href="#grade6-content">
-            เริ่มสำรวจเนื้อหา
-          </a>
         </div>
       </section>
     </div>
