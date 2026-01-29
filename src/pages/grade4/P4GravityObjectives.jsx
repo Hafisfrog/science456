@@ -177,7 +177,7 @@ export default function P4GravityObjectives() {
         {/* ✅ ตัวละครใส่รูปเองได้ */}
         <img
           className="obj-character"
-          src="/images/p4/gunkru.png"
+          src="/images/p4/exp1/gunkru.png"
           alt="character"
         />
 

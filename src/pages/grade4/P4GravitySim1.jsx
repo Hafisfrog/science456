@@ -59,7 +59,7 @@ export default function P4GravitySim1() {
   // ✅ กดเริ่มการทดลอง = ไปหน้าถัดไปทันที
   const handleStart = () => {
     stopAudio(); // กันเสียงค้าง
-    navigate("/p4/gravity/drop");
+    navigate("/p4/gravity/exp1/materials");
   };
 
   return (
