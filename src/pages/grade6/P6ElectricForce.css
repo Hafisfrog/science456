@@ -1,0 +1,24 @@
+.p6-exp-wrap {
+  text-align: center;
+}
+
+.p6-exp-back {
+  margin: 0 auto 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.p6-exp-grid {
+  margin-top: 32px;
+}
+
+.p6-exp-image {
+  height: clamp(240px, 36vw, 360px);
+}
+
+@media (max-width: 700px) {
+  .p6-exp-back {
+    margin-bottom: 20px;
+  }
+}
