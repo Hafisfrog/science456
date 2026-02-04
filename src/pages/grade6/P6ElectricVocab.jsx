@@ -74,7 +74,11 @@ export default function P6ElectricVocab() {
         <button className="p6-vocab-btn ghost" onClick={() => navigate("/p6/experiment/electric-generation")} type="button">
           ← กลับหน้าจุดประสงค์
         </button>
-        <button className="p6-vocab-btn primary" onClick={() => navigate("/p6/electric-force")} type="button">
+        <button
+          className="p6-vocab-btn primary"
+          onClick={() => navigate("/p6/experiment/electric-generation/steps")}
+          type="button"
+        >
           ไปหน้าถัดไป →
         </button>
       </div>

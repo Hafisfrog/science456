@@ -13,6 +13,10 @@ import P4GravityExp1Steps from "./pages/grade4/P4GravityExp1Steps";
 import P4GravityExp1Question from "./pages/grade4/P4GravityExp1Question";
 import P6ElectricObjectives from "./pages/grade6/P6ElectricObjectives";
 import P6ElectricVocab from "./pages/grade6/P6ElectricVocab";
+import P6ElectricGenerationSteps from "./pages/grade6/P6ElectricGenerationSteps";
+import P6ElectricGenerationSim from "./pages/grade6/P6ElectricGenerationSim";
+import P6ElectricGenerationResult from "./pages/grade6/P6ElectricGenerationResult";
+import P6ElectricGenerationSummary from "./pages/grade6/P6ElectricGenerationSummary";
 // import Grade6 from "./pages/grade6/index.jsx";
 
 
@@ -51,6 +55,10 @@ export default function App() {
         />
         <Route path="/p6/experiment/electric-generation" element={<P6ElectricObjectives />} />
         <Route path="/p6/experiment/electric-generation/vocab" element={<P6ElectricVocab />} />
+        <Route path="/p6/experiment/electric-generation/steps" element={<P6ElectricGenerationSteps />} />
+        <Route path="/p6/experiment/electric-generation/sim" element={<P6ElectricGenerationSim />} />
+        <Route path="/p6/experiment/electric-generation/result" element={<P6ElectricGenerationResult />} />
+        <Route path="/p6/experiment/electric-generation/summary" element={<P6ElectricGenerationSummary />} />
         <Route
           path="/p6/experiment/electric-force-effect"
           element={<div style={{ padding: 40 }}>หน้าการทดลอง: ผลของแรงไฟฟ้า</div>}
