@@ -13,6 +13,12 @@
   margin-top: 32px;
 }
 
+.p6-exp-recap {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
 .p6-exp-image {
   height: clamp(240px, 36vw, 360px);
 }

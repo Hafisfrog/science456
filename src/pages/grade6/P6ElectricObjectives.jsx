@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./P6ElectricObjectives.css";
 
 const CONTENT = {
@@ -34,8 +34,12 @@ const CONTENT = {
 
 export default function P6ElectricObjectives() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [lang, setLang] = useState("th");
   const t = CONTENT[lang];
+  const isUnitFlow = pathname === "/p6/electric-force" || pathname.startsWith("/p6/electric-force/");
+  const backPath = isUnitFlow ? "/p6" : "/p6/electric-force/experiments";
+  const nextPath = isUnitFlow ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
 
   return (
     <div className="obj-full p6-obj-full">
@@ -92,12 +96,12 @@ export default function P6ElectricObjectives() {
         <img className="obj-character p6-obj-character" src="/images/p6.png" alt="ป.6" />
 
         <div className="obj-actions p6-obj-actions">
-          <button className="obj-btn ghost" onClick={() => navigate("/p6/electric-force")} type="button">
+          <button className="obj-btn ghost" onClick={() => navigate(backPath)} type="button">
             {t.back}
           </button>
           <button
             className="obj-btn primary"
-            onClick={() => navigate("/p6/experiment/electric-generation/vocab")}
+            onClick={() => navigate(nextPath)}
             type="button"
           >
             {t.next}

@@ -74,10 +74,10 @@ function Translator({ text }) {
             try {
               const data = await res.json()
               errorDetail = data?.error || data?.responseDetails || ""
-            } catch (err) {
+            } catch {
               try {
                 errorDetail = await res.text()
-              } catch (innerErr) {
+              } catch {
                 errorDetail = ""
               }
             }
@@ -112,7 +112,7 @@ function Translator({ text }) {
       setTranslated("")
       setError(lastError || "แปลไม่สำเร็จ ลองใหม่อีกครั้ง")
       return ""
-    } catch (err) {
+    } catch {
       setError("แปลไม่สำเร็จ ลองใหม่อีกครั้ง")
       return ""
     } finally {

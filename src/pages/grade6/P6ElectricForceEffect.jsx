@@ -1,17 +1,14 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./P6ElectricGenerationSteps.css";
 
-export default function P6ElectricGenerationSteps() {
+export default function P6ElectricForceEffect() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const from = searchParams.get("from");
-  const backPath = from === "unit" ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
 
   return (
     <div className="p6-gen-page">
       <div className="p6-gen-container">
         <div className="p6-gen-tag">แรงไฟฟ้าน่ารู้</div>
-        <div className="p6-gen-title">เรื่อง การเกิดไฟฟ้า</div>
+        <div className="p6-gen-title">เรื่อง ผลของแรงไฟฟ้า</div>
 
         <div className="p6-gen-card">
           <div className="p6-gen-sound" title="ฟังเสียง" aria-hidden="true">
@@ -42,31 +39,17 @@ export default function P6ElectricGenerationSteps() {
 
           <div className="p6-gen-section">
             <div className="p6-gen-heading">สถานการณ์ปัญหา</div>
-            <p className="p6-gen-text">ทำไมวัตถุบางอย่างดูเหมือนจะดูดกันได้</p>
+            <p className="p6-gen-text">
+              สังเกตการเปลี่ยนแปลงของวัตถุชนิดเดียวกันและต่างชนิดกันที่ถูด้วยกระดาษเยื่อแล้วนำมาเข้าใกล้กัน
+            </p>
           </div>
 
           <div className="p6-gen-section">
             <div className="p6-gen-heading">อุปกรณ์</div>
             <ol className="p6-gen-list">
-              <li>ลูกโป่ง</li>
-              <li>เศษกระดาษ</li>
-              <li>ผ้าแห้ง</li>
-            </ol>
-          </div>
-
-          <div className="p6-gen-section">
-            <div className="p6-gen-heading">ขั้นตอนการทดลอง</div>
-            <ol className="p6-gen-list">
-              <li>เลือกวัสดุสำหรับทดลอง</li>
-              <li>
-                นำผ้าแห้งมาขัดลูกโป่ง
-                <div className="p6-gen-substeps">
-                  <span>ครั้งที่ 1 ไม่ขัดถูด้วยผ้าแห้ง</span>
-                  <span>ครั้งที่ 2 ถูด้วยผ้าแห้ง 2 นาที</span>
-                  <span>ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที</span>
-                </div>
-              </li>
-              <li>สังเกตและบันทึกผล</li>
+              <li>ปากกาเมจิก 2 ด้าม</li>
+              <li>ลูกโป่งเปล่า 2 ลูก</li>
+              <li>กระดาษเยื่อ 1 ม้วน</li>
             </ol>
           </div>
         </div>
@@ -74,14 +57,14 @@ export default function P6ElectricGenerationSteps() {
         <div className="p6-gen-actions">
           <button
             className="p6-gen-btn ghost"
-            onClick={() => navigate(backPath)}
+            onClick={() => navigate("/p6/electric-force/experiments")}
             type="button"
           >
-            ← กลับคำศัพท์
+            ← กลับหน้าเลือกการทดลอง
           </button>
           <button
             className="p6-gen-btn primary"
-            onClick={() => navigate("/p6/experiment/electric-generation/sim")}
+            onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
             type="button"
           >
             ไปหน้าถัดไป →

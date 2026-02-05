@@ -17,6 +17,11 @@ import P6ElectricGenerationSteps from "./pages/grade6/P6ElectricGenerationSteps"
 import P6ElectricGenerationSim from "./pages/grade6/P6ElectricGenerationSim";
 import P6ElectricGenerationResult from "./pages/grade6/P6ElectricGenerationResult";
 import P6ElectricGenerationSummary from "./pages/grade6/P6ElectricGenerationSummary";
+import P6ElectricForceEffect from "./pages/grade6/P6ElectricForceEffect";
+import P6ElectricForceEffectSteps from "./pages/grade6/P6ElectricForceEffectSteps";
+import P6ElectricForceEffectSim from "./pages/grade6/P6ElectricForceEffectSim";
+import P6ElectricForceEffectSummary from "./pages/grade6/P6ElectricForceEffectSummary";
+import P6ElectricForceRecap from "./pages/grade6/P6ElectricForceRecap";
 // import Grade6 from "./pages/grade6/index.jsx";
 
 
@@ -48,7 +53,10 @@ export default function App() {
           element={<div style={{ padding: 40 }}>หน้า ป.5 (กำลังทำ)</div>}
         />
         <Route path="/p6" element={<P6 />} />
-        <Route path="/p6/electric-force" element={<Grade6 />} />
+        <Route path="/p6/electric-force" element={<P6ElectricObjectives />} />
+        <Route path="/p6/electric-force/vocab" element={<P6ElectricVocab />} />
+        <Route path="/p6/electric-force/experiments" element={<Grade6 />} />
+        <Route path="/p6/electric-force/recap" element={<P6ElectricForceRecap />} />
         <Route
           path="/p6/electric-circuit"
           element={<div style={{ padding: 40 }}>วงจรไฟฟ้าใกล้ตัว (กำลังทำ)</div>}
@@ -59,9 +67,18 @@ export default function App() {
         <Route path="/p6/experiment/electric-generation/sim" element={<P6ElectricGenerationSim />} />
         <Route path="/p6/experiment/electric-generation/result" element={<P6ElectricGenerationResult />} />
         <Route path="/p6/experiment/electric-generation/summary" element={<P6ElectricGenerationSummary />} />
+        <Route path="/p6/experiment/electric-force-effect" element={<P6ElectricForceEffect />} />
         <Route
-          path="/p6/experiment/electric-force-effect"
-          element={<div style={{ padding: 40 }}>หน้าการทดลอง: ผลของแรงไฟฟ้า</div>}
+          path="/p6/experiment/electric-force-effect/steps"
+          element={<P6ElectricForceEffectSteps />}
+        />
+        <Route
+          path="/p6/experiment/electric-force-effect/sim"
+          element={<P6ElectricForceEffectSim />}
+        />
+        <Route
+          path="/p6/experiment/electric-force-effect/summary"
+          element={<P6ElectricForceEffectSummary />}
         />
         <Route path="/p4" element={<P4 />} />
         <Route path="/p4/gravity" element={<P4Gravity />} />

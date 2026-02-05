@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./P6ElectricVocab.css";
 
 const VOCAB = [
@@ -36,7 +36,13 @@ const VOCAB = [
 
 export default function P6ElectricVocab() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const groups = [VOCAB.slice(0, 3), VOCAB.slice(3)];
+  const isUnitFlow = pathname === "/p6/electric-force/vocab" || pathname.startsWith("/p6/electric-force/");
+  const backPath = isUnitFlow ? "/p6/electric-force" : "/p6/experiment/electric-generation";
+  const nextPath = isUnitFlow ? "/p6/electric-force/experiments" : "/p6/experiment/electric-generation/steps";
+  const backLabel = isUnitFlow ? "← กลับหน้าหน่วยการเรียนรู้" : "← กลับหน้าจุดประสงค์";
+  const nextLabel = isUnitFlow ? "ไปหน้าเลือกการทดลอง →" : "ไปหน้าถัดไป →";
 
   return (
     <div className="p6-vocab-page">
@@ -71,15 +77,15 @@ export default function P6ElectricVocab() {
       </div>
 
       <div className="p6-vocab-actions">
-        <button className="p6-vocab-btn ghost" onClick={() => navigate("/p6/experiment/electric-generation")} type="button">
-          ← กลับหน้าจุดประสงค์
+        <button className="p6-vocab-btn ghost" onClick={() => navigate(backPath)} type="button">
+          {backLabel}
         </button>
         <button
           className="p6-vocab-btn primary"
-          onClick={() => navigate("/p6/experiment/electric-generation/steps")}
+          onClick={() => navigate(nextPath)}
           type="button"
         >
-          ไปหน้าถัดไป →
+          {nextLabel}
         </button>
       </div>
     </div>

@@ -8,7 +8,7 @@ const EXPERIMENTS = [
     title: "การทดลองที่ 1",
     subtitle: "การเกิดแรงไฟฟ้า",
     image: "/images/p6.png",
-    path: "/p6/experiment/electric-generation",
+    path: "/p6/experiment/electric-generation/steps?from=unit",
   },
   {
     id: "exp-2",
@@ -24,8 +24,8 @@ export default function Grade6() {
 
   return (
     <div className="grade-wrap p6-exp-wrap">
-      <button className="back-home-btn p6-exp-back" onClick={() => navigate("/p6")}>
-        ← กลับหน้า ป.6
+      <button className="back-home-btn p6-exp-back" onClick={() => navigate("/p6/electric-force/vocab")}>
+        ← กลับคำศัพท์
       </button>
 
       <h1 className="grade-title">แรงไฟฟ้าน่ารู้</h1>
@@ -41,6 +41,12 @@ export default function Grade6() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="p6-exp-recap">
+        <button className="back-home-btn" type="button" onClick={() => navigate("/p6/electric-force/recap")}>
+          สรุปการเกิดแรงไฟฟ้าและผลของแรงไฟฟ้า →
+        </button>
       </div>
     </div>
   );
