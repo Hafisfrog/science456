@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Start from "./pages/Start";
 import SelectGrade from "./pages/SelectGrade";
-import Grade6 from "./pages/grade6";
 import P4 from "./pages/grade4/P4";
 import P4Gravity from "./pages/grade4/P4Gravity";
 import P4GravityVocab from "./pages/grade4/P4GravityVocab";
@@ -10,8 +9,10 @@ import P4GravityObjectives from "./pages/grade4/P4GravityObjectives";
 import P4GravityExp1Materials from "./pages/grade4/P4GravityExp1Materials";
 import P4GravityExp1Steps from "./pages/grade4/P4GravityExp1Steps";
 import P4GravityExp1Question from "./pages/grade4/P4GravityExp1Question";
-import Grade6 from "./pages/grade6";
+import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
+import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
 
+import Grade6 from "./pages/grade6";
 
 export default function App() {
   return (
@@ -28,6 +29,8 @@ export default function App() {
         {/* <Route path="/p4/gravity/exp1/step1" element={<div style={{padding:40}}>Step 1 (กำลังทำ)</div>} /> */}
         <Route path="/p4/gravity/exp1/steps" element={<P4GravityExp1Steps />} />
         <Route path="/p4/gravity/exp1/question" element={<P4GravityExp1Question />} />
+        <Route path="/p4/gravity/exp1/action" element={<P4GravityExp1Action />} />
+        <Route path="/p4/gravity/exp1/result" element={<P4GravityExp1Result />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
@@ -49,20 +52,9 @@ export default function App() {
           path="/p6/experiment/electric-force-effect"
           element={<div style={{ padding: 40 }}>หน้าการทดลอง: ผลของแรงไฟฟ้า</div>}
         />
-        <Route path="/p4" element={<P4 />} />
-        <Route path="/p4/gravity" element={<P4Gravity />} />
-        <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />
-        <Route path="/p4/gravity/sim1" element={<P4GravitySim1 />} />
-        <Route path="/p4/gravity/objectives" element={<P4GravityObjectives />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-        <Route path="/p6" element={<Grade6 />} />
       </Routes>
     </BrowserRouter>
   );
