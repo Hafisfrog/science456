@@ -23,7 +23,11 @@ import P6ElectricForceEffectSim from "./pages/grade6/P6ElectricForceEffectSim";
 import P6ElectricForceEffectSummary from "./pages/grade6/P6ElectricForceEffectSummary";
 import P6ElectricForceRecap from "./pages/grade6/P6ElectricForceRecap";
 // import Grade6 from "./pages/grade6/index.jsx";
+import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
+import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
 
+
+import Grade6 from "./pages/grade6";
 
 export default function App() {
   return (
@@ -40,6 +44,8 @@ export default function App() {
         {/* <Route path="/p4/gravity/exp1/step1" element={<div style={{padding:40}}>Step 1 (กำลังทำ)</div>} /> */}
         <Route path="/p4/gravity/exp1/steps" element={<P4GravityExp1Steps />} />
         <Route path="/p4/gravity/exp1/question" element={<P4GravityExp1Question />} />
+        <Route path="/p4/gravity/exp1/action" element={<P4GravityExp1Action />} />
+        <Route path="/p4/gravity/exp1/result" element={<P4GravityExp1Result />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
@@ -80,11 +86,6 @@ export default function App() {
           path="/p6/experiment/electric-force-effect/summary"
           element={<P6ElectricForceEffectSummary />}
         />
-        <Route path="/p4" element={<P4 />} />
-        <Route path="/p4/gravity" element={<P4Gravity />} />
-        <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />
-        <Route path="/p4/gravity/sim1" element={<P4GravitySim1 />} />
-        <Route path="/p4/gravity/objectives" element={<P4GravityObjectives />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
