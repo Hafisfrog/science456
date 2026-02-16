@@ -34,6 +34,7 @@ import P6ElectricForceEffectSteps from "./pages/grade6/P6ElectricForceEffectStep
 import P6ElectricForceEffectSim from "./pages/grade6/P6ElectricForceEffectSim";
 import P6ElectricForceEffectSummary from "./pages/grade6/P6ElectricForceEffectSummary";
 import P6ElectricForceRecap from "./pages/grade6/P6ElectricForceRecap";
+import Grade6 from "./pages/grade6";
 import P6ElectricCircuitVocab from "./pages/grade6/P6ElectricCircuitVocab";
 import P6ElectricCircuitObjectives from "./pages/grade6/P6ElectricCircuitObjectives";
 import P6ElectricCircuitIntro from "./pages/grade6/P6ElectricCircuitIntro";
