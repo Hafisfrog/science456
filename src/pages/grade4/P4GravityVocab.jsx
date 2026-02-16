@@ -105,7 +105,7 @@ export default function P4GravityVocab() {
       </div>
 
       <div className="vocab-footer">
-        <button className="back-home-btn" onClick={() => navigate("/p4/gravity/objectives")}>
+        <button className="back-home-btn" onClick={() => navigate("/p4/gravity")}>
           ← กลับหน้าจุดประสงค์
         </button>
 
