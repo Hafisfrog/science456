@@ -22,7 +22,7 @@ export default function P4() {
         {/* การ์ด แรงโน้มถ่วง */}
         <div
           className="p4-card"
-          onClick={() => navigate("/p4/gravity")}
+          onClick={() => navigate("/p4/gravity/objectives")}
         >
           <img
             src="/images/p4/gravity.png"

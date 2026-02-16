@@ -15,7 +15,7 @@ export default function P4Gravity() {
       <p className="grade-sub">เลือกการทดลอง</p>
 
       <div className="grade-grid">
-        <div className="grade-card" onClick={() => navigate("/p4/gravity/objectives")}>
+        <div className="grade-card" onClick={() => navigate("/p4/gravity/vocab")}>
         <img src="/images/p4.png" alt="" className="grade-image" />
         <div className="grade-content">
             <div className="grade-big">การทดลองที่ 1</div>
@@ -23,7 +23,7 @@ export default function P4Gravity() {
         </div>
         </div>
 
-        <div className="grade-card" onClick={() => navigate("/p4/gravity/spring")}>
+        <div className="grade-card" onClick={() => navigate("/p4/gravity/exp2/vocab")}>
           <img src="/images/p4/action.png" alt="" className="grade-image" />
           <div className="grade-content">
             <div className="grade-big">การทดลองที่ 2</div>

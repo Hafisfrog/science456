@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Start from "./pages/Start";
 import SelectGrade from "./pages/SelectGrade";
-import Grade6 from "./pages/grade6";
+// import Grade6 from "./pages/grade6";
 import P6 from "./pages/grade6/P6";
 import P4 from "./pages/grade4/P4";
 import P4Gravity from "./pages/grade4/P4Gravity";
@@ -11,6 +11,18 @@ import P4GravityObjectives from "./pages/grade4/P4GravityObjectives";
 import P4GravityExp1Materials from "./pages/grade4/P4GravityExp1Materials";
 import P4GravityExp1Steps from "./pages/grade4/P4GravityExp1Steps";
 import P4GravityExp1Question from "./pages/grade4/P4GravityExp1Question";
+import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
+import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
+import P4GravityExp1Answer from "./pages/grade4/P4GravityExp1Answer";
+//p4 gravity exp2
+import P4GravityExp2Vocab from "./pages/grade4/exp2/P4GravityExp2Vocab";
+import P4GravityExp2Materials from "./pages/grade4/exp2/P4GravityExp2Materials";
+import P4GravityExp2Steps from "./pages/grade4/exp2/P4GravityExp2Steps";
+import P4GravityExp2Question from "./pages/grade4/exp2/P4GravityExp2Question";
+import P4GravityExp2Action from "./pages/grade4/exp2/P4GravityExp2Action";
+import P4GravityExp2Result from "./pages/grade4/exp2/P4GravityExp2Result";
+
+
 import P6ElectricObjectives from "./pages/grade6/P6ElectricObjectives";
 import P6ElectricVocab from "./pages/grade6/P6ElectricVocab";
 import P6ElectricGenerationSteps from "./pages/grade6/P6ElectricGenerationSteps";
@@ -30,8 +42,8 @@ import P6ElectricCircuitSteps from "./pages/grade6/P6ElectricCircuitSteps";
 import P6ElectricCircuitResults from "./pages/grade6/P6ElectricCircuitResults";
 import P6ElectricCircuitSim from "./pages/grade6/P6ElectricCircuitSim";
 // import Grade6 from "./pages/grade6/index.jsx";
-import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
-import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
+// import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
+// import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
 
 
 // import Grade6 from "./pages/grade6";
@@ -53,6 +65,14 @@ export default function App() {
         <Route path="/p4/gravity/exp1/question" element={<P4GravityExp1Question />} />
         <Route path="/p4/gravity/exp1/action" element={<P4GravityExp1Action />} />
         <Route path="/p4/gravity/exp1/result" element={<P4GravityExp1Result />} />
+        <Route path="/p4/gravity/exp1/answer" element={<P4GravityExp1Answer />} />
+
+        <Route path="/p4/gravity/exp2/vocab" element={<P4GravityExp2Vocab />} />
+        <Route path="/p4/gravity/exp2/materials" element={<P4GravityExp2Materials />} />
+        <Route path="/p4/gravity/exp2/steps" element={<P4GravityExp2Steps />} />
+        <Route path="/p4/gravity/exp2/question" element={<P4GravityExp2Question />} />
+        <Route path="/p4/gravity/exp2/action" element={<P4GravityExp2Action />} />
+        <Route path="/p4/gravity/exp2/result" element={<P4GravityExp2Result />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />

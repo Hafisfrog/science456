@@ -183,12 +183,12 @@ export default function P4GravityObjectives() {
 
         {/* Bottom actions */}
         <div className="obj-actions">
-          <button className="obj-btn ghost" onClick={() => navigate("/p4/gravity")} type="button">
+          <button className="obj-btn ghost" onClick={() => navigate("/p4")} type="button">
             {t.back}
           </button>
           <button
             className="obj-btn primary"
-            onClick={() => navigate("/p4/gravity/vocab")}
+            onClick={() => navigate("/p4/gravity")}
             type="button"
           >
             {t.next}
