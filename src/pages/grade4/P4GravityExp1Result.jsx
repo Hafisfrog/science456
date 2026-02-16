@@ -7,7 +7,7 @@ export default function P4GravityExp1Result() {
   const location = useLocation();
 
   // ✅ กลับหน้าชั้นเรียน (หน้า P4Gravity.jsx)
-  const CLASSROOM_PATH = "/p4/gravity";
+  const CLASSROOM_PATH = "/p4/gravity/exp1/answer";
   const RETRY_PATH = "/p4/gravity/exp1/action";
 
   // ✅ รับค่าจากหน้า Action

@@ -1,0 +1,295 @@
+.exp2r2-page{
+  width:100vw;
+  height:100vh;
+  position:relative;
+  overflow:hidden;
+  font-family:'Prompt', sans-serif;
+}
+
+.exp2r2-bg{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(1200px 700px at 55% 20%, rgba(255,255,255,.25), rgba(255,255,255,0) 65%),
+    linear-gradient(180deg, rgba(15,23,42,.35), rgba(15,23,42,.70));
+  z-index:-2;
+}
+
+.exp2r2-sheet{
+  position:absolute;
+  left:50%;
+  top:3px;
+  transform:translateX(-50%);
+  width:min(1180px, calc(100% - 60px));
+  height:calc(100% - 90px);
+  background:rgba(255,255,255,.92);
+  border-radius:10px;
+  box-shadow:0 26px 60px rgba(0,0,0,.22);
+  padding:18px 22px 18px;
+  overflow:auto;
+}
+
+.exp2r2-title{
+  font-size:47px;
+  font-weight:1000;
+  color:#111827;
+}
+
+/* table */
+.exp2r2-tableWrap{
+  margin-top:12px;
+  display:flex;
+  justify-content:center;
+}
+
+.exp2r2-table{
+  width:min(980px, 100%);
+  border:2.5px solid #111827;
+  display:grid;
+  grid-template-columns: 240px repeat(3, 1fr) 190px;
+  grid-auto-rows: 76px;
+  background:#fff;
+}
+
+/* header row 1 */
+.exp2r2-h{
+  display:flex;
+  /* align-items:center; */
+  justify-content:center;
+  text-align:center;
+  font-size:30px;
+  font-weight:1000;
+  color:#111827;
+  background:#efe2b1;
+  border-right:2px solid #111827;
+  border-bottom:2px solid #111827;
+  padding:8px;
+  white-space:pre-line;
+  line-height:1.15; /* ✅ กันตัวอักษรถูกตัด */
+}
+.exp2r2-h-obj{ grid-column:1; grid-row:1 / span 2; }
+.exp2r2-h-mid{ grid-column:2 / span 3; grid-row:1; }
+.exp2r2-h-avg{ grid-column:5; grid-row:1 / span 2; border-right:none; }
+
+/* header row 2 */
+.exp2r2-subh{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:1000;
+  color:#111827;
+  background:#efe2b1;
+  border-right:2px solid #111827;
+  border-bottom:2px solid #111827;
+  padding:8px;
+  line-height:1.15;
+}
+.exp2r2-subh-obj{ grid-column:1; grid-row:2; }
+.exp2r2-subh-t:nth-of-type(2){ grid-column:2; grid-row:2; }
+.exp2r2-subh-t:nth-of-type(3){ grid-column:3; grid-row:2; }
+.exp2r2-subh-t:nth-of-type(4){ grid-column:4; grid-row:2; }
+.exp2r2-subh-avg{ grid-column:5; grid-row:2; border-right:none; }
+
+/* body */
+.exp2r2-row{ display:contents; }
+
+.exp2r2-cell{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 12px;
+  border-right:2px solid #111827;
+  border-bottom:2px solid #111827;
+  font-weight:900;
+  color:#111827;
+  background:rgba(255,255,255,.92);
+  font-size:22px;
+  line-height:1.2; /* ✅ กันตัด */
+}
+
+/* ✅ แก้ “ช่องชื่อวัตถุ” ให้ตัวอักษรไม่โดนตัด/เห็นเต็ม */
+.exp2r2-objCell{
+  justify-content:flex-start;
+  padding-left:20px;
+  font-weight:1000;
+
+  white-space:normal;        /* ✅ ให้ขึ้นบรรทัดใหม่ได้ */
+  word-break:break-word;     /* ✅ กันคำยาวล้น */
+  overflow:visible;
+  text-align:left;
+}
+
+.exp2r2-avgCell{ border-right:none; }
+
+.exp2r2-val{ font-weight:1000; }
+.exp2r2-dots{
+  font-weight:900;
+  letter-spacing:1px;
+  color:#111827;
+  opacity:.85;
+}
+
+/* summary */
+.exp2r2-summaryTitle{
+  margin-top:18px;
+  font-size:34px;
+  font-weight:1000;
+  color:#111827;
+}
+
+.exp2r2-summaryBox{
+  position:relative;
+  width:min(1040px, 100%);
+  margin-top:10px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffffff,#f3f4f6);
+  border:2px dashed rgba(15,23,42,.18);
+  box-shadow:0 16px 30px rgba(0,0,0,.10);
+  padding:14px 16px;
+}
+
+.exp2r2-summaryText{
+  white-space:pre-line;
+  font-size:20px;
+  font-weight:900;
+  color:#111827;
+  line-height:1.75;
+  padding-right:56px;
+}
+
+.exp2r2-summarySpeak{
+  position:absolute;
+  right:14px;
+  top:14px;
+  border:none;
+  cursor:pointer;
+  width:46px;
+  height:46px;
+  border-radius:16px;
+  background:#dbeafe;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.12), 0 16px 30px rgba(0,0,0,.16);
+  font-size:20px;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.exp2r2-summarySpeak:hover{
+  transform:translateY(-2px);
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.12), 0 20px 36px rgba(0,0,0,.20);
+}
+.exp2r2-summarySpeak:active{ transform:translateY(1px); }
+
+/* bottom-left language bar */
+.exp2r2-langbar{
+  position:absolute;
+  left:18px;
+  bottom:18px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(255,255,255,.92);
+  padding:10px 12px;
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+}
+
+.exp2r2-chip{
+  border:none;
+  cursor:pointer;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:18px;
+  font-weight:1000;
+  background:#e6f2ff;
+  color:#111827;
+  transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.exp2r2-chip:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 22px rgba(0,0,0,.14);
+}
+.exp2r2-chip.active{ background:#bfe0ff; }
+
+.exp2r2-speakBtn{
+  border:none;
+  cursor:pointer;
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  background:#dbeafe;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.12), 0 16px 30px rgba(0,0,0,.16);
+  font-size:20px;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.exp2r2-speakBtn:hover{
+  transform:translateY(-2px);
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,.12), 0 20px 36px rgba(0,0,0,.20);
+}
+.exp2r2-speakBtn:active{ transform:translateY(1px); }
+
+/* ✅ center bottom retry button */
+.exp2r2-retry{
+  position:absolute;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%); /* ✅ กึ่งกลาง */
+  border:none;
+  cursor:pointer;
+  padding:14px 18px;
+  border-radius:18px;
+  font-size:20px;
+  font-weight:1000;
+  color:#111827;
+  background:rgba(255,255,255,.92);
+  box-shadow:0 18px 40px rgba(0,0,0,.22);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.exp2r2-retry:hover{
+  transform:translateX(-50%) translateY(-2px);
+  box-shadow:0 22px 48px rgba(0,0,0,.26);
+}
+.exp2r2-retry:active{
+  transform:translateX(-50%) translateY(1px);
+}
+
+/* next */
+.exp2r2-next{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  border:none;
+  cursor:pointer;
+  padding:14px 22px;
+  border-radius:20px;
+  font-size:22px;
+  font-weight:1000;
+  color:#fff;
+  background:linear-gradient(135deg,#ef4444,#b91c1c);
+  box-shadow:0 22px 46px rgba(0,0,0,.22);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.exp2r2-next:hover{ transform:translateY(-2px); box-shadow:0 28px 56px rgba(0,0,0,.26); }
+.exp2r2-next:active{ transform:translateY(1px); }
+
+/* responsive */
+@media (max-width: 980px){
+  .exp2r2-title{ font-size:34px; }
+  .exp2r2-table{
+    grid-template-columns: 200px repeat(3, 1fr) 160px;
+    grid-auto-rows: 74px; /* ✅ เผื่อให้ข้อความในช่องชื่อวัตถุขึ้นบรรทัด */
+  }
+  .exp2r2-cell{ font-size:18px; }
+  .exp2r2-retry{ font-size:18px; }
+  .exp2r2-next{ font-size:20px; }
+}
+@media (max-width: 640px){
+  .exp2r2-sheet{
+    width:calc(100% - 24px);
+    height:calc(100% - 110px);
+    padding:14px 14px;
+  }
+  .exp2r2-table{
+    grid-template-columns: 150px repeat(3, 1fr) 130px;
+    grid-auto-rows: 76px; /* ✅ เพิ่มความสูงแถว กันตัวอักษรถูกตัด */
+  }
+  .exp2r2-next{ padding:12px 16px; }
+}
