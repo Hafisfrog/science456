@@ -22,12 +22,19 @@ import P6ElectricForceEffectSteps from "./pages/grade6/P6ElectricForceEffectStep
 import P6ElectricForceEffectSim from "./pages/grade6/P6ElectricForceEffectSim";
 import P6ElectricForceEffectSummary from "./pages/grade6/P6ElectricForceEffectSummary";
 import P6ElectricForceRecap from "./pages/grade6/P6ElectricForceRecap";
+import P6ElectricCircuitVocab from "./pages/grade6/P6ElectricCircuitVocab";
+import P6ElectricCircuitObjectives from "./pages/grade6/P6ElectricCircuitObjectives";
+import P6ElectricCircuitIntro from "./pages/grade6/P6ElectricCircuitIntro";
+import P6ElectricCircuitProblem from "./pages/grade6/P6ElectricCircuitProblem";
+import P6ElectricCircuitSteps from "./pages/grade6/P6ElectricCircuitSteps";
+import P6ElectricCircuitResults from "./pages/grade6/P6ElectricCircuitResults";
+import P6ElectricCircuitSim from "./pages/grade6/P6ElectricCircuitSim";
 // import Grade6 from "./pages/grade6/index.jsx";
 import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
 import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
 
 
-import Grade6 from "./pages/grade6";
+// import Grade6 from "./pages/grade6";
 
 export default function App() {
   return (
@@ -64,8 +71,30 @@ export default function App() {
         <Route path="/p6/electric-force/experiments" element={<Grade6 />} />
         <Route path="/p6/electric-force/recap" element={<P6ElectricForceRecap />} />
         <Route
-          path="/p6/electric-circuit"
+          path="/p6/electric-circuit-old"
           element={<div style={{ padding: 40 }}>วงจรไฟฟ้าใกล้ตัว (กำลังทำ)</div>}
+        />
+        <Route path="/p6/electric-circuit" element={<P6ElectricCircuitVocab />} />
+        <Route path="/p6/electric-circuit/problem" element={<P6ElectricCircuitProblem />} />
+        <Route path="/p6/electric-circuit/steps" element={<P6ElectricCircuitSteps />} />
+        <Route
+          path="/p6/electric-circuit/sim"
+          element={<P6ElectricCircuitSim />}
+        />
+        <Route path="/p6/electric-circuit/result" element={<P6ElectricCircuitResults />} />
+        <Route path="/p6/electric-circuit/objectives" element={<P6ElectricCircuitObjectives />} />
+        <Route path="/p6/electric-circuit/intro" element={<P6ElectricCircuitIntro />} />
+        <Route
+          path="/p6/electric-circuit/lesson/components"
+          element={<div style={{ padding: 40 }}>องค์ประกอบของวงจรไฟฟ้า (กำลังทำ)</div>}
+        />
+        <Route
+          path="/p6/electric-circuit/lesson/series-parallel"
+          element={<div style={{ padding: 40 }}>การต่อเซลล์ไฟฟ้าแบบอนุกรมและขนาน (กำลังทำ)</div>}
+        />
+        <Route
+          path="/p6/electric-circuit/lesson/open-closed"
+          element={<div style={{ padding: 40 }}>วงจรเปิดและวงจรปิด (กำลังทำ)</div>}
         />
         <Route path="/p6/experiment/electric-generation" element={<P6ElectricObjectives />} />
         <Route path="/p6/experiment/electric-generation/vocab" element={<P6ElectricVocab />} />

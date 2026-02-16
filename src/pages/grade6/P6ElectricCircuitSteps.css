@@ -1,0 +1,222 @@
+.p6-circuit-card {
+  background: linear-gradient(135deg, #7bd1ec 0%, #8dddf2 45%, #7bc3e8 100%);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.p6-circuit-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.p6-circuit-panel {
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  padding: 16px;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+.p6-circuit-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.15);
+  color: #0f172a;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.p6-circuit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+}
+
+.p6-circuit-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 10px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 10px 12px;
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.p6-circuit-icon {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 30%, #e0f2fe, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.p6-circuit-icon svg {
+  width: 56px;
+  height: 56px;
+}
+
+.p6-circuit-meta {
+  display: grid;
+  gap: 4px;
+  align-content: center;
+}
+
+.p6-circuit-title {
+  font-weight: 900;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.p6-circuit-sub {
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.p6-circuit-steps {
+  display: grid;
+  gap: 12px;
+}
+
+.p6-circuit-step {
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+.p6-circuit-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fde68a, #f59e0b);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  color: #111827;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.15);
+}
+
+.p6-circuit-desc {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  line-height: 1.4;
+}
+
+.p6-circuit-note {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px dashed rgba(15, 23, 42, 0.2);
+  font-weight: 700;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.p6-circuit-results {
+  margin-top: 16px;
+  background: rgba(126, 209, 236, 0.35);
+}
+
+.p6-circuit-result-table {
+  display: grid;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid rgba(15, 23, 42, 0.4);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.p6-circuit-result-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(200px, 1fr);
+  gap: 0;
+}
+
+.p6-circuit-result-row > div {
+  padding: 14px 16px;
+  border-right: 2px solid rgba(15, 23, 42, 0.4);
+  border-bottom: 2px solid rgba(15, 23, 42, 0.4);
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.p6-circuit-result-row > div:last-child {
+  border-right: none;
+}
+
+.p6-circuit-result-row:last-child > div {
+  border-bottom: none;
+}
+
+.p6-circuit-result-row.head > div {
+  background: rgba(126, 209, 236, 0.8);
+  font-weight: 900;
+}
+
+.p6-circuit-result-row.active > div {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.4);
+}
+
+.p6-circuit-result-icon {
+  gap: 6px;
+}
+
+.p6-circuit-result-icon svg {
+  width: min(180px, 100%);
+  height: auto;
+}
+
+.p6-circuit-result-label {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.p6-circuit-result-text {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+@media (max-width: 720px) {
+  .p6-circuit-item {
+    grid-template-columns: 54px 1fr;
+  }
+
+  .p6-circuit-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .p6-circuit-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .p6-circuit-result-row {
+    grid-template-columns: 1fr;
+  }
+
+  .p6-circuit-result-row > div {
+    border-right: none;
+  }
+
+  .p6-circuit-result-row > div:first-child {
+    border-bottom: 2px dashed rgba(15, 23, 42, 0.3);
+  }
+}

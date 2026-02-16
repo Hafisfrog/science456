@@ -1,0 +1,330 @@
+.p6-circuit-sim {
+  background: linear-gradient(135deg, #7bd1ec 0%, #8dddf2 45%, #7bc3e8 100%);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.p6-circuit-sim-top {
+  margin-bottom: 16px;
+}
+
+.p6-circuit-sim-title {
+  font-weight: 900;
+  font-size: clamp(20px, 2.6vw, 26px);
+  color: #0f172a;
+}
+
+.p6-circuit-sim-sub {
+  margin-top: 4px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.p6-circuit-sim-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.p6-circuit-sim-card {
+  border: 2px solid rgba(148, 163, 184, 0.45);
+  border-radius: 18px;
+  padding: 12px;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  box-shadow: 0 12px 20px rgba(15, 23, 42, 0.12);
+}
+
+.p6-circuit-sim-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(37, 99, 235, 0.4);
+}
+
+.p6-circuit-sim-card.active {
+  border-color: rgba(37, 99, 235, 0.8);
+  box-shadow: 0 16px 26px rgba(37, 99, 235, 0.18);
+  background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.p6-circuit-sim-icon {
+  border-radius: 14px;
+  background: radial-gradient(circle at 30% 30%, #e0f2fe, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  display: grid;
+  place-items: center;
+  padding: 6px;
+}
+
+.p6-circuit-sim-icon svg {
+  width: 100%;
+  height: auto;
+}
+
+.p6-circuit-sim-label {
+  margin-top: 10px;
+  font-weight: 900;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.p6-circuit-sim-note {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.p6-circuit-sim-preview {
+  margin-top: 16px;
+  border-radius: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px dashed rgba(15, 23, 42, 0.25);
+}
+
+.p6-circuit-sim-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.15);
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.p6-circuit-sim-preview-body {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+.p6-circuit-drag-area {
+  position: relative;
+  height: 220px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8), transparent 60%),
+    linear-gradient(135deg, rgba(224, 242, 254, 0.8), rgba(255, 255, 255, 0.9));
+  border: 1px dashed rgba(15, 23, 42, 0.2);
+  overflow: hidden;
+}
+
+.p6-circuit-drag-hint {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.15);
+  font-weight: 800;
+  font-size: 12px;
+  color: #0f172a;
+}
+
+
+.p6-circuit-wire-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.p6-circuit-piece {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.12);
+  padding: 6px 8px;
+}
+
+.p6-circuit-piece svg {
+  display: block;
+  width: 120px;
+  height: auto;
+}
+
+.p6-circuit-piece.bulb svg,
+.p6-circuit-piece.switch svg {
+  width: 64px;
+}
+
+.p6-circuit-piece.bulb.level-low {
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.12), 0 0 12px rgba(255, 214, 102, 0.35);
+}
+
+.p6-circuit-piece.bulb.level-mid {
+  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.14), 0 0 18px rgba(255, 214, 102, 0.55);
+}
+
+.p6-circuit-piece.bulb.level-mid-high {
+  box-shadow: 0 12px 20px rgba(15, 23, 42, 0.16), 0 0 24px rgba(255, 214, 102, 0.75);
+}
+
+.p6-circuit-piece.bulb.level-high {
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.18), 0 0 32px rgba(255, 214, 102, 0.95);
+}
+
+.p6-circuit-anchor {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 2px solid rgba(15, 23, 42, 0.6);
+  transform: translate(-50%, -50%);
+}
+
+.p6-circuit-endpoint {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  border: 2px solid #ffffff;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.2);
+  cursor: grab;
+  touch-action: none;
+}
+
+.p6-circuit-endpoint:active {
+  cursor: grabbing;
+}
+
+.p6-circuit-endpoint.red {
+  background: #ef4444;
+}
+
+.p6-circuit-endpoint.blue {
+  background: #2563eb;
+}
+
+.p6-circuit-endpoint.green {
+  background: #10b981;
+}
+
+.p6-circuit-endpoint.connected {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.9), 0 0 12px rgba(37, 99, 235, 0.5);
+}
+
+.p6-circuit-sim-preview-title {
+  font-weight: 900;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.p6-circuit-sim-preview-desc {
+  margin-top: 6px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.p6-circuit-sim-run {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+
+.p6-circuit-sim-run-title {
+  font-weight: 900;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.p6-circuit-sim-run-desc {
+  margin-top: 4px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.p6-circuit-sim-status {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 14px;
+  background: rgba(148, 163, 184, 0.2);
+  color: #0f172a;
+}
+
+.p6-circuit-sim-status.running {
+  background: rgba(253, 230, 138, 0.8);
+}
+
+.p6-circuit-sim-status.done {
+  background: rgba(134, 239, 172, 0.9);
+}
+
+.p6-circuit-sim-progress {
+  margin-top: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.25);
+  overflow: hidden;
+}
+
+.p6-circuit-sim-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #60a5fa, #22d3ee);
+  transition: width 0.6s ease;
+}
+
+.p6-circuit-sim-bar.running {
+  width: 70%;
+}
+
+.p6-circuit-sim-bar.done {
+  width: 100%;
+}
+
+.p6-circuit-sim-start {
+  border: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
+  transition: transform 0.12s ease;
+}
+
+.p6-circuit-sim-start:hover {
+  transform: translateY(-2px);
+}
+
+.p6-circuit-sim-start:disabled {
+  cursor: not-allowed;
+  background: #9ca3af;
+  box-shadow: none;
+}
+
+@media (max-width: 720px) {
+  .p6-circuit-sim-preview-body {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .p6-circuit-drag-area {
+    height: 200px;
+  }
+
+  .p6-circuit-sim-run {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
