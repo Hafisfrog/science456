@@ -1,5 +1,5 @@
-﻿.p6-force-sim-page {
-  min-height: 100svh;
+.p6-force-sim-page {
+  min-height: 100vh;
   padding: clamp(18px, 4vw, 40px);
   background:
     radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.65), transparent 55%),
@@ -552,6 +552,3 @@
     transform: translateX(-50%);
   }
 }
-
-
-

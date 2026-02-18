@@ -1,4 +1,4 @@
-﻿/* P4GravityExp2Action.css */
+/* P4GravityExp2Action.css */
 :root{
   --bg:#0b1020;
   --card: rgba(255,255,255,.92);
@@ -19,8 +19,8 @@ button{ font-family: inherit; }
 button:disabled{ opacity:.6; cursor:not-allowed; }
 
 .exp2a-page{
-  width: 100%;
-  min-height: 100svh;
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -56,11 +56,11 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   top:14px;
   display:flex;
   align-items:center;
-  justify-content:center;   /* โ… เนเธซเน title เธญเธขเธนเนเธเธฅเธฒเธ */
+  justify-content:center;   /* ✅ ให้ title อยู่กลาง */
   z-index:5;
 }
 
-/* โ… back circle only */
+/* ✅ back circle only */
 .exp2a-backCircle{
   position:absolute;
   left:0;
@@ -82,9 +82,9 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 .exp2a-backCircle:hover{ transform: translateY(-2px); box-shadow: 0 20px 38px rgba(0,0,0,.22); }
 .exp2a-backCircle:active{ transform: translateY(1px); }
 
-/* โ… title centered & not too wide */
+/* ✅ title centered & not too wide */
 .exp2a-titleCard{
-  width: min(760px, calc(100% - 90px));  /* เนเธกเนเธขเธฒเธงเธกเธฒเธ */
+  width: min(760px, calc(100% - 90px));  /* ไม่ยาวมาก */
   background: var(--card);
   border-radius: 18px;
   box-shadow: var(--shadow);
@@ -101,7 +101,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   line-height:1.2;
   overflow:hidden;
   text-overflow:ellipsis;
-  white-space:nowrap;      /* เธเธฑเธเธขเธฒเธง */
+  white-space:nowrap;      /* กันยาว */
 }
 .exp2a-iconBtn{
   border:none;
@@ -180,9 +180,9 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 
 /* cards */
 .exp2a-card{
-  min-height: 92px;     /* เธฅเนเธญเธเธเธงเธฒเธกเธชเธนเธเธเธฒเธฃเนเธ” */
+  min-height: 92px;     /* ล็อกความสูงการ์ด */
   align-items: center;
-  overflow: visible;   /* เธเธฑเธเธฃเธนเธเธ—เธตเน scale เนเธฅเนเธงเนเธ”เธเธ•เธฑเธ” */
+  overflow: visible;   /* กันรูปที่ scale แล้วโดนตัด */
 
   position:relative;
   width:100%;
@@ -207,9 +207,9 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   width:56px;
   height:56px;
   object-fit:contain;
-  transform: scale(1.25); /* โ… เธ—เธณเนเธซเนเธฃเธนเธเธ”เธนเนเธซเธเนเธเธถเนเธ */
+  transform: scale(1.25); /* ✅ ทำให้รูปดูใหญ่ขึ้น */
   transform-origin: center;
-  flex: 0 0 56px;       /* โ… เนเธกเนเนเธซเนเธกเธฑเธเธ”เธฑเธ layout */
+  flex: 0 0 56px;       /* ✅ ไม่ให้มันดัน layout */
   filter: drop-shadow(0 10px 14px rgba(0,0,0,.18));
 }
 .exp2a-cardInfo{ flex:1; }
@@ -254,7 +254,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 .exp2a-tag.blue{ background:#dbeafe; color:#1e40af; }
 .exp2a-tag.green{ background:#dcfce7; color:#166534; }
 
-/* โ… language dock left-bottom */
+/* ✅ language dock left-bottom */
 .exp2a-langDock{
   margin-top: 12px;
   position: sticky;
@@ -271,7 +271,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   display:flex;
   align-items:center;
   gap:10px;
-  flex-wrap: wrap;            /* โ… เธเธฑเธเธซเธฅเนเธเธเธญ */
+  flex-wrap: wrap;            /* ✅ กันหล่นจอ */
   justify-content:flex-start;
 }
 .exp2a-chip{
@@ -371,7 +371,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   object-fit:contain;
   padding:10px;
   margin-top: 48px; 
-  transform: scale(1.75);      /* โ… เน€เธเธดเนเธกเธเธงเธฒเธกเนเธซเธเน (เธฅเธญเธ 1.10โ€“1.25) */
+  transform: scale(1.75);      /* ✅ เพิ่มความใหญ่ (ลอง 1.10–1.25) */
 }
 .exp2a-scalePlaceholder{
   height:420px;
@@ -618,5 +618,3 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 @media (prefers-reduced-motion: reduce){
   *{ transition:none !important; }
 }
-
-

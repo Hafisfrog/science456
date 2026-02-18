@@ -1,5 +1,5 @@
-﻿.p6-page {
-  min-height: 100svh;
+.p6-page {
+  min-height: 100vh;
   padding: 56px 20px;
   background: linear-gradient(180deg, #eef8ff, #f9fcff);
   font-family: "Prompt", sans-serif;
@@ -100,6 +100,3 @@
     font-size: 18px;
   }
 }
-
-
-

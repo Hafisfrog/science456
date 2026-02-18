@@ -1,6 +1,6 @@
-﻿.mat-page{
-  width: 100%;
-  min-height: 100svh;
+.mat-page{
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -68,7 +68,7 @@
 .mat-titleRow{
   display:flex;
   align-items:center;
-  justify-content:flex-start; /* เธชเธณเธเธฑเธ: เธ—เธณเนเธซเนเธเธธเนเธกเน€เธชเธตเธขเธเธญเธขเธนเนเธซเธฅเธฑเธเธเนเธญเธเธงเธฒเธก */
+  justify-content:flex-start; /* สำคัญ: ทำให้ปุ่มเสียงอยู่หลังข้อความ */
   gap:12px;
 }
 
@@ -79,7 +79,7 @@
   line-height:1.15;
 }
 
-/* โ… เธเธธเนเธกเน€เธชเธตเธขเธเนเธเธเธชเธงเธข (เธญเธขเธนเนเธซเธฅเธฑเธเธเนเธญเธเธงเธฒเธก) */
+/* ✅ ปุ่มเสียงแบบสวย (อยู่หลังข้อความ) */
 .mat-sound-inline{
   border:none;
   cursor:pointer;
@@ -171,7 +171,7 @@
   box-shadow:0 10px 18px rgba(0,0,0,.14);
 }
 
-/* เนเธซเนเนเธ–เธงเธฅเนเธฒเธ 2 เธเธดเนเธเธญเธขเธนเนเธเธฅเธฒเธ */
+/* ให้แถวล่าง 2 ชิ้นอยู่กลาง */
 .mat-grid .mat-card:nth-child(5){
   grid-column: 2 / span 1;
 }
@@ -264,5 +264,3 @@
   .mat-back{ left:16px; }
   .mat-frame{ height:160px; }
 }
-
-

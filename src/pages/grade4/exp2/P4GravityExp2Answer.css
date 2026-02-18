@@ -1,6 +1,6 @@
-﻿.ans2e-page{
-  width: 100%;
-  min-height: 100svh;
+.ans2e-page{
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -250,7 +250,7 @@
   line-height:1.35;
 }
 
-/* โ… LANG DOCK: เธเนเธฒเธขเธฅเนเธฒเธ */
+/* ✅ LANG DOCK: ซ้ายล่าง */
 .ans2e-langDock{
   position:fixed;
   left:18px;
@@ -296,7 +296,7 @@
 }
 .ans2e-audioDock:active{ transform:translateY(1px); }
 
-/* โ… NAV DOCK: เธเธงเธฒเธฅเนเธฒเธ (เธเธญเธเธเธฃเธญเธ) */
+/* ✅ NAV DOCK: ขวาล่าง (นอกกรอบ) */
 .ans2e-navDock{
   position:fixed;
   right:18px;
@@ -306,7 +306,7 @@
   z-index:10;
 }
 
-/* เธเธธเนเธกเธ—เธฃเธเธชเธงเธข + เน€เธซเธกเธทเธญเธเธเธธเนเธกเธเธญเธเธเธฃเธญเธ */
+/* ปุ่มทรงสวย + เหมือนปุ่มนอกกรอบ */
 .ans2e-navBtn{
   border:none;
   cursor:pointer;
@@ -371,7 +371,5 @@
   .ans2e-chip{ padding:10px 12px; font-size:15px; }
   .ans2e-navDock{ right:12px; bottom:12px; gap:10px; }
   .ans2e-navBtn{ padding:12px 12px; font-size:16px; }
-  .ans2e-navText{ display:none; } /* เธกเธทเธญเธ–เธทเธญเนเธซเนเน€เธซเธฅเธทเธญเนเธเนเธฅเธนเธเธจเธฃ */
+  .ans2e-navText{ display:none; } /* มือถือให้เหลือแค่ลูกศร */
 }
-
-

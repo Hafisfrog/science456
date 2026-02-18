@@ -1,6 +1,6 @@
-﻿.q2-page{
-  width: 100%;
-  min-height: 100svh;
+.q2-page{
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -100,7 +100,7 @@
   flex:1;
 }
 
-/* โ… เธเธธเนเธกเน€เธชเธตเธขเธเธญเธขเธนเนเธซเธฅเธฑเธเธเนเธญเธเธงเธฒเธก */
+/* ✅ ปุ่มเสียงอยู่หลังข้อความ */
 .q2-speakBtn{
   border:none;
   cursor:pointer;
@@ -273,5 +273,3 @@
   }
   .q2-hintBtn, .q2-startBtn{ width:190px; }
 }
-
-

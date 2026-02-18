@@ -1,5 +1,5 @@
-﻿.p6-sim-page {
-  min-height: 100svh;
+.p6-sim-page {
+  min-height: 100vh;
   background: #e9f7ff;
   display: flex;
   align-items: center;
@@ -632,6 +632,3 @@
     bottom: 46%;
   }
 }
-
-
-

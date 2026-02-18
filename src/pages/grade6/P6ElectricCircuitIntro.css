@@ -1,5 +1,5 @@
-﻿.p6-activity-page {
-  min-height: 100svh;
+.p6-activity-page {
+  min-height: 100vh;
   padding: clamp(24px, 4vw, 56px) clamp(18px, 4vw, 48px) 70px;
   background:
     linear-gradient(180deg, #f7fbff 0%, #eef7ff 55%, #f8fcff 100%);
@@ -220,6 +220,3 @@
     font-size: 16px;
   }
 }
-
-
-
