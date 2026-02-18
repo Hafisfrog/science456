@@ -33,7 +33,7 @@ export default function P4Gravity() {
           </div>
         </div>
 
-        <div className="grade-card" onClick={() => navigate("/p4/gravity/earth-moon")}>
+        <div className="grade-card" onClick={() => navigate("/p4/gravity/exp3/action")}>
           <img src="/images/p4/earth-moon.png" alt="" className="grade-image" />
           <div className="grade-content">
             <div className="grade-big">การทดลองที่ 3</div>
