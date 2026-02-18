@@ -47,7 +47,7 @@ export default function P4() {
 
         <div
           className="p4-card"
-          onClick={() => navigate("/p4/gravity")}
+          onClick={() => navigate("/p4/light/intro")}
         >
           <img
             src="/images/p4/light.png"
