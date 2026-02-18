@@ -72,9 +72,6 @@ import P5FoodChainSim from "./pages/grade5/life/foodchain/P5FoodChainSim";
 import P5FoodChainCheck from "./pages/grade5/life/foodchain/P5FoodChainCheck";
 import P5FoodChainSummary from "./pages/grade5/life/foodchain/P5FoodChainSummary";
 
-// ===== ป.6 =====
-import Grade6 from "./pages/grade6";
-
 // import Grade6 from "./pages/grade6";
 
 export default function App() {
@@ -220,7 +217,6 @@ export default function App() {
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
-        <Route path="/p6" element={<Grade6 />} />
       </Routes>
     </BrowserRouter>
   );

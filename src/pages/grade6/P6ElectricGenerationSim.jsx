@@ -6,11 +6,23 @@ export default function P6ElectricGenerationSim() {
   const navigate = useNavigate();
   const trialOptions = useMemo(
     () => [
-      { id: "trial-1", label: "ครั้งที่ 1 ไม่ขัดถูด้วยผ้าแห้ง", short: "ครั้งที่ 1 (ไม่ถู)" },
-      { id: "trial-2", label: "ครั้งที่ 2 ถูด้วยผ้าแห้ง 2 นาที", short: "ครั้งที่ 2 (2 นาที)" },
-      { id: "trial-3", label: "ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที", short: "ครั้งที่ 3 (5 นาที)" },
+      {
+        id: "trial-1",
+        label: "ครั้งที่ 1 ไม่ขัดถูด้วยผ้าแห้ง",
+        short: "ครั้งที่ 1 (ไม่ถู)",
+      },
+      {
+        id: "trial-2",
+        label: "ครั้งที่ 2 ขัดถูด้วยผ้าแห้ง 2 นาที",
+        short: "ครั้งที่ 2 (2 นาที)",
+      },
+      {
+        id: "trial-3",
+        label: "ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที",
+        short: "ครั้งที่ 3 (5 นาที)",
+      },
     ],
-    []
+    [],
   );
 
   const [selectedTrial, setSelectedTrial] = useState(null);
@@ -24,6 +36,7 @@ export default function P6ElectricGenerationSim() {
     trialOptions.find((item) => item.id === selectedTrial)?.short || "ยังไม่เลือก";
   const canStart = Boolean(selectedTrial);
   const shouldShowHint = !canStart;
+
   const handleToggleTrial = () => {
     setShowTrialMenu((prev) => !prev);
   };
@@ -49,9 +62,11 @@ export default function P6ElectricGenerationSim() {
       setShowTrialMenu(true);
       return;
     }
+
     setShowTrialMenu(false);
     setStarted(true);
     setRemaining(durationSeconds);
+
     if (durationSeconds > 0) {
       setIsRunning(true);
       setIsDone(false);
@@ -91,6 +106,14 @@ export default function P6ElectricGenerationSim() {
 
   const handleShowResult = () => {
     if (!trialIndex) return;
+    navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
+  };
+
+  const handleSkip = () => {
+    if (!trialIndex) return;
+    setIsRunning(false);
+    setIsDone(true);
+    setRemaining(0);
     navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
   };
 
@@ -141,13 +164,17 @@ export default function P6ElectricGenerationSim() {
               {canStart && <span className="p6-sim-control-sub">เริ่มการทดลอง</span>}
             </button>
 
-            {shouldShowHint && (
-              <div className="p6-sim-hint">กรุณาเลือกการทดลอง</div>
-            )}
+            {shouldShowHint && <div className="p6-sim-hint">กรุณาเลือกการทดลอง</div>}
 
             {isDone && (
               <button className="p6-sim-result-btn" type="button" onClick={handleShowResult}>
                 ดูผลการทดลอง
+              </button>
+            )}
+
+            {isRunning && (
+              <button className="p6-sim-skip-btn" type="button" onClick={handleSkip}>
+                Skip
               </button>
             )}
 
@@ -189,11 +216,7 @@ export default function P6ElectricGenerationSim() {
 
         <div className="p6-sim-bubble">แรงไฟฟ้าเกิดขึ้นได้อย่างไรนะ</div>
 
-        <img
-          className="p6-sim-boy"
-          src="/images/p4/exp1/character-boy.png"
-          alt="นักเรียน"
-        />
+        <img className="p6-sim-boy" src="/images/p4/exp1/character-boy.png" alt="นักเรียน" />
 
         <div className="p6-sim-table">
           <div className="p6-sim-table-top" />
@@ -201,7 +224,9 @@ export default function P6ElectricGenerationSim() {
           <div className="p6-sim-table-leg right" />
         </div>
 
-        <div className={`p6-sim-balloon level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""}`}>
+        <div
+          className={`p6-sim-balloon level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""}`}
+        >
           <div
             className={`p6-sim-cloth ${selectedTrial && selectedTrial !== "trial-1" ? "active" : "inactive"} ${
               started && selectedTrial && selectedTrial !== "trial-1" ? "rubbing" : ""
@@ -210,7 +235,9 @@ export default function P6ElectricGenerationSim() {
           <div className="p6-sim-knot" />
         </div>
 
-        <div className={`p6-sim-papers level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""}`}>
+        <div
+          className={`p6-sim-papers level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""}`}
+        >
           {Array.from({ length: 8 }).map((_, idx) => (
             <span key={idx} className={`paper p-${idx + 1}`} />
           ))}
