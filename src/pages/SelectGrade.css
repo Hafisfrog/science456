@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
+
+.grade-wrap {
+  --bg-ice: #e6f6ff;
+  --bg-peach: #fff1dc;
+  --primary: #2c70c9;
+  --accent: #ff6b4a;
+  --text: #1f2b45;
+  --muted: #51607a;
+  --card: rgba(255, 255, 255, 0.85);
+  --grid: rgba(44, 112, 201, 0.08);
+  --dots: rgba(44, 112, 201, 0.12);
+
+  position: relative;
+  min-height: 100vh;
+  padding: clamp(28px, 5vw, 64px) clamp(20px, 4vw, 48px);
+  text-align: center;
+  background:
+    radial-gradient(1px 1px at 20px 20px, var(--dots) 1px, transparent 1px),
+    radial-gradient(1px 1px at 60px 50px, var(--dots) 1px, transparent 1px),
+    radial-gradient(1px 1px at 90px 90px, rgba(255, 107, 74, 0.2) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, transparent 0 24px, var(--grid) 24px 25px),
+    repeating-linear-gradient(90deg, transparent 0 24px, var(--grid) 24px 25px),
+    radial-gradient(600px 600px at 100% -20%, rgba(255, 183, 95, 0.2), transparent 60%),
+    radial-gradient(520px 520px at -10% 80%, rgba(66, 164, 255, 0.2), transparent 60%),
+    linear-gradient(135deg, var(--bg-ice), #f7fbff 45%, var(--bg-peach));
+  background-size:
+    120px 120px,
+    120px 120px,
+    120px 120px,
+    48px 48px,
+    48px 48px,
+    auto,
+    auto,
+    auto;
+  font-family: "Nunito", "Fredoka", sans-serif;
+  color: var(--text);
+  overflow: hidden;
+}
+
+.grade-wrap::before,
+.grade-wrap::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.grade-wrap::before {
+  width: 380px;
+  height: 380px;
+  right: -140px;
+  top: -160px;
+  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.75), rgba(255, 202, 153, 0.35));
+  opacity: 0.7;
+}
+
+.grade-wrap::after {
+  width: 320px;
+  height: 320px;
+  left: -140px;
+  bottom: -140px;
+  background: radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.7), rgba(141, 210, 255, 0.3));
+  opacity: 0.9;
+}
+
+.grade-header,
+.grade-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.grade-header {
+  margin-bottom: clamp(28px, 4vw, 42px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.grade-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(44, 112, 201, 0.12);
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.grade-title {
+  font-family: "Fredoka", "Nunito", sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0;
+}
+
+.grade-sub {
+  margin: 0;
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--muted);
+}
+
+.grade-grid {
+  margin: 0 auto;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(18px, 3vw, 28px);
+}
+
+.grade-card {
+  background: var(--card);
+  border-radius: 26px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 18px 36px rgba(23, 60, 110, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.grade-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 44px rgba(23, 60, 110, 0.2);
+}
+
+.grade-image {
+  width: 100%;
+  height: clamp(220px, 32vw, 320px);
+  object-fit: cover;
+  background: #f1f4f9;
+}
+
+.grade-content {
+  padding: 18px 20px 22px;
+}
+
+.grade-big {
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.grade-small {
+  margin-top: 8px;
+  font-size: clamp(14px, 1.6vw, 16px);
+  color: #344256;
+}
+
+@media (max-width: 700px) {
+  .grade-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ปุ่มย้อนกลับ */      
+.back-home-btn{
+  border: none;
+  cursor: pointer;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #ffffff, #f0f9ff);
+  color: #1e3a8a;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  font-family: 'Prompt', sans-serif;
+  transition: all .15s ease;
+}
+
+.back-home-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,.2);
+  background: linear-gradient(135deg, #e0f2fe, #ffffff);
+}
+
+.back-home-btn:active{
+  transform: translateY(1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+}
+
