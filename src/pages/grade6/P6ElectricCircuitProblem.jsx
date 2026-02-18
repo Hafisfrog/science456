@@ -47,7 +47,7 @@ export default function P6ElectricCircuitProblem() {
         </div>
 
         <div className="p6-gen-actions">
-          <button className="p6-gen-btn ghost" onClick={() => navigate("/p6/electric-circuit")} type="button">
+          <button className="p6-gen-btn ghost" onClick={() => navigate("/p6/electric-circuit/experiments")} type="button">
             ← กลับคำศัพท์
           </button>
           <button className="p6-gen-btn primary" onClick={() => navigate("/p6/electric-circuit/steps")} type="button">

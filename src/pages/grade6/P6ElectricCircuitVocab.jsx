@@ -58,7 +58,7 @@ export default function P6ElectricCircuitVocab() {
         </button>
         <button
           className="p6-vocab-btn primary"
-          onClick={() => navigate("/p6/electric-circuit/problem")}
+          onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
         >
           ไปสถานการณ์ปัญหา →

@@ -124,6 +124,22 @@
   color: #0f172a;
 }
 
+.p6-circuit-connect-state {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.3);
+  font-weight: 800;
+  font-size: 12px;
+  color: #0f172a;
+}
+
+.p6-circuit-connect-state.ready {
+  background: rgba(34, 197, 94, 0.25);
+}
+
 
 .p6-circuit-wire-layer {
   position: absolute;
@@ -156,6 +172,10 @@
 
 .p6-circuit-piece.bulb.level-low {
   box-shadow: 0 8px 14px rgba(15, 23, 42, 0.12), 0 0 12px rgba(255, 214, 102, 0.35);
+}
+
+.p6-circuit-piece.bulb.level-off {
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.12);
 }
 
 .p6-circuit-piece.bulb.level-mid {
@@ -224,95 +244,6 @@
   color: #1f2937;
 }
 
-.p6-circuit-sim-run {
-  margin-top: 18px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(15, 23, 42, 0.2);
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-}
-
-.p6-circuit-sim-run-title {
-  font-weight: 900;
-  font-size: 18px;
-  color: #0f172a;
-}
-
-.p6-circuit-sim-run-desc {
-  margin-top: 4px;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.p6-circuit-sim-status {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 14px;
-  background: rgba(148, 163, 184, 0.2);
-  color: #0f172a;
-}
-
-.p6-circuit-sim-status.running {
-  background: rgba(253, 230, 138, 0.8);
-}
-
-.p6-circuit-sim-status.done {
-  background: rgba(134, 239, 172, 0.9);
-}
-
-.p6-circuit-sim-progress {
-  margin-top: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: rgba(148, 163, 184, 0.25);
-  overflow: hidden;
-}
-
-.p6-circuit-sim-bar {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, #60a5fa, #22d3ee);
-  transition: width 0.6s ease;
-}
-
-.p6-circuit-sim-bar.running {
-  width: 70%;
-}
-
-.p6-circuit-sim-bar.done {
-  width: 100%;
-}
-
-.p6-circuit-sim-start {
-  border: none;
-  cursor: pointer;
-  padding: 12px 18px;
-  border-radius: 14px;
-  font-weight: 900;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: #ffffff;
-  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
-  transition: transform 0.12s ease;
-}
-
-.p6-circuit-sim-start:hover {
-  transform: translateY(-2px);
-}
-
-.p6-circuit-sim-start:disabled {
-  cursor: not-allowed;
-  background: #9ca3af;
-  box-shadow: none;
-}
-
 @media (max-width: 720px) {
   .p6-circuit-sim-preview-body {
     grid-template-columns: 1fr;
@@ -321,10 +252,5 @@
 
   .p6-circuit-drag-area {
     height: 200px;
-  }
-
-  .p6-circuit-sim-run {
-    flex-direction: column;
-    align-items: stretch;
   }
 }

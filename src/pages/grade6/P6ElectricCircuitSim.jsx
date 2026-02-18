@@ -10,6 +10,29 @@ const OPTIONS = [
   { cells: 4, label: "4 ถ่าน", note: "หลอดไฟสว่างมากที่สุด", level: "high" },
 ];
 
+const WIRE_CONFIG = [
+  { id: "wireA", endpoint: "a2", fromAnchor: "batteryPos", toAnchor: "switchLeft", color: "#ef4444" },
+  { id: "wireB", endpoint: "b2", fromAnchor: "switchRight", toAnchor: "bulbBottom", color: "#2563eb" },
+  { id: "wireC", endpoint: "c2", fromAnchor: "bulbTop", toAnchor: "batteryNeg", color: "#10b981" },
+];
+
+function buildLooseEndpoints(anchorMap) {
+  return {
+    a2: { pos: { x: anchorMap.batteryPos.x + 28, y: anchorMap.batteryPos.y + 8 }, anchor: null },
+    b2: { pos: { x: anchorMap.switchRight.x + 26, y: anchorMap.switchRight.y - 8 }, anchor: null },
+    c2: { pos: { x: anchorMap.bulbTop.x + 28, y: anchorMap.bulbTop.y - 6 }, anchor: null },
+  };
+}
+
+function cloneEndpoints(source) {
+  return Object.fromEntries(
+    Object.entries(source).map(([id, endpoint]) => [
+      id,
+      { anchor: endpoint.anchor, pos: { x: endpoint.pos.x, y: endpoint.pos.y } },
+    ]),
+  );
+}
+
 function CircuitPreview({ cells, level }) {
   const glowMap = {
     low: 0.2,
@@ -63,12 +86,14 @@ function BatteryIcon({ cells }) {
 
 function BulbIcon({ level }) {
   const glowMap = {
+    off: 0,
     low: 0.2,
     mid: 0.5,
     "mid-high": 0.75,
     high: 1,
   };
   const glow = glowMap[level] ?? 0.6;
+  const isOff = level === "off";
   return (
     <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
       <defs>
@@ -79,7 +104,7 @@ function BulbIcon({ level }) {
       </defs>
       <circle cx="32" cy="24" r="22" fill={`rgba(255, 214, 102, ${glow * 0.35})`} />
       <circle cx="32" cy="24" r="18" fill={`url(#dragGlow-${level})`} />
-      <circle cx="32" cy="24" r="12" fill="#ffd166" stroke="#1f2937" strokeWidth="2" />
+      <circle cx="32" cy="24" r="12" fill={isOff ? "#d1d5db" : "#ffd166"} stroke="#1f2937" strokeWidth="2" />
       <path d="M26 36h12v8H26z" fill="#94a3b8" />
       <path d="M28 44h8v8h-8z" fill="#64748b" />
     </svg>
@@ -101,18 +126,14 @@ function SwitchIcon() {
 export default function P6ElectricCircuitSim() {
   const navigate = useNavigate();
   const [selected, setSelected] = useState(2);
-  const [status, setStatus] = useState("idle");
-  const timerRef = useRef(null);
   const dragAreaRef = useRef(null);
   const [area, setArea] = useState({ width: 0, height: 0 });
   const [endpoints, setEndpoints] = useState({
-    a1: { pos: { x: 40, y: 120 }, anchor: null },
     a2: { pos: { x: 160, y: 120 }, anchor: null },
-    b1: { pos: { x: 170, y: 140 }, anchor: null },
     b2: { pos: { x: 230, y: 90 }, anchor: null },
-    c1: { pos: { x: 230, y: 90 }, anchor: null },
     c2: { pos: { x: 40, y: 140 }, anchor: null },
   });
+  const endpointsByCellsRef = useRef({});
   const initializedRef = useRef(false);
   const dragRef = useRef(null);
   const current = useMemo(() => OPTIONS.find((item) => item.cells === selected), [selected]);
@@ -127,19 +148,6 @@ export default function P6ElectricCircuitSim() {
     observer.observe(dragAreaRef.current);
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    setStatus("idle");
-  }, [selected]);
-
-  useEffect(() => () => clearTimeout(timerRef.current), []);
-
-  const handleStart = () => {
-    if (status === "running") return;
-    setStatus("running");
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setStatus("done"), 900);
-  };
 
   const layout = useMemo(() => {
     if (!area.width || !area.height) return null;
@@ -166,22 +174,48 @@ export default function P6ElectricCircuitSim() {
       batteryNeg: { x: battery.x - size.battery.w / 2 + 6, y: battery.y },
       switchLeft: { x: switcher.x - size.switcher.w / 2 + 6, y: switcher.y },
       switchRight: { x: switcher.x + size.switcher.w / 2 - 6, y: switcher.y },
-      bulb: { x: bulb.x - size.bulb.w / 2 + 6, y: bulb.y },
+      bulbTop: { x: bulb.x - size.bulb.w / 2 + 6, y: bulb.y - 12 },
+      bulbBottom: { x: bulb.x - size.bulb.w / 2 + 6, y: bulb.y + 12 },
     };
   }, [layout]);
 
   useEffect(() => {
     if (!layout || initializedRef.current === true) return;
     initializedRef.current = true;
-    setEndpoints({
-      a1: { pos: { x: anchors.batteryPos.x + 8, y: anchors.batteryPos.y - 16 }, anchor: null },
-      a2: { pos: { x: anchors.switchLeft.x - 8, y: anchors.switchLeft.y - 16 }, anchor: null },
-      b1: { pos: { x: anchors.switchRight.x + 8, y: anchors.switchRight.y + 12 }, anchor: null },
-      b2: { pos: { x: anchors.bulb.x - 8, y: anchors.bulb.y + 12 }, anchor: null },
-      c1: { pos: { x: anchors.bulb.x + 8, y: anchors.bulb.y - 10 }, anchor: null },
-      c2: { pos: { x: anchors.batteryNeg.x - 8, y: anchors.batteryNeg.y + 12 }, anchor: null },
-    });
-  }, [anchors, layout]);
+    const initialEndpoints = buildLooseEndpoints(anchors);
+    setEndpoints(initialEndpoints);
+    endpointsByCellsRef.current[selected] = cloneEndpoints(initialEndpoints);
+  }, [anchors, layout, selected]);
+
+  const connectedCount = useMemo(
+    () =>
+      WIRE_CONFIG.reduce(
+        (count, wire) => count + (endpoints[wire.endpoint]?.anchor === wire.toAnchor ? 1 : 0),
+        0,
+      ),
+    [endpoints],
+  );
+  const isCircuitReady = connectedCount === WIRE_CONFIG.length;
+  const bulbLevel = isCircuitReady ? levelClass : "off";
+
+  const handleSelectCells = (cells) => {
+    if (cells === selected) return;
+    if (anchors.batteryPos && anchors.switchRight && anchors.bulbTop) {
+      endpointsByCellsRef.current[selected] = cloneEndpoints(endpoints);
+    }
+    dragRef.current = null;
+    const cachedEndpoints = endpointsByCellsRef.current[cells];
+    setSelected(cells);
+    if (cachedEndpoints) {
+      setEndpoints(cloneEndpoints(cachedEndpoints));
+      return;
+    }
+    if (anchors.batteryPos && anchors.switchRight && anchors.bulbTop) {
+      const freshEndpoints = buildLooseEndpoints(anchors);
+      endpointsByCellsRef.current[cells] = cloneEndpoints(freshEndpoints);
+      setEndpoints(freshEndpoints);
+    }
+  };
 
   const getEndpointPos = (id) => {
     const endpoint = endpoints[id];
@@ -226,28 +260,19 @@ export default function P6ElectricCircuitSim() {
     dragRef.current = null;
     event.currentTarget.releasePointerCapture(event.pointerId);
     const currentPos = getEndpointPos(id);
-    let closest = null;
-    Object.entries(anchors).forEach(([key, point]) => {
-      const dx = currentPos.x - point.x;
-      const dy = currentPos.y - point.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist <= 18 && (!closest || dist < closest.dist)) {
-        closest = { key, dist };
-      }
-    });
-    if (closest) {
+    const wire = WIRE_CONFIG.find((item) => item.endpoint === id);
+    const targetAnchor = wire ? anchors[wire.toAnchor] : null;
+    if (!targetAnchor) return;
+    const dx = currentPos.x - targetAnchor.x;
+    const dy = currentPos.y - targetAnchor.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist <= 18) {
       setEndpoints((prev) => ({
         ...prev,
-        [id]: { ...prev[id], anchor: closest.key, pos: anchors[closest.key] },
+        [id]: { ...prev[id], anchor: wire.toAnchor, pos: targetAnchor },
       }));
     }
   };
-
-  const wires = [
-    { id: "wireA", from: "a1", to: "a2", color: "#ef4444" },
-    { id: "wireB", from: "b1", to: "b2", color: "#2563eb" },
-    { id: "wireC", from: "c1", to: "c2", color: "#10b981" },
-  ];
 
   const buildPath = (p1, p2) => {
     const midX = (p1.x + p2.x) / 2;
@@ -300,7 +325,7 @@ export default function P6ElectricCircuitSim() {
                 key={item.cells}
                 className={`p6-circuit-sim-card ${selected === item.cells ? "active" : ""}`}
                 type="button"
-                onClick={() => setSelected(item.cells)}
+                onClick={() => handleSelectCells(item.cells)}
               >
                 <div className="p6-circuit-sim-icon">
                   <CircuitPreview cells={item.cells} level={item.level} />
@@ -316,10 +341,14 @@ export default function P6ElectricCircuitSim() {
             <div className="p6-circuit-sim-preview-body">
               <div className="p6-circuit-drag-area" ref={dragAreaRef}>
                 <div className="p6-circuit-drag-hint">ลากสายไปต่อที่จุดวงกลม</div>
+                <div className={`p6-circuit-connect-state ${isCircuitReady ? "ready" : ""}`}>
+                  Connect {connectedCount}/{WIRE_CONFIG.length}
+                </div>
                 <svg className="p6-circuit-wire-layer" viewBox={`0 0 ${area.width} ${area.height}`} aria-hidden="true">
-                  {wires.map((wire) => {
-                    const p1 = getEndpointPos(wire.from);
-                    const p2 = getEndpointPos(wire.to);
+                  {WIRE_CONFIG.map((wire) => {
+                    const p1 = anchors[wire.fromAnchor];
+                    const p2 = getEndpointPos(wire.endpoint);
+                    if (!p1) return null;
                     return (
                       <path
                         key={wire.id}
@@ -342,10 +371,10 @@ export default function P6ElectricCircuitSim() {
                       <BatteryIcon cells={selected} />
                     </div>
                     <div
-                      className={`p6-circuit-piece bulb level-${levelClass}`}
+                      className={`p6-circuit-piece bulb level-${bulbLevel}`}
                       style={{ left: `${layout.bulb.x}px`, top: `${layout.bulb.y}px` }}
                     >
-                      <BulbIcon level={current?.level || "mid"} />
+                      <BulbIcon level={bulbLevel} />
                     </div>
                     <div
                       className="p6-circuit-piece switch"
@@ -393,30 +422,6 @@ export default function P6ElectricCircuitSim() {
             </div>
           </div>
 
-          <div className="p6-circuit-sim-run">
-            <div>
-              <div className="p6-circuit-sim-run-title">เริ่มการทดลอง</div>
-              <div className="p6-circuit-sim-run-desc">
-                กดเริ่มทดลอง แล้วรอให้สถานะขึ้นว่า “ทดลองเสร็จแล้ว”
-              </div>
-              <div className={`p6-circuit-sim-status ${status}`}>
-                {status === "idle" && "พร้อมทดลอง"}
-                {status === "running" && "กำลังทดลอง..."}
-                {status === "done" && "ทดลองเสร็จแล้ว"}
-              </div>
-              <div className="p6-circuit-sim-progress">
-                <div className={`p6-circuit-sim-bar ${status}`} />
-              </div>
-            </div>
-            <button
-              className="p6-circuit-sim-start"
-              type="button"
-              onClick={handleStart}
-              disabled={status === "running"}
-            >
-              เริ่มทดลอง
-            </button>
-          </div>
         </div>
 
         <div className="p6-gen-actions">
@@ -427,7 +432,7 @@ export default function P6ElectricCircuitSim() {
             className="p6-gen-btn primary"
             onClick={() => navigate(`/p6/electric-circuit/result?cells=${selected}`)}
             type="button"
-            disabled={status !== "done"}
+            disabled={!isCircuitReady}
           >
             ดูผลการทดลอง →
           </button>

@@ -43,6 +43,8 @@ import P6ElectricCircuitProblem from "./pages/grade6/P6ElectricCircuitProblem";
 import P6ElectricCircuitSteps from "./pages/grade6/P6ElectricCircuitSteps";
 import P6ElectricCircuitResults from "./pages/grade6/P6ElectricCircuitResults";
 import P6ElectricCircuitSim from "./pages/grade6/P6ElectricCircuitSim";
+import P6ElectricCircuitExperimentSelect from "./pages/grade6/P6ElectricCircuitExperimentSelect";
+import P6ElectricCircuitBulbSeriesParallel from "./pages/grade6/P6ElectricCircuitBulbSeriesParallel";
 // import Grade6 from "./pages/grade6/index.jsx";
 // import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
 // import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
@@ -98,11 +100,16 @@ export default function App() {
           element={<div style={{ padding: 40 }}>วงจรไฟฟ้าใกล้ตัว (กำลังทำ)</div>}
         />
         <Route path="/p6/electric-circuit" element={<P6ElectricCircuitVocab />} />
+        <Route path="/p6/electric-circuit/experiments" element={<P6ElectricCircuitExperimentSelect />} />
         <Route path="/p6/electric-circuit/problem" element={<P6ElectricCircuitProblem />} />
         <Route path="/p6/electric-circuit/steps" element={<P6ElectricCircuitSteps />} />
         <Route
           path="/p6/electric-circuit/sim"
           element={<P6ElectricCircuitSim />}
+        />
+        <Route
+          path="/p6/electric-circuit/bulb-series-parallel"
+          element={<P6ElectricCircuitBulbSeriesParallel />}
         />
         <Route path="/p6/electric-circuit/result" element={<P6ElectricCircuitResults />} />
         <Route path="/p6/electric-circuit/objectives" element={<P6ElectricCircuitObjectives />} />
