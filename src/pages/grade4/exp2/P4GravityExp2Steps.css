@@ -1,6 +1,6 @@
-.exp2s-page{
-  width:100vw;
-  height:100vh;
+﻿.exp2s-page{
+  width: 100%;
+  min-height: 100svh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -52,7 +52,7 @@
   text-align:center;
 }
 
-/* ปุ่มย้อนกลับ ซ้ายบน */
+/* เธเธธเนเธกเธขเนเธญเธเธเธฅเธฑเธ เธเนเธฒเธขเธเธ */
 .exp2s-backBtn{
   position:absolute;
   top:18px;
@@ -284,3 +284,5 @@
   }
   .exp2s-nav{ justify-content:space-between; }
 }
+
+

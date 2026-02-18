@@ -1,13 +1,13 @@
-.q-page{
-  width:100vw;
-  height:100vh;
+﻿.q-page{
+  width: 100%;
+  min-height: 100svh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
   background:#eef2ff;
 }
 
-/* พื้นหลัง */
+/* เธเธทเนเธเธซเธฅเธฑเธ */
 .q-bg{
   position:absolute;
   inset:0;
@@ -26,7 +26,7 @@
   padding:24px;
 }
 
-/* ปุ่มย้อนกลับ (มุมซ้ายบน) */
+/* เธเธธเนเธกเธขเนเธญเธเธเธฅเธฑเธ (เธกเธธเธกเธเนเธฒเธขเธเธ) */
 .q-back{
   position:absolute;
   left:44px;
@@ -51,7 +51,7 @@
   transform:translateY(1px);
 }
 
-/* แถบภาษา (ล่างซ้าย) */
+/* เนเธ–เธเธ เธฒเธฉเธฒ (เธฅเนเธฒเธเธเนเธฒเธข) */
 .q-langbar{
   position:absolute;
   left:44px;
@@ -85,7 +85,7 @@
   background:#bfe0ff;
 }
 
-/* ตัวละคร */
+/* เธ•เธฑเธงเธฅเธฐเธเธฃ */
 .q-character{
   position:absolute;
   left:30px;
@@ -98,7 +98,7 @@
   z-index:10;
 }
 
-/* กล่องคำถาม (thought bubble แบบการ์ตูน) */
+/* เธเธฅเนเธญเธเธเธณเธ–เธฒเธก (thought bubble เนเธเธเธเธฒเธฃเนเธ•เธนเธ) */
 .q-bubble{
   position:absolute;
   left:340px;
@@ -112,7 +112,7 @@
   z-index:12;
 }
 
-/* หาง bubble */
+/* เธซเธฒเธ bubble */
 .q-bubble::before{
   content:"";
   position:absolute;
@@ -138,7 +138,7 @@
   border-radius:999px;
 }
 
-/* หัวกล่อง: หัวข้อ + ปุ่มเสียง */
+/* เธซเธฑเธงเธเธฅเนเธญเธ: เธซเธฑเธงเธเนเธญ + เธเธธเนเธกเน€เธชเธตเธขเธ */
 .q-bubble-head{
   display:flex;
   align-items:center;
@@ -178,7 +178,7 @@
   color:#111827;
 }
 
-/* แผงปุ่มด้านขวา */
+/* เนเธเธเธเธธเนเธกเธ”เนเธฒเธเธเธงเธฒ */
 .q-rightpanel{
   position:absolute;
   right:26px;
@@ -189,7 +189,7 @@
   z-index:20;
 }
 
-/* ปุ่ม "มาหาคำตอบกัน" (ตกแต่งให้สวย + กดแล้วเด้งนิดๆ) */
+/* เธเธธเนเธก "เธกเธฒเธซเธฒเธเธณเธ•เธญเธเธเธฑเธ" (เธ•เธเนเธ•เนเธเนเธซเนเธชเธงเธข + เธเธ”เนเธฅเนเธงเน€เธ”เนเธเธเธดเธ”เน) */
 .q-hint{
   width:240px;
   border:none;
@@ -233,7 +233,7 @@
   line-height:1.1;
 }
 
-/* ปุ่มเริ่มทดลอง */
+/* เธเธธเนเธกเน€เธฃเธดเนเธกเธ—เธ”เธฅเธญเธ */
 .q-start{
   width:240px;
   border:none;
@@ -301,3 +301,5 @@
     bottom:18px;
   }
 }
+
+

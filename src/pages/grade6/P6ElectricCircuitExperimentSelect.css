@@ -1,4 +1,4 @@
-.p6-circuit-exp-card-wrap {
+﻿.p6-circuit-exp-card-wrap {
   background: linear-gradient(135deg, #7bd1ec 0%, #8dddf2 45%, #7bc3e8 100%);
 }
 
@@ -163,3 +163,4 @@
     grid-template-columns: 1fr;
   }
 }
+

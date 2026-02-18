@@ -1,5 +1,5 @@
-.grade-wrap{
-  min-height:100vh;
+﻿.grade-wrap{
+  min-height: 100svh;
   padding:48px 24px;
   text-align:center;
   background:#eaf7fb;
@@ -61,7 +61,7 @@
   color:#374151;
 }
 
-/* ปุ่มย้อนกลับ */      
+/* เธเธธเนเธกเธขเนเธญเธเธเธฅเธฑเธ */      
 .back-home-btn{
   border: none;
   cursor: pointer;
@@ -86,3 +86,6 @@
   transform: translateY(1px);
   box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
+
+
+

@@ -1,5 +1,5 @@
-.p6-gen-page {
-  min-height: 100vh;
+﻿.p6-gen-page {
+  min-height: 100svh;
   padding: clamp(26px, 5vw, 60px) clamp(18px, 4vw, 56px) 70px;
   background:
     repeating-linear-gradient(
@@ -162,3 +162,6 @@
     justify-content: center;
   }
 }
+
+
+

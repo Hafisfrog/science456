@@ -1,6 +1,6 @@
-.obj-full.p6-obj-full {
-  width: 100vw;
-  min-height: 100vh;
+﻿.obj-full.p6-obj-full {
+  width: 100%;
+  min-height: 100svh;
   position: relative;
   overflow: hidden;
   font-family: "Prompt", sans-serif;
@@ -9,7 +9,7 @@
 
 .obj-shell.p6-obj-shell {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh;
   padding: 24px;
   background: rgba(255, 255, 255, 0.22);
   backdrop-filter: blur(10px);
@@ -253,3 +253,6 @@
     margin-top: 16px;
   }
 }
+
+
+

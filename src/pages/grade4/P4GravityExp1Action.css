@@ -1,6 +1,6 @@
-.lab2-page{
-  width:100vw;
-  height:100vh;
+﻿.lab2-page{
+  width: 100%;
+  min-height: 100svh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -52,7 +52,7 @@
   color:#111827;
 }
 
-/* ✅ ตัวดันฝั่งขวาให้สมดุล topbar (แทนช่องภาษาเดิม) */
+/* โ… เธ•เธฑเธงเธ”เธฑเธเธเธฑเนเธเธเธงเธฒเนเธซเนเธชเธกเธ”เธธเธฅ topbar (เนเธ—เธเธเนเธญเธเธ เธฒเธฉเธฒเน€เธ”เธดเธก) */
 .topbar-spacer{
   width: 140px;
   height: 1px;
@@ -89,7 +89,7 @@
   overflow:hidden;
 }
 
-/* ✅ LEFT COLUMN: รวม 2 กล่อง (วัตถุ + ภาษา) */
+/* โ… LEFT COLUMN: เธฃเธงเธก 2 เธเธฅเนเธญเธ (เธงเธฑเธ•เธ–เธธ + เธ เธฒเธฉเธฒ) */
 .left-column{
   grid-column: 1;
   grid-row: 2;
@@ -98,7 +98,7 @@
   gap:56px;
 }
 
-/* ❗ ไม่ต้องกำหนด pane.left grid แล้ว เพราะอยู่ใน left-column */
+/* โ— เนเธกเนเธ•เนเธญเธเธเธณเธซเธเธ” pane.left grid เนเธฅเนเธง เน€เธเธฃเธฒเธฐเธญเธขเธนเนเนเธ left-column */
 .pane.right{ grid-column: 3; grid-row: 2; }
 
 .pane-head{ margin-bottom:12px; }
@@ -171,7 +171,7 @@
 .height-slider{ width:100%; margin-top:10px; }
 .height-hint{ margin-top:8px; font-size:13px; font-weight:700; color:#4b5563; }
 
-/* ✅ language pane */
+/* โ… language pane */
 .lang-pane{
   padding:14px;
 }
@@ -486,3 +486,5 @@
   .arena2{ grid-column: 1; grid-row: 3; }
   .pane.right{ grid-column: 1; grid-row: 4; }
 }
+
+

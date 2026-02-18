@@ -1,4 +1,4 @@
-.res-page{
+﻿.res-page{
   width:99vw;
   height:110vh;
   position:relative;
@@ -283,7 +283,7 @@
   transform:translateX(-50%) translateY(1px);
 }
 
-/* ✅ back classroom bottom-right (RED) */
+/* โ… back classroom bottom-right (RED) */
 .res-backClass{
   position:absolute;
   right:18px;
@@ -339,3 +339,4 @@
     bottom:12px;
   }
 }
+

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
 
 .grade6-wrap {
   --bg-ice: #e6f6ff;
@@ -12,7 +12,7 @@
   --grid: rgba(44, 112, 201, 0.08);
   --dots: rgba(44, 112, 201, 0.12);
 
-  min-height: 100vh;
+  min-height: 100svh;
   padding: clamp(28px, 5vw, 64px) clamp(20px, 4vw, 56px);
   background:
     radial-gradient(1px 1px at 20px 20px, var(--dots) 1px, transparent 1px),
@@ -428,3 +428,6 @@
     justify-items: center;
   }
 }
+
+
+

@@ -1,6 +1,6 @@
-.exp2m-page{
-  width:100vw;
-  height:100vh;
+﻿.exp2m-page{
+  width: 100%;
+  min-height: 100svh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -144,7 +144,7 @@
   left:18px;
   right:318px;
   top:170px;
-  bottom:120px; /* เผื่อแถบล่าง */
+  bottom:120px; /* เน€เธเธทเนเธญเนเธ–เธเธฅเนเธฒเธ */
   display:flex;
   align-items:center;
   justify-content:center;
@@ -311,3 +311,5 @@
   .exp2m-badge{ top:132px; }
   .exp2m-center{ top:205px; bottom:140px; }
 }
+
+
