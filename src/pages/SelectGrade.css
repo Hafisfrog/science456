@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
 
 .grade-wrap {
   --bg-ice: #e6f6ff;
@@ -12,7 +12,7 @@
   --dots: rgba(44, 112, 201, 0.12);
 
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   padding: clamp(28px, 5vw, 64px) clamp(20px, 4vw, 48px);
   text-align: center;
   background:
@@ -157,7 +157,7 @@
   }
 }
 
-/* ปุ่มย้อนกลับ */      
+/* เธเธธเนเธกเธขเนเธญเธเธเธฅเธฑเธ */      
 .back-home-btn{
   border: none;
   cursor: pointer;
@@ -182,4 +182,7 @@
   transform: translateY(1px);
   box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
+
+
+
 

@@ -1,6 +1,6 @@
-.ans2-page{
-  width:100vw;
-  height:100vh;
+﻿.ans2-page{
+  width: 100%;
+  min-height: 100svh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -35,7 +35,7 @@
   top:16px;
   display:flex;
   align-items:center;
-  justify-content:flex-start; /* เหลือปุ่มเดียว */
+  justify-content:flex-start; /* เน€เธซเธฅเธทเธญเธเธธเนเธกเน€เธ”เธตเธขเธง */
   gap:12px;
   z-index:6;
 }
@@ -59,7 +59,7 @@
   box-shadow:0 16px 34px rgba(0,0,0,.18);
 }
 
-/* ✅ แถบแปลภาษาแบบลอย (ซ้ายล่าง) */
+/* โ… เนเธ–เธเนเธเธฅเธ เธฒเธฉเธฒเนเธเธเธฅเธญเธข (เธเนเธฒเธขเธฅเนเธฒเธ) */
 .ans2-langFloating{
   position:absolute;
   left:18px;
@@ -123,7 +123,7 @@
   gap:18px;
 }
 
-/* ตัวละคร */
+/* เธ•เธฑเธงเธฅเธฐเธเธฃ */
 .ans2-character{
   position:absolute;
   left:18px;
@@ -346,14 +346,14 @@
   .ans2-a{ font-size:16px; }
   .ans2-character{ width:200px; }
 
-  /* กันชนปุ่มล่างซ้าย */
+  /* เธเธฑเธเธเธเธเธธเนเธกเธฅเนเธฒเธเธเนเธฒเธข */
   .ans2-langFloating{ left:12px; bottom:12px; }
 }
 
 @media (max-width: 700px){
   .ans2-character{ display:none; }
 
-  /* บนมือถือ: ให้แถบภาษาแคบลง และไม่บังปุ่ม next มาก */
+  /* เธเธเธกเธทเธญเธ–เธทเธญ: เนเธซเนเนเธ–เธเธ เธฒเธฉเธฒเนเธเธเธฅเธ เนเธฅเธฐเนเธกเนเธเธฑเธเธเธธเนเธก next เธกเธฒเธ */
   .ans2-lang{
     gap:8px;
     padding:10px 10px;
@@ -364,3 +364,5 @@
   .ans2-title{ font-size:26px; }
   .ans2-next{ font-size:18px; }
 }
+
+

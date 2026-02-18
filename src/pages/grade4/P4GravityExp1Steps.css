@@ -1,6 +1,6 @@
-.step-page{
-  width:100vw;
-  height:100vh;
+﻿.step-page{
+  width: 100%;
+  min-height: 100svh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -186,3 +186,5 @@
   cursor:pointer;
   box-shadow:0 16px 30px rgba(0,0,0,.22);
 }
+
+

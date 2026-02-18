@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
+﻿@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
 
 .start-container {
   --bg-ice: #e6f6ff;
@@ -13,7 +13,7 @@
   --dots: rgba(44, 112, 201, 0.12);
 
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -219,3 +219,6 @@
     width: 100%;
   }
 }
+
+
+
