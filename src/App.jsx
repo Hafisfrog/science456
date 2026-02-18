@@ -25,6 +25,9 @@ import P4GravityExp2Question from "./pages/grade4/exp2/P4GravityExp2Question";
 import P4GravityExp2Action from "./pages/grade4/exp2/P4GravityExp2Action";
 import P4GravityExp2Result from "./pages/grade4/exp2/P4GravityExp2Result";
 import P4GravityExp2Answer from "./pages/grade4/exp2/P4GravityExp2Answer";
+//p4 gavity exp3
+import P4GravityExp3Action from "./pages/grade4/exp3/P4GravityExp3Action";
+import P4GravityExp3Answer from "./pages/grade4/exp3/P4GravityExp3Answer";
 
 
 import P6ElectricObjectives from "./pages/grade6/P6ElectricObjectives";
@@ -104,6 +107,9 @@ export default function App() {
         <Route path="/p4/gravity/exp2/action" element={<P4GravityExp2Action />} />
         <Route path="/p4/gravity/exp2/result" element={<P4GravityExp2Result />} />
         <Route path="/p4/gravity/exp2/answer" element={<P4GravityExp2Answer />} />
+
+        <Route path="/p4/gravity/exp3/action" element={<P4GravityExp3Action />} />
+        <Route path="/p4/gravity/exp3/answer" element={<P4GravityExp3Answer />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
