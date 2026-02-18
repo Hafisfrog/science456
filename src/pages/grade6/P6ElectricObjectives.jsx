@@ -9,8 +9,8 @@ const CONTENT = {
     section: "จุดประสงค์การเรียนรู้",
     obj1: "อธิบายการเกิดแรงไฟฟ้าได้ (K)",
     obj2: "สังเกตและอธิบายผลของแรงไฟฟ้าได้ (K, P)",
-    back: "← กลับ",
-    next: "ไปคำศัพท์ →",
+    back: "← ",
+    next: " →",
   },
   en: {
     grade: "Grade 6",
@@ -40,6 +40,7 @@ export default function P6ElectricObjectives() {
   const isUnitFlow = pathname === "/p6/electric-force" || pathname.startsWith("/p6/electric-force/");
   const backPath = isUnitFlow ? "/p6" : "/p6/electric-force/experiments";
   const nextPath = isUnitFlow ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
+  const languageLabels = { th: "Thai", en: "English", ms: "Malay" };
 
   return (
     <div className="obj-full p6-obj-full">
@@ -51,21 +52,21 @@ export default function P6ElectricObjectives() {
               onClick={() => setLang("th")}
               type="button"
             >
-              ไทย
+              {languageLabels.th}
             </button>
             <button
               className={`obj-chip ${lang === "en" ? "active" : ""}`}
               onClick={() => setLang("en")}
               type="button"
             >
-              อังกฤษ
+              {languageLabels.en}
             </button>
             <button
               className={`obj-chip ${lang === "ms" ? "active" : ""}`}
               onClick={() => setLang("ms")}
               type="button"
             >
-              มลายู
+              {languageLabels.ms}
             </button>
           </div>
         </div>
@@ -111,3 +112,4 @@ export default function P6ElectricObjectives() {
     </div>
   );
 }
+

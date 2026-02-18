@@ -159,11 +159,13 @@
 
 .obj-actions.p6-obj-actions {
   position: absolute;
-  left: 50%;
-  bottom: 46px;
-  transform: translateX(-50%);
+  left: auto;
+  right: clamp(16px, 4vw, 56px);
+  bottom: 28px;
+  transform: none;
   display: flex;
   gap: 14px;
+  z-index: 3;
 }
 
 .obj-btn {
@@ -244,6 +246,7 @@
   .obj-actions.p6-obj-actions {
     position: relative;
     left: auto;
+    right: auto;
     bottom: auto;
     transform: none;
     justify-content: center;
