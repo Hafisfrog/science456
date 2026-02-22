@@ -1,13 +1,13 @@
-﻿.obj-full{
-  width: 100%;
-  min-height: 100svh;
+.obj-full{
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
   background:#eaf7fb;
 }
 
-/* เธเธทเนเธเธซเธฅเธฑเธเธฃเธนเธ */
+/* พื้นหลังรูป */
 .obj-bg{
   position:absolute;
   inset:0;
@@ -19,7 +19,7 @@
   z-index:-2;
 }
 
-/* เน€เธเธฅเธทเธญเธเธซเธเนเธฒ (เน€เธ•เนเธกเธเธญ) */
+/* เปลือกหน้า (เต็มจอ) */
 .obj-shell{
   width:100%;
   height:100%;
@@ -37,7 +37,7 @@
   gap:12px;
 }
 
-/* เธเธธเนเธกเธเธฅเธฑเธ */
+/* ปุ่มกลับ */
 .obj-back{
   border:none;
   cursor:pointer;
@@ -52,7 +52,7 @@
 
 .obj-back:hover{ transform: translateY(-2px); }
 
-/* เนเธ–เธเธ เธฒเธฉเธฒ */
+/* แถบภาษา */
 .obj-langbar{
   display:flex;
   gap:10px;
@@ -110,7 +110,7 @@
   text-shadow:0 4px 0 rgba(255,255,255,.6);
 }
 
-/* เธเธธเนเธกเน€เธชเธตเธขเธ (เธญเธขเธนเนเนเธเธเนเธญเธเธเนเธญเธเธงเธฒเธก) */
+/* ปุ่มเสียง (อยู่ในช่องข้อความ) */
 .obj-audio{
   border:none;
   cursor:pointer;
@@ -276,5 +276,3 @@
     margin-top:16px;
   }
 }
-
-

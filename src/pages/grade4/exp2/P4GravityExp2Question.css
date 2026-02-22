@@ -6,6 +6,8 @@
 q2-page{
   width: 100%;
   min-height: 100svh;
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow-x:hidden;
   overflow-y:hidden;
@@ -113,7 +115,7 @@ q2-page{
   flex:1;
 }
 
-/* โ… เธเธธเนเธกเน€เธชเธตเธขเธเธญเธขเธนเนเธซเธฅเธฑเธเธเนเธญเธเธงเธฒเธก */
+/* ✅ ปุ่มเสียงอยู่หลังข้อความ */
 .q2-speakBtn{
   border:none;
   cursor:pointer;

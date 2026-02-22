@@ -1,5 +1,5 @@
-﻿.p6-summary-page {
-  min-height: 100svh;
+.p6-summary-page {
+  min-height: 100vh;
   background: #e9f7ff;
   display: flex;
   align-items: center;
@@ -313,6 +313,3 @@
     padding: 20px;
   }
 }
-
-
-

@@ -1,5 +1,5 @@
-﻿.p4-page {
-  min-height: 100svh;
+.p4-page {
+  min-height: 100vh;
   padding: 56px 20px;
   background: linear-gradient(180deg, #f0f9ff, #e6f4ff);
   font-family: 'Prompt', sans-serif;
@@ -127,7 +127,7 @@
   }
 }
 
-/* เธเธธเนเธกเธขเนเธญเธเธเธฅเธฑเธ */      
+/* ปุ่มย้อนกลับ */      
 .back-home-btn{
   border: none;
   cursor: pointer;
@@ -152,6 +152,3 @@
   transform: translateY(1px);
   box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
-
-
-

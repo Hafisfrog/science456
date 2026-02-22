@@ -1,5 +1,5 @@
-﻿.p6-force-summary-page {
-  min-height: 100svh;
+.p6-force-summary-page {
+  min-height: 100vh;
   padding: clamp(18px, 4vw, 46px);
   background:
     radial-gradient(circle at 25% 12%, rgba(255, 255, 255, 0.7), transparent 55%),
@@ -159,7 +159,4 @@
     justify-content: center;
   }
 }
-
-
-
 

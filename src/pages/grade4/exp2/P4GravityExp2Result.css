@@ -1,6 +1,6 @@
-﻿.exp2r2-page{
-  width: 100%;
-  min-height: 100svh;
+.exp2r2-page{
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -65,7 +65,7 @@
   border-bottom:2px solid #111827;
   padding:8px;
   white-space:pre-line;
-  line-height:1.15; /* โ… เธเธฑเธเธ•เธฑเธงเธญเธฑเธเธฉเธฃเธ–เธนเธเธ•เธฑเธ” */
+  line-height:1.15; /* ✅ กันตัวอักษรถูกตัด */
 }
 .exp2r2-h-obj{ grid-column:1; grid-row:1 / span 2; }
 .exp2r2-h-mid{ grid-column:2 / span 3; grid-row:1; }
@@ -105,17 +105,17 @@
   color:#111827;
   background:rgba(255,255,255,.92);
   font-size:22px;
-  line-height:1.2; /* โ… เธเธฑเธเธ•เธฑเธ” */
+  line-height:1.2; /* ✅ กันตัด */
 }
 
-/* โ… เนเธเน โ€เธเนเธญเธเธเธทเนเธญเธงเธฑเธ•เธ–เธธโ€ เนเธซเนเธ•เธฑเธงเธญเธฑเธเธฉเธฃเนเธกเนเนเธ”เธเธ•เธฑเธ”/เน€เธซเนเธเน€เธ•เนเธก */
+/* ✅ แก้ “ช่องชื่อวัตถุ” ให้ตัวอักษรไม่โดนตัด/เห็นเต็ม */
 .exp2r2-objCell{
   justify-content:flex-start;
   padding-left:20px;
   font-weight:1000;
 
-  white-space:normal;        /* โ… เนเธซเนเธเธถเนเธเธเธฃเธฃเธ—เธฑเธ”เนเธซเธกเนเนเธ”เน */
-  word-break:break-word;     /* โ… เธเธฑเธเธเธณเธขเธฒเธงเธฅเนเธ */
+  white-space:normal;        /* ✅ ให้ขึ้นบรรทัดใหม่ได้ */
+  word-break:break-word;     /* ✅ กันคำยาวล้น */
   overflow:visible;
   text-align:left;
 }
@@ -226,12 +226,12 @@
 }
 .exp2r2-speakBtn:active{ transform:translateY(1px); }
 
-/* โ… center bottom retry button */
+/* ✅ center bottom retry button */
 .exp2r2-retry{
   position:absolute;
   left:50%;
   bottom:18px;
-  transform:translateX(-50%); /* โ… เธเธถเนเธเธเธฅเธฒเธ */
+  transform:translateX(-50%); /* ✅ กึ่งกลาง */
   border:none;
   cursor:pointer;
   padding:14px 18px;
@@ -275,7 +275,7 @@
   .exp2r2-title{ font-size:34px; }
   .exp2r2-table{
     grid-template-columns: 200px repeat(3, 1fr) 160px;
-    grid-auto-rows: 74px; /* โ… เน€เธเธทเนเธญเนเธซเนเธเนเธญเธเธงเธฒเธกเนเธเธเนเธญเธเธเธทเนเธญเธงเธฑเธ•เธ–เธธเธเธถเนเธเธเธฃเธฃเธ—เธฑเธ” */
+    grid-auto-rows: 74px; /* ✅ เผื่อให้ข้อความในช่องชื่อวัตถุขึ้นบรรทัด */
   }
   .exp2r2-cell{ font-size:18px; }
   .exp2r2-retry{ font-size:18px; }
@@ -289,9 +289,7 @@
   }
   .exp2r2-table{
     grid-template-columns: 150px repeat(3, 1fr) 130px;
-    grid-auto-rows: 76px; /* โ… เน€เธเธดเนเธกเธเธงเธฒเธกเธชเธนเธเนเธ–เธง เธเธฑเธเธ•เธฑเธงเธญเธฑเธเธฉเธฃเธ–เธนเธเธ•เธฑเธ” */
+    grid-auto-rows: 76px; /* ✅ เพิ่มความสูงแถว กันตัวอักษรถูกตัด */
   }
   .exp2r2-next{ padding:12px 16px; }
 }
-
-

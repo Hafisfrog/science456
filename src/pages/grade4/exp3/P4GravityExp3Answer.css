@@ -1,6 +1,6 @@
-﻿.e3r-page{
-  width: 100%;
-  min-height: 100svh;
+.e3r-page{
+  width:100vw;
+  height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -197,7 +197,7 @@
 .e3r-chipAudio:hover{ transform: translateY(-2px); box-shadow: inset 0 -4px 0 rgba(0,0,0,.12), 0 20px 36px rgba(0,0,0,.20); }
 .e3r-chipAudio:active{ transform: translateY(1px); }
 
-/* โ… retry center bottom */
+/* ✅ retry center bottom */
 .e3r-retryCenter{
   position:absolute;
   left:50%;
@@ -253,5 +253,3 @@
   .e3r-sumTitle{ font-size:24px; }
   .e3r-sumText{ font-size:18px; }
 }
-
-

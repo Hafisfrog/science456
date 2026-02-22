@@ -1,5 +1,5 @@
-﻿.p6-vocab-page {
-  min-height: 100svh;
+.p6-vocab-page {
+  min-height: 100vh;
   padding: clamp(28px, 5vw, 56px) clamp(16px, 4vw, 44px) clamp(26px, 4vw, 48px);
   background: linear-gradient(180deg, #d4e8f7 0%, #e8f2fa 50%, #d9e9f5 100%);
   font-family: "Prompt", sans-serif;
@@ -210,6 +210,3 @@
     font-size: 30px;
   }
 }
-
-
-
