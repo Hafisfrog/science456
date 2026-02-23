@@ -1,23 +1,78 @@
 import { useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./P4GravityExp3Answer.css";
 
 export default function P4GravityExp3Answer() {
   const navigate = useNavigate();
-  const location = useLocation();
 
-  // ✅ ปรับ path ตามโปรเจกต์คุณ
-  const BACK_ACTION = "/p4/gravity/exp3/action";
-  const NEXT_PATH = "/p4/gravity"; // หรือหน้าถัดไป
+  const BACK_PATH = "/p4/gravity/exp3/result";
+  const NEXT_PATH = "/p4/gravity";
+  const [lang, setLang] = useState("th");
 
-  const state = location.state || {};
-  const [lang, setLang] = useState(state.lang || "th");
+  const assets = useMemo(
+    () => ({
+      bg: "/images/p4/exp1/bg-lab.jpg",
+      boardFrame: "/images/p4/exp1/board-frame.png",
+      sticker: "/images/p4/exp2/sticker-megaphone.png",
+      character: "/images/p4/exp1/gunkru.png",
+    }),
+    []
+  );
 
-  const items = state.items || [];     // [{id,label,massKg,img}]
-  const records = state.records || []; // [{itemId, earthN, moonN, massKg, ts}]
+  const text = useMemo(
+    () => ({
+      th: {
+        title: "คำถามนี้มีคำตอบ",
+        sub: "อ่านเฉลยแล้วลองอธิบายด้วยคำพูดของตัวเองนะ",
+        q1: "1. วัตถุเดียวกันจะมีน้ำหนักเท่ากันหรือไม่เมื่ออยู่บนโลกและดวงจันทร์",
+        aTitle: "เฉลย",
+        a1:
+          "ไม่เท่ากัน แม้ว่าวัตถุจะเป็นชิ้นเดียวกันและมีมวลเท่ากัน\nแต่แรงโน้มถ่วงของโลกและดวงจันทร์ไม่เท่ากัน\n🌍 บนโลก: แรงโน้มถ่วงมาก → วัตถุมีน้ำหนักมาก\n🌙 บนดวงจันทร์: แรงโน้มถ่วงน้อย (ประมาณ 1 ใน 6 ของโลก) → วัตถุมีน้ำหนักน้อย",
+        speak: "ฟัง",
+        speakAll: "ฟังทั้งหมด",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
+      },
+      en: {
+        title: "Answer",
+        sub: "Read and explain in your own words.",
+        q1: "1. Does the same object have the same weight on Earth and on the Moon?",
+        aTitle: "Answer",
+        a1:
+          "No. Even if it is the same object with the same mass,\ngravity on Earth and on the Moon is different.\n🌍 On Earth: stronger gravity → greater weight\n🌙 On the Moon: weaker gravity (about 1/6 of Earth) → lower weight",
+        speak: "Listen",
+        speakAll: "Listen all",
+        back: "Back",
+        next: "Next",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
+      },
+      ms: {
+        title: "Jawapan",
+        sub: "Baca dan terangkan dengan kata-kata sendiri.",
+        q1: "1. Adakah objek yang sama mempunyai berat yang sama di Bumi dan di Bulan?",
+        aTitle: "Jawapan",
+        a1:
+          "Tidak sama. Walaupun objek itu sama dan mempunyai jisim yang sama,\ndaya graviti di Bumi dan di Bulan adalah berbeza.\n🌍 Di Bumi: graviti lebih kuat → berat lebih besar\n🌙 Di Bulan: graviti lebih lemah (lebih kurang 1/6 Bumi) → berat lebih kecil",
+        speak: "Dengar",
+        speakAll: "Dengar semua",
+        back: "Kembali",
+        next: "Seterusnya",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
+      },
+    }),
+    []
+  );
 
-  // speech
+  const t = text[lang];
   const speakingRef = useRef(false);
+
   const speak = (msg) => {
     try {
       if (!window.speechSynthesis) return;
@@ -32,170 +87,92 @@ export default function P4GravityExp3Answer() {
     }
   };
 
-  const text = useMemo(() => {
-    return {
-      th: {
-        title: "ผลการทดลอง",
-        colObj: "วัตถุ",
-        sec: "สถานที่ทำการทดลอง",
-        colEarth: "น้ำหนักบนโลก",
-        colMoon: "น้ำหนักบนดวงจันทร์",
-        summaryTitle: "สรุปผลการทดลอง",
-        summary:
-          "วัตถุชนิดเดียวกันมีมวลเท่ากัน แต่มีน้ำหนักต่างกันเมื่ออยู่ในบริเวณที่มีแรงดึงดูดต่างกัน เพราะโลกมีแรงดึงดูดมากกว่าดวงจันทร์ จึงดึงวัตถุได้แรงกว่า ทำให้วัตถุมีน้ำหนักมากกว่า",
-        retry: "ทดลองอีกครั้ง",
-        next: "ต่อไป »",
-        chipTh: "ไทย",
-        chipEn: "อังกฤษ",
-        chipMs: "มลายู",
-        speakAll: "ฟังทั้งหน้า",
-        unitN: "นิวตัน",
-        emptyDot: "................................",
-      },
-      en: {
-        title: "Results",
-        colObj: "Object",
-        sec: "Experiment place",
-        colEarth: "Weight on Earth",
-        colMoon: "Weight on the Moon",
-        summaryTitle: "Conclusion",
-        summary:
-          "An object with the same mass can have different weight in different gravity. Earth’s gravity is stronger than the Moon’s, so objects weigh more on Earth.",
-        retry: "Try again",
-        next: "Next »",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
-        speakAll: "Listen to page",
-        unitN: "N",
-        emptyDot: "................................",
-      },
-      ms: {
-        title: "Keputusan Eksperimen",
-        colObj: "Objek",
-        sec: "Tempat eksperimen",
-        colEarth: "Berat di Bumi",
-        colMoon: "Berat di Bulan",
-        summaryTitle: "Kesimpulan",
-        summary:
-          "Objek dengan jisim yang sama boleh mempunyai berat berbeza apabila graviti berbeza. Graviti Bumi lebih kuat daripada Bulan, jadi objek lebih berat di Bumi.",
-        retry: "Cuba lagi",
-        next: "Seterusnya »",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
-        speakAll: "Dengar satu halaman",
-        unitN: "N",
-        emptyDot: "................................",
-      },
-    };
-  }, []);
-
-  const t = text[lang];
-  const fmtN = (n) => (n < 0.1 ? n.toFixed(3) : n.toFixed(1));
-
-  // map record by itemId
-  const recMap = useMemo(() => {
-    const m = {};
-    records.forEach((r) => (m[r.itemId] = r));
-    return m;
-  }, [records]);
-
-  // rows (ถ้าไม่บันทึก -> ว่าง)
-  const rows = useMemo(() => {
-    return (items || []).map((it) => {
-      const r = recMap[it.id];
-      return {
-        id: it.id,
-        label: it.label || it.id,
-        earthN: r ? r.earthN : null,
-        moonN: r ? r.moonN : null,
-      };
-    });
-  }, [items, recMap]);
-
-  const speakAll = () => {
-    const list = rows
-      .map((r) => {
-        const e = r.earthN == null ? "-" : `${fmtN(r.earthN)} ${t.unitN}`;
-        const m = r.moonN == null ? "-" : `${fmtN(r.moonN)} ${t.unitN}`;
-        return `${r.label}: ${t.colEarth} ${e}, ${t.colMoon} ${m}`;
-      })
-      .join("\n");
-    speak(`${t.title}\n${t.summaryTitle}\n${t.summary}\n\n${list}`);
-  };
-
   return (
-    <div className="e3r-page">
-      <div className="e3r-bg" />
+    <div className="ans3a-page">
+      <img className="ans3a-bg" src={assets.bg} alt="background" />
+      <div className="ans3a-overlay" />
 
-      <div className="e3r-title">{t.title}</div>
+      <div className="ans3a-langFloating">
+        <div className="ans3a-lang">
+          <button className={`ans3a-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+            {t.chipTh}
+          </button>
+          <button className={`ans3a-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+            {t.chipEn}
+          </button>
+          <button className={`ans3a-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+            {t.chipMs}
+          </button>
+          <button className="ans3a-audioMain" type="button" onClick={() => speak(`${t.q1}\n${t.a1}`)} title={t.speakAll}>
+            🔊
+          </button>
+        </div>
+      </div>
 
-      <div className="e3r-sheet">
-        <div className="e3r-table">
-          {/* header */}
-          <div className="e3r-h e3r-h-obj">{t.colObj}</div>
-          <div className="e3r-h e3r-h-mid">{t.sec}</div>
+      <div className="ans3a-stage">
+        <img className="ans3a-character" src={assets.character} alt="character" draggable="false" />
 
-          <div className="e3r-subh e3r-subh-earth">{t.colEarth}</div>
-          <div className="e3r-subh e3r-subh-moon">{t.colMoon}</div>
+        <div className="ans3a-board">
+          {assets.boardFrame ? <img className="ans3a-frame" src={assets.boardFrame} alt="frame" /> : null}
 
-          {/* body */}
-          {rows.map((r, idx) => (
-            <div className="e3r-row" key={r.id} style={{ gridRow: idx + 3 }}>
-              <div className="e3r-cell e3r-cell-obj">{r.label}</div>
-
-              <div className="e3r-cell">
-                {r.earthN == null ? (
-                  <span className="e3r-dot">{t.emptyDot}</span>
+          <div className="ans3a-boardInner">
+            <div className="ans3a-header">
+              <div className="ans3a-titleWrap">
+                {assets.sticker ? (
+                  <img className="ans3a-sticker" src={assets.sticker} alt="sticker" />
                 ) : (
-                  <span className="e3r-val">{fmtN(r.earthN)} {lang === "th" ? t.unitN : "N"}</span>
+                  <span className="ans3a-stickerEmoji">📣</span>
                 )}
-              </div>
-
-              <div className="e3r-cell e3r-last">
-                {r.moonN == null ? (
-                  <span className="e3r-dot">{t.emptyDot}</span>
-                ) : (
-                  <span className="e3r-val">{fmtN(r.moonN)} {lang === "th" ? t.unitN : "N"}</span>
-                )}
+                <div>
+                  <div className="ans3a-title">{t.title}</div>
+                  <div className="ans3a-sub">{t.sub}</div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
 
-        <div className="e3r-sumTitle">{t.summaryTitle}</div>
-        <div className="e3r-sumBox">
-          <div className="e3r-sumText">{t.summary}</div>
+            <div className="ans3a-cards">
+              <div className="ans3a-card yellow">
+                <div className="ans3a-cardTop">
+                  <div className="ans3a-q">{t.q1}</div>
+                  <button className="ans3a-miniSpeak" type="button" onClick={() => speak(t.q1)} title={t.speak}>
+                    🔊
+                  </button>
+                </div>
+              </div>
+
+              <div className="ans3a-card green">
+                <div className="ans3a-cardTop">
+                  <div className="ans3a-q">{t.aTitle}</div>
+                  <button className="ans3a-miniSpeak" type="button" onClick={() => speak(t.a1)} title={t.speak}>
+                    🔊
+                  </button>
+                </div>
+                <div className="ans3a-a">
+                  {t.a1.split("\n").map((line, idx) => (
+                    <div className="ans3a-line" key={idx}>
+                      {line}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* bottom-left lang + audio */}
-      <div className="e3r-langDock">
-        <button className={`e3r-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
-          {t.chipTh}
-        </button>
-        <button className={`e3r-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
-          {t.chipEn}
-        </button>
-        <button className={`e3r-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
-          {t.chipMs}
-        </button>
-        <button className="e3r-chipAudio" type="button" onClick={speakAll} title={t.speakAll}>
-          🔊
-        </button>
-      </div>
+      <div className="ans3a-navDock">
+        {/* <button className="ans3a-next" type="button" onClick={() => navigate(NEXT_PATH)}>
+          {t.next} »
+        </button> */}
 
-      {/* ✅ ปุ่มทดลองอีกครั้ง “ล่างตรงกลาง” */}
-      <button className="e3r-retryCenter" type="button" onClick={() => navigate(BACK_ACTION)}>
-        {t.retry}
-      </button>
-
-      {/* bottom-right next */}
-      <div className="e3r-actions">
-        <button className="e3r-btn danger" type="button" onClick={() => navigate(NEXT_PATH)}>
-          {t.next}
-        </button>
+        <div className="ans3a-navMiniRow">
+          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
+            ◀
+          </button>
+          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
+            ▶
+          </button>
+        </div>
       </div>
     </div>
   );

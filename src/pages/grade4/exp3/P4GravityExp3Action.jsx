@@ -7,7 +7,7 @@ export default function P4GravityExp3Action() {
 
   // ✅ ปรับ path ให้ตรงโปรเจกต์คุณ
   const BACK_PATH = "/p4/gravity/exp3/question";
-  const ANSWER_PATH = "/p4/gravity/exp3/answer";
+  const RESULT_PATH = "/p4/gravity/exp3/result";
 
   // ภาษา
   const [lang, setLang] = useState("th"); // th | en | ms
@@ -33,9 +33,9 @@ export default function P4GravityExp3Action() {
     return {
       earthBg: "/images/p4/exp3/earth-side.png",
       moonBg: "/images/p4/exp3/moon-side.png",
-      boyEarth: "/images/p4/exp3/boy-earth.png",
-      boyMoon: "/images/p4/exp3/boy-moon.png",
-      scale: "/images/p4/exp3/scale.png",
+      boyEarth: "/images/p4/exp3/boy-boy.png",
+      boyMoon: "/images/p4/exp3/boy-boy.png",
+      // scale: "/images/p4/exp2/spring-scale.png",
       book: "/images/p4/exp3/book.png",
       rock: "/images/p4/exp3/rock.png",
       mango: "/images/p4/exp3/mango.png",
@@ -64,7 +64,7 @@ export default function P4GravityExp3Action() {
         read: "อ่านค่าการทดลอง",
         save: "บันทึกผล",
         reset: "รีเซ็ต",
-        next: "ต่อไป »",
+        view: "ดูผลการทดลอง",
         back: "ย้อนกลับ",
         earth: "โลก",
         moon: "ดวงจันทร์",
@@ -76,14 +76,13 @@ export default function P4GravityExp3Action() {
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         speakAll: "ฟังทั้งหน้า",
-        speak: "ฟัง",
         obj_book: "หนังสือ",
         obj_rock: "ก้อนหิน",
         obj_mango: "มะม่วง",
         selected: "วัตถุที่เลือก",
         savedTag: "บันทึกแล้ว",
-        toastSaved: "บันทึกผลเรียบร้อยแล้ว",
-        toastReset: "รีเซ็ตผลการทดลองเรียบร้อย",
+        // toastSaved: "บันทึกผลเรียบร้อยแล้ว",
+        // toastReset: "รีเซ็ตผลการทดลองเรียบร้อย",
       },
       en: {
         title: "Earth’s gravity vs the Moon’s gravity",
@@ -91,7 +90,7 @@ export default function P4GravityExp3Action() {
         read: "Read measurement",
         save: "Save result",
         reset: "Reset",
-        next: "Next »",
+        view: "View results",
         back: "Back",
         earth: "Earth",
         moon: "Moon",
@@ -103,14 +102,13 @@ export default function P4GravityExp3Action() {
         chipEn: "English",
         chipMs: "Malay",
         speakAll: "Listen to page",
-        speak: "Listen",
         obj_book: "Book",
         obj_rock: "Rock",
         obj_mango: "Mango",
         selected: "Selected",
         savedTag: "Saved",
-        toastSaved: "Saved successfully",
-        toastReset: "Reset completed",
+        // toastSaved: "Saved successfully",
+        // toastReset: "Reset completed",
       },
       ms: {
         title: "Graviti Bumi vs graviti Bulan",
@@ -118,7 +116,7 @@ export default function P4GravityExp3Action() {
         read: "Baca bacaan",
         save: "Simpan keputusan",
         reset: "Tetapkan semula",
-        next: "Seterusnya »",
+        view: "Lihat keputusan",
         back: "Kembali",
         earth: "Bumi",
         moon: "Bulan",
@@ -130,14 +128,13 @@ export default function P4GravityExp3Action() {
         chipEn: "English",
         chipMs: "Malay",
         speakAll: "Dengar satu halaman",
-        speak: "Dengar",
         obj_book: "Buku",
         obj_rock: "Batu",
         obj_mango: "Mangga",
         selected: "Dipilih",
         savedTag: "Disimpan",
-        toastSaved: "Berjaya disimpan",
-        toastReset: "Berjaya ditetapkan semula",
+        // toastSaved: "Berjaya disimpan",
+        // toastReset: "Berjaya ditetapkan semula",
       },
     };
   }, []);
@@ -198,27 +195,27 @@ export default function P4GravityExp3Action() {
       return [...filtered, { itemId: selected.id, massKg: selected.massKg, earthN, moonN, ts: Date.now() }];
     });
 
-    const objName = labelOf(selected.id);
-    showToast(`${objName} • ${t.toastSaved}`, `${t.wEarth}: ${fmtN(earthN)} N • ${t.wMoon}: ${fmtN(moonN)} N`);
-    speak(`${objName} ${t.toastSaved}`);
+    // const objName = labelOf(selected.id);
+    // showToast(`${objName} • ${t.toastSaved}`, `${t.wEarth}: ${fmtN(earthN)} N • ${t.wMoon}: ${fmtN(moonN)} N`);
+    // speak(`${objName} ${t.toastSaved}`);
   };
 
-  // ✅ RESET (ตามที่ขอ)
+  // ✅ RESET
   const resetAll = () => {
     setRecords([]);
     setReadout(null);
     setToast(null);
     if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
-    setSelectedId("book"); // ถ้าไม่อยากให้กลับไป book บอกได้
-    showToast(t.toastReset);
-    speak(t.toastReset);
+    setSelectedId("book");
+    // showToast(t.toastReset);
+    // speak(t.toastReset);
   };
 
   const speakAll = () => speak(`${t.title}\n${t.choose}`);
 
-  const goAnswer = () => {
+  const goResult = () => {
     const itemsWithLabel = items.map((it) => ({ ...it, label: labelOf(it.id) }));
-    navigate(ANSWER_PATH, {
+    navigate(RESULT_PATH, {
       state: { lang, items: itemsWithLabel, records, gEarth, gMoon },
     });
   };
@@ -243,7 +240,14 @@ export default function P4GravityExp3Action() {
             <img className="e3a-boy earth" src={assets.boyEarth} alt="boy earth" draggable="false" />
           ) : null}
 
+          {/* ✅ SCALE + OBJECT (แสดงวัตถุบนตาชั่ง) */}
           <div className="e3a-scaleWrap">
+            {selected ? (
+              <div className="e3a-objectOnScale" aria-label="selected object on earth scale">
+                <img className="e3a-objectImg" src={selected.img} alt={labelOf(selected.id)} draggable="false" />
+              </div>
+            ) : null}
+
             {assets.scale ? <img className="e3a-scale" src={assets.scale} alt="scale" draggable="false" /> : null}
           </div>
         </section>
@@ -264,7 +268,14 @@ export default function P4GravityExp3Action() {
             <img className="e3a-boy moon" src={assets.boyMoon} alt="boy moon" draggable="false" />
           ) : null}
 
+          {/* ✅ SCALE + OBJECT (แสดงวัตถุบนตาชั่ง) */}
           <div className="e3a-scaleWrap">
+            {selected ? (
+              <div className="e3a-objectOnScale" aria-label="selected object on moon scale">
+                <img className="e3a-objectImg" src={selected.img} alt={labelOf(selected.id)} draggable="false" />
+              </div>
+            ) : null}
+
             {assets.scale ? <img className="e3a-scale" src={assets.scale} alt="scale" draggable="false" /> : null}
           </div>
         </section>
@@ -285,7 +296,9 @@ export default function P4GravityExp3Action() {
         <div className="e3a-chooserHeader">
           <div className="e3a-chooserTitle">
             {t.choose}: <span className="b">{labelOf(selected.id)}</span>
-            <span className="m">• {t.mass}: {fmtKg(selected.massKg)}</span>
+            <span className="m">
+              • {t.mass}: {fmtKg(selected.massKg)}
+            </span>
             {selected && isSaved(selected.id) ? <span className="e3a-savedPill">✓ {t.savedTag}</span> : null}
           </div>
         </div>
@@ -322,7 +335,7 @@ export default function P4GravityExp3Action() {
             })}
           </div>
 
-          {/* ✅ ปุ่มฝั่งขวา (เพิ่มรีเซ็ตในกรอบแดงตามที่ขอ) */}
+          {/* ✅ ปุ่มฝั่งขวา: 3 แถวตามที่ขอ */}
           <div className="e3a-actions">
             <button className="e3a-btn ghost" type="button" onClick={doRead}>
               {t.read}
@@ -332,13 +345,15 @@ export default function P4GravityExp3Action() {
               ↺ {t.reset}
             </button>
 
-            <button className="e3a-btn primary" type="button" onClick={saveRecord}>
-              {t.save}
-            </button>
+            <div className="e3a-actBottom">
+              <button className="e3a-btn primary" type="button" onClick={saveRecord}>
+                {t.save}
+              </button>
 
-            <button className="e3a-btn danger" type="button" onClick={goAnswer}>
-              {t.next}
-            </button>
+              <button className="e3a-btn danger" type="button" onClick={goResult}>
+                {t.view}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -354,9 +369,9 @@ export default function P4GravityExp3Action() {
         <button className={`e3a-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
           {t.chipMs}
         </button>
-        <button className="e3a-chipAudio" type="button" onClick={speakAll} title={t.speakAll}>
+        {/* <button className="e3a-chipAudio" type="button" onClick={speakAll} title={t.speakAll}>
           🔊
-        </button>
+        </button> */}
       </div>
 
       {/* ✅ bottom-right back */}

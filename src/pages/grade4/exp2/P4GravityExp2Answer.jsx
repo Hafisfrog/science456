@@ -38,8 +38,8 @@ export default function P4GravityExp2Answer() {
         //   "ทิป: ลองยกตัวอย่างวัตถุใกล้ตัว แล้วเปรียบเทียบว่า “ชิ้นไหนหนักกว่า” เพราะอะไร",
         // speakAll: "ฟังเฉลยทั้งหมด",
         speak: "ฟัง",
-        // back: "ย้อนกลับ",
-        // next: "ต่อไป",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
@@ -56,8 +56,8 @@ export default function P4GravityExp2Answer() {
         // tip: "Tip: Pick objects nearby and compare which one is heavier—and why.",
         // speakAll: "Listen to all",
         speak: "Listen",
-        // back: "Back",
-        // next: "Next",
+        back: "Back",
+        next: "Next",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
@@ -74,8 +74,8 @@ export default function P4GravityExp2Answer() {
         // tip: "Tip: Pilih objek berdekatan dan bandingkan yang mana lebih berat—dan sebabnya.",
         // speakAll: "Dengar semua",
         speak: "Dengar",
-        // back: "Kembali",
-        // next: "Seterusnya",
+        back: "Kembali",
+        next: "Seterusnya",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
@@ -212,15 +212,18 @@ export default function P4GravityExp2Answer() {
 
       {/* ✅ NAV: นอกกรอบ ขวาล่าง (ย้อนกลับ + ต่อไป) */}
       <div className="ans2e-navDock">
-        <button className="ans2e-navBtn back" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
-          <span className="ans2e-navIcon">‹</span>
-          <span className="ans2e-navText">{t.back}</span>
-        </button>
+        {/* <button className="ans2e-next" type="button" onClick={() => navigate(NEXT_PATH)}>
+          {t.next} »
+        </button> */}
 
-        <button className="ans2e-navBtn next" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
-          <span className="ans2e-navText">{t.next}</span>
-          <span className="ans2e-navIcon">›</span>
-        </button>
+        <div className="ans2e-navMiniRow">
+          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
+            ◀
+          </button>
+          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
+            ▶
+          </button>
+        </div>
       </div>
     </div>
   );
