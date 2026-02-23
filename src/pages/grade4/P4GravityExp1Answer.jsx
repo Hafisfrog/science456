@@ -126,13 +126,6 @@ export default function P4GravityExp1Answer() {
       {/* soft overlay */}
       <div className="ans2-overlay" />
 
-      {/* top actions (เหลือแค่ปุ่มย้อนกลับ) */}
-      <div className="ans2-topActions">
-        <button className="ans2-btn ghost" type="button" onClick={() => navigate(BACK_PATH)}>
-          ← {t.back}
-        </button>
-      </div>
-
       {/* ✅ แถบแปลภาษา ย้ายไปซ้ายล่าง */}
       <div className="ans2-langFloating">
         <div className="ans2-lang">
@@ -245,11 +238,22 @@ export default function P4GravityExp1Answer() {
               </div> */}
             </div>
 
-            {/* next */}
-            <button className="ans2-next" type="button" onClick={() => navigate(NEXT_PATH)}>
-              {t.next} »
-            </button>
           </div>
+        </div>
+      </div>
+
+      <div className="ans2-navDock">
+        {/* <button className="ans2-next" type="button" onClick={() => navigate(NEXT_PATH)}>
+          {t.next} »
+        </button> */}
+
+        <div className="ans2-navMiniRow">
+          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
+            ◀
+          </button>
+          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
+            ▶
+          </button>
         </div>
       </div>
     </div>

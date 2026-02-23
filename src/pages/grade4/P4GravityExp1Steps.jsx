@@ -5,164 +5,139 @@ import "./P4GravityExp1Steps.css";
 export default function P4GravityExp1Steps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
-  const audioRef = useRef(null);
 
-  const content = useMemo(() => {
+  const BACK_PATH = "/p4/gravity/exp1/materials";
+  const NEXT_PATH = "/p4/gravity/exp1/question";
+
+  const speakingRef = useRef(false);
+
+  const text = useMemo(() => {
     return {
       th: {
-        title: "เรื่อง ผลของแรงโน้มถ่วง",
-        section: "ขั้นตอนการทดลอง",
-        steps: [
-          "เลือกวัตถุทดลอง",
-          "วางวัตถุบนแท่นวางวัตถุ",
-          "กดปล่อยวัตถุและสังเกตการตก",
-          "ปรับความสูงแล้วทดลองซ้ำ",
-        ],
-        back: "← ย้อนกลับ",
-        next: "ต่อไป »",
+        topic: "เรื่อง ผลของแรงโน้มถ่วง",
+        label: "ขั้นตอนการทดลอง",
+        step1: "เลือกวัตถุทดลอง",
+        step2: "วางวัตถุบนแท่นวางวัตถุ",
+        step3: "กดปล่อยวัตถุและสังเกตการตก",
+        step4: "ปรับความสูงแล้วทดลองซ้ำ",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
+        speak: "ฟัง",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       en: {
-        title: "Effect of Gravity",
-        section: "Experiment Steps",
-        steps: [
-          "Choose the object",
-          "Place the object on the platform",
-          "Release the object and observe the fall",
-          "Change the height and repeat the experiment",
-        ],
-        back: "← Back",
-        next: "Next »",
+        topic: "Effect of Gravity",
+        label: "Experiment Steps",
+        step1: "Choose the object",
+        step2: "Place the object on the platform",
+        step3: "Release the object and observe the fall",
+        step4: "Change the height and repeat the experiment",
+        back: "Back",
+        next: "Next",
+        speak: "Listen",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
       },
       ms: {
-        title: "Kesan Graviti",
-        section: "Langkah Eksperimen",
-        steps: [
-          "Pilih objek",
-          "Letakkan objek di atas platform",
-          "Lepaskan objek dan perhatikan kejatuhan",
-          "Ubah ketinggian dan ulangi eksperimen",
-        ],
-        back: "← Kembali",
-        next: "Seterusnya »",
+        topic: "Kesan Graviti",
+        label: "Langkah Eksperimen",
+        step1: "Pilih objek",
+        step2: "Letakkan objek di atas platform",
+        step3: "Lepaskan objek dan perhatikan kejatuhan",
+        step4: "Ubah ketinggian dan ulangi eksperimen",
+        back: "Kembali",
+        next: "Seterusnya",
+        speak: "Dengar",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
       },
     };
   }, []);
 
-  const t = content[lang];
+  const t = text[lang];
 
-  const stopAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+  const speak = (msg) => {
+    try {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+
+      const u = new SpeechSynthesisUtterance(msg);
+      u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      u.onstart = () => (speakingRef.current = true);
+      u.onend = () => (speakingRef.current = false);
+      u.onerror = () => (speakingRef.current = false);
+      window.speechSynthesis.speak(u);
+    } catch {
+      // ignore
     }
   };
 
-  const playAudio = (key, index = null) => {
-    const base =
-      index === null
-        ? `title`
-        : `step${index + 1}`;
-
-    const src = {
-      th: `/audio/p4/exp1/${base}_th.mp3`,
-      en: `/audio/p4/exp1/${base}_en.mp3`,
-      ms: `/audio/p4/exp1/${base}_ms.mp3`,
-    }[lang];
-
-    stopAudio();
-    const audio = new Audio(src);
-    audioRef.current = audio;
-    audio.play().catch(() => {});
-  };
+  const steps = [
+    { n: 1, text: t.step1 },
+    { n: 2, text: t.step2 },
+    { n: 3, text: t.step3 },
+    { n: 4, text: t.step4 },
+  ];
 
   return (
-    <div className="step-page">
-      {/* พื้นหลัง */}
-      <img
-        className="step-bg"
-        src="/images/p4/exp1/bg-lab.jpg"
-        alt="bg"
-      />
+    <div className="exp1s-page">
+      <img className="exp1s-bg" src="/images/p4/exp1/bg-lab.jpg" alt="bg" />
+      <div className="exp1s-overlay" />
 
-      <div className="step-stage">
-        {/* Back */}
-        <button
-          className="step-back"
-          onClick={() => navigate("/p4/gravity/exp1/materials")}
-        >
-          {t.back}
-        </button>
+      <button className="exp1s-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
+        ⟵ {t.back}
+      </button>
 
-        {/* Title */}
-        <div className="step-titlebox">
-          <div className="step-titleRow">
-            <div className="step-title">{t.title}</div>
-            <button
-              className="step-sound"
-              onClick={() => playAudio("title")}
-              title="ฟังเสียง"
-            >
-              🔊
-            </button>
+      <div className="exp1s-topTitle">
+        <div className="exp1s-titlePill">{t.topic}</div>
+      </div>
+
+      <div className="exp1s-badge">{t.label}</div>
+
+      <div className="exp1s-board">
+        <div className="exp1s-boardInner">
+          <div className="exp1s-steps">
+            {steps.map((s) => (
+              <div className="exp1s-stepRow" key={s.n}>
+                <div className="exp1s-num">{s.n}</div>
+                <div className="exp1s-stepPill">
+                  <div className="exp1s-stepText">{s.text}</div>
+                  <button className="exp1s-speakBtn" type="button" onClick={() => speak(s.text)} title={t.speak}>
+                    🔊
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="exp1s-characterWrap">
+            <img className="exp1s-character" src="/images/p4/exp1/character-boy.png" alt="character" draggable="false" />
           </div>
         </div>
+      </div>
 
-        {/* Section label */}
-        <div className="step-lefttag">{t.section}</div>
-
-        {/* Steps box */}
-        <div className="step-card">
-          {t.steps.map((text, i) => (
-            <div className="step-item" key={i}>
-              <div className="step-num">{i + 1}</div>
-              <div className="step-text">{text}</div>
-              {/* 🔊 ปุ่มเสียงหลังข้อความทุกข้อ */}
-              <button
-                className="step-sound small"
-                onClick={() => playAudio("step", i)}
-              >
-                🔊
-              </button>
-            </div>
-          ))}
-        </div>
-
-        {/* ตัวละคร (เปลี่ยนรูปเองได้) */}
-        <img
-          className="step-character"
-          src="/images/p4/exp1/character-boy.png"
-          alt="character"
-        />
-
-        {/* Language bar */}
-        <div className="step-langbar">
-          <button
-            className={`step-chip ${lang === "th" ? "active" : ""}`}
-            onClick={() => setLang("th")}
-          >
-            ไทย
+      <div className="exp1s-bottomBar">
+        <div className="exp1s-langGroup">
+          <button className={`exp1s-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+            {t.chipTh}
           </button>
-          <button
-            className={`step-chip ${lang === "en" ? "active" : ""}`}
-            onClick={() => setLang("en")}
-          >
-            อังกฤษ
+          <button className={`exp1s-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+            {t.chipEn}
           </button>
-          <button
-            className={`step-chip ${lang === "ms" ? "active" : ""}`}
-            onClick={() => setLang("ms")}
-          >
-            มลายู
+          <button className={`exp1s-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+            {t.chipMs}
           </button>
         </div>
 
-        {/* Next */}
-        <button
-          className="step-next"
-          onClick={() => navigate("/p4/gravity/exp1/question")}
-        >
-          {t.next}
-        </button>
+        <div className="exp1s-nav">
+          <button className="exp1s-btn primary" type="button" onClick={() => navigate(NEXT_PATH)}>
+            {t.next} »
+          </button>
+        </div>
       </div>
     </div>
   );

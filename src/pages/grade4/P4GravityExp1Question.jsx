@@ -1,11 +1,10 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4GravityExp1Question.css";
 
 export default function P4GravityExp1Question() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
-  const audioRef = useRef(null);
 
   // ✅ ปรับ path ตรงนี้ตามโปรเจกต์คุณ
   const BACK_PATH = "/p4/gravity/exp1/steps";     // หน้าก่อนหน้า
@@ -42,29 +41,20 @@ export default function P4GravityExp1Question() {
 
   const t = content[lang];
 
-  const stopAudio = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+  const playQuestionAudio = () => {
+    try {
+      if (!window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utter = new SpeechSynthesisUtterance(`${t.title}\n${t.q}`);
+      utter.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      window.speechSynthesis.speak(utter);
+    } catch {
+      // ignore
     }
   };
 
-  const playQuestionAudio = () => {
-    // ✅ ใส่ไฟล์เสียงเองได้
-    const src = {
-      th: "/audio/p4/exp1/question2_th.mp3",
-      en: "/audio/p4/exp1/question2_en.mp3",
-      ms: "/audio/p4/exp1/question2_ms.mp3",
-    }[lang];
-
-    stopAudio();
-    const audio = new Audio(src);
-    audioRef.current = audio;
-    audio.play().catch(() => {});
-  };
-
   const handleStart = () => {
-    stopAudio();
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
     navigate(NEXT_PATH);
   };
 
@@ -75,7 +65,7 @@ export default function P4GravityExp1Question() {
   };
 
   const goBack = () => {
-    stopAudio();
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
     // ถ้าคุณอยากย้อนแบบ "หน้าที่ผ่านมา" ใช้ navigate(-1) แทนได้
     navigate(BACK_PATH);
   };

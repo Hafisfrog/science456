@@ -26,7 +26,11 @@ import P4GravityExp2Action from "./pages/grade4/exp2/P4GravityExp2Action";
 import P4GravityExp2Result from "./pages/grade4/exp2/P4GravityExp2Result";
 import P4GravityExp2Answer from "./pages/grade4/exp2/P4GravityExp2Answer";
 //p4 gavity exp3
+import P4GravityExp3Vocab from "./pages/grade4/exp3/P4GravityExp3Vocab";
+import P4GravityExp3Steps from "./pages/grade4/exp3/P4GravityExp3Steps";
 import P4GravityExp3Action from "./pages/grade4/exp3/P4GravityExp3Action";
+import P4GravityExp3Result from "./pages/grade4/exp3/P4GravityExp3Result";
+import P4GravityExp3Question from "./pages/grade4/exp3/P4GravityExp3Question";
 import P4GravityExp3Answer from "./pages/grade4/exp3/P4GravityExp3Answer";
 
 
@@ -108,8 +112,12 @@ export default function App() {
         <Route path="/p4/gravity/exp2/result" element={<P4GravityExp2Result />} />
         <Route path="/p4/gravity/exp2/answer" element={<P4GravityExp2Answer />} />
 
+        <Route path="/p4/gravity/exp3/vocab" element={<P4GravityExp3Vocab />} />
+        <Route path="/p4/gravity/exp3/steps" element={<P4GravityExp3Steps />} />
         <Route path="/p4/gravity/exp3/action" element={<P4GravityExp3Action />} />
+        <Route path="/p4/gravity/exp3/result" element={<P4GravityExp3Result />} />
         <Route path="/p4/gravity/exp3/answer" element={<P4GravityExp3Answer />} />
+        <Route path="/p4/gravity/exp3/question" element={<P4GravityExp3Question />} />
 
         {/* placeholder หน้า experiment */}
         <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
