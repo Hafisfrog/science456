@@ -1,5 +1,6 @@
 .p6-exp-wrap {
   text-align: center;
+  overflow: visible;
 }
 
 .p6-exp-back {
@@ -19,6 +20,51 @@
   justify-content: center;
 }
 
+.p6-exp-actions {
+  position: fixed;
+  right: clamp(12px, 2.8vw, 24px);
+  bottom: clamp(12px, 2.8vw, 24px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 4;
+}
+
+.p6-exp-navBtn {
+  border: none;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  font-size: 28px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 26px rgba(23, 34, 49, 0.2);
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+}
+
+.p6-exp-navBtn:hover {
+  transform: translateY(-2px);
+  filter: brightness(0.99);
+  box-shadow: 0 16px 30px rgba(23, 34, 49, 0.24);
+}
+
+.p6-exp-navBtn:active {
+  transform: translateY(1px);
+}
+
+.p6-exp-navBtn.ghost {
+  background: #ffffff;
+  color: #1f2c40;
+}
+
+.p6-exp-navBtn.primary {
+  background: linear-gradient(135deg, #2963eb, #1d4ed8);
+  color: #ffffff;
+}
+
 .p6-exp-image {
   height: clamp(240px, 36vw, 360px);
 }
@@ -26,5 +72,18 @@
 @media (max-width: 700px) {
   .p6-exp-back {
     margin-bottom: 20px;
+  }
+
+  .p6-exp-actions {
+    right: 12px;
+    bottom: 12px;
+    gap: 10px;
+  }
+
+  .p6-exp-navBtn {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    font-size: 24px;
   }
 }

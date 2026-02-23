@@ -179,6 +179,18 @@
   transition: transform 0.12s ease;
 }
 
+.obj-btn.icon {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border-radius: 20px;
+  font-size: 28px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .obj-btn:hover {
   transform: translateY(-2px);
 }
@@ -251,5 +263,12 @@
     transform: none;
     justify-content: center;
     margin-top: 16px;
+  }
+
+  .obj-btn.icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    font-size: 24px;
   }
 }

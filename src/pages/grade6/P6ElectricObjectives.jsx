@@ -37,6 +37,7 @@ export default function P6ElectricObjectives() {
   const { pathname } = useLocation();
   const [lang, setLang] = useState("th");
   const t = CONTENT[lang];
+  const isIconNav = t.back.trim() === "←" && t.next.trim() === "→";
   const isUnitFlow = pathname === "/p6/electric-force" || pathname.startsWith("/p6/electric-force/");
   const backPath = isUnitFlow ? "/p6" : "/p6/electric-force/experiments";
   const nextPath = isUnitFlow ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
@@ -97,19 +98,18 @@ export default function P6ElectricObjectives() {
         <img className="obj-character p6-obj-character" src="/images/p6.png" alt="ป.6" />
 
         <div className="obj-actions p6-obj-actions">
-          <button className="obj-btn ghost" onClick={() => navigate(backPath)} type="button">
-            {t.back}
+          <button className={`obj-btn ghost ${isIconNav ? "icon" : ""}`} onClick={() => navigate(backPath)} type="button">
+            {isIconNav ? "←" : t.back}
           </button>
           <button
-            className="obj-btn primary"
+            className={`obj-btn primary ${isIconNav ? "icon" : ""}`}
             onClick={() => navigate(nextPath)}
             type="button"
           >
-            {t.next}
+            {isIconNav ? "→" : t.next}
           </button>
         </div>
       </div>
     </div>
   );
 }
-

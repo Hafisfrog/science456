@@ -248,7 +248,7 @@
 }
 
 .p6-summary-retry {
-  margin: 20px auto 0;
+  margin: 10px auto 0;
   display: block;
   border: none;
   padding: 14px 40px;
@@ -258,6 +258,21 @@
   background: #4b8bd1;
   color: #ffffff;
   box-shadow: 0 12px 24px rgba(17, 24, 39, 0.18);
+  cursor: pointer;
+}
+
+.p6-summary-back {
+  margin: 20px auto 0;
+  display: block;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-weight: 900;
+  border-radius: 18px;
+  background: #ffffff;
+  color: #1f2937;
+  border: 2px solid rgba(148, 163, 184, 0.5);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
   cursor: pointer;
 }
 

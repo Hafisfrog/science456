@@ -2,6 +2,35 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P6ElectricGenerationSim.css";
 
+const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
+
+const readCompletedTrials = () => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const raw = window.sessionStorage.getItem(COMPLETED_TRIALS_KEY);
+    if (!raw) return [];
+
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    const allowed = new Set(["trial-1", "trial-2", "trial-3"]);
+    return Array.from(new Set(parsed.filter((id) => allowed.has(id))));
+  } catch {
+    return [];
+  }
+};
+
+const persistCompletedTrials = (ids) => {
+  if (typeof window === "undefined") return;
+
+  try {
+    window.sessionStorage.setItem(COMPLETED_TRIALS_KEY, JSON.stringify(ids));
+  } catch {
+    // ignore persistence errors
+  }
+};
+
 export default function P6ElectricGenerationSim() {
   const navigate = useNavigate();
   const trialOptions = useMemo(
@@ -31,6 +60,11 @@ export default function P6ElectricGenerationSim() {
   const [remaining, setRemaining] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const [completedTrials, setCompletedTrials] = useState(() => readCompletedTrials());
+
+  const totalTrials = trialOptions.length;
+  const completedCount = completedTrials.length;
+  const allTrialsCompleted = completedCount === totalTrials;
 
   const selectedTrialLabel =
     trialOptions.find((item) => item.id === selectedTrial)?.short || "ยังไม่เลือก";
@@ -104,8 +138,19 @@ export default function P6ElectricGenerationSim() {
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
+  const markTrialCompleted = () => {
+    if (!selectedTrial) return;
+
+    setCompletedTrials((prev) => {
+      const next = Array.from(new Set([...prev, selectedTrial]));
+      persistCompletedTrials(next);
+      return next;
+    });
+  };
+
   const handleShowResult = () => {
     if (!trialIndex) return;
+    markTrialCompleted();
     navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
   };
 
@@ -114,13 +159,40 @@ export default function P6ElectricGenerationSim() {
     setIsRunning(false);
     setIsDone(true);
     setRemaining(0);
+    markTrialCompleted();
     navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
+  };
+
+  const handleResetProgress = () => {
+    persistCompletedTrials([]);
+    setCompletedTrials([]);
+    setSelectedTrial(null);
+    setShowTrialMenu(false);
+    setStarted(false);
+    setRemaining(0);
+    setIsRunning(false);
+    setIsDone(false);
   };
 
   return (
     <div className="p6-sim-page">
       <div className="p6-sim-stage">
+        <button
+          className="p6-sim-back"
+          type="button"
+          onClick={() => navigate("/p6/experiment/electric-generation/steps")}
+        >
+          ← ย้อนกลับ
+        </button>
+
         <div className="p6-sim-left">
+          <div className="p6-sim-progressRow">
+            <div className="p6-sim-progress">ความคืบหน้า {completedCount}/{totalTrials}</div>
+            <button className="p6-sim-resetBtn" type="button" onClick={handleResetProgress}>
+              รีเซ็ต
+            </button>
+          </div>
+
           <div className="p6-sim-control-wrap">
             <button className="p6-sim-control" type="button" onClick={handleToggleTrial}>
               <div className="p6-sim-icon pink">
@@ -172,9 +244,19 @@ export default function P6ElectricGenerationSim() {
               </button>
             )}
 
+            {allTrialsCompleted && (
+              <button
+                className="p6-sim-summary-btn"
+                type="button"
+                onClick={() => navigate("/p6/experiment/electric-generation/summary")}
+              >
+                สรุปผล
+              </button>
+            )}
+
             {isRunning && (
               <button className="p6-sim-skip-btn" type="button" onClick={handleSkip}>
-                Skip
+                ข้าม
               </button>
             )}
 

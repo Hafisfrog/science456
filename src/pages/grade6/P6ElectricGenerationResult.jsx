@@ -1,6 +1,8 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./P6ElectricGenerationResult.css";
 
+const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
+
 const RESULTS = {
   1: {
     title: "ไม่ถูด้วยผ้า",
@@ -22,11 +24,29 @@ const RESULTS = {
   },
 };
 
+const readCompletedTrials = () => {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const raw = window.sessionStorage.getItem(COMPLETED_TRIALS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+
+    const allowed = new Set(["trial-1", "trial-2", "trial-3"]);
+    return Array.from(new Set(parsed.filter((id) => allowed.has(id))));
+  } catch {
+    return [];
+  }
+};
+
 export default function P6ElectricGenerationResult() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const selected = searchParams.get("trial") || "1";
   const data = RESULTS[selected] || RESULTS[1];
+  const completedCount = readCompletedTrials().length;
+  const allTrialsCompleted = completedCount === 3;
 
   return (
     <div className="p6-result-page">
@@ -62,6 +82,13 @@ export default function P6ElectricGenerationResult() {
 
         <div className="p6-result-actions">
           <button
+            className="p6-result-back"
+            type="button"
+            onClick={() => navigate("/p6/experiment/electric-generation/sim")}
+          >
+            ← ย้อนกลับ
+          </button>
+          <button
             className="p6-result-retry"
             type="button"
             onClick={() => navigate("/p6/experiment/electric-generation/sim")}
@@ -69,7 +96,8 @@ export default function P6ElectricGenerationResult() {
             ทดลองใหม่
           </button>
           <button
-            className="p6-result-next"
+            className={`p6-result-next ${allTrialsCompleted ? "" : "disabled"}`}
+            disabled={!allTrialsCompleted}
             type="button"
             onClick={() =>
               navigate(`/p6/experiment/electric-generation/summary?trial=${selected}`)
@@ -78,6 +106,12 @@ export default function P6ElectricGenerationResult() {
             สรุปผลการทดลอง
           </button>
         </div>
+
+        {!allTrialsCompleted && (
+          <div className="p6-result-progress-note">
+            กรุณาทำการทดลองให้ครบทั้ง 3 ครั้งก่อนสรุปผล ({completedCount}/3)
+          </div>
+        )}
 
         <div className="p6-result-floor" />
       </div>

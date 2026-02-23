@@ -21,13 +21,11 @@ const EXPERIMENTS = [
 
 export default function Grade6() {
   const navigate = useNavigate();
+  const backPath = "/p6/electric-force/vocab";
+  const nextPath = "/p6/electric-force/recap";
 
   return (
     <div className="grade-wrap p6-exp-wrap">
-      <button className="back-home-btn p6-exp-back" onClick={() => navigate("/p6/electric-force/vocab")}>
-        ← กลับคำศัพท์
-      </button>
-
       <h1 className="grade-title">แรงไฟฟ้าน่ารู้</h1>
       <p className="grade-sub">เลือกการทดลอง</p>
 
@@ -43,9 +41,24 @@ export default function Grade6() {
         ))}
       </div>
 
-      <div className="p6-exp-recap">
-        <button className="back-home-btn" type="button" onClick={() => navigate("/p6/electric-force/recap")}>
-          สรุปการเกิดแรงไฟฟ้าและผลของแรงไฟฟ้า →
+      <div className="p6-exp-actions">
+        <button
+          className="p6-exp-navBtn ghost"
+          type="button"
+          onClick={() => navigate(backPath)}
+          aria-label="กลับคำศัพท์"
+          title="กลับคำศัพท์"
+        >
+          ←
+        </button>
+        <button
+          className="p6-exp-navBtn primary"
+          type="button"
+          onClick={() => navigate(nextPath)}
+          aria-label="ไปหน้าสรุป"
+          title="ไปหน้าสรุป"
+        >
+          →
         </button>
       </div>
     </div>

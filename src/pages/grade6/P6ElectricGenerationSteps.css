@@ -125,16 +125,28 @@
 .p6-gen-btn {
   border: none;
   cursor: pointer;
-  padding: 14px 22px;
-  font-size: 18px;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  font-size: 0;
   font-weight: 900;
-  border-radius: 18px;
+  border-radius: 20px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
-  transition: transform 0.12s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .p6-gen-btn:hover {
   transform: translateY(-2px);
+}
+
+.p6-gen-btn::before {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 1000;
 }
 
 .p6-gen-btn.ghost {
@@ -142,9 +154,17 @@
   color: #111827;
 }
 
+.p6-gen-btn.ghost::before {
+  content: "←";
+}
+
 .p6-gen-btn.primary {
   background: #2563eb;
   color: #ffffff;
+}
+
+.p6-gen-btn.primary::before {
+  content: "→";
 }
 
 @media (max-width: 720px) {
@@ -160,5 +180,15 @@
 
   .p6-gen-actions {
     justify-content: center;
+  }
+
+  .p6-gen-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+  }
+
+  .p6-gen-btn::before {
+    font-size: 24px;
   }
 }

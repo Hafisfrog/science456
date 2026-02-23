@@ -4,8 +4,13 @@ import "./P6ElectricForceEffectSim.css";
 
 const TRIAL_OPTIONS = [
   { id: "rub-both", label: "ขัดถูลูกโป่งทั้ง 2 ใบด้วยกระดาษเยื่อ" },
-  { id: "rub-one", label: "ขัดถูลูกโป่ง 1 ใบด้วยกระดาษเยื่อ" },
+  { id: "rub-one", label: "ขัดถูลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ" },
 ];
+
+const RESULT_BY_TRIAL = {
+  "rub-both": "ผลักกัน",
+  "rub-one": "ดึงดูดกัน",
+};
 
 const CHARGES = {
   left: [
@@ -42,36 +47,62 @@ export default function P6ElectricForceEffectSim() {
   const [isRunning, setIsRunning] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [charged, setCharged] = useState(false);
+  const [sequenceNotice, setSequenceNotice] = useState("");
+  const [trialResults, setTrialResults] = useState({});
 
-  const selectedTrialLabel = TRIAL_OPTIONS.find((t) => t.id === selectedTrial)?.label || "ยังไม่ได้เลือก";
+  const completedCount = useMemo(
+    () => TRIAL_OPTIONS.filter((trial) => Boolean(trialResults[trial.id])).length,
+    [trialResults]
+  );
+  const totalTrials = TRIAL_OPTIONS.length;
+  const allTrialsCompleted = completedCount === totalTrials;
+  const nextPendingTrial = useMemo(
+    () => TRIAL_OPTIONS.find((trial) => !trialResults[trial.id]) || null,
+    [trialResults]
+  );
+  const selectedTrialLabel =
+    TRIAL_OPTIONS.find((t) => t.id === selectedTrial)?.label || "ยังไม่ได้เลือก";
+  const currentResult = selectedTrial ? trialResults[selectedTrial] : null;
+  const totalExperimentTime = useMemo(
+    () =>
+      TRIAL_OPTIONS.reduce((sum, trial) => {
+        const trialTime = trialResults[trial.id]?.time || 0;
+        return sum + trialTime;
+      }, 0),
+    [trialResults]
+  );
+
   const leftCharged = charged && started && Boolean(selectedTrial);
   const rightCharged = charged && started && selectedTrial === "rub-both";
   const isRubbing = started && isRunning && Boolean(selectedTrial);
   const mode = !charged || !started ? "idle" : selectedTrial === "rub-both" ? "repel" : "attract";
-  const resultLabel = selectedTrial === "rub-both" ? "ผลักกัน" : selectedTrial === "rub-one" ? "ดึงดูดกัน" : "";
-  const summaryText = useMemo(() => {
-    if (!started || !charged || isRunning || !selectedTrial) return "";
-    if (selectedTrial === "rub-both") return "สรุป: ขัดถูทั้ง 2 ใบ → ลูกโป่งผลักกัน (ไม่ดึงดูดกัน)";
-    return "สรุป: ขัดถูแค่ 1 ใบ → ลูกโป่งดึงดูดกัน";
-  }, [charged, isRunning, selectedTrial, started]);
 
   const hint = useMemo(() => {
-    if (!selectedTrial) return "กด “เลือกการทดลอง” ก่อนเริ่มการทดลอง";
-    if (!started) {
-      if (selectedTrial === "rub-one") return `${selectedTrialLabel} (ขัดที่ลูกโป่งใบซ้าย)`;
-      return selectedTrialLabel;
+    if (!selectedTrial) return "กด \"เลือกการทดลอง\" ก่อนเริ่มการทดลอง";
+    if (!started) return `พร้อมทดลอง: ${selectedTrialLabel}`;
+    if (isRunning) return "กำลังขัดถู... กด \"หยุด\" เพื่อสิ้นสุดการทดลอง";
+    if (currentResult) return "บันทึกผลแล้ว เลือกการทดลองถัดไปได้";
+    return "กด \"เริ่ม\" เพื่อเริ่มขัดถู";
+  }, [currentResult, isRunning, selectedTrial, selectedTrialLabel, started]);
+
+  const summaryText = useMemo(() => {
+    if (isRunning) return "";
+    if (allTrialsCompleted) return "ทำครบทั้ง 2 การทดลองแล้ว กด \"สรุปผลการทดลอง\" เพื่อดูผล";
+    if (nextPendingTrial) {
+      return `ทำการทดลองทีละอย่าง: ทำแล้ว ${completedCount}/${totalTrials} (ถัดไป: ${nextPendingTrial.label})`;
     }
-    if (isRunning) return "กำลังขัดถู... กด “หยุด” เพื่อดูผลการทดลอง";
-    if (!charged) return "กด “เริ่ม” เพื่อเริ่มขัดถู";
-    if (selectedTrial === "rub-both") return "สังเกตการผลักกันของลูกโป่งที่มีประจุชนิดเดียวกัน";
-    return "สังเกตการดึงดูดกันระหว่างลูกโป่งที่มีประจุกับลูกโป่งที่ไม่มีประจุ";
-  }, [charged, isRunning, selectedTrial, selectedTrialLabel, started]);
+    return "";
+  }, [allTrialsCompleted, completedCount, isRunning, nextPendingTrial, totalTrials]);
 
   const bubbleText = useMemo(() => {
+    if (!selectedTrial && nextPendingTrial) return `เริ่มจาก ${nextPendingTrial.label} ก่อนนะ`;
     if (!selectedTrial) return "เริ่มจากเลือกการทดลองก่อนนะ";
-    if (selectedTrial === "rub-one") return `ขัดที่ลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ`;
+    if (!allTrialsCompleted && trialResults[selectedTrial] && nextPendingTrial) {
+      return `การทดลองนี้เสร็จแล้ว ต่อไปลอง ${nextPendingTrial.label}`;
+    }
+    if (selectedTrial === "rub-one") return "ขัดลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ";
     return `${selectedTrialLabel} จะเกิดอะไรขึ้นนะ`;
-  }, [selectedTrial, selectedTrialLabel]);
+  }, [allTrialsCompleted, nextPendingTrial, selectedTrial, selectedTrialLabel, trialResults]);
 
   useEffect(() => {
     if (!isRunning) return undefined;
@@ -79,7 +110,19 @@ export default function P6ElectricForceEffectSim() {
     return () => clearInterval(timerId);
   }, [isRunning]);
 
+  const canPickTrial = (trialId) => {
+    const alreadyDone = Boolean(trialResults[trialId]);
+    if (alreadyDone) return true;
+    if (!nextPendingTrial) return true;
+    return nextPendingTrial.id === trialId;
+  };
+
   const handleSelectTrial = (id) => {
+    if (!canPickTrial(id) && nextPendingTrial) {
+      setSequenceNotice(`กรุณาทดลอง "${nextPendingTrial.label}" ก่อน`);
+      return;
+    }
+    setSequenceNotice("");
     setSelectedTrial(id);
     setShowTrialMenu(false);
     setStarted(false);
@@ -91,8 +134,14 @@ export default function P6ElectricForceEffectSim() {
   const handleStart = () => {
     if (!selectedTrial) {
       setShowTrialMenu(true);
+      setSequenceNotice("กรุณาเลือกการทดลองก่อนเริ่ม");
       return;
     }
+    if (!allTrialsCompleted && trialResults[selectedTrial] && nextPendingTrial) {
+      setSequenceNotice(`การทดลองนี้เสร็จแล้ว ให้ทำ "${nextPendingTrial.label}" ต่อ`);
+      return;
+    }
+    setSequenceNotice("");
     setStarted(true);
     setShowTrialMenu(false);
     setCharged(false);
@@ -101,26 +150,58 @@ export default function P6ElectricForceEffectSim() {
   };
 
   const handleStop = () => {
-    if (!isRunning) return;
+    if (!isRunning || !selectedTrial) return;
+    const currentLabel = TRIAL_OPTIONS.find((trial) => trial.id === selectedTrial)?.label || "";
+    const nextAfterCurrent = TRIAL_OPTIONS.find(
+      (trial) => trial.id !== selectedTrial && !trialResults[trial.id]
+    );
+
     setIsRunning(false);
     setCharged(true);
+    setTrialResults((prev) => ({
+      ...prev,
+      [selectedTrial]: {
+        result: RESULT_BY_TRIAL[selectedTrial],
+        time: seconds,
+      },
+    }));
+    if (nextAfterCurrent) {
+      setSequenceNotice(`เสร็จแล้ว: ${currentLabel} | ถัดไป: ${nextAfterCurrent.label}`);
+      return;
+    }
+    setSequenceNotice("ทำครบทุกการทดลองแล้ว กดปุ่ม \"สรุปผลการทดลอง\" ได้เลย");
   };
 
   const handleGoSummary = () => {
-    if (!started || isRunning) return;
-    navigate(`/p6/experiment/electric-force-effect/summary?time=${seconds}`);
+    if (!allTrialsCompleted || isRunning) {
+      setSequenceNotice(`ยังทำไม่ครบ ${completedCount}/${totalTrials} การทดลอง`);
+      return;
+    }
+    navigate(`/p6/experiment/electric-force-effect/summary?time=${totalExperimentTime}`);
   };
 
   const handleReset = () => {
+    setSelectedTrial(null);
+    setTrialResults({});
     setStarted(false);
     setCharged(false);
     setIsRunning(false);
     setSeconds(0);
+    setShowTrialMenu(false);
+    setSequenceNotice("");
   };
 
   return (
     <div className="p6-force-sim-page">
       <div className="p6-force-sim-stage">
+        <button
+          className="p6-force-sim-backTop"
+          type="button"
+          onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
+        >
+          ← ย้อนกลับ
+        </button>
+
         <div className="p6-force-sim-sidebar">
           <div className="p6-force-sim-sidewrap">
             <button
@@ -138,18 +219,26 @@ export default function P6ElectricForceEffectSim() {
 
             {showTrialMenu && (
               <div className="p6-force-sim-menu" role="dialog" aria-label="เลือกการทดลอง">
-                <div className="p6-force-sim-menu-title">เลือกการทดลอง</div>
-                {TRIAL_OPTIONS.map((opt) => (
-                  <button
-                    key={opt.id}
-                    type="button"
-                    className={selectedTrial === opt.id ? "active" : ""}
-                    onClick={() => handleSelectTrial(opt.id)}
-                  >
-                    <span>{opt.label}</span>
-                    {selectedTrial === opt.id && <span aria-hidden="true">✓</span>}
-                  </button>
-                ))}
+                <div className="p6-force-sim-menu-title">เลือกการทดลอง (ทำทีละอย่าง)</div>
+                {TRIAL_OPTIONS.map((opt) => {
+                  const locked = !canPickTrial(opt.id);
+                  const done = Boolean(trialResults[opt.id]);
+                  return (
+                    <button
+                      key={opt.id}
+                      type="button"
+                      className={selectedTrial === opt.id ? "active" : ""}
+                      onClick={() => handleSelectTrial(opt.id)}
+                      aria-disabled={locked}
+                    >
+                      <span>
+                        {opt.label}
+                        {done ? " (เสร็จแล้ว)" : locked ? " (รอคิว)" : ""}
+                      </span>
+                      {selectedTrial === opt.id && <span aria-hidden="true">✓</span>}
+                    </button>
+                  );
+                })}
               </div>
             )}
           </div>
@@ -162,6 +251,8 @@ export default function P6ElectricForceEffectSim() {
             </div>
             <span>เริ่ม</span>
           </button>
+
+          <div className="p6-force-sim-timer">ความคืบหน้า: {completedCount}/{totalTrials}</div>
         </div>
 
         <div className="p6-force-sim-center">
@@ -221,44 +312,29 @@ export default function P6ElectricForceEffectSim() {
             <div className="p6-force-sim-instruction">
               {hint}
               <div className="p6-force-sim-toast">ตัวเลือก: {selectedTrialLabel}</div>
+
               {summaryText && (
                 <div className="p6-force-sim-summary" role="status">
-                  <span className={`p6-force-sim-summary-chip ${mode}`}>{resultLabel}</span>
                   <span className="p6-force-sim-summary-text">{summaryText}</span>
                 </div>
               )}
 
-              {charged && started && !isRunning && (
-                <div className="p6-force-sim-result">
-                  <table className="p6-force-sim-result-table" aria-label="ตารางสรุปผลการทดลอง">
-                    <thead>
-                      <tr>
-                        <th>วัสดุ</th>
-                        <th className={selectedTrial === "rub-both" ? "active" : ""}>ขัดถูด้วยกระดาษเยื่อทั้ง 2</th>
-                        <th className={selectedTrial === "rub-one" ? "active" : ""}>ขัดถูด้วยกระดาษเยื่อแค่ 1</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>ลูกโป่ง</td>
-                        <td className={selectedTrial === "rub-both" ? "active" : ""}>ผลักกัน</td>
-                        <td className={selectedTrial === "rub-one" ? "active" : ""}>ดึงดูดกัน</td>
-                      </tr>
-                    </tbody>
-                  </table>
+              {sequenceNotice && (
+                <div className="p6-force-sim-summary">
+                  <span className="p6-force-sim-summary-text">{sequenceNotice}</span>
                 </div>
               )}
+
+              <div className="p6-force-sim-result">
+                <div className="p6-force-sim-toast">ซ่อนผลสรุปไว้ก่อน กด "สรุปผลการทดลอง" เพื่อดูผลทั้งหมด</div>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="p6-force-sim-right">
           <div className="p6-force-sim-bubble">{bubbleText}</div>
-          <img
-            className="p6-force-sim-character"
-            src="/images/p4/exp1/character-boy.png"
-            alt="นักเรียน"
-          />
+          <img className="p6-force-sim-character" src="/images/p4/exp1/character-boy.png" alt="นักเรียน" />
           {started && <div className="p6-force-sim-timer">เวลาการถู: {formatTime(seconds)}</div>}
 
           <div className="p6-force-sim-actions">
@@ -274,7 +350,7 @@ export default function P6ElectricForceEffectSim() {
                 className="p6-force-sim-action"
                 type="button"
                 onClick={handleGoSummary}
-                disabled={!charged || isRunning}
+                disabled={!allTrialsCompleted || isRunning}
               >
                 สรุปผลการทดลอง
               </button>
@@ -286,7 +362,6 @@ export default function P6ElectricForceEffectSim() {
               className="p6-force-sim-action primary"
               type="button"
               onClick={isRunning ? handleStop : handleStart}
-              disabled={!selectedTrial}
             >
               {isRunning ? "หยุด" : "เริ่ม"}
             </button>
