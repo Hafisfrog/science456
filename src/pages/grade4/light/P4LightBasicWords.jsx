@@ -3,58 +3,48 @@ import "./P4LightVocab.css";
 
 const VOCAB = [
   {
-    th: "ตัวกลางของแสง",
-    ms: "Medium Cahaya",
-    en: "Light Medium",
+    th: "แสง",
+    ms: "จาฮายอ",
+    en: "Light",
     audio: {
-      th: "/audio/p4/light/medium_th.mp3",
-      ms: "/audio/p4/light/medium_ms.mp3",
-      en: "/audio/p4/light/medium_en.mp3",
-    },
-  },
-  {
-    th: "วัตถุโปร่งใส",
-    ms: "Objek Lut Sinar",
-    en: "Transparent Object",
-    audio: {
-      th: "/audio/p4/light/transparent_th.mp3",
-      ms: "/audio/p4/light/transparent_ms.mp3",
-      en: "/audio/p4/light/transparent_en.mp3",
-    },
-  },
-  {
-    th: "วัตถุโปร่งแสง",
-    ms: "Objek Lut Separa",
-    en: "Translucent Object",
-    audio: {
-      th: "/audio/p4/light/translucent_th.mp3",
-      ms: "/audio/p4/light/translucent_ms.mp3",
-      en: "/audio/p4/light/translucent_en.mp3",
-    },
-  },
-  {
-    th: "วัตถุทึบแสง",
-    ms: "Objek Legap",
-    en: "Opaque Object",
-    audio: {
-      th: "/audio/p4/light/opaque_th.mp3",
-      ms: "/audio/p4/light/opaque_ms.mp3",
-      en: "/audio/p4/light/opaque_en.mp3",
+      th: "/audio/p4/light/basic_light_th.mp3",
+      ms: "/audio/p4/light/basic_light_ms.mp3",
+      en: "/audio/p4/light/basic_light_en.mp3",
     },
   },
   {
     th: "แหล่งกำเนิดแสง",
-    ms: "Sumber Cahaya",
+    ms: "ตีอาปัต ยาง จาฮายอ",
     en: "Light Source",
     audio: {
-      th: "/audio/p4/light/source_th.mp3",
-      ms: "/audio/p4/light/source_ms.mp3",
-      en: "/audio/p4/light/source_en.mp3",
+      th: "/audio/p4/light/basic_source_th.mp3",
+      ms: "/audio/p4/light/basic_source_ms.mp3",
+      en: "/audio/p4/light/basic_source_en.mp3",
+    },
+  },
+  {
+    th: "เคลื่อนที่ผ่านอากาศ",
+    ms: "บีอรา ลือปะ อางิง",
+    en: "Move Through Air",
+    audio: {
+      th: "/audio/p4/light/basic_move_th.mp3",
+      ms: "/audio/p4/light/basic_move_ms.mp3",
+      en: "/audio/p4/light/basic_move_en.mp3",
+    },
+  },
+  {
+    th: "กั้น",
+    ms: "สือกัต",
+    en: "Block",
+    audio: {
+      th: "/audio/p4/light/basic_block_th.mp3",
+      ms: "/audio/p4/light/basic_block_ms.mp3",
+      en: "/audio/p4/light/basic_block_en.mp3",
     },
   },
 ];
 
-export default function P4LightVocab() {
+export default function P4LightBasicWords() {
   const navigate = useNavigate();
 
   const playSound = (src) => {
@@ -68,7 +58,7 @@ export default function P4LightVocab() {
 
       <header className="vocab-header">
         <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-        <p>เรื่อง ตัวกลางของแสง</p>
+        <p>คำศัพท์พื้นฐานเกี่ยวกับแสง</p>
       </header>
 
       <div className="vocab-card">
@@ -91,7 +81,7 @@ export default function P4LightVocab() {
                 <td className="cell-audio">
                   <button className="audio-btn th" onClick={() => playSound(row.audio.th)}>🇹🇭</button>
                   <button className="audio-btn ms" onClick={() => playSound(row.audio.ms)}>🇲🇾</button>
-                  <button className="audio-btn en" onClick={() => playSound(row.audio.en)}>EN</button>
+                  <button className="audio-btn en" onClick={() => playSound(row.audio.en)}>🇬🇧</button>
                 </td>
               </tr>
             ))}
@@ -102,14 +92,14 @@ export default function P4LightVocab() {
       <div className="vocab-footer">
         <button
           className="back-home-btn"
-          onClick={() => navigate("/p4/light/objective")}
+          onClick={() => navigate("/p4/light/vocab")}
         >
-          ← กลับหน้าจุดประสงค์
+          ← ย้อนกลับ
         </button>
 
         <button
           className="btn-next"
-          onClick={() => navigate("/p4/light/basic")}
+          onClick={() => navigate("/p4/light/Situation")}
         >
           ไปหน้าถัดไป →
         </button>

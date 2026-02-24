@@ -1,0 +1,114 @@
+/* หน้า */
+.vocab-page {
+  min-height: 100vh;
+  padding: 50px 20px;
+  background: #f4f7fb;
+  font-family: 'Prompt', sans-serif;
+}
+
+/* Header */
+.vocab-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.vocab-header h1 {
+  font-size: 40px;
+  font-weight: 800;
+  color: #ff5a6e;
+}
+
+.vocab-header p {
+  color: #374151;
+}
+
+/* Card */
+.vocab-card {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+}
+
+/* Table */
+.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 20px;
+}
+
+/* Header สี */
+.col-th {
+  background: #8fb3cf;
+}
+
+.col-ms {
+  background: #f3c04f;
+}
+
+.col-en {
+  background: #c06097;
+}
+
+/* Cell */
+.vocab-table th,
+.vocab-table td {
+  padding: 22px 18px;
+}
+
+/* body สี */
+.cell-th {
+  background: #dbe8f3;
+  font-weight: 600;
+}
+
+.cell-ms {
+  background: #f6e0a8;
+}
+
+.cell-en {
+  background: #e5b3cd;
+}
+
+/* เส้นคั่น */
+.vocab-table tr:not(:last-child) td {
+  border-bottom: 2px solid #ffffff;
+}
+
+/* Footer */
+.vocab-footer {
+  max-width: 1000px;
+  margin: 30px auto 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ปุ่ม */
+.back-home-btn,
+.btn-next {
+  border: none;
+  cursor: pointer;
+  padding: 14px 22px;
+  border-radius: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Prompt', sans-serif;
+  box-shadow: 0 8px 18px rgba(0,0,0,.15);
+  transition: .15s;
+}
+
+.back-home-btn {
+  background: white;
+}
+
+.btn-next {
+  background: #2563eb;
+  color: white;
+}
+
+.back-home-btn:hover,
+.btn-next:hover {
+  transform: translateY(-2px);
+}

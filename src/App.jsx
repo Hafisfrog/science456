@@ -58,7 +58,7 @@ import P6ElectricCircuitBulbSeriesParallel from "./pages/grade6/P6ElectricCircui
 // import Grade6 from "./pages/grade6/index.jsx";
 // import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
 // import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
-import P4Light from "./pages/grade4/light/P4Light";
+
 import P4LightIntro from "./pages/grade4/light/P4LightIntro";
 import P4LightVocab from "./pages/grade4/light/P4LightVocab";
 import P4LightSelect from "./pages/grade4/light/P4LightSelect";
@@ -68,6 +68,12 @@ import P4LightCheck from "./pages/grade4/light/P4LightCheck";
 import P4LightSummary from "./pages/grade4/light/P4LightSummary";
 import P4LightQA from "./pages/grade4/light/P4LightQA";
 import P4LightConceptSummary from "./pages/grade4/light/P4LightConceptSummary";
+import P4LightIntroLearning from "./pages/grade4/light/P4LightIntroLearning";
+import P4LightBasicWords from "./pages/grade4/light/P4LightBasicWords";
+import P4LightThinking from "./pages/grade4/light/P4LightThinking";
+import P4LightSituation from "./pages/grade4/light/P4LightSituation";
+import P4LightObjective from "./pages/grade4/light/P4LightObjective";
+
 
 // ===== ป.5 — ชีวิตสัมพันธ์ (ห่วงโซ่อาหาร) =====
 import P5LifeIntro from "./pages/grade5/life/P5LifeIntro";
@@ -129,16 +135,31 @@ export default function App() {
         />
 
         {/* ===== Light (ตัวกลางของแสง) ป.4 ===== */}
-        <Route path="/p4/light" element={<P4Light />} />
+      
         <Route path="/p4/light/intro" element={<P4LightIntro />} />
         <Route path="/p4/light/vocab" element={<P4LightVocab />} />
         <Route path="/p4/light/select" element={<P4LightSelect />} />
         <Route path="/p4/light/experiment" element={<P4LightExperiment />} />
         <Route path="/p4/light/record" element={<P4LightRecord />} />
         <Route path="/p4/light/check" element={<P4LightCheck />} />
-        <Route path="/p4/light/summary" element={<P4LightSummary />} />
+        <Route path="/p4/light/summary" element={<P4LightSummary />} /> 
         <Route path="/p4/light/qa" element={<P4LightQA />} />
         <Route path="/p4/light/concept" element={<P4LightConceptSummary />} />
+        <Route path="/p4/light/thinking" element={<P4LightThinking />} />
+        <Route path="/p4/light/situation" element={<P4LightSituation />} />
+        <Route path="/p4/light/objective" element={<P4LightObjective />} />
+        <Route
+        path="/p4/light/P4LightIntroLearning"
+        element={<P4LightIntroLearning />}
+        />
+        <Route
+          path="/p4/light/basic"
+          element={<P4LightBasicWords />}
+        />
+
+        
+        
+
 
         {/* ====================== */}
         {/* ===== ป.5 (ชีวิตสัมพันธ์ → ห่วงโซ่อาหาร) ===== */}
