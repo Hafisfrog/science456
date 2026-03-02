@@ -7,11 +7,7 @@ export default function Start() {
   return (
     <div className="start-container">
       <div className="start-left">
-        <img
-          src="/images/start-lab.png"
-          alt="Virtual Science Lab"
-          className="start-image"
-        />
+        <img src="/images/start-lab.png" alt="Virtual Science Lab" className="start-image" />
       </div>
 
       <div className="start-right">
