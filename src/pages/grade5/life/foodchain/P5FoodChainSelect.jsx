@@ -1,347 +1,332 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LabLayout from "../../../../components/LabLayout";
+import { useState } from "react";
 
-/* === รูปการ์ตูนสัตว์แบบสวยงาม === */
-const createCreatureImage = (type, emoji, bgColor, details) => {
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <defs>
-      <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="white"/>
-        <stop offset="100%" stop-color="${bgColor}"/>
-      </linearGradient>
-      <filter id="shadow">
-        <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="rgba(0,0,0,0.2)"/>
-      </filter>
-      ${details}
-    </defs>
-    
-    <!-- พื้นหลังวงกลม -->
-    <circle cx="100" cy="100" r="85" fill="url(#bg)" filter="url(#shadow)"/>
-    
-    <!-- ลายพื้นหลังพิเศษ -->
-    <circle cx="100" cy="100" r="80" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.3"/>
-    
-    <!-- วงกลมกลางสำหรับอีโมจิ -->
-    <circle cx="100" cy="100" r="60" fill="white" fill-opacity="0.9"/>
-    
-    <!-- อีโมจิสัตว์ -->
-    <text x="100" y="125" text-anchor="middle" font-size="80" font-family="Arial, sans-serif">
-      ${emoji}
-    </text>
-    
-    <!-- รายละเอียดเพิ่มเติม -->
-    <text x="100" y="180" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" font-family="Arial, sans-serif">
-      ${type}
-    </text>
-  </svg>
-  `;
-  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
-};
+const getSlotKey = (row, col) => `${row}-${col}`;
 
-// รูปภาพแต่ละสัตว์
-const CREATURE_IMAGES = {
-  rice: createCreatureImage(
-    "ข้าว", 
-    "🌾", 
-    "#C6F6D5",
-    `<linearGradient id="riceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#9AE6B4"/>
-      <stop offset="100%" stop-color="#68D391"/>
-     </linearGradient>`
-  ),
-  water_plant: createCreatureImage(
-    "พืชน้ำ", 
-    "🌿", 
-    "#B2F5EA",
-    `<linearGradient id="plantGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#81E6D9"/>
-      <stop offset="100%" stop-color="#4FD1C5"/>
-     </linearGradient>`
-  ),
-  grass: createCreatureImage(
-    "หญ้า", 
-    "🌱", 
-    "#9AE6B4",
-    `<linearGradient id="grassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#68D391"/>
-      <stop offset="100%" stop-color="#38A169"/>
-     </linearGradient>`
-  ),
-  caterpillar: createCreatureImage(
-    "หนอน", 
-    "🐛", 
-    "#FED7D7",
-    `<linearGradient id="caterpillarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FC8181"/>
-      <stop offset="100%" stop-color="#E53E3E"/>
-     </linearGradient>
-     <circle cx="70" cy="70" r="5" fill="white" opacity="0.8"/>
-     <circle cx="130" cy="70" r="5" fill="white" opacity="0.8"/>`
-  ),
-  grasshopper: createCreatureImage(
-    "ตั๊กแตน", 
-    "🦗", 
-    "#C6F6D5",
-    `<linearGradient id="grasshopperGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#9AE6B4"/>
-      <stop offset="100%" stop-color="#38A169"/>
-     </linearGradient>
-     <line x1="60" y1="60" x2="40" y2="40" stroke="#4A5568" stroke-width="2"/>
-     <line x1="140" y1="60" x2="160" y2="40" stroke="#4A5568" stroke-width="2"/>`
-  ),
-  frog: createCreatureImage(
-    "กบ", 
-    "🐸", 
-    "#9AE6B4",
-    `<linearGradient id="frogGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#68D391"/>
-      <stop offset="100%" stop-color="#38A169"/>
-     </linearGradient>
-     <circle cx="80" cy="80" r="8" fill="white"/>
-     <circle cx="120" cy="80" r="8" fill="white"/>
-     <circle cx="80" cy="80" r="4" fill="#2D3748"/>
-     <circle cx="120" cy="80" r="4" fill="#2D3748"/>`
-  ),
-  small_fish: createCreatureImage(
-    "ปลาเล็ก", 
-    "🐟", 
-    "#BEE3F8",
-    `<linearGradient id="fishGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#90CDF4"/>
-      <stop offset="100%" stop-color="#4299E1"/>
-     </linearGradient>
-     <path d="M60,100 Q80,80 100,100 Q80,120 60,100" fill="rgba(255,255,255,0.3)"/>
-     <path d="M140,100 Q120,80 100,100 Q120,120 140,100" fill="rgba(255,255,255,0.3)"/>`
-  ),
-  mouse: createCreatureImage(
-    "หนูนา", 
-    "🐭", 
-    "#FED7E2",
-    `<linearGradient id="mouseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FBB6CE"/>
-      <stop offset="100%" stop-color="#ED64A6"/>
-     </linearGradient>
-     <circle cx="80" cy="80" r="6" fill="white"/>
-     <circle cx="120" cy="80" r="6" fill="white"/>
-     <circle cx="80" cy="80" r="3" fill="#4A5568"/>
-     <circle cx="120" cy="80" r="3" fill="#4A5568"/>
-     <line x1="90" y1="110" x2="90" y2="125" stroke="#4A5568" stroke-width="2"/>
-     <line x1="110" y1="110" x2="110" y2="125" stroke="#4A5568" stroke-width="2"/>`
-  ),
-  snake: createCreatureImage(
-    "งู", 
-    "🐍", 
-    "#C6F6D5",
-    `<linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#9AE6B4"/>
-      <stop offset="100%" stop-color="#38A169"/>
-     </linearGradient>
-     <path d="M70,100 Q85,85 100,100 Q115,115 130,100" stroke="white" stroke-width="4" fill="none"/>
-     <circle cx="80" cy="95" r="4" fill="#2D3748"/>
-     <circle cx="120" cy="95" r="4" fill="#2D3748"/>`
-  ),
-  bird: createCreatureImage(
-    "นก", 
-    "🐦", 
-    "#FEFCBF",
-    `<linearGradient id="birdGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FAF089"/>
-      <stop offset="100%" stop-color="#ECC94B"/>
-     </linearGradient>
-     <path d="M70,90 Q60,70 70,50" stroke="#4A5568" stroke-width="3" fill="none"/>
-     <path d="M130,90 Q140,70 130,50" stroke="#4A5568" stroke-width="3" fill="none"/>
-     <circle cx="85" cy="80" r="5" fill="#2D3748"/>
-     <circle cx="115" cy="80" r="5" fill="#2D3748"/>`
-  ),
-  hawk: createCreatureImage(
-    "เหยี่ยว", 
-    "🦅", 
-    "#FED7D7",
-    `<linearGradient id="hawkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FC8181"/>
-      <stop offset="100%" stop-color="#E53E3E"/>
-     </linearGradient>
-     <path d="M60,70 Q40,50 60,30" stroke="#4A5568" stroke-width="4" fill="none"/>
-     <path d="M140,70 Q160,50 140,30" stroke="#4A5568" stroke-width="4" fill="none"/>
-     <circle cx="85" cy="80" r="6" fill="#2D3748"/>
-     <circle cx="115" cy="80" r="6" fill="#2D3748"/>
-     <circle cx="85" cy="80" r="3" fill="white"/>
-     <circle cx="115" cy="80" r="3" fill="white"/>`
-  ),
-  larva: createCreatureImage(
-    "ลูกน้ำ", 
-    "🦟", 
-    "#E9D8FD",
-    `<linearGradient id="larvaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#D6BCFA"/>
-      <stop offset="100%" stop-color="#9F7AEA"/>
-     </linearGradient>
-     <line x1="70" y1="70" x2="60" y2="60" stroke="#4A5568" stroke-width="2"/>
-     <line x1="130" y1="70" x2="140" y2="60" stroke="#4A5568" stroke-width="2"/>
-     <line x1="70" y1="110" x2="60" y2="120" stroke="#4A5568" stroke-width="2"/>
-     <line x1="130" y1="110" x2="140" y2="120" stroke="#4A5568" stroke-width="2"/>`
-  ),
-};
-
-const CREATURES = [
-  { id: "rice", name: "ข้าว", img: CREATURE_IMAGES.rice },
-  { id: "water_plant", name: "พืชน้ำ", img: CREATURE_IMAGES.water_plant },
-  { id: "grass", name: "หญ้า", img: CREATURE_IMAGES.grass },
-  { id: "caterpillar", name: "หนอน", img: CREATURE_IMAGES.caterpillar },
-  { id: "grasshopper", name: "ตั๊กแตน", img: CREATURE_IMAGES.grasshopper },
-  { id: "frog", name: "กบ", img: CREATURE_IMAGES.frog },
-  { id: "small_fish", name: "ปลาเล็ก", img: CREATURE_IMAGES.small_fish },
-  { id: "mouse", name: "หนูนา", img: CREATURE_IMAGES.mouse },
-  { id: "snake", name: "งู", img: CREATURE_IMAGES.snake },
-  { id: "bird", name: "นก", img: CREATURE_IMAGES.bird },
-  { id: "hawk", name: "เหยี่ยว", img: CREATURE_IMAGES.hawk },
-  { id: "larva", name: "ลูกน้ำ", img: CREATURE_IMAGES.larva },
+const ANSWER_CHAINS = [
+  ["ต้นข้าว", "ตั๊กแตน", "กบ", "งู"],
+  ["ต้นข้าว", "หนูนา", "งู", "เหยี่ยว"],
+  ["หญ้า", "หนอน", "นก", "งู"],
+  ["ต้นข้าว", "หนูนา", "นก", "เหยี่ยว"],
+  ["พืชน้ำ", "ลูกน้ำ", "ปลา", "นก"]
 ];
+
+const DEFAULT_LOCKED_SLOT_KEYS = [
+  getSlotKey(0, 0), getSlotKey(0, 3),
+  getSlotKey(1, 1), getSlotKey(1, 3),
+  getSlotKey(2, 1), getSlotKey(2, 2),
+  getSlotKey(3, 0), getSlotKey(3, 1), getSlotKey(3, 3),
+  getSlotKey(4, 1), getSlotKey(4, 2)
+];
+
+const createQuestionChains = (lockedSet) =>
+  ANSWER_CHAINS.map((row, rowIndex) =>
+    row.map((name, colIndex) =>
+      lockedSet.has(getSlotKey(rowIndex, colIndex)) ? name : ""
+    )
+  );
+
+const getRandomLockedSlots = () => {
+  const nextLockedSlots = new Set();
+
+  for (let rowIndex = 0; rowIndex < ANSWER_CHAINS.length; rowIndex++) {
+    const columns = [0, 1, 2, 3];
+
+    for (let i = columns.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [columns[i], columns[j]] = [columns[j], columns[i]];
+    }
+
+    const clueCount = 2 + Math.floor(Math.random() * 2); // 2 หรือ 3 ช่องใบ้ต่อ 1 โซ่
+    for (let i = 0; i < clueCount; i++) {
+      nextLockedSlots.add(getSlotKey(rowIndex, columns[i]));
+    }
+  }
+
+  return nextLockedSlots;
+};
 
 export default function P5FoodChainSelect() {
   const navigate = useNavigate();
-  const [selected, setSelected] = useState([]);
 
-  const toggleSelect = (creature) => {
-    setSelected((prev) =>
-      prev.some((c) => c.id === creature.id)
-        ? prev.filter((c) => c.id !== creature.id)
-        : [...prev, creature]
-    );
+  // Animals data with more vibrant names
+  const animals = [
+    { name: "ต้นข้าว", img: "/images/p5/kaw.png", color: "from-amber-300 to-yellow-400" },
+    { name: "หญ้า", img: "/images/p5/ya.png", color: "from-lime-300 to-green-400" },
+    { name: "พืชน้ำ", img: "/images/p5/lunamm.png", color: "from-emerald-300 to-teal-400" },
+    { name: "ตั๊กแตน", img: "/images/p5/tag.png", color: "from-yellow-300 to-amber-400" },
+    { name: "หนูนา", img: "/images/p5/n.png", color: "from-orange-300 to-amber-500" },
+    { name: "หนอน", img: "/images/p5/non.png", color: "from-red-300 to-rose-400" },
+    { name: "ลูกน้ำ", img: "/images/p5/lunam.png", color: "from-cyan-300 to-blue-400" },
+    { name: "ปลา", img: "/images/p5/pla.png", color: "from-sky-300 to-indigo-400" },
+    { name: "กบ", img: "/images/p5/gop.png", color: "from-lime-300 to-green-500" },
+    { name: "นก", img: "/images/p5/nog.png", color: "from-purple-300 to-violet-400" },
+    { name: "งู", img: "/images/p5/snack.png", color: "from-emerald-400 to-teal-500" },
+    { name: "เหยี่ยว", img: "/images/p5/y.png", color: "from-amber-400 to-orange-500" }
+  ];
+
+  const [lockedSlots, setLockedSlots] = useState(() => new Set(DEFAULT_LOCKED_SLOT_KEYS));
+  const [chains, setChains] = useState(() =>
+    createQuestionChains(new Set(DEFAULT_LOCKED_SLOT_KEYS))
+  );
+
+  // Panel state
+  const [showPanel, setShowPanel] = useState(false);
+  const [activeSlot, setActiveSlot] = useState({ row: null, col: null });
+
+  // Locked slots
+  const isLocked = (row, col) => lockedSlots.has(getSlotKey(row, col));
+
+  // Handle slot click
+  const handleSlotClick = (row, col) => {
+    if (isLocked(row, col)) return;
+    setActiveSlot({ row, col });
+    setShowPanel(true);
   };
 
-  const handleNext = () => {
-    if (selected.length < 2) {
-      alert("กรุณาเลือกสิ่งมีชีวิตอย่างน้อย 2 ชนิด");
-      return;
-    }
+  // Handle animal selection
+  const handleSelectAnimal = (animal) => {
+    if (activeSlot.row === null || activeSlot.col === null) return;
 
-    navigate("/p5/life/foodchain/sim", {
-      state: { creatures: selected },
-    });
+    setChains(prev =>
+      prev.map((row, rowIndex) =>
+        row.map((item, colIndex) =>
+          rowIndex === activeSlot.row && colIndex === activeSlot.col
+            ? animal.name
+            : item
+        )
+      )
+    );
+
+    setShowPanel(false);
+  };
+
+  const handleClearActiveSlot = () => {
+    if (activeSlot.row === null || activeSlot.col === null) return;
+
+    setChains(prev =>
+      prev.map((row, rowIndex) =>
+        row.map((item, colIndex) =>
+          rowIndex === activeSlot.row && colIndex === activeSlot.col
+            ? ""
+            : item
+        )
+      )
+    );
+
+    setShowPanel(false);
+  };
+
+  // สุ่มโจทย์ใหม่: สุ่มเฉพาะช่องที่เป็น "ตัวใบ้" และเป็นคำตอบที่ถูกต้องเสมอ
+  const handleRandomQuestion = () => {
+    const nextLockedSlots = getRandomLockedSlots();
+    setLockedSlots(nextLockedSlots);
+    setChains(createQuestionChains(nextLockedSlots));
+    setShowPanel(false);
+  };
+
+  // Check if all slots are filled
+  const isComplete = () => {
+    for (let row of chains) {
+      for (let item of row) {
+        if (item === "") return false;
+      }
+    }
+    return true;
+  };
+
+  // Get image path
+  const getImage = (name) => {
+    const animal = animals.find(a => a.name === name);
+    return animal ? animal.img : "";
   };
 
   return (
-    <LabLayout title="เลือกสิ่งมีชีวิตสำหรับสร้างห่วงโซ่อาหาร">
-      <div className="space-y-6 bg-gradient-to-b from-green-50 to-green-100 p-6 rounded-2xl shadow-xl">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-100 via-green-100 to-lime-100 font-sans relative overflow-hidden">
+      
+      {/* Decorative Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-green-200 rounded-full filter blur-3xl opacity-30"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-200 rounded-full filter blur-3xl opacity-40"></div>
+        <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-lime-200 rounded-full filter blur-3xl opacity-30"></div>
+      </div>
 
-        {/* คำแนะนำ */}
-        <div className="bg-white border-4 border-black rounded-xl p-4 shadow-lg">
-          <p className="font-bold text-lg">
-            🌿 เลือกสิ่งมีชีวิตอย่างน้อย 2 ชนิด เพื่อสร้างห่วงโซ่อาหาร
-          </p>
-          <p className="text-gray-700 text-sm">
-            (คลิกเพื่อเลือก / คลิกซ้ำเพื่อยกเลิก)
-          </p>
+      {/* Sun decoration - Enhanced */}
+      <div className="absolute top-8 right-16 animate-pulse">
+        <div className="relative">
+          <div className="w-24 h-24 bg-gradient-to-br from-yellow-300 to-amber-400 rounded-full shadow-2xl 
+            border-4 border-yellow-200 flex items-center justify-center text-5xl transform hover:rotate-12 
+            transition-transform duration-300">
+            ☀️
+          </div>
+          <div className="absolute -inset-2 bg-yellow-200 rounded-full filter blur-xl opacity-50 -z-10"></div>
         </div>
+      </div>
 
-        {/* Grid สิ่งมีชีวิต */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {CREATURES.map((c) => (
-            <CreatureCard
-              key={c.id}
-              creature={c}
-              selected={selected.some((s) => s.id === c.id)}
-              onClick={() => toggleSelect(c)}
-            />
-          ))}
+      {/* Floating clouds */}
+      <div className="absolute top-20 left-8 opacity-20 text-7xl">☁️</div>
+      <div className="absolute bottom-20 right-20 opacity-20 text-8xl">☁️</div>
+
+      {/* Title - Enhanced */}
+      <div className="pt-8 text-center relative z-10">
+        <div className="relative inline-block">
+          <div className="absolute inset-0 bg-green-400 rounded-2xl filter blur-lg opacity-50"></div>
+          <div className="relative bg-gradient-to-r from-green-300 via-green-400 to-green-300 
+            px-10 py-5 rounded-3xl text-2xl font-bold shadow-2xl border-4 border-white
+            text-white transform hover:scale-105 transition-transform duration-300">
+            🌿 สร้างห่วงโซ่อาหารโดยเรียงลำดับการกินของสิ่งมีชีวิต 🌿
+          </div>
         </div>
+      </div>
 
-        {/* แสดงที่เลือก */}
-        <div className="bg-white border-2 rounded-xl p-4 shadow">
-          <p className="font-semibold mb-2">สิ่งมีชีวิตที่เลือก:</p>
-          {selected.length === 0 ? (
-            <p className="text-gray-500">ยังไม่ได้เลือก</p>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {selected.map((c) => (
-                <span
-                  key={c.id}
-                  className="bg-green-100 border border-green-400 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-2"
+      {/* Food Chains - Enhanced Cards */}
+      <div className="mt-12 ml-10 space-y-6 relative z-10">
+        {chains.map((row, rowIndex) => (
+          <div key={rowIndex} className="flex items-center gap-6">
+            <div className="w-32 text-2xl font-bold text-white bg-gradient-to-r from-green-600 to-green-500 
+              py-4 px-4 rounded-2xl shadow-lg text-center border-2 border-white transform hover:scale-105 
+              transition-transform duration-300">
+              🌟 โซ่ {rowIndex + 1}
+            </div>
+            <div className="flex gap-4">
+              {row.map((item, colIndex) => (
+                <div
+                  key={colIndex}
+                  onClick={() => handleSlotClick(rowIndex, colIndex)}
+                  className={`w-48 h-32 bg-white rounded-2xl shadow-xl 
+                    flex items-center justify-center cursor-pointer
+                    transform hover:scale-105 transition-all duration-300
+                    ${isLocked(rowIndex, colIndex) 
+                      ? 'border-4 border-gray-400 bg-gradient-to-br from-gray-100 to-gray-200 cursor-not-allowed opacity-80' 
+                      : 'border-4 border-yellow-400 hover:border-yellow-500 bg-gradient-to-br from-amber-50 to-yellow-50'}`}
                 >
-                  <img 
-                    src={c.img} 
-                    alt={c.name} 
-                    className="w-6 h-6"
-                  />
-                  {c.name}
-                </span>
+                  {item ? (
+                    <div className="text-center">
+                      <img src={getImage(item)} className="w-24 h-24 object-contain mx-auto" alt={item} />
+                      <div className="text-sm mt-1 font-medium text-gray-600">{item}</div>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <span className="text-6xl text-yellow-400">❓</span>
+                      <div className="text-sm mt-1 text-gray-400">คลิกเพื่อเลือก</div>
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
-          )}
-        </div>
-
-        {/* ปุ่มนำทาง */}
-        <div className="flex justify-between pt-4">
-          <button
-            onClick={() => navigate("/p5/life/foodchain/steps")}
-            className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600 shadow flex items-center gap-2"
-          >
-            <span>◀</span>
-            <span>ย้อนกลับ</span>
-          </button>
-
-          <button
-            onClick={handleNext}
-            className="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 shadow flex items-center gap-2"
-          >
-            <span>ต่อไป</span>
-            <span>▶</span>
-          </button>
-        </div>
-      </div>
-    </LabLayout>
-  );
-}
-
-/* การ์ดสิ่งมีชีวิต — เวอร์ชันล้ำ */
-function CreatureCard({ creature, selected, onClick }) {
-  return (
-    <div
-      onClick={onClick}
-      className={`
-        cursor-pointer border-4 rounded-2xl p-4 text-center shadow-lg transition-all duration-300 transform
-        flex flex-col items-center justify-between h-full
-        ${
-          selected
-            ? "border-blue-600 bg-gradient-to-b from-blue-50 to-blue-100 scale-105 ring-4 ring-blue-400 ring-opacity-50"
-            : "border-orange-400 bg-white hover:scale-105 hover:shadow-xl hover:border-orange-500"
-        }
-      `}
-    >
-      {/* วงกลมสีพื้นหลังสำหรับรูป */}
-      <div className={`
-        w-32 h-32 rounded-full flex items-center justify-center mb-4
-        ${selected ? "bg-gradient-to-br from-blue-100 to-blue-200" : "bg-gradient-to-br from-gray-50 to-gray-100"}
-      `}>
-        <img
-          src={creature.img}
-          alt={creature.name}
-          className="w-24 h-24 drop-shadow-lg"
-        />
-        {selected && (
-          <div className="absolute top-2 right-2 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-            <span className="text-white font-bold">✓</span>
           </div>
-        )}
+        ))}
       </div>
-      
-      <div className="mt-2">
-        <p className="font-bold text-lg text-gray-800">{creature.name}</p>
-        <div className="flex justify-center mt-2">
-          {selected ? (
-            <span className="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
-              ✓ เลือกแล้ว
-            </span>
-          ) : (
-            <span className="text-xs text-gray-500">
-              คลิกเพื่อเลือก
-            </span>
-          )}
+
+      {/* Selection Panel Modal - Enhanced with colored cards */}
+      {showPanel && (
+        <div
+          className="fixed inset-0 z-50 bg-gradient-to-b from-emerald-200 via-green-100 to-lime-100 overflow-y-auto"
+          onClick={() => setShowPanel(false)}
+        >
+          <div className="min-h-full w-full flex items-start justify-center p-4 sm:p-8" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full max-w-6xl bg-gradient-to-b from-green-300 via-green-200 to-emerald-200 rounded-2xl shadow-2xl border-4 border-green-100 p-4 sm:p-6 md:p-8">
+              <div className="flex items-center justify-between gap-4 mb-6">
+                <div className="relative inline-block">
+                  <div className="absolute inset-0 bg-green-500 rounded-lg filter blur-md opacity-50"></div>
+                  <div className="relative bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-3 rounded-lg text-xl sm:text-2xl font-bold text-white border-2 border-green-100 shadow-lg">
+                    เลือกสิ่งมีชีวิต
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setShowPanel(false)}
+                  className="px-4 py-2 rounded-lg bg-white/80 border-2 border-green-300 text-green-700 font-bold hover:bg-white"
+                >
+                  ปิด
+                </button>
+              </div>
+
+              {/* Animal Grid - Square Green Cards */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <button
+                  onClick={handleClearActiveSlot}
+                  className="aspect-square bg-white/90 rounded-md p-4 border-2 border-red-200
+                    hover:border-red-400 hover:bg-red-50 transition-all duration-200
+                    flex flex-col items-center justify-center"
+                >
+                  <span className="text-5xl mb-2">🧹</span>
+                  <span className="text-base font-bold text-red-600">ลบคำตอบ</span>
+                </button>
+
+                {animals.map((animal, index) => (
+                  <div
+                    key={index}
+                    onClick={() => handleSelectAnimal(animal)}
+                    className="aspect-square bg-green-50 rounded-md p-4 cursor-pointer
+                      border-2 border-green-300 shadow-md hover:shadow-xl
+                      hover:border-green-500 hover:bg-green-100 transition-all duration-200
+                      flex flex-col items-center justify-center"
+                  >
+                    <div className="bg-white rounded-md p-2 w-full h-[68%] flex items-center justify-center">
+                      <img
+                        src={animal.img}
+                        className="w-24 h-24 mx-auto object-contain"
+                        alt={animal.name}
+                      />
+                    </div>
+                    <span className="mt-2 text-base font-bold text-gray-700 text-center">{animal.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* Fixed Action Buttons */}
+      {!showPanel && (
+      <>
+        <button
+          onClick={handleRandomQuestion}
+          className="fixed top-6 left-6 z-[60] bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-4
+            rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl 
+            transition-all duration-300 border-4 border-purple-300
+            transform hover:scale-105
+            flex items-center gap-2"
+        >
+          <span className="text-2xl">🎲</span>
+          สุ่มโจทย์
+        </button>
+
+        <div className="fixed bottom-8 right-8 flex gap-3 z-[60]">
+        <button
+          onClick={() => navigate(-1)}
+          className="bg-gradient-to-r from-sky-600 to-blue-600 text-white px-5 py-2.5 
+            rounded-full text-base font-bold shadow-xl hover:shadow-2xl 
+            transition-all duration-300 border-2 border-sky-300
+            transform hover:scale-105
+            flex items-center gap-2"
+        >
+          <span className="text-lg">←</span>
+          ย้อนกลับ
+        </button>
+
+        <button
+          onClick={() => {
+            if (!isComplete()) {
+              alert("กรุณาทำให้ครบก่อน");
+              return;
+            }
+            navigate("/p5/life/foodchain/answer", { state: { chains } });
+          }}
+          className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-5 py-2.5 
+            rounded-full text-base font-bold shadow-xl hover:shadow-2xl 
+            transition-all duration-300 border-2 border-green-300
+            transform hover:scale-105 hover:-translate-y-0.5
+            flex items-center gap-2"
+        >
+          <span className="text-lg">➡️</span>
+          ต่อไป
+        </button>
+        </div>
+      </>
+      )}
     </div>
   );
 }

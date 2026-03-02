@@ -81,9 +81,12 @@ import P5FoodChainIntro from "./pages/grade5/life/foodchain/P5FoodChainIntro";
 import P5FoodChainVocab from "./pages/grade5/life/foodchain/P5FoodChainVocab";
 import P5FoodChainSteps from "./pages/grade5/life/foodchain/P5FoodChainSteps";
 import P5FoodChainSelect from "./pages/grade5/life/foodchain/P5FoodChainSelect";
-import P5FoodChainSim from "./pages/grade5/life/foodchain/P5FoodChainSim";
+import P5FoodChainAnswer from "./pages/grade5/life/foodchain/P5FoodChainAnswer";
 import P5FoodChainCheck from "./pages/grade5/life/foodchain/P5FoodChainCheck";
 import P5FoodChainSummary from "./pages/grade5/life/foodchain/P5FoodChainSummary";
+import P5FoodChainScene from "./pages/grade5/life/foodchain/P5FoodChainScene";
+import P5FoodChainMaterials from "./pages/grade5/life/foodchain/P5FoodChainMaterials";
+import P5FoodChainConcept from "./pages/grade5/life/foodchain/P5FoodChainConcept";
 
 // import Grade6 from "./pages/grade6";
 
@@ -167,28 +170,31 @@ export default function App() {
 
         {/* STEP 1 */}
         <Route path="/p5/life" element={<P5LifeIntro />} />
-
-        {/* STEP 2 */}
         <Route path="/p5/life/foodchain" element={<P5FoodChainIntro />} />
-
-        {/* STEP 3 */}
         <Route path="/p5/life/foodchain/vocab" element={<P5FoodChainVocab />} />
-
-        {/* STEP 4 */}
         <Route path="/p5/life/foodchain/steps" element={<P5FoodChainSteps />} />
-
-        {/* STEP 5 */}
         <Route path="/p5/life/foodchain/select" element={<P5FoodChainSelect />} />
-
-        {/* STEP 6 */}
-        <Route path="/p5/life/foodchain/sim" element={<P5FoodChainSim />} />
-
-        {/* STEP 7 */}
+        {/* <Route path="/p5/life/foodchain/sim" element={<P5FoodChainSim />} /> */}
         <Route path="/p5/life/foodchain/check" element={<P5FoodChainCheck />} />
+       {/* <Route path="/p5-foodchain-summary" element={<P5FoodChainSummary />} /> */}
+        <Route path="/p5/life/foodchain/materials" element={<P5FoodChainMaterials />} />
 
-        {/* STEP 8 */}
-        <Route path="/p5/life/foodchain/summary" element={<P5FoodChainSummary />} />
-
+        <Route
+ path="/p5/life/foodchain/summary"
+ element={<P5FoodChainSummary />}
+/>
+        <Route 
+path="/p5/life/foodchain/answer" 
+element={<P5FoodChainAnswer />}
+/>
+<Route
+ path="/p5/life/foodchain/concept"
+ element={<P5FoodChainConcept />}
+/>
+        <Route
+        path="/p5/life/foodchain/scene"
+        element={<P5FoodChainScene />}
+        />
         {/* ===== ชั้นอื่น ๆ ===== */}
         <Route
           path="/p5"
