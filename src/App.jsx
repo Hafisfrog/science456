@@ -155,7 +155,6 @@ export default function App() {
         <Route path="/p5/life/foodchain/sim" element={<P5FoodChainSim />} />
         <Route path="/p5/life/foodchain/check" element={<P5FoodChainCheck />} />
         <Route path="/p5/life/foodchain/summary" element={<P5FoodChainSummary />} />
-        <Route path="/p5" element={<div style={{ padding: 40 }}>หน้า ป.5 (กำลังทำ)</div>} />
 
         {/* STEP 9 */}
         <Route path="/p5/life/genetics" element={<P5GeneticsSelect />} />
