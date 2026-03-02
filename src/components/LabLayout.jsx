@@ -1,11 +1,18 @@
-function LabLayout({ title, children, onNext }) {
+import { useLocation } from "react-router-dom";
+
+function LabLayout({ title, children, onNext, showTeacher = true, showHeader = true }) {
+  const location = useLocation();
+  const shouldShowHeader = showHeader && !location.pathname.startsWith("/p5");
+
   return (
     <div className="relative w-screen h-screen bg-gradient-to-b from-sky-300 to-sky-100 flex flex-col overflow-hidden">
 
       {/* HEADER */}
-      <div className="bg-white px-10 py-3 text-xl font-bold text-center shadow shrink-0 z-10">
-        {title}
-      </div>
+      {shouldShowHeader && (
+        <div className="bg-white px-10 py-3 text-xl font-bold text-center shadow shrink-0 z-10">
+          {title}
+        </div>
+      )}
 
       {/* CONTENT */}
       <div className="relative flex-1 overflow-hidden">
@@ -16,19 +23,24 @@ function LabLayout({ title, children, onNext }) {
         </div>
 
         {/* teacher */}
-        <img
-          src="/teacher.png"
-          alt="teacher"
-          className="
-            absolute
-            left-0
-            bottom-0
-            w-[160px]
-            object-contain
-            pointer-events-none
-            z-20
-          "
-        />
+        {showTeacher && (
+          <img
+            src="/images/p4/exp3/teacher.png"
+            alt="teacher"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+            className="
+              absolute
+              left-0
+              bottom-0
+              w-[160px]
+              object-contain
+              pointer-events-none
+              z-20
+            "
+          />
+        )}
 
         {/* next */}
         {onNext && (

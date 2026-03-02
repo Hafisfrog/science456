@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Two red balloons">
+  <defs>
+    <radialGradient id="balloonRed" cx="35%" cy="26%" r="70%">
+      <stop offset="0%" stop-color="#ffd4d4"/>
+      <stop offset="26%" stop-color="#ff8a8f"/>
+      <stop offset="62%" stop-color="#ef3a43"/>
+      <stop offset="100%" stop-color="#b41624"/>
+    </radialGradient>
+    <radialGradient id="shine" cx="20%" cy="24%" r="50%">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="string" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a0b1c8"/>
+      <stop offset="100%" stop-color="#7a8ca6"/>
+    </linearGradient>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="20" stdDeviation="16" flood-color="#243242" flood-opacity="0.24"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="620" fill="none"/>
+
+  <g filter="url(#softShadow)">
+    <path d="M230 113c73 0 139 75 139 195 0 118-52 206-129 206-79 0-133-89-133-207 0-118 54-194 123-194z" fill="url(#balloonRed)"/>
+    <path d="M225 115c66 0 130 67 130 190 0 122-47 196-116 196-79 0-120-93-120-197 0-104 42-189 106-189z" fill="none" stroke="#8d111f" stroke-opacity=".28" stroke-width="3"/>
+    <ellipse cx="188" cy="220" rx="66" ry="92" fill="url(#shine)"/>
+    <path d="M238 512l-18 30 26 0z" fill="#ba1b29"/>
+    <path d="M244 541c19 33 19 53 12 73" fill="none" stroke="url(#string)" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <path d="M575 112c74 0 140 74 140 196 0 117-52 205-129 205-80 0-134-89-134-207 0-119 54-194 123-194z" fill="url(#balloonRed)"/>
+    <path d="M572 115c66 0 129 68 129 191 0 122-47 195-116 195-79 0-120-91-120-197 0-108 42-189 107-189z" fill="none" stroke="#8d111f" stroke-opacity=".28" stroke-width="3"/>
+    <ellipse cx="536" cy="217" rx="64" ry="90" fill="url(#shine)"/>
+    <path d="M582 512l-19 30 26 0z" fill="#ba1b29"/>
+    <path d="M588 542c17 27 17 47 9 72" fill="none" stroke="url(#string)" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>

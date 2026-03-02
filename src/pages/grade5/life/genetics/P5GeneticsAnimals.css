@@ -1,0 +1,487 @@
+.p5ga-page {
+  height: 100%;
+  background: linear-gradient(180deg, #d8deec 0%, #d1d7e4 100%);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: "Prompt", sans-serif;
+}
+
+.p5ga-board {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(700px, 760px) 320px;
+  justify-content: center;
+  align-items: start;
+  column-gap: 16px;
+  padding: 20px 24px 12px;
+  background:
+    radial-gradient(38% 34% at 24% 66%, rgba(167, 207, 150, 0.28) 0 58%, transparent 59%),
+    radial-gradient(38% 34% at 66% 62%, rgba(167, 207, 150, 0.24) 0 58%, transparent 59%),
+    radial-gradient(26% 26% at 18% 36%, rgba(216, 233, 208, 0.66) 0 56%, transparent 57%),
+    radial-gradient(28% 26% at 86% 34%, rgba(216, 233, 208, 0.58) 0 56%, transparent 57%),
+    linear-gradient(180deg, #f5f7f4 0%, #eff4ec 100%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 28px 28px 0 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 22px 42px rgba(24, 34, 58, 0.16);
+  overflow: hidden;
+}
+
+.p5ga-board h1 {
+  grid-column: 1 / -1;
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f213f;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.p5ga-stage {
+  --p5ga-chart-width: 620px;
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  justify-self: center;
+  height: 500px;
+  border-radius: 24px;
+  padding: 8px 8px 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.52));
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.06),
+    0 14px 30px rgba(0, 0, 0, 0.12);
+}
+
+.p5ga-level {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 800;
+  color: #111827;
+}
+
+.p5ga-level,
+.p5ga-parent-row,
+.p5ga-allele-row {
+  position: relative;
+  z-index: 2;
+}
+
+.p5ga-level-parent {
+  width: var(--p5ga-chart-width);
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.p5ga-parent-row {
+  margin-top: 10px;
+  width: var(--p5ga-chart-width);
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.p5ga-parent-block {
+  width: 180px;
+  text-align: center;
+}
+
+.p5ga-cat {
+  width: 126px;
+  height: 126px;
+  border: 3px solid #111827;
+  border-radius: 999px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 8px 20px rgba(17, 24, 39, 0.22);
+}
+
+.p5ga-cat-black {
+  background: #f2f4f6;
+}
+
+.p5ga-cat-white {
+  background: #f2f4f6;
+}
+
+.p5ga-cat-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 999px;
+}
+
+.p5ga-genotype {
+  margin: 6px 0 0;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.p5ga-allele-row {
+  margin-top: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 542px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.p5ga-allele-row span {
+  display: inline-block;
+  width: 44px;
+  text-align: center;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.p5ga-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.p5ga-lines line {
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 1;
+}
+
+.p5ga-lines line.red {
+  stroke: #ff1f1f;
+}
+
+.p5ga-lines line.yellow {
+  stroke: #f2b21c;
+}
+
+.p5ga-level-child {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--p5ga-chart-width);
+  bottom: 92px;
+}
+
+.p5ga-kitten-row {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--p5ga-chart-width);
+  right: auto;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  z-index: 2;
+}
+
+.p5ga-kitten-block {
+  text-align: center;
+}
+
+.p5ga-kitten {
+  width: 126px;
+  height: 126px;
+  border: 3px solid #111827;
+  border-radius: 999px;
+  background: #ececec;
+  display: grid;
+  place-items: center;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.86),
+    0 8px 16px rgba(17, 24, 39, 0.16);
+}
+
+.p5ga-kitten.is-revealed {
+  background: #f7f7f7;
+}
+
+.p5ga-kitten-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  border-radius: 999px;
+}
+
+.p5ga-kitten-genotype {
+  margin: 8px 0 0;
+  min-height: 36px;
+  font-size: 38px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.p5ga-side {
+  margin-top: 62px;
+  padding: 20px 16px 18px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(247, 250, 255, 0.78));
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.06),
+    0 16px 30px rgba(0, 0, 0, 0.14);
+}
+
+.p5ga-side-text {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.28;
+  color: #0a0a0a;
+}
+
+.p5ga-badge {
+  margin: 10px 0 0;
+  display: inline-block;
+  border-radius: 14px;
+  padding: 4px 12px 6px;
+  font-size: 16px;
+  line-height: 1.2;
+  color: #000;
+}
+
+.p5ga-badge.badge-a {
+  background: #ff1717;
+  box-shadow: 0 6px 12px rgba(185, 28, 28, 0.28);
+}
+
+.p5ga-badge.badge-b {
+  background: #ffea00;
+  box-shadow: 0 6px 12px rgba(180, 140, 20, 0.22);
+}
+
+.p5ga-play {
+  margin-top: 20px;
+  width: 72px;
+  height: 72px;
+  border: 5px solid #e7a3a9;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffd9de, #ffc0c8);
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 8px 10px rgba(255, 255, 255, 0.45),
+    0 8px 18px rgba(200, 123, 133, 0.36);
+}
+
+.p5ga-side-note {
+  margin: 8px 0 0;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 800;
+}
+
+.p5ga-ground {
+  height: 95px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 20%),
+    linear-gradient(180deg, #a7d45a 0 46%, #95c748 47% 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 14px 10px;
+  border-radius: 0 0 28px 28px;
+  box-shadow: 0 16px 30px rgba(24, 34, 58, 0.14);
+}
+
+.p5ga-lang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  border: 4px solid #87b6ff;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #f5f9ff, #ebf2ff);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+}
+
+.p5ga-lang button {
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #1f8fb7;
+  background: #9bd7ff;
+  cursor: pointer;
+}
+
+.p5ga-lang button.is-active {
+  background: #5cb0ff;
+  color: #fff;
+}
+
+.p5ga-lang .p5ga-audio {
+  background: #73a8ff;
+  color: #fff;
+}
+
+.p5ga-next {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ff6767, #e63f3f);
+  padding: 7px 24px 9px;
+  box-shadow:
+    inset 0 0 0 4px rgba(171, 50, 50, 0.35),
+    0 10px 18px rgba(172, 46, 46, 0.32);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 1440px) {
+  .p5ga-board h1 {
+    font-size: 22px;
+  }
+
+  .p5ga-level,
+  .p5ga-allele-row span,
+  .p5ga-genotype,
+  .p5ga-kitten-genotype {
+    font-size: 30px;
+  }
+
+  .p5ga-side-text,
+  .p5ga-side-note {
+    font-size: 17px;
+  }
+
+  .p5ga-badge {
+    font-size: 15px;
+  }
+
+  .p5ga-lang button {
+    font-size: 13px;
+  }
+
+  .p5ga-next {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1180px) {
+  .p5ga-page {
+    padding: 10px;
+  }
+
+  .p5ga-board {
+    grid-template-columns: 1fr;
+    padding: 14px 14px 12px;
+    border-radius: 22px 22px 0 0;
+  }
+
+  .p5ga-stage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 18px;
+  }
+
+  .p5ga-level-parent,
+  .p5ga-level-child {
+    position: static;
+    width: auto;
+    transform: none;
+    margin: 4px 0 0;
+  }
+
+  .p5ga-parent-row {
+    width: 100%;
+    max-width: 450px;
+    gap: 14px;
+  }
+
+  .p5ga-allele-row {
+    width: 100%;
+    max-width: 450px;
+    margin-left: 0;
+  }
+
+  .p5ga-lines {
+    display: none;
+  }
+
+  .p5ga-kitten-row {
+    position: static;
+    margin-top: 10px;
+    left: auto;
+    right: auto;
+    width: auto;
+    transform: none;
+    gap: 12px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .p5ga-kitten {
+    width: 92px;
+    height: 92px;
+  }
+
+  .p5ga-kitten-genotype {
+    font-size: 24px;
+    min-height: 24px;
+  }
+
+  .p5ga-side {
+    margin-top: 12px;
+    border-radius: 18px;
+    padding: 14px 12px;
+  }
+
+  .p5ga-side-text {
+    font-size: 24px;
+  }
+
+  .p5ga-badge {
+    font-size: 20px;
+  }
+
+  .p5ga-side-note {
+    font-size: 22px;
+  }
+
+  .p5ga-ground {
+    height: auto;
+    padding: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    border-radius: 0 0 22px 22px;
+  }
+
+  .p5ga-lang {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .p5ga-lang button {
+    font-size: 16px;
+    padding: 6px 10px;
+  }
+
+  .p5ga-next {
+    margin-left: auto;
+    font-size: 30px;
+  }
+}

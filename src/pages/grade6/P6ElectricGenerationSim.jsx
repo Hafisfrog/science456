@@ -33,6 +33,7 @@ const persistCompletedTrials = (ids) => {
 
 export default function P6ElectricGenerationSim() {
   const navigate = useNavigate();
+
   const trialOptions = useMemo(
     () => [
       {
@@ -57,9 +58,9 @@ export default function P6ElectricGenerationSim() {
   const [selectedTrial, setSelectedTrial] = useState(null);
   const [showTrialMenu, setShowTrialMenu] = useState(false);
   const [started, setStarted] = useState(false);
+  const [isTesting, setIsTesting] = useState(false);
   const [remaining, setRemaining] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [isDone, setIsDone] = useState(false);
   const [completedTrials, setCompletedTrials] = useState(() => readCompletedTrials());
 
   const totalTrials = trialOptions.length;
@@ -71,24 +72,41 @@ export default function P6ElectricGenerationSim() {
   const canStart = Boolean(selectedTrial);
   const shouldShowHint = !canStart;
 
-  const handleToggleTrial = () => {
-    setShowTrialMenu((prev) => !prev);
-  };
-
   const durationSeconds = useMemo(() => {
     if (selectedTrial === "trial-2") return 120;
     if (selectedTrial === "trial-3") return 300;
     return 0;
   }, [selectedTrial]);
 
+  const trialLevel =
+    selectedTrial === "trial-2" ? "mid" : selectedTrial === "trial-3" ? "high" : "none";
+  const trialIndex = selectedTrial?.split("-")[1] || "";
+  const isRubbing = isRunning && selectedTrial !== "trial-1";
+  const canShowResult = Boolean(selectedTrial && started && isTesting);
+
+  const markTrialCompleted = () => {
+    if (!selectedTrial) return;
+    const next = Array.from(new Set([...readCompletedTrials(), selectedTrial]));
+    persistCompletedTrials(next);
+    setCompletedTrials(next);
+  };
+
+  const handleToggleTrial = () => {
+    setShowTrialMenu((prev) => !prev);
+  };
+
   const handleSelectTrial = (id) => {
     setSelectedTrial(id);
     setShowTrialMenu(false);
     setStarted(false);
+    setIsTesting(false);
     setIsRunning(false);
-    setIsDone(false);
     const nextDuration = id === "trial-2" ? 120 : id === "trial-3" ? 300 : 0;
     setRemaining(nextDuration);
+  };
+
+  const startPaperTesting = () => {
+    setIsTesting(true);
   };
 
   const handleStart = () => {
@@ -100,19 +118,15 @@ export default function P6ElectricGenerationSim() {
     setShowTrialMenu(false);
     setStarted(true);
     setRemaining(durationSeconds);
+    setIsTesting(false);
 
     if (durationSeconds > 0) {
       setIsRunning(true);
-      setIsDone(false);
     } else {
       setIsRunning(false);
-      setIsDone(true);
+      startPaperTesting();
     }
   };
-
-  const trialLevel =
-    selectedTrial === "trial-2" ? "mid" : selectedTrial === "trial-3" ? "high" : "none";
-  const trialIndex = selectedTrial?.split("-")[1] || "";
 
   useEffect(() => {
     if (!isRunning) return undefined;
@@ -122,7 +136,7 @@ export default function P6ElectricGenerationSim() {
         if (prev <= 1) {
           clearInterval(timerId);
           setIsRunning(false);
-          setIsDone(true);
+          startPaperTesting();
           return 0;
         }
         return prev - 1;
@@ -132,33 +146,15 @@ export default function P6ElectricGenerationSim() {
     return () => clearInterval(timerId);
   }, [isRunning]);
 
-  const formatTime = (value) => {
-    const minutes = Math.floor(value / 60);
-    const seconds = value % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-  };
-
-  const markTrialCompleted = () => {
-    if (!selectedTrial) return;
-
-    setCompletedTrials((prev) => {
-      const next = Array.from(new Set([...prev, selectedTrial]));
-      persistCompletedTrials(next);
-      return next;
-    });
-  };
-
-  const handleShowResult = () => {
-    if (!trialIndex) return;
-    markTrialCompleted();
-    navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
-  };
-
   const handleSkip = () => {
     if (!trialIndex) return;
     setIsRunning(false);
-    setIsDone(true);
     setRemaining(0);
+    startPaperTesting();
+  };
+
+  const handleShowResult = () => {
+    if (!trialIndex || !isTesting) return;
     markTrialCompleted();
     navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
   };
@@ -169,9 +165,15 @@ export default function P6ElectricGenerationSim() {
     setSelectedTrial(null);
     setShowTrialMenu(false);
     setStarted(false);
+    setIsTesting(false);
     setRemaining(0);
     setIsRunning(false);
-    setIsDone(false);
+  };
+
+  const formatTime = (value) => {
+    const minutes = Math.floor(value / 60);
+    const seconds = value % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
   return (
@@ -238,12 +240,6 @@ export default function P6ElectricGenerationSim() {
 
             {shouldShowHint && <div className="p6-sim-hint">กรุณาเลือกการทดลอง</div>}
 
-            {isDone && (
-              <button className="p6-sim-result-btn" type="button" onClick={handleShowResult}>
-                ดูผลการทดลอง
-              </button>
-            )}
-
             {allTrialsCompleted && (
               <button
                 className="p6-sim-summary-btn"
@@ -260,11 +256,23 @@ export default function P6ElectricGenerationSim() {
               </button>
             )}
 
+            {canShowResult && (
+              <button className="p6-sim-result-btn" type="button" onClick={handleShowResult}>
+                {"\u0E14\u0E39\u0E1C\u0E25\u0E01\u0E32\u0E23\u0E17\u0E14\u0E25\u0E2D\u0E07"}
+              </button>
+            )}
+
             <div className={`p6-sim-timer ${isRunning ? "running" : ""}`}>
               <div className="p6-sim-timer-label">จับเวลา</div>
               <div className="p6-sim-timer-value">{formatTime(remaining)}</div>
               <div className="p6-sim-timer-sub">
-                {isRunning ? "กำลังจับเวลา" : isDone ? "ครบเวลา" : "พร้อมเริ่ม"}
+                {isRunning
+                  ? "กำลังจับเวลา"
+                  : isTesting
+                    ? "กำลังทดสอบกับเศษกระดาษ"
+                    : started
+                      ? "ครบเวลา"
+                      : "พร้อมเริ่ม"}
               </div>
             </div>
           </div>
@@ -307,18 +315,18 @@ export default function P6ElectricGenerationSim() {
         </div>
 
         <div
-          className={`p6-sim-balloon level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""}`}
+          className={`p6-sim-balloon level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""} ${isTesting ? "testing" : ""}`}
         >
           <div
             className={`p6-sim-cloth ${selectedTrial && selectedTrial !== "trial-1" ? "active" : "inactive"} ${
-              started && selectedTrial && selectedTrial !== "trial-1" ? "rubbing" : ""
-            }`}
+              isRubbing ? "rubbing" : ""
+            } ${isTesting ? "testing" : ""}`}
           />
           <div className="p6-sim-knot" />
         </div>
 
         <div
-          className={`p6-sim-papers level-${trialLevel} ${selectedTrial ? "active" : ""} ${started ? "started" : ""}`}
+          className={`p6-sim-papers level-${trialLevel} ${selectedTrial ? "active" : ""} ${isTesting ? "started" : ""} ${isTesting ? "testing" : ""}`}
         >
           {Array.from({ length: 8 }).map((_, idx) => (
             <span key={idx} className={`paper p-${idx + 1}`} />

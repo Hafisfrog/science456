@@ -6,19 +6,11 @@ export default function SelectGrade() {
 
   return (
     <div className="grade-wrap">
-
       <div className="grade-header">
         <span className="grade-chip">Science Lab</span>
         <h1 className="grade-title">เลือกชั้นเรียน</h1>
         <p className="grade-sub">เลือกชั้นเพื่อเริ่มการทดลองวิทยาศาสตร์</p>
       </div>
-        <button className="back-home-btn" onClick={() => navigate("/")}>
-            ← กลับหน้าเริ่มต้น
-        </button>
-
-
-      <h1 className="grade-title">เลือกชั้นเรียน</h1>
-      <p className="grade-sub">เลือกชั้นเพื่อเริ่มการทดลองวิทยาศาสตร์</p>
 
       <div className="grade-grid">
         <div className="grade-card" onClick={() => navigate("/p4")}>
@@ -44,6 +36,10 @@ export default function SelectGrade() {
             <div className="grade-small">แรงไฟฟ้าและวงจรไฟฟ้า</div>
           </div>
         </div>
+      </div>
+
+      <div className="grade-footer">
+        <button className="back-home-btn" onClick={() => navigate("/")}>← กลับหน้าหลัก</button>
       </div>
     </div>
   );

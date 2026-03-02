@@ -2,6 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import "./P6ElectricGenerationResult.css";
 
 const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
+const TOTAL_TRIALS = 3;
 
 const RESULTS = {
   1: {
@@ -46,7 +47,7 @@ export default function P6ElectricGenerationResult() {
   const selected = searchParams.get("trial") || "1";
   const data = RESULTS[selected] || RESULTS[1];
   const completedCount = readCompletedTrials().length;
-  const allTrialsCompleted = completedCount === 3;
+  const allTrialsCompleted = completedCount === TOTAL_TRIALS;
 
   return (
     <div className="p6-result-page">
@@ -95,21 +96,22 @@ export default function P6ElectricGenerationResult() {
           >
             ทดลองใหม่
           </button>
-          <button
-            className={`p6-result-next ${allTrialsCompleted ? "" : "disabled"}`}
-            disabled={!allTrialsCompleted}
-            type="button"
-            onClick={() =>
-              navigate(`/p6/experiment/electric-generation/summary?trial=${selected}`)
-            }
-          >
-            สรุปผลการทดลอง
-          </button>
+          {allTrialsCompleted && (
+            <button
+              className="p6-result-next"
+              type="button"
+              onClick={() =>
+                navigate(`/p6/experiment/electric-generation/summary?trial=${selected}`)
+              }
+            >
+              สรุปผลการทดลอง
+            </button>
+          )}
         </div>
 
         {!allTrialsCompleted && (
           <div className="p6-result-progress-note">
-            กรุณาทำการทดลองให้ครบทั้ง 3 ครั้งก่อนสรุปผล ({completedCount}/3)
+            กรุณาทำการทดลองให้ครบทั้ง 3 ครั้งก่อนสรุปผล ({completedCount}/{TOTAL_TRIALS})
           </div>
         )}
 

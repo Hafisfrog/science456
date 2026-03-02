@@ -35,7 +35,7 @@ export default function P5LifeIntro() {
 
           {/* การ์ด 2 */}
           <button
-            onClick={() => alert("หน้าลักษณะทางพันธุกรรม (ยังไม่ทำ)")}
+            onClick={() => navigate("/p5/life/genetics")}
             className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
                        hover:scale-105 transition transform"
           >

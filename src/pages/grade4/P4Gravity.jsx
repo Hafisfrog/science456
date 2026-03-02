@@ -5,7 +5,7 @@ export default function P4Gravity() {
   const navigate = useNavigate();
 
   return (
-    <div className="grade-wrap" style={{ position: "relative" }}>
+    <div className="grade-wrap p4g-page" style={{ position: "relative" }}>
         {/* <BackButton /> */}
         <button className="back-home-btn" onClick={() => navigate("/p4/gravity/objectives")}>
           ← กลับหน้า ป.4
@@ -16,7 +16,9 @@ export default function P4Gravity() {
 
       <div className="grade-grid">
         <div className="grade-card" onClick={() => navigate("/p4/gravity/vocab")}>
-        <img src="/images/p4.png" alt="" className="grade-image" />
+        <div className="p4g-card-media">
+          <img src="/images/p4.png" alt="" className="grade-image" />
+        </div>
         <div className="grade-content">
             <div className="grade-big">การทดลองที่ 1</div>
             <div className="grade-small">ผลของแรงโน้มถ่วง</div>
@@ -24,7 +26,9 @@ export default function P4Gravity() {
         </div>
 
         <div className="grade-card" onClick={() => navigate("/p4/gravity/exp2/vocab")}>
-          <img src="/images/p4/action.png" alt="" className="grade-image" />
+          <div className="p4g-card-media">
+            <img src="/images/p4/action.png" alt="" className="grade-image" />
+          </div>
           <div className="grade-content">
             <div className="grade-big">การทดลองที่ 2</div>
             <div className="grade-small">
@@ -34,7 +38,9 @@ export default function P4Gravity() {
         </div>
 
         <div className="grade-card" onClick={() => navigate("/p4/gravity/exp3/vocab")}>
-          <img src="/images/p4/earth-moon.png" alt="" className="grade-image" />
+          <div className="p4g-card-media">
+            <img src="/images/p4/earth-moon.png" alt="" className="grade-image" />
+          </div>
           <div className="grade-content">
             <div className="grade-big">การทดลองที่ 3</div>
             <div className="grade-small">

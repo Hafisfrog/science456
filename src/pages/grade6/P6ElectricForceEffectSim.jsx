@@ -2,14 +2,172 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P6ElectricForceEffectSim.css";
 
-const TRIAL_OPTIONS = [
-  { id: "rub-both", label: "ขัดถูลูกโป่งทั้ง 2 ใบด้วยกระดาษเยื่อ" },
-  { id: "rub-one", label: "ขัดถูลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ" },
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย", speechLang: "th-TH" },
+  { id: "en", label: "English", speechLang: "en-US" },
+  { id: "ms", label: "Melayu", speechLang: "ms-MY" },
 ];
 
-const RESULT_BY_TRIAL = {
-  "rub-both": "ผลักกัน",
-  "rub-one": "ดึงดูดกัน",
+const TRIAL_OPTIONS = [
+  {
+    id: "balloon-both",
+    equipment: "balloon",
+    mode: "both",
+    label: {
+      th: "ขัดถูลูกโป่งทั้ง 2 ใบด้วยกระดาษเยื่อ",
+      en: "Rub both balloons with tissue paper",
+      ms: "Gosok kedua-dua belon dengan kertas tisu",
+    },
+  },
+  {
+    id: "balloon-one",
+    equipment: "balloon",
+    mode: "one",
+    label: {
+      th: "ขัดถูลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ",
+      en: "Rub 1 balloon (left) with tissue paper",
+      ms: "Gosok 1 belon (kiri) dengan kertas tisu",
+    },
+  },
+  {
+    id: "marker-both",
+    equipment: "marker",
+    mode: "both",
+    label: {
+      th: "ขัดถูปากกาเมจิกทั้ง 2 ด้ามด้วยกระดาษเยื่อ",
+      en: "Rub both marker pens with tissue paper",
+      ms: "Gosok kedua-dua pen marker dengan kertas tisu",
+    },
+  },
+  {
+    id: "marker-one",
+    equipment: "marker",
+    mode: "one",
+    label: {
+      th: "ขัดถูปากกาเมจิก 1 ด้าม (ด้ามซ้าย) ด้วยกระดาษเยื่อ",
+      en: "Rub 1 marker pen (left) with tissue paper",
+      ms: "Gosok 1 pen marker (kiri) dengan kertas tisu",
+    },
+  },
+];
+
+const RESULT_BY_MODE = {
+  both: {
+    th: "ผลักกัน",
+    en: "Repel",
+    ms: "Tolak-menolak",
+  },
+  one: {
+    th: "ดึงดูดกัน",
+    en: "Attract",
+    ms: "Tarik-menarik",
+  },
+};
+
+const EQUIPMENT_LABEL = {
+  balloon: {
+    th: "ลูกโป่ง",
+    en: "balloon",
+    ms: "belon",
+  },
+  marker: {
+    th: "ปากกาเมจิก",
+    en: "marker pen",
+    ms: "pen marker",
+  },
+};
+
+const UI_TEXT = {
+  th: {
+    backTop: "← ย้อนกลับ",
+    selectTrial: "เลือกการทดลอง",
+    start: "เริ่ม",
+    progress: "ความคืบหน้า",
+    menuTitle: "เลือกอุปกรณ์และการทดลอง (ทำทีละอย่าง)",
+    done: "เสร็จแล้ว",
+    waiting: "รอคิว",
+    selected: "ตัวเลือก",
+    hiddenSummary: 'ซ่อนผลสรุปไว้ก่อน กด "สรุปผลการทดลอง" เพื่อดูผลทั้งหมด',
+    backSteps: "← กลับขั้นตอน",
+    summary: "สรุปผลการทดลอง",
+    reset: "เริ่มใหม่",
+    stop: "หยุด",
+    time: "เวลาการถู",
+    listen: "ฟังข้อความหน้านี้",
+    chooseEquipAndTrial: "กรุณาเลือกอุปกรณ์และการทดลองก่อนเริ่ม",
+    chooseTrialFirst: "กรุณาเลือกการทดลองก่อนเริ่ม",
+    chooseEquipFirst: "เลือกอุปกรณ์ก่อนนะ: ลูกโป่ง หรือ ปากกาเมจิก",
+    chooseTrialInEquip: "เลือกการทดลองของอุปกรณ์ที่เลือกก่อนนะ",
+    chooseEquipForExperiment: "เลือกอุปกรณ์ที่จะทดลองก่อน (ลูกโป่ง หรือ ปากกาเมจิก)",
+    tapSelectFirst: 'กด "เลือกการทดลอง" แล้วเลือกอุปกรณ์ก่อนเริ่ม',
+    tapTrialFirst: "เลือกการทดลองในอุปกรณ์ที่เลือกก่อนเริ่ม",
+    rubbing: 'กำลังขัดถู... กด "หยุด" เพื่อสิ้นสุดการทดลอง',
+    recorded: "บันทึกผลแล้ว เลือกการทดลองถัดไปได้",
+    pressStart: 'กด "เริ่ม" เพื่อเริ่มขัดถู',
+    oneBalloonHint: "ขัดลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ",
+    oneMarkerHint: "ขัดปากกาเมจิก 1 ด้าม (ด้ามซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ",
+    completeHint: 'ทำครบทุกการทดลองแล้ว กดปุ่ม "สรุปผลการทดลอง" ได้เลย',
+  },
+  en: {
+    backTop: "← Back",
+    selectTrial: "Select Trial",
+    start: "Start",
+    progress: "Progress",
+    menuTitle: "Select equipment and trial (one by one)",
+    done: "done",
+    waiting: "queued",
+    selected: "Selected",
+    hiddenSummary: 'Summary is hidden. Press "Experiment Summary" to view all results.',
+    backSteps: "← Back to steps",
+    summary: "Experiment Summary",
+    reset: "Reset",
+    stop: "Stop",
+    time: "Rubbing time",
+    listen: "Read this screen",
+    chooseEquipAndTrial: "Please choose equipment and trial before starting.",
+    chooseTrialFirst: "Please choose a trial before starting.",
+    chooseEquipFirst: "Choose equipment first: balloon or marker pen.",
+    chooseTrialInEquip: "Choose a trial from the selected equipment first.",
+    chooseEquipForExperiment: "Choose equipment first (balloon or marker pen).",
+    tapSelectFirst: 'Press "Select Trial" and choose equipment first.',
+    tapTrialFirst: "Choose a trial from selected equipment first.",
+    rubbing: 'Rubbing... press "Stop" to finish.',
+    recorded: "Result saved. You can choose the next trial.",
+    pressStart: 'Press "Start" to begin rubbing.',
+    oneBalloonHint: "What happens if only one balloon (left) is rubbed?",
+    oneMarkerHint: "What happens if only one marker pen (left) is rubbed?",
+    completeHint: 'All trials are done. Press "Experiment Summary".',
+  },
+  ms: {
+    backTop: "← Kembali",
+    selectTrial: "Pilih Ujian",
+    start: "Mula",
+    progress: "Kemajuan",
+    menuTitle: "Pilih peralatan dan ujian (satu demi satu)",
+    done: "selesai",
+    waiting: "menunggu",
+    selected: "Pilihan",
+    hiddenSummary: 'Ringkasan disorok. Tekan "Ringkasan Eksperimen" untuk lihat semua hasil.',
+    backSteps: "← Kembali ke langkah",
+    summary: "Ringkasan Eksperimen",
+    reset: "Mula semula",
+    stop: "Berhenti",
+    time: "Masa menggosok",
+    listen: "Baca skrin ini",
+    chooseEquipAndTrial: "Sila pilih peralatan dan ujian sebelum mula.",
+    chooseTrialFirst: "Sila pilih ujian sebelum mula.",
+    chooseEquipFirst: "Pilih peralatan dahulu: belon atau pen marker.",
+    chooseTrialInEquip: "Pilih ujian dalam peralatan yang dipilih dahulu.",
+    chooseEquipForExperiment: "Pilih peralatan dahulu (belon atau pen marker).",
+    tapSelectFirst: 'Tekan "Pilih Ujian" dan pilih peralatan dahulu.',
+    tapTrialFirst: "Pilih ujian dalam peralatan yang dipilih dahulu.",
+    rubbing: 'Sedang menggosok... tekan "Berhenti" untuk tamat.',
+    recorded: "Hasil disimpan. Boleh pilih ujian seterusnya.",
+    pressStart: 'Tekan "Mula" untuk mula menggosok.',
+    oneBalloonHint: "Apa jadi jika hanya satu belon (kiri) digosok?",
+    oneMarkerHint: "Apa jadi jika hanya satu pen marker (kiri) digosok?",
+    completeHint: 'Semua ujian selesai. Tekan "Ringkasan Eksperimen".',
+  },
 };
 
 const CHARGES = {
@@ -39,8 +197,41 @@ const formatTime = (totalSeconds) => {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 };
 
+function getTrialLabel(trial, language) {
+  return trial?.label?.[language] || trial?.label?.th || "";
+}
+
+function getEquipmentLabel(equipment, language) {
+  return EQUIPMENT_LABEL[equipment]?.[language] || EQUIPMENT_LABEL[equipment]?.th || "";
+}
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) {
+    return;
+  }
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+
+  const voices = window.speechSynthesis.getVoices();
+  const exact = voices.find((voice) => voice.lang.toLowerCase() === lang.toLowerCase());
+  const fallback = voices.find((voice) =>
+    voice.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()),
+  );
+
+  if (exact || fallback) {
+    utterance.voice = exact || fallback;
+  }
+
+  window.speechSynthesis.speak(utterance);
+}
+
 export default function P6ElectricForceEffectSim() {
   const navigate = useNavigate();
+  const [language, setLanguage] = useState("th");
+  const [selectedEquipment, setSelectedEquipment] = useState(null);
   const [selectedTrial, setSelectedTrial] = useState(null);
   const [showTrialMenu, setShowTrialMenu] = useState(false);
   const [started, setStarted] = useState(false);
@@ -49,60 +240,96 @@ export default function P6ElectricForceEffectSim() {
   const [charged, setCharged] = useState(false);
   const [sequenceNotice, setSequenceNotice] = useState("");
   const [trialResults, setTrialResults] = useState({});
+  const t = UI_TEXT[language];
+  const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === language)?.speechLang || "th-TH";
 
-  const completedCount = useMemo(
-    () => TRIAL_OPTIONS.filter((trial) => Boolean(trialResults[trial.id])).length,
-    [trialResults]
+  const activeTrials = useMemo(
+    () => (selectedEquipment ? TRIAL_OPTIONS.filter((trial) => trial.equipment === selectedEquipment) : []),
+    [selectedEquipment]
   );
-  const totalTrials = TRIAL_OPTIONS.length;
+  const totalTrials = selectedEquipment ? activeTrials.length : 2;
+  const completedCount = useMemo(
+    () => activeTrials.filter((trial) => Boolean(trialResults[trial.id])).length,
+    [activeTrials, trialResults]
+  );
   const allTrialsCompleted = completedCount === totalTrials;
   const nextPendingTrial = useMemo(
-    () => TRIAL_OPTIONS.find((trial) => !trialResults[trial.id]) || null,
-    [trialResults]
+    () => activeTrials.find((trial) => !trialResults[trial.id]) || null,
+    [activeTrials, trialResults]
   );
-  const selectedTrialLabel =
-    TRIAL_OPTIONS.find((t) => t.id === selectedTrial)?.label || "ยังไม่ได้เลือก";
+  const selectedTrialMeta = TRIAL_OPTIONS.find((t) => t.id === selectedTrial) || null;
+  const selectedTrialLabel = selectedTrialMeta ? getTrialLabel(selectedTrialMeta, language) : "";
+  const notSelectedLabel = language === "th" ? "ยังไม่ได้เลือก" : language === "en" ? "Not selected" : "Belum dipilih";
   const currentResult = selectedTrial ? trialResults[selectedTrial] : null;
   const totalExperimentTime = useMemo(
-    () =>
-      TRIAL_OPTIONS.reduce((sum, trial) => {
-        const trialTime = trialResults[trial.id]?.time || 0;
-        return sum + trialTime;
-      }, 0),
-    [trialResults]
+    () => activeTrials.reduce((sum, trial) => sum + (trialResults[trial.id]?.time || 0), 0),
+    [activeTrials, trialResults]
   );
 
+  const selectedMode = selectedTrialMeta?.mode || null;
+  const usingMarker = selectedEquipment === "marker";
   const leftCharged = charged && started && Boolean(selectedTrial);
-  const rightCharged = charged && started && selectedTrial === "rub-both";
+  const rightCharged = charged && started && selectedMode === "both";
   const isRubbing = started && isRunning && Boolean(selectedTrial);
-  const mode = !charged || !started ? "idle" : selectedTrial === "rub-both" ? "repel" : "attract";
+  const mode = !charged || !started ? "idle" : selectedMode === "both" ? "repel" : "attract";
 
   const hint = useMemo(() => {
-    if (!selectedTrial) return "กด \"เลือกการทดลอง\" ก่อนเริ่มการทดลอง";
-    if (!started) return `พร้อมทดลอง: ${selectedTrialLabel}`;
-    if (isRunning) return "กำลังขัดถู... กด \"หยุด\" เพื่อสิ้นสุดการทดลอง";
-    if (currentResult) return "บันทึกผลแล้ว เลือกการทดลองถัดไปได้";
-    return "กด \"เริ่ม\" เพื่อเริ่มขัดถู";
-  }, [currentResult, isRunning, selectedTrial, selectedTrialLabel, started]);
+    if (!selectedEquipment) return t.tapSelectFirst;
+    if (!selectedTrial) return t.tapTrialFirst;
+    if (!started)
+      return `${language === "th" ? "พร้อมทดลอง" : language === "en" ? "Ready" : "Sedia"}: ${selectedTrialLabel}`;
+    if (isRunning) return t.rubbing;
+    if (currentResult) return t.recorded;
+    return t.pressStart;
+  }, [currentResult, isRunning, language, selectedEquipment, selectedTrial, selectedTrialLabel, started, t.pressStart, t.recorded, t.rubbing, t.tapSelectFirst, t.tapTrialFirst]);
 
   const summaryText = useMemo(() => {
+    if (!selectedEquipment) return t.chooseEquipForExperiment;
     if (isRunning) return "";
-    if (allTrialsCompleted) return "ทำครบทั้ง 2 การทดลองแล้ว กด \"สรุปผลการทดลอง\" เพื่อดูผล";
+    if (allTrialsCompleted)
+      return language === "th"
+        ? `ทำครบทั้ง ${totalTrials} การทดลองของ${getEquipmentLabel(selectedEquipment, language)}แล้ว กด "${t.summary}" เพื่อดูผล`
+        : language === "en"
+          ? `Completed ${totalTrials} trials for ${getEquipmentLabel(selectedEquipment, language)}. Press "${t.summary}" to view results.`
+          : `Selesai ${totalTrials} ujian untuk ${getEquipmentLabel(selectedEquipment, language)}. Tekan "${t.summary}" untuk lihat hasil.`;
     if (nextPendingTrial) {
-      return `ทำการทดลองทีละอย่าง: ทำแล้ว ${completedCount}/${totalTrials} (ถัดไป: ${nextPendingTrial.label})`;
+      const nextLabel = getTrialLabel(nextPendingTrial, language);
+      return language === "th"
+        ? `ทำการทดลองทีละอย่างในชุด${getEquipmentLabel(selectedEquipment, language)}: ทำแล้ว ${completedCount}/${totalTrials} (ถัดไป: ${nextLabel})`
+        : language === "en"
+          ? `Run one trial at a time in ${getEquipmentLabel(selectedEquipment, language)} set: ${completedCount}/${totalTrials} done (next: ${nextLabel}).`
+          : `Lakukan ujian satu demi satu untuk set ${getEquipmentLabel(selectedEquipment, language)}: ${completedCount}/${totalTrials} siap (seterusnya: ${nextLabel}).`;
     }
     return "";
-  }, [allTrialsCompleted, completedCount, isRunning, nextPendingTrial, totalTrials]);
+  }, [allTrialsCompleted, completedCount, isRunning, language, nextPendingTrial, selectedEquipment, t.chooseEquipForExperiment, t.summary, totalTrials]);
 
   const bubbleText = useMemo(() => {
-    if (!selectedTrial && nextPendingTrial) return `เริ่มจาก ${nextPendingTrial.label} ก่อนนะ`;
-    if (!selectedTrial) return "เริ่มจากเลือกการทดลองก่อนนะ";
-    if (!allTrialsCompleted && trialResults[selectedTrial] && nextPendingTrial) {
-      return `การทดลองนี้เสร็จแล้ว ต่อไปลอง ${nextPendingTrial.label}`;
+    if (!selectedEquipment) return t.chooseEquipFirst;
+    if (!selectedTrial && nextPendingTrial) {
+      const nextLabel = getTrialLabel(nextPendingTrial, language);
+      return language === "th"
+        ? `เริ่มจาก ${nextLabel} ก่อนนะ`
+        : language === "en"
+          ? `Start with "${nextLabel}" first.`
+          : `Mula dengan "${nextLabel}" dahulu.`;
     }
-    if (selectedTrial === "rub-one") return "ขัดลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ";
-    return `${selectedTrialLabel} จะเกิดอะไรขึ้นนะ`;
-  }, [allTrialsCompleted, nextPendingTrial, selectedTrial, selectedTrialLabel, trialResults]);
+    if (!selectedTrial) return t.chooseTrialInEquip;
+    if (!allTrialsCompleted && trialResults[selectedTrial] && nextPendingTrial) {
+      const nextLabel = getTrialLabel(nextPendingTrial, language);
+      return language === "th"
+        ? `การทดลองนี้เสร็จแล้ว ต่อไปลอง ${nextLabel}`
+        : language === "en"
+          ? `This trial is complete. Next try: ${nextLabel}`
+          : `Ujian ini selesai. Seterusnya: ${nextLabel}`;
+    }
+    if (selectedTrialMeta?.id === "balloon-one") return t.oneBalloonHint;
+    if (selectedTrialMeta?.id === "marker-one") return t.oneMarkerHint;
+    return language === "th"
+      ? `${selectedTrialLabel} จะเกิดอะไรขึ้นนะ`
+      : language === "en"
+        ? `What will happen in "${selectedTrialLabel}"?`
+        : `Apa akan terjadi untuk "${selectedTrialLabel}"?`;
+  }, [allTrialsCompleted, language, nextPendingTrial, selectedEquipment, selectedTrial, selectedTrialLabel, selectedTrialMeta?.id, t.chooseEquipFirst, t.chooseTrialInEquip, t.oneBalloonHint, t.oneMarkerHint, trialResults]);
 
   useEffect(() => {
     if (!isRunning) return undefined;
@@ -110,7 +337,14 @@ export default function P6ElectricForceEffectSim() {
     return () => clearInterval(timerId);
   }, [isRunning]);
 
+  useEffect(() => {
+    setSequenceNotice("");
+  }, [language]);
+
   const canPickTrial = (trialId) => {
+    const trial = TRIAL_OPTIONS.find((item) => item.id === trialId);
+    if (!trial) return false;
+    if (selectedEquipment && trial.equipment !== selectedEquipment) return false;
     const alreadyDone = Boolean(trialResults[trialId]);
     if (alreadyDone) return true;
     if (!nextPendingTrial) return true;
@@ -118,11 +352,33 @@ export default function P6ElectricForceEffectSim() {
   };
 
   const handleSelectTrial = (id) => {
+    const trial = TRIAL_OPTIONS.find((item) => item.id === id);
+    if (!trial) return;
+    if (selectedEquipment && trial.equipment !== selectedEquipment) {
+      setSequenceNotice(
+        language === "th"
+          ? `ตอนนี้เลือกชุด${getEquipmentLabel(selectedEquipment, language)}อยู่ กด "${t.reset}" หากต้องการเปลี่ยนอุปกรณ์`
+          : language === "en"
+            ? `You are using ${getEquipmentLabel(selectedEquipment, language)} set. Press "${t.reset}" to change equipment.`
+            : `Anda sedang guna set ${getEquipmentLabel(selectedEquipment, language)}. Tekan "${t.reset}" untuk tukar peralatan.`
+      );
+      return;
+    }
     if (!canPickTrial(id) && nextPendingTrial) {
-      setSequenceNotice(`กรุณาทดลอง "${nextPendingTrial.label}" ก่อน`);
+      const nextLabel = getTrialLabel(nextPendingTrial, language);
+      setSequenceNotice(
+        language === "th"
+          ? `กรุณาทดลอง "${nextLabel}" ก่อน`
+          : language === "en"
+            ? `Please run "${nextLabel}" first.`
+            : `Sila jalankan "${nextLabel}" dahulu.`
+      );
       return;
     }
     setSequenceNotice("");
+    if (!selectedEquipment) {
+      setSelectedEquipment(trial.equipment);
+    }
     setSelectedTrial(id);
     setShowTrialMenu(false);
     setStarted(false);
@@ -132,13 +388,25 @@ export default function P6ElectricForceEffectSim() {
   };
 
   const handleStart = () => {
+    if (!selectedEquipment) {
+      setShowTrialMenu(true);
+      setSequenceNotice(t.chooseEquipAndTrial);
+      return;
+    }
     if (!selectedTrial) {
       setShowTrialMenu(true);
-      setSequenceNotice("กรุณาเลือกการทดลองก่อนเริ่ม");
+      setSequenceNotice(t.chooseTrialFirst);
       return;
     }
     if (!allTrialsCompleted && trialResults[selectedTrial] && nextPendingTrial) {
-      setSequenceNotice(`การทดลองนี้เสร็จแล้ว ให้ทำ "${nextPendingTrial.label}" ต่อ`);
+      const nextLabel = getTrialLabel(nextPendingTrial, language);
+      setSequenceNotice(
+        language === "th"
+          ? `การทดลองนี้เสร็จแล้ว ให้ทำ "${nextLabel}" ต่อ`
+          : language === "en"
+            ? `This trial is complete. Please continue with "${nextLabel}".`
+            : `Ujian ini selesai. Sila teruskan dengan "${nextLabel}".`
+      );
       return;
     }
     setSequenceNotice("");
@@ -151,8 +419,9 @@ export default function P6ElectricForceEffectSim() {
 
   const handleStop = () => {
     if (!isRunning || !selectedTrial) return;
-    const currentLabel = TRIAL_OPTIONS.find((trial) => trial.id === selectedTrial)?.label || "";
-    const nextAfterCurrent = TRIAL_OPTIONS.find(
+    const currentTrial = TRIAL_OPTIONS.find((trial) => trial.id === selectedTrial);
+    const currentLabel = getTrialLabel(currentTrial, language);
+    const nextAfterCurrent = activeTrials.find(
       (trial) => trial.id !== selectedTrial && !trialResults[trial.id]
     );
 
@@ -161,26 +430,40 @@ export default function P6ElectricForceEffectSim() {
     setTrialResults((prev) => ({
       ...prev,
       [selectedTrial]: {
-        result: RESULT_BY_TRIAL[selectedTrial],
+        result: RESULT_BY_MODE[currentTrial?.mode || "one"][language] || RESULT_BY_MODE[currentTrial?.mode || "one"].th,
         time: seconds,
       },
     }));
     if (nextAfterCurrent) {
-      setSequenceNotice(`เสร็จแล้ว: ${currentLabel} | ถัดไป: ${nextAfterCurrent.label}`);
+      const nextLabel = getTrialLabel(nextAfterCurrent, language);
+      setSequenceNotice(
+        language === "th"
+          ? `เสร็จแล้ว: ${currentLabel} | ถัดไป: ${nextLabel}`
+          : language === "en"
+            ? `Done: ${currentLabel} | Next: ${nextLabel}`
+            : `Selesai: ${currentLabel} | Seterusnya: ${nextLabel}`
+      );
       return;
     }
-    setSequenceNotice("ทำครบทุกการทดลองแล้ว กดปุ่ม \"สรุปผลการทดลอง\" ได้เลย");
+    setSequenceNotice(t.completeHint);
   };
 
   const handleGoSummary = () => {
-    if (!allTrialsCompleted || isRunning) {
-      setSequenceNotice(`ยังทำไม่ครบ ${completedCount}/${totalTrials} การทดลอง`);
+    if (!selectedEquipment || !allTrialsCompleted || isRunning) {
+      setSequenceNotice(
+        language === "th"
+          ? `ยังทำไม่ครบ ${completedCount}/${totalTrials} การทดลอง`
+          : language === "en"
+            ? `Incomplete: ${completedCount}/${totalTrials} trials.`
+            : `Belum lengkap: ${completedCount}/${totalTrials} ujian.`
+      );
       return;
     }
-    navigate(`/p6/experiment/electric-force-effect/summary?time=${totalExperimentTime}`);
+    navigate(`/p6/experiment/electric-force-effect/summary?time=${totalExperimentTime}&equipment=${selectedEquipment}`);
   };
 
   const handleReset = () => {
+    setSelectedEquipment(null);
     setSelectedTrial(null);
     setTrialResults({});
     setStarted(false);
@@ -191,6 +474,20 @@ export default function P6ElectricForceEffectSim() {
     setSequenceNotice("");
   };
 
+  const pageSpeech = useMemo(
+    () =>
+      [
+        hint,
+        `${t.selected}: ${selectedTrialLabel || notSelectedLabel}`,
+        summaryText,
+        sequenceNotice,
+        bubbleText,
+      ]
+        .filter(Boolean)
+        .join(". "),
+    [bubbleText, hint, notSelectedLabel, selectedTrialLabel, sequenceNotice, summaryText, t.selected]
+  );
+
   return (
     <div className="p6-force-sim-page">
       <div className="p6-force-sim-stage">
@@ -199,8 +496,45 @@ export default function P6ElectricForceEffectSim() {
           type="button"
           onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
         >
-          ← ย้อนกลับ
+          {t.backTop}
         </button>
+
+        <div className="p6-force-sim-langbar">
+          {LANGUAGE_OPTIONS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              className={`p6-force-sim-langchip ${language === item.id ? "active" : ""}`}
+              onClick={() => setLanguage(item.id)}
+            >
+              {item.label}
+            </button>
+          ))}
+          <button
+            type="button"
+            className="p6-force-sim-lang-audio"
+            onClick={() => speakText(pageSpeech, speechLang)}
+            aria-label={t.listen}
+            title={t.listen}
+          >
+            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <path
+                d="M12 26h12l14-10v32l-14-10H12z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M44 22c4 4 4 16 0 20"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
 
         <div className="p6-force-sim-sidebar">
           <div className="p6-force-sim-sidewrap">
@@ -214,31 +548,37 @@ export default function P6ElectricForceEffectSim() {
                   <path d="M9 6l9 6-9 6V6z" fill="currentColor" />
                 </svg>
               </div>
-              <span>เลือกการทดลอง</span>
+              <span>{t.selectTrial}</span>
             </button>
 
             {showTrialMenu && (
-              <div className="p6-force-sim-menu" role="dialog" aria-label="เลือกการทดลอง">
-                <div className="p6-force-sim-menu-title">เลือกการทดลอง (ทำทีละอย่าง)</div>
-                {TRIAL_OPTIONS.map((opt) => {
-                  const locked = !canPickTrial(opt.id);
-                  const done = Boolean(trialResults[opt.id]);
-                  return (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      className={selectedTrial === opt.id ? "active" : ""}
-                      onClick={() => handleSelectTrial(opt.id)}
-                      aria-disabled={locked}
-                    >
-                      <span>
-                        {opt.label}
-                        {done ? " (เสร็จแล้ว)" : locked ? " (รอคิว)" : ""}
-                      </span>
-                      {selectedTrial === opt.id && <span aria-hidden="true">✓</span>}
-                    </button>
-                  );
-                })}
+              <div className="p6-force-sim-menu" role="dialog" aria-label={t.selectTrial}>
+                <div className="p6-force-sim-menu-title">{t.menuTitle}</div>
+
+                {(["balloon", "marker"]).map((equipment) => (
+                  <div key={equipment} className="p6-force-sim-menu-group">
+                    <div className="p6-force-sim-menu-group-title">{getEquipmentLabel(equipment, language)}</div>
+                    {TRIAL_OPTIONS.filter((opt) => opt.equipment === equipment).map((opt) => {
+                      const locked = !canPickTrial(opt.id);
+                      const done = Boolean(trialResults[opt.id]);
+                      return (
+                        <button
+                          key={opt.id}
+                          type="button"
+                          className={selectedTrial === opt.id ? "active" : ""}
+                          onClick={() => handleSelectTrial(opt.id)}
+                          aria-disabled={locked}
+                        >
+                          <span>
+                            {getTrialLabel(opt, language)}
+                            {done ? ` (${t.done})` : locked ? ` (${t.waiting})` : ""}
+                          </span>
+                          {selectedTrial === opt.id && <span aria-hidden="true">✓</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ))}
               </div>
             )}
           </div>
@@ -249,69 +589,132 @@ export default function P6ElectricForceEffectSim() {
                 <path d="M9 6l9 6-9 6V6z" fill="currentColor" />
               </svg>
             </div>
-            <span>เริ่ม</span>
+            <span>{t.start}</span>
           </button>
 
-          <div className="p6-force-sim-timer">ความคืบหน้า: {completedCount}/{totalTrials}</div>
+          <div className="p6-force-sim-timer">
+            {t.progress}
+            {selectedEquipment ? ` (${getEquipmentLabel(selectedEquipment, language)})` : ""}: {completedCount}/{totalTrials}
+          </div>
         </div>
 
         <div className="p6-force-sim-center">
           <div className="p6-force-sim-board">
             <div className="p6-force-sim-balloons">
-              <div
-                className={`p6-force-sim-balloon left ${leftCharged ? `charged ${mode}` : ""}`}
-                aria-label="balloon-left"
-              >
-                {selectedTrial === "rub-one" && isRubbing && (
-                  <div className="p6-force-sim-rub rub-left" aria-hidden="true">
-                    <div className="p6-force-sim-tissue" />
+              {!usingMarker ? (
+                <>
+                  <div
+                    className={`p6-force-sim-balloon left ${leftCharged ? `charged ${mode}` : ""}`}
+                    aria-label="balloon-left"
+                  >
+                    {isRubbing && (
+                      <div className="p6-force-sim-rub rub-left" aria-hidden="true">
+                        <div className="p6-force-sim-tissue" />
+                      </div>
+                    )}
+                    <div className="p6-force-sim-charges" aria-hidden="true">
+                      {CHARGES.left.map((c, idx) => (
+                        <span
+                          key={`l-${idx}`}
+                          className={`p6-force-sim-charge ${c.kind === "minus" ? "minus" : ""}`}
+                          style={{ top: c.top, left: c.left }}
+                        >
+                          {c.kind === "plus" ? "+" : ""}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                )}
-                {selectedTrial === "rub-both" && isRubbing && (
-                  <div className="p6-force-sim-rub rub-left" aria-hidden="true">
-                    <div className="p6-force-sim-tissue" />
+                  <div
+                    className={`p6-force-sim-balloon right ${rightCharged ? `charged ${mode}` : mode === "attract" && leftCharged ? "attract" : ""}`}
+                    aria-label="balloon-right"
+                  >
+                    {selectedMode === "both" && isRubbing && (
+                      <div className="p6-force-sim-rub rub-right" aria-hidden="true">
+                        <div className="p6-force-sim-tissue" />
+                      </div>
+                    )}
+                    {rightCharged && (
+                      <div className="p6-force-sim-charges" aria-hidden="true">
+                        {CHARGES.right.map((c, idx) => (
+                          <span
+                            key={`r-${idx}`}
+                            className={`p6-force-sim-charge ${c.kind === "minus" ? "minus" : ""}`}
+                            style={{ top: c.top, left: c.left }}
+                          >
+                            {c.kind === "plus" ? "+" : ""}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-                <div className="p6-force-sim-charges" aria-hidden="true">
-                  {CHARGES.left.map((c, idx) => (
-                    <span
-                      key={`l-${idx}`}
-                      className={`p6-force-sim-charge ${c.kind === "minus" ? "minus" : ""}`}
-                      style={{ top: c.top, left: c.left }}
-                    >
-                      {c.kind === "plus" ? "+" : ""}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div
-                className={`p6-force-sim-balloon right ${rightCharged ? `charged ${mode}` : mode === "attract" && leftCharged ? "attract" : ""}`}
-                aria-label="balloon-right"
-              >
-                {selectedTrial === "rub-both" && isRubbing && (
-                  <div className="p6-force-sim-rub rub-right" aria-hidden="true">
-                    <div className="p6-force-sim-tissue" />
+                </>
+              ) : (
+                <>
+                  <div
+                    className={`p6-force-sim-marker left ${leftCharged ? `charged ${mode}` : ""}`}
+                    aria-label="marker-left"
+                  >
+                    {isRubbing && (
+                      <div className="p6-force-sim-rub rub-left" aria-hidden="true">
+                        <div className="p6-force-sim-tissue" />
+                      </div>
+                    )}
+                    <img
+                      className="p6-force-sim-marker-image"
+                      src="/images/p6/equipment/marker-single-real.svg"
+                      alt="ปากกาเมจิกซ้าย"
+                      draggable="false"
+                    />
+                    <div className="p6-force-sim-charges" aria-hidden="true">
+                      {CHARGES.left.map((c, idx) => (
+                        <span
+                          key={`ml-${idx}`}
+                          className={`p6-force-sim-charge ${c.kind === "minus" ? "minus" : ""}`}
+                          style={{ top: c.top, left: c.left }}
+                        >
+                          {c.kind === "plus" ? "+" : ""}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                )}
-                {rightCharged && (
-                  <div className="p6-force-sim-charges" aria-hidden="true">
-                    {CHARGES.right.map((c, idx) => (
-                      <span
-                        key={`r-${idx}`}
-                        className={`p6-force-sim-charge ${c.kind === "minus" ? "minus" : ""}`}
-                        style={{ top: c.top, left: c.left }}
-                      >
-                        {c.kind === "plus" ? "+" : ""}
-                      </span>
-                    ))}
+                  <div
+                    className={`p6-force-sim-marker right ${rightCharged ? `charged ${mode}` : mode === "attract" && leftCharged ? "attract" : ""}`}
+                    aria-label="marker-right"
+                  >
+                    {selectedMode === "both" && isRubbing && (
+                      <div className="p6-force-sim-rub rub-right" aria-hidden="true">
+                        <div className="p6-force-sim-tissue" />
+                      </div>
+                    )}
+                    <img
+                      className="p6-force-sim-marker-image"
+                      src="/images/p6/equipment/marker-single-real.svg"
+                      alt="ปากกาเมจิกขวา"
+                      draggable="false"
+                    />
+                    {rightCharged && (
+                      <div className="p6-force-sim-charges" aria-hidden="true">
+                        {CHARGES.right.map((c, idx) => (
+                          <span
+                            key={`mr-${idx}`}
+                            className={`p6-force-sim-charge ${c.kind === "minus" ? "minus" : ""}`}
+                            style={{ top: c.top, left: c.left }}
+                          >
+                            {c.kind === "plus" ? "+" : ""}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                </>
+              )}
             </div>
 
             <div className="p6-force-sim-instruction">
               {hint}
-              <div className="p6-force-sim-toast">ตัวเลือก: {selectedTrialLabel}</div>
+              <div className="p6-force-sim-toast">
+                {t.selected}: {selectedTrialLabel || notSelectedLabel}
+              </div>
 
               {summaryText && (
                 <div className="p6-force-sim-summary" role="status">
@@ -326,7 +729,7 @@ export default function P6ElectricForceEffectSim() {
               )}
 
               <div className="p6-force-sim-result">
-                <div className="p6-force-sim-toast">ซ่อนผลสรุปไว้ก่อน กด "สรุปผลการทดลอง" เพื่อดูผลทั้งหมด</div>
+                <div className="p6-force-sim-toast">{t.hiddenSummary}</div>
               </div>
             </div>
           </div>
@@ -335,7 +738,11 @@ export default function P6ElectricForceEffectSim() {
         <div className="p6-force-sim-right">
           <div className="p6-force-sim-bubble">{bubbleText}</div>
           <img className="p6-force-sim-character" src="/images/p4/exp1/character-boy.png" alt="นักเรียน" />
-          {started && <div className="p6-force-sim-timer">เวลาการถู: {formatTime(seconds)}</div>}
+          {started && (
+            <div className="p6-force-sim-timer">
+              {t.time}: {formatTime(seconds)}
+            </div>
+          )}
 
           <div className="p6-force-sim-actions">
             <div className="p6-force-sim-actions-row">
@@ -344,7 +751,7 @@ export default function P6ElectricForceEffectSim() {
                 type="button"
                 onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
               >
-                ← กลับขั้นตอน
+                {t.backSteps}
               </button>
               <button
                 className="p6-force-sim-action"
@@ -352,10 +759,10 @@ export default function P6ElectricForceEffectSim() {
                 onClick={handleGoSummary}
                 disabled={!allTrialsCompleted || isRunning}
               >
-                สรุปผลการทดลอง
+                {t.summary}
               </button>
               <button className="p6-force-sim-action" type="button" onClick={handleReset}>
-                เริ่มใหม่
+                {t.reset}
               </button>
             </div>
             <button
@@ -363,7 +770,7 @@ export default function P6ElectricForceEffectSim() {
               type="button"
               onClick={isRunning ? handleStop : handleStart}
             >
-              {isRunning ? "หยุด" : "เริ่ม"}
+              {isRunning ? t.stop : t.start}
             </button>
           </div>
         </div>

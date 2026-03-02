@@ -36,6 +36,7 @@ import P4GravityExp3Answer from "./pages/grade4/exp3/P4GravityExp3Answer";
 
 import P6ElectricObjectives from "./pages/grade6/P6ElectricObjectives";
 import P6ElectricVocab from "./pages/grade6/P6ElectricVocab";
+import P6ElectricGenerationMaterials from "./pages/grade6/P6ElectricGenerationMaterials";
 import P6ElectricGenerationSteps from "./pages/grade6/P6ElectricGenerationSteps";
 import P6ElectricGenerationSim from "./pages/grade6/P6ElectricGenerationSim";
 import P6ElectricGenerationResult from "./pages/grade6/P6ElectricGenerationResult";
@@ -50,11 +51,14 @@ import P6ElectricCircuitVocab from "./pages/grade6/P6ElectricCircuitVocab";
 import P6ElectricCircuitObjectives from "./pages/grade6/P6ElectricCircuitObjectives";
 import P6ElectricCircuitIntro from "./pages/grade6/P6ElectricCircuitIntro";
 import P6ElectricCircuitProblem from "./pages/grade6/P6ElectricCircuitProblem";
+import P6ElectricCircuitMaterials from "./pages/grade6/P6ElectricCircuitMaterials";
 import P6ElectricCircuitSteps from "./pages/grade6/P6ElectricCircuitSteps";
 import P6ElectricCircuitResults from "./pages/grade6/P6ElectricCircuitResults";
 import P6ElectricCircuitSim from "./pages/grade6/P6ElectricCircuitSim";
 import P6ElectricCircuitExperimentSelect from "./pages/grade6/P6ElectricCircuitExperimentSelect";
 import P6ElectricCircuitBulbSeriesParallel from "./pages/grade6/P6ElectricCircuitBulbSeriesParallel";
+import P6ElectricCircuitBulbSeriesParallelSteps from "./pages/grade6/P6ElectricCircuitBulbSeriesParallelSteps";
+import P6ElectricCircuitBulbSeriesParallelSim from "./pages/grade6/P6ElectricCircuitBulbSeriesParallelSim";
 // import Grade6 from "./pages/grade6/index.jsx";
 // import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
 // import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
@@ -84,6 +88,14 @@ import P5FoodChainSelect from "./pages/grade5/life/foodchain/P5FoodChainSelect";
 import P5FoodChainSim from "./pages/grade5/life/foodchain/P5FoodChainSim";
 import P5FoodChainCheck from "./pages/grade5/life/foodchain/P5FoodChainCheck";
 import P5FoodChainSummary from "./pages/grade5/life/foodchain/P5FoodChainSummary";
+import P5GeneticsSelect from "./pages/grade5/life/genetics/P5GeneticsSelect";
+import P5GeneticsAnimals from "./pages/grade5/life/genetics/P5GeneticsAnimals";
+import P5GeneticsAnimalsSummary from "./pages/grade5/life/genetics/P5GeneticsAnimalsSummary";
+import P5GeneticsPlants from "./pages/grade5/life/genetics/P5GeneticsPlants";
+import P5GeneticsPlantsSummary from "./pages/grade5/life/genetics/P5GeneticsPlantsSummary";
+import P5GeneticsHumans from "./pages/grade5/life/genetics/P5GeneticsHumans";
+import P5GeneticsHumansSummary from "./pages/grade5/life/genetics/P5GeneticsHumansSummary";
+import P5GeneticsTopicPlaceholder from "./pages/grade5/life/genetics/P5GeneticsTopicPlaceholder";
 
 // import Grade6 from "./pages/grade6";
 
@@ -189,11 +201,18 @@ export default function App() {
         {/* STEP 8 */}
         <Route path="/p5/life/foodchain/summary" element={<P5FoodChainSummary />} />
 
+        {/* STEP 9 */}
+        <Route path="/p5/life/genetics" element={<P5GeneticsSelect />} />
+        <Route path="/p5/life/genetics/animals" element={<P5GeneticsAnimals />} />
+        <Route path="/p5/life/genetics/animals/summary" element={<P5GeneticsAnimalsSummary />} />
+        <Route path="/p5/life/genetics/plants" element={<P5GeneticsPlants />} />
+        <Route path="/p5/life/genetics/plants/summary" element={<P5GeneticsPlantsSummary />} />
+        <Route path="/p5/life/genetics/humans" element={<P5GeneticsHumans />} />
+        <Route path="/p5/life/genetics/humans/summary" element={<P5GeneticsHumansSummary />} />
+        <Route path="/p5/life/genetics/:topic" element={<P5GeneticsTopicPlaceholder />} />
+
         {/* ===== ชั้นอื่น ๆ ===== */}
-        <Route
-          path="/p5"
-          element={<div style={{ padding: 40 }}>หน้า ป.5 (กำลังทำ)</div>}
-        />
+        <Route path="/p5" element={<P5LifeIntro />} />
         <Route path="/p6" element={<P6 />} />
         <Route path="/p6/electric-force" element={<P6ElectricObjectives />} />
         <Route path="/p6/electric-force/vocab" element={<P6ElectricVocab />} />
@@ -203,9 +222,11 @@ export default function App() {
           path="/p6/electric-circuit-old"
           element={<div style={{ padding: 40 }}>วงจรไฟฟ้าใกล้ตัว (กำลังทำ)</div>}
         />
-        <Route path="/p6/electric-circuit" element={<P6ElectricCircuitVocab />} />
+        <Route path="/p6/electric-circuit" element={<P6ElectricCircuitObjectives />} />
+        <Route path="/p6/electric-circuit/vocab" element={<P6ElectricCircuitVocab />} />
         <Route path="/p6/electric-circuit/experiments" element={<P6ElectricCircuitExperimentSelect />} />
         <Route path="/p6/electric-circuit/problem" element={<P6ElectricCircuitProblem />} />
+        <Route path="/p6/electric-circuit/materials" element={<P6ElectricCircuitMaterials />} />
         <Route path="/p6/electric-circuit/steps" element={<P6ElectricCircuitSteps />} />
         <Route
           path="/p6/electric-circuit/sim"
@@ -214,6 +235,14 @@ export default function App() {
         <Route
           path="/p6/electric-circuit/bulb-series-parallel"
           element={<P6ElectricCircuitBulbSeriesParallel />}
+        />
+        <Route
+          path="/p6/electric-circuit/bulb-series-parallel/steps"
+          element={<P6ElectricCircuitBulbSeriesParallelSteps />}
+        />
+        <Route
+          path="/p6/electric-circuit/bulb-series-parallel/sim"
+          element={<P6ElectricCircuitBulbSeriesParallelSim />}
         />
         <Route path="/p6/electric-circuit/result" element={<P6ElectricCircuitResults />} />
         <Route path="/p6/electric-circuit/objectives" element={<P6ElectricCircuitObjectives />} />
@@ -232,6 +261,7 @@ export default function App() {
         />
         <Route path="/p6/experiment/electric-generation" element={<P6ElectricObjectives />} />
         <Route path="/p6/experiment/electric-generation/vocab" element={<P6ElectricVocab />} />
+        <Route path="/p6/experiment/electric-generation/materials" element={<P6ElectricGenerationMaterials />} />
         <Route path="/p6/experiment/electric-generation/steps" element={<P6ElectricGenerationSteps />} />
         <Route path="/p6/experiment/electric-generation/sim" element={<P6ElectricGenerationSim />} />
         <Route path="/p6/experiment/electric-generation/result" element={<P6ElectricGenerationResult />} />

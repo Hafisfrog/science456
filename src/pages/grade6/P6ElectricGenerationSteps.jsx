@@ -1,19 +1,31 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "./P6ElectricGenerationSteps.css";
 
+const EXPERIMENT_STEPS = [
+  "เลือกวัสดุสำหรับทดลอง",
+  "นำผ้าแห้งมาขัดลูกโป่ง",
+  "ครั้งที่ 1 ไม่ขัดด้วยผ้าแห้ง แล้วสังเกตผล",
+  "ครั้งที่ 2 ขัดด้วยผ้าแห้ง 2 นาที แล้วสังเกตผล",
+  "ครั้งที่ 3 ขัดด้วยผ้าแห้ง 5 นาที แล้วสังเกตผล",
+];
+
 export default function P6ElectricGenerationSteps() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const from = searchParams.get("from");
-  const backPath = from === "unit" ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
+
+  const backPath =
+    from === "unit"
+      ? "/p6/experiment/electric-generation/materials?from=unit"
+      : "/p6/experiment/electric-generation/materials";
 
   return (
-    <div className="p6-gen-page">
+    <div className="p6-gen-page p6-gen-page--generation-steps">
       <div className="p6-gen-container">
         <div className="p6-gen-tag">แรงไฟฟ้าน่ารู้</div>
         <div className="p6-gen-title">เรื่อง การเกิดไฟฟ้า</div>
 
-        <div className="p6-gen-card">
+        <div className="p6-gen-card p6-gen-card--generation-steps">
           <div className="p6-gen-sound" title="ฟังเสียง" aria-hidden="true">
             <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
               <path
@@ -40,51 +52,43 @@ export default function P6ElectricGenerationSteps() {
             </svg>
           </div>
 
-          <div className="p6-gen-section">
-            <div className="p6-gen-heading">สถานการณ์ปัญหา</div>
-            <p className="p6-gen-text">ทำไมวัตถุบางอย่างดูเหมือนจะดูดกันได้</p>
-          </div>
+          <div className="p6-gen-stepsLayout p6-gen-stepsLayout--single">
+            <section className="p6-gen-block p6-gen-block-procedure">
+              <header className="p6-gen-blockHeader">
+                <h2 className="p6-gen-blockTitle">ขั้นตอนการทดลอง</h2>
+                <p className="p6-gen-blockHint">กดที่ขั้นตอนเพื่อฟังเสียง</p>
+              </header>
 
-          <div className="p6-gen-section">
-            <div className="p6-gen-heading">อุปกรณ์</div>
-            <ol className="p6-gen-list">
-              <li>ลูกโป่ง</li>
-              <li>เศษกระดาษ</li>
-              <li>ผ้าแห้ง</li>
-            </ol>
-          </div>
-
-          <div className="p6-gen-section">
-            <div className="p6-gen-heading">ขั้นตอนการทดลอง</div>
-            <ol className="p6-gen-list">
-              <li>เลือกวัสดุสำหรับทดลอง</li>
-              <li>
-                นำผ้าแห้งมาขัดลูกโป่ง
-                <div className="p6-gen-substeps">
-                  <span>ครั้งที่ 1 ไม่ขัดถูด้วยผ้าแห้ง</span>
-                  <span>ครั้งที่ 2 ถูด้วยผ้าแห้ง 2 นาที</span>
-                  <span>ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที</span>
-                </div>
-              </li>
-              <li>สังเกตและบันทึกผล</li>
-            </ol>
+              <ol className="p6-gen-stepList">
+                {EXPERIMENT_STEPS.map((text, index) => (
+                  <li className="p6-gen-stepItem" key={text}>
+                    <span className="p6-gen-stepNumber">{index + 1}</span>
+                    <span className="p6-gen-stepText">{text}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
           </div>
         </div>
 
-        <div className="p6-gen-actions">
+        <div className="p6-gen-actions p6-gen-actions--cluster">
           <button
             className="p6-gen-btn ghost"
             onClick={() => navigate(backPath)}
             type="button"
+            aria-label="กลับหน้าอุปกรณ์"
+            title="กลับหน้าอุปกรณ์"
           >
-            ← กลับคำศัพท์
+            ←
           </button>
           <button
             className="p6-gen-btn primary"
             onClick={() => navigate("/p6/experiment/electric-generation/sim")}
             type="button"
+            aria-label="ไปหน้าทดลอง"
+            title="ไปหน้าทดลอง"
           >
-            ไปหน้าถัดไป →
+            →
           </button>
         </div>
       </div>

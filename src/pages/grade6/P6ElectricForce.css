@@ -1,3 +1,41 @@
+.grade-wrap.p6-exp-wrap {
+  background:
+    radial-gradient(80% 58% at 50% 34%, #f6efef 0 62%, transparent 63%),
+    radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%),
+    radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%),
+    linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%);
+  isolation: isolate;
+}
+
+.grade-wrap.p6-exp-wrap::before {
+  width: clamp(70px, 7vw, 102px);
+  height: clamp(108px, 11vw, 150px);
+  right: clamp(120px, 11vw, 190px);
+  top: 12px;
+  background: #f7bd2b;
+  border-radius: 0;
+  opacity: 1;
+  clip-path: polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%);
+}
+
+.grade-wrap.p6-exp-wrap::after {
+  width: auto;
+  height: 170px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 0;
+  opacity: 1;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 2px, transparent 2px 20px) left 40px bottom 14px / 190px 56px no-repeat,
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 16px) left 40px bottom 14px / 190px 56px no-repeat,
+    linear-gradient(180deg, #43c4e8, #2c8dc9) left 40px bottom 14px / 190px 56px no-repeat,
+    linear-gradient(#4c4f75, #4c4f75) right 96px bottom 0 / 7px 88px no-repeat,
+    linear-gradient(#4c4f75, #4c4f75) right 52px bottom 0 / 7px 68px no-repeat,
+    linear-gradient(#4c4f75, #4c4f75) right 36px bottom 60px / 82px 7px no-repeat,
+    linear-gradient(180deg, rgba(199, 227, 242, 0), rgba(190, 217, 233, 0.72)) center bottom / 100% 120px no-repeat;
+}
+
 .p6-exp-wrap {
   text-align: center;
   overflow: visible;
@@ -70,6 +108,23 @@
 }
 
 @media (max-width: 700px) {
+  .grade-wrap.p6-exp-wrap::before {
+    right: 18px;
+    width: 58px;
+    height: 88px;
+  }
+
+  .grade-wrap.p6-exp-wrap::after {
+    height: 118px;
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 2px, transparent 2px 16px) left 12px bottom 8px / 118px 42px no-repeat,
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.35) 0 2px, transparent 2px 12px) left 12px bottom 8px / 118px 42px no-repeat,
+      linear-gradient(180deg, #43c4e8, #2c8dc9) left 12px bottom 8px / 118px 42px no-repeat,
+      linear-gradient(#4c4f75, #4c4f75) right 66px bottom 0 / 5px 58px no-repeat,
+      linear-gradient(#4c4f75, #4c4f75) right 36px bottom 0 / 5px 46px no-repeat,
+      linear-gradient(#4c4f75, #4c4f75) right 22px bottom 40px / 52px 5px no-repeat;
+  }
+
   .p6-exp-back {
     margin-bottom: 20px;
   }

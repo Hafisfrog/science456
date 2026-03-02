@@ -280,8 +280,8 @@ export default function P6ElectricCircuitSim() {
   };
 
   return (
-    <div className="p6-gen-page">
-      <div className="p6-gen-container">
+    <div className="p6-gen-page p6-circuit-sim-page">
+      <div className="p6-gen-container p6-circuit-sim-container">
         <div className="p6-gen-tag">วงจรไฟฟ้าใกล้ตัว</div>
         <div className="p6-gen-title">เรื่อง วงจรไฟฟ้าอย่างง่าย</div>
 

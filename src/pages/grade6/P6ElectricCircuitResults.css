@@ -1,0 +1,112 @@
+.p6-circuit-results-page {
+  height: 100dvh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.p6-circuit-results-container {
+  height: 100%;
+  min-height: 0;
+  gap: 6px;
+}
+
+.p6-circuit-results-cardWrap {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  min-height: 0;
+  display: grid;
+}
+
+.p6-circuit-results-panel {
+  background:
+    radial-gradient(circle at 10% 8%, rgba(255, 255, 255, 0.56), transparent 42%),
+    linear-gradient(180deg, rgba(185, 228, 243, 0.5), rgba(168, 219, 241, 0.48));
+  border: 2px solid rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
+  padding: clamp(14px, 1.6vw, 20px);
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+}
+
+.p6-circuit-results-panel .p6-circuit-heading {
+  margin-bottom: 0;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(56, 189, 248, 0.24));
+  color: #0f172a;
+  font-size: clamp(22px, 1.6vw, 30px);
+}
+
+.p6-circuit-summary-board {
+  position: relative;
+  background: #f7f4f1;
+  border-radius: 20px;
+  border: 4px solid #111827;
+  padding: clamp(18px, 2.1vw, 30px);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.p6-circuit-summary-board::before,
+.p6-circuit-summary-board::after {
+  content: "";
+  position: absolute;
+  top: -11px;
+  width: 110px;
+  height: 20px;
+  background: #f7f4f1;
+  border: 4px solid #111827;
+}
+
+.p6-circuit-summary-board::before {
+  left: 16%;
+  transform: rotate(0.6deg);
+}
+
+.p6-circuit-summary-board::after {
+  left: 48%;
+  transform: rotate(-1deg);
+}
+
+.p6-circuit-summary-text {
+  margin: 0;
+  font-size: clamp(30px, 2.1vw, 40px);
+  line-height: 1.6;
+  font-weight: 700;
+  color: #111827;
+}
+
+@media (max-width: 980px) {
+  .p6-circuit-results-page {
+    height: auto;
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .p6-circuit-results-container {
+    height: auto;
+    min-height: calc(100dvh - 24px);
+  }
+
+  .p6-circuit-results-cardWrap {
+    display: block;
+  }
+
+  .p6-circuit-results-panel {
+    height: auto;
+    min-height: 0;
+  }
+
+  .p6-circuit-summary-board::before,
+  .p6-circuit-summary-board::after {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .p6-circuit-summary-text {
+    font-size: 20px;
+    line-height: 1.5;
+  }
+}

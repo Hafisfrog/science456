@@ -8,10 +8,23 @@ const formatTime = (totalSeconds) => {
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 };
 
+const SUMMARY_BY_EQUIPMENT = {
+  balloon: [
+    "เมื่อขัดถูลูกโป่งทั้ง 2 ใบด้วยกระดาษเยื่อ ลูกโป่งทั้งสองจะมีประจุชนิดเดียวกัน เมื่อนำมาเข้าใกล้กันจึงเกิดแรงผลักกัน",
+    "เมื่อขัดถูลูกโป่งเพียง 1 ใบ อีกใบไม่ได้ขัดถู จะเกิดการเหนี่ยวนำประจุ เมื่อนำมาเข้าใกล้กันจึงเกิดแรงดึงดูดกัน",
+  ],
+  marker: [
+    "เมื่อขัดถูปากกาเมจิกทั้ง 2 ด้ามด้วยกระดาษเยื่อ ปากกาทั้งสองจะมีประจุชนิดเดียวกัน เมื่อนำมาเข้าใกล้กันจึงเกิดแรงผลักกัน",
+    "เมื่อขัดถูปากกาเมจิกเพียง 1 ด้าม อีกด้ามไม่ได้ขัดถู จะเกิดการเหนี่ยวนำประจุ เมื่อนำมาเข้าใกล้กันจึงเกิดแรงดึงดูดกัน",
+  ],
+};
+
 export default function P6ElectricForceEffectSummary() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const timeParam = Number(searchParams.get("time") || 0);
+  const equipmentParam = searchParams.get("equipment");
+  const summaryItems = SUMMARY_BY_EQUIPMENT[equipmentParam] || SUMMARY_BY_EQUIPMENT.balloon;
 
   return (
     <div className="p6-force-summary-page">
@@ -46,16 +59,9 @@ export default function P6ElectricForceEffectSummary() {
           <h1 className="p6-force-summary-title">สรุปผลการทดลอง</h1>
 
           <ol className="p6-force-summary-list">
-            <li>
-              เมื่อขัดถูลูกโป่งทั้ง 2 ใบด้วยกระดาษเยื่อ จะเกิดการถ่ายโอนประจุไฟฟ้าระหว่างลูกโป่งกับกระดาษเยื่อ
-              และเมื่อลูกโป่งทั้งสองถูกขัดถูด้วยวัสดุชนิดเดียวกัน ทำให้มีประจุไฟฟ้าชนิดเดียวกัน
-              เมื่อนำลูกโป่งมาเข้าใกล้กัน จึงเกิดแรงผลักกัน
-            </li>
-            <li>
-              เมื่อขัดถูลูกโป่งแค่ 1 ใบด้วยกระดาษเยื่อ อีกใบไม่ได้ขัดถู ลูกโป่งที่ถูกขัดถูจะมีประจุไฟฟ้า
-              ส่วนลูกโป่งที่ไม่ถูกขัดถูยังเป็นกลาง แต่เกิดการเหนี่ยวนำให้ประจุภายในแยกตัว
-              เมื่อนำลูกโป่งมาเข้าใกล้กัน จึงเกิดแรงดึงดูดกัน
-            </li>
+            {summaryItems.map((item, idx) => (
+              <li key={`${idx}-${item}`}>{item}</li>
+            ))}
           </ol>
 
           {timeParam > 0 && <div className="p6-force-summary-time">เวลาการถู: {formatTime(timeParam)}</div>}
@@ -83,4 +89,3 @@ export default function P6ElectricForceEffectSummary() {
     </div>
   );
 }
-

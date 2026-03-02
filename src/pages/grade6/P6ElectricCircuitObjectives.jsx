@@ -9,8 +9,8 @@ const CONTENT = {
     section: "จุดประสงค์การเรียนรู้",
     obj1: "อธิบายส่วนประกอบของวงจรไฟฟ้าอย่างง่ายได้ (K)",
     obj2: "ต่อวงจรไฟฟ้าอย่างง่าย และตรวจสอบวงจรเปิด-ปิดได้ (K, P)",
-    back: "← กลับคำศัพท์",
-    next: "ไปเลือกบทเรียน →",
+    back: "← กลับหน้าเลือกบทเรียน",
+    next: "ไปคำศัพท์ →",
   },
   en: {
     grade: "Grade 6",
@@ -18,8 +18,8 @@ const CONTENT = {
     section: "Learning Objectives",
     obj1: "Describe the components of a simple electric circuit. (K)",
     obj2: "Build a simple circuit and identify open/closed circuits. (K, P)",
-    back: "← Back to Vocabulary",
-    next: "Go to Lessons →",
+    back: "← Back to Unit Select",
+    next: "Go to Vocabulary →",
   },
   ms: {
     grade: "Tahun 6",
@@ -27,8 +27,8 @@ const CONTENT = {
     section: "Objektif Pembelajaran",
     obj1: "Menerangkan komponen litar elektrik yang ringkas. (K)",
     obj2: "Membina litar ringkas dan mengenal pasti litar terbuka/tertutup. (K, P)",
-    back: "← Kembali ke Kosa Kata",
-    next: "Pergi ke Pelajaran →",
+    back: "← Kembali Pilih Unit",
+    next: "Pergi ke Kosa Kata →",
   },
 };
 
@@ -94,14 +94,14 @@ export default function P6ElectricCircuitObjectives() {
         <div className="obj-actions p6-obj-actions">
           <button
             className="obj-btn ghost"
-            onClick={() => navigate("/p6/electric-circuit")}
+            onClick={() => navigate("/p6")}
             type="button"
           >
             {t.back}
           </button>
           <button
             className="obj-btn primary"
-            onClick={() => navigate("/p6/electric-circuit/intro")}
+            onClick={() => navigate("/p6/electric-circuit/vocab")}
             type="button"
           >
             {t.next}
@@ -111,4 +111,3 @@ export default function P6ElectricCircuitObjectives() {
     </div>
   );
 }
-

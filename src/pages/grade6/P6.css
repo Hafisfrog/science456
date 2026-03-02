@@ -1,34 +1,169 @@
 .p6-page {
   min-height: 100vh;
-  padding: 56px 20px;
-  background: linear-gradient(180deg, #eef8ff, #f9fcff);
+  height: 100dvh;
+  padding: 20px clamp(12px, 2vw, 20px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%);
   font-family: "Prompt", sans-serif;
+}
+
+.p6-page::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  right: clamp(126px, 11vw, 190px);
+  width: clamp(70px, 7vw, 102px);
+  height: clamp(108px, 11vw, 150px);
+  pointer-events: none;
+  z-index: 0;
+  background: #f7bd2b;
+  clip-path: polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%);
+  filter: drop-shadow(0 8px 12px rgba(145, 101, 9, 0.22));
+}
+
+.p6-page::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(#4c4f75, #4c4f75) right 144px bottom 0 / 8px 132px no-repeat,
+    linear-gradient(#4c4f75, #4c4f75) right 90px bottom 0 / 8px 106px no-repeat,
+    linear-gradient(#4c4f75, #4c4f75) right 60px bottom 96px / 124px 8px no-repeat,
+    linear-gradient(#4c4f75, #4c4f75) right 104px bottom 120px / 98px 6px no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 2px, transparent 2px 24px) left 52px bottom 22px / 230px 80px no-repeat,
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.36) 0 2px, transparent 2px 20px) left 52px bottom 22px / 230px 80px no-repeat,
+    linear-gradient(180deg, #43c4e8, #2c8dc9) left 52px bottom 22px / 230px 80px no-repeat,
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 2px, transparent 2px 24px) left 304px bottom 22px / 182px 76px no-repeat,
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.36) 0 2px, transparent 2px 20px) left 304px bottom 22px / 182px 76px no-repeat,
+    linear-gradient(180deg, #43c4e8, #2c8dc9) left 304px bottom 22px / 182px 76px no-repeat,
+    linear-gradient(180deg, rgba(199, 227, 242, 0), rgba(190, 217, 233, 0.78)) center bottom / 100% 130px no-repeat;
+}
+
+.p6-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.p6-decor::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 72px;
+  bottom: 126px;
+  background:
+    radial-gradient(31% 24% at 10% 34%, #c9e9f4 0 58%, transparent 59%),
+    radial-gradient(31% 24% at 90% 34%, #c9e9f4 0 58%, transparent 59%),
+    radial-gradient(80% 60% at 50% 34%, #f6efef 0 62%, transparent 63%),
+    radial-gradient(76% 54% at 50% 68%, #f6efef 0 58%, transparent 59%);
+}
+
+.p6-bulb {
+  position: absolute;
+  top: 160px;
+  width: 118px;
+  height: 150px;
+  border: 4px solid #0f172a;
+  border-radius: 58% 58% 44% 44% / 58% 58% 42% 42%;
+  background: #fff3a2;
+  box-shadow: inset -14px -10px 0 rgba(255, 255, 255, 0.32);
+}
+
+.p6-bulb::before {
+  content: "";
+  position: absolute;
+  right: 16px;
+  top: 22px;
+  width: 50px;
+  height: 74px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.p6-bulb::after {
+  content: "";
+  position: absolute;
+  left: 34px;
+  bottom: -18px;
+  width: 42px;
+  height: 22px;
+  border: 3px solid #111827;
+  border-top: 0;
+  border-radius: 0 0 9px 9px;
+  background: repeating-linear-gradient(180deg, #111827 0 4px, #f8fafc 4px 8px);
+}
+
+.p6-bulb-left {
+  left: -72px;
+  transform: rotate(-14deg);
+}
+
+.p6-bulb-right {
+  right: -72px;
+  transform: scaleX(-1) rotate(-14deg);
+}
+
+.p6-spark {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #f7bd2b;
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+
+.p6-spark-a {
+  right: 284px;
+  top: 130px;
+}
+
+.p6-spark-b {
+  right: 106px;
+  top: 144px;
+}
+
+.p6-page > :not(.p6-decor) {
+  position: relative;
+  z-index: 1;
 }
 
 .p6-header {
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 18px;
 }
 
 .p6-header h1 {
   margin: 0;
-  font-size: 46px;
+  font-size: clamp(38px, 3.1vw, 46px);
   font-weight: 800;
   color: #2563eb;
 }
 
 .p6-header p {
-  margin-top: 10px;
-  font-size: 20px;
+  margin-top: 6px;
+  font-size: clamp(17px, 1.4vw, 20px);
   color: #374151;
 }
 
 .p6-grid {
+  width: min(1100px, 100%);
   max-width: 1100px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  flex: 1;
+  align-content: center;
 }
 
 .p6-card {
@@ -40,6 +175,7 @@
   transition: transform 0.18s ease, box-shadow 0.18s ease;
   display: flex;
   flex-direction: column;
+  min-height: clamp(420px, 58vh, 520px);
 }
 
 .p6-card:hover {
@@ -47,25 +183,40 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
 }
 
+.p6-card-media {
+  height: clamp(250px, 36vh, 360px);
+  padding: 10px 12px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
 .p6-card-img {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .p6-card-body {
-  padding: 22px 22px 26px;
+  padding: 18px 20px 24px;
   flex: 1;
 }
 
 .p6-card-body h2 {
   margin: 0;
-  font-size: 26px;
+  font-size: clamp(24px, 1.9vw, 30px);
   font-weight: 800;
   color: #111827;
 }
 
 .back-home-btn {
+  align-self: flex-start;
+  width: auto;
+  display: inline-flex;
+  align-items: center;
   border: none;
   cursor: pointer;
   padding: 12px 20px;
@@ -77,7 +228,7 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
   font-family: "Prompt", sans-serif;
   transition: all 0.15s ease;
-  margin-bottom: 28px;
+  margin-bottom: 16px;
 }
 
 .back-home-btn:hover {
@@ -92,6 +243,74 @@
 }
 
 @media (max-width: 768px) {
+  .p6-page {
+    min-height: 100dvh;
+    height: auto;
+    padding: 16px 12px 120px;
+    overflow-y: auto;
+  }
+
+  .p6-page::before {
+    right: 22px;
+    width: 62px;
+    height: 92px;
+  }
+
+  .p6-decor::before {
+    left: 8px;
+    right: 8px;
+    top: 82px;
+    bottom: 110px;
+  }
+
+  .p6-bulb {
+    width: 94px;
+    height: 122px;
+    top: 188px;
+  }
+
+  .p6-bulb-left {
+    left: -66px;
+  }
+
+  .p6-bulb-right {
+    right: -66px;
+  }
+
+  .p6-spark-a {
+    right: 92px;
+    top: 118px;
+  }
+
+  .p6-spark-b {
+    display: none;
+  }
+
+  .p6-page::after {
+    height: 158px;
+    background:
+      linear-gradient(#4c4f75, #4c4f75) right 90px bottom 0 / 6px 88px no-repeat,
+      linear-gradient(#4c4f75, #4c4f75) right 52px bottom 0 / 6px 70px no-repeat,
+      linear-gradient(#4c4f75, #4c4f75) right 30px bottom 62px / 74px 6px no-repeat,
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 2px, transparent 2px 18px) left 14px bottom 34px / 154px 58px no-repeat,
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.38) 0 2px, transparent 2px 14px) left 14px bottom 34px / 154px 58px no-repeat,
+      linear-gradient(180deg, #43c4e8, #2c8dc9) left 14px bottom 34px / 154px 58px no-repeat,
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.45) 0 2px, transparent 2px 18px) left 176px bottom 34px / 114px 54px no-repeat,
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.38) 0 2px, transparent 2px 14px) left 176px bottom 34px / 114px 54px no-repeat,
+      linear-gradient(180deg, #43c4e8, #2c8dc9) left 176px bottom 34px / 114px 54px no-repeat;
+  }
+
+  .p6-card-media {
+    height: clamp(198px, 42vw, 250px);
+    padding: 8px;
+  }
+
+  .p6-card-img {
+    width: auto;
+    height: 100%;
+    max-width: 95%;
+  }
+
   .p6-header h1 {
     font-size: 36px;
   }

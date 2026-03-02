@@ -124,7 +124,7 @@ export default function P6ElectricForceRecap() {
           <button className="p6-recap-btn ghost" type="button" onClick={() => navigate("/p6/electric-force/vocab")}>
             ← กลับคำศัพท์
           </button>
-          <button className="p6-recap-btn primary" type="button" onClick={() => navigate("/p6/experiment/electric-generation/steps?from=unit")}>
+          <button className="p6-recap-btn primary" type="button" onClick={() => navigate("/p6/experiment/electric-generation/materials?from=unit")}>
             ไปทดลองที่ 1 →
           </button>
         </div>
@@ -132,4 +132,3 @@ export default function P6ElectricForceRecap() {
     </div>
   );
 }
-

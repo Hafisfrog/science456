@@ -8,7 +8,7 @@ const EXPERIMENTS = [
     title: "การทดลองที่ 1",
     subtitle: "การเกิดแรงไฟฟ้า",
     image: "/images/p6.png",
-    path: "/p6/experiment/electric-generation/steps?from=unit",
+    path: "/p6/experiment/electric-generation/materials?from=unit",
   },
   {
     id: "exp-2",

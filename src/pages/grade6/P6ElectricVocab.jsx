@@ -41,7 +41,7 @@ export default function P6ElectricVocab() {
 
   const isUnitFlow = pathname === "/p6/electric-force/vocab" || pathname.startsWith("/p6/electric-force/");
   const backPath = isUnitFlow ? "/p6/electric-force" : "/p6/experiment/electric-generation";
-  const nextPath = isUnitFlow ? "/p6/electric-force/experiments" : "/p6/experiment/electric-generation/steps";
+  const nextPath = isUnitFlow ? "/p6/electric-force/experiments" : "/p6/experiment/electric-generation/materials";
   const backLabel = isUnitFlow ? "กลับหน้าหน่วยการเรียนรู้" : "กลับหน้าจุดประสงค์";
   const nextLabel = isUnitFlow ? "ไปหน้าเลือกการทดลอง" : "ไปหน้าถัดไป";
   const subtitle = isUnitFlow ? "เรื่อง แรงไฟฟ้าน่ารู้" : "เรื่อง การเกิดแรงไฟฟ้า";

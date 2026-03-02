@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Two realistic marker pens">
+  <defs>
+    <linearGradient id="mkBody" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fdfefe"/>
+      <stop offset="40%" stop-color="#eef3f8"/>
+      <stop offset="70%" stop-color="#d9e3ee"/>
+      <stop offset="100%" stop-color="#c7d5e3"/>
+    </linearGradient>
+    <linearGradient id="mkCap" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#64e0a0"/>
+      <stop offset="70%" stop-color="#2dbc76"/>
+      <stop offset="100%" stop-color="#14985b"/>
+    </linearGradient>
+    <linearGradient id="mkTip" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f9fcff"/>
+      <stop offset="100%" stop-color="#bccfdf"/>
+    </linearGradient>
+    <linearGradient id="mkBand" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8fbff"/>
+      <stop offset="100%" stop-color="#d5e1ee"/>
+    </linearGradient>
+    <filter id="mkShadow" x="-20%" y="-40%" width="150%" height="220%">
+      <feDropShadow dx="0" dy="18" stdDeviation="14" flood-color="#1f2937" flood-opacity=".24"/>
+    </filter>
+    <g id="markerShape">
+      <rect x="0" y="-58" width="420" height="116" rx="58" fill="url(#mkBody)" stroke="#adbfd1" stroke-width="3"/>
+      <rect x="-2" y="-58" width="92" height="116" rx="58" fill="url(#mkCap)"/>
+      <rect x="72" y="-58" width="20" height="116" rx="5" fill="url(#mkBand)" opacity=".96"/>
+      <path d="M410 -46l70 46-70 46z" fill="url(#mkTip)" stroke="#a6b9cc" stroke-width="3"/>
+      <path d="M478 -10l10 10-10 10z" fill="#eef5fc"/>
+      <path d="M38 -40c14 12 14 68 0 80" fill="none" stroke="#0e7b4f" stroke-opacity=".34" stroke-width="10" stroke-linecap="round"/>
+      <path d="M124 -28h226" stroke="#d7e1ec" stroke-width="4" stroke-linecap="round"/>
+      <path d="M124 28h190" stroke="#d7e1ec" stroke-width="4" stroke-linecap="round"/>
+      <path d="M150 -8h144" stroke="#b8c8d8" stroke-width="3.5" stroke-linecap="round"/>
+      <ellipse cx="250" cy="-22" rx="138" ry="18" fill="#ffffff" opacity=".32"/>
+    </g>
+  </defs>
+
+  <rect width="900" height="620" fill="none"/>
+
+  <g transform="translate(195 300) rotate(-33)" filter="url(#mkShadow)">
+    <use href="#markerShape"/>
+  </g>
+  <g transform="translate(340 396) rotate(-33)" filter="url(#mkShadow)">
+    <use href="#markerShape"/>
+  </g>
+</svg>
