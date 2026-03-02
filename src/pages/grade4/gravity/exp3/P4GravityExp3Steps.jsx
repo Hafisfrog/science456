@@ -6,13 +6,13 @@ export default function P4GravityExp3Steps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th"); // th | en | ms
 
-  const BACK_PATH = "/p4/gravity/exp3/materials";
+  const BACK_PATH = "/p4/gravity/exp3/vocab";
   const NEXT_PATH = "/p4/gravity/exp3/question";
 
   const assets = useMemo(() => {
     return {
       bg: "/images/p4/exp3/bg-lab.jpg",
-      boardFrame: "/images/p4/exp3/board-frame.png",
+      // boardFrame: "/images/p4/sim/sball.png",
       character: "/images/p4/exp3/teacher.png",
 
       itemBook: "/images/p4/exp3/book.png",
