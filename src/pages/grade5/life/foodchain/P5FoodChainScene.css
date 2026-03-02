@@ -1,0 +1,222 @@
+/* P5FoodChainScene.css */
+
+/* ========= Base Styles ========= */
+.organism-img {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+  cursor: pointer;
+  z-index: 10;
+}
+
+.organism-img:hover {
+  transform: scale(1.25) translateY(-8px);
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.25));
+  z-index: 50;
+}
+
+/* ========= Floating Animation ========= */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  25% { transform: translateY(-12px) rotate(1deg); }
+  75% { transform: translateY(8px) rotate(-1deg); }
+}
+
+.fly {
+  animation: float 5s ease-in-out infinite;
+}
+
+/* ========= Snake Slither Animation ========= */
+@keyframes snakeMove {
+  0% { transform: translateX(0) translateY(0) rotate(0deg); }
+  25% { transform: translateX(15px) translateY(-5px) rotate(2deg); }
+  50% { transform: translateX(25px) translateY(0) rotate(0deg); }
+  75% { transform: translateX(15px) translateY(5px) rotate(-2deg); }
+  100% { transform: translateX(0) translateY(0) rotate(0deg); }
+}
+
+.snakeMove {
+  animation: snakeMove 6s ease-in-out infinite;
+}
+
+/* ========= Frog Jump Animation ========= */
+@keyframes frogJump {
+  0%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-20px) scale(1.1); }
+  60% { transform: translateY(5px) scale(0.95); }
+}
+
+.frogMove {
+  animation: frogJump 2.5s ease-in-out infinite;
+}
+
+/* ========= Fish Swim Animation ========= */
+@keyframes fishSwim {
+  0% { transform: translateX(0) translateY(0) rotate(0deg); }
+  25% { transform: translateX(20px) translateY(-8px) rotate(3deg); }
+  50% { transform: translateX(35px) translateY(0) rotate(0deg); }
+  75% { transform: translateX(20px) translateY(8px) rotate(-3deg); }
+  100% { transform: translateX(0) translateY(0) rotate(0deg); }
+}
+
+.fishMove {
+  animation: fishSwim 7s ease-in-out infinite;
+}
+
+/* ========= Plant Sway Animation ========= */
+@keyframes plantSway {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25% { transform: rotate(2deg) translateY(-3px); }
+  75% { transform: rotate(-2deg) translateY(3px); }
+}
+
+.plantMove {
+  animation: plantSway 5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+/* ========= Water Ripple Effect ========= */
+.water-ripple {
+  position: absolute;
+  bottom: 0;
+  left: 30%;
+  right: 0;
+  height: 25%;
+  background: linear-gradient(180deg, rgba(96, 165, 250, 0.3) 0%, rgba(37, 99, 235, 0.5) 100%);
+  animation: ripple 3s ease-in-out infinite;
+}
+
+@keyframes ripple {
+  0%, 100% { opacity: 0.5; transform: scaleY(1); }
+  50% { opacity: 0.7; transform: scaleY(1.02); }
+}
+
+/* ========= Floating Particles ========= */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat 8s infinite;
+}
+
+@keyframes particleFloat {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-100vh) translateX(100px); opacity: 0; }
+}
+
+/* ========= Sun Rays ========= */
+.sun-rays {
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(255,255,190,0.4) 0%, rgba(255,255,200,0) 70%);
+  border-radius: 50%;
+  animation: sunPulse 4s ease-in-out infinite;
+}
+
+@keyframes sunPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+}
+
+/* ========= Navigation Buttons ========= */
+.nav-button {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
+}
+
+.nav-button.next {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.nav-button.prev {
+  background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+  color: #333;
+}
+
+.nav-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.nav-button.next:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.nav-button.prev:hover {
+  background: linear-gradient(135deg, #fda085 0%, #f6d365 100%);
+}
+
+.nav-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+/* ========= Selected Display ========= */
+.selected-display {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: 12px 30px;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* ========= Legend ========= */
+.legend {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  padding: 12px 20px;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border: 1px solid rgba(255,255,255,0.5);
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ========= Back Button ========= */
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 8px 20px;
+  border-radius: 50px;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateX(-5px);
+}

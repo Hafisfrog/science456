@@ -21,7 +21,7 @@ export default function SelectGrade() {
           </div>
         </div>
 
-        <div className="grade-card" onClick={() => navigate("/p5")}>
+        <div className="grade-card" onClick={() => navigate("/p5/life")}>
           <img src="/images/p5.png" alt="ป.5" className="grade-image" />
           <div className="grade-content">
             <div className="grade-big">ป.5</div>

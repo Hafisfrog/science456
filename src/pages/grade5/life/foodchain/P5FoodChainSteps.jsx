@@ -1,20 +1,44 @@
 import { useNavigate } from "react-router-dom";
-import LabLayout from "../../../../components/LabLayout";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import "./P5FoodChainSteps.css";
 
 export default function P5FoodChainSteps() {
   const navigate = useNavigate();
   const audioCtxRef = useRef(null);
+  const [hoveredStep, setHoveredStep] = useState(null);
+  const [showAmbient, setShowAmbient] = useState(true);
 
   const steps = [
-    "สำรวจสิ่งมีชีวิตในระบบนิเวศ",
-    "จำแนกสิ่งมีชีวิตออกเป็นกลุ่ม ผู้ผลิตและผู้บริโภค",
-    "สร้างห่วงโซ่อาหาร",
-    "บันทึกผลการทดลอง",
+    {
+      title: "สำรวจสิ่งมีชีวิตในระบบนิเวศ",
+      description: "สังเกตและจดบันทึกสิ่งมีชีวิตต่างๆ ในระบบนิเวศ",
+      icon: "🔍",
+      color: "from-blue-400 to-blue-600"
+    },
+    {
+      title: "จำแนกสิ่งมีชีวิตออกเป็นกลุ่ม ผู้ผลิตและผู้บริโภค",
+      description: "แยกแยะบทบาทของสิ่งมีชีวิตแต่ละชนิด",
+      icon: "📊",
+      color: "from-green-400 to-green-600"
+    },
+    {
+      title: "สร้างห่วงโซ่อาหาร",
+      description: "เชื่อมโยงความสัมพันธ์ของสิ่งมีชีวิต",
+      icon: "🔄",
+      color: "from-yellow-400 to-yellow-600"
+    },
+    {
+      title: "บันทึกผลการทดลอง",
+      description: "สรุปและบันทึกสิ่งที่ได้เรียนรู้",
+      icon: "📝",
+      color: "from-purple-400 to-purple-600"
+    },
   ];
 
   // สร้าง Audio Context ตอนหน้าโหลด
   useEffect(() => {
+    if (!showAmbient) return;
+    
     audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
 
     // เล่นเสียงพื้นหลังเบา ๆ (ambient tone)
@@ -24,8 +48,8 @@ export default function P5FoodChainSteps() {
       const gain = ctx.createGain();
 
       oscillator.type = "sine";
-      oscillator.frequency.value = 120; // โทนต่ำ นุ่ม ๆ
-      gain.gain.value = 0.02; // เบามาก
+      oscillator.frequency.value = 120;
+      gain.gain.value = 0.02;
 
       oscillator.connect(gain);
       gain.connect(ctx.destination);
@@ -36,12 +60,16 @@ export default function P5FoodChainSteps() {
     playBackground();
 
     return () => {
-      audioCtxRef.current.close();
+      if (audioCtxRef.current) {
+        audioCtxRef.current.close();
+      }
     };
-  }, []);
+  }, [showAmbient]);
 
   // ฟังก์ชันเสียง "คลิก"
   const playClick = () => {
+    if (!audioCtxRef.current) return;
+    
     const ctx = audioCtxRef.current;
     const oscillator = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -57,66 +85,167 @@ export default function P5FoodChainSteps() {
     oscillator.stop(ctx.currentTime + 0.08);
   };
 
+  // สร้างอนุภาคลอย
+  const particles = [...Array(30)].map((_, i) => (
+    <div
+      key={i}
+      className="particle"
+      style={{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 10}s`,
+        width: `${Math.random() * 8 + 2}px`,
+        height: `${Math.random() * 8 + 2}px`,
+        background: `rgba(${Math.random() * 100 + 155}, ${Math.random() * 100 + 155}, 100, ${Math.random() * 0.5 + 0.3})`,
+      }}
+    />
+  ));
+
   return (
-    <LabLayout title="ขั้นตอนการทดลอง">
-      <div className="relative min-h-[80vh] flex flex-col items-center bg-gradient-to-b from-green-50 to-green-100 overflow-hidden">
+    <div className="steps-container">
+      {/* อนุภาคลอย */}
+      {particles}
 
-        {/* ดวงอาทิตย์ */}
-        <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-400 rounded-full shadow-lg" />
+      {/* ดวงอาทิตย์แบบมีรัศมี */}
+      <div className="sun">
+        <div className="sun-core"></div>
+        <div className="sun-rays"></div>
+      </div>
 
-        {/* พื้นหญ้า */}
-        <div className="absolute bottom-0 w-full h-32 bg-green-500" />
+      {/* เมฆลอย */}
+      <div className="cloud cloud-1">☁️</div>
+      <div className="cloud cloud-2">☁️</div>
+      <div className="cloud cloud-3">☁️</div>
 
-        {/* รั้วไม้ */}
-        <div className="absolute bottom-0 w-full flex justify-between px-8 opacity-80">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div key={i} className="w-12 h-8 bg-orange-700 rounded-t-lg" />
+      {/* ต้นไม้ตกแต่ง */}
+      <div className="tree tree-1">🌳</div>
+      <div className="tree tree-2">🌲</div>
+      <div className="tree tree-3">🌿</div>
+
+      {/* พื้นหญ้าพร้อมเอฟเฟกต์ */}
+      <div className="grass-field">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="grass-blade"
+            style={{
+              left: `${i * 5}%`,
+              animationDelay: `${i * 0.1}s`,
+              height: `${Math.random() * 30 + 20}px`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* รั้วไม้ตกแต่ง */}
+      <div className="fence">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div key={i} className="fence-post" />
+        ))}
+      </div>
+
+      {/* หัวเรื่องหลัก */}
+      <div className="title-container">
+        <h1 className="main-title">
+          <span className="title-icon">🧪</span>
+          ขั้นตอนการทดลอง
+          <span className="title-icon">🔬</span>
+        </h1>
+        <p className="title-sub">Experimental Procedure</p>
+      </div>
+
+      {/* Steps Container */}
+      <div className="steps-wrapper">
+        <div className="steps-grid">
+          {steps.map((step, index) => (
+            <div
+              key={index}
+              className={`step-card ${hoveredStep === index ? 'hovered' : ''}`}
+              onMouseEnter={() => setHoveredStep(index)}
+              onMouseLeave={() => setHoveredStep(null)}
+              onClick={() => {
+                playClick();
+                // เลื่อนไปยังขั้นตอนนั้นๆ
+              }}
+            >
+              <div className={`step-number bg-gradient-to-r ${step.color}`}>
+                <span className="step-icon">{step.icon}</span>
+                <span className="step-index">{index + 1}</span>
+              </div>
+              
+              <div className="step-content">
+                <h3 className="step-title">{step.title}</h3>
+                <p className="step-description">{step.description}</p>
+              </div>
+
+              {/* เอฟเฟกต์เส้นทางเชื่อม */}
+              {index < steps.length - 1 && (
+                <div className="step-connector">
+                  <div className="connector-dot" />
+                  <div className="connector-line" />
+                  <div className="connector-dot" />
+                </div>
+              )}
+            </div>
           ))}
         </div>
+      </div>
 
-        {/* กล่องหัวเรื่อง */}
-        <div className="bg-green-300 px-10 py-3 rounded-xl shadow-lg mt-6 mb-8">
-          <h1 className="text-2xl font-bold text-black">
-            ขั้นตอนการทดลอง
-          </h1>
-        </div>
+      {/* ปุ่มควบคุมเสียง */}
+      <button
+        onClick={() => {
+          playClick();
+          setShowAmbient(!showAmbient);
+          if (!showAmbient) {
+            audioCtxRef.current?.resume();
+          } else {
+            audioCtxRef.current?.suspend();
+          }
+        }}
+        className="sound-toggle"
+      >
+        {showAmbient ? '🔊' : '🔈'}
+      </button>
 
-        <div className="bg-white border-4 border-black rounded-2xl p-6 shadow-xl w-[80%] max-w-3xl z-10">
-          <div className="space-y-4">
-            {steps.map((text, index) => (
-              <div
-                key={index}
-                className="flex items-center gap-3 bg-gray-100 p-4 rounded-xl border border-gray-300"
-              >
-                <div className="w-10 h-10 flex items-center justify-center rounded-full bg-green-500 text-white font-bold">
-                  {index + 1}
-                </div>
-                <span className="text-lg font-semibold">{text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Navigation Buttons */}
+      <div className="nav-buttons">
+        <button
+          onClick={() => {
+            playClick();
+            navigate(-1);
+          }}
+          className="nav-btn prev"
+        >
+          <span className="btn-icon">←</span>
+          <span className="btn-text">ย้อนกลับ</span>
+        </button>
 
-        {/* ปุ่มเริ่มการทดลอง */}
         <button
           onClick={() => {
             playClick();
             navigate("/p5/life/foodchain/select");
           }}
-          className="mt-8 bg-blue-500 text-white px-8 py-3 rounded-full text-lg font-semibold shadow-lg
-                     hover:bg-blue-600 transition z-10"
+          className="nav-btn next"
         >
-          ▶ เริ่มการทดลอง
+          <span className="btn-text">เริ่มการทดลอง</span>
+          <span className="btn-icon">→</span>
         </button>
-
-        {/* ปุ่มภาษา + เสียง */}
-        <div className="absolute bottom-6 left-6 flex gap-2">
-          <button onClick={playClick} className="bg-blue-200 px-4 py-2 rounded-full">ไทย</button>
-          <button onClick={playClick} className="bg-blue-200 px-4 py-2 rounded-full">อังกฤษ</button>
-          <button onClick={playClick} className="bg-blue-200 px-4 py-2 rounded-full">มลายู</button>
-          <button onClick={playClick} className="bg-blue-400 px-4 py-2 rounded-full">🔊</button>
-        </div>
       </div>
-    </LabLayout>
+
+      {/* Language Selector */}
+      <div className="language-selector">
+        <button onClick={playClick} className="lang-btn active">🇹🇭 ไทย</button>
+        <button onClick={playClick} className="lang-btn">🇬🇧 ENG</button>
+        <button onClick={playClick} className="lang-btn">🇲🇾 MLY</button>
+      </div>
+
+      {/* Progress Indicator */}
+      <div className="progress-indicator">
+        <div className="progress-bar">
+          <div className="progress-fill" style={{ width: '25%' }} />
+        </div>
+        <span className="progress-text">ขั้นตอนที่ 1/4</span>
+      </div>
+    </div>
   );
 }
