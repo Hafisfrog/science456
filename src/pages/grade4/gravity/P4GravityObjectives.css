@@ -1,4 +1,4 @@
-.obj-full{
+﻿.obj-full{
   width:100vw;
   height:100vh;
   position:relative;
@@ -7,7 +7,6 @@
   background:#eaf7fb;
 }
 
-/* พื้นหลังรูป */
 .obj-bg{
   position:absolute;
   inset:0;
@@ -19,7 +18,6 @@
   z-index:-2;
 }
 
-/* เปลือกหน้า (เต็มจอ) */
 .obj-shell{
   width:100%;
   height:100%;
@@ -29,54 +27,6 @@
   position:relative;
 }
 
-/* Topbar */
-.obj-topbar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-/* ปุ่มกลับ */
-.obj-back{
-  border:none;
-  cursor:pointer;
-  padding:12px 18px;
-  border-radius:18px;
-  font-size:16px;
-  font-weight:900;
-  background:rgba(255,255,255,.92);
-  box-shadow:0 10px 22px rgba(0,0,0,.14);
-  transition: transform .12s ease;
-}
-
-.obj-back:hover{ transform: translateY(-2px); }
-
-/* แถบภาษา */
-.obj-langbar{
-  display:flex;
-  gap:10px;
-  background:rgba(255,255,255,.88);
-  padding:10px 12px;
-  border-radius:18px;
-  box-shadow:0 10px 22px rgba(0,0,0,.12);
-}
-
-.obj-chip{
-  border:none;
-  cursor:pointer;
-  padding:10px 14px;
-  border-radius:14px;
-  background:#e6f2ff;
-  font-size:16px;
-  font-weight:900;
-  transition: transform .12s ease, background .12s ease;
-}
-
-.obj-chip:hover{ transform: translateY(-2px); }
-.obj-chip.active{ background:#bfe0ff; }
-
-/* Header */
 .obj-header{
   text-align:center;
   margin-top:22px;
@@ -93,7 +43,6 @@
   box-shadow:0 10px 22px rgba(0,0,0,.14);
 }
 
-/* Title row + audio */
 .obj-titleRow{
   margin-top:16px;
   display:flex;
@@ -110,7 +59,6 @@
   text-shadow:0 4px 0 rgba(255,255,255,.6);
 }
 
-/* ปุ่มเสียง (อยู่ในช่องข้อความ) */
 .obj-audio{
   border:none;
   cursor:pointer;
@@ -135,7 +83,6 @@
   font-size:20px;
 }
 
-/* Card */
 .obj-card{
   max-width: 900px;
   margin: 26px 0 0 155px;
@@ -164,7 +111,6 @@
   box-shadow:0 12px 24px rgba(0,0,0,.14);
 }
 
-/* Objective item */
 .obj-item{
   display:flex;
   align-items:center;
@@ -199,26 +145,63 @@
   flex:1;
 }
 
-/* Character image */
 .obj-character{
   position:absolute;
-  right:23px;
-  bottom:1px;
-  width:min(30%, 510px);
+  right:-30px;
+  bottom:35px;
+  width:min(28%, 380px);
   height:auto;
   filter: drop-shadow(0 18px 20px rgba(0,0,0,.22));
   user-select:none;
   pointer-events:none;
 }
 
-/* Bottom actions */
+.obj-langbar{
+  position:absolute;
+  left:24px;
+  bottom:24px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  background:rgba(255,255,255,.88);
+  padding:10px 12px;
+  border-radius:18px;
+  box-shadow:0 10px 22px rgba(0,0,0,.12);
+  z-index:20;
+}
+
+.obj-chip{
+  border:none;
+  cursor:pointer;
+  padding:10px 14px;
+  border-radius:14px;
+  background:#e6f2ff;
+  font-size:16px;
+  font-weight:900;
+  transition: transform .12s ease, background .12s ease;
+}
+
+.obj-chip:hover{ transform: translateY(-2px); }
+.obj-chip.active{ background:#bfe0ff; }
+
+.obj-chipAudio{
+  border:none;
+  cursor:pointer;
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  font-size:20px;
+  background:#dbeafe;
+  box-shadow:0 10px 20px rgba(0,0,0,.14);
+}
+
 .obj-actions{
   position:absolute;
-  left:50%;
-  bottom:52px;
-  transform:translateX(-50%);
+  right:24px;
+  bottom:24px;
   display:flex;
-  gap:14px;
+  gap:12px;
+  z-index:20;
 }
 
 .obj-btn{
@@ -244,35 +227,43 @@
   color:white;
 }
 
-/* Responsive */
 @media (max-width: 900px){
   .obj-title{ font-size:42px; }
   .obj-text{ font-size:20px; }
-  .obj-character{ width:min(40%, 320px); opacity:.96; }
+  .obj-character{ width:min(34%, 320px); opacity:.96; bottom:80px; }
+  .obj-card{ margin:20px 220px 0 24px; }
 }
 
 @media (max-width: 640px){
-  .obj-shell{ padding:18px; }
+  .obj-shell{ padding:16px; }
   .obj-grade{ font-size:18px; }
   .obj-title{ font-size:34px; }
   .obj-audio{ width:48px; height:48px; }
-  .obj-card{ margin-top:18px; padding:18px; }
+  .obj-card{ margin:18px 0 0; padding:18px; }
   .obj-section{ font-size:20px; }
   .obj-text{ font-size:18px; }
-  .obj-character{
-    position:relative;
-    right:auto;
-    bottom:auto;
-    display:block;
-    margin:14px auto 0;
-    width:min(70%, 320px);
+  .obj-character{ display:none; }
+
+  .obj-langbar{
+    left:12px;
+    bottom:12px;
+    gap:8px;
+    padding:10px;
   }
+
+  .obj-chip{
+    padding:10px 12px;
+    font-size:15px;
+  }
+
   .obj-actions{
-    position:relative;
-    left:auto;
-    bottom:auto;
-    transform:none;
-    justify-content:space-between;
-    margin-top:16px;
+    right:12px;
+    bottom:12px;
+    gap:8px;
+  }
+
+  .obj-btn{
+    padding:12px 14px;
+    font-size:16px;
   }
 }

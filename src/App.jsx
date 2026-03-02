@@ -2,37 +2,37 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Start from "./pages/Start";
 import SelectGrade from "./pages/SelectGrade";
-// import Grade6 from "./pages/grade6";
 import P6 from "./pages/grade6/P6";
 
 // ===== ป.4 =====
 import P4 from "./pages/grade4/P4";
-import P4Gravity from "./pages/grade4/P4Gravity";
-import P4GravityVocab from "./pages/grade4/P4GravityVocab";
-import P4GravitySim1 from "./pages/grade4/P4GravitySim1";
-import P4GravityObjectives from "./pages/grade4/P4GravityObjectives";
-import P4GravityExp1Materials from "./pages/grade4/P4GravityExp1Materials";
-import P4GravityExp1Steps from "./pages/grade4/P4GravityExp1Steps";
-import P4GravityExp1Question from "./pages/grade4/P4GravityExp1Question";
-import P4GravityExp1Action from "./pages/grade4/P4GravityExp1Action";
-import P4GravityExp1Result from "./pages/grade4/P4GravityExp1Result";
-import P4GravityExp1Answer from "./pages/grade4/P4GravityExp1Answer";
-//p4 gravity exp2
-import P4GravityExp2Vocab from "./pages/grade4/exp2/P4GravityExp2Vocab";
-import P4GravityExp2Materials from "./pages/grade4/exp2/P4GravityExp2Materials";
-import P4GravityExp2Steps from "./pages/grade4/exp2/P4GravityExp2Steps";
-import P4GravityExp2Question from "./pages/grade4/exp2/P4GravityExp2Question";
-import P4GravityExp2Action from "./pages/grade4/exp2/P4GravityExp2Action";
-import P4GravityExp2Result from "./pages/grade4/exp2/P4GravityExp2Result";
-import P4GravityExp2Answer from "./pages/grade4/exp2/P4GravityExp2Answer";
-//p4 gavity exp3
-import P4GravityExp3Vocab from "./pages/grade4/exp3/P4GravityExp3Vocab";
-import P4GravityExp3Steps from "./pages/grade4/exp3/P4GravityExp3Steps";
-import P4GravityExp3Action from "./pages/grade4/exp3/P4GravityExp3Action";
-import P4GravityExp3Result from "./pages/grade4/exp3/P4GravityExp3Result";
-import P4GravityExp3Question from "./pages/grade4/exp3/P4GravityExp3Question";
-import P4GravityExp3Answer from "./pages/grade4/exp3/P4GravityExp3Answer";
-
+import P4Gravity from "./pages/grade4/gravity/P4Gravity";
+import P4GravityObjectives from "./pages/grade4/gravity/P4GravityObjectives";
+import P4Summarize from "./pages/grade4/P4Summarize";
+//P4 Gravity Exp 1
+import P4GravityVocab from "./pages/grade4/gravity/exp1/P4GravityVocab";
+import P4GravitySim1 from "./pages/grade4/gravity/exp1/P4GravitySim1";
+import P4GravityExp1Materials from "./pages/grade4/gravity/exp1/P4GravityExp1Materials";
+import P4GravityExp1Steps from "./pages/grade4/gravity/exp1/P4GravityExp1Steps";
+import P4GravityExp1Question from "./pages/grade4/gravity/exp1/P4GravityExp1Question";
+import P4GravityExp1Action from "./pages/grade4/gravity/exp1/P4GravityExp1Action";
+import P4GravityExp1Result from "./pages/grade4/gravity/exp1/P4GravityExp1Result";
+import P4GravityExp1Answer from "./pages/grade4/gravity/exp1/P4GravityExp1Answer";
+//P4 Gravity Exp 2
+import P4GravityExp2Vocab from "./pages/grade4/gravity/exp2/P4GravityExp2Vocab";
+import P4GravityExp2Materials from "./pages/grade4/gravity/exp2/P4GravityExp2Materials";
+import P4GravityExp2Steps from "./pages/grade4/gravity/exp2/P4GravityExp2Steps";
+import P4GravityExp2Question from "./pages/grade4/gravity/exp2/P4GravityExp2Question";
+import P4GravityExp2Action from "./pages/grade4/gravity/exp2/P4GravityExp2Action";
+import P4GravityExp2Result from "./pages/grade4/gravity/exp2/P4GravityExp2Result";
+import P4GravityExp2Answer from "./pages/grade4/gravity/exp2/P4GravityExp2Answer";
+//P4 Gravity Exp 3
+import P4GravityExp3Vocab from "./pages/grade4/gravity/exp3/P4GravityExp3Vocab";
+import P4GravityExp3Steps from "./pages/grade4/gravity/exp3/P4GravityExp3Steps";
+import P4GravityExp3Action from "./pages/grade4/gravity/exp3/P4GravityExp3Action";
+import P4GravityExp3Result from "./pages/grade4/gravity/exp3/P4GravityExp3Result";
+import P4GravityExp3Question from "./pages/grade4/gravity/exp3/P4GravityExp3Question";
+import P4GravityExp3Answer from "./pages/grade4/gravity/exp3/P4GravityExp3Answer";
 
 import P6ElectricObjectives from "./pages/grade6/P6ElectricObjectives";
 import P6ElectricVocab from "./pages/grade6/P6ElectricVocab";
@@ -78,8 +78,6 @@ import P4LightThinking from "./pages/grade4/light/P4LightThinking";
 import P4LightSituation from "./pages/grade4/light/P4LightSituation";
 import P4LightObjective from "./pages/grade4/light/P4LightObjective";
 
-
-// ===== ป.5 — ชีวิตสัมพันธ์ (ห่วงโซ่อาหาร) =====
 import P5LifeIntro from "./pages/grade5/life/P5LifeIntro";
 import P5FoodChainIntro from "./pages/grade5/life/foodchain/P5FoodChainIntro";
 import P5FoodChainVocab from "./pages/grade5/life/foodchain/P5FoodChainVocab";
@@ -97,8 +95,6 @@ import P5GeneticsHumans from "./pages/grade5/life/genetics/P5GeneticsHumans";
 import P5GeneticsHumansSummary from "./pages/grade5/life/genetics/P5GeneticsHumansSummary";
 import P5GeneticsTopicPlaceholder from "./pages/grade5/life/genetics/P5GeneticsTopicPlaceholder";
 
-// import Grade6 from "./pages/grade6";
-
 export default function App() {
   return (
     <BrowserRouter>
@@ -106,16 +102,15 @@ export default function App() {
         <Route path="/" element={<Start />} />
         <Route path="/grades" element={<SelectGrade />} />
 
-        {/* ===== ป.4 ===== */}
         <Route path="/p4" element={<P4 />} />
 
-        {/* ===== Gravity (ป.4) ===== */}
         <Route path="/p4/gravity" element={<P4Gravity />} />
+        <Route path="/p4/gravity/objectives" element={<P4GravityObjectives />} />
+        <Route path="/p4/gravity/summarize" element={<P4Summarize />} />
+        
         <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />
         <Route path="/p4/gravity/sim1" element={<P4GravitySim1 />} />
-        <Route path="/p4/gravity/objectives" element={<P4GravityObjectives />} />
         <Route path="/p4/gravity/exp1/materials" element={<P4GravityExp1Materials />} />
-        {/* <Route path="/p4/gravity/exp1/step1" element={<div style={{padding:40}}>Step 1 (กำลังทำ)</div>} /> */}
         <Route path="/p4/gravity/exp1/steps" element={<P4GravityExp1Steps />} />
         <Route path="/p4/gravity/exp1/question" element={<P4GravityExp1Question />} />
         <Route path="/p4/gravity/exp1/action" element={<P4GravityExp1Action />} />
@@ -137,69 +132,30 @@ export default function App() {
         <Route path="/p4/gravity/exp3/answer" element={<P4GravityExp3Answer />} />
         <Route path="/p4/gravity/exp3/question" element={<P4GravityExp3Question />} />
 
-        {/* placeholder หน้า experiment */}
-        <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
-        {/* เผื่อไว้ต่อยอด */}
-
-        <Route
-          path="/p4/gravity/:slug"
-          element={<div style={{ padding: 40 }}>หน้าการทดลอง (กำลังทำ)</div>}
-        />
-
-        {/* ===== Light (ตัวกลางของแสง) ป.4 ===== */}
-      
         <Route path="/p4/light/intro" element={<P4LightIntro />} />
         <Route path="/p4/light/vocab" element={<P4LightVocab />} />
         <Route path="/p4/light/select" element={<P4LightSelect />} />
         <Route path="/p4/light/experiment" element={<P4LightExperiment />} />
         <Route path="/p4/light/record" element={<P4LightRecord />} />
         <Route path="/p4/light/check" element={<P4LightCheck />} />
-        <Route path="/p4/light/summary" element={<P4LightSummary />} /> 
+        <Route path="/p4/light/summary" element={<P4LightSummary />} />
         <Route path="/p4/light/qa" element={<P4LightQA />} />
         <Route path="/p4/light/concept" element={<P4LightConceptSummary />} />
         <Route path="/p4/light/thinking" element={<P4LightThinking />} />
         <Route path="/p4/light/situation" element={<P4LightSituation />} />
         <Route path="/p4/light/objective" element={<P4LightObjective />} />
-        <Route
-        path="/p4/light/P4LightIntroLearning"
-        element={<P4LightIntroLearning />}
-        />
-        <Route
-          path="/p4/light/basic"
-          element={<P4LightBasicWords />}
-        />
+        <Route path="/p4/light/P4LightIntroLearning" element={<P4LightIntroLearning />} />
+        <Route path="/p4/light/basic" element={<P4LightBasicWords />} />
 
-        
-        
-
-
-        {/* ====================== */}
-        {/* ===== ป.5 (ชีวิตสัมพันธ์ → ห่วงโซ่อาหาร) ===== */}
-        {/* ====================== */}
-
-        {/* STEP 1 */}
         <Route path="/p5/life" element={<P5LifeIntro />} />
-
-        {/* STEP 2 */}
         <Route path="/p5/life/foodchain" element={<P5FoodChainIntro />} />
-
-        {/* STEP 3 */}
         <Route path="/p5/life/foodchain/vocab" element={<P5FoodChainVocab />} />
-
-        {/* STEP 4 */}
         <Route path="/p5/life/foodchain/steps" element={<P5FoodChainSteps />} />
-
-        {/* STEP 5 */}
         <Route path="/p5/life/foodchain/select" element={<P5FoodChainSelect />} />
-
-        {/* STEP 6 */}
         <Route path="/p5/life/foodchain/sim" element={<P5FoodChainSim />} />
-
-        {/* STEP 7 */}
         <Route path="/p5/life/foodchain/check" element={<P5FoodChainCheck />} />
-
-        {/* STEP 8 */}
         <Route path="/p5/life/foodchain/summary" element={<P5FoodChainSummary />} />
+        <Route path="/p5" element={<div style={{ padding: 40 }}>หน้า ป.5 (กำลังทำ)</div>} />
 
         {/* STEP 9 */}
         <Route path="/p5/life/genetics" element={<P5GeneticsSelect />} />
@@ -224,6 +180,7 @@ export default function App() {
         />
         <Route path="/p6/electric-circuit" element={<P6ElectricCircuitObjectives />} />
         <Route path="/p6/electric-circuit/vocab" element={<P6ElectricCircuitVocab />} />
+        <Route path="/p6/electric-circuit" element={<P6ElectricCircuitVocab />} />
         <Route path="/p6/electric-circuit/experiments" element={<P6ElectricCircuitExperimentSelect />} />
         <Route path="/p6/electric-circuit/problem" element={<P6ElectricCircuitProblem />} />
         <Route path="/p6/electric-circuit/materials" element={<P6ElectricCircuitMaterials />} />
@@ -244,21 +201,11 @@ export default function App() {
           path="/p6/electric-circuit/bulb-series-parallel/sim"
           element={<P6ElectricCircuitBulbSeriesParallelSim />}
         />
+        <Route path="/p6/electric-circuit/sim" element={<P6ElectricCircuitSim />} />
+        <Route path="/p6/electric-circuit/bulb-series-parallel" element={<P6ElectricCircuitBulbSeriesParallel />} />
         <Route path="/p6/electric-circuit/result" element={<P6ElectricCircuitResults />} />
         <Route path="/p6/electric-circuit/objectives" element={<P6ElectricCircuitObjectives />} />
         <Route path="/p6/electric-circuit/intro" element={<P6ElectricCircuitIntro />} />
-        <Route
-          path="/p6/electric-circuit/lesson/components"
-          element={<div style={{ padding: 40 }}>องค์ประกอบของวงจรไฟฟ้า (กำลังทำ)</div>}
-        />
-        <Route
-          path="/p6/electric-circuit/lesson/series-parallel"
-          element={<div style={{ padding: 40 }}>การต่อเซลล์ไฟฟ้าแบบอนุกรมและขนาน (กำลังทำ)</div>}
-        />
-        <Route
-          path="/p6/electric-circuit/lesson/open-closed"
-          element={<div style={{ padding: 40 }}>วงจรเปิดและวงจรปิด (กำลังทำ)</div>}
-        />
         <Route path="/p6/experiment/electric-generation" element={<P6ElectricObjectives />} />
         <Route path="/p6/experiment/electric-generation/vocab" element={<P6ElectricVocab />} />
         <Route path="/p6/experiment/electric-generation/materials" element={<P6ElectricGenerationMaterials />} />
@@ -267,22 +214,11 @@ export default function App() {
         <Route path="/p6/experiment/electric-generation/result" element={<P6ElectricGenerationResult />} />
         <Route path="/p6/experiment/electric-generation/summary" element={<P6ElectricGenerationSummary />} />
         <Route path="/p6/experiment/electric-force-effect" element={<P6ElectricForceEffect />} />
-        <Route
-          path="/p6/experiment/electric-force-effect/steps"
-          element={<P6ElectricForceEffectSteps />}
-        />
-        <Route
-          path="/p6/experiment/electric-force-effect/sim"
-          element={<P6ElectricForceEffectSim />}
-        />
-        <Route
-          path="/p6/experiment/electric-force-effect/summary"
-          element={<P6ElectricForceEffectSummary />}
-        />
-
-        {/* placeholder หน้า experiment */}
-        <Route path="/p4/gravity/:slug" element={<div style={{padding:40}}>หน้าการทดลอง (กำลังทำ)</div>} />
+        <Route path="/p6/experiment/electric-force-effect/steps" element={<P6ElectricForceEffectSteps />} />
+        <Route path="/p6/experiment/electric-force-effect/sim" element={<P6ElectricForceEffectSim />} />
+        <Route path="/p6/experiment/electric-force-effect/summary" element={<P6ElectricForceEffectSummary />} />
       </Routes>
     </BrowserRouter>
   );
 }
+

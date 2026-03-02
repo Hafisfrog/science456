@@ -6,7 +6,7 @@ export default function P4GravityExp3Answer() {
   const navigate = useNavigate();
 
   const BACK_PATH = "/p4/gravity/exp3/result";
-  const NEXT_PATH = "/p4/gravity";
+  const NEXT_PATH = "/p4/gravity/summarize";
   const [lang, setLang] = useState("th");
 
   const assets = useMemo(

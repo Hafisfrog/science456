@@ -1,4 +1,4 @@
-/* หน้า */
+﻿/* เธซเธเนเธฒ */
 .vocab-page {
   min-height: 100vh;
   padding: 50px 20px;
@@ -85,12 +85,12 @@
   text-align: center;
 }
 
-/* เส้นคั่น */
+/* เน€เธชเนเธเธเธฑเนเธ */
 .vocab-table tr:not(:last-child) td {
   border-bottom: 1px solid #e5e7eb;
 }
 
-/* ปุ่มเสียง */
+/* เธเธธเนเธกเน€เธชเธตเธขเธ */
 .audio-btn {
   border: none;
   cursor: pointer;
@@ -128,7 +128,7 @@
   gap: 14px;
 }
 
-/* ปุ่มล่าง */
+/* เธเธธเนเธกเธฅเนเธฒเธ */
 .btn-back,
 .btn-next {
   border: none;
@@ -150,6 +150,9 @@
 .btn-next {
   background: #2563eb;
   color: white;
+  padding: 14px 16px;
+  font-size: 16px;
+  border-radius: 14px;
 }
 
 .btn-back:hover,
@@ -157,7 +160,7 @@
   transform: translateY(-2px);
 }
 
-/* ปุ่มย้อนกลับ */      
+/* เธเธธเนเธกเธขเนเธญเธเธเธฅเธฑเธ */      
 .back-home-btn{
   border: none;
   cursor: pointer;
@@ -182,3 +185,4 @@
   transform: translateY(1px);
   box-shadow: 0 6px 14px rgba(0,0,0,.18);
 }
+
