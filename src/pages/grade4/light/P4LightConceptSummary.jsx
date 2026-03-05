@@ -25,9 +25,9 @@ export default function P4LightConceptSummary() {
             borderColor="border-green-400"
             description="แสงผ่านได้ดี มองเห็นสิ่งของด้านหลังได้ชัดเจน เพราะวัตถุยอมให้แสงผ่าน"
             images={[
-              { src: "/images/glass_clear.png", label: "กระจกใส" },
-              { src: "/images/glass_cup.png", label: "แก้วใส" },
-              { src: "/images/plastic_clear.png", label: "พลาสติกใส" }
+              { src: "/images/materials/l1.png", label: "กระจกใส" },
+              { src: "/images/materials/l10.png", label: "แก้วใส" },
+              { src: "/images/materials/l3.png", label: "พลาสติกใส" }
             ]}
             bgScene={
               <div className="absolute inset-0 bg-gradient-to-b from-sky-200 to-green-200 opacity-30" />
@@ -42,9 +42,9 @@ export default function P4LightConceptSummary() {
             borderColor="border-yellow-400"
             description="แสงผ่านได้บางส่วน มองเห็นสิ่งของด้านหลังได้ไม่ชัด เพราะวัตถุกระจายแสง"
             images={[
-              { src: "/images/glass_frost.png", label: "กระจกฝ้า" },
-              { src: "/images/wax_paper.png", label: "กระดาษไข" },
-              { src: "/images/fog.png", label: "หมอก" }
+              { src: "/images/materials/l2.png", label: "กระจกฝ้า" },
+              { src: "/images/materials/l4.png", label: "กระดาษไข" },
+              { src: "/images/materials/l8.png", label: "หมอก" }
             ]}
             bgScene={
               <div className="absolute inset-0 bg-gradient-to-b from-gray-200 to-yellow-100 opacity-30" />
@@ -59,9 +59,9 @@ export default function P4LightConceptSummary() {
             borderColor="border-gray-500"
             description="แสงผ่านไม่ได้เลย มองไม่เห็นสิ่งของด้านหลัง เพราะวัตถุไม่ยอมให้แสงผ่าน"
             images={[
-              { src: "/images/wood.png", label: "แผ่นไม้" },
-              { src: "/images/metal.png", label: "เหล็ก" },
-              { src: "/images/concrete.png", label: "แผ่นปูน" }
+              { src: "/images/materials/l5.png", label: "แผ่นไม้" },
+              { src: "/images/materials/l6.png", label: "เหล็ก" },
+              { src: "/images/materials/l7.webp", label: "แผ่นปูน" }
             ]}
             bgScene={
               <div className="absolute inset-0 bg-gradient-to-b from-gray-400 to-gray-600 opacity-20" />

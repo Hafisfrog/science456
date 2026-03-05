@@ -47,6 +47,12 @@ const TYPE_META = {
   },
 };
 
+const SPEECH_LOCALE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
 // ─── Beam Canvas ──────────────────────────────────────────────────────────────
 function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, objectSize = 190 }) {
   const canvasRef = useRef(null);
@@ -304,8 +310,8 @@ export default function P4LightExperiment() {
   const [reflectProgress, setReflectProgress] = useState(0);
   const [torchRotation, setTorchRotation] = useState(0);
   const [results, setResults] = useState([]);
-  const [flash, setFlash] = useState(false);
   const [materialSizePercent, setMaterialSizePercent] = useState(100);
+  const [speechLang, setSpeechLang] = useState("th");
   
   // โหลดประวัติจาก localStorage
   const [experimentResults, setExperimentResults] = useState(() => {
@@ -401,9 +407,6 @@ export default function P4LightExperiment() {
               const allResults = [newResult, ...experimentResults];
               setExperimentResults(allResults);
               localStorage.setItem('experiment4_results', JSON.stringify(allResults));
-              
-              setFlash(true);
-              setTimeout(() => setFlash(false), 700);
             }
           }, 16);
         }
@@ -438,6 +441,74 @@ export default function P4LightExperiment() {
     transparent: experimentResults.filter(r => r.type === "transparent").length,
     translucent: experimentResults.filter(r => r.type === "translucent").length,
     opaque: experimentResults.filter(r => r.type === "opaque").length,
+  };
+
+  const buildSpeechText = () => {
+    if (speechLang === "en") {
+      return `Light experiment. Selected material ${selectedMaterial.name}. Material type ${meta.label}. Observation result ${meta.result}. Total experiments ${stats.total}.`;
+    }
+    if (speechLang === "ms") {
+      return `Eksperimen cahaya. Bahan yang dipilih ialah ${selectedMaterial.name}. Jenis bahan ${meta.label}. Hasil pemerhatian ${meta.result}. Jumlah eksperimen ${stats.total} kali.`;
+    }
+    return `การทดลองเรื่องแสง วัสดุที่เลือกคือ ${selectedMaterial.name} เป็นวัสดุประเภท ${meta.label} ผลการสังเกตคือ ${meta.result} ทดลองแล้วทั้งหมด ${stats.total} ครั้ง`;
+  };
+
+  const speakStatus = () => {
+    if (
+      typeof window === "undefined" ||
+      typeof SpeechSynthesisUtterance === "undefined" ||
+      !window.speechSynthesis
+    ) {
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    const text = buildSpeechText();
+    const locale = SPEECH_LOCALE[speechLang] || "th-TH";
+
+    const doSpeak = () => {
+      const voices = synth.getVoices();
+      const lowerLocale = locale.toLowerCase();
+      const langPrefix = lowerLocale.split("-")[0];
+      const voice =
+        voices.find((v) => v.lang?.toLowerCase() === lowerLocale) ||
+        voices.find((v) => v.lang?.toLowerCase().startsWith(langPrefix)) ||
+        voices[0];
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (voice) utterance.voice = voice;
+      utterance.lang = voice?.lang || locale;
+      utterance.rate = 0.9;
+      utterance.pitch = 1;
+
+      synth.cancel();
+      synth.resume();
+      synth.speak(utterance);
+    };
+
+    const voices = synth.getVoices();
+    if (voices.length) {
+      doSpeak();
+      return;
+    }
+
+    let spoken = false;
+    const speakOnce = () => {
+      if (spoken) return;
+      spoken = true;
+      doSpeak();
+    };
+
+    const handleVoicesChanged = () => {
+      synth.removeEventListener("voiceschanged", handleVoicesChanged);
+      speakOnce();
+    };
+
+    synth.addEventListener("voiceschanged", handleVoicesChanged);
+    setTimeout(() => {
+      synth.removeEventListener("voiceschanged", handleVoicesChanged);
+      speakOnce();
+    }, 500);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
@@ -483,7 +554,7 @@ export default function P4LightExperiment() {
                       onClick={() => selectMaterial(m)}
                     >
                       <span style={{ fontSize: 20 }}>{m.emoji}</span>
-                      <span style={{ fontWeight: selectedMaterial.id === m.id ? 700 : 500, color: "#e2e8f0" }}>{m.name}</span>
+                      <span style={{ fontWeight: selectedMaterial.id === m.id ? 700 : 500, color: "#1f2937" }}>{m.name}</span>
                       {selectedMaterial.id === m.id && <span style={{ marginLeft: "auto", color: TYPE_META[grp].badge }}>✓</span>}
                     </button>
                   ))}
@@ -512,13 +583,37 @@ export default function P4LightExperiment() {
         {/* Floating Control Panel */}
         <div style={S.controlPanel} className="glass-panel">
           <div style={S.panelTitle}>ควบคุม</div>
+          <div style={S.speechRow}>
+            {["th", "en", "ms"].map((langKey) => (
+              <button
+                key={langKey}
+                style={{
+                  ...S.speechLangBtn,
+                  ...(speechLang === langKey ? S.speechLangBtnActive : {}),
+                }}
+                onClick={() => setSpeechLang(langKey)}
+                type="button"
+              >
+                {langKey.toUpperCase()}
+              </button>
+            ))}
+            <button
+              style={S.speechBtn}
+              onClick={speakStatus}
+              type="button"
+              className="btn-hover"
+              aria-label="Speak status"
+            >
+              🔊
+            </button>
+          </div>
           <button style={S.secondBtn} onClick={reset} className="btn-hover">
             <span>↺</span> เริ่มใหม่
           </button>
 
           {/* ปุ่มดูสรุปผล - ส่ง results ไปแสดงตามจำนวนที่ทดลอง */}
           <button 
-            style={{ ...S.secondBtn, background: "rgba(139, 92, 246, 0.2)", color: "#c084fc" }} 
+            style={{ ...S.secondBtn, background: "#e0f2fe", color: "#1d4ed8", borderColor: "#93c5fd" }} 
             onClick={goToRecord} 
             className="btn-hover"
           >
@@ -580,15 +675,15 @@ export default function P4LightExperiment() {
               bottom: 20,
               transform: "translateX(-50%)",
               zIndex: 1,
-              border: "1px solid rgba(255,255,255,0.12)",
-              boxShadow: "0 12px 30px rgba(0,0,0,0.45)",
+              border: "1px solid #93c5fd",
+              boxShadow: "0 12px 30px rgba(59,130,246,0.25)",
               backdropFilter: "blur(8px)",
               padding: "12px 20px",
               opacity: shine ? 0.45 : 1,
               cursor: shine ? "not-allowed" : "pointer",
               background: shine
-                ? "rgba(30,41,59,0.75)"
-                : "linear-gradient(135deg,#f59e0b,#ef4444)",
+                ? "#cbd5e1"
+                : "linear-gradient(135deg,#38bdf8,#2563eb)",
             }}
             onClick={doShine}
             disabled={shine}
@@ -609,11 +704,11 @@ export default function P4LightExperiment() {
           <svg style={S.grid} width="100%" height="100%">
             {Array.from({ length: 20 }).map((_, i) => (
               <line key={`v${i}`} x1={`${i * 5.26}%`} y1="0" x2={`${i * 5.26}%`} y2="100%"
-                stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+                stroke="rgba(30,64,175,0.08)" strokeWidth="1" />
             ))}
             {Array.from({ length: 12 }).map((_, i) => (
               <line key={`h${i}`} x1="0" y1={`${i * 9.09}%`} x2="100%" y2={`${i * 9.09}%`}
-                stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
+                stroke="rgba(30,64,175,0.08)" strokeWidth="1" />
             ))}
           </svg>
 
@@ -718,7 +813,7 @@ export default function P4LightExperiment() {
           {/* Status dot */}
           <div style={S.statusDot}>
             <div style={{ ...S.dot, background: shine ? "#4ade80" : "#475569", boxShadow: shine ? "0 0 8px #4ade80" : "none" }} className={shine ? "glow-pulse" : ""} />
-            <span style={{ color: "#94a3b8", fontSize: 13 }}>{shine ? "กำลังทดลอง..." : "พร้อมทดลอง"}</span>
+            <span style={{ color: "#475569", fontSize: 13 }}>{shine ? "กำลังทดลอง..." : "พร้อมทดลอง"}</span>
           </div>
         </div>
       </main>
@@ -749,7 +844,7 @@ export default function P4LightExperiment() {
                     />
                     <span className="chip-emoji" style={{ fontSize: 20, display: 'none' }}>{r.material.emoji}</span>
                     <div>
-                      <div style={{ color: "#e2e8f0", fontSize: 12, fontWeight: 600 }}>{r.material.name}</div>
+                      <div style={{ color: "#1e293b", fontSize: 12, fontWeight: 600 }}>{r.material.name}</div>
                       <div style={{ color: TYPE_META[r.type].badge, fontSize: 11 }}>{r.result}</div>
                     </div>
                   </div>
@@ -759,6 +854,14 @@ export default function P4LightExperiment() {
           {experimentResults.length > 0 && (
             <button style={S.clearBtn} onClick={clearResults}>ล้างประวัติ</button>
           )}
+          <div style={S.pageNav}>
+            <button style={S.pageBackBtn} onClick={() => navigate("/p4/light/thinking")} className="btn-hover">
+              ย้อนกลับ
+            </button>
+            <button style={S.pageNextBtn} onClick={goToRecord} className="btn-hover">
+              ไปต่อ
+            </button>
+          </div>
         </div>
       </footer>
     </div>
@@ -769,26 +872,27 @@ export default function P4LightExperiment() {
 const S = {
   root: {
     fontFamily: "'Sarabun', 'Noto Sans Thai', sans-serif",
-    background: "#070e1a",
+    background: "linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%)",
     height: "100vh",
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
-    color: "#e2e8f0",
+    color: "#1e293b",
+    position: "relative",
   },
   topBar: {
     display: "flex",
     alignItems: "center",
     gap: 20,
     padding: "10px 20px",
-    background: "rgba(15,23,42,0.95)",
-    borderBottom: "1px solid rgba(255,255,255,0.07)",
+    background: "rgba(255,255,255,0.9)",
+    borderBottom: "1px solid #bfdbfe",
     backdropFilter: "blur(12px)",
     zIndex: 40,
     flexShrink: 0,
   },
   logo: { display: "flex", alignItems: "center", gap: 12 },
-  logoIcon: { fontSize: 28, width: 44, height: 44, background: "linear-gradient(135deg,#f59e0b,#ef4444)", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center" },
+  logoIcon: { fontSize: 28, width: 44, height: 44, background: "linear-gradient(135deg,#7dd3fc,#3b82f6)", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center" },
   logoTitle: { fontSize: 17, fontWeight: 800, letterSpacing: 0.5 },
   logoSub: { fontSize: 11, color: "#64748b" },
 
@@ -796,11 +900,11 @@ const S = {
   matBtn: {
     display: "flex", alignItems: "center", gap: 10,
     padding: "8px 14px",
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.1)",
+    background: "#f8fbff",
+    border: "1px solid #bfdbfe",
     borderRadius: 12,
     cursor: "pointer",
-    color: "#e2e8f0",
+    color: "#1e293b",
   },
   matBtnSub: { fontSize: 10, color: "#64748b" },
   matBtnName: { fontSize: 14, fontWeight: 700 },
@@ -809,11 +913,11 @@ const S = {
   dropdown: {
     position: "absolute", top: "calc(100% + 8px)", right: 0,
     width: 240,
-    background: "#0f172a",
-    border: "1px solid rgba(255,255,255,0.1)",
+    background: "#ffffff",
+    border: "1px solid #bfdbfe",
     borderRadius: 16,
     overflow: "hidden",
-    boxShadow: "0 20px 60px rgba(0,0,0,0.7)",
+    boxShadow: "0 16px 34px rgba(37,99,235,0.2)",
     zIndex: 100,
     padding: "8px 0",
   },
@@ -827,7 +931,7 @@ const S = {
     cursor: "pointer",
     fontSize: 14,
     transition: "background 0.15s",
-    color: "#e2e8f0",
+    color: "#1e293b",
   },
 
   statsRow: { display: "flex", gap: 8, marginLeft: 16 },
@@ -845,7 +949,7 @@ const S = {
   canvas: {
     flex: 1,
     position: "relative",
-    background: "radial-gradient(ellipse at 50% 50%, #0d1a2e 0%, #070e1a 100%)",
+    background: "radial-gradient(ellipse at 50% 48%, #f0f9ff 0%, #dbeafe 55%, #bfdbfe 100%)",
   },
   grid: { position: "absolute", inset: 0, pointerEvents: "none" },
   flashOverlay: {
@@ -932,10 +1036,10 @@ const S = {
   statusDot: {
     position: "absolute", bottom: 14, left: 14,
     display: "flex", alignItems: "center", gap: 8,
-    background: "rgba(15,23,42,0.8)",
+    background: "rgba(255,255,255,0.9)",
     padding: "6px 14px",
     borderRadius: 20,
-    border: "1px solid rgba(255,255,255,0.07)",
+    border: "1px solid #bfdbfe",
     backdropFilter: "blur(8px)",
   },
   dot: { width: 8, height: 8, borderRadius: "50%", transition: "all 0.3s" },
@@ -947,17 +1051,57 @@ const S = {
     transform: "translateY(-50%)",
     zIndex: 20,
     width: 160,
-    background: "rgba(10,20,40,0.88)",
-    border: "1px solid rgba(255,255,255,0.08)",
+    background: "rgba(255,255,255,0.9)",
+    border: "1px solid #bfdbfe",
     borderRadius: 20,
     padding: "18px 14px",
     backdropFilter: "blur(18px)",
     display: "flex",
     flexDirection: "column",
     gap: 10,
-    boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
+    boxShadow: "0 14px 36px rgba(37,99,235,0.2)",
   },
   panelTitle: { fontSize: 11, color: "#64748b", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", textAlign: "center" },
+  speechRow: {
+    display: "flex",
+    alignItems: "center",
+    gap: 6,
+    justifyContent: "space-between",
+  },
+  speechLangBtn: {
+    border: "1px solid #bfdbfe",
+    background: "#f8fbff",
+    color: "#475569",
+    borderRadius: 10,
+    padding: "6px 8px",
+    minWidth: 32,
+    fontSize: 11,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontFamily: "inherit",
+    transition: "all 0.2s",
+  },
+  speechLangBtnActive: {
+    background: "#dbeafe",
+    color: "#1d4ed8",
+    borderColor: "#93c5fd",
+  },
+  speechBtn: {
+    border: "1px solid #93c5fd",
+    background: "#e0f2fe",
+    color: "#1e40af",
+    borderRadius: 999,
+    width: 34,
+    height: 34,
+    fontSize: 16,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontFamily: "inherit",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "all 0.2s",
+  },
   bigBtn: {
     display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4,
     padding: "14px 8px",
@@ -973,19 +1117,19 @@ const S = {
   secondBtn: {
     display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
     padding: "9px 8px",
-    border: "1px solid rgba(255,255,255,0.1)",
+    border: "1px solid #bfdbfe",
     borderRadius: 12,
-    background: "rgba(255,255,255,0.05)",
-    color: "#94a3b8",
+    background: "#f8fbff",
+    color: "#334155",
     cursor: "pointer",
     fontFamily: "inherit",
     fontSize: 13, fontWeight: 600,
     transition: "background 0.15s",
   },
-  divider: { height: 1, background: "rgba(255,255,255,0.06)", margin: "2px 0" },
+  divider: { height: 1, background: "#dbeafe", margin: "2px 0" },
 
   gaugeLabel: { fontSize: 11, color: "#64748b", textAlign: "center" },
-  gaugeTrack: { height: 6, background: "rgba(255,255,255,0.08)", borderRadius: 99, overflow: "hidden" },
+  gaugeTrack: { height: 6, background: "#dbeafe", borderRadius: 99, overflow: "hidden" },
   gaugeFill: { height: "100%", borderRadius: 99, transition: "width 0.1s, background 0.4s" },
   gaugeVal: { fontSize: 18, fontWeight: 800, textAlign: "center", letterSpacing: -0.5 },
 
@@ -1010,7 +1154,7 @@ const S = {
     alignItems: "center",
   },
   sizeLabel: { fontSize: 11, color: "#64748b" },
-  sizeValue: { fontSize: 12, fontWeight: 700, color: "#cbd5e1" },
+  sizeValue: { fontSize: 12, fontWeight: 700, color: "#334155" },
   sizeSlider: { width: "100%", cursor: "pointer" },
   sizeHint: {
     display: "flex",
@@ -1022,8 +1166,8 @@ const S = {
   // Footer
   footer: {
     flexShrink: 0,
-    background: "rgba(10,16,30,0.97)",
-    borderTop: "1px solid rgba(255,255,255,0.07)",
+    background: "rgba(255,255,255,0.88)",
+    borderTop: "1px solid #bfdbfe",
     padding: "10px 20px",
   },
   footerInner: { display: "flex", alignItems: "center", gap: 14 },
@@ -1044,14 +1188,43 @@ const S = {
     minWidth: 120,
     transition: "all 0.2s",
   },
-  emptyHint: { fontSize: 12, color: "#334155", fontStyle: "italic" },
+  emptyHint: { fontSize: 12, color: "#64748b", fontStyle: "italic" },
   clearBtn: {
-    fontSize: 12, color: "#475569",
-    background: "transparent", border: "1px solid rgba(255,255,255,0.07)",
+    fontSize: 12, color: "#334155",
+    background: "#ffffff", border: "1px solid #bfdbfe",
     borderRadius: 8, padding: "4px 10px",
     cursor: "pointer",
     fontFamily: "inherit",
     whiteSpace: "nowrap",
+  },
+  pageNav: {
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+    marginLeft: "auto",
+  },
+  pageBackBtn: {
+    border: "1px solid #93c5fd",
+    background: "#ffffff",
+    color: "#1e3a8a",
+    borderRadius: 10,
+    padding: "8px 14px",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontFamily: "inherit",
+  },
+  pageNextBtn: {
+    border: "1px solid #1d4ed8",
+    background: "linear-gradient(135deg, #38bdf8, #2563eb)",
+    color: "#ffffff",
+    borderRadius: 10,
+    padding: "8px 14px",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontFamily: "inherit",
+    boxShadow: "0 8px 22px rgba(59,130,246,0.35)",
   },
 };
 
@@ -1088,5 +1261,5 @@ const CSS = `
 
   ::-webkit-scrollbar { height: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+  ::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.35); border-radius: 99px; }
 `;

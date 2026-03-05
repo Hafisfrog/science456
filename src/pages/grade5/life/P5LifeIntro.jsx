@@ -93,128 +93,212 @@ export default function P5LifeIntro() {
         <div className="absolute -top-16 -left-8 w-24 h-24 bg-green-500 rounded-full blur-sm opacity-70" />
       </div>
 
-        {/* การ์ดหัวข้อใหญ่ */}
-        <div className="flex gap-8 z-10">
-          {/* การ์ด 1 */}
-          <button
+      {/* ===== การ์ดทั้งหมด ===== */}
+      <div className="relative z-10 flex flex-col items-center gap-8 mt-8">
+        {/* การ์ดหัวข้อใหญ่ 2 ใบ */}
+        <div className="flex gap-8">
+          {/* การ์ด ชีวิตสัมพันธ์ */}
+          <div
+            onMouseEnter={() => setHoveredCard('life')}
+            onMouseLeave={() => setHoveredCard(null)}
             onClick={() => navigate("/p5/life/foodchain")}
-            className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
-                       hover:scale-105 transition transform"
+            className="
+            group
+            cursor-pointer
+            bg-gradient-to-br from-white to-green-50
+            rounded-2xl
+            shadow-xl
+            hover:shadow-2xl
+            w-[380px]
+            overflow-hidden
+            hover:scale-105
+            hover:-translate-y-2
+            transition-all
+            duration-300
+            relative
+            border-2 border-green-200/50
+            hover:border-green-400"
           >
-            “ ชีวิตสัมพันธ์ ”
-          </button>
+            {/* ===== รูปภาพ ===== */}
+            <div className="relative h-[220px] overflow-hidden">
+              <img
+                src="/images/p5-life.png"
+                className="
+                w-full
+                h-full
+                object-cover
+                group-hover:scale-110
+                transition-transform
+                duration-500"
+                alt="ชีวิตสัมพันธ์"
+              />
+              
+              {/* ===== โอเวอร์เลย์ ===== */}
+              <div className="absolute inset-0 bg-gradient-to-t from-green-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-          {/* การ์ด 2 */}
-          <button
-            onClick={() => alert("หน้าลักษณะทางพันธุกรรม (ยังไม่ทำ)")}
-            className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
-                       hover:scale-105 transition transform"
-          >
-            “ ลักษณะทางพันธุกรรม ”
-          </button>
-        </div>
-
-        {/* ===== พันธุกรรม ===== */}
-        <div
-          onMouseEnter={() => setHoveredCard('genetic')}
-          onMouseLeave={() => setHoveredCard(null)}
-          onClick={() => navigate("/p5/genetic")}
-          className="
-          group
-          cursor-pointer
-          bg-gradient-to-br from-white to-purple-50
-          rounded-2xl
-          shadow-xl
-          hover:shadow-2xl
-          w-[380px]
-          overflow-hidden
-          hover:scale-105
-          hover:-translate-y-2
-          transition-all
-          duration-300
-          relative
-          border-2 border-purple-200/50
-          hover:border-purple-400">
-
-          {/* ===== รูปภาพ ===== */}
-          <div className="relative h-[220px] overflow-hidden">
-            <img
-              src="/images/p5-genetic.png"
-              className="
-              w-full
-              h-full
-              object-cover
-              group-hover:scale-110
-              transition-transform
-              duration-500"
-              alt="ลักษณะทางพันธุกรรม"
-            />
-            
-            {/* ===== โอเวอร์เลย์ ===== */}
-            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* ===== ไอคอนลอย ===== */}
-            {hoveredCard === 'genetic' && (
-              <div className="absolute inset-0">
-                <div className="absolute top-4 right-4 text-3xl animate-spin-slow">🧬</div>
-                <div className="absolute bottom-4 left-4 text-3xl animate-bounce">🔬</div>
-              </div>
-            )}
-          </div>
-
-          {/* ===== เนื้อหา ===== */}
-          <div className="p-5">
-            <h2 className="
-            text-2xl
-            font-bold
-            text-gray-800
-            mb-2
-            flex
-            items-center
-            gap-2">
-              <span className="text-purple-500">🧬</span>
-              ลักษณะทางพันธุกรรม
-            </h2>
-
-            <p className="text-sm text-gray-600 mb-3">
-              ศึกษาการถ่ายทอดลักษณะทางพันธุกรรม
-            </p>
-
-            {/* ===== แถบความก้าวหน้า ===== */}
-            <div className="space-y-1">
-              <div className="flex justify-between text-xs text-gray-500">
-                <span>ระดับ</span>
-                <span>สูง</span>
-              </div>
-              <div className="w-full bg-gray-100 rounded-full h-1.5">
-                <div className="bg-purple-400 h-1.5 rounded-full w-1/2" />
-              </div>
+              {/* ===== ไอคอนลอย ===== */}
+              {hoveredCard === 'life' && (
+                <div className="absolute inset-0">
+                  <div className="absolute top-4 right-4 text-3xl animate-spin-slow">🌿</div>
+                  <div className="absolute bottom-4 left-4 text-3xl animate-bounce">🐛</div>
+                </div>
+              )}
             </div>
 
-            {/* ===== ปุ่มเริ่มเรียน ===== */}
-            <button className="
-              mt-4
-              bg-purple-500
-              text-white
-              text-sm
-              px-4
-              py-2
-              rounded-xl
-              font-medium
-              opacity-0
-              group-hover:opacity-100
-              transform
-              translate-y-2
-              group-hover:translate-y-0
-              transition-all
-              duration-300
-              hover:bg-purple-600
-              w-full">
-              เริ่มเรียน →
-            </button>
+            {/* ===== เนื้อหา ===== */}
+            <div className="p-5">
+              <h2 className="
+              text-2xl
+              font-bold
+              text-gray-800
+              mb-2
+              flex
+              items-center
+              gap-2">
+                <span className="text-green-500">🌿</span>
+                ชีวิตสัมพันธ์
+              </h2>
+
+              <p className="text-sm text-gray-600 mb-3">
+                ศึกษาความสัมพันธ์ของสิ่งมีชีวิตในระบบนิเวศ
+              </p>
+
+              {/* ===== แถบความก้าวหน้า ===== */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>ระดับ</span>
+                  <span>ป.5</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-1.5">
+                  <div className="bg-green-400 h-1.5 rounded-full w-3/4" />
+                </div>
+              </div>
+
+              {/* ===== ปุ่มเริ่มเรียน ===== */}
+              <button className="
+                mt-4
+                bg-green-500
+                text-white
+                text-sm
+                px-4
+                py-2
+                rounded-xl
+                font-medium
+                opacity-0
+                group-hover:opacity-100
+                transform
+                translate-y-2
+                group-hover:translate-y-0
+                transition-all
+                duration-300
+                hover:bg-green-600
+                w-full">
+                เริ่มเรียน →
+              </button>
+            </div>
+          </div>
+
+          {/* การ์ด ลักษณะทางพันธุกรรม */}
+          <div
+            onMouseEnter={() => setHoveredCard('genetic')}
+            onMouseLeave={() => setHoveredCard(null)}
+            onClick={() => navigate("/p5/genetic")}
+            className="
+            group
+            cursor-pointer
+            bg-gradient-to-br from-white to-purple-50
+            rounded-2xl
+            shadow-xl
+            hover:shadow-2xl
+            w-[380px]
+            overflow-hidden
+            hover:scale-105
+            hover:-translate-y-2
+            transition-all
+            duration-300
+            relative
+            border-2 border-purple-200/50
+            hover:border-purple-400"
+          >
+            {/* ===== รูปภาพ ===== */}
+            <div className="relative h-[220px] overflow-hidden">
+              <img
+                src="/images/p5-genetic.png"
+                className="
+                w-full
+                h-full
+                object-cover
+                group-hover:scale-110
+                transition-transform
+                duration-500"
+                alt="ลักษณะทางพันธุกรรม"
+              />
+              
+              {/* ===== โอเวอร์เลย์ ===== */}
+              <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+              {/* ===== ไอคอนลอย ===== */}
+              {hoveredCard === 'genetic' && (
+                <div className="absolute inset-0">
+                  <div className="absolute top-4 right-4 text-3xl animate-spin-slow">🧬</div>
+                  <div className="absolute bottom-4 left-4 text-3xl animate-bounce">🔬</div>
+                </div>
+              )}
+            </div>
+
+            {/* ===== เนื้อหา ===== */}
+            <div className="p-5">
+              <h2 className="
+              text-2xl
+              font-bold
+              text-gray-800
+              mb-2
+              flex
+              items-center
+              gap-2">
+                <span className="text-purple-500">🧬</span>
+                ลักษณะทางพันธุกรรม
+              </h2>
+
+              <p className="text-sm text-gray-600 mb-3">
+                ศึกษาการถ่ายทอดลักษณะทางพันธุกรรม
+              </p>
+
+              {/* ===== แถบความก้าวหน้า ===== */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs text-gray-500">
+                  <span>ระดับ</span>
+                  <span>ป.5</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-1.5">
+                  <div className="bg-purple-400 h-1.5 rounded-full w-1/2" />
+                </div>
+              </div>
+
+              {/* ===== ปุ่มเริ่มเรียน ===== */}
+              <button className="
+                mt-4
+                bg-purple-500
+                text-white
+                text-sm
+                px-4
+                py-2
+                rounded-xl
+                font-medium
+                opacity-0
+                group-hover:opacity-100
+                transform
+                translate-y-2
+                group-hover:translate-y-0
+                transition-all
+                duration-300
+                hover:bg-purple-600
+                w-full">
+                เริ่มเรียน →
+              </button>
+            </div>
           </div>
         </div>
-
       </div>
 
       {/* ===== ข้อความท้ายหน้า ===== */}
@@ -262,11 +346,6 @@ export default function P5LifeIntro() {
           50% { transform: translateX(-30px); }
         }
         
-        @keyframes titleFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-        
         @keyframes spinSlow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
@@ -284,31 +363,8 @@ export default function P5LifeIntro() {
           animation: cloudMoveReverse 18s ease-in-out infinite;
         }
         
-        .animate-titleFloat {
-          animation: titleFloat 3s ease-in-out infinite;
-        }
-        
         .animate-spin-slow {
           animation: spinSlow 5s linear infinite;
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out;
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .delay-100 {
-          animation-delay: 0.1s;
         }
       `}</style>
 

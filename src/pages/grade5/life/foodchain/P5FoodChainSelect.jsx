@@ -313,7 +313,7 @@ export default function P5FoodChainSelect() {
               alert("กรุณาทำให้ครบก่อน");
               return;
             }
-            navigate("/p5/life/foodchain/answer", { state: { chains } });
+            navigate("/p5/life/foodchain/sim", { state: { chains } });
           }}
           className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-5 py-2.5 
             rounded-full text-base font-bold shadow-xl hover:shadow-2xl 

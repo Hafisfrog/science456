@@ -81,12 +81,14 @@ import P4LightObjective from "./pages/grade4/light/P4LightObjective";
 import P5LifeIntro from "./pages/grade5/life/P5LifeIntro";
 import P5FoodChainIntro from "./pages/grade5/life/foodchain/P5FoodChainIntro";
 import P5FoodChainVocab from "./pages/grade5/life/foodchain/P5FoodChainVocab";
+import P5FoodChainScene from "./pages/grade5/life/foodchain/P5FoodChainScene";
+import P5FoodChainMaterials from "./pages/grade5/life/foodchain/P5FoodChainMaterials";
 import P5FoodChainSteps from "./pages/grade5/life/foodchain/P5FoodChainSteps";
 import P5FoodChainSelect from "./pages/grade5/life/foodchain/P5FoodChainSelect";
 import P5FoodChainAnswer from "./pages/grade5/life/foodchain/P5FoodChainAnswer";
 import P5FoodChainCheck from "./pages/grade5/life/foodchain/P5FoodChainCheck";
 import P5FoodChainSummary from "./pages/grade5/life/foodchain/P5FoodChainSummary";
-
+import P5FoodChainsss from "./pages/grade5/life/foodchain/P5FoodChainsss";
 // import Grade6 from "./pages/grade6";
 
 export default function App() {
@@ -144,11 +146,13 @@ export default function App() {
         <Route path="/p5/life" element={<P5LifeIntro />} />
         <Route path="/p5/life/foodchain" element={<P5FoodChainIntro />} />
         <Route path="/p5/life/foodchain/vocab" element={<P5FoodChainVocab />} />
+        <Route path="/p5/life/foodchain/scene" element={<P5FoodChainScene />} />
+        <Route path="/p5/life/foodchain/materials" element={<P5FoodChainMaterials />} />
         <Route path="/p5/life/foodchain/steps" element={<P5FoodChainSteps />} />
         <Route path="/p5/life/foodchain/select" element={<P5FoodChainSelect />} />
-
+        <Route path="/p5/life/foodchain/summary2" element={<P5FoodChainsss />} />
         {/* STEP 6 */}
-        <Route path="/p5/life/foodchain/sim" element={<P5FoodChainSim />} />
+        <Route path="/p5/life/foodchain/sim" element={<P5FoodChainAnswer />} />
 
         {/* STEP 7 */}
         <Route path="/p5/life/foodchain/check" element={<P5FoodChainCheck />} />
