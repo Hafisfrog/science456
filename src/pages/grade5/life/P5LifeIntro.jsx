@@ -10,44 +10,307 @@ export default function P5LifeIntro() {
   const navigate = useNavigate();
 
   return (
-    <LabLayout title="ชั้นประถมศึกษาปีที่ 5" showTeacher={false}>
-      <div className="relative h-full w-full overflow-hidden bg-gradient-to-b from-green-50 to-green-100">
-        <div className="pointer-events-none absolute right-10 top-8 h-24 w-24 rounded-full bg-yellow-300 opacity-90 shadow-lg" />
-        <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-28 bg-green-400/70" />
+    <div className="
+    w-screen
+    h-screen
+    bg-gradient-to-br from-green-100 via-green-200 to-emerald-300
+    px-8 py-4
+    relative
+    overflow-hidden">
 
-        <div className="relative z-10 flex h-full flex-col items-center justify-center px-6">
-          <div className="mb-8 rounded-full bg-white/85 px-10 py-4 text-3xl font-extrabold text-green-700 shadow-lg">
-            ชั้นประถมศึกษาปีที่ 5
+      {/* ===== เอฟเฟกต์ใบไม้ร่วง ===== */}
+      {showLeaves && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute text-green-600/20 animate-leafFall"
+              style={{
+                fontSize: Math.random() * 30 + 20 + 'px',
+                top: -50 + 'px',
+                left: Math.random() * 100 + '%',
+                animationDelay: Math.random() * 5 + 's',
+                animationDuration: Math.random() * 5 + 8 + 's'
+              }}
+            >
+              {['🌿', '🍃', '🌱', '🍂'][Math.floor(Math.random() * 4)]}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ===== แสงอาทิตย์ ===== */}
+      <div className="
+      absolute top-10 right-10
+      w-40 h-40
+      bg-yellow-200
+      rounded-full
+      blur-3xl
+      opacity-60
+      animate-pulse" />
+
+      {/* ===== เมฆ ===== */}
+      <div className="
+      absolute top-20 left-10
+      w-96 h-24
+      bg-white/40
+      rounded-full
+      blur-2xl
+      animate-cloudMove" />
+      
+      <div className="
+      absolute top-40 right-20
+      w-80 h-20
+      bg-white/40
+      rounded-full
+      blur-2xl
+      animate-cloudMoveReverse" />
+
+      {/* ===== ภูเขา ===== */}
+      <div className="
+      absolute bottom-0 left-0
+      w-64 h-48
+      bg-green-600/30
+      transform skew-x-12
+      rounded-tl-[100%]" />
+      
+      <div className="
+      absolute bottom-0 right-0
+      w-64 h-48
+      bg-green-600/30
+      transform -skew-x-12
+      rounded-tr-[100%]" />
+
+      {/* ===== ต้นไม้ ===== */}
+      <div className="absolute bottom-0 left-20 z-10">
+        <div className="w-8 h-32 bg-amber-800" />
+        <div className="absolute -top-16 -left-8 w-24 h-24 bg-green-500 rounded-full blur-sm opacity-70" />
+      </div>
+      
+      <div className="absolute bottom-0 right-20 z-10">
+        <div className="w-8 h-32 bg-amber-800" />
+        <div className="absolute -top-16 -left-8 w-24 h-24 bg-green-500 rounded-full blur-sm opacity-70" />
+      </div>
+
+        {/* การ์ดหัวข้อใหญ่ */}
+        <div className="flex gap-8 z-10">
+          {/* การ์ด 1 */}
+          <button
+            onClick={() => navigate("/p5/life/foodchain")}
+            className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
+                       hover:scale-105 transition transform"
+          >
+            “ ชีวิตสัมพันธ์ ”
+          </button>
+
+          {/* การ์ด 2 */}
+          <button
+            onClick={() => alert("หน้าลักษณะทางพันธุกรรม (ยังไม่ทำ)")}
+            className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
+                       hover:scale-105 transition transform"
+          >
+            “ ลักษณะทางพันธุกรรม ”
+          </button>
+        </div>
+
+        {/* ===== พันธุกรรม ===== */}
+        <div
+          onMouseEnter={() => setHoveredCard('genetic')}
+          onMouseLeave={() => setHoveredCard(null)}
+          onClick={() => navigate("/p5/genetic")}
+          className="
+          group
+          cursor-pointer
+          bg-gradient-to-br from-white to-purple-50
+          rounded-2xl
+          shadow-xl
+          hover:shadow-2xl
+          w-[380px]
+          overflow-hidden
+          hover:scale-105
+          hover:-translate-y-2
+          transition-all
+          duration-300
+          relative
+          border-2 border-purple-200/50
+          hover:border-purple-400">
+
+          {/* ===== รูปภาพ ===== */}
+          <div className="relative h-[220px] overflow-hidden">
+            <img
+              src="/images/p5-genetic.png"
+              className="
+              w-full
+              h-full
+              object-cover
+              group-hover:scale-110
+              transition-transform
+              duration-500"
+              alt="ลักษณะทางพันธุกรรม"
+            />
+            
+            {/* ===== โอเวอร์เลย์ ===== */}
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* ===== ไอคอนลอย ===== */}
+            {hoveredCard === 'genetic' && (
+              <div className="absolute inset-0">
+                <div className="absolute top-4 right-4 text-3xl animate-spin-slow">🧬</div>
+                <div className="absolute bottom-4 left-4 text-3xl animate-bounce">🔬</div>
+              </div>
+            )}
           </div>
 
-          <div className="grid w-full max-w-4xl grid-cols-1 gap-6 md:grid-cols-2">
-            {TOPICS.map((topic) => (
-              <button
-                key={topic.id}
-                onClick={() => navigate(topic.to)}
-                className="rounded-3xl border-4 border-black bg-white px-10 py-10 text-2xl font-bold shadow-xl transition hover:-translate-y-1 hover:shadow-2xl"
-              >
-                “ {topic.label} ”
-              </button>
-            ))}
-          </div>
+          {/* ===== เนื้อหา ===== */}
+          <div className="p-5">
+            <h2 className="
+            text-2xl
+            font-bold
+            text-gray-800
+            mb-2
+            flex
+            items-center
+            gap-2">
+              <span className="text-purple-500">🧬</span>
+              ลักษณะทางพันธุกรรม
+            </h2>
 
-          <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-2xl border-2 border-blue-300 bg-white/80 p-2 shadow-md">
-            <button className="rounded-full bg-blue-200 px-4 py-2 font-bold text-cyan-700" type="button">
-              ไทย
-            </button>
-            <button className="rounded-full bg-blue-200 px-4 py-2 font-bold text-cyan-700" type="button">
-              อังกฤษ
-            </button>
-            <button className="rounded-full bg-blue-200 px-4 py-2 font-bold text-cyan-700" type="button">
-              มลายู
-            </button>
-            <button className="rounded-full bg-blue-400 px-4 py-2 text-white" type="button" aria-label="audio">
-              🔊
+            <p className="text-sm text-gray-600 mb-3">
+              ศึกษาการถ่ายทอดลักษณะทางพันธุกรรม
+            </p>
+
+            {/* ===== แถบความก้าวหน้า ===== */}
+            <div className="space-y-1">
+              <div className="flex justify-between text-xs text-gray-500">
+                <span>ระดับ</span>
+                <span>สูง</span>
+              </div>
+              <div className="w-full bg-gray-100 rounded-full h-1.5">
+                <div className="bg-purple-400 h-1.5 rounded-full w-1/2" />
+              </div>
+            </div>
+
+            {/* ===== ปุ่มเริ่มเรียน ===== */}
+            <button className="
+              mt-4
+              bg-purple-500
+              text-white
+              text-sm
+              px-4
+              py-2
+              rounded-xl
+              font-medium
+              opacity-0
+              group-hover:opacity-100
+              transform
+              translate-y-2
+              group-hover:translate-y-0
+              transition-all
+              duration-300
+              hover:bg-purple-600
+              w-full">
+              เริ่มเรียน →
             </button>
           </div>
         </div>
+
       </div>
-    </LabLayout>
-  );
+
+      {/* ===== ข้อความท้ายหน้า ===== */}
+      <div className="
+      absolute
+      bottom-4
+      left-1/2
+      transform
+      -translate-x-1/2
+      text-green-600/40
+      text-xs
+      flex
+      gap-2
+      z-20">
+        <span>🌱</span>
+        <span>พร้อมเรียนรู้หรือยัง?</span>
+        <span>🌱</span>
+      </div>
+
+      <style jsx>{`
+        @keyframes leafFall {
+          0% {
+            transform: translateY(-10vh) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.5;
+          }
+          90% {
+            opacity: 0.5;
+          }
+          100% {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+        
+        @keyframes cloudMove {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(30px); }
+        }
+        
+        @keyframes cloudMoveReverse {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-30px); }
+        }
+        
+        @keyframes titleFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes spinSlow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        .animate-leafFall {
+          animation: leafFall 12s linear infinite;
+        }
+        
+        .animate-cloudMove {
+          animation: cloudMove 15s ease-in-out infinite;
+        }
+        
+        .animate-cloudMoveReverse {
+          animation: cloudMoveReverse 18s ease-in-out infinite;
+        }
+        
+        .animate-titleFloat {
+          animation: titleFloat 3s ease-in-out infinite;
+        }
+        
+        .animate-spin-slow {
+          animation: spinSlow 5s linear infinite;
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .delay-100 {
+          animation-delay: 0.1s;
+        }
+      `}</style>
+
+    </div>
+  )
 }

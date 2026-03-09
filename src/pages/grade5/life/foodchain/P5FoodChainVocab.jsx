@@ -1,18 +1,154 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
+const LANG_TO_LOCALE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+const isSpeechSupported = () =>
+  typeof window !== "undefined" &&
+  typeof SpeechSynthesisUtterance !== "undefined" &&
+  !!window.speechSynthesis;
+
+const getVoiceTag = (voice) =>
+  `${voice?.name ?? ""} ${voice?.voiceURI ?? ""}`.toLowerCase();
+
+function pickVoice(voices, locale, langKey) {
+  const lowerLocale = locale.toLowerCase();
+  const langPrefix = lowerLocale.split("-")[0];
+
+  const exactMatch = voices.find(
+    (voice) => voice.lang?.toLowerCase() === lowerLocale
+  );
+  if (exactMatch) return exactMatch;
+
+  if (langKey === "ms") {
+    const msLangMatch = voices.find((voice) =>
+      voice.lang?.toLowerCase().startsWith("ms")
+    );
+    if (msLangMatch) return msLangMatch;
+
+    const malayNameMatch = voices.find((voice) =>
+      MALAY_VOICE_NAME_RE.test(getVoiceTag(voice))
+    );
+    if (malayNameMatch) return malayNameMatch;
+
+    const indonesiaFallback = voices.find((voice) =>
+      voice.lang?.toLowerCase().startsWith("id")
+    );
+    if (indonesiaFallback) return indonesiaFallback;
+
+    return null;
+  }
+
+  return (
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith(langPrefix)) ||
+    voices[0] ||
+    null
+  );
+}
+
+function speakWithBestVoice(text, langKey, onDone) {
+  if (!isSpeechSupported() || !text) {
+    onDone?.();
+    return;
+  }
+
+  const synth = window.speechSynthesis;
+  const locale = LANG_TO_LOCALE[langKey] || "th-TH";
+
+  const doSpeak = () => {
+    const voices = synth.getVoices();
+    const voice = pickVoice(voices, locale, langKey);
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    if (voice) utterance.voice = voice;
+    utterance.lang = locale;
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+    utterance.onend = () => onDone?.();
+    utterance.onerror = () => onDone?.();
+
+    synth.cancel();
+    synth.resume();
+    synth.speak(utterance);
+  };
+
+  const voices = synth.getVoices();
+  if (voices.length) {
+    doSpeak();
+    return;
+  }
+
+  let spoken = false;
+  const speakOnce = () => {
+    if (spoken) return;
+    spoken = true;
+    doSpeak();
+  };
+
+  const handleVoicesChanged = () => {
+    synth.removeEventListener("voiceschanged", handleVoicesChanged);
+    speakOnce();
+  };
+
+  synth.addEventListener("voiceschanged", handleVoicesChanged);
+  setTimeout(() => {
+    synth.removeEventListener("voiceschanged", handleVoicesChanged);
+    speakOnce();
+  }, 700);
+}
 
 export default function P5FoodChainVocab() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [playingLang, setPlayingLang] = useState(null);
+  const currentAudioRef = useRef(null);
 
-  const playSound = (src, lang) => {
-    setPlayingLang(lang);
-    const audio = new Audio(src);
-    audio.currentTime = 0;
-    audio.play();
-    audio.onended = () => setPlayingLang(null);
+  const stopCurrentSound = () => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.resume();
+    }
   };
+
+  const playSound = (src, lang, fallbackText) => {
+    setPlayingLang(lang);
+    stopCurrentSound();
+
+    const audio = new Audio(src);
+    currentAudioRef.current = audio;
+    audio.currentTime = 0;
+
+    audio.onended = () => {
+      if (currentAudioRef.current === audio) currentAudioRef.current = null;
+      setPlayingLang(null);
+    };
+
+    audio.onerror = () => {
+      if (currentAudioRef.current === audio) currentAudioRef.current = null;
+      speakWithBestVoice(fallbackText, lang, () => setPlayingLang(null));
+    };
+
+    const playPromise = audio.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        if (currentAudioRef.current === audio) currentAudioRef.current = null;
+        speakWithBestVoice(fallbackText, lang, () => setPlayingLang(null));
+      });
+    }
+  };
+
+  useEffect(() => () => stopCurrentSound(), []);
 
   const vocabPage1 = [
     {
@@ -623,19 +759,19 @@ export default function P5FoodChainVocab() {
                   <td className="cell-audio">
                     <button 
                       className={`audio-btn th ${playingLang === 'th' ? 'playing' : ''}`} 
-                      onClick={() => playSound(row.audio.th, 'th')}
+                      onClick={() => playSound(row.audio.th, "th", row.th)}
                     >
                       🇹🇭
                     </button>
                     <button 
                       className={`audio-btn ms ${playingLang === 'ms' ? 'playing' : ''}`} 
-                      onClick={() => playSound(row.audio.ms, 'ms')}
+                      onClick={() => playSound(row.audio.ms, "ms", row.ms)}
                     >
                       🇲🇾
                     </button>
                     <button 
                       className={`audio-btn en ${playingLang === 'en' ? 'playing' : ''}`} 
-                      onClick={() => playSound(row.audio.en, 'en')}
+                      onClick={() => playSound(row.audio.en, "en", row.en)}
                     >
                       🔊 EN
                     </button>

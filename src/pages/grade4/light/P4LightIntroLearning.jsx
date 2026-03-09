@@ -1,78 +1,94 @@
 import { useNavigate } from "react-router-dom";
-import "./P4LightVocab.css";
 
 const VOCAB = [
   {
     th: "แสง",
-    ms: "จาฮายอ",
+    ms: "Cahaya",
     en: "Light",
   },
   {
     th: "แหล่งกำเนิดแสง",
-    ms: "ตีอาปัต ยาง จาฮายอ",
+    ms: "Sumber Cahaya",
     en: "Light Source",
   },
   {
     th: "เคลื่อนที่ผ่านอากาศ",
-    ms: "บีอรา ลือปะ อางิง",
+    ms: "Bergerak Melalui Udara",
     en: "Move Through Air",
   },
   {
     th: "กั้น",
-    ms: "สือกัต",
+    ms: "Menghalang",
     en: "Block",
   },
 ];
 
-export default function P4LightBasicWords() {
+export default function P4LightIntroLearning() {
   const navigate = useNavigate();
 
   return (
-    <div className="vocab-page">
+    <div className="min-h-screen bg-gradient-to-b from-[#eef7f6] via-[#e7f2f3] to-[#dcecff] px-4 py-8 sm:px-6">
+      <div className="mx-auto max-w-5xl">
+        <header className="mb-6 text-center">
+          <h1 className="text-3xl font-extrabold text-slate-700 sm:text-4xl">
+            คำศัพท์วิทยาศาสตร์น่ารู้
+          </h1>
+          <p className="mt-2 text-base text-slate-600 sm:text-lg">คำศัพท์พื้นฐานเกี่ยวกับแสง</p>
+        </header>
 
-      <header className="vocab-header">
-        <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-        <p>คำศัพท์พื้นฐานเกี่ยวกับแสง</p>
-      </header>
+        <div className="overflow-hidden rounded-[2rem] border border-[#c7d7d1] bg-[#dfeee8]/80 shadow-lg backdrop-blur-sm">
+          <div className="overflow-x-auto">
+            <table className="min-w-full table-fixed border-separate border-spacing-0">
+              <thead>
+                <tr className="bg-[#bfcfc6] text-slate-900">
+                  <th className="px-4 py-4 text-center text-lg font-extrabold sm:text-2xl">ภาษาไทย</th>
+                  <th className="px-4 py-4 text-center text-lg font-extrabold sm:text-2xl">ภาษามลายู</th>
+                  <th className="px-4 py-4 text-center text-lg font-extrabold sm:text-2xl">ภาษาอังกฤษ</th>
+                </tr>
+              </thead>
 
-      <div className="vocab-card">
-        <table className="vocab-table">
-          <thead>
-            <tr>
-              <th className="col-th">ภาษาไทย</th>
-              <th className="col-ms">ภาษามลายู</th>
-              <th className="col-en">ภาษาอังกฤษ</th>
-            </tr>
-          </thead>
+              <tbody>
+                {VOCAB.map((row) => (
+                  <tr
+                    key={`${row.th}-${row.en}`}
+                    className="[&:not(:last-child)>td]:border-b [&:not(:last-child)>td]:border-[#d5e1dc]"
+                  >
+                    <td className="bg-[#c8d1de] px-4 py-5 text-base font-semibold text-slate-800 sm:py-6 sm:text-xl">
+                      {row.th}
+                    </td>
+                    <td className="bg-[#e8dfc3] px-4 py-5 text-base font-semibold text-slate-800 sm:py-6 sm:text-xl">
+                      {row.ms}
+                    </td>
+                    <td className="bg-[#dec4d7] px-4 py-5 text-base font-semibold text-slate-800 sm:py-6 sm:text-xl">
+                      {row.en}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-          <tbody>
-            {VOCAB.map((row, idx) => (
-              <tr key={idx}>
-                <td className="cell-th">{row.th}</td>
-                <td className="cell-ms">{row.ms}</td>
-                <td className="cell-en">{row.en}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="mt-7 flex justify-end">
+          <div className="flex flex-wrap items-center justify-end gap-3">
+            <button
+              type="button"
+              className="rounded-full border border-sky-300 bg-white px-6 py-3 text-base font-semibold text-sky-700 transition hover:bg-sky-50 hover:shadow"
+              onClick={() => navigate("/p4/light")}
+            >
+              ย้อนกลับ
+            </button>
+
+            <button
+              type="button"
+              className="rounded-full bg-sky-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-sky-600 hover:shadow"
+              onClick={() => navigate("/p4/light/select")}
+            >
+              ไปต่อ
+            </button>
+          </div>
+        </div>
       </div>
-
-      <div className="vocab-footer">
-        <button
-          className="back-home-btn"
-          onClick={() => navigate("/p4/light")}
-        >
-          ← ย้อนกลับ
-        </button>
-
-        <button
-          className="btn-next"
-          onClick={() => navigate("/p4/light/select")}
-        >
-          ไปหน้าถัดไป →
-        </button>
-      </div>
-
     </div>
   );
 }

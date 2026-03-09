@@ -1,17 +1,161 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+const LANGUAGE_CONTENT = {
+  th: {
+    locale: "th-TH",
+    grade: "ชั้นประถมศึกษาปีที่ 5",
+    topic: "ชีวิตสัมพันธ์",
+    experiment: "การทดลองที่ 5",
+    lesson: "ห่วงโซ่อาหาร",
+    back: "ย้อนกลับ",
+    next: "ไปต่อ",
+    text: "ชั้นประถมศึกษาปีที่ 5 ชีวิตสัมพันธ์ การทดลองที่ 5 ห่วงโซ่อาหาร",
+  },
+  en: {
+    locale: "en-US",
+    grade: "Grade 5",
+    topic: "Interdependence",
+    experiment: "Experiment 5",
+    lesson: "Food Chain",
+    back: "Back",
+    next: "Next",
+    text: "Grade 5. Interdependent Life. Experiment 5. Food Chain.",
+  },
+  ms: {
+    locale: "ms-MY",
+    grade: "Tahun 5",
+    topic: "Hidupan Berkait",
+    experiment: "Eksperimen 5",
+    lesson: "Rantaian",
+    back: "Kembali",
+    next: "Seterusnya",
+    text: "Tahun 5. Hidupan Saling Bergantung. Eksperimen 5. Rantaian Makanan.",
+  },
+};
+
+const LANGUAGE_BUTTONS = [
+  { key: "th", label: "🇹🇭 ไทย" },
+  { key: "en", label: "EN English" },
+  { key: "ms", label: "🇲🇾 Melayu" },
+];
+
+const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
+
+const isSpeechSupported = () =>
+  typeof window !== "undefined" &&
+  typeof SpeechSynthesisUtterance !== "undefined" &&
+  !!window.speechSynthesis;
+
+const getVoiceTag = (voice) =>
+  `${voice?.name ?? ""} ${voice?.voiceURI ?? ""}`.toLowerCase();
+
+function pickVoice(voices, locale, langKey) {
+  const lowerLocale = locale.toLowerCase();
+  const langPrefix = lowerLocale.split("-")[0];
+
+  const exactMatch = voices.find(
+    (voice) => voice.lang?.toLowerCase() === lowerLocale
+  );
+  if (exactMatch) return exactMatch;
+
+  if (langKey === "ms") {
+    const msLangMatch = voices.find((voice) =>
+      voice.lang?.toLowerCase().startsWith("ms")
+    );
+    if (msLangMatch) return msLangMatch;
+
+    const malayNameMatch = voices.find((voice) =>
+      MALAY_VOICE_NAME_RE.test(getVoiceTag(voice))
+    );
+    if (malayNameMatch) return malayNameMatch;
+
+    // Chrome บางเครื่องไม่มี ms voice โดยตรง ใช้ id เป็น fallback
+    const indonesiaFallback = voices.find((voice) =>
+      voice.lang?.toLowerCase().startsWith("id")
+    );
+    if (indonesiaFallback) return indonesiaFallback;
+
+    return null;
+  }
+
+  return (
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith(langPrefix)) ||
+    voices[0] ||
+    null
+  );
+}
+
+function speakWithBestVoice(text, locale, langKey) {
+  if (!isSpeechSupported() || !text) return;
+
+  const synth = window.speechSynthesis;
+
+  const doSpeak = () => {
+    const voices = synth.getVoices();
+    const voice = pickVoice(voices, locale, langKey);
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    if (voice) utterance.voice = voice;
+    utterance.lang = locale;
+    utterance.rate = 0.9;
+    utterance.pitch = 1;
+
+    synth.cancel();
+    synth.resume();
+    synth.speak(utterance);
+  };
+
+  const voices = synth.getVoices();
+  if (voices.length) {
+    doSpeak();
+    return;
+  }
+
+  let spoken = false;
+  const speakOnce = () => {
+    if (spoken) return;
+    spoken = true;
+    doSpeak();
+  };
+
+  const handleVoicesChanged = () => {
+    synth.removeEventListener("voiceschanged", handleVoicesChanged);
+    speakOnce();
+  };
+
+  synth.addEventListener("voiceschanged", handleVoicesChanged);
+  setTimeout(() => {
+    synth.removeEventListener("voiceschanged", handleVoicesChanged);
+    speakOnce();
+  }, 700);
+}
+
 export default function P5FoodChainIntro() {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [showArrow, setShowArrow] = useState(false);
+  const [activeLang, setActiveLang] = useState("th");
   const nextPath = "/p5/life/foodchain/vocab";
+
+  const t = LANGUAGE_CONTENT[activeLang] || LANGUAGE_CONTENT.th;
+  const isThai = activeLang === "th";
 
   useEffect(() => {
     // แสดงลูกศรหลังจากโหลดหน้า 2 วินาที
     const timer = setTimeout(() => setShowArrow(true), 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleSpeak = (langKey = activeLang) => {
+    const selected = LANGUAGE_CONTENT[langKey] || LANGUAGE_CONTENT.th;
+    speakWithBestVoice(selected.text, selected.locale, langKey);
+  };
+
+  const handleSelectLanguage = (langKey) => {
+    setActiveLang(langKey);
+    handleSpeak(langKey);
+  };
 
   return (
     <div className="
@@ -87,8 +231,8 @@ export default function P5FoodChainIntro() {
       {/* ===== รั้วซ้าย ===== */}
       <div className="absolute bottom-0 left-20 flex gap-3 z-20">
         {Array.from({length:6}).map((_,i)=>(
-          <div 
-            key={i} 
+          <div
+            key={i}
             className="w-8 h-16 bg-orange-700 border-t-4 border-orange-800 transform -skew-x-6"
             style={{
               animation: `fencePop 0.5s ${i * 0.1}s both`
@@ -100,8 +244,8 @@ export default function P5FoodChainIntro() {
       {/* ===== รั้วขวา ===== */}
       <div className="absolute bottom-0 right-20 flex gap-3 z-20">
         {Array.from({length:6}).map((_,i)=>(
-          <div 
-            key={i} 
+          <div
+            key={i}
             className="w-8 h-16 bg-orange-700 border-t-4 border-orange-800 transform skew-x-6"
             style={{
               animation: `fencePop 0.5s ${i * 0.1}s both`
@@ -123,26 +267,26 @@ export default function P5FoodChainIntro() {
       border-2 border-white
       animate-float
       z-30">
-        🌱 ชั้นประถมศึกษาปีที่ 5
+        🌱 {t.grade}
       </div>
 
       {/* ===== กล่องชีวิตสัมพันธ์ ===== */}
-      <div className="
+      <div className={`
       absolute
       left-[120px]
       top-[260px]
       bg-gradient-to-br from-yellow-100 to-yellow-200
       border-4 border-yellow-600
       px-20 py-8
-      text-4xl
+      ${isThai ? "text-4xl" : "text-3xl"}
       font-bold
       rounded-2xl
       shadow-2xl
       animate-float
       hover:scale-105
       transition-all
-      z-30">
-        <span className="text-green-700">🌿</span> ชีวิตสัมพันธ์
+      z-30`}>
+        <span className="text-green-700">🌿</span> {t.topic}
       </div>
 
       {/* ===== เส้นเชื่อมเคลื่อนที่ ===== */}
@@ -190,12 +334,12 @@ export default function P5FoodChainIntro() {
         duration-300
         z-30">
 
-        <div className="text-green-600 font-bold text-2xl mb-2">
-          🔬 การทดลองที่ 5
+        <div className={`text-green-600 font-bold mb-2 ${isThai ? "text-2xl" : "text-xl"}`}>
+          🔬 {t.experiment}
         </div>
 
-        <div className="text-3xl font-bold text-blue-800 flex items-center gap-2">
-          ห่วงโซ่อาหาร
+        <div className={`font-bold text-blue-800 flex items-center gap-2 ${isThai ? "text-3xl" : "text-2xl"}`}>
+          {t.lesson}
           {isHovered && (
             <span className="text-4xl animate-pulse">🐛</span>
           )}
@@ -218,14 +362,15 @@ export default function P5FoodChainIntro() {
       flex gap-3
       z-30">
 
-        {["🇹🇭 ไทย", "EN อังกฤษ", "🇲🇾 มลายู"].map((lang, i) => (
-          <button 
-            key={i}
-            className="
-            bg-white/90 
+        {LANGUAGE_BUTTONS.map((lang, i) => (
+          <button
+            key={lang.key}
+            type="button"
+            onClick={() => handleSelectLanguage(lang.key)}
+            className={`
             backdrop-blur
-            px-6 
-            py-3 
+            px-6
+            py-3
             rounded-full
             text-lg
             font-medium
@@ -234,19 +379,23 @@ export default function P5FoodChainIntro() {
             hover:scale-110
             hover:shadow-xl
             transition-all
-            border-2 border-transparent
+            border-2
             hover:border-blue-300
             animate-fadeInUp
-            "
+            ${activeLang === lang.key ? "bg-blue-100 border-blue-400" : "bg-white/90 border-transparent"}
+            `}
             style={{ animationDelay: `${i * 0.1}s` }}>
-            {lang}
+            {lang.label}
           </button>
         ))}
 
-        <button className="
-          bg-blue-500 
-          px-6 
-          py-3 
+        <button
+          type="button"
+          onClick={() => handleSpeak()}
+          className="
+          bg-blue-500
+          px-6
+          py-3
           rounded-full
           text-white
           text-xl
@@ -288,7 +437,7 @@ export default function P5FoodChainIntro() {
           hover:bg-blue-50
           hover:scale-105
           transition-all">
-          ย้อนกลับ
+          {t.back}
         </button>
         <button
           onClick={() => navigate(nextPath)}
@@ -304,7 +453,7 @@ export default function P5FoodChainIntro() {
           hover:bg-blue-700
           hover:scale-105
           transition-all">
-          ไปต่อ
+          {t.next}
         </button>
       </div>
 
@@ -323,79 +472,79 @@ export default function P5FoodChainIntro() {
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-        
+
         @keyframes cloudMove {
           0% { transform: translateX(0); }
           50% { transform: translateX(300px); }
           100% { transform: translateX(0); }
         }
-        
+
         @keyframes cloudMoveReverse {
           0% { transform: translateX(0); }
           50% { transform: translateX(-300px); }
           100% { transform: translateX(0); }
         }
-        
+
         @keyframes sway {
           0%, 100% { transform: rotate(0deg); }
           33% { transform: rotate(1deg); }
           66% { transform: rotate(-1deg); }
         }
-        
+
         @keyframes float {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-10px); }
         }
-        
+
         @keyframes fencePop {
           0% { transform: scaleY(0); opacity: 0; }
           100% { transform: scaleY(1); opacity: 1; }
         }
-        
+
         @keyframes fadeInUp {
           0% { opacity: 0; transform: translateY(20px); }
           100% { opacity: 1; transform: translateY(0); }
         }
-        
+
         @keyframes spinSlow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        
+
         .animate-gradientFlow {
           background-size: 200% 200%;
           animation: gradientFlow 10s ease infinite;
         }
-        
+
         .animate-cloudMove {
           animation: cloudMove 20s linear infinite;
         }
-        
+
         .animate-cloudMoveReverse {
           animation: cloudMoveReverse 20s linear infinite;
         }
-        
+
         .animate-sway {
           animation: sway 6s ease-in-out infinite;
         }
-        
+
         .animate-float {
           animation: float 3s ease-in-out infinite;
         }
-        
+
         .animate-spinSlow {
           animation: spinSlow 20s linear infinite;
         }
-        
+
         .animate-fadeInUp {
           animation: fadeInUp 0.6s ease-out forwards;
         }
-        
+
         .delay-100 { animation-delay: 0.1s; }
         .delay-300 { animation-delay: 0.3s; }
         .delay-700 { animation-delay: 0.7s; }
       `}</style>
 
     </div>
-  )
+  );
 }
