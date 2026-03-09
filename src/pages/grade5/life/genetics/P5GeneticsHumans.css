@@ -1,7 +1,7 @@
 .p5gh-page {
   height: 100%;
   background: linear-gradient(180deg, #d8deec 0%, #d1d7e4 100%);
-  padding: 10px 16px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: column;
   font-family: "Prompt", sans-serif;
@@ -11,7 +11,7 @@
   position: relative;
   flex: 1;
   min-height: 0;
-  padding: 18px 20px 10px;
+  padding: 14px 16px 8px;
   background:
     radial-gradient(36% 30% at 24% 66%, rgba(167, 207, 150, 0.28) 0 58%, transparent 59%),
     radial-gradient(38% 30% at 70% 54%, rgba(167, 207, 150, 0.24) 0 58%, transparent 59%),
@@ -26,26 +26,27 @@
 
 .p5gh-board h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: clamp(28px, 2vw, 46px);
   font-weight: 900;
   color: #0f213f;
 }
 
 .p5gh-topic {
-  margin-top: 10px;
+  margin-top: 8px;
   display: inline-block;
-  padding: 10px 18px;
+  padding: 8px 16px;
   border: 4px solid #111827;
   border-radius: 26px;
   background: #fff;
-  box-shadow: 0 8px 0 #0c9488;
-  font-size: 28px;
+  font-size: clamp(24px, 1.75vw, 36px);
   font-weight: 900;
   line-height: 1.2;
 }
 
 .p5gh-content {
-  margin-top: 22px;
+  margin-top: 14px;
+  height: calc(100% - 148px);
+  min-height: 0;
   display: grid;
   grid-template-columns: 74px minmax(0, 1fr);
   gap: 10px;
@@ -72,38 +73,64 @@
 
 .p5gh-start-wrap p {
   margin: 8px 0 0;
-  font-size: 38px;
+  font-size: clamp(18px, 1.5vw, 30px);
   line-height: 1;
   font-weight: 900;
 }
 
+.p5gh-reset {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px 8px;
+  background: linear-gradient(180deg, #b8ddff, #81b8ec);
+  box-shadow:
+    inset 0 0 0 3px rgba(124, 170, 218, 0.65),
+    inset 0 8px 10px rgba(255, 255, 255, 0.32),
+    0 6px 14px rgba(100, 147, 194, 0.35);
+  color: #fff;
+  font-size: clamp(16px, 0.95vw, 20px);
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.p5gh-reset:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .p5gh-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  height: 100%;
   border: 3px solid #111827;
 }
 
 .p5gh-card {
-  min-height: 180px;
+  min-height: 0;
   border-right: 3px solid #111827;
   border-bottom: 3px solid #111827;
   background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
 }
 
-.p5gh-card:nth-child(4n) {
+.p5gh-card:nth-child(6n) {
   border-right: 0;
 }
 
-.p5gh-card:nth-last-child(-n + 4) {
+.p5gh-card:nth-last-child(-n + 6) {
   border-bottom: 0;
 }
 
 .p5gh-image-wrap {
   position: relative;
-  height: 108px;
+  height: 100%;
   display: grid;
   place-items: center;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .p5gh-choice {
@@ -111,22 +138,23 @@
   border: 0;
   background: transparent;
   cursor: pointer;
+  flex: 1;
 }
 
 .p5gh-image {
-  width: 86%;
-  height: 92px;
+  width: calc(100% - 16px);
+  height: calc(100% - 10px);
   object-fit: cover;
 }
 
 .p5gh-mark {
   position: absolute;
-  inset: 8px 12px auto;
-  height: 92px;
+  inset: 4px 8px 4px;
+  height: auto;
   display: none;
   place-items: center;
   color: #16a34a;
-  font-size: 94px;
+  font-size: 64px;
   font-weight: 900;
   line-height: 1;
   text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
@@ -135,9 +163,9 @@
 .p5gh-mark::before {
   content: "";
   position: absolute;
-  width: 70px;
-  height: 70px;
-  border: 7px solid rgba(22, 163, 74, 0.5);
+  width: 52px;
+  height: 52px;
+  border: 5px solid rgba(22, 163, 74, 0.5);
   border-radius: 999px;
 }
 
@@ -154,22 +182,22 @@
 }
 
 .p5gh-label {
-  margin: 2px 10px 0;
+  margin: 2px 6px 0;
   text-align: center;
-  font-size: 34px;
+  font-size: clamp(14px, 1.02vw, 21px);
   line-height: 1.15;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .p5gh-ground {
-  height: 82px;
+  height: 74px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 20%),
     linear-gradient(180deg, #a7d45a 0 46%, #95c748 47% 100%);
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 12px 8px;
+  padding: 0 10px 6px;
   border-radius: 0 0 26px 26px;
   box-shadow: 0 16px 30px rgba(24, 34, 58, 0.14);
 }
@@ -177,18 +205,18 @@
 .p5gh-lang {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px;
+  gap: 6px;
+  padding: 5px;
   border: 4px solid #87b6ff;
-  border-radius: 16px;
+  border-radius: 14px;
   background: linear-gradient(180deg, #f5f9ff, #ebf2ff);
 }
 
 .p5gh-lang button {
   border: 0;
   border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 14px;
+  padding: 5px 12px;
+  font-size: clamp(14px, 0.8vw, 18px);
   font-weight: 700;
   color: #1f8fb7;
   background: #9bd7ff;
@@ -209,12 +237,12 @@
   border: 0;
   border-radius: 999px;
   background: linear-gradient(180deg, #ff6767, #e63f3f);
-  padding: 7px 24px 9px;
+  padding: 7px 20px 9px;
   box-shadow:
     inset 0 0 0 4px rgba(171, 50, 50, 0.35),
     0 10px 18px rgba(172, 46, 46, 0.32);
   color: #fff;
-  font-size: 20px;
+  font-size: clamp(20px, 1.4vw, 30px);
   line-height: 1;
   font-weight: 800;
   cursor: pointer;
@@ -222,6 +250,7 @@
 
 @media (max-width: 1180px) {
   .p5gh-content {
+    height: auto;
     grid-template-columns: 1fr;
     gap: 12px;
   }
@@ -238,10 +267,60 @@
   }
 
   .p5gh-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+    height: auto;
   }
 
   .p5gh-card {
+    min-height: 148px;
+  }
+
+  .p5gh-choice {
+    flex: 0;
+  }
+
+  .p5gh-image-wrap {
+    height: 88px;
+    padding-top: 6px;
+  }
+
+  .p5gh-image {
+    height: 78px;
+  }
+
+  .p5gh-mark {
+    inset: 6px 8px auto;
+    height: 80px;
+  }
+
+  .p5gh-card:nth-child(6n) {
+    border-right: 3px solid #111827;
+  }
+
+  .p5gh-card:nth-child(3n) {
+    border-right: 0;
+  }
+
+  .p5gh-card:nth-last-child(-n + 6) {
+    border-bottom: 3px solid #111827;
+  }
+
+  .p5gh-card:nth-last-child(-n + 3) {
+    border-bottom: 0;
+  }
+
+  .p5gh-label {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .p5gh-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .p5gh-card:nth-child(3n) {
     border-right: 3px solid #111827;
   }
 
@@ -249,7 +328,7 @@
     border-right: 0;
   }
 
-  .p5gh-card:nth-last-child(-n + 4) {
+  .p5gh-card:nth-last-child(-n + 3) {
     border-bottom: 3px solid #111827;
   }
 
@@ -257,7 +336,16 @@
     border-bottom: 0;
   }
 
-  .p5gh-label {
-    font-size: 22px;
+  .p5gh-ground {
+    height: auto;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px;
+  }
+
+  .p5gh-lang {
+    width: 100%;
+    justify-content: center;
   }
 }

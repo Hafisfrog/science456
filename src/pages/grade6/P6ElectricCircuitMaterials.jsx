@@ -1,7 +1,5 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P6ElectricGenerationSteps.css";
-import "./P6ElectricCircuitSteps.css";
 
 const EQUIPMENT = [
   {
@@ -9,7 +7,7 @@ const EQUIPMENT = [
     title: "หลอดไฟฟ้าพร้อมฐาน",
     subtitle: "1 ชุด",
     icon: (
-      <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+      <svg className="h-auto w-[82px]" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
         <defs>
           <radialGradient id="bulbGlassMat" cx="35%" cy="28%" r="68%">
             <stop offset="0%" stopColor="#fff9d7" />
@@ -36,7 +34,7 @@ const EQUIPMENT = [
     title: "สายไฟพร้อมหัวหนีบ",
     subtitle: "2 เส้น",
     icon: (
-      <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+      <svg className="h-auto w-[82px]" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
         <path d="M14 58c18-24 50-24 68 0" fill="none" stroke="#1f2937" strokeWidth="6" strokeLinecap="round" />
         <path d="M14 34c18-20 50-20 68 0" fill="none" stroke="#1f2937" strokeWidth="6" strokeLinecap="round" />
         <path d="M14 58c18-24 50-24 68 0" fill="none" stroke="#2563eb" strokeWidth="4" strokeLinecap="round" />
@@ -57,7 +55,7 @@ const EQUIPMENT = [
     title: "กระบะใส่ถ่านไฟฉาย",
     subtitle: "สำหรับ 4 ก้อน",
     icon: (
-      <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+      <svg className="h-auto w-[82px]" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="holderBodyMat" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#29364a" />
@@ -82,7 +80,7 @@ const EQUIPMENT = [
     title: "สวิตช์",
     subtitle: "1 อัน",
     icon: (
-      <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+      <svg className="h-auto w-[82px]" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="switchPlateMat" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#edf2f7" />
@@ -104,7 +102,7 @@ const EQUIPMENT = [
     title: "ถ่านไฟฉาย",
     subtitle: "4 ก้อน",
     icon: (
-      <svg viewBox="0 0 96 96" aria-hidden="true" focusable="false">
+      <svg className="h-auto w-[82px]" viewBox="0 0 96 96" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="cellBodyMat" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor="#ffbf3a" />
@@ -142,14 +140,41 @@ export default function P6ElectricCircuitMaterials() {
   const navigate = useNavigate();
   const onSpeak = useCallback((text) => speakText(text), []);
 
-  return (
-    <div className="p6-gen-page p6-circuit-materials-page">
-      <div className="p6-gen-container p6-circuit-materials-container">
-        <div className="p6-gen-tag">วงจรไฟฟ้าใกล้ตัว</div>
-        <div className="p6-gen-title">เรื่อง วงจรไฟฟ้าอย่างง่าย</div>
+  const pageBg = {
+    background:
+      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+  };
 
-        <div className="p6-gen-card p6-circuit-card p6-circuit-materials-cardWrap">
-          <div className="p6-gen-sound" title="ฟังเสียง" aria-hidden="true">
+  return (
+    <div
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
+        style={{
+          clipPath:
+            "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+        }}
+      />
+
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
+        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
+          วงจรไฟฟ้าใกล้ตัว
+        </div>
+        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">
+          เรื่อง วงจรไฟฟ้าอย่างง่าย
+        </div>
+
+        <div className="relative min-h-0 overflow-y-auto rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] pr-[clamp(68px,10vw,116px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+          <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
+
+          <div
+            className="absolute right-[22px] top-3 grid h-[52px] w-[52px] place-items-center rounded-2xl border-2 border-slate-900/40 bg-white/75 text-slate-800 shadow-[0_10px_18px_rgba(17,24,39,0.16)]"
+            title="ฟังเสียง"
+            aria-hidden="true"
+          >
             <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
               <path
                 d="M12 26h12l14-10v32l-14-10H12z"
@@ -175,24 +200,30 @@ export default function P6ElectricCircuitMaterials() {
             </svg>
           </div>
 
-          <div className="p6-gen-stepsLayout p6-gen-stepsLayout--single">
-            <section className="p6-gen-block p6-gen-block-equipment p6-circuit-materials-block">
-              <header className="p6-gen-blockHeader">
-                <h2 className="p6-gen-blockTitle">อุปกรณ์</h2>
-                <p className="p6-gen-blockHint">กดที่อุปกรณ์เพื่อฟังชื่อ</p>
+          <div className="grid h-full min-h-0 grid-cols-1 gap-[14px]">
+            <section className="block min-h-0 rounded-3xl border-2 border-white/50 bg-[rgba(233,238,245,0.95)] p-3 shadow-[0_12px_24px_rgba(15,23,42,0.08)]">
+              <header className="mb-1">
+                <h2 className="m-0 text-[clamp(40px,3.2vw,64px)] font-black leading-[0.98]">อุปกรณ์</h2>
+                <p className="mb-0 mt-1 text-[clamp(16px,1.2vw,24px)] font-bold text-slate-700">
+                  กดที่อุปกรณ์เพื่อฟังชื่อ
+                </p>
               </header>
 
-              <div className="p6-circuit-materials-showcase">
+              <div className="grid grid-cols-1 gap-2.5 min-[721px]:grid-cols-2 min-[1201px]:grid-cols-3">
                 {EQUIPMENT.map((item) => (
                   <button
-                    className="p6-circuit-materials-card"
+                    className="grid h-[clamp(170px,24vh,210px)] cursor-pointer content-center justify-items-center gap-1 rounded-[22px] border-2 border-[#c4934f] bg-[#dcc8a5] p-2.5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] transition hover:-translate-y-0.5 hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_10px_16px_rgba(15,23,42,0.14)] max-[720px]:min-h-[180px]"
                     key={item.id}
                     type="button"
                     onClick={() => onSpeak(`${item.title} ${item.subtitle}`)}
                   >
-                    <div className="p6-circuit-materials-visual">{item.icon}</div>
-                    <div className="p6-circuit-materials-name">{item.title}</div>
-                    <div className="p6-circuit-materials-sub">{item.subtitle}</div>
+                    <div className="grid min-h-[78px] w-full place-items-center">{item.icon}</div>
+                    <div className="text-[clamp(15px,1.35vw,26px)] font-black leading-[1.05] text-slate-900 max-[720px]:text-[clamp(22px,7vw,32px)]">
+                      {item.title}
+                    </div>
+                    <div className="text-[clamp(12px,0.95vw,18px)] font-bold text-slate-800 max-[720px]:text-lg">
+                      {item.subtitle}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -200,12 +231,24 @@ export default function P6ElectricCircuitMaterials() {
           </div>
         </div>
 
-        <div className="p6-gen-actions">
-          <button className="p6-gen-btn ghost" onClick={() => navigate("/p6/electric-circuit/problem")} type="button">
-            ← กลับสถานการณ์ปัญหา
+        <div className="mt-1 flex flex-nowrap justify-end gap-2">
+          <button
+            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            onClick={() => navigate("/p6/electric-circuit/problem")}
+            type="button"
+            aria-label="กลับสถานการณ์ปัญหา"
+            title="กลับสถานการณ์ปัญหา"
+          >
+            ←
           </button>
-          <button className="p6-gen-btn primary" onClick={() => navigate("/p6/electric-circuit/steps")} type="button">
-            ไปขั้นตอนการทดลอง →
+          <button
+            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-blue-600 text-[28px] font-black leading-none text-white shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            onClick={() => navigate("/p6/electric-circuit/steps")}
+            type="button"
+            aria-label="ไปขั้นตอนการทดลอง"
+            title="ไปขั้นตอนการทดลอง"
+          >
+            →
           </button>
         </div>
       </div>

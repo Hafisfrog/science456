@@ -178,7 +178,10 @@
   left: 50%;
   transform: translateX(-50%);
   width: var(--p5ga-chart-width);
-  bottom: 92px;
+  bottom: 178px;
+  text-align: left;
+  padding-left: 4px;
+  margin-left: -60px;
 }
 
 .p5ga-kitten-row {
@@ -196,6 +199,22 @@
 
 .p5ga-kitten-block {
   text-align: center;
+}
+
+.p5ga-kitten-btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.p5ga-kitten-btn:disabled {
+  cursor: default;
+}
+
+.p5ga-kitten-btn:focus-visible .p5ga-kitten {
+  outline: 3px solid #6aa8ff;
+  outline-offset: 3px;
 }
 
 .p5ga-kitten {
@@ -266,6 +285,32 @@
 .p5ga-badge.badge-b {
   background: #ffea00;
   box-shadow: 0 6px 12px rgba(180, 140, 20, 0.22);
+}
+
+.p5ga-reset {
+  margin-top: 16px;
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 18px 9px;
+  background: linear-gradient(180deg, #66b7ff, #3e94e8);
+  box-shadow:
+    inset 0 0 0 3px rgba(25, 82, 145, 0.25),
+    0 8px 16px rgba(33, 98, 163, 0.26);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.p5ga-reset:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.p5ga-reset:focus-visible {
+  outline: 3px solid #6aa8ff;
+  outline-offset: 2px;
 }
 
 .p5ga-play {

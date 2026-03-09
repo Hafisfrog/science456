@@ -1,7 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P6ElectricGenerationSteps.css";
-import "./P6ElectricCircuitSim.css";
 
 const OPTIONS = [
   { cells: 1, label: "1 ถ่าน", note: "หลอดไฟสว่างเล็กน้อย", level: "low" },
@@ -121,6 +119,17 @@ function SwitchIcon() {
       <circle cx="32" cy="40" r="3" fill="#1f2937" />
     </svg>
   );
+}
+
+function getBulbPieceStyle(level) {
+  const map = {
+    off: "0 8px 14px rgba(15, 23, 42, 0.12)",
+    low: "0 8px 14px rgba(15, 23, 42, 0.12), 0 0 12px rgba(255, 214, 102, 0.35)",
+    mid: "0 10px 18px rgba(15, 23, 42, 0.14), 0 0 18px rgba(255, 214, 102, 0.55)",
+    "mid-high": "0 12px 20px rgba(15, 23, 42, 0.16), 0 0 24px rgba(255, 214, 102, 0.75)",
+    high: "0 14px 24px rgba(15, 23, 42, 0.18), 0 0 32px rgba(255, 214, 102, 0.95)",
+  };
+  return { boxShadow: map[level] || map.mid };
 }
 
 export default function P6ElectricCircuitSim() {
@@ -279,14 +288,37 @@ export default function P6ElectricCircuitSim() {
     return `M ${p1.x} ${p1.y} C ${midX} ${p1.y}, ${midX} ${p2.y}, ${p2.x} ${p2.y}`;
   };
 
-  return (
-    <div className="p6-gen-page p6-circuit-sim-page">
-      <div className="p6-gen-container p6-circuit-sim-container">
-        <div className="p6-gen-tag">วงจรไฟฟ้าใกล้ตัว</div>
-        <div className="p6-gen-title">เรื่อง วงจรไฟฟ้าอย่างง่าย</div>
+  const pageBg = {
+    background:
+      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+  };
 
-        <div className="p6-gen-card p6-circuit-sim">
-          <div className="p6-gen-sound" title="ฟังเสียง" aria-hidden="true">
+  return (
+    <div
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
+        style={{
+          clipPath:
+            "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+        }}
+      />
+
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
+        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
+          วงจรไฟฟ้าใกล้ตัว
+        </div>
+        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">เรื่อง วงจรไฟฟ้าอย่างง่าย</div>
+
+        <div className="relative min-h-0 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+          <div
+            className="absolute right-[22px] top-3 grid h-[52px] w-[52px] place-items-center rounded-2xl border-2 border-slate-900/40 bg-white/75 text-slate-800 shadow-[0_10px_18px_rgba(17,24,39,0.16)]"
+            title="ฟังเสียง"
+            aria-hidden="true"
+          >
             <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
               <path
                 d="M12 26h12l14-10v32l-14-10H12z"
@@ -312,39 +344,60 @@ export default function P6ElectricCircuitSim() {
             </svg>
           </div>
 
-          <div className="p6-circuit-sim-top">
-            <div className="p6-circuit-sim-title">เลือกจำนวนถ่านเพื่อทดลอง</div>
-            <div className="p6-circuit-sim-sub">
+          <div className="mb-4">
+            <div className="text-[clamp(20px,2.6vw,26px)] font-black text-slate-900">เลือกจำนวนถ่านเพื่อทดลอง</div>
+            <div className="mt-1 font-semibold text-slate-800">
               เลือก 1–4 ถ่าน แล้วสังเกตความสว่างของหลอดไฟ
             </div>
           </div>
 
-          <div className="p6-circuit-sim-grid">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
             {OPTIONS.map((item) => (
               <button
                 key={item.cells}
-                className={`p6-circuit-sim-card ${selected === item.cells ? "active" : ""}`}
+                className={`cursor-pointer rounded-[18px] border-2 bg-white p-3 text-left shadow-[0_12px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 ${
+                  selected === item.cells
+                    ? "border-blue-600/80 bg-gradient-to-b from-white to-blue-50 shadow-[0_16px_26px_rgba(37,99,235,0.18)]"
+                    : "border-slate-400/45 hover:border-blue-600/40"
+                }`}
                 type="button"
                 onClick={() => handleSelectCells(item.cells)}
               >
-                <div className="p6-circuit-sim-icon">
+                <div className="grid place-items-center rounded-[14px] border border-slate-400/40 bg-[radial-gradient(circle_at_30%_30%,#e0f2fe,#ffffff)] p-1.5">
                   <CircuitPreview cells={item.cells} level={item.level} />
                 </div>
-                <div className="p6-circuit-sim-label">{item.label}</div>
-                <div className="p6-circuit-sim-note">{item.note}</div>
+                <div className="mt-2.5 text-lg font-black text-slate-900">{item.label}</div>
+                <div className="mt-1 text-sm font-bold text-slate-800">{item.note}</div>
               </button>
             ))}
           </div>
 
-          <div className="p6-circuit-sim-preview">
-            <div className="p6-circuit-sim-chip">ตัวอย่างการต่อวงจร</div>
-            <div className="p6-circuit-sim-preview-body">
-              <div className="p6-circuit-drag-area" ref={dragAreaRef}>
-                <div className="p6-circuit-drag-hint">ลากสายไปต่อที่จุดวงกลม</div>
-                <div className={`p6-circuit-connect-state ${isCircuitReady ? "ready" : ""}`}>
+          <div className="mt-4 rounded-[18px] border border-slate-900/25 bg-white/75 p-3.5">
+            <div className="inline-flex items-center rounded-full bg-blue-600/15 px-[14px] py-1.5 font-black text-slate-900">
+              ตัวอย่างการต่อวงจร
+            </div>
+
+            <div className="mt-3 grid grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(220px,1fr)_1fr]">
+              <div
+                className="relative h-[220px] overflow-hidden rounded-2xl border border-dashed border-slate-900/20"
+                style={{
+                  background:
+                    "radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8), transparent 60%), linear-gradient(135deg, rgba(224, 242, 254, 0.8), rgba(255, 255, 255, 0.9))",
+                }}
+                ref={dragAreaRef}
+              >
+                <div className="absolute left-3 top-2.5 rounded-full bg-blue-600/15 px-2.5 py-1 text-xs font-extrabold text-slate-900">
+                  ลากสายไปต่อที่จุดวงกลม
+                </div>
+                <div
+                  className={`absolute right-3 top-2.5 rounded-full px-2.5 py-1 text-xs font-extrabold text-slate-900 ${
+                    isCircuitReady ? "bg-green-500/25" : "bg-slate-400/30"
+                  }`}
+                >
                   Connect {connectedCount}/{WIRE_CONFIG.length}
                 </div>
-                <svg className="p6-circuit-wire-layer" viewBox={`0 0 ${area.width} ${area.height}`} aria-hidden="true">
+
+                <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox={`0 0 ${area.width} ${area.height}`} aria-hidden="true">
                   {WIRE_CONFIG.map((wire) => {
                     const p1 = anchors[wire.fromAnchor];
                     const p2 = getEndpointPos(wire.endpoint);
@@ -365,19 +418,23 @@ export default function P6ElectricCircuitSim() {
                 {layout && (
                   <>
                     <div
-                      className="p6-circuit-piece battery"
+                      className="absolute -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
                       style={{ left: `${layout.battery.x}px`, top: `${layout.battery.y}px` }}
                     >
                       <BatteryIcon cells={selected} />
                     </div>
                     <div
-                      className={`p6-circuit-piece bulb level-${bulbLevel}`}
-                      style={{ left: `${layout.bulb.x}px`, top: `${layout.bulb.y}px` }}
+                      className="absolute -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5"
+                      style={{
+                        left: `${layout.bulb.x}px`,
+                        top: `${layout.bulb.y}px`,
+                        ...getBulbPieceStyle(bulbLevel),
+                      }}
                     >
                       <BulbIcon level={bulbLevel} />
                     </div>
                     <div
-                      className="p6-circuit-piece switch"
+                      className="absolute -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
                       style={{ left: `${layout.switcher.x}px`, top: `${layout.switcher.y}px` }}
                     >
                       <SwitchIcon />
@@ -385,7 +442,7 @@ export default function P6ElectricCircuitSim() {
                     {Object.entries(anchors).map(([key, point]) => (
                       <div
                         key={key}
-                        className="p6-circuit-anchor"
+                        className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-900/60 bg-white"
                         style={{ left: `${point.x}px`, top: `${point.y}px` }}
                       />
                     ))}
@@ -395,15 +452,21 @@ export default function P6ElectricCircuitSim() {
                 {Object.entries(endpoints).map(([id, endpoint]) => {
                   const pos = endpoint.anchor && anchors[endpoint.anchor] ? anchors[endpoint.anchor] : endpoint.pos;
                   const colorClass = id.startsWith("a")
-                    ? "red"
+                    ? "bg-red-500"
                     : id.startsWith("b")
-                    ? "blue"
-                    : "green";
+                    ? "bg-blue-600"
+                    : "bg-emerald-500";
                   return (
                     <div
                       key={id}
-                      className={`p6-circuit-endpoint ${colorClass} ${endpoint.anchor ? "connected" : ""}`}
-                      style={{ left: `${pos.x}px`, top: `${pos.y}px` }}
+                      className={`absolute h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border-2 border-white shadow-[0_8px_14px_rgba(15,23,42,0.2)] active:cursor-grabbing ${colorClass}`}
+                      style={{
+                        left: `${pos.x}px`,
+                        top: `${pos.y}px`,
+                        boxShadow: endpoint.anchor
+                          ? "0 0 0 3px rgba(255,255,255,0.9), 0 0 12px rgba(37,99,235,0.5)"
+                          : "0 8px 14px rgba(15,23,42,0.2)",
+                      }}
                       onPointerDown={(event) => handleEndpointDown(id, event)}
                       onPointerMove={(event) => handleEndpointMove(id, event)}
                       onPointerUp={(event) => handleEndpointUp(id, event)}
@@ -411,30 +474,38 @@ export default function P6ElectricCircuitSim() {
                   );
                 })}
               </div>
+
               <div>
-                <div className="p6-circuit-sim-preview-title">
-                  เลือก {selected} ถ่าน
-                </div>
-                <div className="p6-circuit-sim-preview-desc">
-                  ผลที่คาดว่าจะเห็น: {current?.note}
-                </div>
+                <div className="text-lg font-black text-slate-900">เลือก {selected} ถ่าน</div>
+                <div className="mt-1.5 font-bold text-slate-800">ผลที่คาดว่าจะเห็น: {current?.note}</div>
               </div>
             </div>
           </div>
-
         </div>
 
-        <div className="p6-gen-actions">
-          <button className="p6-gen-btn ghost" onClick={() => navigate("/p6/electric-circuit/steps")} type="button">
-            ← กลับอุปกรณ์และขั้นตอน
+        <div className="mt-1 flex flex-nowrap justify-end gap-2">
+          <button
+            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            onClick={() => navigate("/p6/electric-circuit/steps")}
+            type="button"
+            aria-label="กลับอุปกรณ์และขั้นตอน"
+            title="กลับอุปกรณ์และขั้นตอน"
+          >
+            ←
           </button>
           <button
-            className="p6-gen-btn primary"
+            className={`inline-flex h-16 w-16 items-center justify-center rounded-[20px] text-[28px] font-black leading-none shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition ${
+              isCircuitReady
+                ? "bg-blue-600 text-white hover:-translate-y-0.5"
+                : "cursor-not-allowed bg-slate-300 text-slate-500"
+            }`}
             onClick={() => navigate(`/p6/electric-circuit/result?cells=${selected}`)}
             type="button"
             disabled={!isCircuitReady}
+            aria-label="ดูผลการทดลอง"
+            title="ดูผลการทดลอง"
           >
-            ดูผลการทดลอง →
+            →
           </button>
         </div>
       </div>

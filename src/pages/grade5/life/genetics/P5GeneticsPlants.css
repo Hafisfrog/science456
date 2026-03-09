@@ -170,10 +170,10 @@
 
 .p5gp-level-child {
   position: absolute;
-  left: 50%;
+  left: 45%;
   transform: translateX(-50%);
   width: var(--p5gp-chart-width);
-  bottom: 92px;
+  bottom: 168px;
 }
 
 .p5gp-child-row {
@@ -191,6 +191,22 @@
 
 .p5gp-child-block {
   text-align: center;
+}
+
+.p5gp-child-btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.p5gp-child-btn:disabled {
+  cursor: default;
+}
+
+.p5gp-child-btn:focus-visible .p5gp-child {
+  outline: 3px solid #6aa8ff;
+  outline-offset: 3px;
 }
 
 .p5gp-child {
@@ -274,6 +290,38 @@
   box-shadow:
     inset 0 8px 10px rgba(255, 255, 255, 0.45),
     0 8px 18px rgba(200, 123, 133, 0.36);
+}
+
+.p5gp-play:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.p5gp-reset {
+  margin-top: 16px;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 22px 10px;
+  background: linear-gradient(180deg, #b8ddff, #81b8ec);
+  box-shadow:
+    inset 0 0 0 3px rgba(124, 170, 218, 0.65),
+    inset 0 8px 10px rgba(255, 255, 255, 0.32),
+    0 6px 14px rgba(100, 147, 194, 0.35);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.p5gp-reset:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.p5gp-reset:focus-visible {
+  outline: 3px solid #6aa8ff;
+  outline-offset: 2px;
 }
 
 .p5gp-side-note {

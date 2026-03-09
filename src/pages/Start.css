@@ -79,6 +79,8 @@
 .start-right {
   position: relative;
   z-index: 1;
+  opacity: 1;
+  transform: none;
 }
 
 .start-left {
@@ -86,7 +88,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: slideInLeft 800ms ease both;
 }
 
 .start-image {
@@ -105,7 +106,6 @@
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 24px 60px rgba(23, 60, 110, 0.15);
   text-align: left;
-  animation: slideInRight 900ms ease both;
 }
 
 .start-title {

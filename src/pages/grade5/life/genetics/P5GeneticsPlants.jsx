@@ -64,16 +64,22 @@ const seedlings = [
 
 const TEXT = {
   th: {
-    title: "การถ่ายทอดลักษณะทางพันธุกรรมของพืช",
-    parent: "รุ่นพ่อแม่",
-    child: "รุ่นลูก",
-    sideText: "ยีนควบคุมความสูงของพืช\nมี 2 แอลลีล คือ",
-    badgeA: "A แทนแอลลีลความสูงของพืช",
-    badgeB: "a แทนแอลลีลความเตี้ยของพืช",
-    sideNote: "กดเลือกลักษณะของพืช",
-    tallAlt: "พืชสูง",
-    shortAlt: "พืชเตี้ย",
-    childAlt: "ลูกพืช",
+    title:
+      "\u0e01\u0e32\u0e23\u0e16\u0e48\u0e32\u0e22\u0e17\u0e2d\u0e14\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
+    parent: "\u0e23\u0e38\u0e48\u0e19\u0e1e\u0e48\u0e2d\u0e41\u0e21\u0e48",
+    child: "\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01",
+    sideText:
+      "\u0e22\u0e35\u0e19\u0e04\u0e27\u0e1a\u0e04\u0e38\u0e21\u0e04\u0e27\u0e32\u0e21\u0e2a\u0e39\u0e07\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a\n\u0e21\u0e35 2 \u0e41\u0e2d\u0e25\u0e25\u0e35\u0e25 \u0e04\u0e37\u0e2d",
+    badgeA:
+      "A \u0e41\u0e17\u0e19\u0e41\u0e2d\u0e25\u0e25\u0e35\u0e25\u0e04\u0e27\u0e32\u0e21\u0e2a\u0e39\u0e07\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
+    badgeB:
+      "a \u0e41\u0e17\u0e19\u0e41\u0e2d\u0e25\u0e25\u0e35\u0e25\u0e04\u0e27\u0e32\u0e21\u0e40\u0e15\u0e35\u0e49\u0e22\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
+    sideNote:
+      "\u0e01\u0e14\u0e17\u0e35\u0e48\u0e27\u0e07\u0e01\u0e25\u0e21\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e40\u0e09\u0e25\u0e22\u0e17\u0e35\u0e25\u0e30\u0e15\u0e49\u0e19",
+    reset: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15",
+    tallAlt: "\u0e1e\u0e37\u0e0a\u0e2a\u0e39\u0e07",
+    shortAlt: "\u0e1e\u0e37\u0e0a\u0e40\u0e15\u0e35\u0e49\u0e22",
+    childAlt: "\u0e25\u0e39\u0e01\u0e1e\u0e37\u0e0a",
   },
   en: {
     title: "Inheritance of Plant Traits",
@@ -82,7 +88,8 @@ const TEXT = {
     sideText: "Plant height is controlled by genes\nwith 2 alleles:",
     badgeA: "A represents tall allele",
     badgeB: "a represents short allele",
-    sideNote: "Tap to reveal plant traits",
+    sideNote: "Tap each offspring circle to reveal one by one",
+    reset: "Reset",
     tallAlt: "tall plant",
     shortAlt: "short plant",
     childAlt: "offspring plant",
@@ -94,7 +101,8 @@ const TEXT = {
     sideText: "Ketinggian tumbuhan dikawal gen\ndengan 2 alel:",
     badgeA: "A mewakili alel tinggi",
     badgeB: "a mewakili alel rendah",
-    sideNote: "Tekan untuk pilih ciri tumbuhan",
+    sideNote: "Tekan setiap bulatan anak untuk lihat satu demi satu",
+    reset: "Set semula",
     tallAlt: "tumbuhan tinggi",
     shortAlt: "tumbuhan rendah",
     childAlt: "anak tumbuhan",
@@ -104,7 +112,7 @@ const TEXT = {
 export default function P5GeneticsPlants() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const [revealed, setRevealed] = useState(false);
+  const [revealedChildren, setRevealedChildren] = useState(() => seedlings.map(() => false));
   const [plantImages, setPlantImages] = useState({
     tall: TALL_PLANT_IMG,
     short: SHORT_PLANT_IMG,
@@ -117,12 +125,12 @@ export default function P5GeneticsPlants() {
 
   useEffect(() => {
     let isActive = true;
-
-    Promise.all([removeTreeBackground(TALL_PLANT_IMG), removeTreeBackground(SHORT_PLANT_IMG)]).then(([tall, short]) => {
-      if (!isActive) return;
-      setPlantImages({ tall, short });
-    });
-
+    Promise.all([removeTreeBackground(TALL_PLANT_IMG), removeTreeBackground(SHORT_PLANT_IMG)]).then(
+      ([tall, short]) => {
+        if (!isActive) return;
+        setPlantImages({ tall, short });
+      },
+    );
     return () => {
       isActive = false;
     };
@@ -149,10 +157,10 @@ export default function P5GeneticsPlants() {
         readPoint(parentGenotypeRefs.current[1], 0.5, 1),
       ];
       const allele = [
-        readPoint(alleleRefs.current[0], 0.5, 0.5),
-        readPoint(alleleRefs.current[1], 0.5, 0.5),
-        readPoint(alleleRefs.current[2], 0.5, 0.5),
-        readPoint(alleleRefs.current[3], 0.5, 0.5),
+        readPoint(alleleRefs.current[0]),
+        readPoint(alleleRefs.current[1]),
+        readPoint(alleleRefs.current[2]),
+        readPoint(alleleRefs.current[3]),
       ];
       const child = [
         readPoint(childRefs.current[0], 0.5, 0),
@@ -206,6 +214,19 @@ export default function P5GeneticsPlants() {
 
   const t = TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
+  const [lineA, lineB] = t.sideText.split("\n");
+  const hasRevealed = revealedChildren.some(Boolean);
+  const revealChild = (id) => {
+    setRevealedChildren((prev) => {
+      if (prev[id]) return prev;
+      const next = [...prev];
+      next[id] = true;
+      return next;
+    });
+  };
+  const resetChildren = () => {
+    setRevealedChildren(seedlings.map(() => false));
+  };
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -213,7 +234,7 @@ export default function P5GeneticsPlants() {
         <section className="p5gp-board">
           <h1>{t.title}</h1>
 
-          <div className="p5gp-stage" ref={stageRef}>
+          <div ref={stageRef} className="p5gp-stage">
             <p className="p5gp-level p5gp-level-parent">{t.parent}</p>
 
             <div className="p5gp-parent-row">
@@ -221,7 +242,7 @@ export default function P5GeneticsPlants() {
                 <div className="p5gp-parent-plant">
                   <img src={plantImages.tall} alt={t.tallAlt} className="p5gp-parent-plant-img is-tall" />
                 </div>
-                <p className="p5gp-genotype" ref={(node) => (parentGenotypeRefs.current[0] = node)}>
+                <p ref={(node) => (parentGenotypeRefs.current[0] = node)} className="p5gp-genotype">
                   Aa
                 </p>
               </div>
@@ -229,7 +250,7 @@ export default function P5GeneticsPlants() {
                 <div className="p5gp-parent-plant">
                   <img src={plantImages.short} alt={t.shortAlt} className="p5gp-parent-plant-img is-short" />
                 </div>
-                <p className="p5gp-genotype" ref={(node) => (parentGenotypeRefs.current[1] = node)}>
+                <p ref={(node) => (parentGenotypeRefs.current[1] = node)} className="p5gp-genotype">
                   aa
                 </p>
               </div>
@@ -243,9 +264,21 @@ export default function P5GeneticsPlants() {
             </div>
 
             {lineLayout ? (
-              <svg className="p5gp-lines" viewBox={`0 0 ${lineLayout.width} ${lineLayout.height}`} preserveAspectRatio="none" aria-hidden="true">
+              <svg
+                className="p5gp-lines"
+                viewBox={`0 0 ${lineLayout.width} ${lineLayout.height}`}
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
                 {lineSegments.map(([from, to, tone], index) => (
-                  <line key={`${tone}-${index}`} x1={from.x} y1={from.y} x2={to.x} y2={to.y} className={tone} />
+                  <line
+                    key={`${tone}-${index}`}
+                    className={tone}
+                    x1={from.x}
+                    y1={from.y}
+                    x2={to.x}
+                    y2={to.y}
+                  />
                 ))}
               </svg>
             ) : null}
@@ -253,28 +286,53 @@ export default function P5GeneticsPlants() {
             <p className="p5gp-level p5gp-level-child">{t.child}</p>
 
             <div className="p5gp-child-row">
-              {seedlings.map((seedling) => (
-                <div key={seedling.id} className="p5gp-child-block">
-                  <div className={`p5gp-child ${revealed ? "is-revealed" : ""}`} ref={(node) => (childRefs.current[seedling.id] = node)}>
-                    {revealed ? <img src={seedling.genotype === "Aa" ? plantImages.tall : plantImages.short} alt={t.childAlt} className="p5gp-child-img" /> : null}
+              {seedlings.map((seedling) => {
+                const isRevealed = revealedChildren[seedling.id];
+                return (
+                  <div key={seedling.id} className="p5gp-child-block">
+                    <button
+                      type="button"
+                      className="p5gp-child-btn"
+                      onClick={() => revealChild(seedling.id)}
+                      disabled={isRevealed}
+                      aria-label={t.sideNote}
+                    >
+                      <div
+                        className={`p5gp-child ${isRevealed ? "is-revealed" : ""}`}
+                        ref={(node) => (childRefs.current[seedling.id] = node)}
+                      >
+                        {isRevealed ? (
+                          <img
+                            src={seedling.genotype === "Aa" ? plantImages.tall : plantImages.short}
+                            alt={t.childAlt}
+                            className="p5gp-child-img"
+                          />
+                        ) : null}
+                      </div>
+                    </button>
+                    <p className="p5gp-child-genotype">{isRevealed ? seedling.genotype : ".........."}</p>
                   </div>
-                  <p className="p5gp-child-genotype">{revealed ? seedling.genotype : ".........."}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
           <aside className="p5gp-side">
             <p className="p5gp-side-text">
-              {t.sideText.split("\n")[0]}
+              {lineA}
               <br />
-              {t.sideText.split("\n")[1]}
+              {lineB}
             </p>
             <p className="p5gp-badge badge-a">{t.badgeA}</p>
             <p className="p5gp-badge badge-b">{t.badgeB}</p>
 
-            <button className="p5gp-play" onClick={() => setRevealed(true)} aria-label={t.sideNote}>
-              &gt;
+            <button
+              type="button"
+              className="p5gp-reset"
+              onClick={resetChildren}
+              disabled={!hasRevealed}
+            >
+              {t.reset}
             </button>
             <p className="p5gp-side-note">{t.sideNote}</p>
           </aside>
@@ -282,21 +340,37 @@ export default function P5GeneticsPlants() {
 
         <footer className="p5gp-ground">
           <div className="p5gp-lang">
-            <button type="button" className={lang === "th" ? "is-active" : ""} onClick={() => setLang("th")}>
+            <button
+              type="button"
+              className={lang === "th" ? "is-active" : ""}
+              onClick={() => setLang("th")}
+            >
               {labels.th}
             </button>
-            <button type="button" className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")}>
+            <button
+              type="button"
+              className={lang === "en" ? "is-active" : ""}
+              onClick={() => setLang("en")}
+            >
               {labels.en}
             </button>
-            <button type="button" className={lang === "ms" ? "is-active" : ""} onClick={() => setLang("ms")}>
+            <button
+              type="button"
+              className={lang === "ms" ? "is-active" : ""}
+              onClick={() => setLang("ms")}
+            >
               {labels.ms}
             </button>
-            <button type="button" className="p5gp-audio">
-              🔊
+            <button type="button" className="p5gp-audio" aria-label="audio">
+              {"\uD83D\uDD0A"}
             </button>
           </div>
 
-          <button className="p5gp-next" onClick={() => navigate("/p5/life/genetics/plants/summary")}>
+          <button
+            type="button"
+            className="p5gp-next"
+            onClick={() => navigate("/p5/life/genetics/plants/summary")}
+          >
             {NEXT_LABEL[lang]}
           </button>
         </footer>

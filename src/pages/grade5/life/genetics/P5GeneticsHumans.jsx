@@ -8,28 +8,32 @@ const IMAGE_VERSION = "20260302-human-v2";
 
 const TEXT = {
   th: {
-    title: "การถ่ายทอดลักษณะทางพันธุกรรมของคน",
-    topic: "ลักษณะทางพันธุกรรมต่าง ๆ ของคน",
-    tapImage: "แตะรูป",
+    title:
+      "\u0e01\u0e32\u0e23\u0e16\u0e48\u0e32\u0e22\u0e17\u0e2d\u0e14\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
+    topic:
+      "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e15\u0e48\u0e32\u0e07 \u0e46 \u0e02\u0e2d\u0e07\u0e04\u0e19",
+    tapImage: "\u0e41\u0e15\u0e30\u0e23\u0e39\u0e1b",
+    reset: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15",
     traits: {
-      "straight-hair": "ผมตรง",
-      "double-eyelid": "ตา 2 ชั้น",
-      draw: "ชอบวาดรูป",
-      dimple: "มีลักยิ้ม",
-      "no-dimple": "ไม่มีลักยิ้ม",
-      music: "ชอบเล่นดนตรี",
-      "curly-hair": "ผมหยิก",
-      green: "ชอบสีเขียว",
-      nose: "สันจมูกโด่ง",
-      tongue: "ม้วนลิ้นได้",
-      sports: "ชอบเล่นกีฬา",
-      "single-eyelid": "ตาชั้นเดียว",
+      "straight-hair": "\u0e1c\u0e21\u0e15\u0e23\u0e07",
+      "double-eyelid": "\u0e15\u0e32 2 \u0e0a\u0e31\u0e49\u0e19",
+      draw: "\u0e0a\u0e2d\u0e1a\u0e27\u0e32\u0e14\u0e23\u0e39\u0e1b",
+      dimple: "\u0e21\u0e35\u0e25\u0e31\u0e01\u0e22\u0e34\u0e49\u0e21",
+      "no-dimple": "\u0e44\u0e21\u0e48\u0e21\u0e35\u0e25\u0e31\u0e01\u0e22\u0e34\u0e49\u0e21",
+      music: "\u0e0a\u0e2d\u0e1a\u0e40\u0e25\u0e48\u0e19\u0e14\u0e19\u0e15\u0e23\u0e35",
+      "curly-hair": "\u0e1c\u0e21\u0e2b\u0e22\u0e34\u0e01",
+      green: "\u0e0a\u0e2d\u0e1a\u0e2a\u0e35\u0e40\u0e02\u0e35\u0e22\u0e27",
+      nose: "\u0e2a\u0e31\u0e19\u0e08\u0e21\u0e39\u0e01\u0e42\u0e14\u0e48\u0e07",
+      tongue: "\u0e21\u0e49\u0e27\u0e19\u0e25\u0e34\u0e49\u0e19\u0e44\u0e14\u0e49",
+      sports: "\u0e0a\u0e2d\u0e1a\u0e40\u0e25\u0e48\u0e19\u0e01\u0e35\u0e2c\u0e32",
+      "single-eyelid": "\u0e15\u0e32\u0e0a\u0e31\u0e49\u0e19\u0e40\u0e14\u0e35\u0e22\u0e27",
     },
   },
   en: {
     title: "Inheritance of Human Traits",
     topic: "Different Human Genetic Traits",
     tapImage: "Tap Image",
+    reset: "Reset",
     traits: {
       "straight-hair": "Straight Hair",
       "double-eyelid": "Double Eyelid",
@@ -49,6 +53,7 @@ const TEXT = {
     title: "Pewarisan Ciri Genetik Manusia",
     topic: "Pelbagai Ciri Genetik Manusia",
     tapImage: "Sentuh Gambar",
+    reset: "Set semula",
     traits: {
       "straight-hair": "Rambut Lurus",
       "double-eyelid": "Mata 2 Kelopak",
@@ -171,6 +176,7 @@ export default function P5GeneticsHumans() {
   const [results, setResults] = useState({});
   const t = TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
+  const hasResults = Object.keys(results).length > 0;
 
   const handleTraitClick = (trait) => {
     setResults((prev) => {
@@ -189,45 +195,48 @@ export default function P5GeneticsHumans() {
 
           <div className="p5gh-content">
             <div className="p5gh-start-wrap">
-              <div className="p5gh-start-icon" aria-hidden="true">
-                ▶
-              </div>
+              <div className="p5gh-start-icon">{"\u25B6"}</div>
               <p>{t.tapImage}</p>
+              <button
+                type="button"
+                className="p5gh-reset"
+                onClick={() => setResults({})}
+                disabled={!hasResults}
+              >
+                {t.reset}
+              </button>
             </div>
 
             <div className="p5gh-grid">
               {TRAITS.map((trait) => (
                 <div key={trait.id} className="p5gh-card">
-                  <button type="button" className="p5gh-image-wrap p5gh-choice" onClick={() => handleTraitClick(trait)}>
-                    <img
-                      src={`${trait.localImg}?v=${IMAGE_VERSION}`}
-                      alt={t.traits[trait.id]}
-                      className="p5gh-image"
-                      style={{ objectPosition: trait.imagePosition }}
-                      loading="lazy"
-                      referrerPolicy="no-referrer"
-                      onError={(event) => {
-                        const stage = event.currentTarget.dataset.fallbackStage || "local";
-                        if (stage === "local") {
-                          event.currentTarget.dataset.fallbackStage = "remote";
-                          event.currentTarget.src = `${trait.remoteImg}&v=${IMAGE_VERSION}`;
-                          return;
-                        }
-                        event.currentTarget.src = `/images/p5.png?v=${IMAGE_VERSION}`;
-                      }}
-                    />
-                    <div
-                      className={[
-                        "p5gh-mark",
-                        results[trait.id] ? "is-visible" : "",
-                        results[trait.id] === "correct" ? "is-correct" : "",
-                        results[trait.id] === "wrong" ? "is-wrong" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                      aria-hidden="true"
-                    >
-                      {results[trait.id] === "correct" ? "✓" : results[trait.id] === "wrong" ? "✕" : ""}
+                  <button type="button" className="p5gh-choice" onClick={() => handleTraitClick(trait)}>
+                    <div className="p5gh-image-wrap">
+                      <img
+                        src={`${trait.localImg}?v=${IMAGE_VERSION}`}
+                        alt={t.traits[trait.id]}
+                        className="p5gh-image"
+                        style={{ objectPosition: trait.imagePosition }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        onError={(event) => {
+                          const stage = event.currentTarget.dataset.fallbackStage || "local";
+                          if (stage === "local") {
+                            event.currentTarget.dataset.fallbackStage = "remote";
+                            event.currentTarget.src = `${trait.remoteImg}&v=${IMAGE_VERSION}`;
+                            return;
+                          }
+                          event.currentTarget.src = `/images/p5.png?v=${IMAGE_VERSION}`;
+                        }}
+                      />
+                      {results[trait.id] ? (
+                        <div
+                          className={`p5gh-mark is-visible ${results[trait.id] === "wrong" ? "is-wrong" : ""}`}
+                          aria-hidden="true"
+                        >
+                          {results[trait.id] === "correct" ? "\u2713" : "\u2717"}
+                        </div>
+                      ) : null}
                     </div>
                   </button>
                   <p className="p5gh-label">{t.traits[trait.id]}</p>
@@ -239,21 +248,37 @@ export default function P5GeneticsHumans() {
 
         <footer className="p5gh-ground">
           <div className="p5gh-lang">
-            <button type="button" className={lang === "th" ? "is-active" : ""} onClick={() => setLang("th")}>
+            <button
+              type="button"
+              className={lang === "th" ? "is-active" : ""}
+              onClick={() => setLang("th")}
+            >
               {labels.th}
             </button>
-            <button type="button" className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")}>
+            <button
+              type="button"
+              className={lang === "en" ? "is-active" : ""}
+              onClick={() => setLang("en")}
+            >
               {labels.en}
             </button>
-            <button type="button" className={lang === "ms" ? "is-active" : ""} onClick={() => setLang("ms")}>
+            <button
+              type="button"
+              className={lang === "ms" ? "is-active" : ""}
+              onClick={() => setLang("ms")}
+            >
               {labels.ms}
             </button>
             <button type="button" className="p5gh-audio" aria-label="audio">
-              🔊
+              {"\uD83D\uDD0A"}
             </button>
           </div>
 
-          <button className="p5gh-next" onClick={() => navigate("/p5/life/genetics/humans/summary")}>
+          <button
+            type="button"
+            className="p5gh-next"
+            onClick={() => navigate("/p5/life/genetics/humans/summary")}
+          >
             {NEXT_LABEL[lang]}
           </button>
         </footer>
@@ -261,3 +286,4 @@ export default function P5GeneticsHumans() {
     </LabLayout>
   );
 }
+

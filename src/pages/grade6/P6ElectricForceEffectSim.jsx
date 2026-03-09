@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P6ElectricForceEffectSim.css";
+import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย", speechLang: "th-TH" },
@@ -490,6 +490,7 @@ export default function P6ElectricForceEffectSim() {
 
   return (
     <div className="p6-force-sim-page">
+      <style>{forceEffectSimStyles}</style>
       <div className="p6-force-sim-stage">
         <button
           className="p6-force-sim-backTop"
@@ -778,3 +779,4 @@ export default function P6ElectricForceEffectSim() {
     </div>
   );
 }
+

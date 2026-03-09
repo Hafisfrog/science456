@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P6ElectricVocab.css";
 
 const VOCAB = [
   { th: "วงจรไฟฟ้า", ms: "litar elektrik", en: "Electric Circuit" },
@@ -23,108 +22,78 @@ function speakText(text, lang) {
   }
 
   window.speechSynthesis.cancel();
-
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = lang;
   utterance.rate = 0.95;
 
   const voices = window.speechSynthesis.getVoices();
   const exact = voices.find((voice) => voice.lang.toLowerCase() === lang.toLowerCase());
-  const fallback = voices.find((voice) =>
-    voice.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()),
-  );
-
-  if (exact || fallback) {
-    utterance.voice = exact || fallback;
-  }
-
+  const fallback = voices.find((voice) => voice.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
+  if (exact || fallback) utterance.voice = exact || fallback;
   window.speechSynthesis.speak(utterance);
 }
 
 export default function P6ElectricCircuitVocab() {
   const navigate = useNavigate();
-
   const onSpeak = useCallback((text, lang) => {
     speakText(text, lang);
   }, []);
 
   return (
-    <div className="p6-vocab-page">
-      <div className="p6-vocab-shell p6-circuit-vocab-shell">
-        <header className="p6-vocab-header">
-          <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-          <p className="p6-vocab-sub">เรื่อง วงจรไฟฟ้าใกล้ตัว</p>
+    <div
+      className="min-h-screen overflow-hidden px-4 py-5 md:px-6"
+      style={{
+        fontFamily: "Prompt, sans-serif",
+        background:
+          "radial-gradient(80% 58% at 50% 34%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      }}
+    >
+      <div className="mx-auto max-w-[1240px] rounded-3xl bg-white/90 p-5 shadow-lg">
+        <header className="mb-4 text-center">
+          <h1 className="m-0 text-4xl font-extrabold text-blue-700 md:text-5xl">คำศัพท์วิทยาศาสตร์น่ารู้</h1>
+          <p className="mt-2 text-2xl font-semibold text-slate-700 md:text-3xl">เรื่อง วงจรไฟฟ้าใกล้ตัว</p>
         </header>
 
-        <section className="p6-vocab-card">
-          <div className="p6-vocab-table-wrap p6-circuit-vocab-tableWrap">
-            <table className="p6-vocab-table">
-              <thead>
-                <tr>
-                  <th className="col-th">ภาษาไทย</th>
-                  <th className="col-ms">ภาษามลายู</th>
-                  <th className="col-en">ภาษาอังกฤษ</th>
-                  <th className="col-voice">ฟังเสียง</th>
+        <section className="overflow-x-auto rounded-2xl border border-slate-200">
+          <table className="w-full min-w-[980px] border-collapse">
+            <thead>
+              <tr className="bg-slate-100 text-2xl">
+                <th className="border border-slate-300 px-3 py-3 text-left">ภาษาไทย</th>
+                <th className="border border-slate-300 px-3 py-3 text-left">ภาษามลายู</th>
+                <th className="border border-slate-300 px-3 py-3 text-left">ภาษาอังกฤษ</th>
+                <th className="border border-slate-300 px-3 py-3 text-center">ฟังเสียง</th>
+              </tr>
+            </thead>
+            <tbody>
+              {VOCAB.map((row, index) => (
+                <tr key={index} className="bg-white even:bg-slate-50">
+                  <td className="border border-slate-300 px-3 py-3 text-2xl">{row.th}</td>
+                  <td className="border border-slate-300 px-3 py-3 text-2xl">{row.ms}</td>
+                  <td className="border border-slate-300 px-3 py-3 text-2xl">{row.en}</td>
+                  <td className="border border-slate-300 px-3 py-3">
+                    <div className="flex items-center justify-center gap-2">
+                      <button className="rounded-full bg-rose-500 px-3 py-1.5 text-sm font-bold text-white" onClick={() => onSpeak(row.th, "th-TH")} type="button" aria-label={`ฟังเสียงภาษาไทย: ${row.th}`}>
+                        TH
+                      </button>
+                      <button className="rounded-full bg-amber-500 px-3 py-1.5 text-sm font-bold text-white" onClick={() => onSpeak(row.ms, "ms-MY")} type="button" aria-label={`ฟังเสียงภาษามลายู: ${row.ms}`}>
+                        MY
+                      </button>
+                      <button className="rounded-full bg-blue-600 px-3 py-1.5 text-sm font-bold text-white" onClick={() => onSpeak(row.en, "en-GB")} type="button" aria-label={`ฟังเสียงภาษาอังกฤษ: ${row.en}`}>
+                        GB
+                      </button>
+                    </div>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {VOCAB.map((row, index) => (
-                  <tr key={index}>
-                    <td className="col-th">{row.th}</td>
-                    <td className="col-ms">{row.ms}</td>
-                    <td className="col-en">{row.en}</td>
-                    <td className="col-voice">
-                      <div className="p6-vocab-voice-group">
-                        <button
-                          className="p6-vocab-voice-chip th"
-                          onClick={() => onSpeak(row.th, "th-TH")}
-                          type="button"
-                          aria-label={`ฟังเสียงภาษาไทย: ${row.th}`}
-                        >
-                          TH
-                        </button>
-                        <button
-                          className="p6-vocab-voice-chip ms"
-                          onClick={() => onSpeak(row.ms, "ms-MY")}
-                          type="button"
-                          aria-label={`ฟังเสียงภาษามลายู: ${row.ms}`}
-                        >
-                          MY
-                        </button>
-                        <button
-                          className="p6-vocab-voice-chip en"
-                          onClick={() => onSpeak(row.en, "en-GB")}
-                          type="button"
-                          aria-label={`ฟังเสียงภาษาอังกฤษ: ${row.en}`}
-                        >
-                          GB
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </section>
 
-        <div className="p6-vocab-actions">
-          <button
-            className="p6-vocab-btn icon ghost"
-            onClick={() => navigate("/p6/electric-circuit/objectives")}
-            type="button"
-            aria-label="กลับหน้าหน่วยการเรียนรู้"
-            title="กลับหน้าหน่วยการเรียนรู้"
-          >
+        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-6 md:right-6">
+          <button className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl text-slate-700 shadow" onClick={() => navigate("/p6/electric-circuit/objectives")} type="button" aria-label="กลับหน้าหน่วยการเรียนรู้" title="กลับหน้าหน่วยการเรียนรู้">
             ←
           </button>
-          <button
-            className="p6-vocab-btn icon primary"
-            onClick={() => navigate("/p6/electric-circuit/experiments")}
-            type="button"
-            aria-label="ไปหน้าเลือกการทดลอง"
-            title="ไปหน้าเลือกการทดลอง"
-          >
+          <button className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-2xl text-white shadow" onClick={() => navigate("/p6/electric-circuit/experiments")} type="button" aria-label="ไปหน้าเลือกการทดลอง" title="ไปหน้าเลือกการทดลอง">
             →
           </button>
         </div>

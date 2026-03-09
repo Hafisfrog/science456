@@ -2,7 +2,7 @@
   position: relative;
   height: 100%;
   min-height: 0;
-  padding: 12px 18px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
   font-family: "Prompt", sans-serif;
@@ -27,7 +27,7 @@
   position: relative;
   z-index: 2;
   width: min(1120px, 96%);
-  margin: 8px auto 0;
+  margin: 4px auto 0;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -36,15 +36,15 @@
 
 .p5ghs-panel h1 {
   margin: 0;
-  font-size: clamp(30px, 2.8vw, 44px);
+  font-size: clamp(24px, 2.2vw, 40px);
   line-height: 1.05;
   font-weight: 900;
   color: #08111d;
 }
 
 .p5ghs-intro {
-  margin: 8px 0 12px;
-  font-size: clamp(20px, 2.1vw, 34px);
+  margin: 6px 0 10px;
+  font-size: clamp(14px, 1.2vw, 26px);
   line-height: 1.25;
   color: #05070f;
 }
@@ -54,12 +54,13 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   min-height: 0;
+  align-items: start;
 }
 
 .p5ghs-note {
   position: relative;
   min-height: 0;
-  padding: 28px 22px 16px;
+  padding: 22px 16px 12px;
   border: 5px solid #0b0f18;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.22);
@@ -70,8 +71,8 @@
   position: absolute;
   top: -18px;
   left: 50%;
-  width: 136px;
-  height: 32px;
+  width: 112px;
+  height: 24px;
   transform: translateX(-50%);
   border: 5px solid #0b0f18;
   border-radius: 10px;
@@ -81,7 +82,7 @@
 .p5ghs-note h2 {
   margin: 0 0 6px;
   text-align: center;
-  font-size: clamp(28px, 2.5vw, 42px);
+  font-size: clamp(22px, 1.8vw, 34px);
   line-height: 1.15;
   font-weight: 900;
   color: #0a111a;
@@ -90,7 +91,7 @@
 .p5ghs-note p,
 .p5ghs-note li {
   margin: 0;
-  font-size: clamp(18px, 2vw, 38px);
+  font-size: clamp(14px, 1vw, 22px);
   line-height: 1.3;
   color: #05070f;
 }
@@ -101,8 +102,8 @@
 
 .p5ghs-ground {
   position: relative;
-  margin-top: 10px;
-  height: 92px;
+  margin-top: 8px;
+  height: 76px;
   border-radius: 0 0 24px 24px;
   padding: 0 14px 10px;
   display: flex;
@@ -128,7 +129,7 @@
   border: 0;
   border-radius: 999px;
   padding: 6px 14px;
-  font-size: 30px;
+  font-size: clamp(14px, 0.9vw, 20px);
   font-weight: 700;
   color: #1f8fb7;
   background: #9bd7ff;
@@ -154,10 +155,41 @@
     inset 0 0 0 4px rgba(171, 50, 50, 0.35),
     0 10px 18px rgba(172, 46, 46, 0.32);
   color: #fff;
-  font-size: 34px;
+  font-size: clamp(20px, 1.4vw, 30px);
   line-height: 1;
   font-weight: 800;
   cursor: pointer;
+}
+
+.p5ghs-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.p5ghs-back,
+.p5ghs-select {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 18px 9px;
+  font-size: clamp(16px, 1.05vw, 22px);
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.p5ghs-back {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+  box-shadow: 0 8px 14px rgba(15, 23, 42, 0.16);
+}
+
+.p5ghs-select {
+  background: linear-gradient(180deg, #4cb1ff, #2f8de8);
+  color: #fff;
+  box-shadow:
+    inset 0 0 0 3px rgba(24, 87, 155, 0.25),
+    0 8px 14px rgba(34, 96, 161, 0.28);
 }
 
 @media (max-width: 1180px) {
@@ -202,7 +234,7 @@
 
   .p5ghs-note p,
   .p5ghs-note li {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .p5ghs-note ul {
@@ -230,9 +262,16 @@
     padding: 6px 10px;
   }
 
-  .p5ghs-next {
+  .p5ghs-actions {
     margin-left: auto;
-    font-size: 24px;
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .p5ghs-back,
+  .p5ghs-select {
+    font-size: 18px;
   }
 }
 
@@ -242,11 +281,11 @@
   }
 
   .p5ghs-panel h1 {
-    font-size: clamp(24px, 2.2vw, 34px);
+    font-size: clamp(20px, 1.8vw, 30px);
   }
 
   .p5ghs-intro {
-    font-size: clamp(16px, 1.7vw, 24px);
+    font-size: clamp(13px, 1vw, 18px);
     margin-bottom: 8px;
   }
 
@@ -255,38 +294,39 @@
   }
 
   .p5ghs-note {
-    padding: 22px 16px 12px;
-    border-width: 4px;
+    padding: 18px 14px 10px;
+    border-width: 3px;
   }
 
   .p5ghs-tab {
-    width: 112px;
-    height: 28px;
-    top: -15px;
-    border-width: 4px;
+    width: 90px;
+    height: 20px;
+    top: -12px;
+    border-width: 3px;
   }
 
   .p5ghs-note h2 {
-    font-size: clamp(22px, 2vw, 30px);
+    font-size: clamp(18px, 1.4vw, 24px);
   }
 
   .p5ghs-note p,
   .p5ghs-note li {
-    font-size: clamp(14px, 1.55vw, 22px);
-    line-height: 1.25;
+    font-size: clamp(12px, 0.95vw, 16px);
+    line-height: 1.2;
   }
 
   .p5ghs-ground {
-    height: 84px;
-    padding-bottom: 8px;
+    height: 70px;
+    padding-bottom: 6px;
   }
 
   .p5ghs-lang button {
-    font-size: 24px;
-    padding: 5px 12px;
+    font-size: 16px;
+    padding: 5px 10px;
   }
 
-  .p5ghs-next {
-    font-size: 30px;
+  .p5ghs-back,
+  .p5ghs-select {
+    font-size: 16px;
   }
 }

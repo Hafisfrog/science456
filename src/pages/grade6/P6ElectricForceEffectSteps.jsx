@@ -1,7 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P6ElectricGenerationSteps.css";
-import "./P6ElectricForceEffectSteps.css";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย", speechLang: "th-TH" },
@@ -98,39 +96,60 @@ export default function P6ElectricForceEffectSteps() {
     speakText(steps.map((step, idx) => `${idx + 1}. ${step}`).join(" "), speechLang);
   }, [speechLang, steps]);
 
-  return (
-    <div className="p6-gen-page p6-force-steps-page">
-      <div className="p6-gen-container p6-force-steps-container">
-        <section className="p6-force-steps-card">
-          <div className="p6-force-steps-heading">{t.heading}</div>
-          <div className="p6-force-steps-hint">{t.hint}</div>
+  const pageBg = {
+    background:
+      "radial-gradient(circle at 20% 16%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0)), linear-gradient(180deg, #f2eeed 0%, #ece7e6 100%)",
+  };
 
-          <div className="p6-force-steps-list">
+  return (
+    <div
+      className="min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(18px,2.5vw,30px)] text-slate-900"
+      style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
+    >
+      <div className="mx-auto grid h-full w-full max-w-[1260px] gap-[14px]">
+        <section className="rounded-3xl border border-white/85 bg-[#f3ead9] p-[clamp(16px,2.4vw,28px)] shadow-[0_12px_22px_rgba(15,23,42,0.1)]">
+          <div className="text-[clamp(34px,3.5vw,52px)] font-black leading-[1.06] text-slate-900">{t.heading}</div>
+          <div className="mb-[14px] mt-1.5 text-[clamp(14px,1.2vw,18px)] font-bold text-slate-600">{t.hint}</div>
+
+          <div className="grid gap-[clamp(10px,1.2vw,14px)]">
             {steps.map((text, idx) => (
               <button
                 key={`${idx}-${text}`}
                 type="button"
-                className="p6-force-steps-row"
+                className="flex w-full cursor-pointer items-center gap-3 rounded-full border-2 border-slate-900/90 bg-slate-100 px-5 py-2 text-left shadow-[4px_6px_0_rgba(17,24,39,0.22)] transition hover:-translate-y-0.5 hover:shadow-[5px_9px_0_rgba(17,24,39,0.24)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-600"
                 onClick={() => speakStep(text)}
                 aria-label={`${t.speakPrefix} ${idx + 1}`}
                 title={`${t.speakPrefix} ${idx + 1}`}
               >
-                <span className="p6-force-steps-num" aria-hidden="true">
+                <span
+                  className="grid h-[clamp(42px,3.3vw,56px)] w-[clamp(42px,3.3vw,56px)] shrink-0 place-items-center rounded-full text-[clamp(26px,2.4vw,40px)] font-black leading-none text-white"
+                  style={{
+                    background: "linear-gradient(145deg, #f6cb5a, #e9ad2d)",
+                    textShadow: "0 2px 0 rgba(0, 0, 0, 0.16)",
+                  }}
+                  aria-hidden="true"
+                >
                   {idx + 1}
                 </span>
-                <span className="p6-force-steps-text">{text}</span>
+                <span className="text-[clamp(20px,2vw,34px)] font-black leading-[1.2] text-slate-900 max-[980px]:text-[clamp(18px,2.4vw,28px)]">
+                  {text}
+                </span>
               </button>
             ))}
           </div>
         </section>
 
-        <div className="p6-force-steps-bottom">
-          <div className="p6-force-steps-langbar">
+        <div className="flex flex-wrap items-center justify-between gap-3 max-[720px]:justify-center">
+          <div className="inline-flex items-center gap-2 rounded-[18px] border border-blue-500/30 bg-white/90 p-2 shadow-[0_10px_18px_rgba(15,23,42,0.14)]">
             {LANGUAGE_OPTIONS.map((item) => (
               <button
                 key={item.id}
                 type="button"
-                className={`p6-force-steps-chip ${language === item.id ? "active" : ""}`}
+                className={`cursor-pointer rounded-full px-[14px] py-[7px] text-[clamp(15px,1.6vw,20px)] font-black transition ${
+                  language === item.id
+                    ? "bg-sky-500 text-white"
+                    : "bg-[#d7edff] text-sky-700 hover:-translate-y-0.5"
+                }`}
                 onClick={() => setLanguage(item.id)}
               >
                 {item.label}
@@ -138,12 +157,12 @@ export default function P6ElectricForceEffectSteps() {
             ))}
             <button
               type="button"
-              className="p6-force-steps-audio"
+              className="grid h-[42px] w-[42px] place-items-center rounded-[14px] border border-sky-500/35 bg-gradient-to-b from-[#f8fcff] to-sky-100 text-sky-700"
               onClick={speakAll}
               aria-label={t.listenAll}
               title={t.listenAll}
             >
-              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+              <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" className="h-6 w-6">
                 <path
                   d="M12 26h12l14-10v32l-14-10H12z"
                   fill="none"
@@ -162,9 +181,9 @@ export default function P6ElectricForceEffectSteps() {
             </button>
           </div>
 
-          <div className="p6-gen-actions p6-force-steps-actions">
+          <div className="ml-auto mt-0 flex flex-nowrap justify-end gap-2 max-[720px]:ml-0">
             <button
-              className="p6-gen-btn ghost"
+              className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
               onClick={() => navigate("/p6/experiment/electric-force-effect")}
               type="button"
               aria-label={t.back}
@@ -173,7 +192,7 @@ export default function P6ElectricForceEffectSteps() {
               ←
             </button>
             <button
-              className="p6-gen-btn primary"
+              className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-gradient-to-br from-red-500 to-red-600 text-[28px] font-black leading-none text-white shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
               onClick={() => navigate("/p6/experiment/electric-force-effect/sim")}
               type="button"
               aria-label={t.next}
