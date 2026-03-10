@@ -1,4 +1,4 @@
-/* P4GravityExp2Action.css */
+﻿/* P4GravityExp2Action.css */
 :root{
   --bg:#0b1020;
   --card: rgba(255,255,255,.92);
@@ -19,8 +19,9 @@ button{ font-family: inherit; }
 button:disabled{ opacity:.6; cursor:not-allowed; }
 
 .exp2a-page{
-  width:100vw;
-  height:100vh;
+  width:100%;
+  min-height:100vh;
+  min-height:100dvh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -50,17 +51,17 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 
 /* TOP */
 .exp2a-topbar{
-  position:absolute;
+  position:fixed;
   left:18px;
   right:18px;
   top:14px;
   display:flex;
   align-items:center;
-  justify-content:center;   /* ✅ ให้ title อยู่กลาง */
+  justify-content:center;   /* โ… เนเธซเน title เธญเธขเธนเนเธเธฅเธฒเธ */
   z-index:5;
 }
 
-/* ✅ back circle only */
+/* โ… back circle only */
 .exp2a-backCircle{
   position:absolute;
   left:0;
@@ -82,9 +83,9 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 .exp2a-backCircle:hover{ transform: translateY(-2px); box-shadow: 0 20px 38px rgba(0,0,0,.22); }
 .exp2a-backCircle:active{ transform: translateY(1px); }
 
-/* ✅ title centered & not too wide */
+/* โ… title centered & not too wide */
 .exp2a-titleCard{
-  width: min(760px, calc(100% - 90px));  /* ไม่ยาวมาก */
+  width: min(760px, calc(100% - 90px));  /* เนเธกเนเธขเธฒเธงเธกเธฒเธ */
   background: var(--card);
   border-radius: 18px;
   box-shadow: var(--shadow);
@@ -101,7 +102,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   line-height:1.2;
   overflow:hidden;
   text-overflow:ellipsis;
-  white-space:nowrap;      /* กันยาว */
+  white-space:nowrap;      /* เธเธฑเธเธขเธฒเธง */
 }
 .exp2a-iconBtn{
   border:none;
@@ -130,6 +131,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   display:grid;
   grid-template-columns: 360px 1fr 360px;
   gap:14px;
+  min-width:0;
 }
 
 /* pane */
@@ -142,6 +144,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   display:flex;
   flex-direction:column;
   border: 1px solid rgba(255,255,255,.35);
+  min-width:0;
 }
 .exp2a-paneHead{ margin-bottom:10px; }
 .exp2a-paneTitle{
@@ -166,6 +169,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   display:flex;
   flex-direction:column;
   gap:12px;
+  min-height:0;
 }
 .exp2a-groupName{
   font-size:16px;
@@ -180,9 +184,9 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 
 /* cards */
 .exp2a-card{
-  min-height: 92px;     /* ล็อกความสูงการ์ด */
+  min-height: 92px;     /* เธฅเนเธญเธเธเธงเธฒเธกเธชเธนเธเธเธฒเธฃเนเธ” */
   align-items: center;
-  overflow: visible;   /* กันรูปที่ scale แล้วโดนตัด */
+  overflow: visible;   /* เธเธฑเธเธฃเธนเธเธ—เธตเน scale เนเธฅเนเธงเนเธ”เธเธ•เธฑเธ” */
 
   position:relative;
   width:100%;
@@ -207,9 +211,9 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   width:56px;
   height:56px;
   object-fit:contain;
-  transform: scale(1.25); /* ✅ ทำให้รูปดูใหญ่ขึ้น */
+  transform: scale(1.25); /* โ… เธ—เธณเนเธซเนเธฃเธนเธเธ”เธนเนเธซเธเนเธเธถเนเธ */
   transform-origin: center;
-  flex: 0 0 56px;       /* ✅ ไม่ให้มันดัน layout */
+  flex: 0 0 56px;       /* โ… เนเธกเนเนเธซเนเธกเธฑเธเธ”เธฑเธ layout */
   filter: drop-shadow(0 10px 14px rgba(0,0,0,.18));
 }
 .exp2a-cardInfo{ flex:1; }
@@ -254,7 +258,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 .exp2a-tag.blue{ background:#dbeafe; color:#1e40af; }
 .exp2a-tag.green{ background:#dcfce7; color:#166534; }
 
-/* ✅ language dock left-bottom */
+/* โ… language dock left-bottom */
 .exp2a-langDock{
   margin-top: 12px;
   position: sticky;
@@ -263,7 +267,8 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,255,255,.92) 45%);
 }
 .exp2a-lang{
-  width: 73%;
+  width: 100%;
+  max-width: 340px;
   background: rgba(255,255,255,.92);
   border-radius: 18px;
   box-shadow: var(--shadow2);
@@ -271,7 +276,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   display:flex;
   align-items:center;
   gap:10px;
-  flex-wrap: wrap;            /* ✅ กันหล่นจอ */
+  flex-wrap: wrap;            /* โ… เธเธฑเธเธซเธฅเนเธเธเธญ */
   justify-content:flex-start;
 }
 .exp2a-chip{
@@ -315,6 +320,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   overflow:hidden;
   display:flex;
   flex-direction:column;
+  min-width:0;
 }
 .exp2a-stageHead{
   padding:14px;
@@ -371,7 +377,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   object-fit:contain;
   padding:10px;
   margin-top: 48px; 
-  transform: scale(1.75);      /* ✅ เพิ่มความใหญ่ (ลอง 1.10–1.25) */
+  transform: scale(1.75);      /* โ… เน€เธเธดเนเธกเธเธงเธฒเธกเนเธซเธเน (เธฅเธญเธ 1.10โ€“1.25) */
 }
 .exp2a-scalePlaceholder{
   height:420px;
@@ -463,6 +469,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   align-items:center;
   justify-content:center;
   gap:10px;
+  flex-wrap:wrap;
   font-weight:1000;
   color: var(--ink);
 }
@@ -525,6 +532,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   background:#fff;
   border:2px solid rgba(17,24,39,.12);
   overflow:hidden;
+  min-width:0;
 }
 .exp2a-thead{
   position:sticky;
@@ -586,35 +594,176 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
   .exp2a-wrap{ grid-template-columns: 340px 1fr 340px; }
   .exp2a-stageGrid{ grid-template-columns: 1fr; }
   .exp2a-scaleFrame{ min-height: 360px; }
-  .exp2a-scaleImg{ height:360px; }
-  .exp2a-pan{ top: 56%; }
+  .exp2a-scaleImg{ height:320px; transform:scale(1.45); margin-top:24px; }
+  .exp2a-pan{ top: 46%; }
   .exp2a-actionsInline{ flex-direction:row; flex-wrap:wrap; justify-content:flex-end; }
 }
 
 @media (max-width: 980px){
-  .exp2a-wrap{ grid-template-columns: 1fr; top: 98px; padding-bottom: 74px; }
-  .exp2a-titleCard{ width: min(760px, calc(100% - 0px)); }
+  .exp2a-page{
+    overflow-x:hidden;
+  }
+  .exp2a-topbar{ left:12px; right:12px; top:12px; }
+  .exp2a-backCircle{ width:46px; height:46px; font-size:18px; }
+  .exp2a-titleCard{
+    width: calc(100% - 56px);
+    margin-left:auto;
+    padding:9px 10px;
+  }
+  .exp2a-titleText{ font-size:14px; }
+  .exp2a-iconBtn{ width:40px; height:40px; border-radius:12px; font-size:16px; }
+
+  .exp2a-wrap{
+    left:12px;
+    right:12px;
+    top:72px;
+    bottom:84px;
+    grid-template-columns: 1fr;
+    overflow-y:auto;
+    padding-right:2px;
+    padding-bottom:120px;
+    align-content:start;
+  }
+
+  .exp2a-pane{
+    padding:12px;
+    overflow:visible;
+  }
+  .exp2a-paneTitle{ font-size:18px; }
+  .exp2a-paneSub{ font-size:13px; }
+  .exp2a-stageHead{ padding:12px; gap:8px; }
+  .exp2a-pill{ padding:8px 10px; border-radius:12px; font-size:13px; }
+  .exp2a-stageGrid{ padding:12px; gap:12px; }
+  .exp2a-stage{ overflow:visible; }
+  .exp2a-groups{
+    overflow:visible;
+    padding-right:0;
+  }
+  .exp2a-cards{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .exp2a-card{
+    min-height:96px;
+  }
+  .exp2a-langDock{
+    order:2;
+  }
+
+  .exp2a-scaleFrame{ min-height:290px; }
+  .exp2a-scaleImg{ height:250px; transform:scale(1.15); margin-top:12px; }
+  .exp2a-pan{ width:130px; height:130px; top:44%; }
+  .exp2a-object{ width:150px; height:150px; }
+
+  .exp2a-gaugeFace{ height:170px; }
+  .exp2a-readValue{ font-size:38px; }
+
+  .exp2a-table{ margin-top:8px; }
+  .exp2a-table{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .exp2a-thead,
+  .exp2a-tr{
+    min-width:320px;
+  }
+  .exp2a-tbody{
+    max-height: 300px;
+    overflow:auto;
+  }
+
+  .exp2a-langDock{
+    position:static;
+    margin-top:10px;
+    padding-top:0;
+    background:none;
+  }
+  .exp2a-lang{
+    max-width:none;
+    border-radius:14px;
+    padding:8px;
+    gap:8px;
+  }
+  .exp2a-chip{ padding:8px 12px; border-radius:10px; font-size:14px; }
   .exp2a-actionsInline{ display:none; }
 
-  .exp2a-bottomBar{
+.exp2a-bottomBar{
     position:absolute;
-    left:18px;
-    right:18px;
-    bottom:14px;
+    left:12px;
+    right:12px;
+    bottom:10px;
     display:flex;
-    gap:10px;
+    flex-wrap:wrap;
+    gap:8px;
     z-index:6;
     background: rgba(255,255,255,.85);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,.25);
     box-shadow: 0 18px 40px rgba(0,0,0,.18);
-    border-radius: 20px;
-    padding: 10px;
+    border-radius: 14px;
+    padding: 8px;
   }
-  .exp2a-bottomBar .exp2a-btn{ flex:1; }
+  .exp2a-bottomBar .exp2a-btn{
+    flex:1 1 0;
+    min-width:0;
+    padding:10px 10px;
+    font-size:13px;
+    border-radius:12px;
+  }
+}
+
+@media (max-width: 720px){
+  .exp2a-titleCard{ align-items:flex-start; gap:8px; }
+  .exp2a-titleText{ white-space:normal; line-height:1.25; }
+  .exp2a-stageHead{ flex-direction:column; align-items:stretch; }
+  .exp2a-pill{ width:100%; }
+  .exp2a-cards{ grid-template-columns: 1fr; }
+
+  .exp2a-card{ min-height:82px; padding:10px 11px; gap:10px; border-radius:14px; }
+  .exp2a-thumb{ width:48px; height:48px; flex:0 0 48px; transform:scale(1.15); }
+  .exp2a-cardTitle{ font-size:14px; }
+  .exp2a-cardMeta{ font-size:11px; }
+  .exp2a-tag{ font-size:10px; padding:5px 8px; }
+  .exp2a-check{ width:24px; height:24px; right:8px; top:8px; border-radius:8px; font-size:12px; }
+
+  .exp2a-scaleFrame{ min-height:250px; }
+  .exp2a-scaleImg{ height:210px; }
+  .exp2a-gauge{ padding:10px; }
+  .exp2a-gaugeFace{ height:150px; border-radius:14px; }
+  .exp2a-needle{ height:92px; }
+  .exp2a-readValue{ font-size:32px; margin-top:6px; }
+  .exp2a-note{ padding:10px; border-radius:12px; font-size:13px; }
+}
+
+@media (max-width: 480px){
+  .exp2a-wrap{ top:86px; }
+  .exp2a-backCircle{ width:42px; height:42px; }
+  .exp2a-titleCard{
+    width: calc(100% - 50px);
+    margin-left:auto;
+  }
+  .exp2a-titleText{ font-size:13px; }
+  .exp2a-chip{ padding:7px 10px; font-size:13px; }
+  .exp2a-miniIcon{ width:34px; height:34px; border-radius:10px; font-size:15px; }
+  .exp2a-tbody{ max-height: 240px; }
+  .exp2a-thead,
+  .exp2a-tr{ grid-template-columns: 1fr .8fr .7fr; padding:9px 10px; font-size:12px; }
+  .exp2a-bottomBar{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .exp2a-bottomBar .exp2a-btn{ font-size:12px; padding:9px 8px; }
+  .exp2a-bottomBar .exp2a-btn.danger{ grid-column: 1 / -1; }
+}
+
+@media (max-height: 760px){
+  .exp2a-wrap{ bottom:76px; }
+  .exp2a-scaleFrame{ min-height:240px; }
+  .exp2a-gaugeFace{ height:140px; }
+  .exp2a-readValue{ font-size:30px; }
 }
 
 /* reduce motion */
 @media (prefers-reduced-motion: reduce){
   *{ transition:none !important; }
 }
+

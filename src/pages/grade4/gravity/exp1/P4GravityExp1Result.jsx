@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+﻿import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./P4GravityExp1Result.css";
 
@@ -6,22 +6,18 @@ export default function P4GravityExp1Result() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // ✅ กลับหน้าชั้นเรียน (หน้า P4Gravity.jsx)
   const CLASSROOM_PATH = "/p4/gravity/exp1/answer";
   const RETRY_PATH = "/p4/gravity/exp1/action";
 
-  // ✅ รับค่าจากหน้า Action
   const state = location.state || {};
   const selected = state.selected || { ball: true, bocce: false, feather: false };
   const heightM = Number(state.heightM ?? 2);
-  const totalMs = Number(state.time ?? 0); // เวลา "รวม" จากหน้า Action (หยุดเมื่อทุกชิ้นตกถึงพื้น)
+  const totalMs = Number(state.time ?? 0);
 
-  // ✅ ภาษา
   const [lang, setLang] = useState("th");
 
-  // ✅ dictionary
-  const text = useMemo(() => {
-    return {
+  const text = useMemo(
+    () => ({
       th: {
         title: "ผลการทดลอง",
         subtitle: "ตารางจะแสดงเฉพาะวัตถุที่คุณเลือกไว้",
@@ -33,17 +29,18 @@ export default function P4GravityExp1Result() {
         hitGround: "ตกพื้น",
         summaryTitle: "สรุปผลการทดลอง",
         summary:
-          "เมื่อปล่อยวัตถุจากที่สูง วัตถุจะตกลงสู่พื้นโลกเสมอ เพราะโลกมีแรงโน้มถ่วงดึงดูดวัตถุ วัตถุที่มีแรงต้านอากาศมาก (เช่น ขนนก) จะใช้เวลานานกว่าและอาจแกว่งไปมาได้",
-        // listen: "ฟังสรุป",
+          "เมื่อปล่อยวัตถุจากที่สูง วัตถุจะตกลงสู่พื้นโลกเสมอ เพราะโลกมีแรงโน้มถ่วงดึงดูดวัตถุ วัตถุที่มีแรงต้านอากาศมาก เช่น ขนนก จะใช้เวลานานกว่าและอาจแกว่งไปมาได้",
+        listen: "ฟังสรุป",
         retry: "ทดลองใหม่",
-        backClass: "กลับหน้าชั้นเรียน",
+        backClass: "กลับหน้าคำตอบ",
+        empty: "ไม่พบวัตถุที่เลือก กรุณากลับไปเลือกวัตถุใหม่",
         th: "ไทย",
         en: "อังกฤษ",
         ms: "มลายู",
       },
       en: {
         title: "Experiment Results",
-        subtitle: "The table shows only the objects you selected",
+        subtitle: "The table shows only the objects you selected.",
         height: "Height",
         objCol: "Object",
         resultCol: "Result",
@@ -52,17 +49,18 @@ export default function P4GravityExp1Result() {
         hitGround: "Reached ground",
         summaryTitle: "Summary",
         summary:
-          "When objects are released from a height, they fall to the ground due to Earth's gravity. Objects with greater air resistance (like feathers) take longer and may drift sideways.",
-        // listen: "Listen",
+          "When objects are released from a height, they fall to the ground because of Earth's gravity. Objects with greater air resistance, such as feathers, take longer and may drift sideways.",
+        listen: "Listen",
         retry: "Try again",
-        backClass: "Back to classroom",
-        th: "ไทย",
-        en: "อังกฤษ",
-        ms: "มลายู",
+        backClass: "Back to answer",
+        empty: "No selected objects were found. Please go back and choose objects again.",
+        th: "Thai",
+        en: "English",
+        ms: "Malay",
       },
       ms: {
         title: "Keputusan Eksperimen",
-        subtitle: "Jadual hanya memaparkan objek yang anda pilih",
+        subtitle: "Jadual hanya memaparkan objek yang anda pilih.",
         height: "Ketinggian",
         objCol: "Objek",
         resultCol: "Keputusan",
@@ -71,33 +69,31 @@ export default function P4GravityExp1Result() {
         hitGround: "Sampai tanah",
         summaryTitle: "Ringkasan",
         summary:
-          "Apabila objek dilepaskan dari ketinggian, ia jatuh ke tanah kerana graviti Bumi. Objek dengan rintangan udara lebih besar (seperti bulu) mengambil masa lebih lama dan boleh melayang.",
-        // listen: "Dengar",
+          "Apabila objek dilepaskan dari ketinggian, ia jatuh ke tanah kerana graviti Bumi. Objek yang mempunyai rintangan udara lebih besar seperti bulu mengambil masa lebih lama dan boleh melayang ke sisi.",
+        listen: "Dengar",
         retry: "Cuba lagi",
-        backClass: "Kembali ke kelas",
-        th: "ไทย",
-        en: "อังกฤษ",
-        ms: "มลายู",
-        // th: "Thai",
-        // en: "English",
-        // ms: "Melayu",
+        backClass: "Kembali ke jawapan",
+        empty: "Tiada objek yang dipilih. Sila kembali dan pilih objek sekali lagi.",
+        th: "Thai",
+        en: "English",
+        ms: "Melayu",
       },
-    };
-  }, []);
+    }),
+    []
+  );
 
   const t = text[lang];
 
-  // ✅ assets (ปรับรูปได้เอง)
-  const assets = useMemo(() => {
-    return {
+  const assets = useMemo(
+    () => ({
       bg: "/images/p4/exp1/bg-result.jpg",
       ball: "/images/p4/exp1/soccer-ball.png",
       bocce: "/images/p4/exp1/bocce.png",
       feather: "/images/p4/exp1/feather.png",
-    };
-  }, []);
+    }),
+    []
+  );
 
-  // ✅ สูตรเดียวกับหน้า Action (ให้สอดคล้องกัน)
   const durationSec = (type) => {
     const base = Math.sqrt(Math.max(0.5, heightM));
     if (type === "ball") return 0.9 * base;
@@ -106,54 +102,50 @@ export default function P4GravityExp1Result() {
     return 1.1 * base;
   };
 
-  // ✅ รายการวัตถุที่เลือกจริง
-  const rows = useMemo(() => {
-    const items = [
-      { key: "ball", name: { th: "ลูกบอล", en: "Ball", ms: "Bola" }, img: assets.ball, motion: "straight" },
-      { key: "bocce", name: { th: "ลูกเปตอง", en: "Bocce Ball", ms: "Bola Bocce" }, img: assets.bocce, motion: "straight" },
-      { key: "feather", name: { th: "ขนนก", en: "Feather", ms: "Bulu" }, img: assets.feather, motion: "feather" },
-    ].filter((it) => selected?.[it.key]);
+  const rows = useMemo(
+    () =>
+      [
+        { key: "ball", name: { th: "ลูกบอล", en: "Ball", ms: "Bola" }, img: assets.ball, motion: "straight" },
+        {
+          key: "bocce",
+          name: { th: "ลูกเปตอง", en: "Bocce Ball", ms: "Bola Bocce" },
+          img: assets.bocce,
+          motion: "straight",
+        },
+        { key: "feather", name: { th: "ขนนก", en: "Feather", ms: "Bulu" }, img: assets.feather, motion: "feather" },
+      ].filter((item) => selected?.[item.key]),
+    [assets.ball, assets.bocce, assets.feather, selected]
+  );
 
-    return items;
-  }, [assets.ball, assets.bocce, assets.feather, selected]);
-
-  // ✅ คำนวณเวลาแต่ละชิ้นให้ “สัมพันธ์กับ totalMs” และ “สอดคล้อง durationSec”
-  // - ถ้าเลือกหลายชิ้น หน้า Action จะหยุดเมื่อ "ชิ้นที่ช้าที่สุด" ถึงพื้น
-  // - ดังนั้น totalTime ≈ max(durationSec ของชิ้นที่เลือก) (+นิดหน่อยจากการเด้ง/หน่วง)
-  // - เราจึง map เวลาแต่ละชิ้น = totalTime * (durationSec(type) / maxDuration)
   const timePerObjectSec = useMemo(() => {
     const totalSec = Math.max(0, totalMs / 1000);
     if (!rows.length) return {};
 
-    const durations = rows.reduce((acc, r) => {
-      acc[r.key] = durationSec(r.key);
+    const durations = rows.reduce((acc, row) => {
+      acc[row.key] = durationSec(row.key);
       return acc;
     }, {});
 
     const maxDur = Math.max(...Object.values(durations));
-
-    // กันกรณี time = 0 (เช่นเข้าหน้านี้ตรง ๆ)
     const effectiveTotal = totalSec > 0 ? totalSec : maxDur;
 
-    const per = {};
-    rows.forEach((r) => {
-      const ratio = durations[r.key] / maxDur;
-      per[r.key] = Number((effectiveTotal * ratio).toFixed(2));
+    const perObject = {};
+    rows.forEach((row) => {
+      const ratio = durations[row.key] / maxDur;
+      perObject[row.key] = Number((effectiveTotal * ratio).toFixed(2));
     });
 
-    return per;
+    return perObject;
   }, [rows, totalMs, heightM]);
 
-  // ✅ ปุ่มเสียงสรุป (TTS)
   const speakSummary = () => {
     try {
-      const u = new SpeechSynthesisUtterance(t.summary);
-      // เลือกเสียงให้พอเหมาะ (ถ้ามี)
-      u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      const utterance = new SpeechSynthesisUtterance(t.summary);
+      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
       window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(u);
-    } catch (e) {
-      // เงียบไว้ ไม่ให้พัง
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore speech errors
     }
   };
 
@@ -161,18 +153,15 @@ export default function P4GravityExp1Result() {
 
   return (
     <div className="res-page">
-      <img className="res-bg" src={assets.bg} alt="bg" />
+      <img className="res-bg" src={assets.bg} alt="background" />
 
       <div className="res-shell">
-        {/* header */}
         <div className="res-head">
           <div className="res-title">{t.title}</div>
           <div className="res-sub">{t.subtitle}</div>
-
           <div className="res-pill">{heightLabel}</div>
         </div>
 
-        {/* table */}
         <div className="res-card">
           <div className="res-table">
             <div className="res-thead">
@@ -183,23 +172,29 @@ export default function P4GravityExp1Result() {
             </div>
 
             <div className="res-tbody">
-              {rows.map((r) => (
-                <div className="res-row" key={r.key}>
+              {rows.map((row) => (
+                <div className="res-row" key={row.key}>
                   <div className="objcell">
-                    <img className="objimg" src={r.img} alt={r.name[lang]} />
-                    <div className="objname">{r.name[lang]}</div>
+                    <img className="objimg" src={row.img} alt={row.name[lang]} />
+                    <div>
+                      <div className="res-cellLabel">{t.objCol}</div>
+                      <div className="objname">{row.name[lang]}</div>
+                    </div>
                   </div>
 
                   <div>
+                    <div className="res-cellLabel">{t.resultCol}</div>
                     <span className="badge green">{t.hitGround}</span>
                   </div>
 
                   <div className="center timecell">
-                    {timePerObjectSec?.[r.key]?.toFixed(2)}
+                    <div className="res-cellLabel">{t.timeCol}</div>
+                    {timePerObjectSec?.[row.key]?.toFixed(2)}
                   </div>
 
                   <div className="center">
-                    {r.motion === "straight" ? (
+                    <div className="res-cellLabel">{t.dirCol}</div>
+                    {row.motion === "straight" ? (
                       <div className="dir straight">
                         <div className="arrow">↓</div>
                         <div className="dash" />
@@ -216,16 +211,11 @@ export default function P4GravityExp1Result() {
                 </div>
               ))}
 
-              {!rows.length && (
-                <div className="res-empty">
-                  ไม่พบวัตถุที่เลือก (กรุณากลับไปเลือกวัตถุ)
-                </div>
-              )}
+              {!rows.length && <div className="res-empty">{t.empty}</div>}
             </div>
           </div>
         </div>
 
-        {/* summary */}
         <div className="res-summary">
           <div className="sum-head">
             <div className="sum-title">{t.summaryTitle}</div>
@@ -237,7 +227,6 @@ export default function P4GravityExp1Result() {
         </div>
       </div>
 
-      {/* bottom left: language */}
       <div className="res-lang">
         <button className={`res-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
           {t.th}
@@ -250,12 +239,10 @@ export default function P4GravityExp1Result() {
         </button>
       </div>
 
-      {/* bottom center: retry */}
       <button className="res-retry" onClick={() => navigate(RETRY_PATH)} type="button">
         ↻ {t.retry}
       </button>
 
-      {/* bottom right: back classroom (RED) */}
       <button className="res-backClass" onClick={() => navigate(CLASSROOM_PATH)} type="button">
         ← {t.backClass}
       </button>

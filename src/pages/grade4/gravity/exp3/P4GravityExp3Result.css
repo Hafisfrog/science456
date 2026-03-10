@@ -1,8 +1,9 @@
 .e3r-page{
-  width:100vw;
-  height:100vh;
+  width:100%;
+  min-height:100vh;
+  min-height:100dvh;
   position:relative;
-  overflow:hidden;
+  overflow-x:hidden;
   font-family:'Prompt', sans-serif;
   background:
     radial-gradient(1200px 620px at 20% -5%, rgba(129,140,248,.35), transparent 62%),
@@ -61,6 +62,13 @@
   box-shadow: 0 28px 70px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.75);
   padding:20px;
   overflow:auto;
+}
+
+.e3r-tableWrap{
+  width:100%;
+  min-width:0;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
 }
 
 .e3r-table{
@@ -122,6 +130,13 @@
   border-bottom:1px solid #cbd5e1;
   background:linear-gradient(180deg,#ffffff,#f8fafc);
   padding:10px 12px;
+}
+.e3r-mobileLabel{
+  display:none;
+  margin-bottom:4px;
+  font-size:12px;
+  font-weight:1000;
+  color:#64748b;
 }
 .e3r-cell-obj{
   justify-content:flex-start;
@@ -276,6 +291,9 @@
 .e3r-btn.danger{ background:linear-gradient(135deg,#ef4444,#b91c1c); color:#fff; }
 
 @media (max-width: 980px){
+  .e3r-page{
+    padding-bottom:146px;
+  }
   .e3r-title{
     left:12px;
     top:12px;
@@ -298,4 +316,169 @@
   .e3r-cell-obj{ font-size:19px; }
   .e3r-sumTitle{ font-size:24px; }
   .e3r-sumText{ font-size:17px; }
+  .e3r-langDock{
+    max-width:calc(100% - 340px);
+    flex-wrap:wrap;
+  }
+}
+
+@media (max-width: 720px){
+  .e3r-page{
+    padding-bottom:250px;
+  }
+  .e3r-title{
+    right:12px;
+    font-size:20px;
+    padding:8px 12px;
+  }
+  .e3r-sheet{
+    top:62px;
+    left:10px;
+    right:10px;
+    bottom:276px;
+    padding:12px;
+    overflow:auto;
+  }
+  .e3r-tableWrap{
+    overflow-x:visible;
+  }
+  .e3r-table{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    border:none;
+    background:transparent;
+  }
+  .e3r-h,
+  .e3r-subh{
+    display:none;
+  }
+  .e3r-row{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    border:1px solid #cbd5e1;
+    border-radius:14px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:0 10px 22px rgba(15,23,42,.10);
+  }
+  .e3r-cell{
+    justify-content:flex-start;
+    align-items:flex-start;
+    flex-direction:column;
+    border-right:none;
+    border-bottom:1px solid #e2e8f0;
+    font-size:16px;
+    text-align:left;
+  }
+  .e3r-mobileLabel{
+    display:block;
+  }
+  .e3r-cell-obj{
+    font-size:18px;
+    padding-left:12px;
+  }
+  .e3r-last{
+    border-bottom:none;
+  }
+  .e3r-sumTitle{
+    margin-top:16px;
+    font-size:22px;
+  }
+  .e3r-sumBox{
+    padding:14px;
+    border-radius:14px;
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .e3r-sumText{
+    font-size:15px;
+    line-height:1.55;
+  }
+  .e3r-sumSpeak{
+    width:40px;
+    height:40px;
+    border-radius:12px;
+    font-size:16px;
+    align-self:flex-end;
+  }
+  .e3r-langDock{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    width:auto;
+    max-width:none;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:6px;
+    padding:8px;
+    border-radius:14px;
+  }
+  .e3r-chip{
+    flex:1 1 calc(33.333% - 6px);
+    min-width:0;
+    padding:9px 10px;
+    border-radius:12px;
+    font-size:14px;
+  }
+  .e3r-chipAudio{
+    width:100%;
+    height:42px;
+    border-radius:12px;
+    font-size:16px;
+    flex:1 1 100%;
+  }
+  .e3r-retryCenter,
+  .e3r-actions{
+    left:10px;
+    right:10px;
+    width:auto;
+  }
+  .e3r-actions{
+    position:absolute;
+    bottom:142px;
+  }
+  .e3r-btn{
+    width:100%;
+    font-size:16px;
+    padding:12px 14px;
+    border-radius:16px;
+  }
+  .e3r-retryCenter{
+    bottom:84px;
+    transform:none;
+    font-size:16px;
+    padding:12px 14px;
+    border-radius:16px;
+  }
+  .e3r-retryCenter:hover{
+    transform:translateY(-2px);
+  }
+  .e3r-retryCenter:active{
+    transform:translateY(1px);
+  }
+}
+
+@media (max-width: 420px){
+  .e3r-page{
+    padding-bottom:242px;
+  }
+  .e3r-title{
+    font-size:18px;
+  }
+  .e3r-sheet{
+    bottom:268px;
+  }
+  .e3r-chip{
+    font-size:13px;
+    padding:8px 8px;
+  }
+  .e3r-actions{
+    bottom:190px;
+  }
+  .e3r-retryCenter{
+    bottom:126px;
+  }
 }

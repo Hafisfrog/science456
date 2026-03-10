@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4GravityExp3Answer.css";
 
@@ -23,11 +23,11 @@ export default function P4GravityExp3Answer() {
     () => ({
       th: {
         title: "คำถามนี้มีคำตอบ",
-        sub: "อ่านเฉลยแล้วลองอธิบายด้วยคำพูดของตัวเองนะ",
-        q1: "1. วัตถุเดียวกันจะมีน้ำหนักเท่ากันหรือไม่เมื่ออยู่บนโลกและดวงจันทร์",
+        sub: "อ่านเฉลยแล้วลองอธิบายด้วยคำพูดของตัวเองดูนะ",
+        q1: "1. วัตถุเดียวกันจะมีน้ำหนักเท่ากันหรือไม่เมื่ออยู่บนโลกและบนดวงจันทร์?",
         aTitle: "เฉลย",
         a1:
-          "ไม่เท่ากัน แม้ว่าวัตถุจะเป็นชิ้นเดียวกันและมีมวลเท่ากัน\nแต่แรงโน้มถ่วงของโลกและดวงจันทร์ไม่เท่ากัน\n🌍 บนโลก: แรงโน้มถ่วงมาก → วัตถุมีน้ำหนักมาก\n🌙 บนดวงจันทร์: แรงโน้มถ่วงน้อย (ประมาณ 1 ใน 6 ของโลก) → วัตถุมีน้ำหนักน้อย",
+          "ไม่เท่ากัน แม้จะเป็นวัตถุชิ้นเดียวกันและมีมวลเท่ากัน\nแต่แรงโน้มถ่วงของโลกและดวงจันทร์ไม่เท่ากัน\nบนโลก: แรงโน้มถ่วงมาก จึงทำให้วัตถุมีน้ำหนักมาก\nบนดวงจันทร์: แรงโน้มถ่วงน้อยกว่าโลกมาก จึงทำให้วัตถุมีน้ำหนักน้อยกว่า",
         speak: "ฟัง",
         speakAll: "ฟังทั้งหมด",
         back: "ย้อนกลับ",
@@ -38,11 +38,11 @@ export default function P4GravityExp3Answer() {
       },
       en: {
         title: "Answer",
-        sub: "Read and explain in your own words.",
+        sub: "Read and explain it in your own words.",
         q1: "1. Does the same object have the same weight on Earth and on the Moon?",
         aTitle: "Answer",
         a1:
-          "No. Even if it is the same object with the same mass,\ngravity on Earth and on the Moon is different.\n🌍 On Earth: stronger gravity → greater weight\n🌙 On the Moon: weaker gravity (about 1/6 of Earth) → lower weight",
+          "No. Even if it is the same object with the same mass, gravity on Earth and on the Moon is different.\nOn Earth: gravity is stronger, so the object has greater weight.\nOn the Moon: gravity is weaker, so the object has less weight.",
         speak: "Listen",
         speakAll: "Listen all",
         back: "Back",
@@ -53,18 +53,18 @@ export default function P4GravityExp3Answer() {
       },
       ms: {
         title: "Jawapan",
-        sub: "Baca dan terangkan dengan kata-kata sendiri.",
+        sub: "Baca dan terangkan semula dengan kata-kata sendiri.",
         q1: "1. Adakah objek yang sama mempunyai berat yang sama di Bumi dan di Bulan?",
         aTitle: "Jawapan",
         a1:
-          "Tidak sama. Walaupun objek itu sama dan mempunyai jisim yang sama,\ndaya graviti di Bumi dan di Bulan adalah berbeza.\n🌍 Di Bumi: graviti lebih kuat → berat lebih besar\n🌙 Di Bulan: graviti lebih lemah (lebih kurang 1/6 Bumi) → berat lebih kecil",
+          "Tidak sama. Walaupun objek itu sama dan mempunyai jisim yang sama, daya graviti di Bumi dan di Bulan adalah berbeza.\nDi Bumi: graviti lebih kuat, jadi berat objek lebih besar.\nDi Bulan: graviti lebih lemah, jadi berat objek lebih kecil.",
         speak: "Dengar",
         speakAll: "Dengar semua",
         back: "Kembali",
         next: "Seterusnya",
         chipTh: "Thai",
         chipEn: "English",
-        chipMs: "Malay",
+        chipMs: "Melayu",
       },
     }),
     []
@@ -77,14 +77,20 @@ export default function P4GravityExp3Answer() {
     try {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(msg);
-      u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      const utterance = new SpeechSynthesisUtterance(msg);
+      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
       speakingRef.current = true;
-      u.onend = () => (speakingRef.current = false);
-      window.speechSynthesis.speak(u);
+      utterance.onend = () => {
+        speakingRef.current = false;
+      };
+      window.speechSynthesis.speak(utterance);
     } catch {
-      // ignore
+      // ignore speech errors
     }
+  };
+
+  const speakAll = () => {
+    speak(`${t.title}\n${t.sub}\n\n${t.q1}\n\n${t.aTitle}\n${t.a1}`);
   };
 
   return (
@@ -102,9 +108,6 @@ export default function P4GravityExp3Answer() {
           </button>
           <button className={`ans3a-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
             {t.chipMs}
-          </button>
-          <button className="ans3a-audioMain" type="button" onClick={() => speak(`${t.q1}\n${t.a1}`)} title={t.speakAll}>
-            🔊
           </button>
         </div>
       </div>
@@ -128,6 +131,10 @@ export default function P4GravityExp3Answer() {
                   <div className="ans3a-sub">{t.sub}</div>
                 </div>
               </div>
+
+              <button className="ans3a-btn soft" type="button" onClick={speakAll}>
+                🔊 {t.speakAll}
+              </button>
             </div>
 
             <div className="ans3a-cards">
@@ -161,16 +168,12 @@ export default function P4GravityExp3Answer() {
       </div>
 
       <div className="ans3a-navDock">
-        {/* <button className="ans3a-next" type="button" onClick={() => navigate(NEXT_PATH)}>
-          {t.next} »
-        </button> */}
-
         <div className="ans3a-navMiniRow">
           <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
-            ◀
+            ←
           </button>
           <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
-            ▶
+            →
           </button>
         </div>
       </div>

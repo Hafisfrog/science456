@@ -1,6 +1,7 @@
 .lab2-page{
   width:100vw;
-  height:100vh;
+  min-height:100vh;
+  height:100dvh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -20,7 +21,7 @@
 
 .lab2-wrap{
   width:100%;
-  height:100%;
+  min-height:100%;
   position:relative;
   padding:18px;
   display:grid;
@@ -50,6 +51,8 @@
   font-weight:1000;
   font-size:18px;
   color:#111827;
+  width:min(760px, calc(100% - 220px));
+  text-align:center;
 }
 
 /* ✅ ตัวดันฝั่งขวาให้สมดุล topbar (แทนช่องภาษาเดิม) */
@@ -95,11 +98,13 @@
   grid-row: 2;
   display:flex;
   flex-direction:column;
-  gap:56px;
+  gap:18px;
+  min-width:0;
 }
 
 /* ❗ ไม่ต้องกำหนด pane.left grid แล้ว เพราะอยู่ใน left-column */
 .pane.right{ grid-column: 3; grid-row: 2; }
+.pane.right{ min-width:0; }
 
 .pane-head{ margin-bottom:12px; }
 .pane-title{ font-size:20px; font-weight:1000; color:#111827; }
@@ -336,6 +341,7 @@
   box-shadow:0 18px 40px rgba(0,0,0,.18);
   overflow:hidden;
   position:relative;
+  min-width:0;
 
   --platformY: 170px;
   --groundY: 470px;
@@ -461,12 +467,21 @@
 
 /* responsive */
 @media (max-width: 1050px){
-  .lab2-wrap{ grid-template-columns: 320px 1fr 280px; }
+  .lab2-wrap{ grid-template-columns: 300px 1fr 270px; }
+  .lab2-top-title{ width:min(620px, calc(100% - 210px)); font-size:17px; }
+  .choose-name{ font-size:16px; }
+  .play-icon{ width:58px; height:58px; font-size:26px; }
+  .play-text{ font-size:16px; }
 }
 @media (max-width: 900px){
+  .lab2-page{
+    height:auto;
+    overflow-y:auto;
+  }
   .lab2-wrap{
-    grid-template-columns: 320px 1fr;
-    grid-template-rows: 64px 1fr 260px;
+    min-height:auto;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: 64px 1fr auto;
   }
   .pane.right{
     grid-column: 1 / -1;
@@ -476,13 +491,213 @@
     grid-column: 1;
     grid-row: 2;
   }
+  .arena2{
+    grid-column: 2;
+    grid-row: 2;
+    min-height:520px;
+  }
+  .pane.right{
+    display:grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap:12px;
+    align-items:start;
+  }
+  .pane.right .pane-head{
+    grid-column: 1 / -1;
+    margin-bottom:0;
+  }
+  .play-btn,
+  .stopwatch,
+  .result-btn{
+    margin-top:0;
+  }
+  .countdown{
+    grid-column: 1 / -1;
+    margin-top:0;
+  }
+  .stopwatch{
+    height:100%;
+  }
+  .result-btn{
+    align-self:stretch;
+    min-height:100%;
+  }
 }
 @media (max-width: 640px){
+  .lab2-page{
+    overflow-y:auto;
+  }
   .lab2-wrap{
+    height:auto;
     grid-template-columns: 1fr;
-    grid-template-rows: 64px auto 480px auto;
+    grid-template-rows: auto auto minmax(420px, 58vh) auto;
+    padding:12px;
+    gap:12px;
+  }
+  .lab2-topbar{
+    min-height:64px;
+    align-items:flex-start;
+    padding-right:0;
+  }
+  .lab2-top-title{
+    position:static;
+    transform:none;
+    width:calc(100% - 74px);
+    min-height:52px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:10px 12px;
+    font-size:15px;
+    line-height:1.25;
+    margin-left:auto;
+  }
+  .topbar-spacer{ display:none; }
+  .btn{
+    padding:10px 12px;
+    border-radius:12px;
+    font-size:14px;
   }
   .left-column{ grid-column: 1; grid-row: 2; }
   .arena2{ grid-column: 1; grid-row: 3; }
   .pane.right{ grid-column: 1; grid-row: 4; }
+  .pane{
+    border-radius:18px;
+    padding:12px;
+  }
+  .pane-title{ font-size:18px; }
+  .pane-sub{ font-size:13px; }
+  .choose-grid{ gap:8px; }
+  .choose-card{
+    gap:10px;
+    padding:10px;
+    border-radius:14px;
+  }
+  .choose-card img{
+    width:40px;
+    height:40px;
+  }
+  .choose-name{ font-size:15px; }
+  .choose-check{
+    right:8px;
+    top:8px;
+    width:24px;
+    height:24px;
+    border-radius:8px;
+    font-size:12px;
+  }
+  .height-box{
+    margin-top:12px;
+    padding:10px;
+    border-radius:14px;
+  }
+  .height-title,
+  .height-value{ font-size:14px; }
+  .height-hint{ font-size:12px; }
+  .lang-grid{
+    grid-template-columns: 1fr;
+    gap:8px;
+  }
+  .lang-btn{
+    padding:10px 12px;
+    font-size:14px;
+  }
+  .arena2{
+    border-radius:20px;
+    min-height:420px;
+    --platformY: 130px;
+    --groundY: 318px;
+    --fallY: 188px;
+  }
+  .arena2-inner{
+    left:10px;
+    right:10px;
+    top:10px;
+    bottom:10px;
+    border-radius:16px;
+  }
+  .drop-label{
+    left:12px;
+    top:10px;
+    font-size:13px;
+  }
+  .platform{
+    width:min(100%, 320px);
+    height:42px;
+  }
+  .ground{
+    left:10px;
+    right:10px;
+    height:40px;
+    border-radius:12px;
+    font-size:14px;
+  }
+  .obj{
+    width:68px;
+    height:92px;
+    top:calc(var(--platformY) - 40px);
+  }
+  .pane.right{
+    grid-template-columns: 1fr;
+  }
+  .play-btn{
+    padding:12px;
+    border-radius:16px;
+  }
+  .play-icon{
+    width:50px;
+    height:50px;
+    font-size:22px;
+  }
+  .play-text{ font-size:15px; }
+  .count-num{ font-size:34px; }
+  .sw-row{
+    flex-direction:column;
+    gap:10px;
+  }
+  .sw-time{
+    width:100%;
+    min-width:0;
+    font-size:24px;
+  }
+  .reset-btn{
+    width:100%;
+    font-size:14px;
+  }
+  .result-btn{
+    padding:12px 14px;
+    border-radius:14px;
+    font-size:16px;
+  }
+}
+
+@media (max-width: 420px){
+  .lab2-wrap{
+    padding:10px;
+    gap:10px;
+  }
+  .lab2-top-title{
+    width:calc(100% - 64px);
+    font-size:14px;
+  }
+  .btn{
+    padding:9px 10px;
+    font-size:13px;
+  }
+  .pane{ padding:10px; }
+  .choose-name{ font-size:14px; }
+  .pane-title{ font-size:16px; }
+  .pane-sub{ font-size:12px; }
+  .arena2{
+    min-height:380px;
+    --platformY: 116px;
+    --groundY: 292px;
+    --fallY: 176px;
+  }
+  .obj{
+    width:58px;
+    height:80px;
+  }
+  .play-text,
+  .result-btn{ font-size:14px; }
 }

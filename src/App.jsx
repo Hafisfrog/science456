@@ -94,6 +94,7 @@ import P5GeneticsPlantsSummary from "./pages/grade5/life/genetics/P5GeneticsPlan
 import P5GeneticsHumans from "./pages/grade5/life/genetics/P5GeneticsHumans";
 import P5GeneticsHumansSummary from "./pages/grade5/life/genetics/P5GeneticsHumansSummary";
 import P5GeneticsTopicPlaceholder from "./pages/grade5/life/genetics/P5GeneticsTopicPlaceholder";
+import GravityExp1Materials from "./pages/gravity/exp1/GravityExp1Materials";
 
 export default function App() {
   return (
@@ -111,6 +112,7 @@ export default function App() {
         <Route path="/p4/gravity/vocab" element={<P4GravityVocab />} />
         <Route path="/p4/gravity/sim1" element={<P4GravitySim1 />} />
         <Route path="/p4/gravity/exp1/materials" element={<P4GravityExp1Materials />} />
+        <Route path="/gravity/exp1/materials" element={<GravityExp1Materials />} />
         <Route path="/p4/gravity/exp1/steps" element={<P4GravityExp1Steps />} />
         <Route path="/p4/gravity/exp1/question" element={<P4GravityExp1Question />} />
         <Route path="/p4/gravity/exp1/action" element={<P4GravityExp1Action />} />
