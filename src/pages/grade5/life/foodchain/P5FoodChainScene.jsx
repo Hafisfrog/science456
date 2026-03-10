@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-import { useState } from "react";
+// import { useState } from "react";
 
 const sceneStyles = `
 .organism-img {
@@ -144,7 +143,6 @@ const sceneStyles = `
 }
 .back-button:hover { background: rgba(255, 255, 255, 0.4); transform: translateX(-5px); }
 `;
-=======
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -270,7 +268,6 @@ function createParticles(count = 16) {
     duration: `${Math.random() * 2 + 2}s`,
   }));
 }
->>>>>>> e3a7fe288054d61ec7b48444b90f93f622cca94f
 
 export default function P5FoodChainScene() {
   const navigate = useNavigate();
@@ -348,7 +345,6 @@ export default function P5FoodChainScene() {
         {showParticles ? "✨" : "💨"}
       </button>
 
-<<<<<<< HEAD
       {/* ========= Toggle Particles Button ========= */}
       <button
         onClick={() => setShowParticles(!showParticles)}
@@ -358,7 +354,6 @@ export default function P5FoodChainScene() {
       </button>
 
       <style>{sceneStyles}</style>
-=======
       <style>{`
         @keyframes fly {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -411,7 +406,6 @@ export default function P5FoodChainScene() {
         .motion-crawl { animation: crawl 3.3s ease-in-out infinite; }
         .motion-wiggle { animation: wiggle 1.8s ease-in-out infinite; }
       `}</style>
->>>>>>> e3a7fe288054d61ec7b48444b90f93f622cca94f
     </div>
   );
 }

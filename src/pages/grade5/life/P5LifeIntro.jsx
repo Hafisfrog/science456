@@ -1,316 +1,102 @@
 import { useNavigate } from "react-router-dom";
-import LabLayout from "../../../components/LabLayout";
 
 const TOPICS = [
-  { id: "foodchain", label: "ชีวิตสัมพันธ์", to: "/p5/life/foodchain" },
-  { id: "genetics", label: "ลักษณะทางพันธุกรรม", to: "/p5/life/genetics" },
+  {
+    id: "foodchain",
+    title: "ชีวิตสัมพันธ์",
+    subtitle: "Food Chain",
+    description: "เรียนรู้ความสัมพันธ์ของสิ่งมีชีวิตในระบบนิเวศ ผ่านห่วงโซ่อาหารและบทบาทของผู้ผลิต ผู้บริโภค และผู้ย่อยสลาย",
+    badge: "บทเรียนพร้อมใช้งาน",
+    accent: "from-emerald-500 via-green-500 to-lime-400",
+    glow: "shadow-emerald-300/50",
+    to: "/p5/life/foodchain",
+  },
+  {
+    id: "genetics",
+    title: "ลักษณะทางพันธุกรรม",
+    subtitle: "Genetics",
+    description: "สำรวจลักษณะที่ถ่ายทอดจากพ่อแม่สู่ลูก ทั้งในคน สัตว์ และพืช พร้อมเลือกหัวข้อย่อยที่ต้องการศึกษา",
+    badge: "เลือกหัวข้อย่อยได้",
+    accent: "from-fuchsia-500 via-pink-500 to-rose-400",
+    glow: "shadow-pink-300/50",
+    to: "/p5/life/genetics",
+  },
 ];
 
 export default function P5LifeIntro() {
   const navigate = useNavigate();
 
   return (
-    <div className="
-    w-screen
-    h-screen
-    bg-gradient-to-br from-green-100 via-green-200 to-emerald-300
-    px-8 py-4
-    relative
-    overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_#dcfce7,_#bbf7d0_35%,_#86efac_60%,_#4ade80_100%)] px-6 py-8 text-slate-900 md:px-10">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-16 top-12 h-48 w-48 rounded-full bg-white/30 blur-3xl" />
+        <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-yellow-200/40 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-40 w-40 rounded-full bg-emerald-200/40 blur-3xl" />
+      </div>
 
-      {/* ===== เอฟเฟกต์ใบไม้ร่วง ===== */}
-      {showLeaves && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute text-green-600/20 animate-leafFall"
-              style={{
-                fontSize: Math.random() * 30 + 20 + 'px',
-                top: -50 + 'px',
-                left: Math.random() * 100 + '%',
-                animationDelay: Math.random() * 5 + 's',
-                animationDuration: Math.random() * 5 + 8 + 's'
-              }}
+      <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col">
+        <div className="mb-10 flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => navigate("/grades")}
+            className="rounded-full border border-white/70 bg-white/80 px-4 py-2 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:bg-white"
+          >
+            ย้อนกลับ
+          </button>
+
+          <div className="rounded-full border border-emerald-200/80 bg-white/70 px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm">
+            วิทยาศาสตร์ ป.5
+          </div>
+        </div>
+
+        <div className="mb-10 max-w-3xl">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-emerald-800/80">
+            Grade 5 Life Science
+          </p>
+          <h1 className="mb-4 text-4xl font-black leading-tight md:text-6xl">
+            เลือกบทเรียน
+            <span className="block text-emerald-800">ชีวิตและการถ่ายทอดลักษณะ</span>
+          </h1>
+          <p className="max-w-2xl text-base leading-7 text-slate-700 md:text-lg">
+            หน้านี้รวมบทเรียนหลักของหน่วยชีวิตสัมพันธ์และพันธุกรรม กดเลือกหัวข้อเพื่อเข้าสู่กิจกรรมและสื่อการเรียนรู้ของแต่ละบท
+          </p>
+        </div>
+
+        <div className="grid flex-1 gap-6 pb-6 lg:grid-cols-2">
+          {TOPICS.map((topic) => (
+            <button
+              key={topic.id}
+              type="button"
+              onClick={() => navigate(topic.to)}
+              className={`group relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/80 p-7 text-left shadow-2xl backdrop-blur transition duration-300 hover:-translate-y-2 hover:shadow-2xl ${topic.glow}`}
             >
-              {['🌿', '🍃', '🌱', '🍂'][Math.floor(Math.random() * 4)]}
-            </div>
+              <div className={`absolute inset-x-0 top-0 h-2 bg-gradient-to-r ${topic.accent}`} />
+              <div className="absolute right-6 top-6 rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold text-white/90">
+                {topic.badge}
+              </div>
+
+              <div className="mt-10">
+                <p className="mb-2 text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
+                  {topic.subtitle}
+                </p>
+                <h2 className="mb-4 text-3xl font-black text-slate-900">{topic.title}</h2>
+                <p className="min-h-24 text-sm leading-7 text-slate-600 md:text-base">
+                  {topic.description}
+                </p>
+              </div>
+
+              <div className="mt-8 flex items-center justify-between">
+                <div className={`rounded-full bg-gradient-to-r px-4 py-2 text-sm font-bold text-white ${topic.accent}`}>
+                  เข้าเรียน
+                </div>
+                <span className="text-2xl text-slate-400 transition group-hover:translate-x-1 group-hover:text-slate-700">
+                  →
+                </span>
+              </div>
+            </button>
           ))}
         </div>
-      )}
-
-      {/* ===== แสงอาทิตย์ ===== */}
-      <div className="
-      absolute top-10 right-10
-      w-40 h-40
-      bg-yellow-200
-      rounded-full
-      blur-3xl
-      opacity-60
-      animate-pulse" />
-
-      {/* ===== เมฆ ===== */}
-      <div className="
-      absolute top-20 left-10
-      w-96 h-24
-      bg-white/40
-      rounded-full
-      blur-2xl
-      animate-cloudMove" />
-      
-      <div className="
-      absolute top-40 right-20
-      w-80 h-20
-      bg-white/40
-      rounded-full
-      blur-2xl
-      animate-cloudMoveReverse" />
-
-      {/* ===== ภูเขา ===== */}
-      <div className="
-      absolute bottom-0 left-0
-      w-64 h-48
-      bg-green-600/30
-      transform skew-x-12
-      rounded-tl-[100%]" />
-      
-      <div className="
-      absolute bottom-0 right-0
-      w-64 h-48
-      bg-green-600/30
-      transform -skew-x-12
-      rounded-tr-[100%]" />
-
-      {/* ===== ต้นไม้ ===== */}
-      <div className="absolute bottom-0 left-20 z-10">
-        <div className="w-8 h-32 bg-amber-800" />
-        <div className="absolute -top-16 -left-8 w-24 h-24 bg-green-500 rounded-full blur-sm opacity-70" />
       </div>
-      
-      <div className="absolute bottom-0 right-20 z-10">
-        <div className="w-8 h-32 bg-amber-800" />
-        <div className="absolute -top-16 -left-8 w-24 h-24 bg-green-500 rounded-full blur-sm opacity-70" />
-      </div>
-
-        {/* การ์ดหัวข้อใหญ่ */}
-        <div className="flex gap-8 z-10">
-          {/* การ์ด 1 */}
-          <button
-            onClick={() => navigate("/p5/life/foodchain")}
-            className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
-                       hover:scale-105 transition transform"
-          >
-            “ ชีวิตสัมพันธ์ ”
-          </button>
-
-          {/* การ์ด 2 */}
-          <button
-            onClick={() => alert("หน้าลักษณะทางพันธุกรรม (ยังไม่ทำ)")}
-            className="bg-white border-4 border-black rounded-2xl px-12 py-8 shadow-xl text-xl font-bold
-                       hover:scale-105 transition transform"
-          >
-            “ ลักษณะทางพันธุกรรม ”
-          </button>
-        </div>
-
-        {/* ===== พันธุกรรม ===== */}
-        <div
-          onMouseEnter={() => setHoveredCard('genetic')}
-          onMouseLeave={() => setHoveredCard(null)}
-          onClick={() => navigate("/p5/genetic")}
-          className="
-          group
-          cursor-pointer
-          bg-gradient-to-br from-white to-purple-50
-          rounded-2xl
-          shadow-xl
-          hover:shadow-2xl
-          w-[380px]
-          overflow-hidden
-          hover:scale-105
-          hover:-translate-y-2
-          transition-all
-          duration-300
-          relative
-          border-2 border-purple-200/50
-          hover:border-purple-400">
-
-          {/* ===== รูปภาพ ===== */}
-          <div className="relative h-[220px] overflow-hidden">
-            <img
-              src="/images/p5-genetic.png"
-              className="
-              w-full
-              h-full
-              object-cover
-              group-hover:scale-110
-              transition-transform
-              duration-500"
-              alt="ลักษณะทางพันธุกรรม"
-            />
-            
-            {/* ===== โอเวอร์เลย์ ===== */}
-            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-            {/* ===== ไอคอนลอย ===== */}
-            {hoveredCard === 'genetic' && (
-              <div className="absolute inset-0">
-                <div className="absolute top-4 right-4 text-3xl animate-spin-slow">🧬</div>
-                <div className="absolute bottom-4 left-4 text-3xl animate-bounce">🔬</div>
-              </div>
-            )}
-          </div>
-
-          {/* ===== เนื้อหา ===== */}
-          <div className="p-5">
-            <h2 className="
-            text-2xl
-            font-bold
-            text-gray-800
-            mb-2
-            flex
-            items-center
-            gap-2">
-              <span className="text-purple-500">🧬</span>
-              ลักษณะทางพันธุกรรม
-            </h2>
-
-            <p className="text-sm text-gray-600 mb-3">
-              ศึกษาการถ่ายทอดลักษณะทางพันธุกรรม
-            </p>
-
-            {/* ===== แถบความก้าวหน้า ===== */}
-            <div className="space-y-1">
-              <div className="flex justify-between text-xs text-gray-500">
-                <span>ระดับ</span>
-                <span>สูง</span>
-              </div>
-              <div className="w-full bg-gray-100 rounded-full h-1.5">
-                <div className="bg-purple-400 h-1.5 rounded-full w-1/2" />
-              </div>
-            </div>
-
-            {/* ===== ปุ่มเริ่มเรียน ===== */}
-            <button className="
-              mt-4
-              bg-purple-500
-              text-white
-              text-sm
-              px-4
-              py-2
-              rounded-xl
-              font-medium
-              opacity-0
-              group-hover:opacity-100
-              transform
-              translate-y-2
-              group-hover:translate-y-0
-              transition-all
-              duration-300
-              hover:bg-purple-600
-              w-full">
-              เริ่มเรียน →
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      {/* ===== ข้อความท้ายหน้า ===== */}
-      <div className="
-      absolute
-      bottom-4
-      left-1/2
-      transform
-      -translate-x-1/2
-      text-green-600/40
-      text-xs
-      flex
-      gap-2
-      z-20">
-        <span>🌱</span>
-        <span>พร้อมเรียนรู้หรือยัง?</span>
-        <span>🌱</span>
-      </div>
-
-      <style jsx>{`
-        @keyframes leafFall {
-          0% {
-            transform: translateY(-10vh) rotate(0deg);
-            opacity: 0;
-          }
-          10% {
-            opacity: 0.5;
-          }
-          90% {
-            opacity: 0.5;
-          }
-          100% {
-            transform: translateY(100vh) rotate(360deg);
-            opacity: 0;
-          }
-        }
-        
-        @keyframes cloudMove {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(30px); }
-        }
-        
-        @keyframes cloudMoveReverse {
-          0%, 100% { transform: translateX(0); }
-          50% { transform: translateX(-30px); }
-        }
-        
-        @keyframes titleFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-        
-        @keyframes spinSlow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        
-        .animate-leafFall {
-          animation: leafFall 12s linear infinite;
-        }
-        
-        .animate-cloudMove {
-          animation: cloudMove 15s ease-in-out infinite;
-        }
-        
-        .animate-cloudMoveReverse {
-          animation: cloudMoveReverse 18s ease-in-out infinite;
-        }
-        
-        .animate-titleFloat {
-          animation: titleFloat 3s ease-in-out infinite;
-        }
-        
-        .animate-spin-slow {
-          animation: spinSlow 5s linear infinite;
-        }
-        
-        .animate-fadeIn {
-          animation: fadeIn 0.8s ease-out;
-        }
-        
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .delay-100 {
-          animation-delay: 0.1s;
-        }
-      `}</style>
-
     </div>
-  )
+  );
 }

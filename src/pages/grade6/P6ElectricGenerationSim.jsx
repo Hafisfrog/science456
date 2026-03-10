@@ -1,7 +1,100 @@
 ﻿import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
+
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย", speechLang: "th-TH" },
+  { id: "en", label: "English", speechLang: "en-US" },
+  { id: "ms", label: "Melayu", speechLang: "ms-MY" },
+];
+
+const UI_TEXT = {
+  th: {
+    back: "← ย้อนกลับ",
+    progress: "ความคืบหน้า",
+    reset: "รีเซ็ต",
+    selectTrial: "เลือกการทดลอง",
+    start: "เริ่ม",
+    startHint: "เริ่มการทดลอง",
+    timer: "จับเวลา",
+    timerRunning: "กำลังจับเวลา",
+    timerTesting: "กำลังทดสอบกับเศษกระดาษ",
+    timerDone: "ครบเวลา",
+    timerReady: "พร้อมเริ่ม",
+    chooseTrialFirst: "กรุณาเลือกการทดลอง",
+    summary: "สรุปผล",
+    summaryLocked: "ทำการทดลองให้ครบ 3 ครั้งก่อน",
+    skip: "ข้าม",
+    result: "ดูผลการทดลอง",
+    title: "แรงไฟฟ้าเกิดขึ้นได้อย่างไรนะ",
+    trialNotSelected: "ยังไม่เลือก",
+    trial1: "ครั้งที่ 1 ไม่ขัดถูกด้วยผ้าแห้ง",
+    trial1Short: "ครั้งที่ 1 (ไม่ถู)",
+    trial2: "ครั้งที่ 2 ขัดถูด้วยผ้าแห้ง 2 นาที",
+    trial2Short: "ครั้งที่ 2 (2 นาที)",
+    trial3: "ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที",
+    trial3Short: "ครั้งที่ 3 (5 นาที)",
+    next: "ต่อไป »",
+    listen: "ฟังข้อความ",
+  },
+  en: {
+    back: "← Back",
+    progress: "Progress",
+    reset: "Reset",
+    selectTrial: "Select Trial",
+    start: "Start",
+    startHint: "Start experiment",
+    timer: "Timer",
+    timerRunning: "Timing",
+    timerTesting: "Testing with paper bits",
+    timerDone: "Time completed",
+    timerReady: "Ready",
+    chooseTrialFirst: "Please choose a trial",
+    summary: "Summary",
+    summaryLocked: "Complete all 3 trials first",
+    skip: "Skip",
+    result: "See result",
+    title: "How is electric force generated?",
+    trialNotSelected: "Not selected",
+    trial1: "Trial 1: no rubbing with a dry cloth",
+    trial1Short: "Trial 1 (no rub)",
+    trial2: "Trial 2: rub with a dry cloth for 2 minutes",
+    trial2Short: "Trial 2 (2 min)",
+    trial3: "Trial 3: rub with a dry cloth for 5 minutes",
+    trial3Short: "Trial 3 (5 min)",
+    next: "Next »",
+    listen: "Read screen",
+  },
+  ms: {
+    back: "← Kembali",
+    progress: "Kemajuan",
+    reset: "Set semula",
+    selectTrial: "Pilih Ujian",
+    start: "Mula",
+    startHint: "Mula eksperimen",
+    timer: "Pemasa",
+    timerRunning: "Sedang mengira masa",
+    timerTesting: "Menguji cebisan kertas",
+    timerDone: "Masa tamat",
+    timerReady: "Sedia",
+    chooseTrialFirst: "Sila pilih ujian",
+    summary: "Ringkasan",
+    summaryLocked: "Lengkapkan 3 ujian dahulu",
+    skip: "Langkau",
+    result: "Lihat hasil",
+    title: "Bagaimanakah daya elektrik terhasil?",
+    trialNotSelected: "Belum pilih",
+    trial1: "Ujian 1: tanpa gosokan kain kering",
+    trial1Short: "Ujian 1 (tanpa gosok)",
+    trial2: "Ujian 2: gosok dengan kain kering selama 2 minit",
+    trial2Short: "Ujian 2 (2 minit)",
+    trial3: "Ujian 3: gosok dengan kain kering selama 5 minit",
+    trial3Short: "Ujian 3 (5 minit)",
+    next: "Seterusnya »",
+    listen: "Baca skrin",
+  },
+};
 
 const PAPER_BASE = [
   { left: 0, top: 18, rotate: -12 },
@@ -72,6 +165,24 @@ const persistCompletedTrials = (ids) => {
   } catch {
     // ignore persistence errors
   }
+};
+
+const speakText = (text, lang) => {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+
+  const voices = window.speechSynthesis.getVoices();
+  const exact = voices.find((voice) => voice.lang?.toLowerCase() === lang.toLowerCase());
+  const fallback = voices.find((voice) =>
+    voice.lang?.toLowerCase().startsWith(lang.split("-")[0].toLowerCase()),
+  );
+  if (exact || fallback) utterance.voice = exact || fallback;
+
+  window.speechSynthesis.speak(utterance);
 };
 
 const getBalloonStyle = ({ trialLevel, started, isTesting, selectedTrial }) => {
@@ -178,23 +289,52 @@ const getPaperStyle = ({ index, trialLevel, isTesting }) => {
 
 export default function P6ElectricGenerationSim() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const [lang, setLang] = useState("th");
+  const t = UI_TEXT[lang] || UI_TEXT.th;
+  const speechLang =
+    LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || LANGUAGE_OPTIONS[0].speechLang;
 
   const trialOptions = useMemo(
     () => [
       {
         id: "trial-1",
-        label: "ครั้งที่ 1 ไม่ขัดถูกด้วยผ้าแห้ง",
-        short: "ครั้งที่ 1 (ไม่ถู)",
+        label: {
+          th: UI_TEXT.th.trial1,
+          en: UI_TEXT.en.trial1,
+          ms: UI_TEXT.ms.trial1,
+        },
+        short: {
+          th: UI_TEXT.th.trial1Short,
+          en: UI_TEXT.en.trial1Short,
+          ms: UI_TEXT.ms.trial1Short,
+        },
       },
       {
         id: "trial-2",
-        label: "ครั้งที่ 2 ขัดถูด้วยผ้าแห้ง 2 นาที",
-        short: "ครั้งที่ 2 (2 นาที)",
+        label: {
+          th: UI_TEXT.th.trial2,
+          en: UI_TEXT.en.trial2,
+          ms: UI_TEXT.ms.trial2,
+        },
+        short: {
+          th: UI_TEXT.th.trial2Short,
+          en: UI_TEXT.en.trial2Short,
+          ms: UI_TEXT.ms.trial2Short,
+        },
       },
       {
         id: "trial-3",
-        label: "ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที",
-        short: "ครั้งที่ 3 (5 นาที)",
+        label: {
+          th: UI_TEXT.th.trial3,
+          en: UI_TEXT.en.trial3,
+          ms: UI_TEXT.ms.trial3,
+        },
+        short: {
+          th: UI_TEXT.th.trial3Short,
+          en: UI_TEXT.en.trial3Short,
+          ms: UI_TEXT.ms.trial3Short,
+        },
       },
     ],
     [],
@@ -207,12 +347,13 @@ export default function P6ElectricGenerationSim() {
   const [remaining, setRemaining] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [completedTrials, setCompletedTrials] = useState(() => readCompletedTrials());
+  const isFreshStart = searchParams.get("fresh") === "1";
 
   const totalTrials = trialOptions.length;
   const completedCount = completedTrials.length;
   const allTrialsCompleted = completedCount === totalTrials;
   const selectedTrialLabel =
-    trialOptions.find((item) => item.id === selectedTrial)?.short || "ยังไม่เลือก";
+    trialOptions.find((item) => item.id === selectedTrial)?.short?.[lang] || t.trialNotSelected;
   const canStart = Boolean(selectedTrial);
   const shouldShowHint = !canStart;
 
@@ -273,6 +414,13 @@ export default function P6ElectricGenerationSim() {
   };
 
   useEffect(() => {
+    if (!isFreshStart) return;
+
+    persistCompletedTrials([]);
+    setCompletedTrials([]);
+  }, [isFreshStart]);
+
+  useEffect(() => {
     if (!isRunning) return undefined;
 
     const timerId = setInterval(() => {
@@ -327,6 +475,14 @@ export default function P6ElectricGenerationSim() {
 
   const balloonStyle = getBalloonStyle({ trialLevel, started, isTesting, selectedTrial });
   const papersStyle = getPapersContainerStyle({ trialLevel, started, isTesting });
+  const readScreenText = [
+    t.title,
+    t.selectTrial,
+    selectedTrialLabel,
+    t.timer,
+    formatTime(remaining),
+    isRunning ? t.timerRunning : isTesting ? t.timerTesting : started ? t.timerDone : t.timerReady,
+  ].join(". ");
 
   return (
     <div
@@ -351,7 +507,7 @@ export default function P6ElectricGenerationSim() {
       />
 
       <div
-        className="relative isolate z-[1] h-[min(720px,92vh)] w-[min(1220px,96vw)] overflow-hidden rounded-[30px] border border-white/95 shadow-[0_24px_44px_rgba(15,23,42,0.2),inset_0_1px_0_rgba(255,255,255,0.82)]"
+        className="p6-sim-mobile-stage relative isolate z-[1] h-[min(720px,92vh)] w-[min(1220px,96vw)] overflow-hidden rounded-[30px] border border-white/95 shadow-[0_24px_44px_rgba(15,23,42,0.2),inset_0_1px_0_rgba(255,255,255,0.82)]"
         style={{
           background:
             "radial-gradient(110% 64% at 50% 8%, rgba(255, 255, 255, 0.72) 0 36%, rgba(255, 255, 255, 0) 62%), radial-gradient(44% 22% at 12% 34%, rgba(187, 230, 246, 0.74) 0 68%, rgba(187, 230, 246, 0) 69%), radial-gradient(44% 22% at 88% 34%, rgba(187, 230, 246, 0.74) 0 68%, rgba(187, 230, 246, 0) 69%), linear-gradient(180deg, #e2eef8 0%, #d6e6f4 56%, #c6dced 100%)",
@@ -367,30 +523,46 @@ export default function P6ElectricGenerationSim() {
         <div className="pointer-events-none absolute -bottom-[20%] -right-[10%] z-0 h-[360px] w-[360px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.3),rgba(56,189,248,0))]" />
 
         <button
-          className="absolute left-6 top-[18px] z-[6] cursor-pointer rounded-2xl border border-slate-400/35 bg-gradient-to-br from-white via-[#eef5ff] to-[#e1f0ff] px-[17px] py-2.5 text-[15px] font-black text-slate-800 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
+          className="p6-sim-mobile-back absolute left-6 top-[18px] z-[6] cursor-pointer rounded-2xl border border-slate-400/35 bg-gradient-to-br from-white via-[#eef5ff] to-[#e1f0ff] px-[17px] py-2.5 text-[15px] font-black text-slate-800 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
           type="button"
           onClick={() => navigate("/p6/experiment/electric-generation/steps")}
         >
-          ← ย้อนกลับ
+          {t.back}
         </button>
 
-        <div className="p6-sim-mobile-left absolute left-8 top-[80px] z-[8] grid w-[128px] justify-items-center gap-6">
-          <div className="hidden items-center justify-between gap-2">
-            <div className="whitespace-nowrap rounded-[13px] border border-slate-400/40 bg-gradient-to-br from-white via-[#eef5ff] to-[#e1eeff] px-[13px] py-[9px] text-xs font-black text-blue-900 shadow-[0_10px_16px_rgba(15,23,42,0.1)]">
-              ความคืบหน้า {completedCount}/{totalTrials}
+        <div className="p6-sim-mobile-left absolute left-8 top-[80px] z-[8] grid w-[150px] justify-items-center gap-4">
+          <div className="w-full rounded-[18px] border border-slate-400/40 bg-gradient-to-br from-white/95 via-[#eef5ff] to-[#e1eeff] px-3 py-3 text-blue-900 shadow-[0_10px_16px_rgba(15,23,42,0.1)]">
+            <div className="flex items-center justify-between gap-2">
+              <div className="text-[13px] font-black">{t.progress}</div>
+              <button
+                className="cursor-pointer rounded-[11px] border border-red-500/30 bg-gradient-to-br from-white via-[#fff3f3] to-[#ffe8e8] px-2.5 py-1.5 text-[11px] font-black text-red-700 shadow-[0_8px_14px_rgba(17,24,39,0.08)] transition hover:-translate-y-0.5"
+                type="button"
+                onClick={handleResetProgress}
+              >
+                {t.reset}
+              </button>
             </div>
-            <button
-              className="cursor-pointer rounded-[11px] border border-red-500/30 bg-gradient-to-br from-white via-[#fff3f3] to-[#ffe8e8] px-3 py-[9px] text-xs font-black text-red-700 shadow-[0_8px_14px_rgba(17,24,39,0.08)] transition hover:-translate-y-0.5"
-              type="button"
-              onClick={handleResetProgress}
-            >
-              รีเซ็ต
-            </button>
+
+            <div className="mt-2 flex items-end justify-between">
+              <div className="text-[26px] font-black leading-none">
+                {completedCount}/{totalTrials}
+              </div>
+              <div className="text-[11px] font-bold text-slate-500">
+                {allTrialsCompleted ? t.summary : t.summaryLocked}
+              </div>
+            </div>
+
+            <div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-200">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-sky-400 to-blue-600 transition-[width] duration-300"
+                style={{ width: `${(completedCount / totalTrials) * 100}%` }}
+              />
+            </div>
           </div>
 
           <div className="relative">
             <button
-              className="grid w-[112px] cursor-pointer justify-items-center gap-1.5 text-center text-[34px] font-extrabold leading-[1.05] text-slate-900 transition hover:-translate-y-0.5"
+              className="grid w-full cursor-pointer justify-items-center gap-1.5 text-center text-slate-900 transition hover:-translate-y-0.5"
               type="button"
               onClick={handleToggleTrial}
             >
@@ -399,8 +571,8 @@ export default function P6ElectricGenerationSim() {
                   <path d="M9 6l9 6-9 6V6z" fill="currentColor" />
                 </svg>
               </div>
-              <span className="text-[34px] font-extrabold leading-[1.05]">เลือกอุปกรณ์</span>
-              <span className="block max-w-[112px] truncate text-[11px] font-bold text-slate-600">{selectedTrialLabel}</span>
+              <span className="text-[22px] font-extrabold leading-[1.05]">{t.selectTrial}</span>
+              <span className="block max-w-full text-[12px] font-bold leading-4 text-slate-600">{selectedTrialLabel}</span>
             </button>
 
             {showTrialMenu && (
@@ -416,7 +588,7 @@ export default function P6ElectricGenerationSim() {
                     type="button"
                     onClick={() => handleSelectTrial(item.id)}
                   >
-                    {item.label}
+                    {item.label[lang]}
                   </button>
                 ))}
               </div>
@@ -424,8 +596,26 @@ export default function P6ElectricGenerationSim() {
           </div>
 
           <div className="relative">
+            <div
+              className={`mb-4 w-full rounded-[18px] border border-slate-400/45 bg-gradient-to-br from-white/95 to-[#f1f7ff]/90 px-3 py-3 text-center shadow-[0_10px_18px_rgba(15,23,42,0.12)] ${
+                isRunning ? "border-blue-600/50 shadow-[0_12px_22px_rgba(37,99,235,0.2)]" : ""
+              }`}
+            >
+              <div className="text-[20px] font-extrabold leading-tight text-slate-800">{t.timer}</div>
+              <div className="my-1 text-[30px] font-black tracking-[1px] text-slate-900">{formatTime(remaining)}</div>
+              <div className="text-[11px] font-bold text-slate-500">
+                {isRunning
+                  ? t.timerRunning
+                  : isTesting
+                    ? t.timerTesting
+                    : started
+                      ? t.timerDone
+                      : t.timerReady}
+              </div>
+            </div>
+
             <button
-              className={`grid w-[112px] justify-items-center gap-1.5 text-center text-[34px] font-extrabold leading-[1.05] transition ${
+              className={`grid w-full justify-items-center gap-1.5 text-center transition ${
                 canStart ? "cursor-pointer text-slate-900 hover:-translate-y-0.5" : "cursor-not-allowed text-slate-400 opacity-60"
               }`}
               type="button"
@@ -437,63 +627,46 @@ export default function P6ElectricGenerationSim() {
                   <path d="M9 6l9 6-9 6V6z" fill="currentColor" />
                 </svg>
               </div>
-              <span className="text-[34px] font-extrabold leading-[1.05]">เริ่ม</span>
-              {canStart && <span className="text-[11px] font-bold text-slate-600">เริ่มการทดลอง</span>}
+              <span className="text-[22px] font-extrabold leading-[1.05]">{t.start}</span>
+              {canStart && <span className="text-[11px] font-bold text-slate-600">{t.startHint}</span>}
             </button>
 
             {shouldShowHint && (
               <div className="absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-xl border border-slate-400/50 bg-white px-3 py-2 text-xs font-extrabold text-slate-900 shadow-[0_10px_18px_rgba(17,24,39,0.14)]">
-                กรุณาเลือกการทดลอง
+                {t.chooseTrialFirst}
               </div>
             )}
 
             {allTrialsCompleted && (
               <button
-                className="mt-2 hidden w-full cursor-pointer rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 px-3 py-2.5 text-[13px] font-black text-white shadow-[0_12px_20px_rgba(37,99,235,0.26)] transition hover:-translate-y-0.5"
+                className="mt-2 w-full cursor-pointer rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 px-3 py-2.5 text-[13px] font-black text-white shadow-[0_12px_20px_rgba(37,99,235,0.26)] transition hover:-translate-y-0.5"
                 type="button"
                 onClick={() => navigate("/p6/experiment/electric-generation/summary")}
               >
-                สรุปผล
+                {t.summary}
               </button>
             )}
 
             {isRunning && (
               <button
-                className="mt-2.5 hidden w-full cursor-pointer rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 px-3 py-2.5 text-[13px] font-black text-white shadow-[0_12px_20px_rgba(234,88,12,0.3)] transition hover:-translate-y-0.5"
+                className="mt-2.5 w-full cursor-pointer rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 px-3 py-2.5 text-[13px] font-black text-white shadow-[0_12px_20px_rgba(234,88,12,0.3)] transition hover:-translate-y-0.5"
                 type="button"
                 onClick={handleSkip}
               >
-                ข้าม
+                {t.skip}
               </button>
             )}
 
             {canShowResult && (
               <button
-                className="mt-2.5 hidden w-full cursor-pointer rounded-xl border border-slate-400/50 bg-gradient-to-br from-white to-[#eef4ff] px-3 py-2.5 text-[13px] font-black text-slate-800 shadow-[0_10px_18px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5"
+                className="mt-2.5 w-full cursor-pointer rounded-xl border border-slate-400/50 bg-gradient-to-br from-white to-[#eef4ff] px-3 py-2.5 text-[13px] font-black text-slate-800 shadow-[0_10px_18px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5"
                 type="button"
                 onClick={handleShowResult}
               >
-                ดูผลการทดลอง
+                {t.result}
               </button>
             )}
 
-            <div
-              className={`absolute -top-[132px] left-1/2 min-w-[112px] -translate-x-1/2 rounded-[18px] border border-slate-400/45 bg-gradient-to-br from-white/95 to-[#f1f7ff]/90 px-2 py-2 text-center shadow-[0_10px_18px_rgba(15,23,42,0.12)] ${
-                isRunning ? "border-blue-600/50 shadow-[0_12px_22px_rgba(37,99,235,0.2)]" : ""
-              }`}
-            >
-              <div className="text-[34px] font-extrabold leading-[1.05] text-slate-800">จับเวลา</div>
-              <div className="my-0.5 text-xl font-black tracking-[1px] text-slate-900">{formatTime(remaining)}</div>
-              <div className="hidden text-[11px] font-bold text-slate-500">
-                {isRunning
-                  ? "กำลังจับเวลา"
-                  : isTesting
-                    ? "กำลังทดสอบกับเศษกระดาษ"
-                    : started
-                      ? "ครบเวลา"
-                      : "พร้อมเริ่ม"}
-              </div>
-            </div>
           </div>
         </div>
 
@@ -501,6 +674,8 @@ export default function P6ElectricGenerationSim() {
           className="hidden absolute right-[38px] top-7 z-[4] h-14 w-14 place-items-center rounded-2xl border-2 border-slate-400/45 bg-gradient-to-br from-white to-[#edf5ff] text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
           type="button"
           aria-label="sound"
+          title={t.listen}
+          onClick={() => speakText(readScreenText, speechLang)}
         >
           <svg viewBox="0 0 64 64" aria-hidden="true" className="h-[34px] w-[34px]">
             <path
@@ -527,16 +702,17 @@ export default function P6ElectricGenerationSim() {
           </svg>
         </button>
 
-        <div className="p6-sim-mobile-bubble absolute left-[38%] top-[16px] z-[5] max-w-[340px] rounded-[24px] border-[5px] border-slate-900 bg-gradient-to-br from-white to-[#f8fbff] px-6 py-3 text-[20px] font-extrabold text-slate-900 shadow-[0_14px_26px_rgba(15,23,42,0.18)]">
-          แรงไฟฟ้าเกิดขึ้นได้อย่างไรนะ
-          <span
-            className="absolute right-[-10px] top-1/2 h-[18px] w-[18px] -translate-y-1/2 border-b-[3px] border-r-[3px] border-slate-900 bg-white"
-            style={{ transform: "translateY(-50%) rotate(-45deg)" }}
-          />
-        </div>
+        <div className="p6-sim-mobile-bubble absolute right-[24%] top-[90px] z-[5] max-w-[340px] rounded-[24px] border-[5px] border-slate-900 bg-gradient-to-br from-white to-[#f8fbff] px-6 py-3 text-[20px] font-extrabold text-slate-900 shadow-[0_14px_26px_rgba(15,23,42,0.18)]">
+  {t.title}
+
+  <span
+  className="absolute right-[-10px] top-1/2 h-[18px] w-[18px] border-b-[3px] border-r-[3px] border-slate-900 bg-white"
+  style={{ transform: "translateY(-50%) rotate(-45deg)" }}
+/>
+</div>
 
         <img
-          className="p6-sim-mobile-boy absolute bottom-[8%] right-[17%] z-[3] h-[min(500px,78%)] w-auto"
+          className="p6-sim-mobile-boy absolute bottom-[8%] right-[10%] z-[3] h-[min(500px,78%)] w-auto"
           style={{ filter: "saturate(1.04) drop-shadow(0 18px 22px rgba(15, 23, 42, 0.24))" }}
           src="/images/p4/exp1/character-boy.png"
           alt="นักเรียน"
@@ -573,7 +749,7 @@ export default function P6ElectricGenerationSim() {
         </div>
 
         <div
-          className="absolute bottom-[39%] left-[53%] z-[3] h-[140px] w-[140px] rounded-full"
+          className="p6-sim-mobile-balloon absolute bottom-[39%] left-[53%] z-[3] h-[140px] w-[140px] rounded-full"
           style={{
             ...balloonStyle,
             background:
@@ -607,7 +783,7 @@ export default function P6ElectricGenerationSim() {
         </div>
 
         <div
-          className="pointer-events-none absolute bottom-[35%] left-[53%] z-[2] h-[84px] w-[130px]"
+          className="p6-sim-mobile-papers pointer-events-none absolute bottom-[35%] left-[53%] z-[2] h-[84px] w-[130px]"
           style={papersStyle}
         >
           {PAPER_BASE.map((_, idx) => (
@@ -619,20 +795,25 @@ export default function P6ElectricGenerationSim() {
           ))}
         </div>
 
-        <div className="p6-sim-mobile-lang absolute bottom-3 left-4 z-[9] inline-flex items-center gap-2 rounded-[18px] border border-sky-200 bg-white/90 p-2 shadow-[0_10px_16px_rgba(15,23,42,0.12)]">
-          <button className="rounded-full bg-sky-500 px-4 py-2 text-xl font-bold text-white" type="button">
-            ไทย
-          </button>
-          <button className="rounded-full bg-sky-100 px-4 py-2 text-xl font-bold text-sky-700" type="button">
-            อังกฤษ
-          </button>
-          <button className="rounded-full bg-sky-100 px-4 py-2 text-xl font-bold text-sky-700" type="button">
-            มลายู
-          </button>
+<div className="p6-sim-mobile-lang absolute bottom-0 left-6 z-[20] inline-flex items-center gap-2 rounded-[18px] border border-sky-200 bg-white/90 p-2 shadow-[0_10px_16px_rgba(15,23,42,0.12)]">
+            {LANGUAGE_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                className={`rounded-full px-3 py-2 text-sm font-bold sm:px-4 sm:text-xl ${
+                  lang === option.id ? "bg-sky-500 text-white" : "bg-sky-100 text-sky-700"
+                }`}
+                type="button"
+                onClick={() => setLang(option.id)}
+              >
+                {option.label}
+              </button>
+            ))}
           <button
-            className="grid h-10 w-10 place-items-center rounded-full border border-sky-300 bg-gradient-to-br from-white to-sky-100 text-sky-700"
+            className="grid h-9 w-9 place-items-center rounded-full border border-sky-300 bg-gradient-to-br from-white to-sky-100 text-sky-700 sm:h-10 sm:w-10"
             type="button"
             aria-label="sound"
+            title={t.listen}
+            onClick={() => speakText(readScreenText, speechLang)}
           >
             <svg viewBox="0 0 64 64" aria-hidden="true" className="h-5 w-5">
               <path d="M14 26h12l14-10v32l-14-10H14z" fill="none" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
@@ -641,15 +822,27 @@ export default function P6ElectricGenerationSim() {
           </button>
         </div>
 
-        {canShowResult && (
-          <button
-            className="p6-sim-mobile-next absolute bottom-4 right-4 z-[10] cursor-pointer rounded-full border border-red-500/40 bg-gradient-to-b from-[#ff7676] to-[#e83e3e] px-6 py-2.5 text-[38px] font-extrabold text-white shadow-[0_12px_18px_rgba(185,28,28,0.28)] transition hover:-translate-y-0.5"
-            type="button"
-            onClick={handleShowResult}
-          >
-            ต่อไป »
-          </button>
-        )}
+        <div className="p6-sim-mobile-actions absolute bottom-4 right-4 z-[10] flex flex-col items-end gap-2">
+          {isRunning && (
+            <button
+              className="cursor-pointer rounded-full border border-orange-500/40 bg-gradient-to-b from-[#ffb347] to-[#ff8c00] px-4 py-2 text-base font-extrabold text-white shadow-[0_12px_18px_rgba(249,115,22,0.35)] transition hover:-translate-y-0.5 sm:px-6 sm:py-2.5 sm:text-[26px]"
+              type="button"
+              onClick={handleSkip}
+            >
+              {t.skip}
+            </button>
+          )}
+
+          {canShowResult && (
+            <button
+              className="max-w-[180px] cursor-pointer rounded-xl border border-blue-500/40 bg-gradient-to-b from-[#60a5fa] to-[#2563eb] px-4 py-2 text-sm font-bold text-white shadow-[0_10px_16px_rgba(37,99,235,0.35)] transition hover:-translate-y-0.5 sm:max-w-none sm:px-5 sm:text-[18px]"
+              type="button"
+              onClick={handleShowResult}
+            >
+              {t.result}
+            </button>
+          )}
+        </div>
 
         <div
           className="absolute inset-x-0 bottom-0 z-[1] h-[32%] origin-top"
@@ -695,7 +888,7 @@ export default function P6ElectricGenerationSim() {
               font-size: 18px !important;
             }
             .p6-sim-mobile-boy {
-              right: 12% !important;
+              right: 7% !important;
               bottom: 8% !important;
               height: min(460px, 72%) !important;
             }
@@ -723,7 +916,7 @@ export default function P6ElectricGenerationSim() {
               border-width: 4px !important;
             }
             .p6-sim-mobile-boy {
-              right: 8% !important;
+              right: 4% !important;
               bottom: 7% !important;
               height: min(390px, 66%) !important;
             }
@@ -747,42 +940,71 @@ export default function P6ElectricGenerationSim() {
             }
           }
           @media (max-width: 640px) {
+            .p6-sim-mobile-stage {
+              width: min(390px, calc(100vw - 14px)) !important;
+              height: min(844px, calc(100dvh - 14px)) !important;
+              border-radius: 26px !important;
+            }
+            .p6-sim-mobile-back {
+              left: 10px !important;
+              top: 10px !important;
+              padding: 8px 12px !important;
+              font-size: 13px !important;
+            }
             .p6-sim-mobile-left {
               left: 8px !important;
               right: auto !important;
-              top: 84px !important;
-              width: 108px !important;
+              top: 76px !important;
+              width: 104px !important;
+              gap: 10px !important;
             }
             .p6-sim-mobile-bubble {
-              left: 28% !important;
-              top: 8px !important;
-              max-width: min(220px, 58vw) !important;
-              font-size: 14px !important;
+              left: 98px !important;
+              right: 12px !important;
+              top: 18px !important;
+              max-width: none !important;
+              font-size: 13px !important;
               padding: 10px 12px !important;
+              line-height: 1.25 !important;
             }
             .p6-sim-mobile-boy {
-              right: 3% !important;
-              bottom: 7% !important;
-              height: min(290px, 48%) !important;
+              right: 2px !important;
+              bottom: 92px !important;
+              height: 225px !important;
             }
             .p6-sim-mobile-table {
-              left: 58% !important;
-              bottom: 30% !important;
-              width: min(520px, 92%) !important;
+              left: 59% !important;
+              bottom: 150px !important;
+              width: 80% !important;
+              height: 122px !important;
+            }
+            .p6-sim-mobile-balloon {
+              left: 57% !important;
+              bottom: 242px !important;
+              width: 120px !important;
+              height: 120px !important;
+            }
+            .p6-sim-mobile-papers {
+              left: 57% !important;
+              bottom: 220px !important;
+              width: 116px !important;
+              height: 76px !important;
             }
             .p6-sim-mobile-menu {
               left: 0 !important;
               top: calc(100% + 8px) !important;
-              width: min(220px, 72vw) !important;
+              width: min(230px, 72vw) !important;
             }
             .p6-sim-mobile-lang {
-              transform: scale(0.72);
-            }
-            .p6-sim-mobile-next {
-              right: 8px !important;
+              left: 8px !important;
               bottom: 8px !important;
-              font-size: 20px !important;
-              padding: 7px 14px !important;
+              gap: 6px !important;
+              padding: 6px !important;
+              transform: none !important;
+            }
+            .p6-sim-mobile-actions {
+              right: 8px !important;
+              bottom: 10px !important;
             }
           }
         `}</style>

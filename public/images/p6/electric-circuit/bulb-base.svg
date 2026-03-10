@@ -1,0 +1,23 @@
+<svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="160" cy="222" rx="54" ry="14" fill="#C7D2E2" fill-opacity="0.45"/>
+  <ellipse cx="160" cy="86" rx="66" ry="72" fill="url(#paint0_radial)" stroke="#1E3154" stroke-width="7"/>
+  <path d="M122 118C124.5 144.5 139.5 159.5 160 176C180.5 159.5 195.5 144.5 198 118" stroke="#6C5730" stroke-width="6" stroke-linecap="round"/>
+  <path d="M145 95L156 113L165 98L175 113L183 91" stroke="#F3C84A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <ellipse cx="137" cy="63" rx="18" ry="12" fill="white" fill-opacity="0.6"/>
+  <path d="M138 156H182V178H138V156Z" fill="url(#paint1_linear)" stroke="#56657D" stroke-width="5"/>
+  <path d="M134 178H186V192H134V178Z" fill="#8D99AA"/>
+  <path d="M136 194H184V206H136V194Z" fill="#748196"/>
+  <path d="M142 208H178V222H142V208Z" fill="#5E6B80"/>
+  <rect x="153" y="222" width="14" height="22" rx="5" fill="#475569"/>
+  <defs>
+    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(137 54) rotate(57.2049) scale(109.025 102.155)">
+      <stop stop-color="#FFFCE7"/>
+      <stop offset="0.55" stop-color="#FFE389"/>
+      <stop offset="1" stop-color="#F1B74F"/>
+    </radialGradient>
+    <linearGradient id="paint1_linear" x1="160" y1="156" x2="160" y2="178" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D5DDE7"/>
+      <stop offset="1" stop-color="#95A1B2"/>
+    </linearGradient>
+  </defs>
+</svg>

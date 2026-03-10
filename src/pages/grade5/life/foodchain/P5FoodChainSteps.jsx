@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { useEffect, useRef, useState } from "react";
+// import { useEffect, useRef, useState } from "react";
 
 const stepsStyles = `
 .steps-container {
@@ -433,7 +432,6 @@ const stepsStyles = `
   .sound-toggle { top: 20px; right: 20px; }
 }
 `;
-=======
 import SpeakButton from "../../../../components/SpeakButton";
 
 const PAGE_COPY = {
@@ -530,7 +528,6 @@ function makeParticles(count = 20) {
     duration: `${Math.random() * 2 + 1.5}s`,
   }));
 }
->>>>>>> e3a7fe288054d61ec7b48444b90f93f622cca94f
 
 export default function P5FoodChainSteps() {
   const navigate = useNavigate();
