@@ -1,6 +1,5 @@
-﻿import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P4GravitySim1.css";
 
 export default function P4GravitySim1() {
   const navigate = useNavigate();
@@ -84,19 +83,23 @@ export default function P4GravitySim1() {
   };
 
   return (
-    <div className="sim-page">
-      <div className="sim-stage">
-        <img className="sim-bg" src="/images/p4/sim/sball.png" alt="background" />
+    <div className="m-0 h-screen min-h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,#ffffff_0%,#e8f6ff_35%,#d8efff_100%)] p-0 font-['Prompt',sans-serif]">
+      <div className="relative h-full w-full overflow-hidden bg-[#cfe9f6]">
+        <img className="absolute inset-0 h-full w-full object-cover saturate-105" src="/images/p4/sim/sball.png" alt="background" />
 
-        <button className="sim-back" onClick={() => navigate("/p4/gravity/vocab")} type="button">
+        <button
+          className="absolute left-4 top-4 z-20 cursor-pointer rounded-2xl bg-white/90 px-[14px] py-[10px] text-[16px] font-black shadow-[0_10px_22px_rgba(0,0,0,.14)] transition duration-150 hover:-translate-y-0.5"
+          onClick={() => navigate("/p4/gravity/vocab")}
+          type="button"
+        >
           {t.back}
         </button>
 
-        <div className="sim-bubble">
-          <div className="sim-bubble-row">
-            <div className="sim-bubble-text">{t.bubble}</div>
+        <div className="absolute left-[7%] right-[7%] top-[12%] z-[15] rounded-[20px] bg-[rgba(191,219,240,.92)] px-[18px] py-[18px] text-[#0b1020] shadow-[0_14px_28px_rgba(0,0,0,.20)] backdrop-blur-[4px]">
+          <div className="flex items-start gap-3">
+            <div className="flex-1 text-[26px] font-black leading-[1.25] max-[900px]:text-[20px]">{t.bubble}</div>
             <button
-              className="sim-sound-inbubble"
+              className="h-[46px] w-[46px] shrink-0 cursor-pointer rounded-[14px] bg-white/90 text-[20px] shadow-[0_10px_18px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.20)]"
               onClick={playNarration}
               type="button"
               title={t.speakTitle}
@@ -105,28 +108,55 @@ export default function P4GravitySim1() {
               🔊
             </button>
           </div>
-          <div className="sim-bubble-hint">{t.hint}</div>
+          <div className="mt-[10px] text-[15px] font-extrabold opacity-90">{t.hint}</div>
         </div>
 
-        <img className="sim-right-character" src="/images/p4/exp1/boy-soccer.png" alt="teacher" />
+        <img
+          className="pointer-events-none absolute bottom-[5%] right-[11%] z-[13] h-auto w-[min(44vw,480px)] select-none [filter:drop-shadow(0_14px_20px_rgba(0,0,0,.26))] max-[900px]:bottom-[14%] max-[900px]:right-[5%] max-[900px]:w-[min(22vw,160px)] max-[640px]:hidden"
+          src="/images/p4/exp1/boy-soccer.png"
+          alt="teacher"
+        />
 
-        {/* <img className="sim-prop-center" src="/images/soccer.png" alt="ball" /> */}
-
-        <button className="sim-play" onClick={handleStart} type="button" aria-label="start">
-          <span className="sim-play-icon">▶</span>
+        <button
+          className="absolute left-1/2 top-[58%] z-[16] flex h-[130px] w-[130px] -translate-x-1/2 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-[3px] border-[rgba(255,255,255,.55)] bg-[rgba(170,220,255,.96)] shadow-[0_18px_34px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-[52%] hover:shadow-[0_22px_40px_rgba(0,0,0,.22)] max-[900px]:top-[78%] max-[900px]:h-[104px] max-[900px]:w-[104px]"
+          onClick={handleStart}
+          type="button"
+          aria-label="start"
+        >
+          <span className="text-[54px] font-black leading-none max-[900px]:text-[46px]">▶</span>
         </button>
 
-        <div className="sim-caption">{t.caption}</div>
+        <div className="absolute left-1/2 top-[68%] z-[16] -translate-x-1/2 text-[22px] font-black text-[#0b1020] [text-shadow:0_2px_0_rgba(255,255,255,.75)] max-[900px]:top-[88%] max-[900px]:text-[18px]">
+          {t.caption}
+        </div>
 
-        <div className="sim-toolbar">
-          <div className="sim-lang">
-            <button className={`sim-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+        <div className="absolute bottom-4 left-4 z-20 flex items-center gap-3 rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          <div className="flex items-center gap-[10px]">
+            <button
+              className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black transition duration-150 hover:-translate-y-0.5 ${
+                lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+              }`}
+              onClick={() => setLang("th")}
+              type="button"
+            >
               ไทย
             </button>
-            <button className={`sim-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+            <button
+              className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black transition duration-150 hover:-translate-y-0.5 ${
+                lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+              }`}
+              onClick={() => setLang("en")}
+              type="button"
+            >
               อังกฤษ
             </button>
-            <button className={`sim-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+            <button
+              className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black transition duration-150 hover:-translate-y-0.5 ${
+                lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+              }`}
+              onClick={() => setLang("ms")}
+              type="button"
+            >
               มลายู
             </button>
           </div>

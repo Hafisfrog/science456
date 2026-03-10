@@ -1,6 +1,5 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P4Gravity.css";
 
 export default function P4Gravity() {
   const navigate = useNavigate();
@@ -55,54 +54,79 @@ export default function P4Gravity() {
 
   const t = copy[lang];
 
+  const cardClass =
+    "cursor-pointer overflow-hidden rounded-[22px] bg-white shadow-[0_10px_20px_rgba(0,0,0,.08)] transition duration-150 hover:-translate-y-1.5 hover:shadow-[0_18px_30px_rgba(0,0,0,.14)]";
+  const imageClass = "h-[300px] w-full object-cover max-[900px]:h-[260px]";
+  const chipClass =
+    "rounded-[14px] px-4 py-3 text-base font-extrabold transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[11px] max-[640px]:py-[9px] max-[640px]:text-sm";
+
   return (
-    <div className="grade-wrap" style={{ position: "relative" }}>
-      <h1 className="grade-title">{t.title}</h1>
-      <p className="grade-sub">{t.sub}</p>
+    <div className="relative min-h-screen bg-[#eaf7fb] px-6 pb-[140px] pt-12 text-center max-[640px]:px-[14px] max-[640px]:pb-[150px] max-[640px]:pt-7">
+      <h1 className="text-[48px] font-extrabold text-[#2563eb] max-[900px]:text-[40px] max-[640px]:text-[32px]">{t.title}</h1>
+      <p className="mt-3 text-[24px] font-semibold text-gray-700 max-[900px]:text-[20px] max-[640px]:text-[18px]">{t.sub}</p>
 
-      <div className="grade-grid">
-        <div className="grade-card" onClick={() => navigate("/p4/gravity/vocab")}>
-          <img src="/images/p4.png" alt="" className="grade-image" />
-          <div className="grade-content">
-            <div className="grade-big">{t.exp1Title}</div>
-            <div className="grade-small">{t.exp1Desc}</div>
+      <div
+        className="mx-auto mt-10 grid max-w-[1200px] gap-6"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
+      >
+        <div className={cardClass} onClick={() => navigate("/p4/gravity/vocab")}>
+          <img src="/images/p4.png" alt="" className={imageClass} />
+          <div className="p-4">
+            <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp1Title}</div>
+            <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp1Desc}</div>
           </div>
         </div>
 
-        <div className="grade-card" onClick={() => navigate("/p4/gravity/exp2/vocab")}>
-          <img src="/images/p4/action.png" alt="" className="grade-image" />
-          <div className="grade-content">
-            <div className="grade-big">{t.exp2Title}</div>
-            <div className="grade-small">{t.exp2Desc}</div>
+        <div className={cardClass} onClick={() => navigate("/p4/gravity/exp2/vocab")}>
+          <img src="/images/p4/action.png" alt="" className={imageClass} />
+          <div className="p-4">
+            <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp2Title}</div>
+            <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp2Desc}</div>
           </div>
         </div>
 
-        <div className="grade-card" onClick={() => navigate("/p4/gravity/exp3/vocab")}>
-          <img src="/images/p4/earth-moon.png" alt="" className="grade-image" />
-          <div className="grade-content">
-            <div className="grade-big">{t.exp3Title}</div>
-            <div className="grade-small">{t.exp3Desc}</div>
+        <div className={cardClass} onClick={() => navigate("/p4/gravity/exp3/vocab")}>
+          <img src="/images/p4/earth-moon.png" alt="" className={imageClass} />
+          <div className="p-4">
+            <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp3Title}</div>
+            <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp3Desc}</div>
           </div>
         </div>
       </div>
 
-      <div className="grade-langDock">
-        <div className="grade-langbar">
-          <button className={`grade-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+      <div className="fixed bottom-[18px] left-[18px] z-20 max-[640px]:bottom-[10px] max-[640px]:left-[10px]">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)] max-[640px]:gap-1.5 max-[640px]:p-2">
+          <button
+            className={`${chipClass} ${lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"}`}
+            onClick={() => setLang("th")}
+            type="button"
+          >
             {t.chipTh}
           </button>
-          <button className={`grade-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+          <button
+            className={`${chipClass} ${lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"}`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
             {t.chipEn}
           </button>
-          <button className={`grade-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+          <button
+            className={`${chipClass} ${lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"}`}
+            onClick={() => setLang("ms")}
+            type="button"
+          >
             {t.chipMs}
           </button>
         </div>
       </div>
 
-      <div className="grade-navDock">
-        <button className="back-home-btn" onClick={() => navigate("/p4/gravity/objectives")} type="button">
-          ◀ {t.back}
+      <div className="fixed bottom-[18px] right-[18px] z-20 max-[640px]:bottom-[10px] max-[640px]:right-[10px]">
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ffffff,#f0f9ff)] px-[22px] py-[14px] text-[20px] font-extrabold text-[#1e3a8a] shadow-[0_8px_18px_rgba(0,0,0,.15)] transition duration-150 hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#e0f2fe,#ffffff)] hover:shadow-[0_12px_24px_rgba(0,0,0,.2)] active:translate-y-px active:shadow-[0_6px_14px_rgba(0,0,0,.18)] max-[640px]:px-[14px] max-[640px]:py-[10px] max-[640px]:text-[14px]"
+          onClick={() => navigate("/p4/gravity/objectives")}
+          type="button"
+        >
+          {"<"} {t.back}
         </button>
       </div>
     </div>

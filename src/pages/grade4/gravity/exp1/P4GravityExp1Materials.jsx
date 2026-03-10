@@ -211,13 +211,15 @@ export default function P4GravityExp1Materials() {
         </button> */}
       </div>
 
-      <button className="exp1m-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
-        ← {t.back}
-      </button>
+      <div className="exp1m-actionRow">
+        <button className="exp1m-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
+          ← {t.back}
+        </button>
 
-      <button className="exp1m-nextBtn" type="button" onClick={() => navigate(NEXT_PATH)}>
-        {t.next} »
-      </button>
+        <button className="exp1m-nextBtn" type="button" onClick={() => navigate(NEXT_PATH)}>
+          {t.next} »
+        </button>
+      </div>
     </div>
   );
 }

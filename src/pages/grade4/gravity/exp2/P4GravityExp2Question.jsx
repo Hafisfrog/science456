@@ -1,29 +1,21 @@
-import { useMemo, useRef, useState } from "react";
+﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P4GravityExp2Question.css";
 
 export default function P4GravityExp2Question() {
   const navigate = useNavigate();
+  const [lang, setLang] = useState("th");
 
-  // ✅ ปรับ path ให้ตรงโปรเจกต์คุณ
   const BACK_PATH = "/p4/gravity/exp2/steps";
   const ACTION_PATH = "/p4/gravity/exp2/action";
-  const ANSWER_HINT_PATH = "/p4/gravity/exp2/answer"; // ถ้ามีหน้า “มาหาคำตอบกัน” แยก
-  // ถ้าไม่มีหน้า answer ให้เปลี่ยนปุ่ม “มาหาคำตอบกัน” ไป ACTION_PATH ได้เลย
+  const ANSWER_HINT_PATH = "/p4/gravity/exp2/answer";
 
-  // ภาษา
-  const [lang, setLang] = useState("th"); // th | en | ms
-
-  // ✅ เปลี่ยนรูปเองได้
   const assets = useMemo(() => {
     return {
-      bg: "/images/p4/exp1/bg-lab.jpg", // ใช้ BG เดิมได้ หรือเปลี่ยนเป็น exp2 ก็ได้
-      character: "/images/p4/exp1/character-girl.png", // เปลี่ยนเป็นรูปตัวละครของคุณ
-      // ถ้าไม่มีรูป ให้ใส่เป็น "" แล้วระบบจะไม่แสดง
+      bg: "/images/p4/exp1/bg-lab.jpg",
+      character: "/images/p4/exp1/character-girl.png",
     };
   }, []);
 
-  // ข้อความหลายภาษา
   const text = useMemo(() => {
     return {
       th: {
@@ -63,22 +55,17 @@ export default function P4GravityExp2Question() {
   }, []);
 
   const t = text[lang];
-
-  // ---------- speech ----------
   const speakingRef = useRef(false);
 
   const speak = (msg) => {
     try {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
-
       const u = new SpeechSynthesisUtterance(msg);
       u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
       u.rate = 0.98;
-
       speakingRef.current = true;
       u.onend = () => (speakingRef.current = false);
-
       window.speechSynthesis.speak(u);
     } catch {
       // ignore
@@ -86,81 +73,108 @@ export default function P4GravityExp2Question() {
   };
 
   return (
-    <div className="q2-page">
-      {/* bg */}
-      <img className="q2-bg" src={assets.bg} alt="bg" />
-      <div className="q2-overlay" />
+    <div className="relative h-[100svh] min-h-[100svh] w-full overflow-hidden bg-[#eef2ff] font-['Prompt',sans-serif] max-[760px]:overflow-y-auto">
+      <img
+        className="absolute inset-0 -z-[3] h-full w-full scale-[1.02] object-cover [filter:blur(2px)_brightness(.92)]"
+        src={assets.bg}
+        alt="bg"
+      />
+      <div className="absolute inset-0 -z-[2] [background:radial-gradient(1200px_720px_at_50%_40%,rgba(255,255,255,.20),rgba(255,255,255,0)_60%),linear-gradient(180deg,rgba(10,16,32,.18),rgba(10,16,32,.55))]" />
 
-      {/* back top-left */}
-      <button className="q2-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
+      <button
+        className="absolute left-[18px] top-4 z-[5] rounded-[18px] bg-white/92 px-4 py-3 text-base font-black text-slate-900 shadow-[0_16px_32px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(0,0,0,.26)] active:translate-y-px"
+        type="button"
+        onClick={() => navigate(BACK_PATH)}
+      >
         {t.back}
       </button>
 
-      {/* character */}
       {assets.character ? (
-        <img className="q2-character" src={assets.character} alt="character" draggable="false" />
+        <img
+          className="pointer-events-none absolute bottom-[clamp(56px,8vh,72px)] left-[26px] z-[2] h-auto w-[min(330px,28vw)] select-none [filter:drop-shadow(0_18px_28px_rgba(0,0,0,.30))] max-[720px]:hidden max-[880px]:bottom-[52px] max-[880px]:w-[min(280px,22vw)] max-[760px]:left-3 max-[760px]:bottom-[92px] max-[760px]:block max-[760px]:w-[min(190px,16vw)]"
+          src={assets.character}
+          alt="character"
+          draggable="false"
+        />
       ) : null}
 
-      {/* bubble */}
-      <div className="q2-bubble">
-        <div className="q2-bTitle">{t.title}</div>
+      <div className="absolute left-[330px] right-[360px] top-[120px] z-[3] rounded-[32px] border-[5px] border-slate-900/90 bg-white/96 px-[26px] py-[22px] shadow-[0_30px_60px_rgba(0,0,0,.26)] max-[980px]:left-[220px] max-[980px]:w-[min(720px,60vw)] max-[980px]:right-auto max-[720px]:left-[18px] max-[720px]:right-[260px] max-[720px]:top-[100px] max-[680px]:top-[86px] max-[880px]:top-[82px] max-[880px]:border-4 max-[880px]:px-5 max-[880px]:py-[18px] max-[760px]:left-[clamp(170px,13vw,220px)] max-[760px]:right-[230px]">
+        <span className="absolute -left-6 bottom-14 h-7 w-7 rotate-45 rounded-bl-lg border-b-[8px] border-l-[8px] border-black/70 bg-[linear-gradient(180deg,#ffffff,#f2f8ff)]" />
+        <span className="absolute -left-[52px] bottom-[34px] h-[18px] w-[18px] rounded-full border-[6px] border-black/70 bg-[linear-gradient(180deg,#ffffff,#f2f8ff)]" />
 
-        <div className="q2-bTextRow">
-          <div className="q2-bText">{t.q1}</div>
+        <div className="mb-[10px] text-[28px] font-black text-slate-900 max-[980px]:text-2xl max-[880px]:mb-2 max-[880px]:text-2xl">
+          {t.title}
+        </div>
 
-          {/* ✅ ปุ่มเสียงอยู่ “หลังข้อความ” */}
+        <div className="flex items-start gap-[14px]">
+          <div className="flex-1 rounded-[18px] border-2 border-dashed border-blue-500/30 bg-[linear-gradient(135deg,rgba(255,255,255,.9),rgba(239,246,255,.88)),repeating-linear-gradient(0deg,rgba(148,163,184,.10),rgba(148,163,184,.10)_2px,transparent_2px,transparent_26px)] px-4 py-[14px] text-2xl font-black leading-[1.3] text-slate-900 max-[980px]:text-xl max-[880px]:text-xl">
+            {t.q1}
+          </div>
+
           <button
-            className="q2-speakBtn"
+            className="h-[54px] w-[54px] shrink-0 rounded-2xl bg-[linear-gradient(180deg,#ffffff,#e6f0ff)] text-[22px] shadow-[inset_0_-5px_0_rgba(0,0,0,.12),0_18px_34px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[inset_0_-5px_0_rgba(0,0,0,.12),0_24px_44px_rgba(0,0,0,.20)] active:translate-y-px max-[880px]:h-12 max-[880px]:w-12 max-[880px]:text-xl"
             type="button"
             onClick={() => speak(`${t.title}\n${t.q1}`)}
             title={t.speak}
           >
-            🔊
+            {"\uD83D\uDD0A"}
           </button>
         </div>
       </div>
 
-      {/* right actions */}
-      <div className="q2-rightActions">
+      <div className="absolute bottom-[clamp(14px,2.4vh,24px)] right-7 z-[4] flex flex-col gap-[14px] max-[680px]:bottom-[90px] max-[680px]:right-[18px] max-[760px]:bottom-4">
         <button
-          className="q2-hintBtn"
+          className="flex h-[92px] w-[210px] items-center justify-center gap-3 rounded-2xl bg-white/92 shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[190px] max-[880px]:h-[84px] max-[880px]:w-[190px]"
           type="button"
           onClick={() => navigate(ANSWER_HINT_PATH)}
           title={t.btnHint.replace("\n", " ")}
         >
-          <span className="q2-hIcon">?</span>
-          <span className="q2-hText">{t.btnHint}</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-400 text-xl font-black text-slate-900 shadow-[inset_0_-4px_0_rgba(0,0,0,.12)]">
+            ?
+          </span>
+          <span className="whitespace-pre-line text-[20px] font-black leading-[1.05] text-slate-900 max-[880px]:text-lg">
+            {t.btnHint}
+          </span>
         </button>
 
         <button
-          className="q2-startBtn"
+          className="flex h-[132px] w-[210px] flex-col items-center justify-center gap-[10px] rounded-[18px] bg-white/92 shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[190px] max-[880px]:h-[116px] max-[880px]:w-[190px]"
           type="button"
           onClick={() => navigate(ACTION_PATH)}
           title={t.btnStart.replace("\n", " ")}
         >
-          <span className="q2-playCircle">▶</span>
-          <span className="q2-startText">{t.btnStart}</span>
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-[28px] font-black shadow-[inset_0_-5px_0_rgba(0,0,0,.12)] max-[880px]:h-[54px] max-[880px]:w-[54px] max-[880px]:text-2xl">
+            {"\u25B6"}
+          </span>
+          <span className="whitespace-pre-line text-center text-[20px] font-black leading-[1.05] text-slate-900 max-[880px]:text-lg">
+            {t.btnStart}
+          </span>
         </button>
       </div>
 
-      {/* language bar bottom-left */}
-      <div className="q2-langBar">
+      <div className="absolute bottom-4 left-[18px] z-[5] flex items-center gap-[10px] rounded-[18px] bg-white/92 px-3 py-[10px] shadow-[0_18px_38px_rgba(0,0,0,.22)]">
         <button
-          className={`q2-chip ${lang === "th" ? "active" : ""}`}
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
+            lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+          }`}
           onClick={() => setLang("th")}
           type="button"
         >
           {t.langTh}
         </button>
         <button
-          className={`q2-chip ${lang === "en" ? "active" : ""}`}
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
+            lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+          }`}
           onClick={() => setLang("en")}
           type="button"
         >
           {t.langEn}
         </button>
         <button
-          className={`q2-chip ${lang === "ms" ? "active" : ""}`}
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
+            lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+          }`}
           onClick={() => setLang("ms")}
           type="button"
         >

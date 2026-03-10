@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4GravityExp1Action.css";
 
@@ -377,14 +377,14 @@ export default function P4GravityExp1Action() {
                 onClick={() => setLang("en")}
                 type="button"
               >
-                มลายู
+                English
               </button>
               <button
                 className={`lang-btn ${lang === "ms" ? "active" : ""}`}
                 onClick={() => setLang("ms")}
                 type="button"
               >
-                อังกฤษ
+                Melayu
               </button>
             </div>
           </div>

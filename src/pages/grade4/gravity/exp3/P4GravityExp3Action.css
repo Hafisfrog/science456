@@ -1,6 +1,7 @@
 ﻿.e3a-page{
   width:100vw;
-  height:100vh;
+  height:100dvh;
+  min-height:100vh;
   position:relative;
   overflow:hidden;
   font-family:'Prompt', sans-serif;
@@ -125,9 +126,10 @@
 
 /* ===== top title ===== */
 .e3a-titleBar{
-  position:absolute;
-  left:0; right:0;
-  top:10px;
+  position:fixed;
+  left:18px;
+  right:18px;
+  top:18px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -138,13 +140,17 @@
   pointer-events:auto;
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  border-radius:18px;
-  background:rgba(255,255,255,.90);
+  justify-content:center;
+  gap:12px;
+  width:min(760px, calc(100% - 220px));
+  padding:12px 18px;
+  border-radius:16px;
+  background:rgba(255,255,255,.92);
   font-size:18px;
-  font-weight:1200;
-  box-shadow:0 18px 45px rgba(0,0,0,.26);
+  font-weight:1000;
+  color:#111827;
+  text-align:center;
+  box-shadow:0 14px 28px rgba(0,0,0,.22);
 }
 .e3a-audioInline{
   border:none;
@@ -422,11 +428,11 @@
 }
 .e3a-chipAudio:active{ transform: translateY(1px); }
 
-/* floating back (bottom-right) */
+/* floating back (top-left) */
 .e3a-backBR{
-  position:absolute;
-  right:18px;
-  bottom:18px;
+  position:fixed;
+  left:18px;
+  top:18px;
   z-index:9;
 
   border:none;
@@ -488,30 +494,129 @@
 
 /* responsive */
 @media (max-width: 980px){
-  .e3a-split{ grid-template-columns:1fr; }
+  .e3a-page{
+    height:auto;
+    min-height:100dvh;
+    overflow-y:auto;
+    padding-bottom:84px;
+  }
+  .e3a-split{
+    position:relative;
+    inset:auto;
+    margin-top:64px;
+    grid-template-columns:1fr;
+    grid-template-rows: 260px 260px;
+  }
   .e3a-panel.earth{ border-right:none; border-bottom:4px solid rgba(255,255,255,.45); }
+  .e3a-panelTop{ top:12px; left:12px; right:12px; }
+  .e3a-badge{ padding:7px 10px; font-size:13px; }
+  .e3a-measure{ min-width: 170px; padding:8px 10px; border-radius:12px; }
+  .e3a-measure .k{ font-size:11px; }
+  .e3a-measure .v{ font-size:20px; }
+  .e3a-boy{ top:54px; width:min(132px, 30vw); }
+  .e3a-scaleWrap{ top:158px; width:min(84px, 21vw); }
+  .e3a-objectOnScale{ top:-72px; width:84px; height:84px; }
+
+  .e3a-titleBar{
+    left:10px;
+    right:10px;
+    top:10px;
+    justify-content:flex-start;
+  }
+  .e3a-title{
+    width:calc(100% - 74px);
+    min-height:52px;
+    margin-left:auto;
+    border-radius:14px;
+    padding:10px 12px;
+    font-size:15px;
+    line-height:1.25;
+    justify-content:space-between;
+    box-shadow:0 14px 28px rgba(0,0,0,.22);
+  }
+  .e3a-audioInline{ width:36px; height:36px; border-radius:10px; font-size:15px; }
 
   .e3a-chooser{
-    bottom:108px;
-    width:calc(100% - 28px);
+    position:relative;
+    left:auto;
+    transform:none;
+    bottom:auto;
+    margin:10px 12px 0;
+    width:auto;
+    border-radius:14px;
+    padding:9px;
   }
+  .e3a-chooserTitle{ font-size:13px; gap:6px; }
+  .e3a-savedPill{ font-size:11px; padding:4px 7px; }
   .e3a-chooserMain{
     flex-direction:column;
     align-items:stretch;
-    gap:10px;
+    gap:8px;
   }
-  .e3a-actions{ width:100%; }
+  .e3a-actions{ width:100%; border-radius:14px; padding:8px; gap:8px; }
+  .e3a-btn{ padding:10px 10px; border-radius:12px; font-size:14px; }
+  .e3a-actBottom{ gap:8px; }
+
+  .e3a-langDock{
+    position:fixed;
+    left:10px;
+    bottom:10px;
+    padding:7px;
+    border-radius:12px;
+    gap:6px;
+    max-width:calc(100vw - 80px);
+    flex-wrap:wrap;
+  }
+  .e3a-chip{ padding:8px 10px; border-radius:10px; font-size:13px; }
+  .e3a-backBR{
+    left:10px;
+    top:10px;
+    width:48px;
+    height:48px;
+  }
+  .e3a-backBR .ico{ font-size:18px; }
+  .e3a-toast{
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:74px;
+    transform:none;
+    min-width:0;
+    border-radius:12px;
+    padding:9px 10px;
+  }
 }
 
 @media (max-width: 520px){
-  .e3a-objCard{ flex:0 0 175px; }
-  .e3a-btn{ padding:10px 11px; font-size:14px; }
-  .e3a-toast{ bottom:190px; }
+  .e3a-split{ grid-template-rows: 230px 230px; }
+  .e3a-measure{ min-width: 150px; }
+  .e3a-measure .v{ font-size:18px; }
+  .e3a-objCard{ flex:0 0 160px; border-radius:14px; padding:6px; }
+  .e3a-objImgWrap{ height:94px; border-radius:10px; }
+  .e3a-objImg{ height:145px; }
+  .e3a-objName{ font-size:13px; }
+  .e3a-objMeta{ font-size:11px; }
+  .e3a-btn{ padding:9px 10px; font-size:13px; }
 
-  .e3a-actBottom{
-    grid-template-columns:1fr;
+  .e3a-actBottom{ grid-template-columns:1fr; }
+  .e3a-objectOnScale{ top:-56px; width:68px; height:68px; }
+  .e3a-title{
+    width:calc(100% - 64px);
+    font-size:14px;
   }
+  .e3a-chooser{ margin:8px 10px 0; }
+}
 
-  /* ✅ วัตถุบนตาชั่งในจอเล็ก ให้เล็กลงนิด */
-  .e3a-objectOnScale{ top:-46px; width:78px; height:78px; }
+@media (max-width: 390px){
+  .e3a-split{ grid-template-rows: 214px 214px; }
+  .e3a-panelTop{ left:10px; right:10px; }
+  .e3a-badge{ font-size:12px; }
+  .e3a-measure{ min-width: 138px; }
+  .e3a-measure .k{ font-size:10px; }
+  .e3a-measure .v{ font-size:16px; }
+  .e3a-scaleWrap{ top:146px; }
+  .e3a-title{ font-size:13px; }
+  .e3a-chip{ padding:7px 9px; font-size:12px; }
+  .e3a-backBR{ width:44px; height:44px; }
+  .e3a-backBR .ico{ font-size:16px; }
 }

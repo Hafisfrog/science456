@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+﻿import { useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./P4GravityExp2Result.css";
 
@@ -21,18 +21,20 @@ export default function P4GravityExp2Result() {
     try {
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(msg);
-      u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      const utterance = new SpeechSynthesisUtterance(msg);
+      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
       speakingRef.current = true;
-      u.onend = () => (speakingRef.current = false);
-      window.speechSynthesis.speak(u);
+      utterance.onend = () => {
+        speakingRef.current = false;
+      };
+      window.speechSynthesis.speak(utterance);
     } catch {
-      // ignore
+      // ignore speech errors
     }
   };
 
-  const text = useMemo(() => {
-    return {
+  const text = useMemo(
+    () => ({
       th: {
         title: "ผลการทดลอง",
         colObj: "วัตถุ",
@@ -43,7 +45,7 @@ export default function P4GravityExp2Result() {
         avg: "น้ำหนัก\nเฉลี่ย",
         summaryTitle: "สรุปผลการทดลอง",
         retry: "ทดลองอีกครั้ง",
-        next: "ต่อไป »",
+        next: "ต่อไป →",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
@@ -52,8 +54,9 @@ export default function P4GravityExp2Result() {
         bocce: "ลูกเปตอง",
         feather: "ขนนก",
         unitN: "นิวตัน",
+        noData: "ยังไม่มีข้อมูล",
         summary:
-          "จากการทำกิจกรรม พบว่า มวลของวัตถุมีผลต่อแรงโน้มถ่วงของโลก โดยสังเกตได้จากการยืดของสปริงในเครื่องชั่งสปริง มวลมากแรงโน้มถ่วงมาก น้ำหนักมาก มวลน้อยแรงโน้มถ่วงน้อย น้ำหนักน้อย ดังนั้นแรงโน้มถ่วงของโลกที่กระทำต่อวัตถุแต่ละชนิดจึงมีค่าต่างกัน",
+          "จากกิจกรรมนี้จะเห็นได้ว่ามวลของวัตถุมีผลต่อแรงโน้มถ่วงของโลกและน้ำหนักที่ชั่งได้ วัตถุที่มีมวลมากจะมีน้ำหนักมากกว่า ส่วนวัตถุที่มีมวลน้อยจะมีน้ำหนักน้อยกว่า",
       },
       en: {
         title: "Experiment Results",
@@ -65,7 +68,7 @@ export default function P4GravityExp2Result() {
         avg: "Average\nWeight",
         summaryTitle: "Conclusion",
         retry: "Try again",
-        next: "Next »",
+        next: "Next →",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
@@ -74,8 +77,9 @@ export default function P4GravityExp2Result() {
         bocce: "Bocce Ball",
         feather: "Feather",
         unitN: "N",
+        noData: "No data",
         summary:
-          "From this activity, we found that an object's mass affects gravity and weight. Greater mass gives greater gravitational force, so the measured weight is greater. Smaller mass gives smaller gravitational force, so the measured weight is smaller.",
+          "This activity shows that an object's mass affects gravity and the weight measured by the spring scale. Greater mass gives greater weight, while smaller mass gives smaller weight.",
       },
       ms: {
         title: "Keputusan Eksperimen",
@@ -87,20 +91,22 @@ export default function P4GravityExp2Result() {
         avg: "Purata\nBerat",
         summaryTitle: "Rumusan",
         retry: "Cuba lagi",
-        next: "Seterusnya »",
+        next: "Seterusnya →",
         chipTh: "Thai",
         chipEn: "English",
-        chipMs: "Malay",
+        chipMs: "Melayu",
         speakAll: "Dengar satu halaman",
         ball: "Bola",
         bocce: "Bola Bocce",
         feather: "Bulu",
         unitN: "N",
+        noData: "Tiada data",
         summary:
-          "Daripada aktiviti ini, kita dapati jisim objek mempengaruhi graviti dan berat. Jisim lebih besar menghasilkan daya graviti lebih besar, jadi berat yang diukur lebih besar. Jisim lebih kecil menghasilkan daya graviti lebih kecil, jadi berat yang diukur lebih kecil.",
+          "Aktiviti ini menunjukkan bahawa jisim objek mempengaruhi graviti dan berat yang diukur dengan penimbang spring. Jisim yang lebih besar memberi berat yang lebih besar, manakala jisim yang lebih kecil memberi berat yang lebih kecil.",
       },
-    };
-  }, []);
+    }),
+    []
+  );
 
   const t = text[lang];
 
@@ -110,16 +116,16 @@ export default function P4GravityExp2Result() {
     return t.feather;
   };
 
-  const fmtN = (n) => {
-    const num = Number(n);
+  const fmtN = (value) => {
+    const num = Number(value);
     if (!Number.isFinite(num)) return "";
     return num < 0.1 ? num.toFixed(3) : num.toFixed(2);
   };
 
   const latestRecordByItemId = useMemo(() => {
     const map = {};
-    records.forEach((r) => {
-      map[r.itemId] = r;
+    records.forEach((record) => {
+      map[record.itemId] = record;
     });
     return map;
   }, [records]);
@@ -128,24 +134,23 @@ export default function P4GravityExp2Result() {
     const types = ["ball", "bocce", "feather"];
 
     const findItem = (type, piece) =>
-      (items || []).find((x) => x.type === type && Number(x.piece) === Number(piece)) || null;
+      items.find((item) => item.type === type && Number(item.piece) === Number(piece)) || null;
 
     const getCell = (type, piece) => {
-      const it = findItem(type, piece);
-      if (!it) return { show: false, val: null };
-      if (!selectedIds.includes(it.id)) return { show: false, val: null };
+      const item = findItem(type, piece);
+      if (!item || !selectedIds.includes(item.id)) return { show: false, val: null };
 
-      const rec = latestRecordByItemId[it.id];
-      if (!rec || !Number.isFinite(Number(rec.weightN))) return { show: false, val: null };
-      return { show: true, val: Number(rec.weightN) };
+      const record = latestRecordByItemId[item.id];
+      if (!record || !Number.isFinite(Number(record.weightN))) return { show: false, val: null };
+      return { show: true, val: Number(record.weightN) };
     };
 
     return types.map((type) => {
       const c1 = getCell(type, 1);
       const c2 = getCell(type, 2);
       const c3 = getCell(type, 3);
-      const vals = [c1, c2, c3].filter((c) => c.show).map((c) => c.val);
-      const avg = vals.length ? vals.reduce((s, x) => s + x, 0) / vals.length : null;
+      const values = [c1, c2, c3].filter((cell) => cell.show).map((cell) => cell.val);
+      const avg = values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
 
       return {
         type,
@@ -154,18 +159,19 @@ export default function P4GravityExp2Result() {
         avg,
       };
     });
-  }, [items, latestRecordByItemId, selectedIds, lang]);
+  }, [items, latestRecordByItemId, selectedIds, t]);
 
   const speakPage = () => {
     const rowText = tableRows
-      .map((r) => {
-        const trials = r.cells
-          .map((c) => (c.show ? `${fmtN(c.val)} ${lang === "th" ? t.unitN : "N"}` : "-"))
+      .map((row) => {
+        const trials = row.cells
+          .map((cell) => (cell.show ? `${fmtN(cell.val)} ${t.unitN}` : t.noData))
           .join(", ");
-        const avg = Number.isFinite(r.avg) ? `${fmtN(r.avg)} ${lang === "th" ? t.unitN : "N"}` : "-";
-        return `${r.label}: ${trials}. ${t.avg.replace("\n", " ")} ${avg}`;
+        const avg = Number.isFinite(row.avg) ? `${fmtN(row.avg)} ${t.unitN}` : t.noData;
+        return `${row.label}: ${trials}. ${t.avg.replace("\n", " ")} ${avg}`;
       })
       .join("\n");
+
     speak(`${t.title}\n${t.summaryTitle}\n${t.summary}\n\n${rowText}`);
   };
 
@@ -176,40 +182,47 @@ export default function P4GravityExp2Result() {
       <div className="exp2r2-title">{t.title}</div>
 
       <div className="exp2r2-sheet">
-        <div className="exp2r2-table">
-          <div className="exp2r2-h exp2r2-h-obj">{t.colObj}</div>
-          <div className="exp2r2-h exp2r2-h-mid">{t.colMeasured}</div>
-          <div className="exp2r2-h exp2r2-h-avg">{t.avg}</div>
+        <div className="exp2r2-tableWrap">
+          <div className="exp2r2-table">
+            <div className="exp2r2-h exp2r2-h-obj">{t.colObj}</div>
+            <div className="exp2r2-h exp2r2-h-mid">{t.colMeasured}</div>
+            <div className="exp2r2-h exp2r2-h-avg">{t.avg}</div>
 
-          <div className="exp2r2-subh exp2r2-subh-t1">{t.t1}</div>
-          <div className="exp2r2-subh exp2r2-subh-t2">{t.t2}</div>
-          <div className="exp2r2-subh exp2r2-subh-t3">{t.t3}</div>
+            <div className="exp2r2-subh exp2r2-subh-t1">{t.t1}</div>
+            <div className="exp2r2-subh exp2r2-subh-t2">{t.t2}</div>
+            <div className="exp2r2-subh exp2r2-subh-t3">{t.t3}</div>
 
-          {tableRows.map((r) => (
-            <div className="exp2r2-row" key={r.type}>
-              <div className="exp2r2-cell exp2r2-objCell">{r.label}</div>
-              {r.cells.map((c, idx) => (
-                <div className="exp2r2-cell" key={idx}>
-                  {c.show ? (
+            {tableRows.map((row) => (
+              <div className="exp2r2-row" key={row.type}>
+                <div className="exp2r2-cell exp2r2-objCell">
+                  <span className="exp2r2-mobileLabel">{t.colObj}</span>
+                  {row.label}
+                </div>
+                {row.cells.map((cell, idx) => (
+                  <div className="exp2r2-cell" key={idx}>
+                    <span className="exp2r2-mobileLabel">{[t.t1, t.t2, t.t3][idx]}</span>
+                    {cell.show ? (
+                      <span className="exp2r2-val">
+                        {fmtN(cell.val)} {t.unitN}
+                      </span>
+                    ) : (
+                      <span className="exp2r2-dots">{t.noData}</span>
+                    )}
+                  </div>
+                ))}
+                <div className="exp2r2-cell exp2r2-avgCell">
+                  <span className="exp2r2-mobileLabel">{t.avg.replace("\n", " ")}</span>
+                  {Number.isFinite(row.avg) ? (
                     <span className="exp2r2-val">
-                      {fmtN(c.val)} {lang === "th" ? t.unitN : "N"}
+                      {fmtN(row.avg)} {t.unitN}
                     </span>
                   ) : (
-                    <span className="exp2r2-dots">........................</span>
+                    <span className="exp2r2-dots">{t.noData}</span>
                   )}
                 </div>
-              ))}
-              <div className="exp2r2-cell exp2r2-avgCell">
-                {Number.isFinite(r.avg) ? (
-                  <span className="exp2r2-val">
-                    {fmtN(r.avg)} {lang === "th" ? t.unitN : "N"}
-                  </span>
-                ) : (
-                  <span className="exp2r2-dots">........................</span>
-                )}
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="exp2r2-summaryTitle">{t.summaryTitle}</div>
@@ -236,9 +249,9 @@ export default function P4GravityExp2Result() {
         <button className={`exp2r2-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
           {t.chipMs}
         </button>
-        <button className="exp2r2-speakBtn" type="button" onClick={speakPage} title={t.speakAll}>
+        {/* <button className="exp2r2-speakBtn" type="button" onClick={speakPage} title={t.speakAll}>
           🔊
-        </button>
+        </button> */}
       </div>
 
       <button className="exp2r2-retry" type="button" onClick={() => navigate(BACK_ACTION, { state: { lang } })}>
