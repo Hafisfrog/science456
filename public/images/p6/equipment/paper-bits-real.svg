@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Paper bits">
+  <defs>
+    <linearGradient id="bitFront" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f9fcff"/>
+      <stop offset="100%" stop-color="#dde5ef"/>
+    </linearGradient>
+    <linearGradient id="bitBack" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef3f8"/>
+      <stop offset="100%" stop-color="#cfd9e5"/>
+    </linearGradient>
+    <filter id="bitsShadow" x="-35%" y="-35%" width="180%" height="210%">
+      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#1f2937" flood-opacity=".2"/>
+    </filter>
+  </defs>
+
+  <rect width="900" height="620" fill="none"/>
+
+  <g filter="url(#bitsShadow)">
+    <g transform="translate(214 170)">
+      <path d="M38 12 150 0l18 74-111 26L0 59Z" fill="url(#bitBack)" stroke="#bdcad8" stroke-width="3"/>
+      <path d="M171 45 285 26l19 82-101 24-43-52Z" fill="url(#bitFront)" stroke="#c6d2de" stroke-width="3"/>
+      <path d="M88 112 191 93l27 77-108 28-31-53Z" fill="url(#bitFront)" stroke="#c0ccd9" stroke-width="3"/>
+      <path d="M240 117 344 97l28 77-110 31-34-54Z" fill="url(#bitBack)" stroke="#bcc8d6" stroke-width="3"/>
+      <path d="M22 194 129 175l24 75-109 32-31-53Z" fill="url(#bitFront)" stroke="#c7d3df" stroke-width="3"/>
+      <path d="M149 213 269 195l18 80-116 25-29-49Z" fill="url(#bitBack)" stroke="#becbd9" stroke-width="3"/>
+      <path d="M302 206 401 188l21 73-102 27-30-48Z" fill="url(#bitFront)" stroke="#c3cfdb" stroke-width="3"/>
+      <path d="M88 302 197 281l20 72-101 28-34-44Z" fill="url(#bitBack)" stroke="#bcc9d7" stroke-width="3"/>
+      <path d="M235 314 352 292l18 69-108 28-37-43Z" fill="url(#bitFront)" stroke="#c5d0dc" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

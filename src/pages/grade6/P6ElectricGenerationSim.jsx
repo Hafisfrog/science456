@@ -37,6 +37,20 @@ const UI_TEXT = {
     trial3Short: "ครั้งที่ 3 (5 นาที)",
     next: "ต่อไป »",
     listen: "ฟังข้อความ",
+    resultTitle: "ผลการทดลอง",
+    objectColumn: "วัตถุ",
+    outcomeColumn: "ผลการทดลอง",
+    timeColumn: "เวลา (นาที)",
+    visualColumn: "ภาพแสดงการดูดของเศษกระดาษ",
+    objectValue: "ลูกโป่ง + เศษกระดาษ",
+    outcomeNone: "ไม่เกิดการเปลี่ยนแปลง",
+    outcomeMid: "เศษกระดาษถูกดูดเล็กน้อย",
+    outcomeHigh: "เศษกระดาษถูกดูดมากขึ้น",
+    closeResult: "ปิด",
+    continueExperiment: "ทดลองต่อ",
+    summaryReady: "สรุปผลทั้งหมด",
+    summaryProgress: "กรุณาทำการทดลองให้ครบทั้ง 3 ครั้งก่อนสรุปผล",
+    summaryDone: "ทดลองครบทั้ง 3 ครั้งแล้ว ไปดูสรุปผลทั้งหมดได้เลย",
   },
   en: {
     back: "← Back",
@@ -65,6 +79,20 @@ const UI_TEXT = {
     trial3Short: "Trial 3 (5 min)",
     next: "Next »",
     listen: "Read screen",
+    resultTitle: "Experiment Result",
+    objectColumn: "Object",
+    outcomeColumn: "Result",
+    timeColumn: "Time (min)",
+    visualColumn: "Paper attraction view",
+    objectValue: "Balloon + Paper Bits",
+    outcomeNone: "No visible change",
+    outcomeMid: "Paper bits are slightly attracted",
+    outcomeHigh: "Paper bits are strongly attracted",
+    closeResult: "Close",
+    continueExperiment: "Continue",
+    summaryReady: "View Full Summary",
+    summaryProgress: "Complete all 3 trials before viewing the full summary",
+    summaryDone: "All 3 trials are complete. Open the full summary.",
   },
   ms: {
     back: "← Kembali",
@@ -93,7 +121,27 @@ const UI_TEXT = {
     trial3Short: "Ujian 3 (5 minit)",
     next: "Seterusnya »",
     listen: "Baca skrin",
+    resultTitle: "Hasil Eksperimen",
+    objectColumn: "Objek",
+    outcomeColumn: "Hasil",
+    timeColumn: "Masa (minit)",
+    visualColumn: "Paparan tarikan cebisan kertas",
+    objectValue: "Belon + Cebisan Kertas",
+    outcomeNone: "Tiada perubahan yang ketara",
+    outcomeMid: "Cebisan kertas tertarik sedikit",
+    outcomeHigh: "Cebisan kertas tertarik dengan lebih kuat",
+    closeResult: "Tutup",
+    continueExperiment: "Teruskan",
+    summaryReady: "Lihat Ringkasan Penuh",
+    summaryProgress: "Lengkapkan 3 ujian dahulu sebelum melihat ringkasan penuh",
+    summaryDone: "Semua 3 ujian telah lengkap. Buka ringkasan penuh.",
   },
+};
+
+const TRIAL_RESULTS = {
+  "trial-1": { time: "0", intensity: "none", outcomeKey: "outcomeNone" },
+  "trial-2": { time: "2", intensity: "mid", outcomeKey: "outcomeMid" },
+  "trial-3": { time: "5", intensity: "high", outcomeKey: "outcomeHigh" },
 };
 
 const PAPER_BASE = [
@@ -119,24 +167,24 @@ const PAPER_TESTING = {
     { x: 7, y: 25, opacity: 0.45, scale: 1 },
   ],
   mid: [
-    { x: -5, y: 12, opacity: 0.4, scale: 1 },
-    { x: 4, y: -56, opacity: 1, scale: 1.08 },
-    { x: 1, y: 10, opacity: 0.4, scale: 1 },
-    { x: 6, y: -54, opacity: 1, scale: 1.08 },
-    { x: 6, y: 14, opacity: 0.35, scale: 1 },
-    { x: 8, y: 10, opacity: 0.4, scale: 1 },
-    { x: -7, y: -50, opacity: 1, scale: 1.08 },
-    { x: 4, y: 16, opacity: 0.3, scale: 1 },
+    { x: -6, y: 6, opacity: 0.5, scale: 1.02 },
+    { x: 4, y: -16, opacity: 0.95, scale: 1.06 },
+    { x: 0, y: 4, opacity: 0.45, scale: 1 },
+    { x: 8, y: -14, opacity: 0.95, scale: 1.06 },
+    { x: 6, y: 10, opacity: 0.38, scale: 1 },
+    { x: 10, y: 6, opacity: 0.45, scale: 1 },
+    { x: -10, y: -12, opacity: 0.95, scale: 1.06 },
+    { x: 6, y: 12, opacity: 0.35, scale: 1 },
   ],
   high: [
-    { x: -14, y: -66, opacity: 0.72, scale: 1.05 },
-    { x: -6, y: -72, opacity: 0.72, scale: 1.05 },
-    { x: 2, y: -64, opacity: 0.72, scale: 1.05 },
-    { x: 10, y: -70, opacity: 0.72, scale: 1.05 },
-    { x: 16, y: -62, opacity: 0.72, scale: 1.05 },
-    { x: 22, y: -56, opacity: 0.72, scale: 1.05 },
-    { x: 4, y: -50, opacity: 0.72, scale: 1.05 },
-    { x: 8, y: -30, opacity: 0.48, scale: 0.98 },
+    { x: -12, y: -22, opacity: 0.8, scale: 1.06 },
+    { x: -6, y: -24, opacity: 0.82, scale: 1.07 },
+    { x: 2, y: -18, opacity: 0.82, scale: 1.07 },
+    { x: 10, y: -26, opacity: 0.82, scale: 1.07 },
+    { x: 16, y: -18, opacity: 0.82, scale: 1.07 },
+    { x: 20, y: -14, opacity: 0.82, scale: 1.07 },
+    { x: 2, y: -12, opacity: 0.82, scale: 1.07 },
+    { x: 8, y: -8, opacity: 0.6, scale: 1.02 },
   ],
 };
 
@@ -290,6 +338,7 @@ const getPaperStyle = ({ index, trialLevel, isTesting }) => {
 export default function P6ElectricGenerationSim() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const isFreshStart = searchParams.get("fresh") === "1";
   const [lang, setLang] = useState("th");
   const t = UI_TEXT[lang] || UI_TEXT.th;
   const speechLang =
@@ -346,8 +395,10 @@ export default function P6ElectricGenerationSim() {
   const [isTesting, setIsTesting] = useState(false);
   const [remaining, setRemaining] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [completedTrials, setCompletedTrials] = useState(() => readCompletedTrials());
-  const isFreshStart = searchParams.get("fresh") === "1";
+  const [completedTrials, setCompletedTrials] = useState(() =>
+    isFreshStart ? [] : readCompletedTrials(),
+  );
+  const [resultTrialId, setResultTrialId] = useState(null);
 
   const totalTrials = trialOptions.length;
   const completedCount = completedTrials.length;
@@ -355,8 +406,6 @@ export default function P6ElectricGenerationSim() {
   const selectedTrialLabel =
     trialOptions.find((item) => item.id === selectedTrial)?.short?.[lang] || t.trialNotSelected;
   const canStart = Boolean(selectedTrial);
-  const shouldShowHint = !canStart;
-
   const durationSeconds = useMemo(() => {
     if (selectedTrial === "trial-2") return 120;
     if (selectedTrial === "trial-3") return 300;
@@ -374,6 +423,7 @@ export default function P6ElectricGenerationSim() {
     const next = Array.from(new Set([...readCompletedTrials(), selectedTrial]));
     persistCompletedTrials(next);
     setCompletedTrials(next);
+    return next;
   };
 
   const handleToggleTrial = () => {
@@ -386,6 +436,7 @@ export default function P6ElectricGenerationSim() {
     setStarted(false);
     setIsTesting(false);
     setIsRunning(false);
+    setResultTrialId(null);
     const nextDuration = id === "trial-2" ? 120 : id === "trial-3" ? 300 : 0;
     setRemaining(nextDuration);
   };
@@ -415,9 +466,7 @@ export default function P6ElectricGenerationSim() {
 
   useEffect(() => {
     if (!isFreshStart) return;
-
     persistCompletedTrials([]);
-    setCompletedTrials([]);
   }, [isFreshStart]);
 
   useEffect(() => {
@@ -446,9 +495,9 @@ export default function P6ElectricGenerationSim() {
   };
 
   const handleShowResult = () => {
-    if (!trialIndex || !isTesting) return;
+    if (!selectedTrial || !trialIndex || !isTesting) return;
     markTrialCompleted();
-    navigate(`/p6/experiment/electric-generation/result?trial=${trialIndex}`);
+    setResultTrialId(selectedTrial);
   };
 
   const handleResetProgress = () => {
@@ -460,6 +509,7 @@ export default function P6ElectricGenerationSim() {
     setIsTesting(false);
     setRemaining(0);
     setIsRunning(false);
+    setResultTrialId(null);
   };
 
   const formatTime = (value) => {
@@ -475,6 +525,11 @@ export default function P6ElectricGenerationSim() {
 
   const balloonStyle = getBalloonStyle({ trialLevel, started, isTesting, selectedTrial });
   const papersStyle = getPapersContainerStyle({ trialLevel, started, isTesting });
+  const resultData = resultTrialId ? TRIAL_RESULTS[resultTrialId] : null;
+  const resultCompletedCount = resultTrialId
+    ? Array.from(new Set([...completedTrials, resultTrialId])).length
+    : completedCount;
+  const resultAllTrialsCompleted = resultCompletedCount === totalTrials;
   const readScreenText = [
     t.title,
     t.selectTrial,
@@ -631,22 +686,6 @@ export default function P6ElectricGenerationSim() {
               {canStart && <span className="text-[11px] font-bold text-slate-600">{t.startHint}</span>}
             </button>
 
-            {shouldShowHint && (
-              <div className="absolute left-[calc(100%+8px)] top-1/2 -translate-y-1/2 whitespace-nowrap rounded-xl border border-slate-400/50 bg-white px-3 py-2 text-xs font-extrabold text-slate-900 shadow-[0_10px_18px_rgba(17,24,39,0.14)]">
-                {t.chooseTrialFirst}
-              </div>
-            )}
-
-            {allTrialsCompleted && (
-              <button
-                className="mt-2 w-full cursor-pointer rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 px-3 py-2.5 text-[13px] font-black text-white shadow-[0_12px_20px_rgba(37,99,235,0.26)] transition hover:-translate-y-0.5"
-                type="button"
-                onClick={() => navigate("/p6/experiment/electric-generation/summary")}
-              >
-                {t.summary}
-              </button>
-            )}
-
             {isRunning && (
               <button
                 className="mt-2.5 w-full cursor-pointer rounded-xl bg-gradient-to-br from-orange-400 to-orange-600 px-3 py-2.5 text-[13px] font-black text-white shadow-[0_12px_20px_rgba(234,88,12,0.3)] transition hover:-translate-y-0.5"
@@ -701,22 +740,6 @@ export default function P6ElectricGenerationSim() {
             />
           </svg>
         </button>
-
-        <div className="p6-sim-mobile-bubble absolute right-[24%] top-[90px] z-[5] max-w-[340px] rounded-[24px] border-[5px] border-slate-900 bg-gradient-to-br from-white to-[#f8fbff] px-6 py-3 text-[20px] font-extrabold text-slate-900 shadow-[0_14px_26px_rgba(15,23,42,0.18)]">
-  {t.title}
-
-  <span
-  className="absolute right-[-10px] top-1/2 h-[18px] w-[18px] border-b-[3px] border-r-[3px] border-slate-900 bg-white"
-  style={{ transform: "translateY(-50%) rotate(-45deg)" }}
-/>
-</div>
-
-        <img
-          className="p6-sim-mobile-boy absolute bottom-[8%] right-[10%] z-[3] h-[min(500px,78%)] w-auto"
-          style={{ filter: "saturate(1.04) drop-shadow(0 18px 22px rgba(15, 23, 42, 0.24))" }}
-          src="/images/p4/exp1/character-boy.png"
-          alt="นักเรียน"
-        />
 
         <div className="p6-sim-mobile-table absolute bottom-[30%] left-[56%] z-[2] h-[140px] w-[min(860px,76%)] -translate-x-1/2">
           <div
@@ -795,7 +818,7 @@ export default function P6ElectricGenerationSim() {
           ))}
         </div>
 
-<div className="p6-sim-mobile-lang absolute bottom-0 left-6 z-[20] inline-flex items-center gap-2 rounded-[18px] border border-sky-200 bg-white/90 p-2 shadow-[0_10px_16px_rgba(15,23,42,0.12)]">
+<div className="p6-sim-mobile-lang absolute bottom-1 left-6 z-[20] inline-flex items-center gap-2 rounded-[18px] border border-sky-200 bg-white/90 p-2 shadow-[0_10px_16px_rgba(15,23,42,0.12)]">
             {LANGUAGE_OPTIONS.map((option) => (
               <button
                 key={option.id}
@@ -854,6 +877,118 @@ export default function P6ElectricGenerationSim() {
           }}
         />
 
+        {resultData && (
+          <div className="absolute inset-0 z-[50] flex items-center justify-center bg-slate-950/35 p-4 backdrop-blur-[2px]">
+            <div
+              className="w-[min(980px,92vw)] overflow-hidden rounded-[28px] border border-white/80 bg-[linear-gradient(180deg,#eef8ff_0%,#dff1ff_55%,#cfe7f9_100%)] shadow-[0_26px_60px_rgba(15,23,42,0.28)]"
+              role="dialog"
+              aria-modal="true"
+              aria-label={t.resultTitle}
+            >
+              <div className="border-b border-slate-300/60 px-6 py-5 text-center">
+                <h2 className="m-0 text-[clamp(24px,2.4vw,34px)] font-black text-slate-900">
+                  {t.resultTitle}
+                </h2>
+                <p className="mt-2 text-sm font-bold text-slate-600">
+                  {trialOptions.find((item) => item.id === resultTrialId)?.label?.[lang]}
+                </p>
+              </div>
+
+              <div className="p-5 md:p-7">
+                <div className="overflow-hidden rounded-[22px] border border-slate-300/70 bg-white shadow-[0_16px_28px_rgba(15,23,42,0.12)]">
+                  <div className="grid grid-cols-1 bg-[#fdeaa1] px-4 py-4 text-center text-sm font-black text-slate-900 md:grid-cols-[1.1fr_1.25fr_0.8fr_1.5fr] md:text-base">
+                    <div>{t.objectColumn}</div>
+                    <div>{t.outcomeColumn}</div>
+                    <div>{t.timeColumn}</div>
+                    <div>{t.visualColumn}</div>
+                  </div>
+
+                  <div className="grid grid-cols-1 items-center gap-4 px-4 py-5 text-center text-sm font-bold text-slate-900 md:grid-cols-[1.1fr_1.25fr_0.8fr_1.5fr] md:text-base">
+                    <div className="flex items-center justify-center gap-3 md:justify-start">
+                      <div
+                        className="relative h-[42px] w-[42px] rounded-full"
+                        style={{
+                          background:
+                            "radial-gradient(circle at 30% 30%, #ffd7b0 0%, #f3a86e 45%, #e18a54 100%)",
+                          boxShadow: "inset -5px -8px 12px rgba(102, 52, 25, 0.35)",
+                        }}
+                      >
+                        <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-[#e18a54]" />
+                      </div>
+                      <div>{t.objectValue}</div>
+                    </div>
+
+                    <div>{t[resultData.outcomeKey]}</div>
+                    <div>{resultData.time}</div>
+
+                    <div className="relative grid h-[96px] place-items-center">
+                      <div
+                        className="relative h-[54px] w-[54px] rounded-full"
+                        style={{
+                          background:
+                            "radial-gradient(circle at 30% 30%, #ffd7b0 0%, #f3a86e 45%, #e18a54 100%)",
+                          boxShadow: "inset -4px -6px 10px rgba(102, 52, 25, 0.35)",
+                        }}
+                      >
+                        <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-[#e18a54]" />
+                      </div>
+
+                      <div className="absolute bottom-[18px] left-1/2 h-[84px] w-[130px] -translate-x-1/2">
+                        {PAPER_BASE.map((_, idx) => (
+                          <span
+                            key={`result-paper-${idx}`}
+                            className="absolute h-[10px] w-5 rounded-[3px] border border-slate-400/45 bg-gradient-to-br from-white/90 to-slate-100/95 shadow-[0_6px_10px_rgba(17,24,39,0.18)]"
+                            style={getPaperStyle({
+                              index: idx,
+                              trialLevel: resultData.intensity,
+                              isTesting: true,
+                            })}
+                          />
+                        ))}
+                      </div>
+
+                      <div className="absolute bottom-[8px] left-1/2 h-[30px] w-0 -translate-x-1/2 border-l-2 border-dashed border-slate-800">
+                        <span
+                          className="absolute left-[-6px] top-[-6px] h-3 w-3 border-l-2 border-t-2 border-slate-800"
+                          style={{ transform: "rotate(45deg)" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-wrap justify-center gap-3">
+                  <button
+                    className="rounded-[18px] border border-slate-300/80 bg-white px-6 py-3 text-sm font-black text-slate-800 shadow-[0_12px_24px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 md:text-base"
+                    type="button"
+                    onClick={() => setResultTrialId(null)}
+                  >
+                    {t.closeResult}
+                  </button>
+                  <button
+                    className="rounded-[18px] bg-blue-600 px-6 py-3 text-sm font-black text-white shadow-[0_12px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5 md:text-base"
+                    type="button"
+                    onClick={() => {
+                      setResultTrialId(null);
+                      if (resultAllTrialsCompleted) {
+                        navigate("/p6/experiment/electric-generation/summary");
+                      }
+                    }}
+                  >
+                    {resultAllTrialsCompleted ? t.summaryReady : t.continueExperiment}
+                  </button>
+                </div>
+
+                <p className="mt-4 text-center text-sm font-bold text-blue-900">
+                  {resultAllTrialsCompleted
+                    ? t.summaryDone
+                    : `${t.summaryProgress} (${resultCompletedCount}/${totalTrials})`}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         <style>{`
           @keyframes p6-balloon-mid {
             0%, 100% { transform: translateX(-50%) translateY(-4px); }
@@ -881,23 +1016,14 @@ export default function P6ElectricGenerationSim() {
               top: 72px !important;
               width: 120px !important;
             }
-            .p6-sim-mobile-bubble {
-              left: 34% !important;
-              top: 16px !important;
-              max-width: 300px !important;
-              font-size: 18px !important;
-            }
-            .p6-sim-mobile-boy {
-              right: 7% !important;
-              bottom: 8% !important;
-              height: min(460px, 72%) !important;
-            }
             .p6-sim-mobile-table {
               left: 56% !important;
               bottom: 30% !important;
               width: min(780px, 78%) !important;
             }
             .p6-sim-mobile-lang {
+              left: 12px !important;
+              bottom: 4px !important;
               transform: scale(0.9);
               transform-origin: left bottom;
             }
@@ -907,18 +1033,6 @@ export default function P6ElectricGenerationSim() {
               left: 10px !important;
               top: 78px !important;
               width: 112px !important;
-            }
-            .p6-sim-mobile-bubble {
-              left: 30% !important;
-              top: 12px !important;
-              max-width: 260px !important;
-              font-size: 16px !important;
-              border-width: 4px !important;
-            }
-            .p6-sim-mobile-boy {
-              right: 4% !important;
-              bottom: 7% !important;
-              height: min(390px, 66%) !important;
             }
             .p6-sim-mobile-table {
               left: 56% !important;
@@ -930,7 +1044,7 @@ export default function P6ElectricGenerationSim() {
             }
             .p6-sim-mobile-lang {
               left: 8px !important;
-              bottom: 8px !important;
+              bottom: 4px !important;
               transform: scale(0.8);
               transform-origin: left bottom;
             }
@@ -958,20 +1072,6 @@ export default function P6ElectricGenerationSim() {
               width: 104px !important;
               gap: 10px !important;
             }
-            .p6-sim-mobile-bubble {
-              left: 98px !important;
-              right: 12px !important;
-              top: 18px !important;
-              max-width: none !important;
-              font-size: 13px !important;
-              padding: 10px 12px !important;
-              line-height: 1.25 !important;
-            }
-            .p6-sim-mobile-boy {
-              right: 2px !important;
-              bottom: 92px !important;
-              height: 225px !important;
-            }
             .p6-sim-mobile-table {
               left: 59% !important;
               bottom: 150px !important;
@@ -997,7 +1097,7 @@ export default function P6ElectricGenerationSim() {
             }
             .p6-sim-mobile-lang {
               left: 8px !important;
-              bottom: 8px !important;
+              bottom: 2px !important;
               gap: 6px !important;
               padding: 6px !important;
               transform: none !important;

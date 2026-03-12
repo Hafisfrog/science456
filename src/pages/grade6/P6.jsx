@@ -1,22 +1,51 @@
 ﻿import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const LESSONS = [
   {
     id: "force",
-    title: "แรงไฟฟ้าน่ารู้",
+    title: {
+      th: "แรงไฟฟ้าน่ารู้",
+      en: "Electric Force",
+      ms: "Daya Elektrik",
+    },
     image: "/images/p6.png",
     to: "/p6/electric-force",
   },
   {
     id: "circuit",
-    title: "วงจรไฟฟ้าใกล้ตัว",
+    title: {
+      th: "วงจรไฟฟ้าใกล้ตัว",
+      en: "Electric Circuit",
+      ms: "Litar Elektrik",
+    },
     image: "/images/p6.png",
     to: "/p6/electric-circuit",
   },
 ];
 
+function speakText(text, lang) {
+  if (!("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+
+  window.speechSynthesis.speak(utterance);
+}
+
 export default function P6() {
   const navigate = useNavigate();
+
+  const [lang, setLang] = useState("th");
+
+  const voiceMap = {
+    th: "th-TH",
+    en: "en-US",
+    ms: "ms-MY",
+  };
 
   const pageBg = {
     background:
@@ -28,6 +57,8 @@ export default function P6() {
       className="relative h-[100svh] overflow-hidden px-4 pb-6 pt-7 text-center md:px-6 md:pt-8"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+
+      {/* Lightning */}
       <div
         className="pointer-events-none absolute right-[clamp(126px,11vw,190px)] top-3 h-[150px] w-[100px] bg-[#f7bd2b]"
         style={{
@@ -36,43 +67,95 @@ export default function P6() {
         }}
       />
 
+      {/* Header */}
       <header className="mb-5">
         <h1 className="text-4xl font-extrabold text-blue-600 md:text-[46px]">
           วิทยาศาสตร์ ป.6
         </h1>
+
         <p className="mt-2 text-lg text-slate-700 md:text-xl">
           เลือกหน่วยการเรียนรู้
         </p>
       </header>
 
+      {/* Lesson Cards */}
       <section className="mx-auto mt-4 flex w-full flex-1 items-start justify-center">
         <div className="grid w-full max-w-[1320px] grid-cols-1 justify-items-center gap-8 lg:grid-cols-2 lg:gap-10">
+
           {LESSONS.map((lesson) => (
-            <button
+
+            <div
               key={lesson.id}
-              type="button"
-              onClick={() => navigate(lesson.to)}
               className="group flex h-[clamp(460px,56vh,560px)] w-[min(620px,44vw)] max-w-[94vw] flex-col overflow-hidden rounded-[36px] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
             >
-              <div className="flex h-[clamp(250px,32vh,320px)] items-center justify-center overflow-hidden bg-slate-200 px-3 py-2">
+
+              {/* Image */}
+              <div
+                onClick={() => navigate(lesson.to)}
+                className="flex h-[clamp(250px,32vh,320px)] items-center justify-center overflow-hidden bg-slate-200 px-3 py-2 cursor-pointer"
+              >
                 <img
                   src={lesson.image}
-                  alt={lesson.title}
+                  alt={lesson.title[lang]}
                   className="h-full max-w-full object-contain transition duration-300 group-hover:scale-105"
                 />
               </div>
 
-              <div className="flex flex-1 items-center justify-center px-5 py-5 text-center">
+              {/* Title */}
+              <div className="flex flex-1 items-center justify-center gap-3 px-5 py-5 text-center">
+
                 <h2 className="text-[clamp(28px,2.4vw,56px)] font-extrabold leading-[1.15] text-slate-900">
-                  {lesson.title}
+                  {lesson.title[lang]}
                 </h2>
+
+                <button
+                  onClick={() => speakText(lesson.title[lang], voiceMap[lang])}
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-xl shadow hover:bg-blue-200"
+                >
+                  🔊
+                </button>
+
               </div>
-            </button>
+
+            </div>
+
           ))}
+
         </div>
       </section>
 
+      {/* Language Buttons */}
+      <div className="fixed bottom-3 left-3 flex gap-2 bg-white/90 p-2 rounded-xl shadow-lg">
+
+        <button
+          onClick={() => setLang("th")}
+          className={`px-4 py-2 rounded-lg font-bold ${lang === "th" ? "bg-blue-600 text-white" : "bg-slate-200"
+            }`}
+        >
+          ไทย
+        </button>
+
+        <button
+          onClick={() => setLang("en")}
+          className={`px-4 py-2 rounded-lg font-bold ${lang === "en" ? "bg-blue-600 text-white" : "bg-slate-200"
+            }`}
+        >
+          English
+        </button>
+
+        <button
+          onClick={() => setLang("ms")}
+          className={`px-4 py-2 rounded-lg font-bold ${lang === "ms" ? "bg-blue-600 text-white" : "bg-slate-200"
+            }`}
+        >
+          Melayu
+        </button>
+
+      </div>
+
+      {/* Navigation Buttons */}
       <div className="fixed bottom-3 right-3 z-20 flex gap-3 md:bottom-6 md:right-6">
+
         <button
           className="h-14 w-14 rounded-2xl bg-white text-2xl shadow-lg"
           onClick={() => navigate("/grades")}
@@ -86,7 +169,9 @@ export default function P6() {
         >
           →
         </button>
+
       </div>
+
     </div>
   );
 }

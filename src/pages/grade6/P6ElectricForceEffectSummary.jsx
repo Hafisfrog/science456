@@ -90,14 +90,7 @@ export default function P6ElectricForceEffectSummary() {
             type="button"
             onClick={() => navigate("/p6/experiment/electric-force-effect/sim")}
           >
-            ← กลับหน้าจำลอง
-          </button>
-          <button
-            className="cursor-pointer rounded-2xl bg-blue-600 px-[18px] py-3 font-black text-white shadow-[0_16px_28px_rgba(17,24,39,0.14)] transition hover:-translate-y-0.5"
-            type="button"
-            onClick={() => navigate("/p6/electric-force/experiments")}
-          >
-            กลับหน้าเลือกการทดลอง →
+            ← กลับหน้าทดลอง
           </button>
         </div>
 

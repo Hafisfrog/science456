@@ -1,26 +1,71 @@
-﻿import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const LANGUAGES = [
+  { key: "th", label: "ไทย" },
+  { key: "en", label: "English" },
+  { key: "ms", label: "Melayu" },
+];
 
 const EXPERIMENTS = [
   {
     id: "exp-1",
-    title: "การทดลองที่ 1",
-    subtitle: "การเกิดแรงไฟฟ้า",
+    title: {
+      th: "การทดลองที่ 1",
+      en: "Experiment 1",
+      ms: "Eksperimen 1",
+    },
+    subtitle: {
+      th: "การเกิดแรงไฟฟ้า",
+      en: "Generating Electric Force",
+      ms: "Penghasilan Daya Elektrik",
+    },
     image: "/images/p6.png",
     path: "/p6/experiment/electric-generation/materials?from=unit",
   },
   {
     id: "exp-2",
-    title: "การทดลองที่ 2",
-    subtitle: "ผลของแรงไฟฟ้า",
+    title: {
+      th: "การทดลองที่ 2",
+      en: "Experiment 2",
+      ms: "Eksperimen 2",
+    },
+    subtitle: {
+      th: "ผลของแรงไฟฟ้า",
+      en: "Effects of Electric Force",
+      ms: "Kesan Daya Elektrik",
+    },
     image: "/images/p6.png",
     path: "/p6/experiment/electric-force-effect",
   },
 ];
 
+const PAGE_COPY = {
+  th: {
+    title: "แรงไฟฟ้าน่ารู้",
+    subtitle: "เลือกการทดลอง",
+    backLabel: "กลับคำศัพท์",
+    languageLabel: "เลือกภาษา",
+  },
+  en: {
+    title: "Electric Force",
+    subtitle: "Choose an Experiment",
+    backLabel: "Back to Vocabulary",
+    languageLabel: "Choose language",
+  },
+  ms: {
+    title: "Daya Elektrik",
+    subtitle: "Pilih Eksperimen",
+    backLabel: "Kembali ke Kosa Kata",
+    languageLabel: "Pilih bahasa",
+  },
+};
+
 export default function Grade6() {
   const navigate = useNavigate();
+  const [language, setLanguage] = useState("th");
   const backPath = "/p6/electric-force/vocab";
-  const nextPath = "/p6/electric-force/recap";
+  const copy = PAGE_COPY[language];
 
   const pageBg = {
     background:
@@ -48,9 +93,9 @@ export default function Grade6() {
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] flex-col">
         <h1 className="m-0 text-4xl font-extrabold text-blue-600 md:text-[72px]">
-          แรงไฟฟ้าน่ารู้
+          {copy.title}
         </h1>
-        <p className="mt-2 text-lg text-slate-700 md:text-[45px]">เลือกการทดลอง</p>
+        <p className="mt-2 text-lg text-slate-700 md:text-[45px]">{copy.subtitle}</p>
 
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
           <div className="grid w-full max-w-[1120px] grid-cols-1 justify-items-center gap-8 lg:translate-x-4 lg:grid-cols-2 xl:translate-x-5">
@@ -64,15 +109,17 @@ export default function Grade6() {
                 <div className="flex h-[260px] items-center justify-center bg-slate-200 px-3 py-2">
                   <img
                     src={item.image}
-                    alt={item.subtitle}
+                    alt={item.subtitle[language]}
                     className="h-full max-w-full object-contain object-center transition duration-300 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex-1 px-5 pb-5 pt-4 text-center">
                   <div className="text-[clamp(18px,1.8vw,30px)] font-extrabold leading-[1.12] text-slate-900">
-                    {item.title}
+                    {item.title[language]}
                   </div>
-                  <div className="mt-2 text-sm text-slate-700 md:text-base">{item.subtitle}</div>
+                  <div className="mt-2 text-sm text-slate-700 md:text-base">
+                    {item.subtitle[language]}
+                  </div>
                 </div>
               </button>
             ))}
@@ -80,24 +127,40 @@ export default function Grade6() {
         </section>
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-6 md:right-6">
+      <div className="fixed bottom-3 left-3 z-20 rounded-[28px] bg-white/95 p-2 shadow-[0_16px_34px_rgba(23,34,49,0.18)] md:bottom-6 md:left-6">
+        <div className="flex items-center gap-2" role="group" aria-label={copy.languageLabel}>
+          {LANGUAGES.map((option) => {
+            const isActive = option.key === language;
+
+            return (
+              <button
+                key={option.key}
+                type="button"
+                onClick={() => setLanguage(option.key)}
+                className={`min-w-[82px] rounded-[18px] px-5 py-3 text-base font-bold transition ${
+                  isActive
+                    ? "bg-sky-500 text-white shadow-[0_8px_18px_rgba(14,165,233,0.35)]"
+                    : "bg-slate-200 text-slate-900 hover:-translate-y-0.5 hover:bg-slate-300"
+                }`}
+                aria-pressed={isActive}
+                title={option.label}
+              >
+                {option.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-6 md:right-6">
         <button
           className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl text-slate-700 shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
           type="button"
           onClick={() => navigate(backPath)}
-          aria-label="กลับคำศัพท์"
-          title="กลับคำศัพท์"
+          aria-label={copy.backLabel}
+          title={copy.backLabel}
         >
           ←
-        </button>
-        <button
-          className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-2xl text-white shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
-          type="button"
-          onClick={() => navigate(nextPath)}
-          aria-label="ไปหน้าสรุป"
-          title="ไปหน้าสรุป"
-        >
-          →
         </button>
       </div>
     </div>

@@ -80,7 +80,6 @@ import P6ElectricForceRecap from "../pages/grade6/P6ElectricForceRecap";
 import P6ElectricCircuitObjectives from "../pages/grade6/P6ElectricCircuitObjectives";
 import P6ElectricCircuitVocab from "../pages/grade6/P6ElectricCircuitVocab";
 import P6ElectricCircuitIntro from "../pages/grade6/P6ElectricCircuitIntro";
-import P6ElectricCircuitProblem from "../pages/grade6/P6ElectricCircuitProblem";
 import P6ElectricCircuitMaterials from "../pages/grade6/P6ElectricCircuitMaterials";
 import P6ElectricCircuitSteps from "../pages/grade6/P6ElectricCircuitSteps";
 import P6ElectricCircuitResults from "../pages/grade6/P6ElectricCircuitResults";
@@ -89,6 +88,8 @@ import P6ElectricCircuitExperimentSelect from "../pages/grade6/P6ElectricCircuit
 import P6ElectricCircuitBulbSeriesParallel from "../pages/grade6/P6ElectricCircuitBulbSeriesParallel";
 import P6ElectricCircuitBulbSeriesParallelSteps from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelSteps";
 import P6ElectricCircuitBulbSeriesParallelSim from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelSim";
+import P6ElectricCircuitBulbSeriesParallelResult from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelResult";
+import P6ElectricCircuitKeySummary from "../pages/grade6/P6ElectricCircuitKeySummary";
 
 export default function OtherRoutes() {
   return (
@@ -173,7 +174,7 @@ export default function OtherRoutes() {
       <Route path="/p6/electric-circuit/vocab" element={<P6ElectricCircuitVocab />} />
       <Route path="/p6/electric-circuit/intro" element={<P6ElectricCircuitIntro />} />
       <Route path="/p6/electric-circuit/experiments" element={<P6ElectricCircuitExperimentSelect />} />
-      <Route path="/p6/electric-circuit/problem" element={<P6ElectricCircuitProblem />} />
+      <Route path="/p6/electric-circuit/problem" element={<Navigate to="/p6/electric-circuit/materials" replace />} />
       <Route path="/p6/electric-circuit/materials" element={<P6ElectricCircuitMaterials />} />
       <Route path="/p6/electric-circuit/steps" element={<P6ElectricCircuitSteps />} />
       <Route path="/p6/electric-circuit/sim" element={<P6ElectricCircuitSim />} />
@@ -181,6 +182,11 @@ export default function OtherRoutes() {
       <Route path="/p6/electric-circuit/bulb-series-parallel" element={<P6ElectricCircuitBulbSeriesParallel />} />
       <Route path="/p6/electric-circuit/bulb-series-parallel/steps" element={<P6ElectricCircuitBulbSeriesParallelSteps />} />
       <Route path="/p6/electric-circuit/bulb-series-parallel/sim" element={<P6ElectricCircuitBulbSeriesParallelSim />} />
+      <Route
+        path="/p6/electric-circuit/bulb-series-parallel/result"
+        element={<P6ElectricCircuitBulbSeriesParallelResult />}
+      />
+      <Route path="/p6/electric-circuit/key-summary" element={<P6ElectricCircuitKeySummary />} />
 
       <Route path="/p6/experiment/electric-generation" element={<P6ElectricObjectives />} />
       <Route path="/p6/experiment/electric-generation/vocab" element={<P6ElectricVocab />} />

@@ -88,7 +88,6 @@ const UI_TEXT = {
     waiting: "รอคิว",
     selected: "ตัวเลือก",
     hiddenSummary: 'ซ่อนผลสรุปไว้ก่อน กด "สรุปผลการทดลอง" เพื่อดูผลทั้งหมด',
-    backSteps: "← กลับขั้นตอน",
     summary: "สรุปผลการทดลอง",
     reset: "เริ่มใหม่",
     stop: "หยุด",
@@ -729,9 +728,11 @@ export default function P6ElectricForceEffectSim() {
                 </div>
               )}
 
-              <div className="p6-force-sim-result">
-                <div className="p6-force-sim-toast">{t.hiddenSummary}</div>
-              </div>
+              {allTrialsCompleted && (
+                <div className="p6-force-sim-result">
+                  <div className="p6-force-sim-toast">{t.hiddenSummary}</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -747,21 +748,15 @@ export default function P6ElectricForceEffectSim() {
 
           <div className="p6-force-sim-actions">
             <div className="p6-force-sim-actions-row">
-              <button
-                className="p6-force-sim-action"
-                type="button"
-                onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
-              >
-                {t.backSteps}
-              </button>
-              <button
-                className="p6-force-sim-action"
-                type="button"
-                onClick={handleGoSummary}
-                disabled={!allTrialsCompleted || isRunning}
-              >
-                {t.summary}
-              </button>
+              {allTrialsCompleted && !isRunning && (
+                <button
+                  className="p6-force-sim-action"
+                  type="button"
+                  onClick={handleGoSummary}
+                >
+                  {t.summary}
+                </button>
+              )}
               <button className="p6-force-sim-action" type="button" onClick={handleReset}>
                 {t.reset}
               </button>
@@ -779,4 +774,3 @@ export default function P6ElectricForceEffectSim() {
     </div>
   );
 }
-

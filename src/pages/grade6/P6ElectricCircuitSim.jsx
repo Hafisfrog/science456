@@ -1,12 +1,91 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const OPTIONS = [
-  { cells: 1, label: "1 ถ่าน", note: "หลอดไฟสว่างเล็กน้อย", level: "low" },
-  { cells: 2, label: "2 ถ่าน", note: "หลอดไฟสว่างเพิ่มขึ้น", level: "mid" },
-  { cells: 3, label: "3 ถ่าน", note: "หลอดไฟสว่างเพิ่มขึ้นอีก", level: "mid-high" },
-  { cells: 4, label: "4 ถ่าน", note: "หลอดไฟสว่างมากที่สุด", level: "high" },
+const TEXT = {
+  th: {
+    badge: "วงจรไฟฟ้าใกล้ตัว",
+    title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
+    chooseTitle: "เลือกจำนวนถ่านเพื่อลอง",
+    chooseHint: "เลือก 1–4 ถ่าน แล้วสังเกตความสว่างของหลอดไฟ",
+    sectionTitle: "ตัวอย่างการต่อวงจร",
+    dragTip: "ลากสายไปต่อที่จุดวงกลม",
+    connectedLabel: (connected, total) => `เชื่อมต่อ ${connected}/${total}`,
+    selectedLabel: (n) => `เลือก ${n} ถ่าน`,
+    expectedPrefix: "ผลคาดว่าจะเห็น:",
+    optionLabels: ["1 ถ่าน", "2 ถ่าน", "3 ถ่าน", "4 ถ่าน"],
+    optionNotes: [
+      "หลอดไฟสว่างเล็กน้อย",
+      "หลอดไฟสว่างเพิ่มขึ้น",
+      "หลอดไฟสว่างเพิ่มขึ้นอีก",
+      "หลอดไฟสว่างมากที่สุด",
+    ],
+    back: "โ",
+    next: "โ’",
+    langLabel: { th: "ไทย", en: "English", ms: "Melayu" },
+  },
+  en: {
+    badge: "Everyday Circuits",
+    title: "Simple Electric Circuit",
+    chooseTitle: "Choose number of cells",
+    chooseHint: "Pick 1–4 cells and observe bulb brightness",
+    sectionTitle: "Circuit Connection Example",
+    dragTip: "Drag wires to the round anchors",
+    connectedLabel: (connected, total) => `Connected ${connected}/${total}`,
+    selectedLabel: (n) => `Selected ${n} cell${n > 1 ? "s" : ""}`,
+    expectedPrefix: "Expected:",
+    optionLabels: ["1 cell", "2 cells", "3 cells", "4 cells"],
+    optionNotes: [
+      "Bulb glows dim",
+      "Bulb gets brighter",
+      "Bulb brighter again",
+      "Bulb brightest",
+    ],
+    back: "โ",
+    next: "โ’",
+    langLabel: { th: "Thai", en: "English", ms: "Malay" },
+  },
+  ms: {
+    badge: "Litar Harian",
+    title: "Litar Elektrik Mudah",
+    chooseTitle: "Pilih bilangan sel bateri",
+    chooseHint: "Pilih 1–4 sel dan perhati kecerahan mentol",
+    sectionTitle: "Contoh sambungan litar",
+    dragTip: "Seret wayar ke bulatan sambungan",
+    connectedLabel: (connected, total) => `Disambung ${connected}/${total}`,
+    selectedLabel: (n) => `Pilih ${n} sel`,
+    expectedPrefix: "Jangkaan:",
+    optionLabels: ["1 sel", "2 sel", "3 sel", "4 sel"],
+    optionNotes: [
+      "Mentol menyala malap",
+      "Mentol bertambah terang",
+      "Mentol lebih terang lagi",
+      "Mentol paling terang",
+    ],
+    back: "โ",
+    next: "โ’",
+    langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+  },
+};
+
+const LANGS = [
+  { id: "th", label: TEXT.th.langLabel.th },
+  { id: "en", label: TEXT.en.langLabel.en },
+  { id: "ms", label: TEXT.ms.langLabel.ms },
 ];
+
+const BASE_OPTIONS = [
+  { cells: 1, level: "low" },
+  { cells: 2, level: "mid" },
+  { cells: 3, level: "mid-high" },
+  { cells: 4, level: "high" },
+];
+
+const getOptions = (content) =>
+  BASE_OPTIONS.map((item, idx) => ({
+    ...item,
+    label: content.optionLabels[idx],
+    note: content.optionNotes[idx],
+  }));
 
 const WIRE_CONFIG = [
   { id: "wireA", endpoint: "a2", fromAnchor: "batteryPos", toAnchor: "switchLeft", color: "#ef4444" },
@@ -72,7 +151,7 @@ function clamp(value, min, max) {
 function BatteryIcon({ cells }) {
   const cellPositions = Array.from({ length: cells }, (_, index) => 18 + index * 12);
   return (
-    <svg viewBox="0 0 120 64" aria-hidden="true" focusable="false">
+    <svg className="block h-auto w-full" viewBox="0 0 120 64" aria-hidden="true" focusable="false">
       <rect x="8" y="10" width="72" height="44" rx="12" fill="#1f2937" />
       {cellPositions.map((x) => (
         <rect key={x} x={x} y="18" width="10" height="28" rx="4" fill="#f59e0b" />
@@ -93,7 +172,7 @@ function BulbIcon({ level }) {
   const glow = glowMap[level] ?? 0.6;
   const isOff = level === "off";
   return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <svg className="block h-auto w-full" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
       <defs>
         <radialGradient id={`dragGlow-${level}`} cx="50%" cy="50%" r="50%">
           <stop offset="0" stopColor={`rgba(255, 214, 102, ${glow})`} />
@@ -111,7 +190,7 @@ function BulbIcon({ level }) {
 
 function SwitchIcon() {
   return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+    <svg className="block h-auto w-full" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
       <rect x="16" y="10" width="32" height="44" rx="10" fill="#e2e8f0" stroke="#1f2937" strokeWidth="2" />
       <rect x="22" y="18" width="20" height="12" rx="6" fill="#cbd5f5" />
       <rect x="22" y="34" width="20" height="12" rx="6" fill="#94a3b8" />
@@ -134,6 +213,10 @@ function getBulbPieceStyle(level) {
 
 export default function P6ElectricCircuitSim() {
   const navigate = useNavigate();
+  const [lang, setLang] = useState("th");
+  const content = TEXT[lang] || TEXT.th;
+  const options = useMemo(() => getOptions(content), [content]);
+
   const [selected, setSelected] = useState(2);
   const dragAreaRef = useRef(null);
   const [area, setArea] = useState({ width: 0, height: 0 });
@@ -145,17 +228,42 @@ export default function P6ElectricCircuitSim() {
   const endpointsByCellsRef = useRef({});
   const initializedRef = useRef(false);
   const dragRef = useRef(null);
-  const current = useMemo(() => OPTIONS.find((item) => item.cells === selected), [selected]);
+  const current = useMemo(() => options.find((item) => item.cells === selected), [options, selected]);
   const levelClass = current?.level || "mid";
 
   useLayoutEffect(() => {
-    if (!dragAreaRef.current) return;
+    if (!dragAreaRef.current) return undefined;
+
+    const element = dragAreaRef.current;
+    const syncArea = () => {
+      const { width, height } = element.getBoundingClientRect();
+      setArea((currentArea) => {
+        if (currentArea.width === width && currentArea.height === height) {
+          return currentArea;
+        }
+        return { width, height };
+      });
+    };
+
+    syncArea();
+
     const observer = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect;
-      setArea({ width, height });
+      setArea((currentArea) => {
+        if (currentArea.width === width && currentArea.height === height) {
+          return currentArea;
+        }
+        return { width, height };
+      });
     });
-    observer.observe(dragAreaRef.current);
-    return () => observer.disconnect();
+
+    observer.observe(element);
+    window.addEventListener("resize", syncArea);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncArea);
+    };
   }, []);
 
   const layout = useMemo(() => {
@@ -189,11 +297,16 @@ export default function P6ElectricCircuitSim() {
   }, [layout]);
 
   useEffect(() => {
-    if (!layout || initializedRef.current === true) return;
+    if (!layout || initializedRef.current === true) return undefined;
     initializedRef.current = true;
     const initialEndpoints = buildLooseEndpoints(anchors);
-    setEndpoints(initialEndpoints);
-    endpointsByCellsRef.current[selected] = cloneEndpoints(initialEndpoints);
+
+    const frameId = window.requestAnimationFrame(() => {
+      setEndpoints(initialEndpoints);
+      endpointsByCellsRef.current[selected] = cloneEndpoints(initialEndpoints);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
   }, [anchors, layout, selected]);
 
   const connectedCount = useMemo(
@@ -309,50 +422,18 @@ export default function P6ElectricCircuitSim() {
 
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
         <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          วงจรไฟฟ้าใกล้ตัว
+          {content.badge}
         </div>
-        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">เรื่อง วงจรไฟฟ้าอย่างง่าย</div>
+        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">{content.title}</div>
 
         <div className="relative min-h-0 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
-          <div
-            className="absolute right-[22px] top-3 grid h-[52px] w-[52px] place-items-center rounded-2xl border-2 border-slate-900/40 bg-white/75 text-slate-800 shadow-[0_10px_18px_rgba(17,24,39,0.16)]"
-            title="ฟังเสียง"
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-              <path
-                d="M12 26h12l14-10v32l-14-10H12z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M44 22c4 4 4 16 0 20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-              <path
-                d="M50 16c7 7 7 25 0 32"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-
           <div className="mb-4">
-            <div className="text-[clamp(20px,2.6vw,26px)] font-black text-slate-900">เลือกจำนวนถ่านเพื่อทดลอง</div>
-            <div className="mt-1 font-semibold text-slate-800">
-              เลือก 1–4 ถ่าน แล้วสังเกตความสว่างของหลอดไฟ
-            </div>
+            <div className="text-[clamp(20px,2.6vw,26px)] font-black text-slate-900">{content.chooseTitle}</div>
+            <div className="mt-1 font-semibold text-slate-800">{content.chooseHint}</div>
           </div>
 
           <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
-            {OPTIONS.map((item) => (
+            {options.map((item) => (
               <button
                 key={item.cells}
                 className={`cursor-pointer rounded-[18px] border-2 bg-white p-3 text-left shadow-[0_12px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 ${
@@ -374,7 +455,7 @@ export default function P6ElectricCircuitSim() {
 
           <div className="mt-4 rounded-[18px] border border-slate-900/25 bg-white/75 p-3.5">
             <div className="inline-flex items-center rounded-full bg-blue-600/15 px-[14px] py-1.5 font-black text-slate-900">
-              ตัวอย่างการต่อวงจร
+              {content.sectionTitle}
             </div>
 
             <div className="mt-3 grid grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(220px,1fr)_1fr]">
@@ -387,14 +468,14 @@ export default function P6ElectricCircuitSim() {
                 ref={dragAreaRef}
               >
                 <div className="absolute left-3 top-2.5 rounded-full bg-blue-600/15 px-2.5 py-1 text-xs font-extrabold text-slate-900">
-                  ลากสายไปต่อที่จุดวงกลม
+                  {content.dragTip}
                 </div>
                 <div
                   className={`absolute right-3 top-2.5 rounded-full px-2.5 py-1 text-xs font-extrabold text-slate-900 ${
                     isCircuitReady ? "bg-green-500/25" : "bg-slate-400/30"
                   }`}
                 >
-                  Connect {connectedCount}/{WIRE_CONFIG.length}
+                  {content.connectedLabel(connectedCount, WIRE_CONFIG.length)}
                 </div>
 
                 <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox={`0 0 ${area.width} ${area.height}`} aria-hidden="true">
@@ -418,13 +499,13 @@ export default function P6ElectricCircuitSim() {
                 {layout && (
                   <>
                     <div
-                      className="absolute -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
+                      className="absolute z-10 w-[128px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
                       style={{ left: `${layout.battery.x}px`, top: `${layout.battery.y}px` }}
                     >
                       <BatteryIcon cells={selected} />
                     </div>
                     <div
-                      className="absolute -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5"
+                      className="absolute z-10 w-[76px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5"
                       style={{
                         left: `${layout.bulb.x}px`,
                         top: `${layout.bulb.y}px`,
@@ -434,7 +515,7 @@ export default function P6ElectricCircuitSim() {
                       <BulbIcon level={bulbLevel} />
                     </div>
                     <div
-                      className="absolute -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
+                      className="absolute z-10 w-[76px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
                       style={{ left: `${layout.switcher.x}px`, top: `${layout.switcher.y}px` }}
                     >
                       <SwitchIcon />
@@ -442,7 +523,7 @@ export default function P6ElectricCircuitSim() {
                     {Object.entries(anchors).map(([key, point]) => (
                       <div
                         key={key}
-                        className="absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-900/60 bg-white"
+                        className="absolute z-20 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-900/60 bg-white"
                         style={{ left: `${point.x}px`, top: `${point.y}px` }}
                       />
                     ))}
@@ -459,7 +540,7 @@ export default function P6ElectricCircuitSim() {
                   return (
                     <div
                       key={id}
-                      className={`absolute h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border-2 border-white shadow-[0_8px_14px_rgba(15,23,42,0.2)] active:cursor-grabbing ${colorClass}`}
+                      className={`absolute z-30 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border-2 border-white shadow-[0_8px_14px_rgba(15,23,42,0.2)] active:cursor-grabbing ${colorClass}`}
                       style={{
                         left: `${pos.x}px`,
                         top: `${pos.y}px`,
@@ -476,8 +557,10 @@ export default function P6ElectricCircuitSim() {
               </div>
 
               <div>
-                <div className="text-lg font-black text-slate-900">เลือก {selected} ถ่าน</div>
-                <div className="mt-1.5 font-bold text-slate-800">ผลที่คาดว่าจะเห็น: {current?.note}</div>
+                <div className="text-lg font-black text-slate-900">{content.selectedLabel(selected)}</div>
+                <div className="mt-1.5 font-bold text-slate-800">
+                  {content.expectedPrefix} {current?.note}
+                </div>
               </div>
             </div>
           </div>
@@ -488,10 +571,10 @@ export default function P6ElectricCircuitSim() {
             className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
             onClick={() => navigate("/p6/electric-circuit/steps")}
             type="button"
-            aria-label="กลับอุปกรณ์และขั้นตอน"
-            title="กลับอุปกรณ์และขั้นตอน"
+            aria-label={content.back}
+            title={content.back}
           >
-            ←
+            {content.back}
           </button>
           <button
             className={`inline-flex h-16 w-16 items-center justify-center rounded-[20px] text-[28px] font-black leading-none shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition ${
@@ -502,12 +585,29 @@ export default function P6ElectricCircuitSim() {
             onClick={() => navigate(`/p6/electric-circuit/result?cells=${selected}`)}
             type="button"
             disabled={!isCircuitReady}
-            aria-label="ดูผลการทดลอง"
-            title="ดูผลการทดลอง"
+            aria-label={content.next}
+            title={content.next}
           >
-            →
+            {content.next}
           </button>
         </div>
+      </div>
+
+      <div className="fixed bottom-4 left-4 z-40 inline-flex items-center gap-2 rounded-[18px] border border-[#6ca9d7]/40 bg-white/92 p-2 shadow-[0_10px_20px_rgba(15,23,42,0.18)] backdrop-blur-[2px]">
+        {LANGS.map((item) => (
+          <button
+            key={item.id}
+            className={`rounded-full px-4 py-2 text-[18px] font-bold ${
+              lang === item.id
+                ? "bg-gradient-to-b from-[#2cb0ff] to-[#178dd4] text-white shadow-[0_4px_10px_rgba(14,116,194,0.35)]"
+                : "bg-[#d7edff] text-sky-700"
+            }`}
+            type="button"
+            onClick={() => setLang(item.id)}
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
     </div>
   );

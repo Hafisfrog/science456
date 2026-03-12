@@ -207,7 +207,7 @@ export default function P6ElectricCircuitIntro() {
         </button>
         <button
           className="cursor-pointer rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 px-5 py-3 font-black text-white shadow-[0_12px_24px_rgba(37,99,235,0.24)]"
-          onClick={() => navigate("/p6/electric-circuit/problem")}
+          onClick={() => navigate("/p6/electric-circuit/materials")}
           type="button"
         >
           เริ่มกิจกรรม →
