@@ -1,7 +1,7 @@
 const BUTTONS = [
   {
     key: "th",
-    label: "🇹🇭 Thai",
+    label: "Thai",
     lang: "th-TH",
     textProp: "th",
     className:
@@ -9,7 +9,7 @@ const BUTTONS = [
   },
   {
     key: "en",
-    label: "🇬🇧 English",
+    label: "English",
     lang: "en-US",
     textProp: "en",
     className:
@@ -17,7 +17,7 @@ const BUTTONS = [
   },
   {
     key: "ms",
-    label: "🇲🇾 Malay",
+    label: "Malay",
     lang: "ms-MY",
     textProp: "ms",
     className:

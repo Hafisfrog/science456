@@ -208,7 +208,7 @@ const bottomMaterials = [
   },
 ];
 
-const materialImageClass = "w-56 sm:w-64 md:w-80 lg:w-[22rem] mx-auto drop-shadow-xl";
+const materialImageClass = "w-24 sm:w-28 md:w-32 lg:w-36 mx-auto drop-shadow-xl";
 
 const getLivingImageStyle = (delay, duration) => ({
   animation: `p5Living ${duration} ease-in-out ${delay} infinite`,
@@ -228,24 +228,34 @@ export default function P5FoodChainMaterials() {
     speakWithBestVoice(speechText, activeLang);
   };
 
-  return (
-    <div className="relative h-screen w-full overflow-hidden font-sans">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-100 to-green-200" />
-      <div className="absolute -translate-y-10 translate-x-10 rounded-full bg-yellow-400 h-40 w-40 right-0 top-0" />
+  const speakItem = (item) => {
+    speakWithBestVoice(getName(item), activeLang);
+  };
 
-      <div className="absolute left-1/2 top-8 -translate-x-1/2">
-        <div className="rounded bg-green-300 px-10 py-4 text-2xl font-bold md:px-14 md:text-3xl">
+  return (
+    <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-[#f5fff1] via-[#e7f6d9] to-[#cfe9b6] font-['Prompt',sans-serif]">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-0 left-0 h-56 w-full bg-[#eef8e7]" />
+        <div className="absolute left-0 top-6 h-36 w-full opacity-70 [background:radial-gradient(circle_at_15%_40%,rgba(255,255,255,0.9),transparent_50%),radial-gradient(circle_at_45%_35%,rgba(255,255,255,0.85),transparent_55%),radial-gradient(circle_at_75%_45%,rgba(255,255,255,0.9),transparent_50%)]" />
+        <div className="absolute right-6 top-4 h-28 w-28 rounded-full bg-[#ffd84d] shadow-[0_0_40px_rgba(255,216,77,0.8)]" />
+      </div>
+
+      <div className="pointer-events-none absolute bottom-0 left-0 h-28 w-full bg-gradient-to-t from-[#7dbb4f] to-[#a6d469]" />
+      <div className="pointer-events-none absolute bottom-4 left-0 h-8 w-full [background:repeating-linear-gradient(90deg,#8b5a2b_0_12px,transparent_12px_26px)]" />
+
+      <div className="absolute left-1/2 top-6 -translate-x-1/2">
+        <div className="rounded bg-[#b7f0a4] px-8 py-3 text-xl font-bold text-slate-900 md:px-12 md:text-2xl">
           {t.title}
         </div>
       </div>
 
-      <div className="absolute left-20 top-24">
-        <div className="rounded bg-green-300 px-7 py-3 text-xl font-semibold md:text-2xl">
+      <div className="absolute left-12 top-24">
+        <div className="rounded bg-[#b7f0a4] px-6 py-2 text-lg font-semibold text-slate-900 md:text-xl">
           {t.materials}
         </div>
       </div>
 
-      <div className="absolute left-1/2 top-[27%] flex -translate-x-1/2 items-end gap-2 md:gap-4">
+      <div className="absolute left-1/2 top-[28%] flex w-[92%] -translate-x-1/2 items-end justify-between gap-3 md:gap-4">
         {topMaterials.map((item) => (
           <div key={item.key} className="text-center">
             <img
@@ -254,12 +264,22 @@ export default function P5FoodChainMaterials() {
               className={materialImageClass}
               style={getLivingImageStyle(item.delay, item.duration)}
             />
-            <div className="mt-2 text-lg md:text-xl">{getName(item)}</div>
+            <div className="mt-2 flex items-center justify-center gap-2 text-base font-semibold text-slate-900 md:text-lg">
+              <span>{getName(item)}</span>
+              <button
+                type="button"
+                onClick={() => speakItem(item)}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#dcecff] text-sm text-blue-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-[#cfe4ff]"
+                aria-label={`Speak ${getName(item)}`}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="absolute bottom-[18%] left-1/2 flex -translate-x-1/2 items-end gap-2 md:gap-4">
+      <div className="absolute bottom-[20%] left-1/2 flex w-[92%] -translate-x-1/2 items-end justify-between gap-3 md:gap-4">
         {bottomMaterials.map((item) => (
           <div key={item.key} className="text-center">
             <img
@@ -268,7 +288,17 @@ export default function P5FoodChainMaterials() {
               className={materialImageClass}
               style={getLivingImageStyle(item.delay, item.duration)}
             />
-            <div className="mt-2 text-lg md:text-xl">{getName(item)}</div>
+            <div className="mt-2 flex items-center justify-center gap-2 text-base font-semibold text-slate-900 md:text-lg">
+              <span>{getName(item)}</span>
+              <button
+                type="button"
+                onClick={() => speakItem(item)}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#dcecff] text-sm text-blue-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-[#cfe4ff]"
+                aria-label={`Speak ${getName(item)}`}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
+            </div>
           </div>
         ))}
       </div>

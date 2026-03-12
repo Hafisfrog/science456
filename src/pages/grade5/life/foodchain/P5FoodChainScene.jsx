@@ -149,7 +149,11 @@ import { useNavigate } from "react-router-dom";
 const SCENE_ITEMS = [
   {
     key: "hawk",
-    label: "เหยี่ยว/ผู้บริโภค",
+    label: {
+      th: "เหยี่ยว/ผู้บริโภค",
+      en: "Hawk / Consumer",
+      ms: "Helang / Pengguna",
+    },
     img: "/images/p5/y.png",
     containerClass: "top-[10%] left-[22%]",
     imageClass: "w-40 md:w-44",
@@ -158,7 +162,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "bird",
-    label: "นก/ผู้บริโภค",
+    label: {
+      th: "นก/ผู้บริโภค",
+      en: "Bird / Consumer",
+      ms: "Burung / Pengguna",
+    },
     img: "/images/p5/nog.png",
     containerClass: "top-[13%] right-[9%]",
     imageClass: "w-24 md:w-28",
@@ -167,7 +175,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "rice",
-    label: "ต้นข้าว/ผู้ผลิต",
+    label: {
+      th: "ต้นข้าว/ผู้ผลิต",
+      en: "Rice Plant / Producer",
+      ms: "Pokok Padi / Pengeluar",
+    },
     img: "/images/p5/kaw.png",
     containerClass: "top-[28%] left-[6%]",
     imageClass: "w-40 md:w-44",
@@ -176,7 +188,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "rat",
-    label: "หนูนา/ผู้บริโภค",
+    label: {
+      th: "หนูนา/ผู้บริโภค",
+      en: "Field Rat / Consumer",
+      ms: "Tikus Sawah / Pengguna",
+    },
     img: "/images/p5/n.png",
     containerClass: "top-[35%] left-[53%]",
     imageClass: "w-24 md:w-28",
@@ -185,7 +201,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "worm",
-    label: "หนอน/ผู้บริโภค",
+    label: {
+      th: "หนอน/ผู้บริโภค",
+      en: "Caterpillar / Consumer",
+      ms: "Ulat / Pengguna",
+    },
     img: "/images/p5/non.png",
     containerClass: "top-[39%] right-[9%]",
     imageClass: "w-20 md:w-24",
@@ -194,7 +214,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "snake",
-    label: "งู/ผู้บริโภค",
+    label: {
+      th: "งู/ผู้บริโภค",
+      en: "Snake / Consumer",
+      ms: "Ular / Pengguna",
+    },
     img: "/images/p5/snack.png",
     containerClass: "top-[52%] left-[30%]",
     imageClass: "w-40 md:w-44",
@@ -203,7 +227,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "fish",
-    label: "ปลา/ผู้บริโภค",
+    label: {
+      th: "ปลา/ผู้บริโภค",
+      en: "Fish / Consumer",
+      ms: "Ikan / Pengguna",
+    },
     img: "/images/p5/pla.png",
     containerClass: "top-[57%] right-[9%]",
     imageClass: "w-32 md:w-36",
@@ -212,7 +240,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "grass",
-    label: "หญ้า/ผู้ผลิต",
+    label: {
+      th: "หญ้า/ผู้ผลิต",
+      en: "Grass / Producer",
+      ms: "Rumput / Pengeluar",
+    },
     img: "/images/p5/ya.png",
     containerClass: "top-[63%] left-[8%]",
     imageClass: "w-32 md:w-36",
@@ -221,7 +253,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "frog",
-    label: "กบ/ผู้บริโภค",
+    label: {
+      th: "กบ/ผู้บริโภค",
+      en: "Frog / Consumer",
+      ms: "Katak / Pengguna",
+    },
     img: "/images/p5/gop.png",
     containerClass: "bottom-[8%] left-[22%]",
     imageClass: "w-36 md:w-40",
@@ -230,7 +266,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "grasshopper",
-    label: "ตั๊กแตน/ผู้บริโภค",
+    label: {
+      th: "ตั๊กแตน/ผู้บริโภค",
+      en: "Grasshopper / Consumer",
+      ms: "Belalang / Pengguna",
+    },
     img: "/images/p5/tag.png",
     containerClass: "bottom-[12%] left-[40%]",
     imageClass: "w-28 md:w-32",
@@ -239,7 +279,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "larva",
-    label: "ลูกน้ำ/ผู้บริโภค",
+    label: {
+      th: "ลูกน้ำ/ผู้บริโภค",
+      en: "Larva / Consumer",
+      ms: "Jentik-jentik / Pengguna",
+    },
     img: "/images/p5/lunam.png",
     containerClass: "bottom-[18%] right-[24%]",
     imageClass: "w-20 md:w-24",
@@ -248,7 +292,11 @@ const SCENE_ITEMS = [
   },
   {
     key: "water-plant",
-    label: "พืชน้ำ/ผู้ผลิต",
+    label: {
+      th: "พืชน้ำ/ผู้ผลิต",
+      en: "Aquatic Plant / Producer",
+      ms: "Tumbuhan Air / Pengeluar",
+    },
     img: "/images/p5/lunamm.png",
     containerClass: "top-[50%] left-[52%]",
     imageClass: "w-36 md:w-40",
@@ -272,7 +320,20 @@ function createParticles(count = 16) {
 export default function P5FoodChainScene() {
   const navigate = useNavigate();
   const [showParticles, setShowParticles] = useState(true);
+  const [activeLang, setActiveLang] = useState("th");
   const particles = useMemo(() => createParticles(16), []);
+
+  const speakText = (text) => {
+    try {
+      if (!text || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = activeLang === "th" ? "th-TH" : activeLang === "ms" ? "ms-MY" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore
+    }
+  };
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-gradient-to-b from-sky-200 via-lime-100 to-green-200">
@@ -299,7 +360,7 @@ export default function P5FoodChainScene() {
           />
         ))}
 
-      <h1 className="absolute left-1/2 top-4 z-30 -translate-x-1/2 rounded-full bg-white/55 px-6 py-2 text-center text-xl font-bold text-slate-900 shadow-sm md:text-2xl">
+      <h1 className="absolute left-1/2 top-4 z-30 -translate-x-1/2 rounded-full bg-white/55 px-6 py-2 text-center text-lg font-bold text-slate-900 shadow-sm md:text-xl">
         แผนภาพระบบนิเวศและห่วงโซ่อาหาร
       </h1>
 
@@ -307,14 +368,24 @@ export default function P5FoodChainScene() {
         <div key={item.key} className={`absolute z-20 ${item.containerClass}`}>
           <img
             src={item.img}
-            alt={item.label}
+            alt={item.label[activeLang] ?? item.label.th}
             className={`${item.imageClass} ${item.motionClass} select-none object-contain drop-shadow-xl`}
           />
           <p
-            className={`absolute z-30 whitespace-nowrap text-lg font-extrabold text-slate-900 md:text-2xl ${item.labelClass}`}
+            className={`absolute z-30 whitespace-nowrap text-base font-extrabold text-slate-900 md:text-xl ${item.labelClass}`}
             style={{ textShadow: "0 2px 8px rgba(255,255,255,0.85)" }}
           >
-            {item.label}
+            <span className="rounded-full px-2 py-1">
+              {item.label[activeLang] ?? item.label.th}
+            </span>
+            <button
+              type="button"
+              onClick={() => speakText(item.label[activeLang] ?? item.label.th)}
+              className="ml-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#cfe4ff] text-sm text-blue-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-[#b7d6ff]"
+              aria-label={`Speak ${item.label[activeLang] ?? item.label.th}`}
+            >
+              {"\uD83D\uDD0A"}
+            </button>
           </p>
         </div>
       ))}
@@ -323,7 +394,7 @@ export default function P5FoodChainScene() {
         <button
           type="button"
           onClick={() => navigate("/p5/life/foodchain/vocab")}
-          className="rounded-full bg-white/85 px-4 py-2 text-sm font-semibold text-slate-800 shadow hover:bg-white"
+          className="rounded-full bg-[#dfefff] px-4 py-2 text-sm font-semibold text-blue-800 shadow hover:bg-[#cfe4ff]"
         >
           ← ย้อนกลับ
         </button>
@@ -336,21 +407,46 @@ export default function P5FoodChainScene() {
         </button>
       </div>
 
+      <div className="absolute bottom-4 left-4 z-40 flex items-center gap-2 rounded-full bg-transparent p-1.5">
+        {[
+          { key: "th", label: "Thai" },
+          { key: "en", label: "English" },
+          { key: "ms", label: "Malay" },
+        ].map((lang) => (
+          <button
+            key={lang.key}
+            type="button"
+            onClick={() => setActiveLang(lang.key)}
+            className={`rounded-full px-3 py-1 text-sm font-bold transition ${
+              activeLang === lang.key
+                ? "bg-[#dcecff] text-slate-900"
+                : "bg-white text-slate-700 hover:bg-blue-50"
+            }`}
+          >
+            {lang.label}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            speakText(
+              SCENE_ITEMS.map((item) => item.label[activeLang] ?? item.label.th).join(", ")
+            )
+          }
+          className="rounded-full bg-[#dcecff] px-3 py-1 text-sm font-bold text-blue-700 shadow-md transition hover:bg-[#cfe4ff]"
+          aria-label="speak-all"
+        >
+          {"\uD83D\uDD0A"}
+        </button>
+      </div>
+
       <button
         type="button"
         onClick={() => setShowParticles((prev) => !prev)}
-        className="absolute bottom-4 left-4 z-40 rounded-full bg-white/70 px-3 py-1 text-lg text-slate-700 hover:bg-white"
+        className="absolute top-4 left-4 z-40 rounded-full bg-[#dfefff] px-3 py-1 text-sm text-blue-800 shadow hover:bg-[#cfe4ff]"
         aria-label="toggle-particles"
       >
-        {showParticles ? "✨" : "💨"}
-      </button>
-
-      {/* ========= Toggle Particles Button ========= */}
-      <button
-        onClick={() => setShowParticles(!showParticles)}
-        className="absolute bottom-6 right-6 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white hover:bg-white/30 transition-all"
-      >
-        {showParticles ? '✨' : '💫'}
+        {showParticles ? "??" : "??"}
       </button>
 
       <style>{sceneStyles}</style>
@@ -409,3 +505,4 @@ export default function P5FoodChainScene() {
     </div>
   );
 }
+
