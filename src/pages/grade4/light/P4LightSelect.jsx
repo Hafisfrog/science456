@@ -82,6 +82,18 @@ export default function P4LightSelect() {
   const [language, setLanguage] = useState("th");
   const ui = UI[language] ?? UI.th;
 
+  const speakMaterial = (text) => {
+    try {
+      if (!text || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language === "th" ? "th-TH" : language === "ms" ? "ms-MY" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore
+    }
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-4 pb-28 pt-8 sm:px-8">
       <div className="pointer-events-none absolute left-1/2 top-[-13rem] h-[28rem] w-[140%] -translate-x-1/2 rounded-b-[100%] bg-slate-200/80" />
@@ -112,6 +124,14 @@ export default function P4LightSelect() {
               <p className="mt-2 text-base font-bold text-slate-800">
                 {material.name[language] ?? material.name.th}
               </p>
+              <button
+                type="button"
+                className="mt-3 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-lg text-blue-600 shadow-[0_4px_10px_rgba(0,0,0,0.18)] transition hover:-translate-y-0.5 hover:bg-blue-50"
+                onClick={() => speakMaterial(material.name[language] ?? material.name.th)}
+                aria-label={`Speak ${material.name[language] ?? material.name.th}`}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
             </div>
           ))}
         </div>

@@ -47,8 +47,11 @@ export default function P4LightSituation() {
   const content = CONTENT[language] ?? CONTENT.th;
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-cyan-100 px-4 py-10 font-['Prompt',sans-serif] sm:px-6">
-      <div className="w-full max-w-5xl">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-4 pb-28 pt-8 font-['Prompt',sans-serif] sm:px-8">
+      <div className="pointer-events-none absolute left-1/2 top-[-13rem] h-[28rem] w-[140%] -translate-x-1/2 rounded-b-[100%] bg-slate-200/80" />
+      <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(90deg,rgba(15,23,42,0.35)_0px,rgba(15,23,42,0.35)_10px,transparent_10px,transparent_190px)]" />
+
+      <div className="relative z-10 w-full max-w-5xl">
         <div className="mb-8 rounded-3xl border-2 border-blue-200 bg-white/95 p-8 text-center shadow-[0_8px_22px_rgba(0,0,0,0.08)] sm:p-10">
           <h1 className="text-3xl font-extrabold text-blue-700 sm:text-4xl">{content.title}</h1>
         </div>

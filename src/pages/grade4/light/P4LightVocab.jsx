@@ -193,7 +193,7 @@ export default function P4LightVocab() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#eef7f6] via-[#e7f2f3] to-[#dcecff] px-4 py-8 sm:px-6">
+    <div className="min-h-screen bg-gradient-to-b from-[#eef6ff] via-[#e9f2fb] to-[#dbe9f7] px-4 py-8 sm:px-6">
       <div className="mx-auto max-w-5xl">
         <header className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-slate-600 sm:text-3xl">
@@ -202,11 +202,11 @@ export default function P4LightVocab() {
           <p className="mt-2 text-sm text-slate-500 sm:text-base">เรื่อง ตัวกลางของแสง</p>
         </header>
 
-        <div className="overflow-hidden rounded-[2rem] border border-[#c7d7d1] bg-[#dfeee8]/80 shadow-lg backdrop-blur-sm">
+        <div className="overflow-hidden rounded-[2rem] border border-[#c7d6e6] bg-[#e9f2fb]/80 shadow-lg backdrop-blur-sm">
           <div className="overflow-x-auto">
-            <table className="min-w-full table-fixed border-separate border-spacing-0">
+            <table className="min-w-full table-fixed border-separate border-spacing-0 [&_thead_th:nth-child(1)]:bg-[#b7cfea] [&_thead_th:nth-child(2)]:bg-[#f3cf73] [&_thead_th:nth-child(3)]:bg-[#c486b5] [&_thead_th:nth-child(4)]:bg-[#d6f8e4] [&_tbody_td:nth-child(1)]:bg-[#eaf3ff] [&_tbody_td:nth-child(2)]:bg-[#fdf2d6] [&_tbody_td:nth-child(3)]:bg-[#f5d7e8] [&_tbody_td:nth-child(4)]:bg-[#e8fbef]">
               <thead>
-                <tr className="bg-[#bfcfc6] text-slate-700">
+                <tr className="text-slate-800">
                   <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ภาษาไทย</th>
                   <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ภาษามลายู</th>
                   <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ภาษาอังกฤษ</th>
@@ -218,22 +218,22 @@ export default function P4LightVocab() {
                 {VOCAB.map((row) => (
                   <tr
                     key={`${row.th}-${row.en}`}
-                    className="[&:not(:last-child)>td]:border-b [&:not(:last-child)>td]:border-[#d5e1dc]"
+                    className="[&:not(:last-child)>td]:border-b [&:not(:last-child)>td]:border-[#d8e2ee]"
                   >
-                    <td className="bg-[#c8d1de] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
+                    <td className="bg-[#edf4ff] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
                       {row.th}
                     </td>
-                    <td className="bg-[#e8dfc3] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
+                    <td className="bg-[#edf4ff] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
                       {row.ms}
                     </td>
-                    <td className="bg-[#dec4d7] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
+                    <td className="bg-[#edf4ff] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
                       {row.en}
                     </td>
-                    <td className="bg-[#dce9e3] px-4 py-5">
+                    <td className="bg-[#edf4ff] px-4 py-5">
                       <div className="flex items-center justify-center gap-3 sm:gap-4">
                         <button
                           type="button"
-                          className="h-11 w-11 rounded-2xl bg-[#b9c9e0] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-blue-300 sm:h-12 sm:w-12 sm:text-lg"
+                          className="h-11 w-11 rounded-2xl bg-[#dcecff] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-[#b7cfea] sm:h-12 sm:w-12 sm:text-lg"
                           onClick={() =>
                             playSound({
                               src: row.audio.th,
@@ -247,7 +247,7 @@ export default function P4LightVocab() {
                         </button>
                         <button
                           type="button"
-                          className="h-11 w-11 rounded-2xl bg-[#e8cf62] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-amber-300 sm:h-12 sm:w-12 sm:text-lg"
+                          className="h-11 w-11 rounded-2xl bg-[#ffe08a] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-[#f3cf73] sm:h-12 sm:w-12 sm:text-lg"
                           onClick={() =>
                             playSound({
                               src: row.audio.ms,
@@ -261,7 +261,7 @@ export default function P4LightVocab() {
                         </button>
                         <button
                           type="button"
-                          className="h-11 w-11 rounded-2xl bg-[#e3b8d6] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-pink-300 sm:h-12 sm:w-12 sm:text-lg"
+                          className="h-11 w-11 rounded-2xl bg-[#f7c6e5] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-[#c486b5] sm:h-12 sm:w-12 sm:text-lg"
                           onClick={() =>
                             playSound({
                               src: row.audio.en,
@@ -286,7 +286,7 @@ export default function P4LightVocab() {
           <div className="flex flex-wrap items-center justify-end gap-3">
             <button
               type="button"
-              className="rounded-full border border-sky-300 bg-white px-5 py-2.5 text-sm font-medium text-sky-600 transition hover:bg-sky-50 hover:shadow"
+              className="rounded-full border border-[#8fb3e5] bg-white px-5 py-2.5 text-sm font-medium text-[#1f4d93] transition hover:bg-[#f2f7ff] hover:shadow"
               onClick={() => navigate("/p4/light/objective")}
             >
               ย้อนกลับ
@@ -294,7 +294,7 @@ export default function P4LightVocab() {
 
             <button
               type="button"
-              className="rounded-full bg-sky-500 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-sky-600 hover:shadow"
+              className="rounded-full bg-[#2d63d6] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#255bc9] hover:shadow"
               onClick={() => navigate("/p4/light/basic")}
             >
               ไปต่อ

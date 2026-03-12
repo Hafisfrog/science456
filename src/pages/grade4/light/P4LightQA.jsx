@@ -124,31 +124,6 @@ function buildSpeakText(content) {
   return `${content.questionText} ${content.answerTitle}. ${cardsText}`;
 }
 
-function AnswerCard({ card }) {
-  const colorMap = {
-    blue: "bg-blue-50 border-blue-300 text-blue-800",
-    amber: "bg-amber-50 border-amber-300 text-amber-800",
-    gray: "bg-gray-50 border-gray-300 text-gray-800",
-  };
-
-  return (
-    <div className={`rounded-xl border-2 p-5 shadow-sm ${colorMap[card.color]}`}>
-      <div className="mb-2 flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white font-bold">
-          {card.number}
-        </div>
-        <div className="font-bold">{card.title}</div>
-      </div>
-
-      <div className="pl-12 text-gray-700 leading-relaxed">
-        <p>{card.examples}</p>
-        <p className="font-semibold">{card.pass}</p>
-        <p>{card.result}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function P4LightQA() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -164,53 +139,115 @@ export default function P4LightQA() {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 p-6">
-      <div className="mx-auto max-w-4xl space-y-6">
-        <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-lg">
-          <h1 className="text-2xl font-bold text-blue-800 sm:text-3xl">{content.header}</h1>
-          <p className="mt-1 text-blue-600">{content.subHeader}</p>
-        </div>
+    <div className="relative min-h-screen overflow-hidden bg-[#8fb1bf] p-6 font-['Prompt',sans-serif]">
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 1440 900"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <linearGradient id="qa-bg" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#a5b2ba" />
+            <stop offset="45%" stopColor="#8ab2bf" />
+            <stop offset="100%" stopColor="#4f7f97" />
+          </linearGradient>
+          <linearGradient id="qa-glass" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="#c7f2ff" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#88d3e8" stopOpacity="0.85" />
+          </linearGradient>
+        </defs>
+        <rect width="1440" height="900" fill="url(#qa-bg)" />
+        <path d="M0 0H1440V120C1060 200 380 200 0 120Z" fill="#9aa1a9" />
+        <rect x="0" y="120" width="1440" height="170" fill="#6d8698" />
+        <rect x="80" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
+        <rect x="260" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
+        <rect x="440" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
+        <rect x="850" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
+        <rect x="1030" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
+        <rect x="1210" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
 
-        <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-md">
-          <h2 className="mb-3 text-lg font-bold text-blue-800">{content.questionTitle}</h2>
-          <p className="text-lg font-semibold text-gray-800">{content.questionText}</p>
-        </div>
+        <rect x="300" y="0" width="6" height="120" fill="#2f3c44" />
+        <path d="M260 120H350L330 170H280Z" fill="#2f3c44" />
+        <polygon points="280,170 330,170 360,270 250,270" fill="rgba(190,230,240,0.35)" />
 
-        <div className="rounded-2xl border border-blue-200 bg-blue-50 p-6 shadow-md">
-          <p className="mb-4 text-lg font-semibold text-blue-800">{content.answerTitle}</p>
+        <rect x="1134" y="0" width="6" height="120" fill="#2f3c44" />
+        <path d="M1094 120H1184L1164 170H1114Z" fill="#2f3c44" />
+        <polygon points="1114,170 1164,170 1194,270 1084,270" fill="rgba(190,230,240,0.35)" />
+      </svg>
 
-          <div className="space-y-4">
-            {content.cards.map((card) => (
-              <AnswerCard key={card.number} card={card} />
-            ))}
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <h1 className="mx-auto mb-4 w-fit rounded-md border-4 border-slate-900 bg-white px-6 py-3 text-center text-xl font-extrabold text-slate-900 shadow-[0_6px_18px_rgba(0,0,0,0.25)] sm:text-3xl">
+          {content.header}
+        </h1>
+
+        <div className="relative">
+          <img
+            className="pointer-events-none absolute bottom-0 left-[-8px] h-auto w-[min(28%,280px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:w-[min(32%,240px)] max-[640px]:hidden"
+            src="/images/p4/exp3/teacher.png"
+            alt="teacher"
+          />
+
+          <div className="ml-[230px] max-[900px]:ml-[190px] max-[640px]:ml-0">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-md border-2 border-slate-900 bg-[#ffd95a] px-3 py-1.5 text-base font-bold text-slate-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]">
+              📣 คำถามมีคำตอบ
+            </div>
+
+            <div className="mb-4 text-base font-semibold text-slate-900 sm:text-lg">
+              1. {content.questionText}
+            </div>
+
+            <div className="relative">
+              <div className="pointer-events-none absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-[28px] bg-[#2bb3a8]" />
+              <div className="rounded-[28px] border-[6px] border-slate-800 bg-white p-6 shadow-[0_12px_26px_rgba(0,0,0,0.25)]">
+                <div className="mb-4 text-base font-semibold text-slate-900 sm:text-lg">
+                  {content.answerTitle}
+                </div>
+
+                <div className="space-y-4 text-slate-800">
+                  {content.cards.map((card) => (
+                    <div key={card.number} className="leading-relaxed">
+                      <div className="font-bold">
+                        {card.number}. {card.title}{" "}
+                        <span className="font-normal">{card.examples}</span>
+                      </div>
+                      <div className="pl-5 text-sm font-semibold sm:text-base">
+                        {card.pass}
+                      </div>
+                      <div className="pl-5 text-sm sm:text-base">👉 {card.result}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="rounded-xl border-2 border-blue-200 bg-white p-4">
-          <p className="mb-2 text-sm font-semibold text-blue-700">{content.speakLabel}</p>
-          <SpeakButton
-            th={speakTexts.th}
-            en={speakTexts.en}
-            ms={speakTexts.ms}
-            activeLang={language}
-            onLanguageChange={setLanguage}
-          />
-        </div>
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="rounded-2xl bg-white/90 p-3 shadow-[0_6px_16px_rgba(0,0,0,0.18)]">
+            <SpeakButton
+              th={speakTexts.th}
+              en={speakTexts.en}
+              ms={speakTexts.ms}
+              activeLang={language}
+              onLanguageChange={setLanguage}
+            />
+          </div>
 
-        <div className="flex justify-between pt-2">
-          <button
-            onClick={() => navigate("/p4/light/summary")}
-            className="rounded-xl bg-gray-500 px-6 py-3 text-white transition hover:bg-gray-600"
-          >
-            {content.back}
-          </button>
+          <div className="ml-auto flex gap-3">
+            <button
+              onClick={() => navigate("/p4/light/summary")}
+              className="rounded-full bg-slate-600 px-6 py-3 text-base font-semibold text-white shadow-[0_6px_14px_rgba(0,0,0,0.25)] transition hover:bg-slate-700"
+            >
+              {content.back}
+            </button>
 
-          <button
-            onClick={() => navigate("/p4")}
-            className="rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-3 text-white transition hover:shadow-lg"
-          >
-            {content.finish}
-          </button>
+            <button
+              onClick={() => navigate("/p4")}
+              className="rounded-full bg-red-500 px-7 py-3 text-base font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.3)] transition hover:scale-105 hover:bg-red-600"
+            >
+              {content.finish}
+            </button>
+          </div>
         </div>
       </div>
     </div>

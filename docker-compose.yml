@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  science456:
+    build: .
+    ports:
+      - "5173:5173"
+    command: npm run dev -- --host

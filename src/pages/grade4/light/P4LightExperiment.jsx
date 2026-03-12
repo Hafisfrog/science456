@@ -3,18 +3,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const MATERIALS = [
-  { id: 1,  name: "กระจกใส",    img: "/images/materials/l1.png",   type: "transparent", emoji: "🪟" },
+  { id: 1,  name: "กระจกใส",    img: "/images/materials/p1.png",   type: "transparent", emoji: "🪟" },
   { id: 2,  name: "แก้วใส",     img: "/images/materials/l10.png",  type: "transparent", emoji: "🥛" },
   { id: 3,  name: "พลาสติกใส",  img: "/images/materials/l3.png",   type: "transparent", emoji: "🔷" },
-  { id: 4,  name: "หมอก",       img: "/images/materials/l8.png",   type: "translucent", emoji: "🌫️" },
+  { id: 4,  name: "หมอก",      img: "/images/materials/l8.png",   type: "translucent", emoji: "🌫️" },
   { id: 5,  name: "กระดาษไข",  img: "/images/materials/l4.png",   type: "translucent", emoji: "📄" },
   { id: 6,  name: "กระจกฝ้า",   img: "/images/materials/l2.png",   type: "translucent", emoji: "🔲" },
   { id: 7,  name: "แผ่นไม้",    img: "/images/materials/l5.png",   type: "opaque",      emoji: "🪵" },
   { id: 8,  name: "ผนังปูน",    img: "/images/materials/l7.webp",  type: "opaque",      emoji: "🧱" },
-  { id: 9,  name: "เหล็ก",      img: "/images/materials/l6.png",   type: "opaque",      emoji: "⚙️" },
+  { id: 9,  name: "เหล็ก",     img: "/images/materials/l6.png",   type: "opaque",      emoji: "⚙️" },
 ];
 
-const TYPE_META = {
+const TYPE_META = { 
   transparent: { 
     label: "โปร่งใส",  
     result: "เห็นชัดเจน",    
@@ -312,6 +312,10 @@ export default function P4LightExperiment() {
   const [results, setResults] = useState([]);
   const [materialSizePercent, setMaterialSizePercent] = useState(100);
   const [speechLang, setSpeechLang] = useState("th");
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
+  const [isMobile, setIsMobile] = useState(false);
   
   // โหลดประวัติจาก localStorage
   const [experimentResults, setExperimentResults] = useState(() => {
@@ -326,8 +330,11 @@ export default function P4LightExperiment() {
   const menuRef = useRef(null);
 
   const meta = TYPE_META[selectedMaterial.type];
-  const materialSize = Math.round((190 * materialSizePercent) / 100);
-  const fallbackEmojiSize = Math.round((112 * materialSizePercent) / 100);
+  const isTight = viewportWidth > 0 && viewportWidth <= 420;
+  const baseMaterialSize = isTight ? 130 : isMobile ? 150 : 190;
+  const baseEmojiSize = isTight ? 78 : isMobile ? 90 : 112;
+  const materialSize = Math.round((baseMaterialSize * materialSizePercent) / 100);
+  const fallbackEmojiSize = Math.round((baseEmojiSize * materialSizePercent) / 100);
 
   // Cleanup
   useEffect(() => {
@@ -336,6 +343,18 @@ export default function P4LightExperiment() {
       clearInterval(reflectRef.current);
       clearInterval(rotationRef.current);
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const update = () => {
+      const w = window.innerWidth;
+      setViewportWidth(w);
+      setIsMobile(w <= 768);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
   }, []);
 
   // Click outside
@@ -512,28 +531,120 @@ export default function P4LightExperiment() {
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
+  const rootStyle = isMobile
+    ? { ...S.root, height: "auto", minHeight: "100vh", overflow: "auto", overflowX: "hidden" }
+    : S.root;
+  const topBarStyle = isMobile
+    ? { ...S.topBar, flexDirection: "column", alignItems: "stretch", gap: 8, padding: "10px 12px" }
+    : S.topBar;
+  const logoIconStyle = isMobile ? { ...S.logoIcon, width: 38, height: 38, fontSize: 22 } : S.logoIcon;
+  const logoTitleStyle = isMobile ? { ...S.logoTitle, fontSize: 15 } : S.logoTitle;
+  const logoSubStyle = isMobile ? { ...S.logoSub, fontSize: 10 } : S.logoSub;
+  const matSelectorWrapStyle = isMobile
+    ? { ...S.matSelectorWrap, width: "100%", marginLeft: 0 }
+    : S.matSelectorWrap;
+  const matBtnStyle = isMobile
+    ? { ...S.matBtn, width: "100%", justifyContent: "space-between", flexWrap: "wrap", rowGap: 6 }
+    : S.matBtn;
+  const dropdownStyle = isMobile ? { ...S.dropdown, width: "100%", left: 0, right: "auto" } : S.dropdown;
+  const statsRowStyle = isMobile
+    ? { ...S.statsRow, marginLeft: 0, flexWrap: "wrap", justifyContent: "flex-start", rowGap: 6 }
+    : S.statsRow;
+  const mainStyle = isMobile
+    ? { ...S.main, flexDirection: "column", gap: 10, padding: "0 10px 12px", overflow: "visible" }
+    : S.main;
+  const controlPanelStyle = isMobile
+    ? {
+        ...S.controlPanel,
+        position: "relative",
+        left: "auto",
+        top: "auto",
+        transform: "none",
+        width: "100%",
+        maxWidth: 560,
+        margin: "10px auto 0",
+        order: 2,
+        padding: isTight ? "12px 10px" : "14px 12px",
+        gap: isTight ? 8 : 10,
+        borderRadius: 16,
+      }
+    : S.controlPanel;
+  const canvasStyle = isMobile
+    ? {
+        ...S.canvas,
+        order: 1,
+        minHeight: isTight ? 320 : 360,
+        height: isTight ? "48vh" : "52vh",
+        maxHeight: 420,
+        borderRadius: 16,
+        overflow: "hidden",
+      }
+    : S.canvas;
+  const stageStyle = isMobile
+    ? {
+        position: "absolute",
+        inset: 0,
+        transform: `scale(${isTight ? 0.86 : 0.92})`,
+        transformOrigin: "center center",
+        pointerEvents: "none",
+      }
+    : { position: "absolute", inset: 0, pointerEvents: "none" };
+  const torchStyle = isMobile ? { ...S.torch, left: isTight ? 40 : 70 } : S.torch;
+  const torchGlowStyle = isMobile
+    ? isTight
+      ? { ...S.torchGlow, width: 200, height: 80 }
+      : { ...S.torchGlow, width: 240, height: 96 }
+    : { ...S.torchGlow, width: 300, height: 120 };
+  const torchWideGlow = isMobile
+    ? isTight
+      ? { width: 240, height: 100 }
+      : { width: 300, height: 120 }
+    : { width: 400, height: 160 };
+  const torchEmojiSize = isMobile ? (isTight ? 64 : 72) : 96;
+  const targetStyle = isMobile ? { ...S.target, right: isTight ? 8 : 16, gap: isTight ? 6 : 8 } : S.target;
+  const targetGlowSize = isMobile ? (isTight ? 120 : 150) : 200;
+  const statusDotStyle = isMobile
+    ? {
+        ...S.statusDot,
+        bottom: "auto",
+        top: isTight ? 8 : 10,
+        left: isTight ? 8 : 10,
+        padding: isTight ? "4px 8px" : "5px 10px",
+      }
+    : S.statusDot;
+  const shineBtnExtra = isMobile
+    ? { bottom: isTight ? 10 : 12, padding: isTight ? "9px 14px" : "10px 16px" }
+    : {};
+  const footerStyle = isMobile ? { ...S.footer, padding: "10px 12px" } : S.footer;
+  const footerInnerStyle = isMobile
+    ? { ...S.footerInner, flexDirection: "column", alignItems: "stretch", gap: 8 }
+    : S.footerInner;
+  const footerTitleStyle = isMobile ? { ...S.footerTitle, textAlign: "center" } : S.footerTitle;
+  const resultsScrollStyle = isMobile ? { ...S.resultsScroll, width: "100%" } : S.resultsScroll;
+  const pageNavStyle = isMobile ? { ...S.pageNav, marginLeft: 0, justifyContent: "space-between" } : S.pageNav;
+
   return (
-    <div style={S.root}>
+    <div style={rootStyle}>
       <style>{CSS}</style>
 
       {/* ── TOP BAR ────────────────────────────────────────────────────── */}
-      <header style={S.topBar}>
+      <header style={topBarStyle}>
         {/* Logo */}
         <div style={S.logo}>
-          <div style={S.logoIcon}>💡</div>
+          <div style={logoIconStyle}>💡</div>
           <div>
-            <div style={S.logoTitle}>Light Lab</div>
-            <div style={S.logoSub}>การส่องผ่านของแสง</div>
+            <div style={logoTitleStyle}>Light Lab</div>
+            <div style={logoSubStyle}>การส่องผ่านของแสง</div>
           </div>
         </div>
 
         {/* Material Selector */}
-        <div style={S.matSelectorWrap} ref={menuRef}>
-          <button style={S.matBtn} onClick={() => setShowMaterialMenu(v => !v)}>
+        <div style={matSelectorWrapStyle} ref={menuRef}>
+          <button style={matBtnStyle} onClick={() => setShowMaterialMenu(v => !v)}>
             <span style={{ fontSize: 22 }}>{selectedMaterial.emoji}</span>
             <div style={{ lineHeight: 1.2 }}>
-              <div style={S.matBtnSub}>วัสดุปัจจุบัน</div>
-              <div style={S.matBtnName}>{selectedMaterial.name}</div>
+              <div style={S.matBtnSub} className="mat-btn-sub">วัสดุปัจจุบัน</div>
+              <div style={S.matBtnName} className="mat-btn-name">{selectedMaterial.name}</div>
             </div>
             <div style={{ ...S.typePill, background: meta.dim, color: meta.badge }}>
               {meta.label}
@@ -542,7 +653,7 @@ export default function P4LightExperiment() {
           </button>
 
           {showMaterialMenu && (
-            <div style={S.dropdown} className="dropdown-anim">
+            <div style={dropdownStyle} className="dropdown-anim">
               <div style={S.dropHeader}>เลือกวัสดุทดลอง</div>
               {["transparent","translucent","opaque"].map(grp => (
                 <div key={grp}>
@@ -565,12 +676,12 @@ export default function P4LightExperiment() {
         </div>
 
         {/* Stats pills */}
-        <div style={S.statsRow}>
-          <div style={{ ...S.statPill, background: "#3b82f6", color: "white" }}>
+        <div style={statsRowStyle}>
+          <div style={{ ...S.statPill, background: "#3b82f6", color: "white" }} className="stat-pill">
             รวม {stats.total} ครั้ง
           </div>
           {Object.entries(stats).filter(([k]) => k !== 'total').map(([k, v]) => (
-            <div key={k} style={{ ...S.statPill, background: TYPE_META[k].dim, color: TYPE_META[k].badge }}>
+            <div key={k} style={{ ...S.statPill, background: TYPE_META[k].dim, color: TYPE_META[k].badge }} className="stat-pill">
               {v} {TYPE_META[k].label}
             </div>
           ))}
@@ -578,10 +689,10 @@ export default function P4LightExperiment() {
       </header>
 
       {/* ── MAIN LAB ───────────────────────────────────────────────────── */}
-      <main style={S.main}>
+      <main style={mainStyle}>
 
         {/* Floating Control Panel */}
-        <div style={S.controlPanel} className="glass-panel">
+        <div style={controlPanelStyle} className="glass-panel">
           <div style={S.panelTitle}>ควบคุม</div>
           <div style={S.speechRow}>
             {["th", "en", "ms"].map((langKey) => (
@@ -665,9 +776,9 @@ export default function P4LightExperiment() {
         </div>
 
         {/* ── CANVAS AREA ─────────────────────────────────────────────── */}
-        <div style={S.canvas}>
+        <div style={canvasStyle}>
           {/* ambient flash */}
-                    <button
+          <button
             style={{
               ...S.bigBtn,
               position: "absolute",
@@ -679,26 +790,29 @@ export default function P4LightExperiment() {
               boxShadow: "0 12px 30px rgba(59,130,246,0.25)",
               backdropFilter: "blur(8px)",
               padding: "12px 20px",
+              fontSize: isTight ? 13 : 14,
               opacity: shine ? 0.45 : 1,
               cursor: shine ? "not-allowed" : "pointer",
               background: shine
                 ? "#cbd5e1"
                 : "linear-gradient(135deg,#38bdf8,#2563eb)",
+              ...shineBtnExtra,
             }}
             onClick={doShine}
             disabled={shine}
           >
-            <span style={{ fontSize: 26 }}>🔦</span>
+            <span style={{ fontSize: isMobile ? 22 : 26 }}>🔦</span>
             <span>ส่องแสง</span>
           </button>
 
-          <BeamCanvas
-            shine={shine}
-            beamProgress={beamProgress}
-            reflectProgress={reflectProgress}
-            materialType={selectedMaterial.type}
-            objectSize={materialSize}
-          />
+          <div style={stageStyle}>
+            <BeamCanvas
+              shine={shine}
+              beamProgress={beamProgress}
+              reflectProgress={reflectProgress}
+              materialType={selectedMaterial.type}
+              objectSize={materialSize}
+            />
 
           {/* Grid lines (decorative) */}
           <svg style={S.grid} width="100%" height="100%">
@@ -714,17 +828,17 @@ export default function P4LightExperiment() {
 
           {/* Torch - ทำให้ใหญ่ขึ้นและเห็นชัด */}
           <div style={{
-            ...S.torch,
+            ...torchStyle,
             transform: `translateY(-50%) rotate(${torchRotation}deg)`,
             transformOrigin: "82px 70px",
           }}>
             {shine && (
               <>
-                <div style={{...S.torchGlow, width: 300, height: 120}} className="glow-pulse" />
+                <div style={torchGlowStyle} className="glow-pulse" />
                 <div style={{
                   position: "absolute", top: "50%", left: "50%",
                   transform: "translate(-50%,-50%)",
-                  width: 400, height: 160,
+                  ...torchWideGlow,
                   background: "radial-gradient(ellipse, rgba(255,215,0,0.3) 0%, transparent 70%)",
                   borderRadius: "50%",
                   pointerEvents: "none",
@@ -732,7 +846,7 @@ export default function P4LightExperiment() {
                 }} />
               </>
             )}
-            <span style={{ fontSize: 96, position: "relative", zIndex: 2, filter: "drop-shadow(0 0 20px gold)" }}>🔦</span>
+            <span style={{ fontSize: torchEmojiSize, position: "relative", zIndex: 2, filter: "drop-shadow(0 0 20px gold)" }}>🔦</span>
           </div>
 
           {/* Material Object - แสดงรูปภาพเปล่า ไม่มีกล่อง */}
@@ -780,7 +894,7 @@ export default function P4LightExperiment() {
           </div>
 
           {/* Target */}
-          <div style={S.target}>
+          <div style={targetStyle} className="target-block">
             {shine && reflectProgress > 0.6 && (
               <div style={{
                 ...S.targetGlow,
@@ -789,8 +903,8 @@ export default function P4LightExperiment() {
                   : selectedMaterial.type === "translucent"
                   ? "radial-gradient(circle, rgba(255,165,0,0.4) 0%, rgba(255,100,0,0.2) 50%, transparent 80%)"
                   : "radial-gradient(circle, rgba(0,0,0,0.3) 0%, transparent 80%)",
-                width: 200,
-                height: 200,
+                width: targetGlowSize,
+                height: targetGlowSize,
               }} className="glow-pulse" />
             )}
             <span style={{ fontSize: 80, filter: shine && reflectProgress > 0.8 && selectedMaterial.type === "transparent" ? "drop-shadow(0 0 20px gold)" : "none" }}>🧸</span>
@@ -811,18 +925,19 @@ export default function P4LightExperiment() {
           </div>
 
           {/* Status dot */}
-          <div style={S.statusDot}>
+          <div style={statusDotStyle} className="status-dot">
             <div style={{ ...S.dot, background: shine ? "#4ade80" : "#475569", boxShadow: shine ? "0 0 8px #4ade80" : "none" }} className={shine ? "glow-pulse" : ""} />
             <span style={{ color: "#475569", fontSize: 13 }}>{shine ? "กำลังทดลอง..." : "พร้อมทดลอง"}</span>
           </div>
         </div>
+        </div>
       </main>
 
       {/* ── BOTTOM RESULT PANEL ─────────────────────────────────────────── */}
-      <footer style={S.footer}>
-        <div style={S.footerInner}>
-          <div style={S.footerTitle}>ผลการทดลองล่าสุด</div>
-          <div style={S.resultsScroll}>
+      <footer style={footerStyle}>
+        <div style={footerInnerStyle}>
+          <div style={footerTitleStyle}>ผลการทดลองล่าสุด</div>
+          <div style={resultsScrollStyle}>
             {results.length === 0
               ? <div style={S.emptyHint}>ยังไม่มีผล – กดส่องแสงเพื่อเริ่ม</div>
               : results.slice(0, 5).map((r, i) => (
@@ -831,7 +946,8 @@ export default function P4LightExperiment() {
                       borderColor: TYPE_META[r.type].color,
                       background:  TYPE_META[r.type].dim,
                       animation: i === 0 ? "popIn 0.3s ease" : "none",
-                    }}>
+                    }}
+                    className="result-chip">
                     <img 
                       src={r.material.img}
                       alt=""
@@ -844,8 +960,8 @@ export default function P4LightExperiment() {
                     />
                     <span className="chip-emoji" style={{ fontSize: 20, display: 'none' }}>{r.material.emoji}</span>
                     <div>
-                      <div style={{ color: "#1e293b", fontSize: 12, fontWeight: 600 }}>{r.material.name}</div>
-                      <div style={{ color: TYPE_META[r.type].badge, fontSize: 11 }}>{r.result}</div>
+                      <div className="chip-title" style={{ color: "#1e293b", fontSize: 12, fontWeight: 600 }}>{r.material.name}</div>
+                      <div className="chip-sub" style={{ color: TYPE_META[r.type].badge, fontSize: 11 }}>{r.result}</div>
                     </div>
                   </div>
                 ))
@@ -854,7 +970,7 @@ export default function P4LightExperiment() {
           {experimentResults.length > 0 && (
             <button style={S.clearBtn} onClick={clearResults}>ล้างประวัติ</button>
           )}
-          <div style={S.pageNav}>
+          <div style={pageNavStyle}>
             <button style={S.pageBackBtn} onClick={() => navigate("/p4/light/thinking")} className="btn-hover">
               ย้อนกลับ
             </button>
@@ -1257,6 +1373,59 @@ const CSS = `
   }
   .btn-hover:active:not(:disabled) {
     transform: scale(0.97);
+  }
+
+  @media (max-width: 768px) {
+    .target-block > span {
+      font-size: 60px !important;
+    }
+    .target-block .pop-in {
+      font-size: 13px !important;
+      padding: 6px 12px !important;
+    }
+    .status-dot span {
+      font-size: 12px !important;
+    }
+    .mat-btn-sub {
+      font-size: 9px !important;
+    }
+    .mat-btn-name {
+      font-size: 13px !important;
+    }
+    .stat-pill {
+      font-size: 11px !important;
+      padding: 3px 8px !important;
+    }
+    .result-chip {
+      min-width: 110px !important;
+      padding: 6px 10px !important;
+    }
+    .result-chip .chip-title {
+      font-size: 11px !important;
+    }
+    .result-chip .chip-sub {
+      font-size: 10px !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .target-block > span {
+      font-size: 52px !important;
+    }
+    .target-block .pop-in {
+      font-size: 12px !important;
+      padding: 5px 10px !important;
+    }
+    .status-dot span {
+      font-size: 11px !important;
+    }
+    .stat-pill {
+      font-size: 10px !important;
+      padding: 3px 7px !important;
+    }
+    .result-chip {
+      min-width: 100px !important;
+    }
   }
 
   ::-webkit-scrollbar { height: 4px; }

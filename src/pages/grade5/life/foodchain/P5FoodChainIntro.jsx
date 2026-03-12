@@ -422,7 +422,7 @@ export default function P5FoodChainIntro() {
       gap-3
       z-40">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/p5/life")}
           className="
           bg-white/95
           backdrop-blur
