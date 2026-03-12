@@ -403,14 +403,20 @@ export default function P6ElectricCircuitSim() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "linear-gradient(180deg, #cde9f7 0%, #e9f5ff 32%, #d7ecf7 60%, #c2dbe9 100%), radial-gradient(120% 70% at 50% 20%, rgba(255,255,255,0.65), transparent 45%), radial-gradient(90% 60% at 20% 10%, rgba(255,255,255,0.35), transparent 40%)",
   };
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-16 pt-3 text-slate-900 md:px-8"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-4 right-4 top-[18%] h-[42%] rounded-[48%] bg-white/38 blur-3xl" />
+        <div className="absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-[#9fc5d8] via-[#b1d4e6] to-transparent" />
+        <div className="absolute inset-x-0 bottom-[110px] h-4 rounded-full bg-[repeating-linear-gradient(90deg,#7aa3c7_0_40px,#6d94b8_40px_44px)] opacity-50" />
+      </div>
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
@@ -432,11 +438,11 @@ export default function P6ElectricCircuitSim() {
             <div className="mt-1 font-semibold text-slate-800">{content.chooseHint}</div>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-4 xl:gap-5">
             {options.map((item) => (
               <button
                 key={item.cells}
-                className={`cursor-pointer rounded-[18px] border-2 bg-white p-3 text-left shadow-[0_12px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 ${
+                className={`w-full max-w-[260px] cursor-pointer rounded-[18px] border-2 bg-white p-3 text-left shadow-[0_12px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 ${
                   selected === item.cells
                     ? "border-blue-600/80 bg-gradient-to-b from-white to-blue-50 shadow-[0_16px_26px_rgba(37,99,235,0.18)]"
                     : "border-slate-400/45 hover:border-blue-600/40"

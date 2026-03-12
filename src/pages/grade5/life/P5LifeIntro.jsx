@@ -1,98 +1,167 @@
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const TOPICS = [
-  {
-    id: "foodchain",
-    title: "ชีวิตสัมพันธ์",
-    subtitle: "Food Chain",
-    description: "เรียนรู้ความสัมพันธ์ของสิ่งมีชีวิตในระบบนิเวศ ผ่านห่วงโซ่อาหารและบทบาทของผู้ผลิต ผู้บริโภค และผู้ย่อยสลาย",
-    badge: "บทเรียนพร้อมใช้งาน",
-    accent: "from-emerald-500 via-green-500 to-lime-400",
-    glow: "shadow-emerald-300/50",
-    to: "/p5/life/foodchain",
-  },
-  {
-    id: "genetics",
-    title: "ลักษณะทางพันธุกรรม",
-    subtitle: "Genetics",
-    description: "สำรวจลักษณะที่ถ่ายทอดจากพ่อแม่สู่ลูก ทั้งในคน สัตว์ และพืช พร้อมเลือกหัวข้อย่อยที่ต้องการศึกษา",
-    badge: "เลือกหัวข้อย่อยได้",
-    accent: "from-fuchsia-500 via-pink-500 to-rose-400",
-    glow: "shadow-pink-300/50",
-    to: "/p5/life/genetics",
-  },
+const LANGS = [
+  { id: "th", label: "ไทย", voice: "th-TH" },
+  { id: "en", label: "English", voice: "en-US" },
+  { id: "ms", label: "Melayu", voice: "ms-MY" },
 ];
+
+const TEXT = {
+  th: {
+    grade: "ชั้นประถมศึกษาปีที่ 5",
+    heading: "เลือกบทเรียน\nชีวิตและการถ่ายทอดลักษณะ",
+    sub: "เลือกรายวิชาเพื่อเข้าสู่กิจกรรมและสื่อการเรียนรู้",
+    topics: [
+      { id: "foodchain", title: "ชีวิตสัมพันธ์", to: "/p5/life/foodchain" },
+      { id: "genetics", title: "ลักษณะทางพันธุกรรม", to: "/p5/life/genetics" },
+    ],
+    back: "ย้อนกลับ",
+    listen: "ฟังหัวข้อทั้งหมด",
+  },
+  en: {
+    grade: "Grade 5",
+    heading: "Choose a Lesson\nLife & Heredity",
+    sub: "Pick a topic to enter its activities and learning media.",
+    topics: [
+      { id: "foodchain", title: "Food Chain", to: "/p5/life/foodchain" },
+      { id: "genetics", title: "Genetics", to: "/p5/life/genetics" },
+    ],
+    back: "Back",
+    listen: "Play all titles",
+  },
+  ms: {
+    grade: "Tahun 5",
+    heading: "Pilih Pelajaran\nKehidupan & Keturunan",
+    sub: "Pilih topik untuk masuk aktiviti dan bahan pembelajaran.",
+    topics: [
+      { id: "foodchain", title: "Rantaian Makanan", to: "/p5/life/foodchain" },
+      { id: "genetics", title: "Genetik", to: "/p5/life/genetics" },
+    ],
+    back: "Kembali",
+    listen: "Dengar semua tajuk",
+  },
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+  const voices = synth.getVoices();
+  const voice =
+    voices.find((item) => item.lang === lang) ||
+    voices.find((item) => item.lang.startsWith(lang.split("-")[0]));
+  if (voice) utterance.voice = voice;
+  synth.speak(utterance);
+}
 
 export default function P5LifeIntro() {
   const navigate = useNavigate();
+  const [lang, setLang] = useState("th");
+  const content = TEXT[lang];
+  const voice = useMemo(() => LANGS.find((item) => item.id === lang)?.voice || "th-TH", [lang]);
+
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) return;
+    const preload = () => window.speechSynthesis.getVoices();
+    preload();
+    window.speechSynthesis.onvoiceschanged = preload;
+  }, []);
+
+  const handleSpeakAll = () => {
+    const titles = content.topics.map((t) => t.title).join(", ");
+    speakText(`${content.grade}. ${titles}`, voice);
+  };
+
+  const pageBg =
+    "linear-gradient(180deg, #e8fff3 0%, #d3f7e2 40%, #b8edc9 80%), radial-gradient(120% 80% at 20% 20%, rgba(255,255,255,0.6), transparent 55%)";
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[radial-gradient(circle_at_top_left,_#dcfce7,_#bbf7d0_35%,_#86efac_60%,_#4ade80_100%)] px-6 py-8 text-slate-900 md:px-10">
+    <div
+      className="relative min-h-screen overflow-hidden px-4 py-5 text-slate-900 md:px-10"
+      style={{ fontFamily: "Prompt, Noto Sans Thai, sans-serif", background: pageBg }}
+    >
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-16 top-12 h-48 w-48 rounded-full bg-white/30 blur-3xl" />
-        <div className="absolute right-0 top-24 h-64 w-64 rounded-full bg-yellow-200/40 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-40 w-40 rounded-full bg-emerald-200/40 blur-3xl" />
+        <div className="absolute -right-10 -top-16 h-40 w-40 rounded-full bg-yellow-300 shadow-[0_0_0_14px_#f59e0b] sm:h-48 sm:w-48" />
+        <div className="absolute left-0 right-0 top-[32%] h-[46%] bg-[radial-gradient(circle_at_center,_#c8e7c7_0%,_#c8e7c7_45%,_transparent_55%)]" />
+        <div className="absolute left-0 right-0 bottom-0 h-[220px] bg-gradient-to-t from-[#74c665] via-[#7ccf6d] to-transparent" />
+        <div className="absolute inset-x-0 bottom-[140px] h-12 bg-[repeating-linear-gradient(90deg,#c0763c_0_24px,#a15d2d_24px_30px)] rounded-full opacity-90 blur-[1px]" />
+        <div className="absolute inset-x-0 bottom-[110px] h-8 bg-[repeating-linear-gradient(90deg,#f9b24e_0_22px,#d68632_22px_28px)] rounded-full opacity-85" />
+        <div className="absolute bottom-[82px] left-0 right-0 flex justify-around px-8">
+          {Array.from({ length: 14 }).map((_, idx) => (
+            <div key={idx} className="h-10 w-5 rounded-[4px] bg-[#8c5b2c] shadow-[inset_0_-2px_0_rgba(0,0,0,0.12)]" />
+          ))}
+        </div>
       </div>
 
-      <div className="relative mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl flex-col">
-        <div className="mb-10 flex items-center justify-between">
+      <div className="relative mx-auto flex min-h-[calc(100vh-40px)] max-w-5xl flex-col">
+        <div className="mb-6 flex items-center justify-between">
           <button
             type="button"
             onClick={() => navigate("/grades")}
-            className="rounded-full border border-white/70 bg-white/80 px-4 py-2 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:bg-white"
+            className="rounded-full bg-white/85 px-4 py-2 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:bg-white"
           >
-            ย้อนกลับ
+            {content.back}
           </button>
-
-          <div className="rounded-full border border-emerald-200/80 bg-white/70 px-4 py-2 text-sm font-semibold text-emerald-700 shadow-sm">
-            วิทยาศาสตร์ ป.5
+          <div className="rounded-full bg-white/80 px-4 py-2 text-sm font-bold text-emerald-700 shadow">
+            {content.grade}
           </div>
         </div>
 
-        <div className="mb-10 max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-emerald-800/80">
-            Grade 5 Life Science
-          </p>
-          <h1 className="mb-4 text-4xl font-black leading-tight md:text-6xl">
-            เลือกบทเรียน
-            <span className="block text-emerald-800">ชีวิตและการถ่ายทอดลักษณะ</span>
+        <div className="mb-8 text-center">
+          <h1 className="whitespace-pre-line text-[clamp(34px,4vw,56px)] font-black leading-tight text-[#0f2b21] drop-shadow-[0_2px_0_rgba(255,255,255,0.7)]">
+            {content.heading}
           </h1>
-          <p className="max-w-2xl text-base leading-7 text-slate-700 md:text-lg">
-            หน้านี้รวมบทเรียนหลักของหน่วยชีวิตสัมพันธ์และพันธุกรรม กดเลือกหัวข้อเพื่อเข้าสู่กิจกรรมและสื่อการเรียนรู้ของแต่ละบท
+          <p className="mt-3 text-[clamp(16px,1.6vw,20px)] font-semibold text-[#1e3a2f]">
+            {content.sub}
           </p>
         </div>
 
-        <div className="grid flex-1 gap-6 pb-6 lg:grid-cols-2">
-          {TOPICS.map((topic) => (
+        <div className="mx-auto grid max-w-4xl gap-8 pb-20 md:grid-cols-2">
+          {content.topics.map((topic) => (
             <button
               key={topic.id}
               type="button"
               onClick={() => navigate(topic.to)}
-              className={`group relative overflow-hidden rounded-[2rem] border border-white/60 bg-white/80 p-7 text-left shadow-2xl backdrop-blur transition duration-300 hover:-translate-y-2 hover:shadow-2xl ${topic.glow}`}
+              className="group relative overflow-hidden rounded-[22px] border-2 border-[#f3c262] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.95),rgba(255,255,255,0.9))] px-7 py-10 text-left shadow-[0_14px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-1.5"
             >
-              <div className={`absolute inset-x-0 top-0 h-2 bg-gradient-to-r ${topic.accent}`} />
-              <div className="absolute right-6 top-6 rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold text-white/90">
-                {topic.badge}
+              <span className="pointer-events-none absolute inset-y-2 left-2 text-4xl text-[#2b2b2b]">“</span>
+              <span className="pointer-events-none absolute inset-y-2 right-3 text-4xl text-[#2b2b2b]">”</span>
+              <div className="absolute right-4 top-4">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    speakText(topic.title, voice);
+                  }}
+                  className="inline-grid h-10 w-10 place-items-center rounded-xl bg-emerald-50 text-emerald-700 shadow hover:scale-105"
+                  aria-label={topic.title}
+                  title={topic.title}
+                >
+                  🔊
+                </button>
               </div>
+              <div className="ml-6 mr-12 text-center text-[clamp(26px,3vw,34px)] font-black leading-tight text-[#1f2a36]">
+                {topic.title}
+              </div>
+            </button>
+          ))}
+        </div>
 
-              <div className="mt-10">
-                <p className="mb-2 text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
-                  {topic.subtitle}
-                </p>
-                <h2 className="mb-4 text-3xl font-black text-slate-900">{topic.title}</h2>
-                <p className="min-h-24 text-sm leading-7 text-slate-600 md:text-base">
-                  {topic.description}
-                </p>
-              </div>
-
-              <div className="mt-8 flex items-center justify-between">
-                <div className={`rounded-full bg-gradient-to-r px-4 py-2 text-sm font-bold text-white ${topic.accent}`}>
-                  เข้าเรียน
-                </div>
-                <span className="text-2xl text-slate-400 transition group-hover:translate-x-1 group-hover:text-slate-700">
-                  →
-                </span>
-              </div>
+        <div className="fixed bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-[18px] border border-[#7ccf6d]/40 bg-white/92 p-2 shadow-[0_10px_16px_rgba(15,23,42,0.16)] backdrop-blur-[2px]">
+          {LANGS.map((item) => (
+            <button
+              key={item.id}
+              className={`rounded-full px-4 py-2 text-sm font-bold ${
+                lang === item.id ? "bg-emerald-500 text-white shadow" : "bg-emerald-50 text-emerald-800"
+              }`}
+              type="button"
+              onClick={() => setLang(item.id)}
+            >
+              {item.label}
             </button>
           ))}
         </div>
