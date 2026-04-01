@@ -1,4 +1,4 @@
-.exp3-vocab-page {
+﻿.exp3-vocab-page {
   min-height: 100vh;
   padding: 50px 20px;
   background: linear-gradient(180deg, #f0f9ff, #e6f4ff);
@@ -168,5 +168,53 @@
 
   .exp3-vocab-header h1 {
     font-size: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .exp3-vocab-page {
+    padding: 24px 12px 28px;
+  }
+
+  .exp3-vocab-header {
+    margin-bottom: 18px;
+  }
+
+  .exp3-vocab-header h1 {
+    font-size: 28px;
+  }
+
+  .exp3-vocab-header p {
+    font-size: 16px;
+  }
+
+  .exp3-vocab-card {
+    overflow-x: auto;
+    border-radius: 18px;
+  }
+
+  .exp3-vocab-table {
+    min-width: 720px;
+    font-size: 15px;
+  }
+
+  .exp3-vocab-table th,
+  .exp3-vocab-table td {
+    padding: 12px 10px;
+  }
+
+  .cell-audio {
+    min-width: 180px;
+  }
+
+  .exp3-vocab-footer {
+    flex-direction: column;
+  }
+
+  .back-home-btn,
+  .btn-next {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 16px;
   }
 }

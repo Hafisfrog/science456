@@ -45,7 +45,7 @@ export default function P4GravityExp2Result() {
         avg: "น้ำหนัก\nเฉลี่ย",
         summaryTitle: "สรุปผลการทดลอง",
         retry: "ทดลองอีกครั้ง",
-        next: "ต่อไป →",
+        next: "ต่อไป »",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
@@ -68,7 +68,7 @@ export default function P4GravityExp2Result() {
         avg: "Average\nWeight",
         summaryTitle: "Conclusion",
         retry: "Try again",
-        next: "Next →",
+        next: "Next »",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
@@ -91,7 +91,7 @@ export default function P4GravityExp2Result() {
         avg: "Purata\nBerat",
         summaryTitle: "Rumusan",
         retry: "Cuba lagi",
-        next: "Seterusnya →",
+        next: "Seterusnya »",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Melayu",
@@ -177,7 +177,11 @@ export default function P4GravityExp2Result() {
 
   return (
     <div className="exp2r2-page">
-      <div className="exp2r2-bg" />
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
 
       <div className="exp2r2-title">{t.title}</div>
 

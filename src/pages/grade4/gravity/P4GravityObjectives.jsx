@@ -77,9 +77,9 @@ export default function P4GravityObjectives() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,#f0f9ff_0%,#dceefb_42%,#d1e7f8_100%)] font-['Prompt',sans-serif] before:pointer-events-none before:absolute before:inset-0 before:-z-[1] before:content-[''] before:[background:radial-gradient(420px_320px_at_8%_82%,rgba(56,189,248,.18),transparent_65%),radial-gradient(380px_280px_at_95%_22%,rgba(59,130,246,.20),transparent_70%),radial-gradient(240px_200px_at_66%_8%,rgba(255,255,255,.32),transparent_70%)]">
       <img
-        className="absolute inset-0 -z-[2] h-full w-full scale-[1.03] object-cover [filter:blur(1.5px)_brightness(.86)_saturate(1.08)]"
-        src="/images/p4/gravity.png"
-        alt="bg"
+        src="/images/p4/sim/sball.png"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
 
       <div className="relative h-full w-full bg-[linear-gradient(120deg,rgba(255,255,255,.30),rgba(255,255,255,.14)),repeating-linear-gradient(135deg,rgba(255,255,255,.08)_0px,rgba(255,255,255,.08)_20px,rgba(255,255,255,0)_20px,rgba(255,255,255,0)_48px)] p-6 backdrop-blur-[12px] before:pointer-events-none before:absolute before:inset-0 before:content-[''] before:[background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.02)),radial-gradient(circle_at_50%_0%,rgba(255,255,255,.20),transparent_55%)] max-[640px]:p-4">

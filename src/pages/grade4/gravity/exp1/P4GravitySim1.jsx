@@ -9,24 +9,27 @@ export default function P4GravitySim1() {
   const copy = useMemo(() => {
     return {
       th: {
-        bubble: '1. "เคยสงสัยไหมว่า...ทำไมลูกบอลถึงตกลงพื้น ไม่ลอยขึ้นฟ้า?"',
+        bubble: '1. "เคยสงสัยไหมว่า...ทำไมลูกบอลถึงตกลงพื้น ไม่ลอยขึ้นฟ้า ? "',
         caption: "เริ่มการทดลอง",
-        back: "← กลับหน้าคำศัพท์",
-        hint: "กด 🔊 เพื่อฟังคำถาม หรือกด ▶ เพื่อเริ่มการทดลอง",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
+        // hint: "กด 🔊 เพื่อฟังคำถาม หรือกด ▶ เพื่อเริ่มการทดลอง",
         speakTitle: "ฟังเสียง",
       },
       en: {
-        bubble: '1. "Have you ever wondered... why does a ball fall to the ground instead of floating up?"',
+        bubble: '1. "Have you ever wondered... why does a ball fall to the ground instead of floating up ? "',
         caption: "Start Experiment",
-        back: "← Back to Vocabulary",
-        hint: "Tap 🔊 to listen, or press ▶ to start",
+        back: "Back",
+        next: "Next",
+        // hint: "Tap 🔊 to listen, or press ▶ to start",
         speakTitle: "Listen",
       },
       ms: {
-        bubble: '1. "Pernah terfikir... kenapa bola jatuh ke tanah, bukan terapung ke langit?"',
+        bubble: '1. "Pernah terfikir... kenapa bola jatuh ke tanah, bukan terapung ke langit ? "',
         caption: "Mula Eksperimen",
-        back: "← Kembali ke Kosa Kata",
-        hint: "Tekan 🔊 untuk dengar, atau ▶ untuk mula",
+        back: "Kembali",
+        next: "Seterusnya",
+        // hint: "Tekan 🔊 untuk dengar, atau ▶ untuk mula",
         speakTitle: "Dengar",
       },
     };
@@ -82,22 +85,30 @@ export default function P4GravitySim1() {
     navigate("/p4/gravity/exp1/materials");
   };
 
+  const handleBack = () => {
+    stopAudio();
+    navigate("/p4/gravity/vocab");
+  };
+
+  const handleNext = () => {
+    stopAudio();
+    navigate("/p4/gravity/exp1/materials");
+  };
+
   return (
     <div className="m-0 h-screen min-h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,#ffffff_0%,#e8f6ff_35%,#d8efff_100%)] p-0 font-['Prompt',sans-serif]">
       <div className="relative h-full w-full overflow-hidden bg-[#cfe9f6]">
-        <img className="absolute inset-0 h-full w-full object-cover saturate-105" src="/images/p4/sim/sball.png" alt="background" />
-
-        <button
-          className="absolute left-4 top-4 z-20 cursor-pointer rounded-2xl bg-white/90 px-[14px] py-[10px] text-[16px] font-black shadow-[0_10px_22px_rgba(0,0,0,.14)] transition duration-150 hover:-translate-y-0.5"
-          onClick={() => navigate("/p4/gravity/vocab")}
-          type="button"
-        >
-          {t.back}
-        </button>
+        <img
+          className="absolute inset-0 h-full w-full object-cover saturate-105"
+          src="/images/p4/sim/sball.png"
+          alt="background"
+        />
 
         <div className="absolute left-[7%] right-[7%] top-[12%] z-[15] rounded-[20px] bg-[rgba(191,219,240,.92)] px-[18px] py-[18px] text-[#0b1020] shadow-[0_14px_28px_rgba(0,0,0,.20)] backdrop-blur-[4px]">
           <div className="flex items-start gap-3">
-            <div className="flex-1 text-[26px] font-black leading-[1.25] max-[900px]:text-[20px]">{t.bubble}</div>
+            <div className="flex-1 text-[26px] font-black leading-[1.25] max-[900px]:text-[20px]">
+              {t.bubble}
+            </div>
             <button
               className="h-[46px] w-[46px] shrink-0 cursor-pointer rounded-[14px] bg-white/90 text-[20px] shadow-[0_10px_18px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.20)]"
               onClick={playNarration}
@@ -108,7 +119,10 @@ export default function P4GravitySim1() {
               🔊
             </button>
           </div>
-          <div className="mt-[10px] text-[15px] font-extrabold opacity-90">{t.hint}</div>
+
+          {/* <div className="mt-[10px] text-[15px] font-extrabold opacity-90">
+            {t.hint}
+          </div> */}
         </div>
 
         <img
@@ -123,7 +137,9 @@ export default function P4GravitySim1() {
           type="button"
           aria-label="start"
         >
-          <span className="text-[54px] font-black leading-none max-[900px]:text-[46px]">▶</span>
+          <span className="text-[54px] font-black leading-none max-[900px]:text-[46px]">
+            ▶
+          </span>
         </button>
 
         <div className="absolute left-1/2 top-[68%] z-[16] -translate-x-1/2 text-[22px] font-black text-[#0b1020] [text-shadow:0_2px_0_rgba(255,255,255,.75)] max-[900px]:top-[88%] max-[900px]:text-[18px]">
@@ -160,6 +176,25 @@ export default function P4GravitySim1() {
               มลายู
             </button>
           </div>
+        </div>
+
+        {/* bottom-right nav */}
+        <div className="absolute bottom-4 right-4 z-20 flex items-center gap-3 max-[640px]:gap-2">
+          <button
+            className="cursor-pointer rounded-[18px] bg-white/90 px-4 py-[12px] text-[18px] font-black text-[#0b1020] shadow-[0_12px_24px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_rgba(0,0,0,.20)] max-[640px]:px-3 max-[640px]:py-[11px] max-[640px]:text-[16px]"
+            onClick={handleBack}
+            type="button"
+          >
+            « {t.back}
+          </button>
+
+          <button
+            className="cursor-pointer rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-5 py-[12px] text-[20px] font-black text-white shadow-[0_14px_28px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.22)] max-[640px]:px-4 max-[640px]:py-[11px] max-[640px]:text-[17px]"
+            onClick={handleNext}
+            type="button"
+          >
+            {t.next} »
+          </button>
         </div>
       </div>
     </div>

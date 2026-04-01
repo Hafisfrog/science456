@@ -144,7 +144,11 @@ export default function P4GravityExp3Steps() {
   return (
     <div className="e3s-page">
       {/* BG */}
-      {assets.bg ? <img className="e3s-bg" src={assets.bg} alt="bg" /> : <div className="e3s-bg fallback" />}
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
       <div className="e3s-overlay" />
 
       {/* language dock (ซ้ายล่าง) */}
@@ -245,7 +249,7 @@ export default function P4GravityExp3Steps() {
       {/* bottom-right nav */}
       <div className="e3s-nav">
         <button className="e3s-back" type="button" onClick={() => navigate(BACK_PATH)}>
-          ← {t.back}
+          « {t.back}
         </button>
 
         <button className="e3s-next" type="button" onClick={() => navigate(NEXT_PATH)}>

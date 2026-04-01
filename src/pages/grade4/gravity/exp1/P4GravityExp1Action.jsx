@@ -31,6 +31,7 @@ export default function P4GravityExp1Action() {
   const [elapsedMs, setElapsedMs] = useState(0);
   const timerRef = useRef(null);
   const startAtRef = useRef(0);
+  const audioCtxRef = useRef(null);
 
   // track object done
   const doneRef = useRef({});
@@ -44,7 +45,7 @@ export default function P4GravityExp1Action() {
     return {
       th: {
         topTitle: "ลงมือทดลองจริง: เลือกวัตถุ • ปรับความสูง • ปล่อย • จับเวลา",
-        back: "← ย้อนกลับ",
+        back: "« ย้อนกลับ",
         chooseTitle: "เลือกวัตถุ",
         chooseSub: "เลือกได้หลายชิ้น (เลือกอย่างน้อย 1 ชิ้น)",
         objBall: "ลูกบอล",
@@ -62,7 +63,7 @@ export default function P4GravityExp1Action() {
         stateCountdown: "กำลังนับถอยหลัง",
         stateDropping: "กำลังตก...",
         stateDone: "เสร็จแล้ว! ดูผลได้เลย",
-        viewResult: "ดูผลการทดลอง →",
+        viewResult: "ดูผลการทดลอง",
         ground: "พื้น",
         heightLabel: "ความสูง",
         mUnit: "m",
@@ -71,7 +72,7 @@ export default function P4GravityExp1Action() {
       },
       en: {
         topTitle: "Real Experiment: Choose • Height • Drop • Time",
-        back: "← Back",
+        back: "« Back",
         chooseTitle: "Choose Objects",
         chooseSub: "Select multiple (at least 1)",
         objBall: "Ball",
@@ -89,7 +90,7 @@ export default function P4GravityExp1Action() {
         stateCountdown: "Counting down",
         stateDropping: "Dropping...",
         stateDone: "Done! View results",
-        viewResult: "View Results →",
+        viewResult: "View Results",
         ground: "Ground",
         heightLabel: "Height",
         mUnit: "m",
@@ -98,7 +99,7 @@ export default function P4GravityExp1Action() {
       },
       ms: {
         topTitle: "Eksperimen Sebenar: Pilih • Tinggi • Lepas • Masa",
-        back: "← Kembali",
+        back: "« Kembali",
         chooseTitle: "Pilih Objek",
         chooseSub: "Boleh pilih banyak (sekurang-kurangnya 1)",
         objBall: "Bola",
@@ -116,7 +117,7 @@ export default function P4GravityExp1Action() {
         stateCountdown: "Mengira turun",
         stateDropping: "Sedang jatuh...",
         stateDone: "Siap! Lihat keputusan",
-        viewResult: "Lihat Keputusan →",
+        viewResult: "Lihat Keputusan",
         ground: "Tanah",
         heightLabel: "Ketinggian",
         mUnit: "m",
@@ -208,6 +209,72 @@ export default function P4GravityExp1Action() {
     timerRef.current = null;
   };
 
+  const ensureImpactAudioReady = () => {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return null;
+
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new AudioCtx();
+      }
+
+      const ctx = audioCtxRef.current;
+      if (ctx.state === "suspended") {
+        ctx.resume?.();
+      }
+
+      return ctx;
+    } catch {
+      return null;
+    }
+  };
+
+  const playImpactSound = (type) => {
+    try {
+      const ctx = ensureImpactAudioReady();
+      if (!ctx) return;
+
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      const filter = ctx.createBiquadFilter();
+      const punch = ctx.createOscillator();
+      const punchGain = ctx.createGain();
+
+      osc.type = type === "feather" ? "sine" : "triangle";
+      osc.frequency.setValueAtTime(type === "feather" ? 240 : type === "bocce" ? 120 : 170, now);
+      osc.frequency.exponentialRampToValueAtTime(type === "feather" ? 180 : 60, now + 0.16);
+
+      punch.type = "square";
+      punch.frequency.setValueAtTime(type === "feather" ? 420 : 240, now);
+      punch.frequency.exponentialRampToValueAtTime(type === "feather" ? 260 : 110, now + 0.05);
+
+      filter.type = "lowpass";
+      filter.frequency.setValueAtTime(type === "feather" ? 1200 : 700, now);
+
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(type === "feather" ? 0.11 : type === "bocce" ? 0.32 : 0.27, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + (type === "feather" ? 0.16 : 0.22));
+
+      punchGain.gain.setValueAtTime(0.0001, now);
+      punchGain.gain.exponentialRampToValueAtTime(type === "feather" ? 0.03 : 0.08, now + 0.006);
+      punchGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+
+      osc.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+      punch.connect(punchGain);
+      punchGain.connect(ctx.destination);
+
+      osc.start(now);
+      punch.start(now);
+      osc.stop(now + (type === "feather" ? 0.18 : 0.24));
+      punch.stop(now + 0.055);
+    } catch {
+      // ignore audio errors
+    }
+  };
+
   // ---------- run control ----------
   const prepareDoneTracker = () => {
     doneRef.current = {};
@@ -227,6 +294,7 @@ export default function P4GravityExp1Action() {
     if (phase !== "idle") return;
     if (activeKeys.length === 0) return;
 
+    ensureImpactAudioReady();
     prepareDoneTracker();
     setCountdown(3);
     setPhase("countdown");
@@ -280,10 +348,6 @@ export default function P4GravityExp1Action() {
       <div className="lab2-wrap">
         {/* Top bar */}
         <div className="lab2-topbar">
-          <button className="btn ghost" onClick={() => navigate(BACK_PATH)} type="button">
-            {t.back}
-          </button>
-
           <div className="lab2-top-title">{t.topTitle}</div>
 
           {/* ✅ เอาพื้นที่ด้านขวาไว้บาลานซ์ (ไม่ให้ title ดูเอียง) */}
@@ -438,6 +502,10 @@ export default function P4GravityExp1Action() {
           <button className="result-btn" onClick={handleViewResult} type="button" disabled={!showViewResult}>
             {t.viewResult}
           </button>
+
+          <button className="back-bottom-btn" onClick={() => navigate(BACK_PATH)} type="button">
+            {t.back}
+          </button>
         </div>
 
         {/* CENTER: พื้นที่ปล่อย/แท่น/พื้น */}
@@ -475,6 +543,7 @@ export default function P4GravityExp1Action() {
                 duration={durationSec("ball")}
                 runPhase={phase}
                 x={-140}
+                onImpact={playImpactSound}
                 onDone={() => markDone("ball")}
               />
             )}
@@ -486,6 +555,7 @@ export default function P4GravityExp1Action() {
                 duration={durationSec("bocce")}
                 runPhase={phase}
                 x={0}
+                onImpact={playImpactSound}
                 onDone={() => markDone("bocce")}
               />
             )}
@@ -497,6 +567,7 @@ export default function P4GravityExp1Action() {
                 duration={durationSec("feather")}
                 runPhase={phase}
                 x={140}
+                onImpact={playImpactSound}
                 onDone={() => markDone("feather")}
               />
             )}
@@ -507,7 +578,7 @@ export default function P4GravityExp1Action() {
   );
 }
 
-function FallingObject({ type, img, duration, runPhase, x, onDone }) {
+function FallingObject({ type, img, duration, runPhase, x, onDone, onImpact }) {
   const isDropping = runPhase === "dropping";
   const isSettled = runPhase === "done";
 
@@ -522,6 +593,7 @@ function FallingObject({ type, img, duration, runPhase, x, onDone }) {
       style={style}
       onAnimationEnd={(e) => {
         if (e.animationName === "fallStraight" || e.animationName === "fallFeather") {
+          onImpact?.(type);
           onDone?.();
         }
       }}

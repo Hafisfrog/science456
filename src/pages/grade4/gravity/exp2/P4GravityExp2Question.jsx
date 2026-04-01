@@ -25,8 +25,9 @@ export default function P4GravityExp2Question() {
         langEn: "อังกฤษ",
         langMs: "มลายู",
         btnHint: "มาหาคำตอบ\nกัน",
-        btnStart: "เริ่ม\nการทดลอง",
-        back: "← ย้อนกลับ",
+        btnStart: "เริ่มการทดลอง",
+        back: "« ย้อนกลับ",
+        next: "ต่อไป »",
         speak: "ฟังคำถาม",
       },
       en: {
@@ -36,8 +37,9 @@ export default function P4GravityExp2Question() {
         langEn: "English",
         langMs: "Malay",
         btnHint: "Find\nthe answer",
-        btnStart: "Start\nExperiment",
-        back: "← Back",
+        btnStart: "Start Experiment",
+        back: "« Back",
+        next: "Next »",
         speak: "Listen",
       },
       ms: {
@@ -47,8 +49,9 @@ export default function P4GravityExp2Question() {
         langEn: "English",
         langMs: "Malay",
         btnHint: "Cari\njawapan",
-        btnStart: "Mulakan\nEksperimen",
-        back: "← Kembali",
+        btnStart: "Mulakan Eksperimen",
+        back: "« Kembali",
+        next: "Seterusnya »",
         speak: "Dengar soalan",
       },
     };
@@ -75,19 +78,11 @@ export default function P4GravityExp2Question() {
   return (
     <div className="relative h-[100svh] min-h-[100svh] w-full overflow-hidden bg-[#eef2ff] font-['Prompt',sans-serif] max-[760px]:overflow-y-auto">
       <img
-        className="absolute inset-0 -z-[3] h-full w-full scale-[1.02] object-cover [filter:blur(2px)_brightness(.92)]"
-        src={assets.bg}
-        alt="bg"
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
       <div className="absolute inset-0 -z-[2] [background:radial-gradient(1200px_720px_at_50%_40%,rgba(255,255,255,.20),rgba(255,255,255,0)_60%),linear-gradient(180deg,rgba(10,16,32,.18),rgba(10,16,32,.55))]" />
-
-      <button
-        className="absolute left-[18px] top-4 z-[5] rounded-[18px] bg-white/92 px-4 py-3 text-base font-black text-slate-900 shadow-[0_16px_32px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_42px_rgba(0,0,0,.26)] active:translate-y-px"
-        type="button"
-        onClick={() => navigate(BACK_PATH)}
-      >
-        {t.back}
-      </button>
 
       {assets.character ? (
         <img
@@ -122,9 +117,9 @@ export default function P4GravityExp2Question() {
         </div>
       </div>
 
-      <div className="absolute bottom-[clamp(14px,2.4vh,24px)] right-7 z-[4] flex flex-col gap-[14px] max-[680px]:bottom-[90px] max-[680px]:right-[18px] max-[760px]:bottom-4">
+      <div className="absolute bottom-[clamp(14px,2.4vh,24px)] right-7 z-[4] flex flex-col gap-[12px] max-[680px]:bottom-[90px] max-[680px]:right-[18px] max-[760px]:bottom-4">
         <button
-          className="flex h-[92px] w-[210px] items-center justify-center gap-3 rounded-2xl bg-white/92 shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[190px] max-[880px]:h-[84px] max-[880px]:w-[190px]"
+          className="mx-auto flex h-[92px] w-[240px] items-center justify-center gap-3 rounded-2xl bg-white/92 shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[210px] max-[880px]:h-[84px] max-[880px]:w-[210px]"
           type="button"
           onClick={() => navigate(ANSWER_HINT_PATH)}
           title={t.btnHint.replace("\n", " ")}
@@ -138,18 +133,36 @@ export default function P4GravityExp2Question() {
         </button>
 
         <button
-          className="flex h-[132px] w-[210px] flex-col items-center justify-center gap-[10px] rounded-[18px] bg-white/92 shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[190px] max-[880px]:h-[116px] max-[880px]:w-[190px]"
+          className="flex w-[280px] flex-col items-center justify-center gap-[8px] rounded-[18px] bg-white/92 px-5 py-[14px] shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[236px] max-[880px]:w-[236px] max-[880px]:py-[12px]"
           type="button"
           onClick={() => navigate(ACTION_PATH)}
           title={t.btnStart.replace("\n", " ")}
         >
-          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-blue-100 text-[28px] font-black shadow-[inset_0_-5px_0_rgba(0,0,0,.12)] max-[880px]:h-[54px] max-[880px]:w-[54px] max-[880px]:text-2xl">
+          <span className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-blue-100 text-[26px] font-black shadow-[inset_0_-5px_0_rgba(0,0,0,.12)] max-[880px]:h-[54px] max-[880px]:w-[54px] max-[880px]:text-2xl">
             {"\u25B6"}
           </span>
-          <span className="whitespace-pre-line text-center text-[20px] font-black leading-[1.05] text-slate-900 max-[880px]:text-lg">
+          <span className="whitespace-pre-line text-center text-[20px] font-black leading-[1.05] text-slate-900 max-[880px]:text-[18px]">
             {t.btnStart}
           </span>
         </button>
+
+        <div className="flex w-[280px] gap-[10px] max-[680px]:w-[236px] max-[680px]:gap-[8px]">
+          <button
+            className="flex-1 rounded-[16px] bg-white/95 px-[14px] py-[11px] text-[17px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[680px]:px-[10px] max-[680px]:py-[10px] max-[680px]:text-[15px]"
+            type="button"
+            onClick={() => navigate(BACK_PATH)}
+          >
+            {t.back}
+          </button>
+
+          <button
+            className="flex-1 rounded-[16px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[14px] py-[11px] text-[17px] font-black text-white shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[680px]:px-[10px] max-[680px]:py-[10px] max-[680px]:text-[15px]"
+            type="button"
+            onClick={() => navigate(ACTION_PATH)}
+          >
+            {t.next}
+          </button>
+        </div>
       </div>
 
       <div className="absolute bottom-4 left-[18px] z-[5] flex items-center gap-[10px] rounded-[18px] bg-white/92 px-3 py-[10px] shadow-[0_18px_38px_rgba(0,0,0,.22)]">

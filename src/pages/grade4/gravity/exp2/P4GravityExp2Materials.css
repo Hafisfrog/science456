@@ -360,3 +360,125 @@
   .exp2m-cardInner{ padding:10px 10px 9px; }
   .exp2m-name{ font-size:17px; }
 }
+
+/* exp2 uses exp1 materials layout, then applies smaller card sizing here */
+.exp2m-page .exp1m-grid{
+  width:min(1040px, 100%);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:14px;
+  margin-inline:auto;
+}
+
+.exp2m-page .exp1m-card{
+  max-width:248px;
+}
+
+.exp2m-page .exp1m-cardInner{
+  width:85%;
+  padding:14px 14px 12px;
+  border-radius:16px;
+}
+
+.exp2m-page .exp1m-imgBox{
+  width:100%;
+  border-radius:14px;
+}
+
+.exp2m-page .exp1m-name{
+  font-size:20px;
+}
+
+.exp2m-page .exp1m-itemSpeak{
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  font-size:17px;
+}
+
+.exp2m-page .exp1m-center{
+  align-items:center;
+  justify-content:center;
+}
+
+@media (max-width: 980px){
+  .exp2m-page .exp1m-grid{
+    width:min(940px, 100%);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap:14px;
+  }
+
+  .exp2m-page .exp1m-card{
+    max-width:232px;
+  }
+}
+
+@media (max-width: 720px){
+  .exp2m-page .exp1m-grid{
+    width:min(320px, 100%);
+    grid-template-columns: 1fr;
+    gap:8px;
+  }
+
+  .exp2m-page .exp1m-card{
+    max-width:none;
+  }
+
+  .exp2m-page .exp1m-cardInner{
+    width:62%;
+    padding:7px 7px 6px;
+    border-radius:11px;
+  }
+
+  .exp2m-page .exp1m-name{
+    font-size:13px;
+  }
+
+  .exp2m-page .exp1m-itemSpeak{
+    width:28px;
+    height:28px;
+    border-radius:8px;
+    font-size:12px;
+  }
+
+  .exp2m-page .exp1m-nameRow{
+    margin-top:6px;
+    gap:6px;
+  }
+
+  .exp2m-page .exp1m-imgBox{
+    border-radius:10px;
+  }
+}
+
+@media (max-width: 480px){
+  .exp2m-page .exp1m-grid{
+    width:min(280px, 100%);
+    gap:8px;
+  }
+
+  .exp2m-page .exp1m-cardInner{
+    width:58%;
+    padding:6px 6px 5px;
+    border-radius:10px;
+  }
+
+  .exp2m-page .exp1m-name{
+    font-size:12px;
+  }
+
+  .exp2m-page .exp1m-itemSpeak{
+    width:26px;
+    height:26px;
+    border-radius:8px;
+    font-size:11px;
+  }
+
+  .exp2m-page .exp1m-nameRow{
+    margin-top:5px;
+    gap:5px;
+  }
+
+  .exp2m-page .exp1m-imgBox{
+    border-radius:9px;
+  }
+}

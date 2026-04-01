@@ -61,35 +61,43 @@ export default function P4Gravity() {
     "rounded-[14px] px-4 py-3 text-base font-extrabold transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[11px] max-[640px]:py-[9px] max-[640px]:text-sm";
 
   return (
-    <div className="relative min-h-screen bg-[#eaf7fb] px-6 pb-[140px] pt-12 text-center max-[640px]:px-[14px] max-[640px]:pb-[150px] max-[640px]:pt-7">
-      <h1 className="text-[48px] font-extrabold text-[#2563eb] max-[900px]:text-[40px] max-[640px]:text-[32px]">{t.title}</h1>
-      <p className="mt-3 text-[24px] font-semibold text-gray-700 max-[900px]:text-[20px] max-[640px]:text-[18px]">{t.sub}</p>
+    <div className="relative min-h-screen overflow-hidden bg-[#eaf7fb] px-6 pb-[140px] pt-12 text-center max-[640px]:px-[14px] max-[640px]:pb-[150px] max-[640px]:pt-7">
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
 
-      <div
-        className="mx-auto mt-10 grid max-w-[1200px] gap-6"
-        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
-      >
-        <div className={cardClass} onClick={() => navigate("/p4/gravity/vocab")}>
-          <img src="/images/p4.png" alt="" className={imageClass} />
-          <div className="p-4">
-            <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp1Title}</div>
-            <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp1Desc}</div>
+      <div className="relative z-10">
+        <h1 className="text-[48px] font-extrabold text-[#2563eb] max-[900px]:text-[40px] max-[640px]:text-[32px]">{t.title}</h1>
+        <p className="mt-3 text-[24px] font-semibold text-gray-700 max-[900px]:text-[20px] max-[640px]:text-[18px]">{t.sub}</p>
+
+        <div
+          className="mx-auto mt-10 grid max-w-[1200px] gap-6"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
+        >
+          <div className={cardClass} onClick={() => navigate("/p4/gravity/vocab")}>
+            <img src="/images/p4.png" alt="" className={imageClass} />
+            <div className="p-4">
+              <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp1Title}</div>
+              <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp1Desc}</div>
+            </div>
           </div>
-        </div>
 
-        <div className={cardClass} onClick={() => navigate("/p4/gravity/exp2/vocab")}>
-          <img src="/images/p4/action.png" alt="" className={imageClass} />
-          <div className="p-4">
-            <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp2Title}</div>
-            <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp2Desc}</div>
+          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp2/vocab")}>
+            <img src="/images/p4/action.png" alt="" className={imageClass} />
+            <div className="p-4">
+              <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp2Title}</div>
+              <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp2Desc}</div>
+            </div>
           </div>
-        </div>
 
-        <div className={cardClass} onClick={() => navigate("/p4/gravity/exp3/vocab")}>
-          <img src="/images/p4/earth-moon.png" alt="" className={imageClass} />
-          <div className="p-4">
-            <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp3Title}</div>
-            <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp3Desc}</div>
+          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp3/vocab")}>
+            <img src="/images/p4/earth-moon.png" alt="" className={imageClass} />
+            <div className="p-4">
+              <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp3Title}</div>
+              <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp3Desc}</div>
+            </div>
           </div>
         </div>
       </div>

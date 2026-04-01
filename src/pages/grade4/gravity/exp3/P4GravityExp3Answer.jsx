@@ -1,20 +1,19 @@
 ﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./P4GravityExp3Answer.css";
+import "../exp1/P4GravityExp1Answer.css";
 
 export default function P4GravityExp3Answer() {
   const navigate = useNavigate();
 
   const BACK_PATH = "/p4/gravity/exp3/result";
   const NEXT_PATH = "/p4/gravity/summarize";
+
   const [lang, setLang] = useState("th");
+  const [revealedAnswers, setRevealedAnswers] = useState({});
 
   const assets = useMemo(
     () => ({
       bg: "/images/p4/exp1/bg-lab.jpg",
-      boardFrame: "/images/p4/exp1/board-frame.png",
-      sticker: "/images/p4/exp2/sticker-megaphone.png",
-      character: "/images/p4/exp1/gunkru.png",
     }),
     []
   );
@@ -25,7 +24,6 @@ export default function P4GravityExp3Answer() {
         title: "คำถามนี้มีคำตอบ",
         sub: "อ่านเฉลยแล้วลองอธิบายด้วยคำพูดของตัวเองดูนะ",
         q1: "1. วัตถุเดียวกันจะมีน้ำหนักเท่ากันหรือไม่เมื่ออยู่บนโลกและบนดวงจันทร์?",
-        aTitle: "เฉลย",
         a1:
           "ไม่เท่ากัน แม้จะเป็นวัตถุชิ้นเดียวกันและมีมวลเท่ากัน\nแต่แรงโน้มถ่วงของโลกและดวงจันทร์ไม่เท่ากัน\nบนโลก: แรงโน้มถ่วงมาก จึงทำให้วัตถุมีน้ำหนักมาก\nบนดวงจันทร์: แรงโน้มถ่วงน้อยกว่าโลกมาก จึงทำให้วัตถุมีน้ำหนักน้อยกว่า",
         speak: "ฟัง",
@@ -35,12 +33,13 @@ export default function P4GravityExp3Answer() {
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
+        reveal: "เฉลยคำตอบ",
+        hide: "ซ่อนคำตอบ",
       },
       en: {
-        title: "Answer",
+        title: "Answers",
         sub: "Read and explain it in your own words.",
         q1: "1. Does the same object have the same weight on Earth and on the Moon?",
-        aTitle: "Answer",
         a1:
           "No. Even if it is the same object with the same mass, gravity on Earth and on the Moon is different.\nOn Earth: gravity is stronger, so the object has greater weight.\nOn the Moon: gravity is weaker, so the object has less weight.",
         speak: "Listen",
@@ -50,12 +49,13 @@ export default function P4GravityExp3Answer() {
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
+        reveal: "Show answer",
+        hide: "Hide answer",
       },
       ms: {
         title: "Jawapan",
         sub: "Baca dan terangkan semula dengan kata-kata sendiri.",
         q1: "1. Adakah objek yang sama mempunyai berat yang sama di Bumi dan di Bulan?",
-        aTitle: "Jawapan",
         a1:
           "Tidak sama. Walaupun objek itu sama dan mempunyai jisim yang sama, daya graviti di Bumi dan di Bulan adalah berbeza.\nDi Bumi: graviti lebih kuat, jadi berat objek lebih besar.\nDi Bulan: graviti lebih lemah, jadi berat objek lebih kecil.",
         speak: "Dengar",
@@ -65,6 +65,8 @@ export default function P4GravityExp3Answer() {
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Melayu",
+        reveal: "Tunjuk jawapan",
+        hide: "Sembunyikan jawapan",
       },
     }),
     []
@@ -90,90 +92,96 @@ export default function P4GravityExp3Answer() {
   };
 
   const speakAll = () => {
-    speak(`${t.title}\n${t.sub}\n\n${t.q1}\n\n${t.aTitle}\n${t.a1}`);
+    const message = revealedAnswers.q1 ? `${t.q1}\n${t.a1}` : t.q1;
+    speak(message);
+  };
+
+  const toggleAnswer = (id) => {
+    setRevealedAnswers((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   return (
-    <div className="ans3a-page">
-      <img className="ans3a-bg" src={assets.bg} alt="background" />
-      <div className="ans3a-overlay" />
+    <div className="ans2-page">
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
+      <div className="ans2-overlay" />
 
-      <div className="ans3a-langFloating">
-        <div className="ans3a-lang">
-          <button className={`ans3a-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+      <div className="ans2-langFloating">
+        <div className="ans2-lang">
+          <button className={`ans2-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
             {t.chipTh}
           </button>
-          <button className={`ans3a-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+          <button className={`ans2-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
             {t.chipEn}
           </button>
-          <button className={`ans3a-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+          <button className={`ans2-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
             {t.chipMs}
           </button>
         </div>
       </div>
 
-      <div className="ans3a-stage">
-        <img className="ans3a-character" src={assets.character} alt="character" draggable="false" />
-
-        <div className="ans3a-board">
-          {assets.boardFrame ? <img className="ans3a-frame" src={assets.boardFrame} alt="frame" /> : null}
-
-          <div className="ans3a-boardInner">
-            <div className="ans3a-header">
-              <div className="ans3a-titleWrap">
-                {assets.sticker ? (
-                  <img className="ans3a-sticker" src={assets.sticker} alt="sticker" />
-                ) : (
-                  <span className="ans3a-stickerEmoji">📣</span>
-                )}
+      <div className="ans2-stage">
+        <div className="ans2-board">
+          <div className="ans2-boardInner">
+            <div className="ans2-header">
+              <div className="ans2-titleWrap">
                 <div>
-                  <div className="ans3a-title">{t.title}</div>
-                  <div className="ans3a-sub">{t.sub}</div>
+                  <div className="ans2-title">{t.title}</div>
+                  <div className="ans2-sub">{t.sub}</div>
                 </div>
               </div>
 
-              <button className="ans3a-btn soft" type="button" onClick={speakAll}>
-                🔊 {t.speakAll}
-              </button>
+              {/* <button className="ans2-btn soft" type="button" onClick={speakAll}>
+                {"\uD83D\uDD0A"} {t.speakAll}
+              </button> */}
             </div>
 
-            <div className="ans3a-cards">
-              <div className="ans3a-card yellow">
-                <div className="ans3a-cardTop">
-                  <div className="ans3a-q">{t.q1}</div>
-                  <button className="ans3a-miniSpeak" type="button" onClick={() => speak(t.q1)} title={t.speak}>
-                    🔊
+            <div className="ans2-cards">
+              <div className="ans2-card yellow">
+                <div className="ans2-cardTop">
+                  <div className="ans2-q">{t.q1}</div>
+                  <button className="ans2-miniSpeak" type="button" onClick={() => speak(t.q1)} title={t.speak}>
+                    {"\uD83D\uDD0A"}
                   </button>
                 </div>
-              </div>
-
-              <div className="ans3a-card green">
-                <div className="ans3a-cardTop">
-                  <div className="ans3a-q">{t.aTitle}</div>
-                  <button className="ans3a-miniSpeak" type="button" onClick={() => speak(t.a1)} title={t.speak}>
-                    🔊
+                <div className="ans2-answerActions">
+                  <button className="ans2-revealBtn" type="button" onClick={() => toggleAnswer("q1")}>
+                    {revealedAnswers.q1 ? t.hide : t.reveal}
                   </button>
                 </div>
-                <div className="ans3a-a">
-                  {t.a1.split("\n").map((line, idx) => (
-                    <div className="ans3a-line" key={idx}>
-                      {line}
-                    </div>
-                  ))}
-                </div>
+                {revealedAnswers.q1 && (
+                  <div className="ans2-a">
+                    <button className="ans2-answerSpeak" type="button" onClick={() => speak(t.a1)} title={t.speak}>
+                      {"\uD83D\uDD0A"}
+                    </button>
+                    {t.a1.split("\n").map((line, idx) => (
+                      <div className="ans2-line" key={idx}>
+                        {line}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="ans3a-navDock">
-        <div className="ans3a-navMiniRow">
-          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
-            ←
+      <div className="ans2-navDock">
+        <div className="ans2-navMiniRow">
+          <button className="ans2-navMiniBtn ans2-navBackBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
+            <span className="ans2-navArrow">«</span>
+            <span>{t.back}</span>
           </button>
-          <button className="ans3a-navMiniBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
-            →
+          <button className="ans2-navMiniBtn ans2-navNextBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
+            <span>{t.next}</span>
+            <span className="ans2-navArrow">»</span>
           </button>
         </div>
       </div>

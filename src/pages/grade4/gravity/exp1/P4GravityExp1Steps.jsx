@@ -13,7 +13,7 @@ export default function P4GravityExp1Steps() {
   const text = useMemo(() => {
     return {
       th: {
-        topic: "เรื่อง ผลของแรงโน้มถ่วง",
+        topic: "การทดลองที่ 1 เรื่อง ผลของแรงโน้มถ่วง",
         label: "ขั้นตอนการทดลอง",
         step1: "เลือกวัตถุทดลอง",
         step2: "วางวัตถุบนแท่นวางวัตถุ",
@@ -27,7 +27,7 @@ export default function P4GravityExp1Steps() {
         chipMs: "มลายู",
       },
       en: {
-        topic: "Effect of Gravity",
+        topic: "Experiment 1: Effect of Gravity",
         label: "Experiment Steps",
         step1: "Choose the object",
         step2: "Place the object on the platform",
@@ -41,7 +41,7 @@ export default function P4GravityExp1Steps() {
         chipMs: "Malay",
       },
       ms: {
-        topic: "Kesan Graviti",
+        topic: "Eksperimen 1: Kesan Graviti",
         label: "Langkah Eksperimen",
         step1: "Pilih objek",
         step2: "Letakkan objek di atas platform",
@@ -85,9 +85,9 @@ export default function P4GravityExp1Steps() {
   return (
     <div className="relative min-h-[100dvh] w-screen overflow-x-hidden overflow-y-auto bg-[#eef2ff] pb-[110px] font-['Prompt',sans-serif]">
       <img
-        className="fixed inset-0 -z-[3] h-full w-full scale-[1.03] object-cover [filter:blur(2px)_brightness(.88)]"
-        src="/images/p4/exp1/bg-lab.jpg"
-        alt="bg"
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
       <div className="fixed inset-0 -z-[2] [background:radial-gradient(1000px_650px_at_55%_30%,rgba(255,255,255,.35),rgba(255,255,255,0)_62%),linear-gradient(180deg,rgba(10,16,32,.25),rgba(10,16,32,.72))]" />
 
@@ -179,14 +179,14 @@ export default function P4GravityExp1Steps() {
             type="button"
             onClick={() => navigate(BACK_PATH)}
           >
-            {"\u2190"} {t.back}
+            « {t.back}
           </button>
           <button
             className="cursor-pointer rounded-xl bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[14px] py-[10px] text-[14px] font-black text-white shadow-[0_18px_40px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_rgba(0,0,0,.26)] active:translate-y-px min-[641px]:rounded-2xl min-[641px]:px-[18px] min-[641px]:py-3 min-[641px]:text-[16px]"
             type="button"
             onClick={() => navigate(NEXT_PATH)}
           >
-            {t.next} {"\u00BB"}
+            {t.next} »
           </button>
         </div>
       </div>

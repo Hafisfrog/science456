@@ -5,43 +5,43 @@ import "./P4GravityExp2Vocab.css";
 const VOCAB = [
   {
     th: "มวลของวัตถุ",
-    ms: "จีซิม เฎาะ บาแร",
-    en: "Object's Mass",
-    audio: {
-      th: "/audio/p4/gravity/gravity_th.mp3",
-      ms: "/audio/p4/gravity/gravity_ms.mp3",
-      en: "/audio/p4/gravity/gravity_en.mp3",
-    },
+    ms: "Jisim objek",
+    en: "Mass of an object",
+    // audio: {
+    //   th: "/audio/p4/gravity/gravity_th.mp3",
+    //   ms: "/audio/p4/gravity/gravity_ms.mp3",
+    //   en: "/audio/p4/gravity/gravity_en.mp3",
+    // },
   },
   {
     th: "แรงดึงดูดของโลก",
-    ms: "ดาโย ตาเระ เฎาะ ดูนีโย",
-    en: "Earth's Gravitational Pull",
-    audio: {
-      th: "/audio/p4/gravity/center_th.mp3",
-      ms: "/audio/p4/gravity/center_ms.mp3",
-      en: "/audio/p4/gravity/center_en.mp3",
-    },
+    ms: "Daya tarikan graviti Bumi",
+    en: "Earth’s gravity",
+    // audio: {
+    //   th: "/audio/p4/gravity/center_th.mp3",
+    //   ms: "/audio/p4/gravity/center_ms.mp3",
+    //   en: "/audio/p4/gravity/center_en.mp3",
+    // },
   },
   {
     th: "เครื่องชั่งสปริง",
-    ms: "เกโล สปริง",
+    ms: "Penimbang spring",
     en: "Spring Scale",
-    audio: {
-      th: "/audio/p4/gravity/weight_th.mp3",
-      ms: "/audio/p4/gravity/weight_ms.mp3",
-      en: "/audio/p4/gravity/weight_en.mp3",
-    },
+    // audio: {
+    //   th: "/audio/p4/gravity/weight_th.mp3",
+    //   ms: "/audio/p4/gravity/weight_ms.mp3",
+    //   en: "/audio/p4/gravity/weight_en.mp3",
+    // },
   },
   {
     th: "การยืดของสปริง",
-    ms: "รือแง เฎาะ สปริง",
+    ms: "Pemanjangan spring",
     en: "Spring Extension",
-    audio: {
-      th: "/audio/p4/gravity/mass_th.mp3",
-      ms: "/audio/p4/gravity/mass_ms.mp3",
-      en: "/audio/p4/gravity/mass_en.mp3",
-    },
+    // audio: {
+    //   th: "/audio/p4/gravity/mass_th.mp3",
+    //   ms: "/audio/p4/gravity/mass_ms.mp3",
+    //   en: "/audio/p4/gravity/mass_en.mp3",
+    // },
   },
 ];
 
@@ -129,11 +129,11 @@ export default function P4GravityExp2Vocab() {
 
       <div className="vocab-footer">
         <button className="back-home-btn" type="button" onClick={() => navigate("/p4/gravity")}>
-          ← กลับหน้าจุดประสงค์
+          « ย้อนกลับ
         </button>
 
         <button className="btn-next" type="button" onClick={() => navigate("/p4/gravity/exp2/materials")}>
-          ไปหน้าถัดไป →
+          ต่อไป »
         </button>
       </div>
     </div>

@@ -9,13 +9,11 @@ export default function P4GravityExp1Answer() {
   const NEXT_PATH = "/p4/gravity";
 
   const [lang, setLang] = useState("th");
+  const [revealedAnswers, setRevealedAnswers] = useState({});
 
   const assets = useMemo(
     () => ({
       bg: "/images/p4/exp1/bg-lab.jpg",
-      boardFrame: "/images/p4/exp1/board-frame.png",
-      sticker: "/images/p4/exp1/sticker-star.png",
-      character: "/images/p4/exp1/gunkru.png",
     }),
     []
   );
@@ -40,6 +38,8 @@ export default function P4GravityExp1Answer() {
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
+        reveal: "เฉลยคำตอบ",
+        hide: "ซ่อนคำตอบ",
       },
       en: {
         title: "Answers",
@@ -59,6 +59,8 @@ export default function P4GravityExp1Answer() {
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
+        reveal: "Show answer",
+        hide: "Hide answer",
       },
       ms: {
         title: "Jawapan",
@@ -78,6 +80,8 @@ export default function P4GravityExp1Answer() {
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Melayu",
+        reveal: "Tunjuk jawapan",
+        hide: "Sembunyikan jawapan",
       },
     }),
     []
@@ -106,13 +110,28 @@ export default function P4GravityExp1Answer() {
   };
 
   const speakAll = () => {
-    const message = `${t.q1}\n${t.a1}\n\n${t.q2}\n${t.a2a_b} ${t.a2a}\n${t.a2b_b} ${t.a2b}`;
+    const q1Message = revealedAnswers.q1 ? `${t.q1}\n${t.a1}` : t.q1;
+    const q2Message = revealedAnswers.q2
+      ? `${t.q2}\n${t.a2a_b} ${t.a2a}\n${t.a2b_b} ${t.a2b}`
+      : t.q2;
+    const message = `${q1Message}\n\n${q2Message}`;
     speak(message);
+  };
+
+  const toggleAnswer = (id) => {
+    setRevealedAnswers((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
   };
 
   return (
     <div className="ans2-page">
-      <img className="ans2-bg" src={assets.bg} alt="background" />
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
       <div className="ans2-overlay" />
 
       <div className="ans2-langFloating">
@@ -130,39 +149,49 @@ export default function P4GravityExp1Answer() {
       </div>
 
       <div className="ans2-stage">
-        <img className="ans2-character" src={assets.character} alt="character" draggable="false" />
+        {/* <img className="ans2-character" src={assets.character} alt="character" draggable="false" /> */}
 
         <div className="ans2-board">
-          {assets.boardFrame && <img className="ans2-frame" src={assets.boardFrame} alt="frame" />}
-
           <div className="ans2-boardInner">
             <div className="ans2-header">
               <div className="ans2-titleWrap">
-                {assets.sticker ? (
-                  <img className="ans2-sticker" src={assets.sticker} alt="sticker" />
-                ) : (
-                  <span className="ans2-stickerEmoji">★</span>
-                )}
                 <div>
                   <div className="ans2-title">{t.title}</div>
                   <div className="ans2-sub">{t.sub}</div>
                 </div>
               </div>
 
-              <button className="ans2-btn soft" type="button" onClick={speakAll}>
+              {/* <button className="ans2-btn soft" type="button" onClick={speakAll}>
                 🔊 {t.speakAll}
-              </button>
+              </button> */}
             </div>
 
             <div className="ans2-cards">
               <div className="ans2-card yellow">
                 <div className="ans2-cardTop">
                   <div className="ans2-q">{t.q1}</div>
-                  <button className="ans2-miniSpeak" type="button" onClick={() => speak(`${t.q1}\n${t.a1}`)} title={t.speak}>
+                  <button
+                    className="ans2-miniSpeak"
+                    type="button"
+                    onClick={() => speak(t.q1)}
+                    title={t.speak}
+                  >
                     🔊
                   </button>
                 </div>
-                <div className="ans2-a">{t.a1}</div>
+                <div className="ans2-answerActions">
+                  <button className="ans2-revealBtn" type="button" onClick={() => toggleAnswer("q1")}>
+                    {revealedAnswers.q1 ? t.hide : t.reveal}
+                  </button>
+                </div>
+                {revealedAnswers.q1 && (
+                  <div className="ans2-a">
+                    <button className="ans2-answerSpeak" type="button" onClick={() => speak(t.a1)} title={t.speak}>
+                      🔊
+                    </button>
+                    <div>{t.a1}</div>
+                  </div>
+                )}
               </div>
 
               <div className="ans2-card blue">
@@ -171,21 +200,35 @@ export default function P4GravityExp1Answer() {
                   <button
                     className="ans2-miniSpeak"
                     type="button"
-                    onClick={() => speak(`${t.q2}\n${t.a2a_b} ${t.a2a}\n${t.a2b_b} ${t.a2b}`)}
+                    onClick={() => speak(t.q2)}
                     title={t.speak}
                   >
                     🔊
                   </button>
                 </div>
-
-                <div className="ans2-a">
-                  <div className="ans2-line">
-                    <span className="ans2-bold">{t.a2a_b}</span> {t.a2a}
-                  </div>
-                  <div className="ans2-line">
-                    <span className="ans2-bold">{t.a2b_b}</span> {t.a2b}
-                  </div>
+                <div className="ans2-answerActions">
+                  <button className="ans2-revealBtn" type="button" onClick={() => toggleAnswer("q2")}>
+                    {revealedAnswers.q2 ? t.hide : t.reveal}
+                  </button>
                 </div>
+                {revealedAnswers.q2 && (
+                  <div className="ans2-a">
+                    <button
+                      className="ans2-answerSpeak"
+                      type="button"
+                      onClick={() => speak(`${t.a2a_b} ${t.a2a}\n${t.a2b_b} ${t.a2b}`)}
+                      title={t.speak}
+                    >
+                      🔊
+                    </button>
+                    <div className="ans2-line">
+                      <span className="ans2-bold">{t.a2a_b}</span> {t.a2a}
+                    </div>
+                    <div className="ans2-line">
+                      <span className="ans2-bold">{t.a2b_b}</span> {t.a2b}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -194,11 +237,13 @@ export default function P4GravityExp1Answer() {
 
       <div className="ans2-navDock">
         <div className="ans2-navMiniRow">
-          <button className="ans2-navMiniBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
-            ←
+          <button className="ans2-navMiniBtn ans2-navBackBtn" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
+            <span className="ans2-navArrow">«</span>
+            <span>{t.back}</span>
           </button>
-          <button className="ans2-navMiniBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
-            →
+          <button className="ans2-navMiniBtn ans2-navNextBtn" type="button" onClick={() => navigate(NEXT_PATH)} title={t.next}>
+            <span>{t.next}</span>
+            <span className="ans2-navArrow">»</span>
           </button>
         </div>
       </div>

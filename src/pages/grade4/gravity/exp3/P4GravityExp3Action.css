@@ -359,6 +359,9 @@
   grid-template-columns:1fr 1fr;
   gap:10px;
 }
+.e3a-backAction{
+  display:none;
+}
 
 /* buttons */
 .e3a-btn{
@@ -431,39 +434,42 @@
 /* floating back (top-left) */
 .e3a-backBR{
   position:fixed;
-  left:18px;
-  top:18px;
+  right:18px;
+  bottom:18px;
   z-index:9;
-
   border:none;
   cursor:pointer;
-
-  width:58px;
-  height:58px;
-  border-radius:999px;
-
-  background:linear-gradient(135deg,#ffffff,#e2e8f0);
+  min-width:180px;
+  padding:14px 22px;
+  border-radius:18px;
+  background:rgba(255,255,255,.94);
   color:#0f172a;
-
-  box-shadow:
-    inset 0 -6px 0 rgba(0,0,0,.10),
-    0 18px 40px rgba(0,0,0,.28);
-
+  box-shadow:0 18px 40px rgba(0,0,0,.28);
   display:flex;
   align-items:center;
   justify-content:center;
-
-  transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+  gap:8px;
+  font-weight:1200;
+  font-size:0;
+  transition: transform .12s ease, box-shadow .12s ease;
 }
-.e3a-backBR .ico{ font-size:22px; font-weight:1200; transform: translateX(-1px); }
+.e3a-backBR::after{
+  content:"ย้อนกลับ";
+  font-size:18px;
+  font-weight:1200;
+  line-height:1;
+}
+.e3a-backBR .ico{
+  font-size:20px;
+  font-weight:1200;
+  line-height:1;
+}
 .e3a-backBR:hover{
-  transform: translateY(-3px);
-  box-shadow: inset 0 -6px 0 rgba(0,0,0,.10), 0 24px 54px rgba(0,0,0,.34);
-  filter: brightness(1.02);
+  transform:translateY(-2px);
+  box-shadow:0 22px 44px rgba(0,0,0,.32);
 }
 .e3a-backBR:active{
-  transform: translateY(1px);
-  box-shadow: inset 0 -3px 0 rgba(0,0,0,.10), 0 14px 30px rgba(0,0,0,.26);
+  transform:translateY(1px);
 }
 
 /* ✅ Toast */
@@ -556,6 +562,16 @@
   .e3a-actions{ width:100%; border-radius:14px; padding:8px; gap:8px; }
   .e3a-btn{ padding:10px 10px; border-radius:12px; font-size:14px; }
   .e3a-actBottom{ gap:8px; }
+  .e3a-backBR{
+    right:10px;
+    bottom:10px;
+    min-width:144px;
+    padding:11px 16px;
+    border-radius:14px;
+    gap:6px;
+  }
+  .e3a-backBR::after{ font-size:15px; }
+  .e3a-backBR .ico{ font-size:17px; }
 
   .e3a-langDock{
     position:fixed;
@@ -568,13 +584,6 @@
     flex-wrap:wrap;
   }
   .e3a-chip{ padding:8px 10px; border-radius:10px; font-size:13px; }
-  .e3a-backBR{
-    left:10px;
-    top:10px;
-    width:48px;
-    height:48px;
-  }
-  .e3a-backBR .ico{ font-size:18px; }
   .e3a-toast{
     position:fixed;
     left:10px;
@@ -605,6 +614,11 @@
     font-size:14px;
   }
   .e3a-chooser{ margin:8px 10px 0; }
+  .e3a-backBR{
+    min-width:132px;
+    padding:10px 14px;
+  }
+  .e3a-backBR::after{ font-size:14px; }
 }
 
 @media (max-width: 390px){
@@ -617,6 +631,4 @@
   .e3a-scaleWrap{ top:146px; }
   .e3a-title{ font-size:13px; }
   .e3a-chip{ padding:7px 9px; font-size:12px; }
-  .e3a-backBR{ width:44px; height:44px; }
-  .e3a-backBR .ico{ font-size:16px; }
 }

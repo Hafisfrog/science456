@@ -354,6 +354,9 @@ export default function P4GravityExp3Action() {
                 {t.view}
               </button>
             </div>
+            <button className="e3a-btn ghost e3a-backAction" type="button" onClick={() => navigate(BACK_PATH)}>
+              ← {t.back}
+            </button>
           </div>
         </div>
       </div>
@@ -376,7 +379,7 @@ export default function P4GravityExp3Action() {
 
       {/* ✅ bottom-right back */}
       <button className="e3a-backBR" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
-        <span className="ico">←</span>
+        <span className="ico">«</span>
       </button>
 
       {/* ✅ Toast */}

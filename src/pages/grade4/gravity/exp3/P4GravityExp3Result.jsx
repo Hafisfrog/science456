@@ -44,7 +44,7 @@ export default function P4GravityExp3Result() {
         summary:
           "วัตถุชนิดเดียวกันมีมวลเท่ากัน แต่จะมีน้ำหนักต่างกันเมื่ออยู่ในบริเวณที่มีแรงดึงดูดต่างกัน โลกมีแรงดึงดูดมากกว่าดวงจันทร์ จึงทำให้วัตถุมีน้ำหนักบนโลกมากกว่าบนดวงจันทร์",
         retry: "ทดลองอีกครั้ง",
-        next: "ต่อไป →",
+        next: "ต่อไป »",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
@@ -62,7 +62,7 @@ export default function P4GravityExp3Result() {
         summary:
           "An object with the same mass can have different weight under different gravity. Earth's gravity is stronger than the Moon's, so objects weigh more on Earth than on the Moon.",
         retry: "Try again",
-        next: "Next →",
+        next: "Next »",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Malay",
@@ -80,7 +80,7 @@ export default function P4GravityExp3Result() {
         summary:
           "Objek dengan jisim yang sama boleh mempunyai berat berbeza apabila graviti berbeza. Graviti Bumi lebih kuat daripada graviti Bulan, jadi objek lebih berat di Bumi berbanding di Bulan.",
         retry: "Cuba lagi",
-        next: "Seterusnya →",
+        next: "Seterusnya »",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Melayu",
@@ -135,7 +135,11 @@ export default function P4GravityExp3Result() {
 
   return (
     <div className="e3r-page">
-      <div className="e3r-bg" />
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
 
       <div className="e3r-title">{t.title}</div>
 
