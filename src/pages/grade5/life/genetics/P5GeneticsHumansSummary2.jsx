@@ -8,7 +8,7 @@ const TEXT = {
     title: "สรุปผลการทดลอง",
     back: "ย้อนกลับ",
     inheritedTitle: "ลักษณะทางพันธุกรรมของคน",
-    inheritedDesc: "เป็นลักษณะที่ ถ่ายทอดมาจากพ่อแม่ และติดตัวมาตั้งแต่เกิด เช่น",
+    inheritedDesc: "เป็นลักษณะที่ถ่ายทอดมาจากพ่อแม่ และติดตัวมาตั้งแต่เกิด เช่น",
     inheritedItems: ["ตา 2 ชั้น", "จมูก", "รูปร่างใบหน้า", "ลักษณะผม (หยิก / ตรง)"],
     learnedTitle: "ลักษณะที่เกิดจากการเรียนรู้",
     learnedDesc: "เป็นลักษณะที่ไม่ได้ถ่ายทอดทางพันธุกรรม แต่เกิดจากการฝึกฝนหรือความชอบ เช่น",
@@ -44,18 +44,18 @@ export default function P5GeneticsHumansSummary2() {
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
-      <div className="p5ghs2-page">
+      <div className="p5ghs2-page notranslate" translate="no">
         <div className="p5ghs2-sun" aria-hidden="true" />
 
         <main className="p5ghs2-main">
-          <h1>{t.title}</h1>
+          <h1 className="notranslate" translate="no">{t.title}</h1>
 
           <section className="p5ghs2-grid">
             <article className="p5ghs2-note">
               <div className="p5ghs2-tape" aria-hidden="true" />
-              <h2>{t.inheritedTitle}</h2>
-              <p>{t.inheritedDesc}</p>
-              <ul>
+              <h2 className="notranslate" translate="no">{t.inheritedTitle}</h2>
+              <p className="notranslate" translate="no">{t.inheritedDesc}</p>
+              <ul className="notranslate" translate="no">
                 {t.inheritedItems.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -64,9 +64,9 @@ export default function P5GeneticsHumansSummary2() {
 
             <article className="p5ghs2-note">
               <div className="p5ghs2-tape" aria-hidden="true" />
-              <h2>{t.learnedTitle}</h2>
-              <p>{t.learnedDesc}</p>
-              <ul>
+              <h2 className="notranslate" translate="no">{t.learnedTitle}</h2>
+              <p className="notranslate" translate="no">{t.learnedDesc}</p>
+              <ul className="notranslate" translate="no">
                 {t.learnedItems.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
@@ -82,36 +82,48 @@ export default function P5GeneticsHumansSummary2() {
           <div className="p5ghs2-lang">
             <button
               type="button"
-              className={lang === "th" ? "is-active" : ""}
+              className={lang === "th" ? "is-active notranslate" : "notranslate"}
+              translate="no"
               onClick={() => setLang("th")}
             >
               {labels.th}
             </button>
             <button
               type="button"
-              className={lang === "en" ? "is-active" : ""}
+              className={lang === "en" ? "is-active notranslate" : "notranslate"}
+              translate="no"
               onClick={() => setLang("en")}
             >
               {labels.en}
             </button>
             <button
               type="button"
-              className={lang === "ms" ? "is-active" : ""}
+              className={lang === "ms" ? "is-active notranslate" : "notranslate"}
+              translate="no"
               onClick={() => setLang("ms")}
             >
               {labels.ms}
             </button>
-            <button type="button" className="p5ghs2-audio" aria-label="audio">
-              {"\uD83D\uDD0A"}
-            </button>
           </div>
 
           <div className="p5ghs2-actions">
-            <button type="button" className="p5ghs2-back" onClick={() => navigate("/p5/life/genetics/humans/summary")}>
-              {t.back}
+            <button
+              type="button"
+              className="p5ghs2-back notranslate"
+              translate="no"
+              onClick={() => navigate("/p5/life/genetics/humans/summary")}
+            >
+              {/* <span aria-hidden="true">←</span> */}
+              <span>{t.back}</span>
             </button>
-            <button type="button" className="p5ghs2-next" onClick={() => navigate("/p5/life/genetics/humans/summary-3")}>
-              {NEXT_LABEL[lang]}
+            <button
+              type="button"
+              className="p5ghs2-next notranslate"
+              translate="no"
+              onClick={() => navigate("/p5/life/genetics/humans/summary-3")}
+            >
+              <span>{NEXT_LABEL[lang]}</span>
+              {/* <span aria-hidden="true">→</span> */}
             </button>
           </div>
         </footer>

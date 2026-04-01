@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย", speechLang: "th-TH" },
-  { id: "en", label: "English", speechLang: "en-US" },
-  { id: "ms", label: "Melayu", speechLang: "ms-MY" },
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "English" },
+  { id: "ms", label: "Melayu" },
 ];
 
 const TRIAL_OPTIONS = [
@@ -94,7 +94,6 @@ const UI_TEXT = {
     stop: "หยุด",
     time: "เวลาการถู",
     result: "ผลการทดลอง",
-    listen: "ฟังข้อความหน้านี้",
     chooseEquipAndTrial: "กรุณาเลือกอุปกรณ์และการทดลองก่อนเริ่ม",
     chooseTrialFirst: "กรุณาเลือกการทดลองก่อนเริ่ม",
     chooseEquipFirst: "เลือกอุปกรณ์ก่อนนะ: ลูกโป่ง หรือ ปากกาเมจิก",
@@ -126,7 +125,6 @@ const UI_TEXT = {
     stop: "Stop",
     time: "Rubbing time",
     result: "Result",
-    listen: "Read this screen",
     chooseEquipAndTrial: "Please choose equipment and trial before starting.",
     chooseTrialFirst: "Please choose a trial before starting.",
     chooseEquipFirst: "Choose equipment first: balloon or marker pen.",
@@ -158,7 +156,6 @@ const UI_TEXT = {
     stop: "Berhenti",
     time: "Masa menggosok",
     result: "Hasil",
-    listen: "Baca skrin ini",
     chooseEquipAndTrial: "Sila pilih peralatan dan ujian sebelum mula.",
     chooseTrialFirst: "Sila pilih ujian sebelum mula.",
     chooseEquipFirst: "Pilih peralatan dahulu: belon atau pen marker.",
@@ -210,29 +207,6 @@ function getEquipmentLabel(equipment, language) {
   return EQUIPMENT_LABEL[equipment]?.[language] || EQUIPMENT_LABEL[equipment]?.th || "";
 }
 
-function speakText(text, lang) {
-  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) {
-    return;
-  }
-
-  window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = lang;
-  utterance.rate = 0.95;
-
-  const voices = window.speechSynthesis.getVoices();
-  const exact = voices.find((voice) => voice.lang.toLowerCase() === lang.toLowerCase());
-  const fallback = voices.find((voice) =>
-    voice.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()),
-  );
-
-  if (exact || fallback) {
-    utterance.voice = exact || fallback;
-  }
-
-  window.speechSynthesis.speak(utterance);
-}
-
 export default function P6ElectricForceEffectSim() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -245,7 +219,6 @@ export default function P6ElectricForceEffectSim() {
   const [sequenceNotice, setSequenceNotice] = useState("");
   const [trialResults, setTrialResults] = useState({});
   const t = UI_TEXT[language];
-  const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === language)?.speechLang || "th-TH";
 
   const activeTrials = useMemo(() => TRIAL_OPTIONS, []);
   const totalTrials = TRIAL_OPTIONS.length;
@@ -427,20 +400,6 @@ export default function P6ElectricForceEffectSim() {
     setSequenceNotice("");
   };
 
-  const pageSpeech = useMemo(
-    () =>
-      [
-        hint,
-        `${t.selected}: ${selectedTrialLabel || notSelectedLabel}`,
-        summaryText,
-        sequenceNotice,
-        bubbleText,
-      ]
-        .filter(Boolean)
-        .join(". "),
-    [bubbleText, hint, notSelectedLabel, selectedTrialLabel, sequenceNotice, summaryText, t.selected]
-  );
-
   return (
     <div className="p6-force-sim-page">
       <style>{forceEffectSimStyles}</style>
@@ -464,30 +423,6 @@ export default function P6ElectricForceEffectSim() {
               {item.label}
             </button>
           ))}
-          <button
-            type="button"
-            className="p6-force-sim-lang-audio"
-            onClick={() => speakText(pageSpeech, speechLang)}
-            aria-label={t.listen}
-            title={t.listen}
-          >
-            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-              <path
-                d="M12 26h12l14-10v32l-14-10H12z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M44 22c4 4 4 16 0 20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
         </div>
 
         <div className="p6-force-sim-sidebar">

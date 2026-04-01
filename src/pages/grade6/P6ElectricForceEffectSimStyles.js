@@ -81,26 +81,29 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   z-index: 65;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #e8f3ff, #ffffff);
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  box-shadow: 0 10px 18px rgba(17, 24, 39, 0.14);
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(191, 219, 254, 0.95);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
 }
 
 .p6-force-sim-langchip {
   border: none;
   cursor: pointer;
-  border-radius: 999px;
-  padding: 7px 12px;
-  background: #dbeafe;
-  color: #0369a1;
+  border-radius: 18px;
+  min-width: 98px;
+  min-height: 44px;
+  padding: 8px 18px;
+  background: #dcefff;
+  color: #111827;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 900;
   line-height: 1;
-  transition: transform 0.12s ease, filter 0.12s ease;
+  box-shadow: none;
+  transition: transform 0.12s ease, filter 0.12s ease, background-color 0.12s ease;
 }
 
 .p6-force-sim-langchip:hover {
@@ -109,26 +112,9 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-langchip.active {
-  background: #0ea5e9;
+  background: #1499e6;
   color: #ffffff;
-}
-
-.p6-force-sim-lang-audio {
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  color: #0f3f79;
-  background: linear-gradient(180deg, #f8fcff, #e0f2fe);
-  border: 1px solid rgba(14, 165, 233, 0.36);
-}
-
-.p6-force-sim-lang-audio svg {
-  width: 21px;
-  height: 21px;
+  box-shadow: none;
 }
 
 .p6-force-sim-sidebar {
@@ -1016,8 +1002,15 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
   .p6-force-sim-langbar {
     align-self: center;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .p6-force-sim-langchip {
+    min-width: 88px;
+    min-height: 42px;
+    padding: 8px 14px;
+    font-size: 16px;
   }
 }
 `;

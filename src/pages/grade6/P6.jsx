@@ -9,7 +9,7 @@ const LESSONS = [
       en: "Electric Force",
       ms: "Daya Elektrik",
     },
-    image: "/images/p6/equipment/balloons-real.svg",
+    image: "/images/p6/home/electric-force-card.png",
     to: "/p6/electric-force",
   },
   {
@@ -19,7 +19,7 @@ const LESSONS = [
       en: "Electric Circuit",
       ms: "Litar Elektrik",
     },
-    image: "/images/p6/electric-circuit/batteries.svg",
+    image: "/images/p6/home/electric-circuit-card.png",
     to: "/p6/electric-circuit",
   },
 ];
@@ -103,7 +103,7 @@ export default function P6() {
                 <img
                   src={lesson.image}
                   alt={lesson.title[lang]}
-                  className="h-full max-w-full object-contain transition duration-300 group-hover:scale-105"
+                  className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
                 />
               </div>
 
