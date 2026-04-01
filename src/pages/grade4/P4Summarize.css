@@ -4,238 +4,503 @@
   overflow: hidden;
   font-family: "Prompt", sans-serif;
   color: #0f172a;
+  background:
+    linear-gradient(180deg, rgba(238, 247, 253, 0.96), rgba(219, 237, 248, 0.96)),
+    radial-gradient(circle at top left, rgba(183, 220, 243, 0.6), transparent 34%),
+    radial-gradient(circle at bottom right, rgba(210, 237, 223, 0.45), transparent 30%);
 }
 
-.p4sum-bg {
+.p4sum-bgShapes,
+.p4sum-bgShapes::before,
+.p4sum-bgShapes::after {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  pointer-events: none;
+  content: "";
 }
 
-.p4sum-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(225, 239, 248, 0.82);
+.p4sum-bgShapes {
+  background:
+    linear-gradient(130deg, rgba(173, 213, 237, 0.18) 12%, transparent 12.5%, transparent 100%),
+    linear-gradient(32deg, rgba(173, 213, 237, 0.18) 16%, transparent 16.5%, transparent 100%),
+    linear-gradient(156deg, rgba(173, 213, 237, 0.14) 10%, transparent 10.5%, transparent 100%);
+  opacity: 0.8;
+}
+
+.p4sum-bgShapes::before {
+  inset: auto 0 0;
+  height: 24vh;
+  background:
+    radial-gradient(circle at 15% 100%, rgba(178, 219, 167, 0.6) 0 18%, transparent 18.5%),
+    radial-gradient(circle at 23% 100%, rgba(189, 226, 179, 0.6) 0 14%, transparent 14.5%),
+    radial-gradient(circle at 85% 100%, rgba(178, 219, 167, 0.6) 0 18%, transparent 18.5%),
+    radial-gradient(circle at 75% 100%, rgba(189, 226, 179, 0.6) 0 12%, transparent 12.5%);
 }
 
 .p4sum-wrap {
   position: relative;
-  z-index: 2;
-  max-width: 1580px;
+  z-index: 1;
+  max-width: 1820px;
   margin: 0 auto;
-  padding: 24px 28px 140px;
+  padding: 22px 34px 160px;
 }
 
 .p4sum-title {
   margin: 0;
   text-align: center;
-  font-size: clamp(36px, 4vw, 72px);
-  font-weight: 800;
-  line-height: 1.2;
+  font-size: clamp(38px, 4vw, 78px);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -0.04em;
 }
 
-.p4sum-grid {
-  margin-top: 18px;
+.p4sum-stage {
+  margin-top: 20px;
   display: grid;
-  grid-template-columns: 1.05fr 0.9fr 1.05fr;
-  gap: 22px;
+  grid-template-columns: minmax(360px, 1.1fr) minmax(420px, 0.95fr) minmax(360px, 1.1fr);
+  gap: clamp(24px, 2vw, 52px);
   align-items: start;
 }
 
-.p4sum-col {
+.p4sum-side {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 24px;
 }
 
 .p4sum-badge {
   align-self: flex-start;
-  padding: 10px 16px;
-  border-radius: 14px;
-  background: #f4e2be;
-  font-size: clamp(22px, 1.9vw, 42px);
-  font-weight: 800;
-  line-height: 1.2;
+  padding: 14px 28px;
+  border-radius: 20px;
+  background: #f6ddaa;
+  font-size: clamp(24px, 2vw, 46px);
+  font-weight: 900;
+  line-height: 1.15;
+  box-shadow: 0 10px 20px rgba(98, 80, 40, 0.08);
 }
 
-.p4sum-card {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.22);
-  border: 2px solid rgba(255, 255, 255, 0.5);
+.p4sum-badge-right {
+  align-self: flex-end;
 }
 
-.p4sum-text {
-  flex: 1;
-  min-width: 0;
+.p4sum-feature,
+.p4sum-mini,
+.p4sum-mass,
+.p4sum-distance {
+  position: relative;
 }
 
-.p4sum-text h3 {
-  margin: 0;
-  font-size: clamp(25px, 2vw, 42px);
-  font-weight: 800;
-  line-height: 1.2;
+.p4sum-feature {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
 }
 
-.p4sum-text p {
-  margin: 8px 0 0;
-  font-size: clamp(19px, 1.55vw, 32px);
-  line-height: 1.35;
-}
-
-.p4sum-icon {
-  width: min(120px, 13vw);
-  max-height: 130px;
-  object-fit: contain;
-  border-radius: 12px;
-  flex-shrink: 0;
-}
-
-.p4sum-speak {
-  border: none;
-  cursor: pointer;
-  background: #f6fbff;
-  color: #23448f;
-  box-shadow: 0 8px 16px rgba(25, 47, 99, 0.22);
-}
-
-.p4sum-speak-small {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  font-size: 20px;
-  flex-shrink: 0;
-}
-
-.p4sum-earthWrap {
+.p4sum-branch {
   display: flex;
   justify-content: center;
-  padding-top: 34px;
+  align-items: flex-start;
+  min-height: 300px;
+}
+
+.p4sum-branchImage {
+  width: min(150px, 100%);
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(73, 99, 125, 0.12));
+}
+
+.p4sum-copy h2,
+.p4sum-copy h3 {
+  margin: 0;
+  font-size: clamp(28px, 2.2vw, 48px);
+  line-height: 1.1;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.p4sum-copy p {
+  margin: 10px 0 0;
+  font-size: clamp(20px, 1.6vw, 34px);
+  line-height: 1.28;
+}
+
+.p4sum-inlineSpeak {
+  margin-top: 14px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(222, 228, 238, 0.92);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.98), rgba(246, 248, 252, 0.96) 56%, rgba(238, 241, 247, 0.96) 100%);
+  color: #4b86f1;
+  font-family: inherit;
+  font-size: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 18px 35px rgba(122, 139, 176, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
+}
+
+.p4sum-inlineSpeak:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 22px 40px rgba(122, 139, 176, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.98);
+}
+
+.p4sum-inlineSpeak:active {
+  transform: translateY(0);
+  filter: brightness(0.98);
+}
+
+.p4sum-mini {
+  display: grid;
+  grid-template-columns: 165px minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.p4sum-miniMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 168px;
+}
+
+.p4sum-scaleImage {
+  width: min(150px, 100%);
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(73, 99, 125, 0.15));
+}
+
+.p4sum-groundImage {
+  width: min(190px, 100%);
+  object-fit: contain;
+  filter: drop-shadow(0 12px 18px rgba(94, 135, 88, 0.12));
+}
+
+.p4sum-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.p4sum-earthShell {
+  width: min(100%, 650px);
+  aspect-ratio: 0.88;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .p4sum-earth {
   width: min(100%, 620px);
-  max-height: 700px;
   object-fit: contain;
-  filter: drop-shadow(0 14px 26px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 18px 30px rgba(36, 79, 86, 0.18));
+}
+
+.p4sum-copy-right {
+  text-align: center;
+}
+
+.p4sum-mass {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.p4sum-massDiagram {
+  position: relative;
+  min-height: 220px;
+}
+
+.p4sum-massVisual {
+  display: block;
+  width: min(100%, 520px);
+  margin: 44px auto 0;
+  object-fit: contain;
+}
+
+.p4sum-massLabel {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: clamp(20px, 1.35vw, 30px);
+  line-height: 1.18;
+  font-weight: 700;
+}
+
+.p4sum-massLabel strong {
+  font-size: clamp(24px, 1.55vw, 34px);
+  font-weight: 900;
+}
+
+.p4sum-massLabel-left {
+  left: 0;
+  text-align: center;
+}
+
+.p4sum-massLabel-right {
+  right: 0;
+  text-align: center;
+}
+
+.p4sum-distance {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.p4sum-distanceDiagram {
+  position: relative;
+  min-height: 330px;
+}
+
+.p4sum-distanceVisual {
+  display: block;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.p4sum-distanceMeta {
+  position: absolute;
+  max-width: 170px;
+  font-size: clamp(22px, 1.45vw, 32px);
+  line-height: 1.22;
+  font-weight: 700;
+  white-space: pre-line;
+}
+
+.p4sum-distanceMeta-top {
+  right: 0;
+  top: 100px;
+  text-align: left;
+}
+
+.p4sum-distanceMeta-bottom {
+  left: 0;
+  bottom: 18px;
+  text-align: left;
 }
 
 .p4sum-langDock {
   position: fixed;
-  left: 20px;
-  bottom: 18px;
+  left: 18px;
+  bottom: 16px;
   z-index: 10;
   display: flex;
-  gap: 8px;
   align-items: center;
-  padding: 8px;
-  border-radius: 22px;
-  background: rgba(235, 245, 252, 0.94);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.15);
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 14px 30px rgba(45, 77, 113, 0.14);
 }
 
-.p4sum-chip {
-  border: none;
-  cursor: pointer;
-  min-width: 88px;
-  height: 56px;
-  border-radius: 16px;
-  background: #dceefd;
-  font-size: 18px;
-  font-weight: 800;
-  color: #1e3a8a;
-}
-
-.p4sum-chip.active {
-  background: #b9dcfd;
-}
-
+.p4sum-chip,
 .p4sum-chipAudio {
   border: none;
   cursor: pointer;
-  width: 56px;
-  height: 56px;
+  font-family: inherit;
+}
+
+.p4sum-chip {
+  min-width: 80px;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 14px;
+  background: #e8f0fd;
+  color: #3f6da6;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.p4sum-chip.active {
+  background: linear-gradient(180deg, #cce4ff, #a9cdfd);
+  color: #184d95;
+}
+
+.p4sum-chipAudio {
+  width: 46px;
+  height: 46px;
   border-radius: 16px;
-  background: #7e97da;
+  background: #6f88da;
   color: #fff;
-  font-size: 25px;
-  box-shadow: 0 8px 18px rgba(35, 68, 143, 0.32);
+  font-size: 20px;
+  box-shadow: 0 10px 20px rgba(72, 96, 180, 0.22);
 }
 
 .p4sum-actions {
   position: fixed;
-  right: 20px;
-  bottom: 18px;
+  right: 18px;
+  bottom: 16px;
   z-index: 10;
   display: flex;
+  align-items: center;
   gap: 10px;
 }
 
 .p4sum-btn {
   border: none;
   cursor: pointer;
-  height: 60px;
-  border-radius: 28px;
-  padding: 0 24px;
-  font-size: 23px;
-  font-weight: 800;
   font-family: inherit;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .p4sum-btn-back {
-  background: rgba(255, 255, 255, 0.94);
-  color: #0f172a;
+  min-width: 158px;
+  height: 52px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1a2a50;
+  font-size: 18px;
+  box-shadow: 0 12px 24px rgba(44, 62, 102, 0.12);
 }
 
 .p4sum-btn-next {
-  background: linear-gradient(180deg, #f47066, #d8463d);
+  min-width: 152px;
+  height: 52px;
+  padding: 0 22px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #f06d61, #df4d43);
   color: #fff;
+  font-size: 18px;
+  box-shadow:
+    inset -6px -7px 0 rgba(136, 28, 22, 0.16),
+    0 14px 24px rgba(195, 71, 58, 0.22);
+}
+
+@media (max-width: 1550px) {
+  .p4sum-wrap {
+    max-width: 1460px;
+    padding-inline: 20px;
+  }
+
+  .p4sum-stage {
+    grid-template-columns: minmax(320px, 1fr) minmax(360px, 0.9fr) minmax(320px, 1fr);
+    gap: 24px;
+  }
+
+  .p4sum-feature,
+  .p4sum-mini {
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .p4sum-massDiagram {
+    min-height: 224px;
+  }
+
+  .p4sum-distanceDiagram {
+    min-height: 290px;
+  }
 }
 
 @media (max-width: 1280px) {
-  .p4sum-grid {
+  .p4sum-wrap {
+    padding-bottom: 200px;
+  }
+
+  .p4sum-stage {
     grid-template-columns: 1fr;
+    gap: 36px;
   }
 
-  .p4sum-earthWrap {
+  .p4sum-center {
     order: -1;
-    padding-top: 0;
+    padding-top: 10px;
   }
 
-  .p4sum-earth {
-    width: min(72vw, 540px);
+  .p4sum-badge-right {
+    align-self: flex-start;
   }
 }
 
 @media (max-width: 768px) {
   .p4sum-wrap {
-    padding: 14px 14px 180px;
+    padding: 14px 12px 212px;
   }
 
-  .p4sum-card {
-    padding: 10px;
+  .p4sum-title {
+    font-size: clamp(30px, 8vw, 52px);
   }
 
-  .p4sum-icon {
-    width: 72px;
-    max-height: 78px;
-  }
-
-  .p4sum-langDock {
-    left: 10px;
-    bottom: 10px;
-    padding: 6px;
+  .p4sum-badge {
+    padding: 10px 18px;
     border-radius: 16px;
   }
 
-  .p4sum-chip {
-    min-width: 62px;
+  .p4sum-feature,
+  .p4sum-mini {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .p4sum-branch,
+  .p4sum-miniMedia {
+    margin: 0 auto;
+  }
+
+  .p4sum-copy,
+  .p4sum-copy-right {
+    text-align: center;
+  }
+
+  .p4sum-massDiagram,
+  .p4sum-distanceDiagram {
+    min-height: auto;
+    display: grid;
+    gap: 14px;
+    justify-items: center;
+  }
+
+  .p4sum-massLabel,
+  .p4sum-distanceMeta {
+    position: static;
+    transform: none;
+  }
+
+  .p4sum-distanceMeta {
+    text-align: center;
+    white-space: pre-line;
+  }
+
+  .p4sum-inlineSpeak {
+    width: 42px;
     height: 42px;
+    border-radius: 14px;
+    font-size: 17px;
+  }
+
+  .p4sum-langDock {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 14px;
+  }
+
+  .p4sum-chip {
+    min-width: 60px;
+    height: 42px;
+    padding: 0 10px;
     border-radius: 12px;
     font-size: 14px;
   }
@@ -244,19 +509,26 @@
     width: 42px;
     height: 42px;
     border-radius: 12px;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .p4sum-actions {
-    right: 10px;
-    bottom: 10px;
+    right: 12px;
+    bottom: 68px;
+    gap: 8px;
   }
 
-  .p4sum-btn {
+  .p4sum-btn-back {
+    min-width: 106px;
     height: 44px;
-    border-radius: 18px;
-    padding: 0 14px;
-    font-size: 18px;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  .p4sum-btn-next {
+    min-width: 104px;
+    height: 44px;
+    padding: 0 18px;
+    font-size: 14px;
   }
 }
-

@@ -53,23 +53,23 @@ export default function P4GravityExp2Action() {
     () => ({
       th: {
         topTitle:
-          "ลงมือทดลองจริง: เลือกวัตถุ → วางบนเครื่องชั่งสปริง → อ่านค่าน้ำหนัก (N)",
+          "ลงมือทดลองจริง: เลือกวัตถุ → วางบนเครื่องชั่งสปริง → อ่านค่าน้ำหนัก",
         back: "ย้อนกลับ",
         chooseTitle: "เลือกอุปกรณ์/วัตถุ",
         chooseSub: "เลือกชิ้นที่ต้องการวางบนเครื่องชั่ง",
         selected: "วัตถุที่เลือก",
         mass: "มวล",
-        weight: "น้ำหนัก (N)",
+        weight: "น้ำหนัก",
         hint: "น้ำหนักขึ้นกับมวลและแรงดึงดูดของโลก",
         recordTitle: "บันทึกผล",
         recordSub: "เก็บค่าเพื่อเปรียบเทียบ",
         colObj: "วัตถุ",
         colMass: "มวล",
-        colW: "น้ำหนัก (N)",
+        colW: "น้ำหนัก ",
         empty: "ยังไม่มีข้อมูล\nกด \"บันทึกค่าน้ำหนัก\" เพื่อเพิ่มแถว",
         save: "+ บันทึกค่าน้ำหนัก",
         clear: "รีเซ็ตตาราง",
-        viewAll: "ดูผลลัพธ์ทั้งหมด →",
+        viewAll: "ดูผลลัพธ์ทั้งหมด",
         note:
           "ลองเลือกและบันทึกหลายชิ้น แล้วสังเกตว่าเมื่อมวลมากขึ้น น้ำหนักก็จะมากขึ้นตาม",
         groupBall: "ลูกบอล",
@@ -93,23 +93,23 @@ export default function P4GravityExp2Action() {
       },
       en: {
         topTitle:
-          "Real experiment: choose an object, place it on the spring scale, then read the weight (N)",
+          "Real experiment: choose an object, place it on the spring scale, then read the weight",
         back: "Back",
         chooseTitle: "Choose an Object",
         chooseSub: "Select one piece to place on the scale",
         selected: "Selected Object",
         mass: "Mass",
-        weight: "Weight (N)",
+        weight: "Weight",
         hint: "Weight depends on mass and Earth's gravity.",
         recordTitle: "Records",
         recordSub: "Save values for comparison",
         colObj: "Object",
         colMass: "Mass",
-        colW: "Weight (N)",
+        colW: "Weight",
         empty: "No records yet.\nPress \"Save weight\" to add a row.",
         save: "+ Save weight",
         clear: "Clear table",
-        viewAll: "View all results →",
+        viewAll: "View all results",
         note:
           "Select and record several pieces, then compare how greater mass leads to greater weight.",
         groupBall: "Ball",
@@ -133,23 +133,23 @@ export default function P4GravityExp2Action() {
       },
       ms: {
         topTitle:
-          "Eksperimen sebenar: pilih objek, letakkan pada penimbang spring, kemudian baca berat (N)",
+          "Eksperimen sebenar: pilih objek, letakkan pada penimbang spring, kemudian baca berat",
         back: "Kembali",
         chooseTitle: "Pilih Objek",
         chooseSub: "Pilih satu keping untuk diletakkan pada penimbang",
         selected: "Objek Dipilih",
         mass: "Jisim",
-        weight: "Berat (N)",
+        weight: "Berat",
         hint: "Berat bergantung pada jisim dan graviti Bumi.",
         recordTitle: "Rekod",
         recordSub: "Simpan nilai untuk perbandingan",
         colObj: "Objek",
         colMass: "Jisim",
-        colW: "Berat (N)",
+        colW: "Berat",
         empty: "Belum ada rekod.\nTekan \"Simpan berat\" untuk tambah baris.",
         save: "+ Simpan berat",
         clear: "Kosongkan jadual",
-        viewAll: "Lihat semua keputusan →",
+        viewAll: "Lihat semua keputusan",
         note:
           "Pilih dan rekod beberapa keping supaya anda dapat melihat bahawa jisim yang lebih besar memberi berat yang lebih besar.",
         groupBall: "Bola",
@@ -192,7 +192,6 @@ export default function P4GravityExp2Action() {
   const assets = useMemo(
     () => ({
       bg: "/images/p4/exp2/bg-lab.jpg",
-      scale: "/images/p4/exp2/spring-scale.png",
       ball1: "/images/p4/exp2/ball1.png",
       ball2: "/images/p4/exp2/ball2.png",
       ball3: "/images/p4/exp2/ball3.png",
@@ -207,6 +206,7 @@ export default function P4GravityExp2Action() {
   );
 
   const g = 9.81;
+  const gaugeMaxN = 8;
 
   const items = useMemo(
     () => [
@@ -235,10 +235,29 @@ export default function P4GravityExp2Action() {
   const weightN = useMemo(() => (selected ? selected.massKg * g : 0), [selected]);
 
   const needleDeg = useMemo(() => {
-    const maxN = 8;
-    const clamped = Math.max(0, Math.min(weightN, maxN));
-    return -70 + (clamped / maxN) * 140;
-  }, [weightN]);
+    const clamped = Math.max(0, Math.min(weightN, gaugeMaxN));
+    return -70 + (clamped / gaugeMaxN) * 140;
+  }, [gaugeMaxN, weightN]);
+
+  const gaugeMarks = useMemo(
+    () =>
+        Array.from({ length: gaugeMaxN + 1 }, (_, value) => {
+          const angleDeg = -70 + (value / gaugeMaxN) * 140;
+          const angleRad = (angleDeg * Math.PI) / 180;
+          const radiusX = 41;
+          const radiusY = 41;
+          const centerX = 50;
+          const centerY = 76;
+
+          return {
+            value,
+            left: `${centerX + Math.sin(angleRad) * radiusX}%`,
+          top: `${centerY - Math.cos(angleRad) * radiusY}%`,
+          rotate: `${angleDeg * 0.18}deg`,
+        };
+      }),
+    [gaugeMaxN]
+  );
 
   const addRecord = () => {
     if (!selected) return;
@@ -319,19 +338,9 @@ export default function P4GravityExp2Action() {
       <div className="exp2a-overlay" />
 
       <div className="exp2a-topbar">
-        <button
-          className="exp2a-backCircle"
-          type="button"
-          onClick={() => navigate(BACK_PATH)}
-          aria-label={t.back}
-          title={t.back}
-        >
-          ←
-        </button>
-
         <div className="exp2a-titleCard">
           <div className="exp2a-titleText">{t.topTitle}</div>
-          <button
+          {/* <button
             className="exp2a-iconBtn"
             type="button"
             onClick={isSpeaking ? stopSpeak : speakAll}
@@ -339,7 +348,7 @@ export default function P4GravityExp2Action() {
             aria-label={isSpeaking ? t.stop : t.speakAll}
           >
             {isSpeaking ? "■" : "🔊"}
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -450,65 +459,69 @@ export default function P4GravityExp2Action() {
           </div>
 
           <div className="exp2a-stageGrid">
-            <div className="exp2a-scaleCard">
-              <div className="exp2a-scaleFrame" title={t.placedOnScale}>
-                {assets.scale ? (
-                  <img className="exp2a-scaleImg" src={assets.scale} alt="spring scale" />
-                ) : (
-                  <div className="exp2a-scalePlaceholder">SPRING SCALE</div>
-                )}
+            <div className="exp2a-experimentCard">
+              <div className="exp2a-selectedObjectTop" title={t.placedOnScale}>
+                <div className="exp2a-selectedObjectPlate" aria-hidden="true" />
+                <img
+                  className={`exp2a-selectedObject ${selected.type}`}
+                  src={selected.img}
+                  alt="object on scale"
+                  draggable="false"
+                />
+              </div>
 
-                <div className="exp2a-pan">
-                  <img
-                    className={`exp2a-object ${selected.type}`}
-                    src={selected.img}
-                    alt="object on scale"
-                    draggable="false"
-                  />
+              <div className="exp2a-scaleBody">
+                <div className="exp2a-scaleTop">
+                  <div className="exp2a-gaugeFace">
+                    <div className="exp2a-gaugeTicks" />
+                    <div className="exp2a-gaugeArc" aria-hidden="true" />
+                    <div className="exp2a-gaugeLabels" aria-hidden="true">
+                      {gaugeMarks.map((mark) => (
+                        <span
+                          key={mark.value}
+                          className="exp2a-gaugeLabel"
+                          style={{
+                            left: mark.left,
+                            top: mark.top,
+                            transform: `translate(-50%, -50%) rotate(${mark.rotate})`,
+                          }}
+                        >
+                          {mark.value}
+                        </span>
+                      ))}
+                    </div>
+                    <div
+                      className="exp2a-needle"
+                      style={{ transform: `translate(-50%, -90%) rotate(${needleDeg}deg)` }}
+                    />
+                    <div className="exp2a-needleHub" />
+                  </div>
+                </div>
+
+                <div className="exp2a-readout">
+                  <div className="exp2a-readLabel">
+                    {t.weight}
+                    <button
+                      className="exp2a-miniIcon"
+                      type="button"
+                      onClick={speakWeight}
+                      title={t.speak}
+                      aria-label={t.speak}
+                      disabled={isSpeaking}
+                    >
+                      🔊
+                    </button>
+                  </div>
+                  <div className="exp2a-readValue">{fmtN(weightN)}</div>
+                  <div className="exp2a-readUnit">{t.unitNewton}</div>
                 </div>
               </div>
 
               <div className="exp2a-hint">{t.hint}</div>
-            </div>
 
-            <div className="exp2a-gauge">
-              <div className="exp2a-gaugeFace">
-                <div className="exp2a-gaugeTicks" />
-                <div
-                  className="exp2a-needle"
-                  style={{ transform: `translate(-50%, -90%) rotate(${needleDeg}deg)` }}
-                />
-                <div className="exp2a-needleHub" />
-              </div>
-
-              <div className="exp2a-readout">
-                <div className="exp2a-readLabel">
-                  {t.weight}
-                  <button
-                    className="exp2a-miniIcon"
-                    type="button"
-                    onClick={speakWeight}
-                    title={t.speak}
-                    aria-label={t.speak}
-                    disabled={isSpeaking}
-                  >
-                    🔊
-                  </button>
-                </div>
-                <div className="exp2a-readValue">{fmtN(weightN)}</div>
-              </div>
-
-              <div className="exp2a-actionsInline">
-                <button className="exp2a-btn primary" type="button" onClick={addRecord}>
-                  {t.save}
-                </button>
-                <button className="exp2a-btn ghost" type="button" onClick={clearRecords}>
-                  {t.clear}
-                </button>
-                <button className="exp2a-btn danger" type="button" onClick={goResult}>
-                  {t.viewAll}
-                </button>
-              </div>
+              <button className="exp2a-btn primary exp2a-saveBottomBtn" type="button" onClick={addRecord}>
+                {t.save}
+              </button>
             </div>
           </div>
         </section>
@@ -530,6 +543,12 @@ export default function P4GravityExp2Action() {
             </div>
             <div className="exp2a-paneSub">{t.recordSub}</div>
           </header>
+
+          <div className="exp2a-tableTools">
+            <button className="exp2a-btn ghost exp2a-tableResetBtn" type="button" onClick={clearRecords}>
+              {t.clear}
+            </button>
+          </div>
 
           <div className="exp2a-table">
             <div className="exp2a-thead">
@@ -558,8 +577,15 @@ export default function P4GravityExp2Action() {
             )}
           </div>
 
-          <div className="exp2a-note">
-            {t.noteLabel}: {t.note}
+          <div className="exp2a-actionsInline exp2a-sideActions">
+            <div className="exp2a-sideBottomRow">
+              <button className="exp2a-btn danger" type="button" onClick={goResult}>
+                {t.viewAll}
+              </button>
+              <button className="exp2a-btn ghost exp2a-backInlineBtn" type="button" onClick={() => navigate(BACK_PATH)}>
+                « {t.back}
+              </button>
+            </div>
           </div>
         </section>
       </div>
@@ -573,6 +599,9 @@ export default function P4GravityExp2Action() {
         </button>
         <button className="exp2a-btn danger" type="button" onClick={goResult}>
           {t.viewAll}
+        </button>
+        <button className="exp2a-btn ghost" type="button" onClick={() => navigate(BACK_PATH)}>
+          « {t.back}
         </button>
       </div>
     </div>

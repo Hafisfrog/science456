@@ -4,18 +4,18 @@ import "./P4GravityExp3Vocab.css";
 const VOCAB = [
   {
     th: "การเปลี่ยนแปลง",
-    ms: "จารอ ตูกา / จารอ บือรูเบาะฮุ",
+    ms: "Perubahan",
     en: "Change",
   },
   {
     th: "การเคลื่อนที่ของวัตถุ",
-    ms: "จารอ เขอเราะ เฮาะบาแร",
-    en: "Object's Movement",
+    ms: "Pergerakan objek",
+    en: "Object motion",
   },
   {
     th: "เคลื่อนย้าย",
-    ms: "เขอเราะ",
-    en: "Displace",
+    ms: "Menggerakkan",
+    en: "Move",
   },
 ];
 
@@ -60,13 +60,13 @@ export default function P4GravityExp3Vocab() {
                 <td className="cell-en">{row.en}</td>
                 <td className="cell-audio">
                   <button className="audio-btn th" onClick={() => speak(row.th, "th")}>
-                    ไทย
+                    TH
                   </button>
                   <button className="audio-btn ms" onClick={() => speak(row.ms, "ms")}>
-                    มลายู
+                    MY
                   </button>
                   <button className="audio-btn en" onClick={() => speak(row.en, "en")}>
-                    อังกฤษ
+                    GB
                   </button>
                 </td>
               </tr>
@@ -77,11 +77,11 @@ export default function P4GravityExp3Vocab() {
 
       <div className="exp3-vocab-footer">
         <button className="back-home-btn" onClick={() => navigate("/p4/gravity")}>
-          ⟵ กลับหน้าหลัก
+          « ย้อนกลับ
         </button>
 
         <button className="btn-next" onClick={() => navigate("/p4/gravity/exp3/steps")}>
-          ต่อไป ⟶
+          ต่อไป »
         </button>
       </div>
     </div>

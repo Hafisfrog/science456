@@ -1,88 +1,220 @@
-.grade-wrap{
-  min-height:100vh;
-  padding:48px 24px;
-  text-align:center;
-  background:#eaf7fb;
+﻿.vocab-page {
+  min-height: 100vh;
+  padding: 50px 20px;
+  background: linear-gradient(180deg, #f0f9ff, #e6f4ff);
+  font-family: "Prompt", sans-serif;
 }
 
-.grade-title{
-  font-size:38px;
-  font-weight:700;
-  color:#2563eb;
+.vocab-header {
+  text-align: center;
+  margin-bottom: 28px;
 }
 
-.grade-sub{
-  margin-top:10px;
-  font-size:18px;
-  color:#374151;
+.vocab-header h1 {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 800;
+  color: #e85a6b;
 }
 
-.grade-grid{
-  margin:40px auto 0;
-  max-width:1200px;
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap:24px;
+.vocab-header p {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #374151;
 }
 
-.grade-card{
-  background:white;
-  border-radius:22px;
-  overflow:hidden;
-  cursor:pointer;
-  box-shadow:0 10px 20px rgba(0,0,0,.08);
-  transition:transform .15s ease, box-shadow .15s ease;
+.vocab-card {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 22px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
-.grade-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 18px 30px rgba(0,0,0,.14);
+.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 20px;
 }
 
-.grade-image{
-  width:100%;
-  height:360px;
-  object-fit:cover;
+.vocab-table th,
+.vocab-table td {
+  padding: 20px 16px;
+  text-align: left;
 }
 
-.grade-content{
-  padding:18px;
+.col-th {
+  background: #a7c7e7;
 }
 
-.grade-big{
-  font-size:26px;
-  font-weight:700;
-  color:#111827;
+.col-ms {
+  background: #f6cc6b;
 }
 
-.grade-small{
-  margin-top:8px;
-  font-size:15px;
-  color:#374151;
+.col-en {
+  background: #c084b3;
 }
 
-/* ปุ่มย้อนกลับ */      
-.back-home-btn{
+.col-audio {
+  background: #d1fae5;
+  text-align: center;
+}
+
+.cell-th {
+  background: #eaf4ff;
+  font-weight: 600;
+}
+
+.cell-ms {
+  background: #fff3d6;
+}
+
+.cell-en {
+  background: #f9d9ec;
+}
+
+.cell-audio {
+  background: #ecfdf5;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.vocab-table tr:not(:last-child) td {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.audio-btn {
   border: none;
   cursor: pointer;
-  padding: 12px 20px;
-  font-size: 16px;
+  margin: 0 4px;
+  padding: 8px 10px;
+  font-size: 15px;
   font-weight: 700;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #ffffff, #f0f9ff);
-  color: #1e3a8a;
-  box-shadow: 0 8px 18px rgba(0,0,0,.15);
-  font-family: 'Prompt', sans-serif;
-  transition: all .15s ease;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  font-family: "Prompt", sans-serif;
 }
 
-.back-home-btn:hover{
+.audio-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0,0,0,.2);
-  background: linear-gradient(135deg, #e0f2fe, #ffffff);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
 }
 
-.back-home-btn:active{
-  transform: translateY(1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+.audio-btn.th {
+  background: #dbeafe;
+}
+
+.audio-btn.ms {
+  background: #fde68a;
+}
+
+.audio-btn.en {
+  background: #fbcfe8;
+}
+
+.vocab-footer {
+  max-width: 1100px;
+  margin: 26px auto 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.back-home-btn,
+.btn-next {
+  border: none;
+  cursor: pointer;
+  padding: 14px 22px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+  transition: transform 0.12s ease;
+  font-family: "Prompt", sans-serif;
+}
+
+.back-home-btn {
+  background: white;
+  color: #111827;
+}
+
+.btn-next {
+  background: #ef4444;
+  color: white;
+}
+
+.back-home-btn:hover,
+.btn-next:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 860px) {
+  .vocab-table {
+    font-size: 16px;
+  }
+
+  .vocab-table th,
+  .vocab-table td {
+    padding: 14px 10px;
+  }
+
+  .audio-btn {
+    margin: 2px;
+    padding: 7px 9px;
+    font-size: 13px;
+  }
+
+  .vocab-header h1 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 640px) {
+  .vocab-page {
+    padding: 24px 12px 28px;
+  }
+
+  .vocab-header {
+    margin-bottom: 18px;
+  }
+
+  .vocab-header h1 {
+    font-size: 28px;
+  }
+
+  .vocab-header p {
+    font-size: 16px;
+  }
+
+  .vocab-card {
+    overflow-x: auto;
+    border-radius: 18px;
+  }
+
+  .vocab-table {
+    min-width: 720px;
+    font-size: 15px;
+  }
+
+  .vocab-table th,
+  .vocab-table td {
+    padding: 12px 10px;
+  }
+
+  .cell-audio {
+    min-width: 180px;
+  }
+
+  .vocab-footer {
+    flex-direction: column;
+  }
+
+  .back-home-btn,
+  .btn-next {
+    width: 100%;
+    font-size: 16px;
+    padding: 14px 16px;
+  }
 }

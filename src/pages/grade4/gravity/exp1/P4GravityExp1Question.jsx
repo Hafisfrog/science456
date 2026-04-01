@@ -15,7 +15,8 @@ export default function P4GravityExp1Question() {
         q: "2. เมื่อปล่อยวัตถุ วัตถุจะเคลื่อนที่ไปทางใด?\nและอะไรเป็นแรงที่ทำให้วัตถุตกลงสู่พื้น?",
         hintBtn: "มาหาคำตอบกัน",
         startBtn: "เริ่มการทดลอง",
-        backBtn: "← ย้อนกลับ",
+        backBtn: "« ย้อนกลับ",
+        nextBtn: "ต่อไป »",
         soundTitle: "ฟังเสียง",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
@@ -26,7 +27,8 @@ export default function P4GravityExp1Question() {
         q: "2. When you release an object, which direction will it move?\nAnd what force makes it fall to the ground?",
         hintBtn: "Let's find the answer",
         startBtn: "Start Experiment",
-        backBtn: "← Back",
+        backBtn: "« Back",
+        nextBtn: "Next »",
         soundTitle: "Sound",
         chipTh: "Thai",
         chipEn: "English",
@@ -37,7 +39,8 @@ export default function P4GravityExp1Question() {
         q: "2. Apabila objek dilepaskan, ke arah manakah ia bergerak?\nDan apakah daya yang menyebabkan objek jatuh ke tanah?",
         hintBtn: "Mari cari jawapan",
         startBtn: "Mula Eksperimen",
-        backBtn: "← Kembali",
+        backBtn: "« Kembali",
+        nextBtn: "Seterusnya »",
         soundTitle: "Bunyi",
         chipTh: "Thai",
         chipEn: "English",
@@ -77,20 +80,12 @@ export default function P4GravityExp1Question() {
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[#eef2ff] font-['Prompt',sans-serif]">
       <img
-        className="absolute inset-0 -z-10 h-full w-full scale-[1.02] object-cover [filter:blur(2px)_brightness(.92)]"
-        src="/images/p4/exp1/bg-question.jpg"
-        alt="bg"
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
 
       <div className="relative h-full w-full p-6">
-        <button
-          className="absolute left-11 top-5 z-20 rounded-[18px] bg-white/95 px-[18px] py-3 text-base font-black text-slate-900 shadow-[0_14px_26px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_rgba(0,0,0,.26)] active:translate-y-px max-[700px]:left-[18px] max-[700px]:top-[16px]"
-          onClick={goBack}
-          type="button"
-        >
-          {t.backBtn}
-        </button>
-
         <div className="absolute bottom-[22px] left-11 z-20 flex gap-[10px] rounded-[18px] bg-white/92 px-3 py-[10px] shadow-[0_14px_28px_rgba(0,0,0,.22)] max-[700px]:bottom-[16px] max-[700px]:left-[10px]">
           <button
             className={`rounded-[14px] px-[14px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_10px_18px_rgba(0,0,0,.14)] ${
@@ -150,9 +145,9 @@ export default function P4GravityExp1Question() {
           </div>
         </div>
 
-        <div className="absolute bottom-[26px] right-[26px] z-20 flex flex-col gap-[14px] max-[700px]:bottom-[16px] max-[700px]:right-[10px]">
+        <div className="absolute bottom-[26px] right-[26px] z-20 flex flex-col gap-[12px] max-[700px]:bottom-[16px] max-[700px]:right-[10px]">
           <button
-            className="flex w-[240px] items-center gap-3 rounded-[14px] border-4 border-black/70 bg-white/92 px-4 py-4 shadow-[0_14px_28px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.26)] active:translate-y-px max-[700px]:w-[210px]"
+            className="mx-auto flex w-[240px] items-center gap-3 rounded-[14px] border-4 border-black/70 bg-white/92 px-4 py-4 shadow-[0_14px_28px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.26)] active:translate-y-px max-[700px]:w-[210px]"
             onClick={handleHint}
             type="button"
           >
@@ -163,15 +158,33 @@ export default function P4GravityExp1Question() {
           </button>
 
           <button
-            className="flex w-[240px] flex-col items-center gap-[10px] rounded-[18px] border-4 border-black/70 bg-white/95 px-4 py-[18px] shadow-[0_18px_34px_rgba(0,0,0,.24)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(0,0,0,.28)] active:translate-y-px max-[700px]:w-[210px]"
+            className="flex w-[280px] flex-col items-center gap-[8px] rounded-[18px] border-4 border-black/70 bg-white/95 px-5 py-[14px] shadow-[0_18px_34px_rgba(0,0,0,.24)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(0,0,0,.28)] active:translate-y-px max-[700px]:w-[236px] max-[700px]:py-[12px]"
             onClick={handleStart}
             type="button"
           >
-            <div className="flex h-[66px] w-[66px] items-center justify-center rounded-full bg-[#dbeafe] text-[30px] font-black shadow-[inset_0_-4px_0_rgba(0,0,0,.12)]">
+            <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[#dbeafe] text-[26px] font-black shadow-[inset_0_-4px_0_rgba(0,0,0,.12)]">
               {"\u25B6"}
             </div>
-            <div className="text-[22px] font-black text-slate-900 max-[700px]:text-xl">{t.startBtn}</div>
+            <div className="text-[20px] font-black text-slate-900 max-[700px]:text-[18px]">{t.startBtn}</div>
           </button>
+
+          <div className="flex w-[280px] gap-[10px] max-[700px]:w-[236px] max-[700px]:gap-[8px]">
+            <button
+              className="flex-1 rounded-[16px] bg-white/95 px-[14px] py-[11px] text-[17px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[700px]:px-[10px] max-[700px]:py-[10px] max-[700px]:text-[15px]"
+              onClick={goBack}
+              type="button"
+            >
+              {t.backBtn}
+            </button>
+
+            <button
+              className="flex-1 rounded-[16px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[14px] py-[11px] text-[17px] font-black text-white shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[700px]:px-[10px] max-[700px]:py-[10px] max-[700px]:text-[15px]"
+              onClick={handleStart}
+              type="button"
+            >
+              {t.nextBtn}
+            </button>
+          </div>
         </div>
       </div>
     </div>

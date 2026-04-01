@@ -1,5 +1,6 @@
 ﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../exp1/P4GravityExp1Materials.css";
 import "./P4GravityExp2Materials.css";
 
 export default function P4GravityExp2Materials() {
@@ -14,7 +15,6 @@ export default function P4GravityExp2Materials() {
   const assets = useMemo(() => {
     return {
       bg: "/images/p4/exp1/bg-lab.jpg",
-      character: "/images/p4/exp2/ajang.png",
       ball: "/images/p4/exp1/soccer-ball.png",
       bocce: "/images/p4/exp1/bocce.png",
       feather: "/images/p4/exp1/feather.png",
@@ -121,15 +121,21 @@ export default function P4GravityExp2Materials() {
   };
 
   return (
-    <div className="exp2m-page">
-      <img className="exp2m-bg" src={assets.bg} alt="bg" />
-      <div className="exp2m-overlay" />
+    <div className="exp1m-page exp2m-page">
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
+      <div className="exp1m-overlay" />
 
-      <div className="exp2m-topTitle">
-        <div className="exp2m-titleBox">
-          <div className="exp2m-titleText">{t.title}</div>
+      <div className="absolute left-[18px] right-[18px] top-[18px] z-[6] flex items-center justify-center">
+        <div className="flex max-w-[min(1120px,calc(100%-240px))] items-center gap-3 rounded-[18px] border-2 border-slate-900/10 bg-white/95 px-[18px] py-[14px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:max-w-[calc(100%-40px)]">
+          <div className="text-[26px] font-black leading-tight text-slate-900 max-[980px]:text-[20px]">
+            {t.title}
+          </div>
           <button
-            className={`exp2m-speak ${isSpeaking("title") ? "speaking" : ""}`}
+            className={`exp1m-speak ${isSpeaking("title") ? "speaking" : ""}`}
             type="button"
             onClick={() => speak(t.title, "title")}
             title="Speak"
@@ -139,79 +145,65 @@ export default function P4GravityExp2Materials() {
         </div>
       </div>
 
-      <div className="exp2m-badge">
-        <span className="exp2m-badgeText">{t.badge}</span>
-        <button
-          className={`exp2m-speak mini ${isSpeaking("badge") ? "speaking" : ""}`}
-          type="button"
-          onClick={() => speak(t.badge, "badge")}
-          title="Speak"
-        >
-          🔊
-        </button>
+      <div className="absolute left-[18px] top-[118px] z-[6] flex items-center gap-[10px] rounded-2xl border-2 border-slate-900/15 bg-white/90 px-[14px] py-3 shadow-[0_16px_34px_rgba(0,0,0,.18)] max-[980px]:top-[126px] max-[720px]:top-[132px]">
+        <span className="text-[22px] font-black text-slate-900">{t.badge}</span>
       </div>
 
-      <div className="exp2m-center">
-        <div className="exp2m-grid">
-          {t.items.map((it) => (
-            <div className="exp2m-card" key={it.key}>
-              <div className="exp2m-cardInner">
-                <div className="exp2m-imgBox">
-                  <img
-                    className="exp2m-img"
-                    src={imgOf(it.key)}
-                    alt={it.name}
-                    draggable="false"
-                    onError={(e) => {
-                      e.currentTarget.style.opacity = "0";
-                    }}
-                  />
-                </div>
+      <div className="exp1m-center">
+        <div className="max-h-full overflow-y-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="exp1m-grid">
+            {t.items.map((it) => (
+              <div key={it.key} className="exp1m-card">
+                <div className="exp1m-cardInner">
+                  <div className="exp1m-imgBox">
+                    <img
+                      className="exp1m-img"
+                      src={imgOf(it.key)}
+                      alt={it.name}
+                      draggable="false"
+                      onError={(e) => {
+                        e.currentTarget.style.opacity = "0";
+                      }}
+                    />
+                  </div>
 
-                <div className="exp2m-nameRow">
-                  <div className="exp2m-name">{it.name}</div>
-                  <button
-                    className={`exp2m-speak ${isSpeaking(it.key) ? "speaking" : ""}`}
-                    type="button"
-                    onClick={() => speak(it.name, it.key)}
-                    title="Speak"
-                  >
-                    🔊
-                  </button>
+                  <div className="exp1m-nameRow">
+                    <div className="exp1m-name whitespace-nowrap text-center tracking-[-0.02em]">
+                      {it.name}
+                    </div>
+                    <button
+                      className={`exp1m-itemSpeak ${isSpeaking(it.key) ? "speaking" : ""}`}
+                      type="button"
+                      onClick={() => speak(it.name, it.key)}
+                      title="Speak"
+                    >
+                      🔊
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      <img
-        className="exp2m-character"
-        src={assets.character}
-        alt="character"
-        draggable="false"
-        onError={(e) => {
-          e.currentTarget.style.display = "none";
-        }}
-      />
-
-      <div className="exp2m-langBar">
+      <div className="exp1m-langBar">
         <button
-          className={`exp2m-chip ${lang === "th" ? "active" : ""}`}
+          className={`exp1m-chip ${lang === "th" ? "active" : ""}`}
           onClick={() => setLang("th")}
           type="button"
         >
           {t.chipTh}
         </button>
         <button
-          className={`exp2m-chip ${lang === "en" ? "active" : ""}`}
+          className={`exp1m-chip ${lang === "en" ? "active" : ""}`}
           onClick={() => setLang("en")}
           type="button"
         >
           {t.chipEn}
         </button>
         <button
-          className={`exp2m-chip ${lang === "ms" ? "active" : ""}`}
+          className={`exp1m-chip ${lang === "ms" ? "active" : ""}`}
           onClick={() => setLang("ms")}
           type="button"
         >
@@ -219,12 +211,12 @@ export default function P4GravityExp2Materials() {
         </button>
       </div>
 
-      <div className="exp2m-actionRow">
-        <button className="exp2m-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
-          ← {t.back}
+      <div className="exp1m-actionRow">
+        <button className="exp1m-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
+          « {t.back}
         </button>
 
-        <button className="exp2m-nextBtn" type="button" onClick={() => navigate(NEXT_PATH)}>
+        <button className="exp1m-nextBtn" type="button" onClick={() => navigate(NEXT_PATH)}>
           {t.next} »
         </button>
       </div>

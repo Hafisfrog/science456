@@ -30,9 +30,9 @@ export default function P4GravityExp1Result() {
         summaryTitle: "สรุปผลการทดลอง",
         summary:
           "เมื่อปล่อยวัตถุจากที่สูง วัตถุจะตกลงสู่พื้นโลกเสมอ เพราะโลกมีแรงโน้มถ่วงดึงดูดวัตถุ วัตถุที่มีแรงต้านอากาศมาก เช่น ขนนก จะใช้เวลานานกว่าและอาจแกว่งไปมาได้",
-        listen: "ฟังสรุป",
+        // listen: "ฟังสรุป",
         retry: "ทดลองใหม่",
-        backClass: "กลับหน้าคำตอบ",
+        next: "ต่อไป",
         empty: "ไม่พบวัตถุที่เลือก กรุณากลับไปเลือกวัตถุใหม่",
         th: "ไทย",
         en: "อังกฤษ",
@@ -50,9 +50,9 @@ export default function P4GravityExp1Result() {
         summaryTitle: "Summary",
         summary:
           "When objects are released from a height, they fall to the ground because of Earth's gravity. Objects with greater air resistance, such as feathers, take longer and may drift sideways.",
-        listen: "Listen",
+        // listen: "Listen",
         retry: "Try again",
-        backClass: "Back to answer",
+        next: "Next",
         empty: "No selected objects were found. Please go back and choose objects again.",
         th: "Thai",
         en: "English",
@@ -70,9 +70,9 @@ export default function P4GravityExp1Result() {
         summaryTitle: "Ringkasan",
         summary:
           "Apabila objek dilepaskan dari ketinggian, ia jatuh ke tanah kerana graviti Bumi. Objek yang mempunyai rintangan udara lebih besar seperti bulu mengambil masa lebih lama dan boleh melayang ke sisi.",
-        listen: "Dengar",
+        // listen: "Dengar",
         retry: "Cuba lagi",
-        backClass: "Kembali ke jawapan",
+        next: "Seterusnya",
         empty: "Tiada objek yang dipilih. Sila kembali dan pilih objek sekali lagi.",
         th: "Thai",
         en: "English",
@@ -243,8 +243,8 @@ export default function P4GravityExp1Result() {
         ↻ {t.retry}
       </button>
 
-      <button className="res-backClass" onClick={() => navigate(CLASSROOM_PATH)} type="button">
-        ← {t.backClass}
+      <button className="next-btn" onClick={() => navigate(CLASSROOM_PATH)} type="button">
+        {t.next} »
       </button>
     </div>
   );

@@ -31,24 +31,6 @@
   filter:saturate(1.05);
 }
 
-.sim-back{
-  position:absolute;
-  top:16px;
-  left:16px;
-  z-index:20;
-  border:none;
-  cursor:pointer;
-  padding:10px 14px;
-  border-radius:16px;
-  background:rgba(255,255,255,.92);
-  font-size:16px;
-  font-weight:900;
-  box-shadow:0 10px 22px rgba(0,0,0,.14);
-  transition:transform .12s ease;
-}
-
-.sim-back:hover{ transform:translateY(-2px); }
-
 .sim-bubble{
   position:absolute;
   top:12%;
@@ -202,6 +184,36 @@
 .sim-chip:hover{ transform:translateY(-2px); }
 .sim-chip.active{ background:#bfe0ff; }
 
+.sim-navButtons{
+  position:absolute;
+  right:22px;
+  bottom:22px;
+  z-index:20;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.sim-navButton{
+  width:72px;
+  height:72px;
+  border:none;
+  border-radius:22px;
+  background:rgba(255,255,255,.92);
+  color:#0f172a;
+  font-size:38px;
+  font-weight:900;
+  line-height:1;
+  cursor:pointer;
+  box-shadow:0 12px 24px rgba(0,0,0,.14);
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+
+.sim-navButton:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 28px rgba(0,0,0,.18);
+}
+
 @media (max-width: 900px){
   .sim-stage{ aspect-ratio:auto; }
   .sim-bubble-text{ font-size:20px; }
@@ -210,8 +222,12 @@
   .sim-play{ width:104px; height:104px; top:78%; }
   .sim-play-icon{ font-size:46px; }
   .sim-caption{ font-size:18px; top:88%; }
+  .sim-navButtons{ right:16px; bottom:16px; gap:12px; }
+  .sim-navButton{ width:64px; height:64px; border-radius:20px; font-size:34px; }
 }
 
 @media (max-width: 640px){
   .sim-right-character{ display:none; }
+  .sim-navButtons{ right:14px; bottom:14px; }
+  .sim-navButton{ width:58px; height:58px; border-radius:18px; font-size:30px; }
 }

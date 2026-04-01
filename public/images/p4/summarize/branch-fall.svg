@@ -1,0 +1,13 @@
+<svg width="220" height="360" viewBox="0 0 220 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M40 54C42 48 50 47 54 51L62 59L62 170C62 176 57 180 52 180C46 180 42 176 42 170L40 54Z" fill="#7A5331"/>
+  <path d="M61 57L117 35C128 30 139 35 142 44C145 53 138 63 127 67L70 89L61 57Z" fill="#9AB84A"/>
+  <path d="M66 110L134 109C146 109 154 117 154 125C154 134 144 141 132 141L66 139V110Z" fill="#A5C54E"/>
+  <path d="M56 150L106 130C116 126 125 130 128 138C130 145 124 154 114 160L64 190L56 150Z" fill="#97B83D"/>
+  <path d="M98 236V286" stroke="#9BC5F4" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <path d="M113 224V274" stroke="#B4D5FA" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+  <path d="M128 216V266" stroke="#86B6EE" stroke-width="3" stroke-linecap="round" opacity="0.9"/>
+  <ellipse cx="119" cy="304" rx="42" ry="52" fill="#E05D49"/>
+  <ellipse cx="110" cy="294" rx="11" ry="15" fill="white" fill-opacity="0.82" transform="rotate(22 110 294)"/>
+  <path d="M124 247C126 237 130 228 135 219C137 216 141 214 145 216C149 219 150 224 147 227C142 234 138 242 136 251L124 247Z" fill="#7A5331"/>
+  <path d="M87 307C87 319 95 333 108 338C112 340 116 341 120 341C136 341 149 328 149 311V293C149 275 135 261 119 261C101 261 87 276 87 294V307Z" fill="#D94B3E"/>
+</svg>
