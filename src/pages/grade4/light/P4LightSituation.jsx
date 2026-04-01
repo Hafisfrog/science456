@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpeakButton from "../../../components/SpeakButton";
 
 const CONTENT = {
   th: {
@@ -41,38 +40,87 @@ const CONTENT = {
   },
 };
 
+const LANGUAGE_BUTTONS = [
+  { key: "th", label: "Thai", className: "bg-blue-100 text-blue-800 hover:bg-blue-200" },
+  { key: "en", label: "English", className: "bg-emerald-100 text-emerald-800 hover:bg-emerald-200" },
+  { key: "ms", label: "Malay", className: "bg-amber-100 text-amber-800 hover:bg-amber-200" },
+];
+
+const LANGUAGE_LABELS = {
+  th: { th: "\u0E44\u0E17\u0E22", en: "\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29", ms: "\u0E21\u0E25\u0E32\u0E22\u0E39" },
+  en: { th: "Thai", en: "English", ms: "Malay" },
+  ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+};
+
 export default function P4LightSituation() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const content = CONTENT[language] ?? CONTENT.th;
 
+  const speak = (text) => {
+    try {
+      if (!text || !window.speechSynthesis) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = language === "th" ? "th-TH" : language === "ms" ? "ms-MY" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore
+    }
+  };
+
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-4 pb-28 pt-8 font-['Prompt',sans-serif] sm:px-8">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/materials/back.png')" }}
+      />
       <div className="pointer-events-none absolute left-1/2 top-[-13rem] h-[28rem] w-[140%] -translate-x-1/2 rounded-b-[100%] bg-slate-200/80" />
       <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(90deg,rgba(15,23,42,0.35)_0px,rgba(15,23,42,0.35)_10px,transparent_10px,transparent_190px)]" />
 
       <div className="relative z-10 w-full max-w-5xl">
-        <div className="mb-8 rounded-3xl border-2 border-blue-200 bg-white/95 p-8 text-center shadow-[0_8px_22px_rgba(0,0,0,0.08)] sm:p-10">
+        <div className="relative mb-8 rounded-3xl border-2 border-blue-200 bg-white/95 p-8 text-center shadow-[0_8px_22px_rgba(0,0,0,0.08)] sm:p-10">
           <h1 className="text-3xl font-extrabold text-blue-700 sm:text-4xl">{content.title}</h1>
+          <button
+            type="button"
+            onClick={() => speak(content.title)}
+            className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-base text-blue-700 shadow-[0_4px_10px_rgba(14,116,144,0.2)] transition hover:bg-blue-200"
+            aria-label="Speak title"
+          >
+            {"\uD83D\uDD0A"}
+          </button>
         </div>
 
-        <div className="mb-10 rounded-3xl border-2 border-sky-300 bg-white p-7 text-base leading-8 text-slate-600 shadow-[0_10px_24px_rgba(0,0,0,0.08)] sm:p-10 sm:text-xl sm:leading-9">
+        <div className="relative mb-10 rounded-3xl border-2 border-sky-300 bg-white p-7 text-base leading-8 text-slate-600 shadow-[0_10px_24px_rgba(0,0,0,0.08)] sm:p-10 sm:text-xl sm:leading-9">
           {content.paragraphs.map((text) => (
             <p key={text} className="mb-4 last:mb-0">
               {text}
             </p>
           ))}
+          <button
+            type="button"
+            onClick={() => speak(content.paragraphs.join(" "))}
+            className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-100 text-base text-sky-700 shadow-[0_4px_10px_rgba(14,116,144,0.2)] transition hover:bg-sky-200"
+            aria-label="Speak content"
+          >
+            {"\uD83D\uDD0A"}
+          </button>
         </div>
 
         <div className="flex flex-wrap items-center gap-5">
-          <div className="flex items-center [&_.mt-3]:mt-0">
-            <SpeakButton
-              th={CONTENT.th.speakText}
-              en={CONTENT.en.speakText}
-              ms={CONTENT.ms.speakText}
-              activeLang={language}
-              onLanguageChange={setLanguage}
-            />
+          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-300 bg-slate-100/95 px-2 py-1.5 shadow-[0_8px_20px_rgba(59,130,246,0.18)]">
+            {LANGUAGE_BUTTONS.map((button) => (
+              <button
+                key={button.key}
+                type="button"
+                onClick={() => setLanguage(button.key)}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${button.className} ${
+                  language === button.key ? "ring-2 ring-offset-2 ring-slate-500" : ""
+                }`}
+              >
+                {LANGUAGE_LABELS[language]?.[button.key] ?? button.label}
+              </button>
+            ))}
           </div>
 
           <div className="ml-auto flex w-full justify-end gap-4 sm:w-auto">

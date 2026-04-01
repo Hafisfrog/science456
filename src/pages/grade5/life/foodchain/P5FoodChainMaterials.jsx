@@ -118,6 +118,12 @@ const PAGE_COPY = {
   },
 };
 
+const LANGUAGE_LABELS = {
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  en: { th: "Thai", en: "English", ms: "Malay" },
+  ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+};
+
 const topMaterials = [
   {
     key: "rice",
@@ -210,38 +216,25 @@ const bottomMaterials = [
 
 const materialImageClass = "w-24 sm:w-28 md:w-32 lg:w-36 mx-auto drop-shadow-xl";
 
-const getLivingImageStyle = (delay, duration) => ({
-  animation: `p5Living ${duration} ease-in-out ${delay} infinite`,
-});
-
 export default function P5FoodChainMaterials() {
   const navigate = useNavigate();
   const [activeLang, setActiveLang] = useState("th");
+  const languageButtons = [
+    { key: "th" },
+    { key: "en" },
+    { key: "ms" },
+  ];
 
   const t = PAGE_COPY[activeLang];
   const getName = (item) => item.name[activeLang] || item.name.th;
-  const handleSpeak = () => {
-    const names = [...topMaterials, ...bottomMaterials]
-      .map((item) => getName(item))
-      .join(", ");
-    const speechText = `${t.title}. ${t.materials}. ${names}`;
-    speakWithBestVoice(speechText, activeLang);
-  };
 
   const speakItem = (item) => {
     speakWithBestVoice(getName(item), activeLang);
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-[#f5fff1] via-[#e7f6d9] to-[#cfe9b6] font-['Prompt',sans-serif]">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 left-0 h-56 w-full bg-[#eef8e7]" />
-        <div className="absolute left-0 top-6 h-36 w-full opacity-70 [background:radial-gradient(circle_at_15%_40%,rgba(255,255,255,0.9),transparent_50%),radial-gradient(circle_at_45%_35%,rgba(255,255,255,0.85),transparent_55%),radial-gradient(circle_at_75%_45%,rgba(255,255,255,0.9),transparent_50%)]" />
-        <div className="absolute right-6 top-4 h-28 w-28 rounded-full bg-[#ffd84d] shadow-[0_0_40px_rgba(255,216,77,0.8)]" />
-      </div>
-
-      <div className="pointer-events-none absolute bottom-0 left-0 h-28 w-full bg-gradient-to-t from-[#7dbb4f] to-[#a6d469]" />
-      <div className="pointer-events-none absolute bottom-4 left-0 h-8 w-full [background:repeating-linear-gradient(90deg,#8b5a2b_0_12px,transparent_12px_26px)]" />
+    <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
+      <div className="absolute inset-0 bg-white/5" />
 
       <div className="absolute left-1/2 top-6 -translate-x-1/2">
         <div className="rounded bg-[#b7f0a4] px-8 py-3 text-xl font-bold text-slate-900 md:px-12 md:text-2xl">
@@ -262,7 +255,6 @@ export default function P5FoodChainMaterials() {
               src={item.img}
               alt={getName(item)}
               className={materialImageClass}
-              style={getLivingImageStyle(item.delay, item.duration)}
             />
             <div className="mt-2 flex items-center justify-center gap-2 text-base font-semibold text-slate-900 md:text-lg">
               <span>{getName(item)}</span>
@@ -286,7 +278,6 @@ export default function P5FoodChainMaterials() {
               src={item.img}
               alt={getName(item)}
               className={materialImageClass}
-              style={getLivingImageStyle(item.delay, item.duration)}
             />
             <div className="mt-2 flex items-center justify-center gap-2 text-base font-semibold text-slate-900 md:text-lg">
               <span>{getName(item)}</span>
@@ -303,35 +294,22 @@ export default function P5FoodChainMaterials() {
         ))}
       </div>
 
-      <div className="absolute bottom-8 left-8 z-20 flex items-center gap-1.5 rounded-full bg-white/70 p-1.5 shadow-lg backdrop-blur">
-        {[
-          { key: "th", label: "TH" },
-          { key: "en", label: "EN" },
-          { key: "ms", label: "MY" },
-        ].map((lang) => (
+      <div className="absolute bottom-8 left-8 z-20 flex items-center gap-1 rounded-[20px] bg-white/85 px-2 py-2 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm">
+        {languageButtons.map((lang) => (
           <button
             key={lang.key}
             type="button"
             onClick={() => setActiveLang(lang.key)}
-            className={`rounded-full px-4 py-2 text-lg font-bold shadow-md transition ${
+            className={`rounded-[16px] px-2.5 py-1 text-xs font-bold text-black transition sm:px-3 sm:py-1 sm:text-[1.25rem] ${
               activeLang === lang.key
-                ? "bg-blue-600 text-white"
-                : "bg-white text-slate-700 hover:bg-blue-50"
+                ? "bg-[#9fd9ff]"
+                : "bg-[#d8e4f3] hover:bg-[#c9dbef]"
             }`}
           >
-            {lang.label}
+            {LANGUAGE_LABELS[activeLang]?.[lang.key] ?? lang.key.toUpperCase()}
           </button>
         ))}
-        <button
-          type="button"
-          onClick={handleSpeak}
-          className="rounded-full bg-blue-100 px-3 py-2 text-lg font-bold text-blue-700 shadow-md transition hover:bg-blue-200"
-          aria-label="speak-materials"
-        >
-          🔊
-        </button>
       </div>
-
       <div className="absolute bottom-8 right-10 flex items-center gap-3">
         <button
           type="button"
@@ -349,23 +327,7 @@ export default function P5FoodChainMaterials() {
           {t.next} →
         </button>
       </div>
-
-      <style>{`
-        @keyframes p5Living {
-          0%, 100% {
-            transform: translateY(0) rotate(0deg) scale(1);
-          }
-          25% {
-            transform: translateY(-6px) rotate(1deg) scale(1.02);
-          }
-          50% {
-            transform: translateY(-10px) rotate(0deg) scale(1.04);
-          }
-          75% {
-            transform: translateY(-4px) rotate(-1deg) scale(1.02);
-          }
-        }
-      `}</style>
     </div>
   );
 }
+

@@ -47,11 +47,7 @@ const TYPE_META = {
   },
 };
 
-const SPEECH_LOCALE = {
-  th: "th-TH",
-  en: "en-US",
-  ms: "ms-MY",
-};
+const clamp01 = (value) => Math.max(0, Math.min(value, 1));
 
 // ─── Beam Canvas ──────────────────────────────────────────────────────────────
 function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, objectSize = 190 }) {
@@ -304,37 +300,125 @@ export default function P4LightExperiment() {
   
   // States
   const [selectedMaterial, setSelectedMaterial] = useState(() => state?.material || MATERIALS[0]);
-  const [showMaterialMenu, setShowMaterialMenu] = useState(false);
   const [shine, setShine] = useState(false);
   const [beamProgress, setBeamProgress] = useState(0);
   const [reflectProgress, setReflectProgress] = useState(0);
   const [torchRotation, setTorchRotation] = useState(0);
-  const [results, setResults] = useState([]);
-  const [materialSizePercent, setMaterialSizePercent] = useState(100);
-  const [speechLang, setSpeechLang] = useState("th");
+  const materialSizePercent = 100;
   const [viewportWidth, setViewportWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
   const [isMobile, setIsMobile] = useState(false);
   
-  // โหลดประวัติจาก localStorage
-  const [experimentResults, setExperimentResults] = useState(() => {
-    const saved = localStorage.getItem('experiment4_results');
-    return saved ? JSON.parse(saved) : [];
-  });
+  // นับเฉพาะรอบการทดลองปัจจุบัน และรีเซ็ตใหม่เมื่อเข้าเว็บ/เข้าหน้านี้อีกครั้ง
+  const [experimentResults, setExperimentResults] = useState([]);
 
   // Refs
   const beamRef = useRef(null);
   const reflectRef = useRef(null);
   const rotationRef = useRef(null);
-  const menuRef = useRef(null);
 
   const meta = TYPE_META[selectedMaterial.type];
+  const experimentCount = experimentResults.length;
   const isTight = viewportWidth > 0 && viewportWidth <= 420;
   const baseMaterialSize = isTight ? 130 : isMobile ? 150 : 190;
   const baseEmojiSize = isTight ? 78 : isMobile ? 90 : 112;
   const materialSize = Math.round((baseMaterialSize * materialSizePercent) / 100);
   const fallbackEmojiSize = Math.round((baseEmojiSize * materialSizePercent) / 100);
+  const isFogMaterial = selectedMaterial.id === 4;
+  const beamHitProgress = shine ? clamp01((beamProgress - 0.72) / 0.28) : 0;
+  const passThroughProgress = shine ? clamp01(reflectProgress) : 0;
+  const surfaceLightLevel =
+    selectedMaterial.type === "opaque"
+      ? clamp01(beamHitProgress * 0.98)
+      : clamp01(beamHitProgress * 0.65 + passThroughProgress * 0.4);
+  const internalLightLevel =
+    selectedMaterial.type === "transparent"
+      ? clamp01(beamHitProgress * 0.45 + passThroughProgress * 1.05)
+      : selectedMaterial.type === "translucent"
+        ? clamp01(beamHitProgress * 0.8 + passThroughProgress * (isFogMaterial ? 0.95 : 0.75))
+        : clamp01(beamHitProgress * 0.3 + passThroughProgress * 0.12);
+  const highlightTravel = clamp01(beamHitProgress * 0.45 + passThroughProgress * 0.85);
+  const materialMaskStyle = {
+    WebkitMaskImage: `url(${selectedMaterial.img})`,
+    maskImage: `url(${selectedMaterial.img})`,
+    WebkitMaskRepeat: "no-repeat",
+    maskRepeat: "no-repeat",
+    WebkitMaskPosition: "center",
+    maskPosition: "center",
+    WebkitMaskSize: "contain",
+    maskSize: "contain",
+  };
+  const materialImageFilter = [
+    `drop-shadow(0 0 22px ${meta.glow})`,
+    `brightness(${(
+      1 +
+      internalLightLevel *
+        (selectedMaterial.type === "transparent"
+          ? 0.22
+          : selectedMaterial.type === "translucent"
+            ? isFogMaterial
+              ? 0.42
+              : 0.3
+            : 0.1)
+    ).toFixed(2)})`,
+    `contrast(${(1 + surfaceLightLevel * (selectedMaterial.type === "opaque" ? 0.18 : 0.08)).toFixed(2)})`,
+    `saturate(${(selectedMaterial.type === "opaque" ? 1 : 1 + internalLightLevel * 0.16).toFixed(2)})`,
+  ].join(" ");
+  const materialHotspotStyle = {
+    ...S.matLightOverlay,
+    ...materialMaskStyle,
+    opacity:
+      selectedMaterial.type === "opaque"
+        ? Math.min(0.65, 0.12 + surfaceLightLevel * 0.58)
+        : Math.min(0.9, 0.15 + internalLightLevel * (isFogMaterial ? 0.9 : 0.75)),
+    background:
+      selectedMaterial.type === "transparent"
+        ? "radial-gradient(circle at 34% 50%, rgba(255,250,228,0.98) 0%, rgba(255,231,170,0.8) 18%, rgba(255,195,108,0.32) 42%, rgba(255,185,90,0) 70%)"
+        : selectedMaterial.type === "translucent"
+          ? "radial-gradient(circle at 34% 50%, rgba(255,248,225,0.95) 0%, rgba(255,234,184,0.72) 22%, rgba(255,196,118,0.3) 48%, rgba(255,190,100,0) 74%)"
+          : "radial-gradient(circle at 28% 50%, rgba(255,244,208,0.78) 0%, rgba(255,205,122,0.34) 20%, rgba(255,180,95,0.08) 46%, rgba(255,180,95,0) 68%)",
+    filter: `blur(${selectedMaterial.type === "translucent" ? (isFogMaterial ? 16 : 10) : 6}px)`,
+  };
+  const materialBeamInsideStyle = {
+    ...S.matBeamInside,
+    ...materialMaskStyle,
+    opacity:
+      selectedMaterial.type === "opaque"
+        ? Math.min(0.32, surfaceLightLevel * 0.34)
+        : Math.min(
+            selectedMaterial.type === "transparent" ? 0.9 : isFogMaterial ? 0.78 : 0.62,
+            0.12 + highlightTravel * (selectedMaterial.type === "transparent" ? 0.92 : 0.7)
+          ),
+    background:
+      selectedMaterial.type === "transparent"
+        ? "linear-gradient(92deg, rgba(255,244,205,0) 24%, rgba(255,253,240,0.98) 42%, rgba(255,225,150,0.82) 50%, rgba(255,184,88,0.24) 62%, rgba(255,184,88,0) 74%)"
+        : selectedMaterial.type === "translucent"
+          ? "linear-gradient(92deg, rgba(255,230,160,0) 16%, rgba(255,249,233,0.82) 42%, rgba(255,214,132,0.6) 56%, rgba(255,183,95,0.14) 72%, rgba(255,183,95,0) 84%)"
+          : "linear-gradient(92deg, rgba(255,228,160,0) 12%, rgba(255,246,220,0.56) 28%, rgba(255,211,132,0.24) 42%, rgba(255,180,96,0.04) 56%, rgba(255,180,96,0) 68%)",
+    filter: `blur(${selectedMaterial.type === "transparent" ? 1 : selectedMaterial.type === "translucent" ? 10 : 5}px)`,
+    transform: `translateX(${(-10 + highlightTravel * 18).toFixed(1)}%)`,
+  };
+  const materialScatterStyle = {
+    ...S.matTextureOverlay,
+    ...materialMaskStyle,
+    opacity:
+      selectedMaterial.type === "transparent"
+        ? Math.min(0.22, internalLightLevel * 0.22)
+        : selectedMaterial.type === "translucent"
+          ? Math.min(isFogMaterial ? 0.86 : 0.52, 0.14 + internalLightLevel * (isFogMaterial ? 0.82 : 0.42))
+          : Math.min(0.34, surfaceLightLevel * 0.36),
+    background:
+      selectedMaterial.type === "transparent"
+        ? "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.36) 48%, rgba(255,226,145,0.24) 62%, rgba(255,255,255,0) 100%)"
+        : selectedMaterial.type === "translucent"
+          ? isFogMaterial
+            ? "radial-gradient(circle at 38% 48%, rgba(255,255,255,0.66) 0%, rgba(255,243,210,0.46) 26%, rgba(255,219,150,0.18) 52%, rgba(255,219,150,0) 74%), linear-gradient(90deg, rgba(255,214,125,0.02) 0%, rgba(255,248,234,0.34) 36%, rgba(255,223,158,0.22) 62%, rgba(255,190,100,0.04) 100%)"
+            : "radial-gradient(circle at 40% 50%, rgba(255,255,255,0.42) 0%, rgba(255,242,205,0.26) 30%, rgba(255,214,140,0.08) 56%, rgba(255,214,140,0) 72%), linear-gradient(90deg, rgba(255,236,195,0.04) 0%, rgba(255,244,220,0.22) 42%, rgba(255,213,145,0.12) 68%, rgba(255,213,145,0) 100%)"
+          : "linear-gradient(90deg, rgba(255,238,196,0.24) 0%, rgba(255,227,178,0.12) 22%, rgba(31,41,55,0) 40%, rgba(15,23,42,0.18) 76%, rgba(15,23,42,0.32) 100%)",
+    filter: `blur(${selectedMaterial.type === "translucent" ? (isFogMaterial ? 18 : 12) : selectedMaterial.type === "opaque" ? 2 : 0}px)`,
+    mixBlendMode: selectedMaterial.type === "opaque" ? "multiply" : "screen",
+  };
 
   // Cleanup
   useEffect(() => {
@@ -355,17 +439,6 @@ export default function P4LightExperiment() {
     update();
     window.addEventListener("resize", update);
     return () => window.removeEventListener("resize", update);
-  }, []);
-
-  // Click outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setShowMaterialMenu(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const reset = () => {
@@ -419,13 +492,7 @@ export default function P4LightExperiment() {
                 timestamp: new Date().toISOString()
               };
               
-              // อัปเดตทั้ง results และ experimentResults
-              setResults(prev => [newResult, ...prev]);
-              
-              // เก็บผลการทดลองทั้งหมดไว้ใน localStorage
-              const allResults = [newResult, ...experimentResults];
-              setExperimentResults(allResults);
-              localStorage.setItem('experiment4_results', JSON.stringify(allResults));
+              setExperimentResults((prev) => [newResult, ...prev]);
             }
           }, 16);
         }
@@ -435,121 +502,35 @@ export default function P4LightExperiment() {
 
   const selectMaterial = (m) => {
     setSelectedMaterial(m);
-    setShowMaterialMenu(false);
     reset();
   };
-
-  const goToRecord = () => {
-    // ส่ง results (ผลลัพธ์ล่าสุด) ไปให้หน้าบันทึก
-    // results จะมีเฉพาะครั้งที่ทดลองในรอบนี้ เช่น ทดลอง 3 ครั้งก็มี 3 รายการ
-    navigate("/p4/light/record", { 
-      state: { 
-        pendingResults: results  // เปลี่ยนจาก experimentResults เป็น results
-      } 
+  const goToRecordSummary = () => {
+    navigate("/p4/light/record", {
+      state: {
+        pendingResults: experimentResults,
+      },
     });
   };
-
-  const clearResults = () => {
-    setResults([]);
+  const resetExperimentCount = () => {
+    reset();
     setExperimentResults([]);
-    localStorage.removeItem('experiment4_results');
-  };
-
-  const stats = {
-    total: experimentResults.length,
-    transparent: experimentResults.filter(r => r.type === "transparent").length,
-    translucent: experimentResults.filter(r => r.type === "translucent").length,
-    opaque: experimentResults.filter(r => r.type === "opaque").length,
-  };
-
-  const buildSpeechText = () => {
-    if (speechLang === "en") {
-      return `Light experiment. Selected material ${selectedMaterial.name}. Material type ${meta.label}. Observation result ${meta.result}. Total experiments ${stats.total}.`;
-    }
-    if (speechLang === "ms") {
-      return `Eksperimen cahaya. Bahan yang dipilih ialah ${selectedMaterial.name}. Jenis bahan ${meta.label}. Hasil pemerhatian ${meta.result}. Jumlah eksperimen ${stats.total} kali.`;
-    }
-    return `การทดลองเรื่องแสง วัสดุที่เลือกคือ ${selectedMaterial.name} เป็นวัสดุประเภท ${meta.label} ผลการสังเกตคือ ${meta.result} ทดลองแล้วทั้งหมด ${stats.total} ครั้ง`;
-  };
-
-  const speakStatus = () => {
-    if (
-      typeof window === "undefined" ||
-      typeof SpeechSynthesisUtterance === "undefined" ||
-      !window.speechSynthesis
-    ) {
-      return;
-    }
-
-    const synth = window.speechSynthesis;
-    const text = buildSpeechText();
-    const locale = SPEECH_LOCALE[speechLang] || "th-TH";
-
-    const doSpeak = () => {
-      const voices = synth.getVoices();
-      const lowerLocale = locale.toLowerCase();
-      const langPrefix = lowerLocale.split("-")[0];
-      const voice =
-        voices.find((v) => v.lang?.toLowerCase() === lowerLocale) ||
-        voices.find((v) => v.lang?.toLowerCase().startsWith(langPrefix)) ||
-        voices[0];
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      if (voice) utterance.voice = voice;
-      utterance.lang = voice?.lang || locale;
-      utterance.rate = 0.9;
-      utterance.pitch = 1;
-
-      synth.cancel();
-      synth.resume();
-      synth.speak(utterance);
-    };
-
-    const voices = synth.getVoices();
-    if (voices.length) {
-      doSpeak();
-      return;
-    }
-
-    let spoken = false;
-    const speakOnce = () => {
-      if (spoken) return;
-      spoken = true;
-      doSpeak();
-    };
-
-    const handleVoicesChanged = () => {
-      synth.removeEventListener("voiceschanged", handleVoicesChanged);
-      speakOnce();
-    };
-
-    synth.addEventListener("voiceschanged", handleVoicesChanged);
-    setTimeout(() => {
-      synth.removeEventListener("voiceschanged", handleVoicesChanged);
-      speakOnce();
-    }, 500);
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
   const rootStyle = isMobile
     ? { ...S.root, height: "auto", minHeight: "100vh", overflow: "auto", overflowX: "hidden" }
     : S.root;
-  const topBarStyle = isMobile
-    ? { ...S.topBar, flexDirection: "column", alignItems: "stretch", gap: 8, padding: "10px 12px" }
-    : S.topBar;
-  const logoIconStyle = isMobile ? { ...S.logoIcon, width: 38, height: 38, fontSize: 22 } : S.logoIcon;
-  const logoTitleStyle = isMobile ? { ...S.logoTitle, fontSize: 15 } : S.logoTitle;
-  const logoSubStyle = isMobile ? { ...S.logoSub, fontSize: 10 } : S.logoSub;
-  const matSelectorWrapStyle = isMobile
-    ? { ...S.matSelectorWrap, width: "100%", marginLeft: 0 }
-    : S.matSelectorWrap;
-  const matBtnStyle = isMobile
-    ? { ...S.matBtn, width: "100%", justifyContent: "space-between", flexWrap: "wrap", rowGap: 6 }
-    : S.matBtn;
-  const dropdownStyle = isMobile ? { ...S.dropdown, width: "100%", left: 0, right: "auto" } : S.dropdown;
-  const statsRowStyle = isMobile
-    ? { ...S.statsRow, marginLeft: 0, flexWrap: "wrap", justifyContent: "flex-start", rowGap: 6 }
-    : S.statsRow;
+  const menuListStyle = isMobile
+    ? {
+        ...S.menuList,
+        gap: isTight ? 10 : 12,
+        gridAutoRows: `minmax(${isTight ? 132 : 144}px, auto)`,
+      }
+    : {
+        ...S.menuList,
+        gap: 10,
+        gridAutoRows: "minmax(124px, auto)",
+      };
   const mainStyle = isMobile
     ? { ...S.main, flexDirection: "column", gap: 10, padding: "0 10px 12px", overflow: "visible" }
     : S.main;
@@ -567,6 +548,8 @@ export default function P4LightExperiment() {
         padding: isTight ? "12px 10px" : "14px 12px",
         gap: isTight ? 8 : 10,
         borderRadius: 16,
+        maxHeight: "none",
+        overflow: "visible",
       }
     : S.controlPanel;
   const canvasStyle = isMobile
@@ -589,7 +572,9 @@ export default function P4LightExperiment() {
         pointerEvents: "none",
       }
     : { position: "absolute", inset: 0, pointerEvents: "none" };
-  const torchStyle = isMobile ? { ...S.torch, left: isTight ? 40 : 70 } : S.torch;
+  const torchStyle = isMobile
+    ? { ...S.torch, left: isTight ? 62 : 94 }
+    : { ...S.torch, left: 300 };
   const torchGlowStyle = isMobile
     ? isTight
       ? { ...S.torchGlow, width: 200, height: 80 }
@@ -615,167 +600,78 @@ export default function P4LightExperiment() {
   const shineBtnExtra = isMobile
     ? { bottom: isTight ? 10 : 12, padding: isTight ? "9px 14px" : "10px 16px" }
     : {};
-  const footerStyle = isMobile ? { ...S.footer, padding: "10px 12px" } : S.footer;
-  const footerInnerStyle = isMobile
-    ? { ...S.footerInner, flexDirection: "column", alignItems: "stretch", gap: 8 }
-    : S.footerInner;
-  const footerTitleStyle = isMobile ? { ...S.footerTitle, textAlign: "center" } : S.footerTitle;
-  const resultsScrollStyle = isMobile ? { ...S.resultsScroll, width: "100%" } : S.resultsScroll;
-  const pageNavStyle = isMobile ? { ...S.pageNav, marginLeft: 0, justifyContent: "space-between" } : S.pageNav;
-
+  const pageNavFloatingStyle = isMobile
+    ? { ...S.pageNavFloating, right: isTight ? 8 : 12, bottom: isTight ? 8 : 12, gap: isTight ? 6 : 8 }
+    : S.pageNavFloating;
+  const getMenuImageBtnStyle = (isSelected, isLast) => ({
+    ...S.menuImageBtn,
+    ...(isLast ? S.menuImageBtnLast : {}),
+    opacity: 1,
+    transform: isSelected ? "translateY(-2px)" : "translateY(0)",
+    background: isSelected
+      ? "linear-gradient(180deg, rgba(240,246,252,0.98) 0%, rgba(221,232,245,0.96) 100%)"
+      : "linear-gradient(180deg, rgba(233,241,249,0.82) 0%, rgba(219,229,240,0.78) 100%)",
+    borderColor: isSelected ? "#93b3cf" : "rgba(166,186,207,0.75)",
+    boxShadow: isSelected
+      ? "0 12px 24px rgba(124,150,177,0.22), inset 0 1px 0 rgba(255,255,255,0.82)"
+      : "0 8px 18px rgba(140,160,182,0.12), inset 0 1px 0 rgba(255,255,255,0.62)",
+  });
+  const getMenuImageFrameStyle = (isSelected) => ({
+    ...S.menuImageFrame,
+    maxWidth: isMobile ? (isTight ? 98 : 112) : 100,
+    height: isMobile ? (isTight ? 72 : 86) : 76,
+    padding: isTight ? "8px 10px" : "10px 12px",
+    background: isSelected
+      ? "linear-gradient(180deg, rgba(248,252,255,0.98) 0%, rgba(226,237,247,0.96) 100%)"
+      : "linear-gradient(180deg, rgba(244,248,252,0.95) 0%, rgba(227,236,245,0.9) 100%)",
+    borderColor: isSelected ? "rgba(146,178,205,0.95)" : "rgba(188,206,223,0.95)",
+    boxShadow: isSelected
+      ? "0 10px 20px rgba(144,168,192,0.2), inset 0 1px 0 rgba(255,255,255,0.86)"
+      : "0 6px 14px rgba(154,176,198,0.12), inset 0 1px 0 rgba(255,255,255,0.7)",
+  });
   return (
     <div style={rootStyle}>
       <style>{CSS}</style>
 
-      {/* ── TOP BAR ────────────────────────────────────────────────────── */}
-      <header style={topBarStyle}>
-        {/* Logo */}
-        <div style={S.logo}>
-          <div style={logoIconStyle}>💡</div>
-          <div>
-            <div style={logoTitleStyle}>Light Lab</div>
-            <div style={logoSubStyle}>การส่องผ่านของแสง</div>
-          </div>
-        </div>
-
-        {/* Material Selector */}
-        <div style={matSelectorWrapStyle} ref={menuRef}>
-          <button style={matBtnStyle} onClick={() => setShowMaterialMenu(v => !v)}>
-            <span style={{ fontSize: 22 }}>{selectedMaterial.emoji}</span>
-            <div style={{ lineHeight: 1.2 }}>
-              <div style={S.matBtnSub} className="mat-btn-sub">วัสดุปัจจุบัน</div>
-              <div style={S.matBtnName} className="mat-btn-name">{selectedMaterial.name}</div>
-            </div>
-            <div style={{ ...S.typePill, background: meta.dim, color: meta.badge }}>
-              {meta.label}
-            </div>
-            <span style={{ fontSize: 12, color: "#64748b", marginLeft: 4 }}>{showMaterialMenu ? "▲" : "▼"}</span>
-          </button>
-
-          {showMaterialMenu && (
-            <div style={dropdownStyle} className="dropdown-anim">
-              <div style={S.dropHeader}>เลือกวัสดุทดลอง</div>
-              {["transparent","translucent","opaque"].map(grp => (
-                <div key={grp}>
-                  <div style={{ ...S.dropGroupLabel, color: TYPE_META[grp].badge }}>{TYPE_META[grp].label}</div>
-                  {MATERIALS.filter(m => m.type === grp).map(m => (
-                    <button
-                      key={m.id}
-                      style={{ ...S.dropItem, background: selectedMaterial.id === m.id ? TYPE_META[grp].dim : "transparent" }}
-                      onClick={() => selectMaterial(m)}
-                    >
-                      <span style={{ fontSize: 20 }}>{m.emoji}</span>
-                      <span style={{ fontWeight: selectedMaterial.id === m.id ? 700 : 500, color: "#1f2937" }}>{m.name}</span>
-                      {selectedMaterial.id === m.id && <span style={{ marginLeft: "auto", color: TYPE_META[grp].badge }}>✓</span>}
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Stats pills */}
-        <div style={statsRowStyle}>
-          <div style={{ ...S.statPill, background: "#3b82f6", color: "white" }} className="stat-pill">
-            รวม {stats.total} ครั้ง
-          </div>
-          {Object.entries(stats).filter(([k]) => k !== 'total').map(([k, v]) => (
-            <div key={k} style={{ ...S.statPill, background: TYPE_META[k].dim, color: TYPE_META[k].badge }} className="stat-pill">
-              {v} {TYPE_META[k].label}
-            </div>
-          ))}
-        </div>
-      </header>
-
-      {/* ── MAIN LAB ───────────────────────────────────────────────────── */}
       <main style={mainStyle}>
 
-        {/* Floating Control Panel */}
+                {/* Floating Control Panel */}
         <div style={controlPanelStyle} className="glass-panel">
-          <div style={S.panelTitle}>ควบคุม</div>
-          <div style={S.speechRow}>
-            {["th", "en", "ms"].map((langKey) => (
+          <div style={S.menuHeaderRow}>
+            <div style={S.menuInstruction}>เลือกวัตถุข้างบน</div>
+            <div style={S.menuCountInline}>({experimentCount}ครั้ง)</div>
+          </div>
+          <div style={menuListStyle}>
+            {MATERIALS.map((m, index) => (
               <button
-                key={langKey}
-                style={{
-                  ...S.speechLangBtn,
-                  ...(speechLang === langKey ? S.speechLangBtnActive : {}),
-                }}
-                onClick={() => setSpeechLang(langKey)}
-                type="button"
+                key={m.id}
+                title={m.name}
+                aria-label={m.name}
+                style={getMenuImageBtnStyle(
+                  selectedMaterial.id === m.id,
+                  index === MATERIALS.length - 1
+                )}
+                onClick={() => selectMaterial(m)}
               >
-                {langKey.toUpperCase()}
+                <div style={getMenuImageFrameStyle(selectedMaterial.id === m.id)}>
+                  <img src={m.img} alt={m.name} style={S.menuImageThumb} />
+                </div>
+                <span
+                  style={{
+                    ...S.menuImageName,
+                    color: selectedMaterial.id === m.id ? "#254561" : "#3f556d",
+                    background: selectedMaterial.id === m.id
+                      ? "rgba(232,241,249,0.98)"
+                      : "rgba(232,239,246,0.86)",
+                  }}
+                >
+                  {m.id === 9 ? "เหล็ก" : m.name}
+                </span>
               </button>
             ))}
-            <button
-              style={S.speechBtn}
-              onClick={speakStatus}
-              type="button"
-              className="btn-hover"
-              aria-label="Speak status"
-            >
-              🔊
-            </button>
           </div>
-          <button style={S.secondBtn} onClick={reset} className="btn-hover">
-            <span>↺</span> เริ่มใหม่
-          </button>
-
-          {/* ปุ่มดูสรุปผล - ส่ง results ไปแสดงตามจำนวนที่ทดลอง */}
-          <button 
-            style={{ ...S.secondBtn, background: "#e0f2fe", color: "#1d4ed8", borderColor: "#93c5fd" }} 
-            onClick={goToRecord} 
-            className="btn-hover"
-          >
-            <span>📊</span> ดูสรุปผล ({results.length})
-          </button>
-
-          <div style={S.divider} />
-
-          {/* Image size control */}
-          <div style={S.gaugeLabel}>ขนาดรูปทดลอง</div>
-          <div style={S.sizeControl}>
-            <div style={S.sizeHeader}>
-              <span style={S.sizeLabel}>ขนาดรูป</span>
-              <span style={S.sizeValue}>{materialSizePercent}%</span>
-            </div>
-            <input
-              style={{ ...S.sizeSlider, accentColor: meta.badge }}
-              type="range"
-              min="60"
-              max="150"
-              step="5"
-              value={materialSizePercent}
-              onChange={(e) => setMaterialSizePercent(Number(e.target.value))}
-            />
-            <div style={S.sizeHint}>
-              <span>60%</span>
-              <span>150%</span>
-            </div>
-          </div>
-
-          <div style={S.divider} />
-
-          <div style={S.gaugeLabel}>ความเข้มแสง</div>
-          <div style={S.gaugeTrack}>
-            <div style={{ ...S.gaugeFill, width: `${reflectProgress * 100}%`, background: meta.color }} />
-          </div>
-          <div style={{ ...S.gaugeVal, color: meta.color }}>{Math.round(reflectProgress * 100)}%</div>
-
-          <div style={S.divider} />
-
-          {/* Result card */}
-          <div style={{ ...S.resultCard, borderColor: meta.glow, boxShadow: shine && reflectProgress > 0.5 ? `0 0 18px ${meta.glow}` : "none" }}>
-            <div style={S.resultLabel}>ผลลัพธ์</div>
-            <div style={{ ...S.resultValue, color: meta.color }}>{meta.result}</div>
-          </div>
-
-          <div style={S.divider} />
-          <div style={S.panelCount}>ทดลองแล้ว {stats.total} ครั้ง</div>
         </div>
 
-        {/* ── CANVAS AREA ─────────────────────────────────────────────── */}
         <div style={canvasStyle}>
           {/* ambient flash */}
           <button
@@ -851,27 +747,36 @@ export default function P4LightExperiment() {
 
           {/* Material Object - แสดงรูปภาพเปล่า ไม่มีกล่อง */}
           <div style={S.matObj}>
-            <img 
-              src={selectedMaterial.img}
-              alt={selectedMaterial.name}
+            <div
               style={{
-                ...S.matImg,
+                ...S.matVisual,
                 width: materialSize,
                 height: materialSize,
-                filter: `drop-shadow(0 0 22px ${meta.glow})`,
               }}
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.style.display = 'none';
-                e.target.parentElement.querySelector('.fallback-emoji').style.display = 'block';
-              }}
-            />
-            <span
-              className="fallback-emoji"
-              style={{ ...S.matFallback, color: meta.color, fontSize: fallbackEmojiSize }}
             >
-              {selectedMaterial.emoji}
-            </span>
+              <img 
+                src={selectedMaterial.img}
+                alt={selectedMaterial.name}
+                style={{
+                  ...S.matImg,
+                  filter: materialImageFilter,
+                }}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.style.display = 'none';
+                  e.target.parentElement.querySelector('.fallback-emoji').style.display = 'block';
+                }}
+              />
+              {shine && beamHitProgress > 0 && <div style={materialHotspotStyle} />}
+              {shine && beamHitProgress > 0 && <div style={materialBeamInsideStyle} />}
+              {shine && beamHitProgress > 0 && <div style={materialScatterStyle} />}
+              <span
+                className="fallback-emoji"
+                style={{ ...S.matFallback, color: meta.color, fontSize: fallbackEmojiSize }}
+              >
+                {selectedMaterial.emoji}
+              </span>
+            </div>
             {shine && beamProgress >= 0.95 && selectedMaterial.type !== "opaque" && (
               <div
                 style={{
@@ -933,53 +838,32 @@ export default function P4LightExperiment() {
         </div>
       </main>
 
-      {/* ── BOTTOM RESULT PANEL ─────────────────────────────────────────── */}
-      <footer style={footerStyle}>
-        <div style={footerInnerStyle}>
-          <div style={footerTitleStyle}>ผลการทดลองล่าสุด</div>
-          <div style={resultsScrollStyle}>
-            {results.length === 0
-              ? <div style={S.emptyHint}>ยังไม่มีผล – กดส่องแสงเพื่อเริ่ม</div>
-              : results.slice(0, 5).map((r, i) => (
-                  <div key={r.id}
-                    style={{ ...S.resultChip,
-                      borderColor: TYPE_META[r.type].color,
-                      background:  TYPE_META[r.type].dim,
-                      animation: i === 0 ? "popIn 0.3s ease" : "none",
-                    }}
-                    className="result-chip">
-                    <img 
-                      src={r.material.img}
-                      alt=""
-                      style={{ width: 24, height: 24, objectFit: "contain" }}
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.style.display = 'none';
-                        e.target.parentElement.querySelector('.chip-emoji').style.display = 'inline';
-                      }}
-                    />
-                    <span className="chip-emoji" style={{ fontSize: 20, display: 'none' }}>{r.material.emoji}</span>
-                    <div>
-                      <div className="chip-title" style={{ color: "#1e293b", fontSize: 12, fontWeight: 600 }}>{r.material.name}</div>
-                      <div className="chip-sub" style={{ color: TYPE_META[r.type].badge, fontSize: 11 }}>{r.result}</div>
-                    </div>
-                  </div>
-                ))
-            }
-          </div>
-          {experimentResults.length > 0 && (
-            <button style={S.clearBtn} onClick={clearResults}>ล้างประวัติ</button>
-          )}
-          <div style={pageNavStyle}>
-            <button style={S.pageBackBtn} onClick={() => navigate("/p4/light/thinking")} className="btn-hover">
-              ย้อนกลับ
-            </button>
-            <button style={S.pageNextBtn} onClick={goToRecord} className="btn-hover">
-              ไปต่อ
-            </button>
-          </div>
-        </div>
-      </footer>
+      <div style={pageNavFloatingStyle}>
+        <button
+          type="button"
+          style={S.pageBackBtn}
+          className="btn-hover"
+          onClick={() => navigate("/p4/light/thinking")}
+        >
+          ย้อนกลับ
+        </button>
+        <button
+          type="button"
+          style={S.pageResetBtn}
+          className="btn-hover"
+          onClick={resetExperimentCount}
+        >
+          รีเซ็ตนับใหม่
+        </button>
+        <button
+          type="button"
+          style={S.pageNextBtn}
+          className="btn-hover"
+          onClick={goToRecordSummary}
+        >
+          ไปต่อ / ดูผลสรุป
+        </button>
+      </div>
     </div>
   );
 }
@@ -1098,14 +982,44 @@ const S = {
     display: "flex", flexDirection: "column", alignItems: "center",
     zIndex: 5,
   },
+  matVisual: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   matImg: {
-    width: 190,
-    height: 190,
+    width: "100%",
+    height: "100%",
     objectFit: "contain",
+    position: "relative",
+    zIndex: 1,
+  },
+  matLightOverlay: {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none",
+    zIndex: 2,
+    mixBlendMode: "screen",
+  },
+  matBeamInside: {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none",
+    zIndex: 3,
+    mixBlendMode: "screen",
+  },
+  matTextureOverlay: {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none",
+    zIndex: 4,
   },
   matFallback: {
     fontSize: 112,
     display: "none",
+    position: "relative",
+    zIndex: 5,
   },
   beamPassOverlay: {
     position: "absolute",
@@ -1163,21 +1077,116 @@ const S = {
   // Control Panel
   controlPanel: {
     position: "absolute",
-    left: 14, top: "50%",
-    transform: "translateY(-50%)",
+    left: 0, top: 0, bottom: 0,
+    transform: "none",
     zIndex: 20,
-    width: 160,
-    background: "rgba(255,255,255,0.9)",
-    border: "1px solid #bfdbfe",
-    borderRadius: 20,
-    padding: "18px 14px",
+    width: 270,
+    maxHeight: "100%",
+    overflow: "hidden",
+    background: "linear-gradient(180deg, rgba(225,233,244,0.96) 0%, rgba(212,223,237,0.96) 100%)",
+    border: "1px solid #b5cadf",
+    borderRadius: "0 20px 20px 0",
+    padding: "12px 10px",
     backdropFilter: "blur(18px)",
     display: "flex",
     flexDirection: "column",
     gap: 10,
-    boxShadow: "0 14px 36px rgba(37,99,235,0.2)",
+    boxShadow: "0 16px 30px rgba(132,154,180,0.18), inset 0 1px 0 rgba(255,255,255,0.55)",
   },
   panelTitle: { fontSize: 11, color: "#64748b", fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", textAlign: "center" },
+  menuHeaderRow: {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "center",
+    gap: 6,
+    marginBottom: 2,
+  },
+  menuInstruction: {
+    fontSize: 14,
+    fontWeight: 700,
+    color: "#334155",
+    textAlign: "center",
+    marginBottom: 0,
+  },
+  menuCountInline: {
+    fontSize: 11,
+    fontWeight: 700,
+    color: "#58718a",
+    letterSpacing: 0.1,
+  },
+  menuCurrentCard: {
+    display: "flex",
+    alignItems: "center",
+    gap: 10,
+    padding: "8px 10px",
+    borderRadius: 12,
+    border: "1px solid #bfdbfe",
+    background: "#f8fbff",
+  },
+  menuList: {
+    flex: 1,
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 10,
+    gridAutoRows: "minmax(112px, auto)",
+    alignContent: "start",
+    justifyItems: "stretch",
+    paddingTop: 4,
+    paddingBottom: 14,
+    maxHeight: "none",
+    overflowX: "hidden",
+    overflowY: "auto",
+  },
+  menuImageBtn: {
+    border: "1px solid transparent",
+    borderRadius: 22,
+    padding: "10px 8px 8px",
+    width: "100%",
+    minHeight: 112,
+    cursor: "pointer",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 8,
+    transition: "all 0.2s",
+    background: "transparent",
+    backdropFilter: "blur(6px)",
+  },
+  menuImageBtnLast: {
+    gridColumn: "1 / -1",
+    justifySelf: "center",
+    width: "58%",
+    minHeight: 124,
+    paddingBottom: 12,
+  },
+  menuImageFrame: {
+    width: "100%",
+    borderRadius: 18,
+    border: "1px solid rgba(188,206,223,0.95)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    overflow: "hidden",
+  },
+  menuImageThumb: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
+    display: "block",
+    filter: "drop-shadow(0 8px 14px rgba(148,163,184,0.18))",
+  },
+  menuImageName: {
+    fontSize: 11,
+    lineHeight: 1.15,
+    fontWeight: 700,
+    color: "#334155",
+    textAlign: "center",
+    whiteSpace: "normal",
+    width: "100%",
+    borderRadius: 999,
+    padding: "5px 8px",
+  },
   speechRow: {
     display: "flex",
     alignItems: "center",
@@ -1319,10 +1328,30 @@ const S = {
     gap: 8,
     marginLeft: "auto",
   },
+  pageNavFloating: {
+    position: "absolute",
+    right: 18,
+    bottom: 16,
+    zIndex: 70,
+    display: "flex",
+    alignItems: "center",
+    gap: 8,
+  },
   pageBackBtn: {
     border: "1px solid #93c5fd",
     background: "#ffffff",
     color: "#1e3a8a",
+    borderRadius: 10,
+    padding: "8px 14px",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    fontFamily: "inherit",
+  },
+  pageResetBtn: {
+    border: "1px solid #fdba74",
+    background: "#fff7ed",
+    color: "#9a3412",
     borderRadius: 10,
     padding: "8px 14px",
     fontSize: 13,
@@ -1432,3 +1461,6 @@ const CSS = `
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(59,130,246,0.35); border-radius: 99px; }
 `;
+
+
+

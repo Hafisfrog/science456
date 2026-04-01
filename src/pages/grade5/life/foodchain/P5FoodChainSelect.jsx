@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const getSlotKey = (row, col) => `${row}-${col}`;
 
@@ -46,9 +46,16 @@ const getRandomLockedSlots = () => {
   return nextLockedSlots;
 };
 
+const CHAIN_ACCENTS = [
+  "from-emerald-500 via-green-500 to-lime-400",
+  "from-sky-500 via-cyan-500 to-blue-500",
+  "from-amber-500 via-orange-500 to-yellow-400",
+  "from-fuchsia-500 via-pink-500 to-rose-500",
+  "from-teal-500 via-emerald-500 to-cyan-500"
+];
+
 export default function P5FoodChainSelect() {
   const navigate = useNavigate();
-
   // Animals data with more vibrant names
   const animals = [
     { name: "ต้นข้าว", img: "/images/p5/kaw.png", color: "from-amber-300 to-yellow-400" },
@@ -76,6 +83,21 @@ export default function P5FoodChainSelect() {
 
   // Locked slots
   const isLocked = (row, col) => lockedSlots.has(getSlotKey(row, col));
+
+  const totalEditableSlots = ANSWER_CHAINS.reduce(
+    (count, row) => count + row.length,
+    0
+  ) - lockedSlots.size;
+  const filledEditableSlots = chains.reduce(
+    (count, row, rowIndex) =>
+      count + row.filter((item, colIndex) => !isLocked(rowIndex, colIndex) && item).length,
+    0
+  );
+  const activeSlotSummary =
+    activeSlot.row !== null && activeSlot.col !== null
+      ? `โซ่อาหาร ${activeSlot.row + 1} ช่องที่ ${activeSlot.col + 1}`
+      : "";
+  const isComplete = chains.every((row) => row.every(Boolean));
 
   // Handle slot click
   const handleSlotClick = (row, col) => {
@@ -125,15 +147,22 @@ export default function P5FoodChainSelect() {
     setShowPanel(false);
   };
 
-  // Check if all slots are filled
-  const isComplete = () => {
-    for (let row of chains) {
-      for (let item of row) {
-        if (item === "") return false;
-      }
-    }
-    return true;
+  const handleRevealRowAnswer = (rowIndex) => {
+    setChains((prev) =>
+      prev.map((row, index) => (index === rowIndex ? [...ANSWER_CHAINS[rowIndex]] : row))
+    );
+    setShowPanel(false);
   };
+
+  const handleGoToAnswers = () => {
+    if (!isComplete) {
+      window.alert("กรุณาเติมคำตอบให้ครบทุกช่องก่อน");
+      return;
+    }
+
+    navigate("/p5/life/foodchain/sim", { state: { chains } });
+  };
+
 
   // Get image path
   const getImage = (name) => {
@@ -142,191 +171,260 @@ export default function P5FoodChainSelect() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-100 via-green-100 to-lime-100 font-sans relative overflow-hidden">
-      
-      {/* Decorative Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-green-200 rounded-full filter blur-3xl opacity-30"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-emerald-200 rounded-full filter blur-3xl opacity-40"></div>
-        <div className="absolute top-1/2 left-1/4 w-48 h-48 bg-lime-200 rounded-full filter blur-3xl opacity-30"></div>
+    <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-sans">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-emerald-950/25 via-emerald-700/10 to-slate-950/15" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -left-12 top-10 h-56 w-56 rounded-full bg-lime-200/45 blur-3xl" />
+        <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
+        <div className="absolute bottom-10 left-1/3 h-64 w-64 rounded-full bg-cyan-200/30 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-200/35 blur-3xl" />
       </div>
 
-      {/* Sun decoration - Enhanced */}
-      <div className="absolute top-8 right-16 animate-pulse">
-        <div className="relative">
-          <div className="w-24 h-24 bg-gradient-to-br from-yellow-300 to-amber-400 rounded-full shadow-2xl 
-            border-4 border-yellow-200 flex items-center justify-center text-5xl transform hover:rotate-12 
-            transition-transform duration-300">
-            ☀️
-          </div>
-          <div className="absolute -inset-2 bg-yellow-200 rounded-full filter blur-xl opacity-50 -z-10"></div>
-        </div>
-      </div>
+      <div className="pointer-events-none absolute right-8 top-8 hidden text-7xl opacity-85 sm:block">☀️</div>
+      <div className="pointer-events-none absolute left-8 top-24 hidden text-6xl opacity-30 lg:block">☁️</div>
+      <div className="pointer-events-none absolute bottom-16 right-16 hidden text-7xl opacity-25 lg:block">☁️</div>
 
-      {/* Floating clouds */}
-      <div className="absolute top-20 left-8 opacity-20 text-7xl">☁️</div>
-      <div className="absolute bottom-20 right-20 opacity-20 text-8xl">☁️</div>
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-10 pt-6 sm:px-6 lg:px-8">
+        <div className="rounded-[32px] border border-emerald-50/80 bg-gradient-to-br from-white/62 via-emerald-50/52 to-lime-50/58 p-5 shadow-[0_22px_60px_rgba(15,23,42,0.14)] backdrop-blur-md sm:p-7">
+          <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
+            <div className="max-w-3xl">
+              <div className="mb-3 inline-flex items-center rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm">
+                กิจกรรมฝึกเรียงลำดับห่วงโซ่อาหาร
+              </div>
+              <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                สร้างห่วงโซ่อาหารโดยเรียงลำดับการกินของสิ่งมีชีวิต
+              </h1>
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                คลิกช่องที่ยังว่างเพื่อเลือกสิ่งมีชีวิตให้ถูกตำแหน่ง จากนั้นตรวจคำตอบต่อในขั้นถัดไปได้เหมือนเดิม
+              </p>
 
-      {/* Title - Enhanced */}
-      <div className="pt-8 text-center relative z-10">
-        <div className="relative inline-block">
-          <div className="absolute inset-0 bg-green-400 rounded-2xl filter blur-lg opacity-50"></div>
-          <div className="relative bg-gradient-to-r from-green-300 via-green-400 to-green-300 
-            px-10 py-5 rounded-3xl text-2xl font-bold shadow-2xl border-4 border-white
-            text-white transform hover:scale-105 transition-transform duration-300">
-            🌿 สร้างห่วงโซ่อาหารโดยเรียงลำดับการกินของสิ่งมีชีวิต 🌿
-          </div>
-        </div>
-      </div>
-
-      {/* Food Chains - Enhanced Cards */}
-      <div className="mt-12 ml-10 space-y-6 relative z-10">
-        {chains.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex items-center gap-6">
-            <div className="w-32 text-2xl font-bold text-white bg-gradient-to-r from-green-600 to-green-500 
-              py-4 px-4 rounded-2xl shadow-lg text-center border-2 border-white transform hover:scale-105 
-              transition-transform duration-300">
-              🌟 โซ่ {rowIndex + 1}
-            </div>
-            <div className="flex gap-4">
-              {row.map((item, colIndex) => (
-                <div
-                  key={colIndex}
-                  onClick={() => handleSlotClick(rowIndex, colIndex)}
-                  className={`w-48 h-32 bg-white rounded-2xl shadow-xl 
-                    flex items-center justify-center cursor-pointer
-                    transform hover:scale-105 transition-all duration-300
-                    ${isLocked(rowIndex, colIndex) 
-                      ? 'border-4 border-gray-400 bg-gradient-to-br from-gray-100 to-gray-200 cursor-not-allowed opacity-80' 
-                      : 'border-4 border-yellow-400 hover:border-yellow-500 bg-gradient-to-br from-amber-50 to-yellow-50'}`}
-                >
-                  {item ? (
-                    <div className="text-center">
-                      <img src={getImage(item)} className="w-24 h-24 object-contain mx-auto" alt={item} />
-                      <div className="text-sm mt-1 font-medium text-gray-600">{item}</div>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <span className="text-6xl text-yellow-400">❓</span>
-                      <div className="text-sm mt-1 text-gray-400">คลิกเพื่อเลือก</div>
-                    </div>
-                  )}
+              <div className="mt-4 flex flex-wrap gap-2 text-sm font-medium">
+                <div className="rounded-full border border-slate-200/70 bg-white/55 px-3 py-1.5 text-slate-700 backdrop-blur-sm">
+                  ช่องสีเทา = ช่องใบ้
                 </div>
-              ))}
+                <div className="rounded-full border border-amber-200/80 bg-amber-50/70 px-3 py-1.5 text-amber-700 backdrop-blur-sm">
+                  ช่องสีครีม = ช่องให้เติม
+                </div>
+                <div className="rounded-full border border-sky-200/80 bg-sky-50/70 px-3 py-1.5 text-sky-700 backdrop-blur-sm">
+                  ปุ่มเฉลย = เปิดคำตอบทั้งแถว
+                </div>
+              </div>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 xl:w-[23rem]">
+              <div className="rounded-[28px] border border-emerald-200/80 bg-gradient-to-br from-white/70 to-emerald-100/72 p-4 shadow-sm backdrop-blur-sm">
+                <div className="text-sm font-semibold text-emerald-700">ความคืบหน้า</div>
+                <div className="mt-1 text-3xl font-black text-emerald-900">
+                  {filledEditableSlots}/{totalEditableSlots}
+                </div>
+                <p className="mt-1 text-sm text-emerald-800/80">จำนวนช่องที่เติมแล้วจากช่องที่ต้องตอบ</p>
+              </div>
+
+              <div className="rounded-[28px] border border-sky-200/80 bg-gradient-to-br from-white/70 to-cyan-100/75 p-4 shadow-sm backdrop-blur-sm">
+                <div className="text-sm font-semibold text-sky-700">ช่องใบ้เริ่มต้น</div>
+                <div className="mt-1 text-3xl font-black text-sky-900">{lockedSlots.size}</div>
+                <p className="mt-1 text-sm text-sky-800/80">จำนวนช่องที่ระบบเปิดคำตอบไว้ให้</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleRandomQuestion}
+                className="inline-flex items-center justify-center gap-2 rounded-[24px] bg-gradient-to-r from-fuchsia-500 via-pink-500 to-rose-500 px-5 py-4 text-base font-bold text-white shadow-[0_14px_28px_rgba(219,39,119,0.28)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(219,39,119,0.35)] sm:col-span-2"
+              >
+                <span className="text-xl">🎲</span>
+                สุ่มโจทย์ใหม่
+              </button>
             </div>
           </div>
-        ))}
+        </div>
+
+        <div className="mt-6 space-y-4">
+          {chains.map((row, rowIndex) => {
+            const editableCount = row.filter((_, colIndex) => !isLocked(rowIndex, colIndex)).length;
+            const filledCount = row.filter((item, colIndex) => !isLocked(rowIndex, colIndex) && item).length;
+            const isRowComplete = row.every(Boolean);
+            const accent = CHAIN_ACCENTS[rowIndex % CHAIN_ACCENTS.length];
+
+            return (
+              <div
+                key={rowIndex}
+                className="rounded-[30px] border border-emerald-50/85 bg-gradient-to-r from-white/62 via-white/54 to-emerald-50/58 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.12)] backdrop-blur-sm sm:p-5"
+              >
+                <div className="flex flex-col gap-4 2xl:flex-row 2xl:items-center">
+                  <div
+                    className={`inline-flex w-fit items-center rounded-[22px] bg-gradient-to-r ${accent} px-5 py-3 text-lg font-extrabold text-white shadow-lg`}
+                  >
+                    โซ่อาหาร {rowIndex + 1}
+                  </div>
+
+                  <div className="flex flex-1 flex-wrap items-center gap-3">
+                    {row.map((item, colIndex) => {
+                      const locked = isLocked(rowIndex, colIndex);
+
+                      return (
+                        <div key={colIndex} className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => handleSlotClick(rowIndex, colIndex)}
+                            disabled={locked}
+                            className={`group relative flex h-32 w-[10.75rem] flex-col items-center justify-center overflow-hidden rounded-[26px] border text-center shadow-[0_10px_24px_rgba(15,23,42,0.1)] transition duration-200 sm:h-36 sm:w-[11.5rem] ${
+                              locked
+                                ? "cursor-not-allowed border-slate-300/90 bg-gradient-to-br from-slate-100/90 to-slate-200/85 opacity-95"
+                                : item
+                                  ? "border-emerald-300/90 bg-gradient-to-br from-white/92 to-emerald-50/85 hover:-translate-y-1 hover:border-emerald-500 hover:shadow-[0_16px_30px_rgba(16,185,129,0.18)]"
+                                  : "border-amber-300/90 bg-gradient-to-br from-white/88 to-amber-50/80 hover:-translate-y-1 hover:border-amber-500 hover:shadow-[0_16px_30px_rgba(245,158,11,0.18)]"
+                            }`}
+                          >
+                            <div
+                              className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-xs font-bold ${
+                                locked
+                                  ? "bg-slate-700 text-white"
+                                  : item
+                                    ? "bg-emerald-100 text-emerald-700"
+                                    : "bg-amber-100 text-amber-700"
+                              }`}
+                            >
+                              {locked ? "โจทย์" : item ? "เลือกแล้ว" : "เติมคำตอบ"}
+                            </div>
+
+                            {item ? (
+                              <div className="px-3">
+                                <img
+                                  src={getImage(item)}
+                                  className="mx-auto h-20 w-20 object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.14)] sm:h-24 sm:w-24"
+                                  alt={item}
+                                />
+                                <div className="mt-2 text-sm font-bold text-slate-700">{item}</div>
+                              </div>
+                            ) : (
+                              <div className="px-3 text-center">
+                                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/80 text-4xl text-amber-500 shadow-inner">
+                                  +
+                                </div>
+                                <div className="mt-3 text-sm font-semibold text-amber-700">คลิกเพื่อเลือก</div>
+                              </div>
+                            )}
+                          </button>
+
+                          {colIndex < row.length - 1 && (
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-200/85 bg-emerald-50/75 text-xl font-black text-emerald-700 shadow-sm backdrop-blur-sm">
+                              →
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3 2xl:justify-end">
+                    <div
+                      className={`rounded-full px-4 py-2 text-sm font-bold ${
+                        isRowComplete
+                          ? "bg-emerald-100 text-emerald-700"
+                          : "bg-amber-100 text-amber-700"
+                      }`}
+                    >
+                      {isRowComplete ? "เติมครบแล้ว" : `เติมแล้ว ${filledCount}/${editableCount} ช่อง`}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleRevealRowAnswer(rowIndex)}
+                      className="inline-flex items-center justify-center rounded-full border border-sky-200/85 bg-white/82 px-5 py-2.5 text-sm font-bold text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-400 hover:bg-sky-50"
+                    >
+                      เฉลยทั้งแถว
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 pb-2 sm:flex-row sm:items-center sm:justify-end">
+          <button
+            type="button"
+            onClick={() => navigate("/p5/life/foodchain/steps")}
+            className="inline-flex items-center justify-center rounded-full border border-slate-300/90 bg-white/78 px-6 py-3 text-base font-bold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.08)] backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:bg-white/90"
+          >
+            ← ย้อนกลับ
+          </button>
+          <button
+            type="button"
+            onClick={handleGoToAnswers}
+            className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-green-600 px-6 py-3 text-base font-bold text-white shadow-[0_14px_28px_rgba(22,163,74,0.24)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(22,163,74,0.3)]"
+          >
+            ไปดูเฉลยทั้งหมด →
+          </button>
+        </div>
       </div>
 
-      {/* Selection Panel Modal - Enhanced with colored cards */}
       {showPanel && (
         <div
-          className="fixed inset-0 z-50 bg-gradient-to-b from-emerald-200 via-green-100 to-lime-100 overflow-y-auto"
+          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/45 p-4 backdrop-blur-sm sm:p-6"
           onClick={() => setShowPanel(false)}
         >
-          <div className="min-h-full w-full flex items-start justify-center p-4 sm:p-8" onClick={(e) => e.stopPropagation()}>
-            <div className="w-full max-w-6xl bg-gradient-to-b from-green-300 via-green-200 to-emerald-200 rounded-2xl shadow-2xl border-4 border-green-100 p-4 sm:p-6 md:p-8">
-              <div className="flex items-center justify-between gap-4 mb-6">
-                <div className="relative inline-block">
-                  <div className="absolute inset-0 bg-green-500 rounded-lg filter blur-md opacity-50"></div>
-                  <div className="relative bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-3 rounded-lg text-xl sm:text-2xl font-bold text-white border-2 border-green-100 shadow-lg">
+          <div className="flex min-h-full items-center justify-center" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full max-w-6xl rounded-[32px] border border-white/75 bg-gradient-to-br from-white/95 via-lime-50/92 to-emerald-100/88 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.3)] backdrop-blur-md sm:p-7">
+              <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <div className="inline-flex rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-700">
                     เลือกสิ่งมีชีวิต
                   </div>
+                  <h2 className="mt-3 text-2xl font-extrabold text-slate-900 sm:text-3xl">
+                    เติมคำตอบลงใน {activeSlotSummary}
+                  </h2>
+                  <p className="mt-2 text-sm text-slate-600 sm:text-base">
+                    แตะการ์ดด้านล่างเพื่อใส่คำตอบ หรือเลือกปุ่มลบเพื่อล้างช่องที่กำลังเลือก
+                  </p>
                 </div>
 
                 <button
+                  type="button"
                   onClick={() => setShowPanel(false)}
-                  className="px-4 py-2 rounded-lg bg-white/80 border-2 border-green-300 text-green-700 font-bold hover:bg-white"
+                  className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white/85 px-5 py-2.5 font-bold text-slate-700 shadow-sm transition hover:bg-white"
                 >
                   ปิด
                 </button>
               </div>
 
-              {/* Animal Grid - Square Green Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 <button
+                  type="button"
                   onClick={handleClearActiveSlot}
-                  className="aspect-square bg-white/90 rounded-md p-4 border-2 border-red-200
-                    hover:border-red-400 hover:bg-red-50 transition-all duration-200
-                    flex flex-col items-center justify-center"
+                  className="flex aspect-square flex-col items-center justify-center rounded-[24px] border border-red-200 bg-gradient-to-br from-red-50 to-rose-100 p-4 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover:border-red-400 hover:shadow-[0_14px_28px_rgba(244,63,94,0.18)]"
                 >
-                  <span className="text-5xl mb-2">🧹</span>
-                  <span className="text-base font-bold text-red-600">ลบคำตอบ</span>
+                  <span className="mb-3 text-5xl">🧹</span>
+                  <span className="text-lg font-bold text-red-600">ลบคำตอบ</span>
+                  <span className="mt-1 text-sm text-red-500">เคลียร์ช่องที่เลือก</span>
                 </button>
 
                 {animals.map((animal, index) => (
-                  <div
+                  <button
                     key={index}
+                    type="button"
                     onClick={() => handleSelectAnimal(animal)}
-                    className="aspect-square bg-green-50 rounded-md p-4 cursor-pointer
-                      border-2 border-green-300 shadow-md hover:shadow-xl
-                      hover:border-green-500 hover:bg-green-100 transition-all duration-200
-                      flex flex-col items-center justify-center"
+                  className="group relative aspect-square overflow-hidden rounded-[24px] border border-emerald-200/90 bg-white/82 p-4 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover:border-emerald-400 hover:shadow-[0_16px_32px_rgba(16,185,129,0.18)]"
                   >
-                    <div className="bg-white rounded-md p-2 w-full h-[68%] flex items-center justify-center">
-                      <img
-                        src={animal.img}
-                        className="w-24 h-24 mx-auto object-contain"
-                        alt={animal.name}
-                      />
+                    <div className={`absolute inset-0 bg-gradient-to-br opacity-20 ${animal.color}`} />
+                    <div className="relative flex h-full w-full flex-col items-center justify-center">
+                      <div className="flex h-[68%] w-full items-center justify-center rounded-[18px] bg-white/55 p-2">
+                        <img
+                          src={animal.img}
+                          className="mx-auto h-24 w-24 object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.18)] transition duration-200 group-hover:scale-105"
+                          alt={animal.name}
+                        />
+                      </div>
+                      <span className="mt-3 text-base font-bold text-slate-700">{animal.name}</span>
                     </div>
-                    <span className="mt-2 text-base font-bold text-gray-700 text-center">{animal.name}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
           </div>
         </div>
       )}
-
-      {/* Fixed Action Buttons */}
-      {!showPanel && (
-      <>
-        <button
-          onClick={handleRandomQuestion}
-          className="fixed top-6 left-6 z-[60] bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-4
-            rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl 
-            transition-all duration-300 border-4 border-purple-300
-            transform hover:scale-105
-            flex items-center gap-2"
-        >
-          <span className="text-2xl">🎲</span>
-          สุ่มโจทย์
-        </button>
-
-        <div className="fixed bottom-8 right-8 flex gap-3 z-[60]">
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-gradient-to-r from-sky-600 to-blue-600 text-white px-5 py-2.5 
-            rounded-full text-base font-bold shadow-xl hover:shadow-2xl 
-            transition-all duration-300 border-2 border-sky-300
-            transform hover:scale-105
-            flex items-center gap-2"
-        >
-          <span className="text-lg">←</span>
-          ย้อนกลับ
-        </button>
-
-        <button
-          onClick={() => {
-            if (!isComplete()) {
-              alert("กรุณาทำให้ครบก่อน");
-              return;
-            }
-            navigate("/p5/life/foodchain/sim", { state: { chains } });
-          }}
-          className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-5 py-2.5 
-            rounded-full text-base font-bold shadow-xl hover:shadow-2xl 
-            transition-all duration-300 border-2 border-green-300
-            transform hover:scale-105 hover:-translate-y-0.5
-            flex items-center gap-2"
-        >
-          <span className="text-lg">➡️</span>
-          ต่อไป
-        </button>
-        </div>
-      </>
-      )}
     </div>
   );
 }
+
