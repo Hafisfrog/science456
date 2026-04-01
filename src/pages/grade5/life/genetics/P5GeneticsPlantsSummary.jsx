@@ -50,47 +50,10 @@ export default function P5GeneticsPlantsSummary() {
       <div
         className="relative min-h-full overflow-hidden px-6 pb-24 pt-7"
         style={{
-          background: "linear-gradient(180deg, #80c5ee 0%, #a8daf8 26%, #c8e9fb 52%, #d9efd8 100%)",
+          background:
+            "radial-gradient(38% 34% at 24% 66%, rgba(167, 207, 150, 0.2) 0 58%, transparent 59%), radial-gradient(38% 34% at 66% 62%, rgba(167, 207, 150, 0.16) 0 58%, transparent 59%), linear-gradient(180deg, #f4f7f1 0%, #eef4ec 100%)",
         }}
       >
-        <div
-          className="pointer-events-none absolute inset-0 opacity-45"
-          style={{
-            backgroundImage:
-              "radial-gradient(56% 28% at 18% 18%, rgba(255,255,255,0.66) 0%, transparent 72%), radial-gradient(60% 30% at 72% 14%, rgba(255,255,255,0.52) 0%, transparent 74%)",
-          }}
-        />
-
-        <div
-          className="pointer-events-none absolute right-10 top-6 h-28 w-28 rounded-full"
-          style={{
-            background: "radial-gradient(circle at 34% 34%, #fff9cf 0 32%, #ffe06a 56%, #f7be38 100%)",
-            boxShadow: "0 0 28px rgba(255, 224, 112, 0.75), 0 0 84px rgba(255, 214, 89, 0.45)",
-          }}
-        />
-
-        <div className="pointer-events-none absolute left-[7%] top-[10%] h-16 w-40 rounded-full bg-white/70 blur-[1px]" />
-        <div className="pointer-events-none absolute left-[12%] top-[8.8%] h-12 w-24 rounded-full bg-white/75" />
-        <div className="pointer-events-none absolute left-[18%] top-[11.2%] h-11 w-24 rounded-full bg-white/70" />
-
-        <div className="pointer-events-none absolute right-[19%] top-[18%] h-16 w-44 rounded-full bg-white/68 blur-[1px]" />
-        <div className="pointer-events-none absolute right-[24%] top-[16.6%] h-12 w-24 rounded-full bg-white/74" />
-        <div className="pointer-events-none absolute right-[14%] top-[19.2%] h-11 w-24 rounded-full bg-white/68" />
-
-        <div className="pointer-events-none absolute -left-24 bottom-24 h-72 w-[58%] rounded-[50%] bg-emerald-300/28 blur-[2px]" />
-        <div className="pointer-events-none absolute right-[-12%] bottom-20 h-80 w-[62%] rounded-[50%] bg-emerald-300/26 blur-[2px]" />
-        <div className="pointer-events-none absolute left-[22%] bottom-24 h-56 w-[34%] rounded-[50%] bg-emerald-200/32 blur-[1px]" />
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-lime-300/85 via-emerald-400 to-emerald-500" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-20 h-10 bg-lime-100/35 blur-sm" />
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 opacity-30"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(90deg, rgba(255,255,255,0.26) 0 2px, transparent 2px 22px)",
-          }}
-        />
-
         <section className="relative z-10 mx-auto max-w-5xl">
           <h1 className="mb-5 text-4xl font-extrabold text-slate-900">{t.title}</h1>
 
@@ -113,44 +76,85 @@ export default function P5GeneticsPlantsSummary() {
         </section>
 
         <footer className="fixed bottom-3 left-3 right-3 z-20 flex items-center justify-between gap-3 max-[1180px]:flex-col max-[1180px]:items-stretch">
-          <div className="flex items-center gap-2 rounded-2xl border-2 border-blue-300 bg-white/90 p-2 shadow-md max-[1180px]:justify-center">
+          <div
+            className="flex items-center gap-2 rounded-[22px] border-2 bg-white/95 p-[6px_8px] shadow-[0_10px_24px_rgba(75,123,92,0.18)] max-[1180px]:justify-center"
+            style={{ borderColor: "#bfe5c9" }}
+          >
             <button
               type="button"
-              className={`rounded-full px-4 py-2 font-bold ${lang === "th" ? "bg-blue-500 text-white" : "bg-blue-200 text-cyan-700"}`}
+              className="rounded-full px-[18px] py-2 text-base font-extrabold transition duration-150 hover:-translate-y-px"
+              style={
+                lang === "th"
+                  ? {
+                      color: "#fff",
+                      background: "linear-gradient(180deg, #12c06d 0%, #06a85d 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 16px rgba(6,168,93,0.28)",
+                    }
+                  : {
+                      color: "#0f6c5c",
+                      background: "linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
+                    }
+              }
               onClick={() => setLang("th")}
             >
               {labels.th}
             </button>
             <button
               type="button"
-              className={`rounded-full px-4 py-2 font-bold ${lang === "en" ? "bg-blue-500 text-white" : "bg-blue-200 text-cyan-700"}`}
+              className="rounded-full px-[18px] py-2 text-base font-extrabold transition duration-150 hover:-translate-y-px"
+              style={
+                lang === "en"
+                  ? {
+                      color: "#fff",
+                      background: "linear-gradient(180deg, #12c06d 0%, #06a85d 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 16px rgba(6,168,93,0.28)",
+                    }
+                  : {
+                      color: "#0f6c5c",
+                      background: "linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
+                    }
+              }
               onClick={() => setLang("en")}
             >
               {labels.en}
             </button>
             <button
               type="button"
-              className={`rounded-full px-4 py-2 font-bold ${lang === "ms" ? "bg-blue-500 text-white" : "bg-blue-200 text-cyan-700"}`}
+              className="rounded-full px-[18px] py-2 text-base font-extrabold transition duration-150 hover:-translate-y-px"
+              style={
+                lang === "ms"
+                  ? {
+                      color: "#fff",
+                      background: "linear-gradient(180deg, #12c06d 0%, #06a85d 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 16px rgba(6,168,93,0.28)",
+                    }
+                  : {
+                      color: "#0f6c5c",
+                      background: "linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%)",
+                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
+                    }
+              }
               onClick={() => setLang("ms")}
             >
               {labels.ms}
-            </button>
-            <button type="button" className="rounded-full bg-blue-400 px-4 py-2 text-white" aria-label="audio">
-              {"\uD83D\uDD0A"}
             </button>
           </div>
 
           <div className="flex items-center gap-2 max-[1180px]:flex-wrap max-[1180px]:justify-end">
             <button
               type="button"
-              className="rounded-full bg-white/90 px-5 py-2 text-lg font-bold text-slate-900 shadow-md hover:bg-white max-[1180px]:text-base"
+              className="rounded-full px-6 py-[10px] text-lg font-extrabold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_0_0_0_2px_rgba(203,213,225,0.88),0_4px_0_rgba(148,163,184,0.55),0_12px_18px_rgba(15,23,42,0.12)] transition duration-150 hover:-translate-y-0.5 hover:brightness-[1.02] max-[1180px]:text-base"
+              style={{ background: "linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%)" }}
               onClick={() => navigate("/p5/life/genetics/plants")}
             >
               {t.back}
             </button>
             <button
               type="button"
-              className="rounded-full bg-sky-500 px-5 py-2 text-lg font-bold text-white shadow-md hover:bg-sky-600 max-[1180px]:text-base"
+              className="rounded-full px-6 py-[10px] text-lg font-extrabold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_0_0_2px_rgba(205,65,56,0.95),0_4px_0_rgba(182,53,46,0.95),0_12px_18px_rgba(172,46,46,0.28)] transition duration-150 hover:-translate-y-0.5 hover:brightness-[1.02] max-[1180px]:text-base"
+              style={{ background: "linear-gradient(180deg, #ff766d 0%, #f34f44 55%, #e94239 100%)" }}
               onClick={() => navigate("/p5/life/genetics")}
             >
               {t.select}

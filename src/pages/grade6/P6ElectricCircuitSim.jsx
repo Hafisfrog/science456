@@ -1,35 +1,60 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TEXT = {
   th: {
     badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
-    chooseTitle: "เลือกจำนวนถ่านเพื่อลอง",
-    chooseHint: "เลือก 1–4 ถ่าน แล้วสังเกตความสว่างของหลอดไฟ",
+    title: "ทดลองใส่ถ่านในกระบะ",
+    chooseTitle: "เลือก 4 ก้อน",
+    chooseHint:
+      "เริ่มจากถ่าน 4 ก้อน ลากใส่กระบะ 1-4 ก้อน แล้วเปิดสวิตช์ดูความสว่าง",
     sectionTitle: "ตัวอย่างการต่อวงจร",
-    dragTip: "ลากสายไปต่อที่จุดวงกลม",
-    connectedLabel: (connected, total) => `เชื่อมต่อ ${connected}/${total}`,
-    selectedLabel: (n) => `เลือก ${n} ถ่าน`,
-    expectedPrefix: "ผลคาดว่าจะเห็น:",
-    optionLabels: ["1 ถ่าน", "2 ถ่าน", "3 ถ่าน", "4 ถ่าน"],
+    dragTip: "ลากสายไปที่จุดวงกลม",
+    wireGuideTitle: "ต่อสายตามลำดับนี้",
+    wireGuides: [
+      { color: "แดง", text: "ต่อจากขั้วบวกของถ่านไปที่ด้านซ้ายของสวิตช์" },
+      { color: "น้ำเงิน", text: "ต่อจากด้านขวาของสวิตช์ไปที่ขั้วล่างของหลอดไฟ" },
+      { color: "เขียว", text: "ต่อจากขั้วบนของหลอดไฟกลับไปที่ขั้วลบของถ่าน" },
+    ],
+    connectedLabel: (connected, total) => `ต่อแล้ว ${connected}/${total}`,
+    selectedLabel: (n) => `เลือก ${n} ก้อน`,
+    expectedPrefix: "ผลที่ควรจะเห็น:",
+    optionLabels: ["1 ก้อน", "2 ก้อน", "3 ก้อน", "4 ก้อน"],
     optionNotes: [
-      "หลอดไฟสว่างเล็กน้อย",
-      "หลอดไฟสว่างเพิ่มขึ้น",
-      "หลอดไฟสว่างเพิ่มขึ้นอีก",
+      "หลอดไฟสว่างน้อย",
+      "หลอดไฟสว่างขึ้น",
+      "หลอดไฟสว่างขึ้นอีก",
       "หลอดไฟสว่างมากที่สุด",
     ],
-    back: "โ",
-    next: "โ’",
+    switchStatus: {
+      off: "สวิตช์ปิด",
+      low: "สว่างน้อย",
+      mid: "สว่างปานกลาง",
+      midHigh: "สว่างมากขึ้น",
+      high: "สว่างมากที่สุด",
+    },
+    looseCellsLabel: "ถ่านแยกก่อนใส่กระบะ:",
+    holderSlotTitle: { filled: "แตะเพื่อนำถ่านออก", empty: "ลากถ่านใส่กระบะ" },
+    looseCellTitle: "ลากไปใส่กระบะ",
+    noCellsInserted: "ยังไม่ได้ใส่ถ่าน",
+    bulbOff: "หลอดไฟไม่สว่าง",
+    back: "ย้อนกลับ",
+    next: "ผลการทดลอง",
     langLabel: { th: "ไทย", en: "English", ms: "Melayu" },
   },
   en: {
     badge: "Everyday Circuits",
     title: "Simple Electric Circuit",
-    chooseTitle: "Choose number of cells",
-    chooseHint: "Pick 1–4 cells and observe bulb brightness",
+    chooseTitle: "Insert cells into holder",
+    chooseHint: "Start with 4 loose cells, insert 1-4 cells, then turn on the switch to observe brightness",
     sectionTitle: "Circuit Connection Example",
     dragTip: "Drag wires to the round anchors",
+    wireGuideTitle: "Connect wires in this order",
+    wireGuides: [
+      { color: "Red", text: "Connect the battery positive terminal to the left side of the switch" },
+      { color: "Blue", text: "Connect the right side of the switch to the lower bulb terminal" },
+      { color: "Green", text: "Connect the upper bulb terminal back to the battery negative terminal" },
+    ],
     connectedLabel: (connected, total) => `Connected ${connected}/${total}`,
     selectedLabel: (n) => `Selected ${n} cell${n > 1 ? "s" : ""}`,
     expectedPrefix: "Expected:",
@@ -40,17 +65,36 @@ const TEXT = {
       "Bulb brighter again",
       "Bulb brightest",
     ],
-    back: "โ",
-    next: "โ’",
+    switchStatus: {
+      off: "Switch off",
+      low: "Dim",
+      mid: "Moderate brightness",
+      midHigh: "Brighter",
+      high: "Brightest",
+    },
+    looseCellsLabel: "Loose cells before inserting into holder:",
+    holderSlotTitle: { filled: "Tap to remove this cell", empty: "Drag a cell into the holder" },
+    looseCellTitle: "Drag to holder",
+    noCellsInserted: "No cells inserted yet",
+    bulbOff: "Bulb off",
+    back: "Back",
+    next: "Experiment Results",
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
   },
+
   ms: {
     badge: "Litar Harian",
     title: "Litar Elektrik Mudah",
-    chooseTitle: "Pilih bilangan sel bateri",
-    chooseHint: "Pilih 1–4 sel dan perhati kecerahan mentol",
+    chooseTitle: "Masukkan sel ke dalam bekas bateri",
+    chooseHint: "Mula dengan 4 sel terasing, masukkan 1-4 sel, kemudian hidupkan suis untuk lihat kecerahan",
     sectionTitle: "Contoh sambungan litar",
     dragTip: "Seret wayar ke bulatan sambungan",
+    wireGuideTitle: "Sambung wayar ikut turutan ini",
+    wireGuides: [
+      { color: "Merah", text: "Sambung dari terminal positif bateri ke bahagian kiri suis" },
+      { color: "Biru", text: "Sambung dari bahagian kanan suis ke terminal bawah mentol" },
+      { color: "Hijau", text: "Sambung dari terminal atas mentol kembali ke terminal negatif bateri" },
+    ],
     connectedLabel: (connected, total) => `Disambung ${connected}/${total}`,
     selectedLabel: (n) => `Pilih ${n} sel`,
     expectedPrefix: "Jangkaan:",
@@ -61,8 +105,20 @@ const TEXT = {
       "Mentol lebih terang lagi",
       "Mentol paling terang",
     ],
-    back: "โ",
-    next: "โ’",
+    switchStatus: {
+      off: "Suis dimatikan",
+      low: "Malap",
+      mid: "Kecerahan sederhana",
+      midHigh: "Lebih terang",
+      high: "Paling terang",
+    },
+    looseCellsLabel: "Sel longgar sebelum dimasukkan ke dalam bekas:",
+    holderSlotTitle: { filled: "Tekan untuk keluarkan sel", empty: "Seret sel ke dalam bekas" },
+    looseCellTitle: "Seret ke bekas",
+    noCellsInserted: "Belum masukkan sel",
+    bulbOff: "Mentol tidak menyala",
+    back: "Kembali",
+    next: "Hasil Eksperimen",
     langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
   },
 };
@@ -92,6 +148,28 @@ const WIRE_CONFIG = [
   { id: "wireB", endpoint: "b2", fromAnchor: "switchRight", toAnchor: "bulbBottom", color: "#2563eb" },
   { id: "wireC", endpoint: "c2", fromAnchor: "bulbTop", toAnchor: "batteryNeg", color: "#10b981" },
 ];
+
+const createBatteryPlacement = (count) =>
+  Array.from({ length: 4 }, (_, batteryId) => (batteryId < count ? batteryId : null));
+
+const DEVICE_MEDIA = {
+  cell: {
+    image: "/images/p6/electric-circuit/battery-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/batteries.svg",
+  },
+  holder: {
+    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
+  },
+  bulb: {
+    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
+  },
+  switch: {
+    image: "/images/p6/electric-circuit/switch-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/switch.svg",
+  },
+};
 
 function buildLooseEndpoints(anchorMap) {
   return {
@@ -148,67 +226,115 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-function BatteryIcon({ cells }) {
-  const cellPositions = Array.from({ length: cells }, (_, index) => 18 + index * 12);
+function EquipmentImage({ src, fallbackSrc, alt, className = "", style }) {
   return (
-    <svg className="block h-auto w-full" viewBox="0 0 120 64" aria-hidden="true" focusable="false">
-      <rect x="8" y="10" width="72" height="44" rx="12" fill="#1f2937" />
-      {cellPositions.map((x) => (
-        <rect key={x} x={x} y="18" width="10" height="28" rx="4" fill="#f59e0b" />
-      ))}
-      <path d="M8 34c10 0 18 8 28 8" stroke="#ef4444" strokeWidth="4" fill="none" />
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      style={style}
+      onError={(event) => {
+        if (event.currentTarget.dataset.fallbackApplied === "true") return;
+        event.currentTarget.dataset.fallbackApplied = "true";
+        event.currentTarget.src = fallbackSrc;
+      }}
+    />
+  );
+}
+
+function BatteryToken({ dimmed = false, compact = false, fill = false }) {
+  return (
+    <svg
+      className={`${fill ? "h-full w-full" : compact ? "h-11 w-11" : "h-12 w-12"}`}
+      viewBox="0 0 40 40"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect
+        x="9"
+        y="4"
+        width="22"
+        height="32"
+        rx="6"
+        fill={dimmed ? "#dbe4ef" : "#5f7fa7"}
+        stroke={dimmed ? "#cbd5e1" : "#35516D"}
+        strokeWidth="1.5"
+      />
+      <rect x="14" y="7" width="12" height="26" rx="4" fill={dimmed ? "#e2e8f0" : "#f5ca4e"} />
+      <rect x="16" y="10" width="8" height="20" rx="3" fill={dimmed ? "#cbd5e1" : "#d78c17"} />
+      <rect x="16" y="2.5" width="8" height="2.5" rx="1.25" fill={dimmed ? "#94a3b8" : "#d6dee8"} />
+      <rect x="14.5" y="18" width="11" height="2.6" rx="1.3" fill={dimmed ? "#b8c4d4" : "#29435f"} opacity="0.42" />
+      <rect x="17.2" y="12" width="2.1" height="15" rx="1.05" fill={dimmed ? "#d2dae6" : "rgba(255,255,255,0.26)"} />
     </svg>
   );
 }
 
-function BulbIcon({ level }) {
-  const glowMap = {
-    off: 0,
-    low: 0.2,
-    mid: 0.5,
-    "mid-high": 0.75,
-    high: 1,
-  };
-  const glow = glowMap[level] ?? 0.6;
-  const isOff = level === "off";
+function BatteryHolderLive({ slotToBattery, onSlotDrop, onRemoveBattery, onHolderDrop, filledTitle, emptyTitle }) {
   return (
-    <svg className="block h-auto w-full" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-      <defs>
-        <radialGradient id={`dragGlow-${level}`} cx="50%" cy="50%" r="50%">
-          <stop offset="0" stopColor={`rgba(255, 214, 102, ${glow})`} />
-          <stop offset="1" stopColor="rgba(255, 214, 102, 0)" />
-        </radialGradient>
-      </defs>
-      <circle cx="32" cy="24" r="22" fill={`rgba(255, 214, 102, ${glow * 0.35})`} />
-      <circle cx="32" cy="24" r="18" fill={`url(#dragGlow-${level})`} />
-      <circle cx="32" cy="24" r="12" fill={isOff ? "#d1d5db" : "#ffd166"} stroke="#1f2937" strokeWidth="2" />
-      <path d="M26 36h12v8H26z" fill="#94a3b8" />
-      <path d="M28 44h8v8h-8z" fill="#64748b" />
-    </svg>
+    <div
+      className="relative h-full w-full"
+      onDragOver={(event) => event.preventDefault()}
+      onDrop={onHolderDrop}
+    >
+      <div className="absolute inset-0">
+        <div className="absolute inset-x-3 bottom-2 top-2 rounded-[13px] border-[2.5px] border-[#2f4561] bg-gradient-to-b from-[#5d7697] to-[#2f4561]" />
+        <div className="absolute inset-x-6 top-3 h-2.5 rounded-full bg-[#23354b]/75" />
+      </div>
+      <div className="absolute left-1/2 top-[16px] flex -translate-x-1/2 gap-[4px]">
+        {Array.from({ length: 4 }).map((_, index) => {
+          const batteryId = slotToBattery[index];
+          return (
+            <button
+              key={`holder-slot-${index}`}
+              type="button"
+              className={`grid h-[70px] w-[38px] place-items-center rounded-[8px] border ${
+                batteryId !== null
+                  ? "border-transparent bg-transparent"
+                  : "border-slate-300/70 bg-slate-100/90"
+              }`}
+              onDragOver={(event) => event.preventDefault()}
+              onDrop={(event) => onSlotDrop(index, event)}
+              onClick={() => {
+                if (batteryId !== null) onRemoveBattery(batteryId);
+              }}
+              title={batteryId !== null ? filledTitle : emptyTitle}
+            >
+              <div className="h-[60px] w-[24px]">
+                {batteryId !== null ? <BatteryToken fill /> : <BatteryToken dimmed fill />}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
   );
 }
 
-function SwitchIcon() {
+function SlideSwitch({ isOn, onChange }) {
   return (
-    <svg className="block h-auto w-full" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-      <rect x="16" y="10" width="32" height="44" rx="10" fill="#e2e8f0" stroke="#1f2937" strokeWidth="2" />
-      <rect x="22" y="18" width="20" height="12" rx="6" fill="#cbd5f5" />
-      <rect x="22" y="34" width="20" height="12" rx="6" fill="#94a3b8" />
-      <circle cx="32" cy="24" r="3" fill="#1f2937" />
-      <circle cx="32" cy="40" r="3" fill="#1f2937" />
-    </svg>
+    <div
+      role="switch"
+      aria-checked={isOn}
+      tabIndex={0}
+      className="relative h-[84px] w-[48px] cursor-pointer rounded-[16px] border-[3px] border-slate-600 bg-gradient-to-b from-slate-100 to-slate-200 p-[6px] shadow-[0_10px_18px_rgba(15,23,42,0.18)]"
+      onClick={() => onChange(!isOn)}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onChange(!isOn);
+        }
+      }}
+    >
+      <div className="relative h-full w-full overflow-hidden rounded-[11px] bg-gradient-to-b from-slate-300 to-slate-400">
+        <div className="absolute left-1/2 top-[3px] -translate-x-1/2 text-[9px] font-black text-slate-700">ON</div>
+        <div className="absolute bottom-[3px] left-1/2 -translate-x-1/2 text-[9px] font-black text-slate-700">OFF</div>
+        <div
+          className="absolute left-1/2 h-[28px] w-[22px] -translate-x-1/2 rounded-[8px] border border-slate-500 bg-gradient-to-b from-slate-700 to-slate-800 shadow-[inset_0_2px_3px_rgba(255,255,255,0.2)] transition-all duration-150"
+          style={{ top: isOn ? "10px" : "34px" }}
+        />
+      </div>
+    </div>
   );
-}
-
-function getBulbPieceStyle(level) {
-  const map = {
-    off: "0 8px 14px rgba(15, 23, 42, 0.12)",
-    low: "0 8px 14px rgba(15, 23, 42, 0.12), 0 0 12px rgba(255, 214, 102, 0.35)",
-    mid: "0 10px 18px rgba(15, 23, 42, 0.14), 0 0 18px rgba(255, 214, 102, 0.55)",
-    "mid-high": "0 12px 20px rgba(15, 23, 42, 0.16), 0 0 24px rgba(255, 214, 102, 0.75)",
-    high: "0 14px 24px rgba(15, 23, 42, 0.18), 0 0 32px rgba(255, 214, 102, 0.95)",
-  };
-  return { boxShadow: map[level] || map.mid };
 }
 
 export default function P6ElectricCircuitSim() {
@@ -217,7 +343,9 @@ export default function P6ElectricCircuitSim() {
   const content = TEXT[lang] || TEXT.th;
   const options = useMemo(() => getOptions(content), [content]);
 
-  const [selected, setSelected] = useState(2);
+  const [selected, setSelected] = useState(1);
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const [batteryPlacement, setBatteryPlacement] = useState(() => createBatteryPlacement(0));
   const dragAreaRef = useRef(null);
   const [area, setArea] = useState({ width: 0, height: 0 });
   const [endpoints, setEndpoints] = useState({
@@ -228,8 +356,20 @@ export default function P6ElectricCircuitSim() {
   const endpointsByCellsRef = useRef({});
   const initializedRef = useRef(false);
   const dragRef = useRef(null);
-  const current = useMemo(() => options.find((item) => item.cells === selected), [options, selected]);
-  const levelClass = current?.level || "mid";
+  const slotToBattery = useMemo(() => {
+    const map = Array(4).fill(null);
+    batteryPlacement.forEach((slotIndex, batteryId) => {
+      if (slotIndex !== null) map[slotIndex] = batteryId;
+    });
+    return map;
+  }, [batteryPlacement]);
+  const insertedCount = useMemo(
+    () => batteryPlacement.filter((slotIndex) => slotIndex !== null).length,
+    [batteryPlacement],
+  );
+  const current = useMemo(() => options.find((item) => item.cells === Math.max(1, insertedCount)), [insertedCount, options]);
+  const levelClass =
+    insertedCount <= 0 ? "off" : insertedCount === 1 ? "low" : insertedCount === 2 ? "mid" : insertedCount === 3 ? "mid-high" : "high";
 
   useLayoutEffect(() => {
     if (!dragAreaRef.current) return undefined;
@@ -303,41 +443,83 @@ export default function P6ElectricCircuitSim() {
 
     const frameId = window.requestAnimationFrame(() => {
       setEndpoints(initialEndpoints);
-      endpointsByCellsRef.current[selected] = cloneEndpoints(initialEndpoints);
+      endpointsByCellsRef.current[1] = cloneEndpoints(initialEndpoints);
     });
 
     return () => window.cancelAnimationFrame(frameId);
-  }, [anchors, layout, selected]);
+  }, [anchors, layout]);
 
-  const connectedCount = useMemo(
-    () =>
-      WIRE_CONFIG.reduce(
-        (count, wire) => count + (endpoints[wire.endpoint]?.anchor === wire.toAnchor ? 1 : 0),
-        0,
-      ),
-    [endpoints],
-  );
-  const isCircuitReady = connectedCount === WIRE_CONFIG.length;
-  const bulbLevel = isCircuitReady ? levelClass : "off";
+  // Wires are considered pre-connected for this mode.
+  const connectedCount = WIRE_CONFIG.length;
+  const isCircuitReady = true;
+  const bulbLevel = isSwitchOn ? levelClass : "off";
+  const bulbGlowOpacity =
+    bulbLevel === "high"
+      ? 0.95
+      : bulbLevel === "mid-high"
+        ? 0.75
+        : bulbLevel === "mid"
+          ? 0.55
+          : bulbLevel === "low"
+            ? 0.35
+            : 0;
 
-  const handleSelectCells = (cells) => {
-    if (cells === selected) return;
-    if (anchors.batteryPos && anchors.switchRight && anchors.bulbTop) {
-      endpointsByCellsRef.current[selected] = cloneEndpoints(endpoints);
-    }
-    dragRef.current = null;
-    const cachedEndpoints = endpointsByCellsRef.current[cells];
-    setSelected(cells);
-    if (cachedEndpoints) {
-      setEndpoints(cloneEndpoints(cachedEndpoints));
-      return;
-    }
-    if (anchors.batteryPos && anchors.switchRight && anchors.bulbTop) {
-      const freshEndpoints = buildLooseEndpoints(anchors);
-      endpointsByCellsRef.current[cells] = cloneEndpoints(freshEndpoints);
-      setEndpoints(freshEndpoints);
-    }
+  const handleBatteryDragStart = (batteryId, event) => {
+    event.dataTransfer.setData("text/plain", String(batteryId));
+    event.dataTransfer.effectAllowed = "move";
   };
+
+  const placeBatteryToSlot = (batteryId, slotIndex) => {
+    setBatteryPlacement((prev) => {
+      const next = [...prev];
+      const occupiedBattery = next.findIndex((currentSlot, idx) => currentSlot === slotIndex && idx !== batteryId);
+      if (occupiedBattery !== -1) next[occupiedBattery] = null;
+      next[batteryId] = slotIndex;
+      return next;
+    });
+  };
+
+  const removeBattery = (batteryId) => {
+    setBatteryPlacement((prev) => {
+      const next = [...prev];
+      next[batteryId] = null;
+      return next;
+    });
+  };
+
+  const handleSlotDrop = (slotIndex, event) => {
+    event.preventDefault();
+    const batteryId = Number(event.dataTransfer.getData("text/plain"));
+    if (Number.isNaN(batteryId)) return;
+    placeBatteryToSlot(batteryId, slotIndex);
+  };
+
+  const handleHolderDrop = (event) => {
+    event.preventDefault();
+    const batteryId = Number(event.dataTransfer.getData("text/plain"));
+    if (Number.isNaN(batteryId)) return;
+    const emptySlot = slotToBattery.findIndex((battery) => battery === null);
+    if (emptySlot === -1) return;
+    placeBatteryToSlot(batteryId, emptySlot);
+  };
+
+  const handleLooseDrop = (event) => {
+    event.preventDefault();
+    const batteryId = Number(event.dataTransfer.getData("text/plain"));
+    if (Number.isNaN(batteryId)) return;
+    removeBattery(batteryId);
+  };
+
+  const placeLooseBatteryToNextSlot = (batteryId) => {
+    const freeSlot = slotToBattery.findIndex((battery) => battery === null);
+    if (freeSlot === -1) return;
+    placeBatteryToSlot(batteryId, freeSlot);
+  };
+
+  useEffect(() => {
+    const nextSelected = Math.max(1, insertedCount);
+    setSelected((currentSelected) => (currentSelected === nextSelected ? currentSelected : nextSelected));
+  }, [insertedCount]);
 
   const getEndpointPos = (id) => {
     const endpoint = endpoints[id];
@@ -438,178 +620,156 @@ export default function P6ElectricCircuitSim() {
             <div className="mt-1 font-semibold text-slate-800">{content.chooseHint}</div>
           </div>
 
-          <div className="grid grid-cols-1 justify-items-center gap-4 md:grid-cols-2 xl:grid-cols-4 xl:gap-5">
-            {options.map((item) => (
-              <button
-                key={item.cells}
-                className={`w-full max-w-[260px] cursor-pointer rounded-[18px] border-2 bg-white p-3 text-left shadow-[0_12px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 ${
-                  selected === item.cells
-                    ? "border-blue-600/80 bg-gradient-to-b from-white to-blue-50 shadow-[0_16px_26px_rgba(37,99,235,0.18)]"
-                    : "border-slate-400/45 hover:border-blue-600/40"
-                }`}
-                type="button"
-                onClick={() => handleSelectCells(item.cells)}
-              >
-                <div className="grid place-items-center rounded-[14px] border border-slate-400/40 bg-[radial-gradient(circle_at_30%_30%,#e0f2fe,#ffffff)] p-1.5">
-                  <CircuitPreview cells={item.cells} level={item.level} />
-                </div>
-                <div className="mt-2.5 text-lg font-black text-slate-900">{item.label}</div>
-                <div className="mt-1 text-sm font-bold text-slate-800">{item.note}</div>
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-4 rounded-[18px] border border-slate-900/25 bg-white/75 p-3.5">
-            <div className="inline-flex items-center rounded-full bg-blue-600/15 px-[14px] py-1.5 font-black text-slate-900">
-              {content.sectionTitle}
-            </div>
-
-            <div className="mt-3 grid grid-cols-1 items-center gap-4 lg:grid-cols-[minmax(220px,1fr)_1fr]">
-              <div
-                className="relative h-[220px] overflow-hidden rounded-2xl border border-dashed border-slate-900/20"
-                style={{
-                  background:
-                    "radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8), transparent 60%), linear-gradient(135deg, rgba(224, 242, 254, 0.8), rgba(255, 255, 255, 0.9))",
-                }}
-                ref={dragAreaRef}
-              >
-                <div className="absolute left-3 top-2.5 rounded-full bg-blue-600/15 px-2.5 py-1 text-xs font-extrabold text-slate-900">
-                  {content.dragTip}
-                </div>
-                <div
-                  className={`absolute right-3 top-2.5 rounded-full px-2.5 py-1 text-xs font-extrabold text-slate-900 ${
-                    isCircuitReady ? "bg-green-500/25" : "bg-slate-400/30"
-                  }`}
-                >
-                  {content.connectedLabel(connectedCount, WIRE_CONFIG.length)}
+          <div className="mt-4 rounded-[18px] border border-slate-900/25 bg-white/75 p-3.5 shadow-[0_14px_24px_rgba(15,23,42,0.1)]">
+            <div className="mt-3">
+              <div className="rounded-2xl bg-white/90 p-4 shadow-[0_12px_22px_rgba(15,23,42,0.14)]">
+                <div className="flex items-center justify-between">
+                  <div className="text-[clamp(18px,1.6vw,26px)] font-black text-slate-900">
+                    {content.selectedLabel(insertedCount || selected)}
+                  </div>
+                  <div
+                    className={`rounded-full px-3 py-1 text-xs font-black ${
+                      !isSwitchOn
+                        ? "bg-slate-100 text-slate-700"
+                        : bulbLevel === "high"
+                          ? "bg-green-100 text-green-700"
+                          : bulbLevel === "mid-high"
+                            ? "bg-amber-100 text-amber-700"
+                            : bulbLevel === "mid"
+                              ? "bg-sky-100 text-sky-700"
+                              : "bg-slate-100 text-slate-700"
+                    }`}
+                  >
+                    {!isSwitchOn
+                      ? content.switchStatus.off
+                      : bulbLevel === "high"
+                        ? content.switchStatus.high
+                        : bulbLevel === "mid-high"
+                          ? content.switchStatus.midHigh
+                          : bulbLevel === "mid"
+                            ? content.switchStatus.mid
+                            : content.switchStatus.low}
+                  </div>
                 </div>
 
-                <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox={`0 0 ${area.width} ${area.height}`} aria-hidden="true">
-                  {WIRE_CONFIG.map((wire) => {
-                    const p1 = anchors[wire.fromAnchor];
-                    const p2 = getEndpointPos(wire.endpoint);
-                    if (!p1) return null;
-                    return (
-                      <path
-                        key={wire.id}
-                        d={buildPath(p1, p2)}
-                        stroke={wire.color}
-                        strokeWidth="4"
-                        fill="none"
-                        strokeLinecap="round"
-                      />
-                    );
-                  })}
-                </svg>
+                <div className="mt-4 grid gap-3 rounded-[18px] border border-slate-200 bg-[radial-gradient(circle_at_30%_30%,#e0f2fe,#ffffff)] p-4">
+                  <div className="text-sm font-black text-slate-800">{content.looseCellsLabel}</div>
+                  <div
+                    className="flex min-h-12 w-fit min-w-[232px] flex-wrap items-center gap-2 rounded-lg border border-dashed border-slate-300 bg-white/60 p-2"
+                    onDragOver={(event) => event.preventDefault()}
+                    onDrop={handleLooseDrop}
+                  >
+                    {Array.from({ length: 4 }).map((_, batteryId) => {
+                      if (batteryPlacement[batteryId] !== null) return null;
+                      return (
+                        <button
+                          key={`loose-${batteryId}`}
+                          type="button"
+                          draggable
+                          onDragStart={(event) => handleBatteryDragStart(batteryId, event)}
+                          onClick={() => placeLooseBatteryToNextSlot(batteryId)}
+                          className="grid h-14 w-12 place-items-center rounded-md border border-slate-300 bg-white hover:bg-slate-50"
+                          title={content.looseCellTitle}
+                        >
+                          <BatteryToken compact />
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                {layout && (
-                  <>
-                    <div
-                      className="absolute z-10 w-[128px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
-                      style={{ left: `${layout.battery.x}px`, top: `${layout.battery.y}px` }}
-                    >
-                      <BatteryIcon cells={selected} />
-                    </div>
-                    <div
-                      className="absolute z-10 w-[76px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5"
-                      style={{
-                        left: `${layout.bulb.x}px`,
-                        top: `${layout.bulb.y}px`,
-                        ...getBulbPieceStyle(bulbLevel),
-                      }}
-                    >
-                      <BulbIcon level={bulbLevel} />
-                    </div>
-                    <div
-                      className="absolute z-10 w-[76px] -translate-x-1/2 -translate-y-1/2 rounded-[14px] border border-slate-400/50 bg-white px-2 py-1.5 shadow-[0_10px_18px_rgba(15,23,42,0.12)]"
-                      style={{ left: `${layout.switcher.x}px`, top: `${layout.switcher.y}px` }}
-                    >
-                      <SwitchIcon />
-                    </div>
-                    {Object.entries(anchors).map(([key, point]) => (
-                      <div
-                        key={key}
-                        className="absolute z-20 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-slate-900/60 bg-white"
-                        style={{ left: `${point.x}px`, top: `${point.y}px` }}
-                      />
-                    ))}
-                  </>
-                )}
+                  <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+                    <div className="relative mx-auto h-[170px] w-full max-w-[620px]">
+                      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 620 170" aria-hidden="true">
+                        <path d="M242 106 C 258 106, 272 98, 290 92" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" />
+                        <path d="M355 92 C 405 92, 435 92, 472 95" stroke="#2563eb" strokeWidth="4" fill="none" strokeLinecap="round" />
+                      </svg>
 
-                {Object.entries(endpoints).map(([id, endpoint]) => {
-                  const pos = endpoint.anchor && anchors[endpoint.anchor] ? anchors[endpoint.anchor] : endpoint.pos;
-                  const colorClass = id.startsWith("a")
-                    ? "bg-red-500"
-                    : id.startsWith("b")
-                    ? "bg-blue-600"
-                    : "bg-emerald-500";
-                  return (
-                    <div
-                      key={id}
-                      className={`absolute z-30 h-[14px] w-[14px] -translate-x-1/2 -translate-y-1/2 cursor-grab rounded-full border-2 border-white shadow-[0_8px_14px_rgba(15,23,42,0.2)] active:cursor-grabbing ${colorClass}`}
-                      style={{
-                        left: `${pos.x}px`,
-                        top: `${pos.y}px`,
-                        boxShadow: endpoint.anchor
-                          ? "0 0 0 3px rgba(255,255,255,0.9), 0 0 12px rgba(37,99,235,0.5)"
-                          : "0 8px 14px rgba(15,23,42,0.2)",
-                      }}
-                      onPointerDown={(event) => handleEndpointDown(id, event)}
-                      onPointerMove={(event) => handleEndpointMove(id, event)}
-                      onPointerUp={(event) => handleEndpointUp(id, event)}
-                    />
-                  );
-                })}
-              </div>
+                      <div className="absolute left-[18px] top-[56px] h-[112px] w-[232px] rounded-xl border border-slate-200 bg-white px-2 py-2 shadow-[0_8px_14px_rgba(15,23,42,0.1)]">
+                        <BatteryHolderLive
+                          slotToBattery={slotToBattery}
+                          onSlotDrop={handleSlotDrop}
+                          onRemoveBattery={removeBattery}
+                          onHolderDrop={handleHolderDrop}
+                          filledTitle={content.holderSlotTitle.filled}
+                          emptyTitle={content.holderSlotTitle.empty}
+                        />
+                      </div>
 
-              <div>
-                <div className="text-lg font-black text-slate-900">{content.selectedLabel(selected)}</div>
-                <div className="mt-1.5 font-bold text-slate-800">
-                  {content.expectedPrefix} {current?.note}
+                      <div className="absolute left-[294px] top-[54px]">
+                        <SlideSwitch isOn={isSwitchOn} onChange={setIsSwitchOn} />
+                      </div>
+
+                      <div className="absolute left-[438px] top-[36px] h-[112px] w-[112px]">
+                        <div
+                          className="pointer-events-none absolute left-1/2 top-[46%] h-[122px] w-[122px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+                          style={{
+                            background: `radial-gradient(circle, rgba(255,214,102,${bulbGlowOpacity}) 0%, rgba(255,214,102,0) 68%)`,
+                            filter: "blur(2px)",
+                          }}
+                        />
+                        <div className="relative z-10 h-full w-full">
+                          <EquipmentImage
+                            src={DEVICE_MEDIA.bulb.image}
+                            fallbackSrc={DEVICE_MEDIA.bulb.fallbackImage}
+                            alt="bulb"
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right text-sm font-semibold text-slate-700">
+                      <div>{content.expectedPrefix}</div>
+                      <div className="text-lg font-black text-slate-900">
+                        {isSwitchOn
+                          ? insertedCount > 0
+                            ? options[insertedCount - 1]?.note
+                            : content.noCellsInserted
+                          : content.bulbOff}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="mt-1 flex flex-nowrap justify-end gap-2">
+        <div className="fixed bottom-3 right-3 z-40 flex gap-3">
           <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
             onClick={() => navigate("/p6/electric-circuit/steps")}
             type="button"
             aria-label={content.back}
             title={content.back}
           >
-            {content.back}
+            <span className="text-xl leading-none">←</span>
+            <span>{content.back}</span>
           </button>
           <button
-            className={`inline-flex h-16 w-16 items-center justify-center rounded-[20px] text-[28px] font-black leading-none shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition ${
-              isCircuitReady
-                ? "bg-blue-600 text-white hover:-translate-y-0.5"
-                : "cursor-not-allowed bg-slate-300 text-slate-500"
+            className={`inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-base font-bold text-white shadow ${
+              isCircuitReady ? "bg-blue-600" : "cursor-not-allowed bg-slate-300 text-slate-500"
             }`}
-            onClick={() => navigate(`/p6/electric-circuit/result?cells=${selected}`)}
+            onClick={() => navigate("/p6/electric-circuit/result")}
             type="button"
             disabled={!isCircuitReady}
             aria-label={content.next}
             title={content.next}
           >
-            {content.next}
+            <span>{content.next}</span>
+            <span className="text-xl leading-none">→</span>
           </button>
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-40 inline-flex items-center gap-2 rounded-[18px] border border-[#6ca9d7]/40 bg-white/92 p-2 shadow-[0_10px_20px_rgba(15,23,42,0.18)] backdrop-blur-[2px]">
+      <div className="fixed bottom-3 left-3 z-40 inline-flex items-center gap-3 rounded-2xl bg-white p-2 shadow">
         {LANGS.map((item) => (
           <button
             key={item.id}
-            className={`rounded-full px-4 py-2 text-[18px] font-bold ${
-              lang === item.id
-                ? "bg-gradient-to-b from-[#2cb0ff] to-[#178dd4] text-white shadow-[0_4px_10px_rgba(14,116,194,0.35)]"
-                : "bg-[#d7edff] text-sky-700"
+            onClick={() => setLang(item.id)}
+            className={`rounded-xl px-4 py-2 font-bold ${
+              lang === item.id ? "bg-sky-500 text-white" : "bg-sky-100"
             }`}
             type="button"
-            onClick={() => setLang(item.id)}
           >
             {item.label}
           </button>
@@ -618,3 +778,6 @@ export default function P6ElectricCircuitSim() {
     </div>
   );
 }
+
+
+

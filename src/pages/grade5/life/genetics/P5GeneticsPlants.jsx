@@ -62,6 +62,8 @@ const seedlings = [
   { id: 3, genotype: "aa" },
 ];
 
+const GENOTYPE_OPTIONS = ["AA", "Aa", "aa"];
+
 const TEXT = {
   th: {
     title:
@@ -75,11 +77,20 @@ const TEXT = {
     badgeB:
       "a \u0e41\u0e17\u0e19\u0e41\u0e2d\u0e25\u0e25\u0e35\u0e25\u0e04\u0e27\u0e32\u0e21\u0e40\u0e15\u0e35\u0e49\u0e22\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
     sideNote:
-      "\u0e01\u0e14\u0e17\u0e35\u0e48\u0e27\u0e07\u0e01\u0e25\u0e21\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e40\u0e09\u0e25\u0e22\u0e17\u0e35\u0e25\u0e30\u0e15\u0e49\u0e19",
+      "\u0e40\u0e25\u0e37\u0e2d\u0e01 AA, Aa \u0e2b\u0e23\u0e37\u0e2d aa \u0e43\u0e2b\u0e49\u0e25\u0e39\u0e01\u0e1e\u0e37\u0e0a\u0e41\u0e15\u0e48\u0e25\u0e30\u0e15\u0e49\u0e19 \u0e41\u0e25\u0e49\u0e27\u0e01\u0e14\u0e1b\u0e38\u0e48\u0e21\u0e40\u0e09\u0e25\u0e22",
     reset: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15",
+    resetAria: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15\u0e04\u0e33\u0e15\u0e2d\u0e1a\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01",
+    reveal: "\u0e40\u0e09\u0e25\u0e22",
+    revealAria: "\u0e40\u0e09\u0e25\u0e22\u0e04\u0e33\u0e15\u0e2d\u0e1a\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01",
     tallAlt: "\u0e1e\u0e37\u0e0a\u0e2a\u0e39\u0e07",
     shortAlt: "\u0e1e\u0e37\u0e0a\u0e40\u0e15\u0e35\u0e49\u0e22",
     childAlt: "\u0e25\u0e39\u0e01\u0e1e\u0e37\u0e0a",
+    optionAlt: "\u0e15\u0e31\u0e27\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e08\u0e35\u0e19\u0e02\u0e2d\u0e07\u0e25\u0e39\u0e01\u0e1e\u0e37\u0e0a",
+    correct: "\u0e16\u0e39\u0e01",
+    incorrect: "\u0e1c\u0e34\u0e14",
+    correctAnswer: "\u0e40\u0e09\u0e25\u0e22",
+    noAnswer: "\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49\u0e40\u0e25\u0e37\u0e2d\u0e01",
+    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
   },
   en: {
     title: "Inheritance of Plant Traits",
@@ -88,11 +99,20 @@ const TEXT = {
     sideText: "Plant height is controlled by genes\nwith 2 alleles:",
     badgeA: "A represents tall allele",
     badgeB: "a represents short allele",
-    sideNote: "Tap each offspring circle to reveal one by one",
+    sideNote: "Choose AA, Aa, or aa for each plant, then press Reveal",
     reset: "Reset",
+    resetAria: "Reset offspring answers",
+    reveal: "Reveal",
+    revealAria: "Reveal offspring answers",
     tallAlt: "tall plant",
     shortAlt: "short plant",
     childAlt: "offspring plant",
+    optionAlt: "offspring genotype option",
+    correct: "Correct",
+    incorrect: "Incorrect",
+    correctAnswer: "Answer",
+    noAnswer: "No answer selected",
+    back: "Back",
   },
   ms: {
     title: "Pewarisan Ciri Tumbuhan",
@@ -101,18 +121,29 @@ const TEXT = {
     sideText: "Ketinggian tumbuhan dikawal gen\ndengan 2 alel:",
     badgeA: "A mewakili alel tinggi",
     badgeB: "a mewakili alel rendah",
-    sideNote: "Tekan setiap bulatan anak untuk lihat satu demi satu",
+    sideNote: "Pilih AA, Aa, atau aa bagi setiap anak tumbuhan, kemudian tekan Jawapan",
     reset: "Set semula",
+    resetAria: "Set semula jawapan anak",
+    reveal: "Jawapan",
+    revealAria: "Tunjukkan jawapan anak",
     tallAlt: "tumbuhan tinggi",
     shortAlt: "tumbuhan rendah",
     childAlt: "anak tumbuhan",
+    optionAlt: "pilihan genotip anak tumbuhan",
+    correct: "Betul",
+    incorrect: "Salah",
+    correctAnswer: "Jawapan",
+    noAnswer: "Belum pilih",
+    back: "Kembali",
   },
 };
 
 export default function P5GeneticsPlants() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const [revealedChildren, setRevealedChildren] = useState(() => seedlings.map(() => false));
+  const [selectedGenotypes, setSelectedGenotypes] = useState(() => seedlings.map(() => ""));
+  const [showAnswers, setShowAnswers] = useState(false);
+  const [activeSeedlingId, setActiveSeedlingId] = useState(null);
   const [plantImages, setPlantImages] = useState({
     tall: TALL_PLANT_IMG,
     short: SHORT_PLANT_IMG,
@@ -215,17 +246,25 @@ export default function P5GeneticsPlants() {
   const t = TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
   const [lineA, lineB] = t.sideText.split("\n");
-  const hasRevealed = revealedChildren.some(Boolean);
-  const revealChild = (id) => {
-    setRevealedChildren((prev) => {
-      if (prev[id]) return prev;
+  const hasSelections = selectedGenotypes.some(Boolean);
+  const getGenotypeImage = (genotype) => (genotype === "aa" ? plantImages.short : plantImages.tall);
+  const selectGenotype = (id, genotype) => {
+    setSelectedGenotypes((prev) => {
+      if (prev[id] === genotype) return prev;
       const next = [...prev];
-      next[id] = true;
+      next[id] = genotype;
       return next;
     });
+    setActiveSeedlingId(null);
   };
   const resetChildren = () => {
-    setRevealedChildren(seedlings.map(() => false));
+    setSelectedGenotypes(seedlings.map(() => ""));
+    setShowAnswers(false);
+    setActiveSeedlingId(null);
+  };
+  const revealAnswers = () => {
+    setShowAnswers(true);
+    setActiveSeedlingId(null);
   };
 
   return (
@@ -287,30 +326,59 @@ export default function P5GeneticsPlants() {
 
             <div className="p5gp-child-row">
               {seedlings.map((seedling) => {
-                const isRevealed = revealedChildren[seedling.id];
+                const selectedGenotype = selectedGenotypes[seedling.id];
+                const displayedGenotype = showAnswers ? seedling.genotype : selectedGenotype;
+                const displayedImage = displayedGenotype ? getGenotypeImage(displayedGenotype) : null;
+                const isChooserOpen = activeSeedlingId === seedling.id && !showAnswers;
+                const isCorrect = selectedGenotype === seedling.genotype;
                 return (
                   <div key={seedling.id} className="p5gp-child-block">
                     <button
                       type="button"
-                      className="p5gp-child-btn"
-                      onClick={() => revealChild(seedling.id)}
-                      disabled={isRevealed}
-                      aria-label={t.sideNote}
+                      className="p5gp-child-trigger"
+                      onClick={() => setActiveSeedlingId((prev) => (prev === seedling.id ? null : seedling.id))}
+                      disabled={showAnswers}
                     >
                       <div
-                        className={`p5gp-child ${isRevealed ? "is-revealed" : ""}`}
+                        className={`p5gp-child ${displayedImage ? "is-revealed" : ""} ${isChooserOpen ? "is-active" : ""}`}
                         ref={(node) => (childRefs.current[seedling.id] = node)}
                       >
-                        {isRevealed ? (
+                        {displayedImage ? (
                           <img
-                            src={seedling.genotype === "Aa" ? plantImages.tall : plantImages.short}
+                            src={displayedImage}
                             alt={t.childAlt}
                             className="p5gp-child-img"
                           />
                         ) : null}
                       </div>
                     </button>
-                    <p className="p5gp-child-genotype">{isRevealed ? seedling.genotype : ".........."}</p>
+                    <p className="p5gp-child-genotype">{displayedGenotype || ".........."}</p>
+                    {showAnswers ? (
+                      <div className={`p5gp-feedback ${isCorrect ? "is-correct" : "is-incorrect"}`}>
+                        <p className="p5gp-feedback-status">{isCorrect ? t.correct : t.incorrect}</p>
+                        {!isCorrect ? (
+                          <p className="p5gp-feedback-answer">
+                            {selectedGenotype ? null : `${t.noAnswer} `}
+                            {t.correctAnswer}: {seedling.genotype}
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
+                    {isChooserOpen ? (
+                      <div className="p5gp-choice-row" role="group" aria-label={t.optionAlt}>
+                        {GENOTYPE_OPTIONS.map((option) => (
+                          <button
+                            key={option}
+                            type="button"
+                            className={`p5gp-choice ${selectedGenotype === option ? "is-selected" : ""}`}
+                            onClick={() => selectGenotype(seedling.id, option)}
+                          >
+                            <img src={getGenotypeImage(option)} alt={t.optionAlt} className="p5gp-choice-img" />
+                            <span>{option}</span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 );
               })}
@@ -330,9 +398,19 @@ export default function P5GeneticsPlants() {
               type="button"
               className="p5gp-reset"
               onClick={resetChildren}
-              disabled={!hasRevealed}
+              disabled={!hasSelections && !showAnswers}
+              aria-label={t.resetAria}
             >
               {t.reset}
+            </button>
+            <button
+              type="button"
+              className="p5gp-reveal"
+              onClick={revealAnswers}
+              disabled={showAnswers}
+              aria-label={t.revealAria}
+            >
+              {t.reveal}
             </button>
             <p className="p5gp-side-note">{t.sideNote}</p>
           </aside>
@@ -361,18 +439,24 @@ export default function P5GeneticsPlants() {
             >
               {labels.ms}
             </button>
-            <button type="button" className="p5gp-audio" aria-label="audio">
-              {"\uD83D\uDD0A"}
-            </button>
           </div>
 
-          <button
-            type="button"
-            className="p5gp-next"
-            onClick={() => navigate("/p5/life/genetics/plants/summary")}
-          >
-            {NEXT_LABEL[lang]}
-          </button>
+          <div className="p5gp-actions">
+            <button
+              type="button"
+              className="p5gp-back"
+              onClick={() => navigate("/p5/life/genetics")}
+            >
+              {t.back}
+            </button>
+            <button
+              type="button"
+              className="p5gp-next"
+              onClick={() => navigate("/p5/life/genetics/plants/summary")}
+            >
+              {NEXT_LABEL[lang]}
+            </button>
+          </div>
         </footer>
       </div>
     </LabLayout>

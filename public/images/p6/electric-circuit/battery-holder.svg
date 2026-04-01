@@ -1,45 +1,57 @@
 <svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <ellipse cx="160" cy="226" rx="88" ry="16" fill="#C7D2E2" fill-opacity="0.42"/>
-  <path d="M76 110L122 80H214L248 100V166L198 194H108L76 172V110Z" fill="#4A607D" stroke="#26364F" stroke-width="6"/>
-  <path d="M108 194V132L76 110" stroke="#26364F" stroke-width="6"/>
-  <path d="M198 194V132L248 100" stroke="#26364F" stroke-width="6"/>
-  <path d="M108 132H198" stroke="#26364F" stroke-width="6"/>
-  <g transform="rotate(-22 116 146)">
-    <rect x="98" y="108" width="32" height="92" rx="12" fill="url(#paint0_linear)" stroke="#35516D" stroke-width="5"/>
-    <rect x="103" y="102" width="22" height="12" rx="6" fill="#E5E7EB"/>
-    <rect x="98" y="144" width="32" height="13" rx="6.5" fill="#1F2937" fill-opacity="0.32"/>
-  </g>
-  <g transform="rotate(-22 146 142)">
-    <rect x="128" y="104" width="32" height="92" rx="12" fill="url(#paint1_linear)" stroke="#35516D" stroke-width="5"/>
-    <rect x="133" y="98" width="22" height="12" rx="6" fill="#E5E7EB"/>
-    <rect x="128" y="140" width="32" height="13" rx="6.5" fill="#1F2937" fill-opacity="0.32"/>
-  </g>
-  <g transform="rotate(-22 176 138)">
-    <rect x="158" y="100" width="32" height="92" rx="12" fill="url(#paint2_linear)" stroke="#35516D" stroke-width="5"/>
-    <rect x="163" y="94" width="22" height="12" rx="6" fill="#E5E7EB"/>
-    <rect x="158" y="136" width="32" height="13" rx="6.5" fill="#1F2937" fill-opacity="0.32"/>
-  </g>
-  <g transform="rotate(-22 206 134)">
-    <rect x="188" y="96" width="32" height="92" rx="12" fill="url(#paint3_linear)" stroke="#35516D" stroke-width="5"/>
-    <rect x="193" y="90" width="22" height="12" rx="6" fill="#E5E7EB"/>
-    <rect x="188" y="132" width="32" height="13" rx="6.5" fill="#1F2937" fill-opacity="0.32"/>
-  </g>
+  <ellipse cx="160" cy="226" rx="92" ry="16" fill="#C7D2E2" fill-opacity="0.36"/>
   <defs>
-    <linearGradient id="paint0_linear" x1="114" y1="108" x2="114" y2="200" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#72A9D8"/>
-      <stop offset="1" stop-color="#2C6C9E"/>
+    <linearGradient id="holderShell" x1="92" y1="98" x2="236" y2="182" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5B708F"/>
+      <stop offset="1" stop-color="#334760"/>
     </linearGradient>
-    <linearGradient id="paint1_linear" x1="144" y1="104" x2="144" y2="196" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F2D46A"/>
-      <stop offset="1" stop-color="#E59A1A"/>
+    <linearGradient id="slotMetal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#DDE5EC"/>
+      <stop offset="1" stop-color="#8694A6"/>
     </linearGradient>
-    <linearGradient id="paint2_linear" x1="174" y1="100" x2="174" y2="192" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#72A9D8"/>
-      <stop offset="1" stop-color="#2C6C9E"/>
+    <linearGradient id="cellBlue" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#69A9E0"/>
+      <stop offset="1" stop-color="#2E6E9F"/>
     </linearGradient>
-    <linearGradient id="paint3_linear" x1="204" y1="96" x2="204" y2="188" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#F2D46A"/>
-      <stop offset="1" stop-color="#E59A1A"/>
+    <linearGradient id="cellGold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5CA4E"/>
+      <stop offset="1" stop-color="#D78C17"/>
     </linearGradient>
   </defs>
+
+  <path d="M74 110L116 84H214L250 106V170L203 196H105L74 174V110Z" fill="url(#holderShell)" stroke="#26364F" stroke-width="6"/>
+  <path d="M105 196V132L74 110" stroke="#26364F" stroke-width="6"/>
+  <path d="M203 196V132L250 106" stroke="#26364F" stroke-width="6"/>
+  <path d="M105 132H203" stroke="#26364F" stroke-width="6"/>
+  <rect x="92" y="118" width="124" height="18" rx="9" fill="#253447" fill-opacity="0.7"/>
+  <rect x="98" y="90" width="10" height="30" rx="5" fill="url(#slotMetal)"/>
+  <rect x="206" y="90" width="10" height="30" rx="5" fill="url(#slotMetal)"/>
+
+  <g transform="rotate(-18 114 147)">
+    <rect x="98" y="102" width="28" height="88" rx="11" fill="url(#cellBlue)" stroke="#35516D" stroke-width="4"/>
+    <rect x="102" y="96" width="20" height="10" rx="5" fill="#E5E7EB"/>
+    <rect x="102" y="137" width="20" height="12" rx="6" fill="#1F2937" fill-opacity="0.28"/>
+    <rect x="106" y="112" width="5" height="67" rx="2.5" fill="white" fill-opacity="0.22"/>
+  </g>
+
+  <g transform="rotate(-18 144 143)">
+    <rect x="128" y="98" width="28" height="88" rx="11" fill="url(#cellGold)" stroke="#35516D" stroke-width="4"/>
+    <rect x="132" y="92" width="20" height="10" rx="5" fill="#E5E7EB"/>
+    <rect x="132" y="133" width="20" height="12" rx="6" fill="#1F2937" fill-opacity="0.28"/>
+    <rect x="136" y="108" width="5" height="67" rx="2.5" fill="white" fill-opacity="0.22"/>
+  </g>
+
+  <g transform="rotate(-18 174 139)">
+    <rect x="158" y="94" width="28" height="88" rx="11" fill="url(#cellBlue)" stroke="#35516D" stroke-width="4"/>
+    <rect x="162" y="88" width="20" height="10" rx="5" fill="#E5E7EB"/>
+    <rect x="162" y="129" width="20" height="12" rx="6" fill="#1F2937" fill-opacity="0.28"/>
+    <rect x="166" y="104" width="5" height="67" rx="2.5" fill="white" fill-opacity="0.22"/>
+  </g>
+
+  <g transform="rotate(-18 204 135)">
+    <rect x="188" y="90" width="28" height="88" rx="11" fill="url(#cellGold)" stroke="#35516D" stroke-width="4"/>
+    <rect x="192" y="84" width="20" height="10" rx="5" fill="#E5E7EB"/>
+    <rect x="192" y="125" width="20" height="12" rx="6" fill="#1F2937" fill-opacity="0.28"/>
+    <rect x="196" y="100" width="5" height="67" rx="2.5" fill="white" fill-opacity="0.22"/>
+  </g>
 </svg>

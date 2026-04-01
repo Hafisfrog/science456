@@ -6,28 +6,28 @@ const CONTENT = {
     grade: "ชั้นประถมศึกษาปีที่ 6",
     title: "แรงไฟฟ้าน่ารู้",
     section: "จุดประสงค์การเรียนรู้",
-    obj1: "อธิบายการเกิดแรงไฟฟ้าได้ (K)",
-    obj2: "สังเกตและอธิบายผลของแรงไฟฟ้าได้ (K, P)",
-    back: "←",
-    next: "→",
+    obj1: "อธิบายการเกิดแรงไฟฟ้าได้",
+    obj2: "สังเกตและอธิบายผลของแรงไฟฟ้าได้",
+    back: "ย้อนกลับ",
+    next: "หน้าคำศัพท์",
   },
   en: {
     grade: "Grade 6",
     title: "Electric Force Basics",
     section: "Learning Objectives",
-    obj1: "Explain how electric force is generated. (K)",
-    obj2: "Observe and explain the effects of electric force. (K, P)",
-    back: "←",
-    next: "→",
+    obj1: "Explain how electric force is generated.",
+    obj2: "Observe and explain the effects of electric force.",
+    back: "Back",
+    next: "Vocabulary",
   },
   ms: {
     grade: "Tahun 6",
     title: "Daya Elektrik",
     section: "Objektif Pembelajaran",
-    obj1: "Menerangkan bagaimana daya elektrik terhasil. (K)",
-    obj2: "Memerhati dan menerangkan kesan daya elektrik. (K, P)",
-    back: "←",
-    next: "→",
+    obj1: "Menerangkan bagaimana daya elektrik terhasil.",
+    obj2: "Memerhati dan menerangkan kesan daya elektrik.",
+    back: "Kembali",
+    next: "Kosa Kata",
   },
 };
 
@@ -156,17 +156,25 @@ export default function P6ElectricObjectives() {
         <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-6 md:right-6">
 
           <button
-            className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl font-bold shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow"
             onClick={() => navigate(backPath)}
+            type="button"
+            aria-label={t.back}
+            title={t.back}
           >
-            {t.back}
+            <span className="text-2xl leading-none">←</span>
+            <span className="text-sm font-bold leading-none">{t.back}</span>
           </button>
 
           <button
-            className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-2xl font-bold text-white shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-white shadow"
             onClick={() => navigate(nextPath)}
+            type="button"
+            aria-label={t.next}
+            title={t.next}
           >
-            {t.next}
+            <span className="text-2xl leading-none">→</span>
+            <span className="text-sm font-bold leading-none">{t.next}</span>
           </button>
 
         </div>

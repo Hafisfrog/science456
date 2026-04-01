@@ -1,36 +1,41 @@
-import { useCallback, useMemo, useState } from "react";
+﻿import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EQUIPMENT_MEDIA = {
   cell: {
-    image: "/images/p6/electric-circuit/batteries.svg",
-    imageClassName: "max-w-[110px] min-[1400px]:max-w-[120px]",
-  },
-  wire: {
-    image: "/images/p6/electric-circuit/wire-clips.svg",
+    image: "/images/p6/electric-circuit/battery-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/batteries.svg",
     imageClassName: "max-w-[116px] min-[1400px]:max-w-[126px]",
   },
+  wire: {
+    image: "/images/p6/electric-circuit/wire-clips-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/wire-clips.svg",
+    imageClassName: "max-w-[122px] min-[1400px]:max-w-[134px]",
+  },
   holder: {
-    image: "/images/p6/electric-circuit/battery-holder.svg",
-    imageClassName: "max-w-[126px] min-[1400px]:max-w-[136px]",
+    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
+    imageClassName: "max-w-[132px] min-[1400px]:max-w-[144px]",
   },
   bulb: {
-    image: "/images/p6/electric-circuit/bulb-base.svg",
-    imageClassName: "max-w-[92px] min-[1400px]:max-w-[102px]",
+    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
+    imageClassName: "max-w-[98px] min-[1400px]:max-w-[108px]",
   },
   switch: {
-    image: "/images/p6/electric-circuit/switch.svg",
-    imageClassName: "max-w-[90px] min-[1400px]:max-w-[98px]",
+    image: "/images/p6/electric-circuit/switch-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/switch.svg",
+    imageClassName: "max-w-[96px] min-[1400px]:max-w-[106px]",
   },
 };
 
 const TRANSLATIONS = {
-  th: {
+    th: {
     badge: "วงจรไฟฟ้าใกล้ตัว",
     title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
     equipmentHeading: "อุปกรณ์",
     back: "ย้อนกลับ",
-    next: "ไปขั้นตอน",
+    next: "ขั้นตอน",
     equipment: {
       cell: { title: "ถ่านไฟฉาย", subtitle: "4 ก้อน" },
       wire: { title: "สายไฟพร้อมหัวหนีบ", subtitle: "4 เส้น" },
@@ -90,11 +95,21 @@ function speakText(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
+function handleEquipmentImageError(event, fallbackImage, onImageError) {
+  if (fallbackImage && event.currentTarget.dataset.fallbackApplied !== "true") {
+    event.currentTarget.dataset.fallbackApplied = "true";
+    event.currentTarget.src = fallbackImage;
+    return;
+  }
+
+  onImageError();
+}
+
 function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
   return (
-    <div className="group flex h-full w-full flex-col items-center gap-3 rounded-[28px] border-[3px] border-white/80 bg-white/95 px-4 py-5 text-center shadow-[0_16px_28px_rgba(15,23,42,0.14)]">
+    <div className="group flex h-full w-full flex-col items-center gap-3 rounded-[28px] border-[3px] border-white/80 bg-white/95 px-4 py-5 text-center shadow-[0_16px_28px_rgba(15,23,42,0.14)] transition-transform duration-200 hover:-translate-y-1">
 
-      <div className="grid h-[126px] w-[126px] place-items-center rounded-[24px] border-[4px] border-[#ddecf7] bg-white p-3 shadow-[inset_0_6px_12px_rgba(255,255,255,0.55),0_12px_18px_rgba(17,24,39,0.14)]">
+      <div className="grid h-[134px] w-[134px] place-items-center rounded-[26px] border-[4px] border-[#ddecf7] bg-[linear-gradient(180deg,#ffffff_0%,#f6fbff_100%)] p-3 shadow-[inset_0_6px_12px_rgba(255,255,255,0.55),0_12px_18px_rgba(17,24,39,0.14)]">
         {imageBroken ? (
           <div className="text-sm font-bold text-slate-500">
             Image unavailable
@@ -103,8 +118,15 @@ function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
           <img
             src={item.image}
             alt={item.title}
-            className={`h-auto max-h-[92px] w-full object-contain ${item.imageClassName}`}
-            onError={onImageError}
+            data-fallback-applied="false"
+            className={`h-auto max-h-[102px] w-full object-contain ${item.imageClassName}`}
+            onError={(event) =>
+              handleEquipmentImageError(
+                event,
+                item.fallbackImage,
+                onImageError
+              )
+            }
           />
         )}
       </div>
@@ -210,46 +232,43 @@ export default function P6ElectricCircuitMaterials() {
           </div>
         </div>
 
-        <div className="flex justify-end gap-3">
-
-          <button
-            className="h-16 w-16 rounded-[20px] bg-white text-[28px] shadow"
-            onClick={() =>
-              navigate("/p6/electric-circuit/experiments")
-            }
-          >
-            ←
-          </button>
-
-          <button
-            className="h-16 w-16 rounded-[20px] bg-blue-600 text-[28px] text-white shadow"
-            onClick={() =>
-              navigate("/p6/electric-circuit/steps")
-            }
-          >
-            →
-          </button>
-
-        </div>
+              <div className="fixed bottom-3 right-3 z-20 flex gap-3">
+        <button
+          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          onClick={() => navigate("/p6/electric-circuit/experiments")}
+          type="button"
+        >
+          <span className="text-xl leading-none">←</span>
+          <span>{t.back}</span>
+        </button>
+        <button
+          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          onClick={() => navigate("/p6/electric-circuit/steps")}
+          type="button"
+        >
+          <span>{t.next}</span>
+          <span className="text-xl leading-none">→</span>
+        </button>
+      </div>
       </div>
 
-      <div className="fixed left-4 bottom-4 flex gap-2 bg-white p-2 rounded-full shadow">
-
+            <div className="fixed bottom-3 left-3 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow">
         {LANGUAGE_OPTIONS.map((option) => (
           <button
             key={option.id}
             onClick={() => setLang(option.id)}
-            className={`px-4 py-2 rounded-full font-bold ${
-              lang === option.id
-                ? "bg-blue-600 text-white"
-                : "text-slate-800"
+            className={`rounded-xl px-4 py-2 font-bold ${
+              lang === option.id ? "bg-sky-500 text-white" : "bg-sky-100"
             }`}
           >
             {option.label}
           </button>
         ))}
-
       </div>
     </div>
   );
 }
+
+
+
+

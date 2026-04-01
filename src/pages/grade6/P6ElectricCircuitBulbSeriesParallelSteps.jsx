@@ -6,10 +6,10 @@ const TRANSLATIONS = {
     badge: "วงจรไฟฟ้าใกล้ตัว",
     title: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
     stepsHeading: "ขั้นตอนการทดลอง",
-    stepsSub: "กดที่ขั้นตอนเพื่อฟังเสียง",
+    stepsSub: "กดที่ลำโพงเพื่อฟังเสียง",
     summary: "เปรียบเทียบผลการทดลองแบบอนุกรมและแบบขนาน แล้วสรุปความแตกต่าง",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ทดลอง",
     sound: "เปิดเสียง",
     steps: [
       {
@@ -37,7 +37,7 @@ const TRANSLATIONS = {
     stepsSub: "Tap a step to hear it",
     summary: "Compare the series and parallel results, then summarize the differences.",
     back: "Back",
-    next: "Next",
+    next: "Experiment",
     sound: "Sound",
     steps: [
       {
@@ -62,10 +62,10 @@ const TRANSLATIONS = {
     badge: "Litar elektrik dekat kita",
     title: "Sambungan mentol siri dan selari",
     stepsHeading: "Langkah eksperimen",
-    stepsSub: "Tekan setiap langkah untuk dengar",
+    stepsSub: "Tekan setiap langkah untuk mendengar",
     summary: "Bandingkan keputusan siri dan selari kemudian rumuskan perbezaannya.",
     back: "Kembali",
-    next: "Seterusnya",
+    next: "Eksperimen",
     sound: "Bunyi",
     steps: [
       {
@@ -88,11 +88,17 @@ const TRANSLATIONS = {
   },
 };
 
-function speak(text) {
+const SPEECH_LANGUAGES = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+function speak(text, lang = "th-TH") {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "th-TH";
+  u.lang = lang;
   u.rate = 0.98;
   window.speechSynthesis.speak(u);
 }
@@ -101,7 +107,8 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
-  const handleSpeak = useCallback((text) => speak(text), []);
+  const speechLang = useMemo(() => SPEECH_LANGUAGES[lang] ?? "th-TH", [lang]);
+  const handleSpeak = useCallback((text) => speak(text, speechLang), [speechLang]);
 
   const pageBg = {
     background:
@@ -122,119 +129,111 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_auto_auto] gap-2">
         <div className="flex flex-wrap items-center gap-3">
           <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
             {t.badge}
           </div>
-          <div className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 shadow-[0_12px_24px_rgba(0,0,0,0.12)] ring-2 ring-white/85 backdrop-blur-md">
-            {["th", "en", "ms"].map((code) => (
-              <button
-                key={code}
-                type="button"
-                onClick={() => setLang(code)}
-                className={`rounded-full px-4 py-2 text-[15px] font-black transition ${
-                  lang === code
-                    ? "bg-blue-600 text-white shadow-[0_8px_16px_rgba(37,99,235,0.35)]"
-                    : "text-slate-800 hover:bg-white"
-                }`}
-              >
-                {code === "th" ? "ไทย" : code === "en" ? "English" : "Melayu"}
-              </button>
-            ))}
-          </div>
         </div>
-        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">
+
+        <h1 className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">
           {t.title}
-        </div>
+        </h1>
 
-        <div className="relative min-h-0 overflow-y-auto rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-[14px] pt-[14px] pr-[clamp(68px,10vw,116px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
-          <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
+        <div className="relative min-h-0 overflow-hidden rounded-[30px] bg-[#e5f3ff] px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_22px_40px_rgba(17,24,39,0.18)]">
+          <div className="flex flex-col gap-4">
+            <header className="flex flex-col gap-1">
+              <p className="text-[clamp(32px,2.4vw,48px)] font-black leading-tight text-slate-900">
+                {t.stepsHeading}
+              </p>
+              <p className="text-[clamp(14px,1vw,18px)] font-bold text-slate-700">
+                {t.stepsSub}
+              </p>
+            </header>
 
-          <div
-            className="absolute right-[22px] top-3 grid h-[52px] w-[52px] place-items-center rounded-2xl border-2 border-slate-900/40 bg-white/75 text-slate-800 shadow-[0_10px_18px_rgba(17,24,39,0.16)]"
-            title={t.sound}
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-              <path
-                d="M12 26h12l14-10v32l-14-10H12z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinejoin="round"
-              />
-              <path d="M44 22c4 4 4 16 0 20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-              <path d="M50 16c7 7 7 25 0 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-            </svg>
-          </div>
-
-          <section className="grid h-full min-h-0 grid-cols-1 gap-[14px]">
-            <div className="rounded-[26px] border-2 border-white/75 bg-[#e8dcc5] px-[clamp(14px,1.6vw,20px)] py-[clamp(14px,1.6vw,20px)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.9)]">
-              <header className="mb-3 flex flex-col gap-1">
-                <div className="text-[clamp(30px,2.4vw,44px)] font-black leading-tight">{t.stepsHeading}</div>
-                <div className="text-[clamp(14px,1vw,18px)] font-bold text-slate-700">{t.stepsSub}</div>
-              </header>
-
-              <div className="grid gap-3.5">
-                {t.steps.map((step, index) => (
-                  <button
-                    key={step.title}
-                    type="button"
-                    onClick={() => handleSpeak(`${index + 1} ${step.title} ${step.detail}`)}
-                    className="grid grid-cols-[64px_1fr] items-center gap-3 rounded-[18px] border-[3px] border-slate-700 bg-white px-3.5 py-3 text-left shadow-[0_10px_16px_rgba(0,0,0,0.16)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_20px_rgba(0,0,0,0.18)]"
-                  >
-                    <div className="grid h-[58px] w-[58px] place-items-center rounded-[16px] bg-amber-300 text-[32px] font-black text-slate-900 shadow-[inset_0_-4px_0_rgba(0,0,0,0.12),0_10px_14px_rgba(0,0,0,0.18)]">
+            <div className="flex flex-col gap-3">
+              {t.steps.map((step, index) => (
+                <div
+                  key={`${step.title}-${index}`}
+                  className="flex items-center gap-4 rounded-[999px] border-[3px] border-slate-900 bg-white px-5 py-3 shadow-[0_18px_28px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                >
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="grid h-[56px] w-[56px] place-items-center rounded-full bg-gradient-to-br from-[#f8d67b] to-[#e3a92a] text-[30px] font-black text-white shadow-[inset_0_-4px_0_rgba(0,0,0,0.16),0_10px_26px_rgba(12,13,71,0.2)]">
                       {index + 1}
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <div className="text-[clamp(20px,1.6vw,26px)] font-black">{step.title}</div>
-                      <div className="text-[clamp(15px,1.1vw,20px)] font-semibold text-slate-900">{step.detail}</div>
+                    <div className="flex-1 text-left">
+                      <p className="text-[clamp(20px,1.6vw,26px)] font-black text-slate-900">
+                        {step.title}
+                      </p>
+                      <p className="text-[clamp(14px,1vw,18px)] font-semibold text-slate-700">
+                        {step.detail}
+                      </p>
                     </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleSpeak(`${index + 1}. ${step.title}. ${step.detail}`)}
+                    className="grid h-[54px] w-[54px] place-items-center rounded-[16px] border border-slate-900/30 bg-[#fff7e3] text-slate-900 shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:-translate-y-0.5 hover:bg-white"
+                    aria-label={`${t.sound} ${index + 1}`}
+                    title={t.sound}
+                  >
+                    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" className="h-8 w-8">
+                      <path
+                        d="M12 26h12l14-10v32l-14-10H12z"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinejoin="round"
+                      />
+                      <path d="M44 22c4 4 4 16 0 20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                      <path d="M50 16c7 7 7 25 0 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+                    </svg>
                   </button>
-                ))}
-
-                <div className="mt-1 rounded-[14px] border border-dashed border-slate-900/20 bg-white/85 px-3 py-2.5 text-sm font-bold text-slate-900">
-                  {t.summary}
                 </div>
-              </div>
+              ))}
             </div>
-          </section>
+
+            <div className="rounded-[24px] border border-dashed border-slate-900/20 bg-white/80 px-4 py-3 text-sm font-bold text-slate-900 shadow-[0_12px_20px_rgba(15,23,42,0.12)]">
+              {t.summary}
+            </div>
+          </div>
         </div>
 
-        <div className="mt-1 flex flex-nowrap justify-end gap-2">
+        <div className="fixed bottom-3 right-3 z-20 flex gap-3">
           <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
             onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            ←
+            <span className="text-xl leading-none">←</span>
+            <span>{t.back}</span>
           </button>
           <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-blue-600 text-[28px] font-black leading-none text-white shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
             onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            →
+            <span>{t.next}</span>
+            <span className="text-xl leading-none">→</span>
           </button>
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed left-4 bottom-4 z-20 max-sm:left-3 max-sm:bottom-3">
-        <div className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 shadow-[0_14px_26px_rgba(0,0,0,0.14)] ring-2 ring-white/85 backdrop-blur-md">
+      <div className="fixed bottom-3 left-3 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow">
+        <div className="inline-flex items-center gap-1">
           {["th", "en", "ms"].map((code) => (
             <button
               key={code}
               type="button"
               onClick={() => setLang(code)}
-              className={`rounded-full px-4 py-2 text-[15px] font-black transition ${
+              className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
                 lang === code
-                  ? "bg-blue-600 text-white shadow-[0_8px_16px_rgba(37,99,235,0.35)]"
-                  : "text-slate-800 hover:bg-white"
+                  ? "bg-sky-500 text-white"
+                  : "bg-sky-100 text-slate-800"
               }`}
             >
               {code === "th" ? "ไทย" : code === "en" ? "English" : "Melayu"}

@@ -125,6 +125,8 @@ export default function P6ElectricGenerationMaterials() {
   const [broken, setBroken] = useState({});
 
   const t = LANG[lang];
+  const backLabel = "ย้อนกลับ";
+  const nextLabel = "ขั้นตอน";
 
   const from = searchParams.get("from");
 
@@ -216,17 +218,23 @@ export default function P6ElectricGenerationMaterials() {
       <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3">
 
         <button
-          className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
           onClick={() => navigate(backPath)}
+          type="button"
+          aria-label={backLabel}
         >
-          ←
+          <span className="text-[28px] leading-none">←</span>
+          <span className="text-sm font-black leading-none">{backLabel}</span>
         </button>
 
         <button
-          className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-blue-600 text-[28px] font-black text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
           onClick={() => navigate(nextPath)}
+          type="button"
+          aria-label={nextLabel}
         >
-          →
+          <span className="text-sm font-black leading-none">{nextLabel}</span>
+          <span className="text-[28px] leading-none">→</span>
         </button>
 
       </div>

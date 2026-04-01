@@ -53,22 +53,20 @@ const getPaperContainerStyle = (intensity) => {
   if (intensity === "high") {
     return {
       opacity: 1,
-      transform: "translateX(-30%) translateY(-12px)",
-      animation: "p6-result-float-high 2.2s ease-in-out infinite",
+      transform: "translateX(-50%) translateY(0px)",
     };
   }
 
   if (intensity === "mid") {
     return {
       opacity: 1,
-      transform: "translateX(-60%) translateY(0px)",
-      animation: "p6-result-float-mid 2.2s ease-in-out infinite",
+      transform: "translateX(-50%) translateY(2px)",
     };
   }
 
   return {
-    opacity: 0.5,
-    transform: "translateX(-60%) translateY(6px)",
+    opacity: 0,
+    transform: "translateX(-50%) translateY(6px)",
   };
 };
 
@@ -79,6 +77,7 @@ export default function P6ElectricGenerationResult() {
   const data = RESULTS[selected] || RESULTS[1];
   const completedCount = readCompletedTrials().length;
   const allTrialsCompleted = completedCount === TOTAL_TRIALS;
+  const paperCount = data.intensity === "high" ? 5 : data.intensity === "mid" ? 3 : 0;
 
   const pageBg = {
     background: "linear-gradient(180deg, #e7f8ff 0%, #dff3ff 55%, #cde9f9 100%)",
@@ -120,32 +119,38 @@ export default function P6ElectricGenerationResult() {
 
             <div className="relative grid h-[90px] place-items-center">
               <div
-                className="relative h-[54px] w-[54px] rounded-full"
+                className="relative h-[58px] w-[58px] rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle at 30% 30%, #ffd7b0 0%, #f3a86e 45%, #e18a54 100%)",
-                  boxShadow: "inset -4px -6px 10px rgba(102, 52, 25, 0.35)",
+                    "radial-gradient(circle at 30% 25%, #ffd3d3, #ea3b3b 45%, #b91c1c 74%, #7f1d1d)",
+                  boxShadow:
+                    "inset 0 8px 14px rgba(255, 255, 255, 0.22), inset 0 -12px 18px rgba(0, 0, 0, 0.28), 0 10px 18px rgba(15, 23, 42, 0.18)",
                 }}
               >
-                <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-[#e18a54]" />
+                <span className="absolute inset-[10%] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.6),transparent_60%)]" />
+                <span className="absolute -top-[6px] left-1/2 h-[10px] w-[10px] -translate-x-1/2 rounded-[4px] bg-[#991b1b] shadow-[0_4px_8px_rgba(15,23,42,0.2)]" />
               </div>
 
-              <div
-                className="absolute bottom-[18px] left-1/2 h-10 w-[90px]"
-                style={getPaperContainerStyle(data.intensity)}
-              >
-                {PAPER_POSITIONS.map((paper, idx) => (
-                  <span
-                    key={idx}
-                    className="absolute h-[7px] w-[14px] rounded bg-gradient-to-br from-red-500 to-blue-500"
-                    style={{
-                      left: `${paper.left}px`,
-                      top: `${paper.top}px`,
-                      transform: `rotate(${paper.rotate}deg)`,
-                    }}
-                  />
-                ))}
-              </div>
+              {paperCount > 0 && (
+                <div
+                  className="absolute top-[18px] left-1/2 z-[2] h-[34px] w-[56px]"
+                  style={getPaperContainerStyle(data.intensity)}
+                >
+                  {PAPER_POSITIONS.slice(0, paperCount).map((paper, idx) => (
+                    <img
+                      key={idx}
+                      src="/images/p6/equipment/tissue-real.svg"
+                      alt="paper"
+                      className="absolute h-[9px] w-[12px]"
+                      style={{
+                        left: `${paper.left}px`,
+                        top: `${paper.top}px`,
+                        transform: `rotate(${paper.rotate}deg)`,
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
 
               <div className="absolute bottom-[10px] left-1/2 h-[30px] w-0 border-l-2 border-dashed border-slate-800 -translate-x-1/2">
                 <span
@@ -200,16 +205,7 @@ export default function P6ElectricGenerationResult() {
           }}
         />
 
-        <style>{`
-          @keyframes p6-result-float-mid {
-            0%, 100% { transform: translateX(-60%) translateY(0px); }
-            50% { transform: translateX(-60%) translateY(-8px); }
-          }
-          @keyframes p6-result-float-high {
-            0%, 100% { transform: translateX(-30%) translateY(-12px); }
-            50% { transform: translateX(-30%) translateY(-22px); }
-          }
-        `}</style>
+        <style>{``}</style>
       </div>
     </div>
   );

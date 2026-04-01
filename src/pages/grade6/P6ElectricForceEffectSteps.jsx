@@ -18,8 +18,8 @@ const CONTENT = {
       "เปลี่ยนวัตถุแล้วทำตามขั้นตอนเหมือนเดิมตั้งแต่แรก",
       "สังเกตผล",
     ],
-    back: "กลับหน้าอุปกรณ์",
-    next: "ไปหน้าถัดไป",
+    back: "ย้อนกลับ",
+    next: "ทดลอง",
   },
   en: {
     heading: "Experiment Steps",
@@ -31,8 +31,8 @@ const CONTENT = {
       "Change the object and repeat the same steps.",
       "Observe the results.",
     ],
-    back: "Back to materials",
-    next: "Next",
+    back: "Back",
+    next: "Experiment",
   },
   ms: {
     heading: "Langkah Eksperimen",
@@ -44,8 +44,8 @@ const CONTENT = {
       "Tukar objek dan ulang langkah.",
       "Perhatikan hasil.",
     ],
-    back: "Kembali ke bahan",
-    next: "Seterusnya",
+    back: "Kembali",
+    next: "Eksperimen",
   },
 };
 
@@ -131,48 +131,46 @@ export default function P6ElectricForceEffectSteps() {
         </section>
 
         {/* LANGUAGE */}
-        <div className="mt-6 flex items-center justify-between">
+        <div className="fixed bottom-6 left-6 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
 
-          <div className="flex gap-3 rounded-2xl bg-white p-2 shadow">
-
-            {LANGUAGE_OPTIONS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setLanguage(item.id)}
-                className={`rounded-xl px-4 py-2 font-bold ${
-                  language === item.id
-                    ? "bg-sky-500 text-white"
-                    : "bg-sky-100"
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-
-          </div>
-
-          <div className="flex gap-3">
-
+          {LANGUAGE_OPTIONS.map((item) => (
             <button
-              className="h-16 w-16 rounded-[20px] bg-white text-[28px] font-black shadow"
-              onClick={() =>
-                navigate("/p6/experiment/electric-force-effect")
-              }
+              key={item.id}
+              onClick={() => setLanguage(item.id)}
+              className={`rounded-xl px-4 py-2 font-bold ${
+                language === item.id ? "bg-sky-500 text-white" : "bg-sky-100"
+              }`}
+              type="button"
             >
-              ←
+              {item.label}
             </button>
+          ))}
 
-            <button
-              className="h-16 w-16 rounded-[20px] bg-blue-600 text-[28px] font-black text-white shadow"
-              onClick={() =>
-                navigate("/p6/experiment/electric-force-effect/sim")
-              }
-            >
-              →
-            </button>
+        </div>
 
-          </div>
+        {/* NAVIGATION */}
+        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3">
+          <button
+            className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
+            onClick={() => navigate("/p6/experiment/electric-force-effect")}
+            type="button"
+            aria-label={t.back}
+            title={t.back}
+          >
+            <span className="text-[22px] leading-none">←</span>
+            <span className="text-sm font-black leading-none">{t.back}</span>
+          </button>
 
+          <button
+            className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+            onClick={() => navigate("/p6/experiment/electric-force-effect/sim")}
+            type="button"
+            aria-label={t.next}
+            title={t.next}
+          >
+            <span className="text-sm font-black leading-none">{t.next}</span>
+            <span className="text-[22px] leading-none">→</span>
+          </button>
         </div>
       </div>
     </div>

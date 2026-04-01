@@ -7,9 +7,9 @@ const TEXT = {
     title: "สรุปสาระสำคัญ : วงจรไฟฟ้าใกล้ตัว",
     sectionParts: "องค์ประกอบของวงจรไฟฟ้า",
     parts: [
-      { heading: "แหล่งกำเนิดไฟฟ้า", body: "ให้พลังงานไฟฟ้า เช่น ถ่านไฟฉาย แบตเตอรี", icon: "🔋" },
-      { heading: "สายไฟฟ้า", body: "เชื่อมต่อวงจรให้กระแสไฟไหลผ่าน เช่น สายทองแดง", icon: "⚡" },
-      { heading: "อุปกรณ์ไฟฟ้า", body: "เปลี่ยนพลังงานไฟฟ้าเป็นพลังงานอื่น เช่น หลอดไฟ มอเตอร์", icon: "💡" },
+      { heading: "แหล่งกำเนิดไฟฟ้า", body: "ให้พลังงานไฟฟ้า เช่น ถ่านไฟฉาย แบตเตอรี่" },
+      { heading: "สายไฟฟ้า", body: "เชื่อมต่อวงจรให้กระแสไฟไหลผ่าน เช่น สายทองแดง" },
+      { heading: "อุปกรณ์ไฟฟ้า", body: "เปลี่ยนพลังงานไฟฟ้าเป็นพลังงานอื่น เช่น หลอดไฟ มอเตอร์" },
     ],
     compareTitle: "เปรียบเทียบการต่อวงจรไฟฟ้า",
     table: {
@@ -22,71 +22,77 @@ const TEXT = {
       ],
     },
     back: "ย้อนกลับ",
-    next: "ต่อไป",
+    next: "กลับเลือกการทดลอง",
   },
   en: {
     badge: "Electricity Around You",
     title: "Key Takeaways: Everyday Circuits",
     sectionParts: "Parts of an Electric Circuit",
     parts: [
-      { heading: "Power source", body: "Provides energy, e.g., batteries", icon: "🔋" },
-      { heading: "Wires", body: "Carry current between components, e.g., copper wire", icon: "⚡" },
-      { heading: "Electrical device", body: "Converts electrical energy, e.g., bulb, motor", icon: "💡" },
+      { heading: "Power source", body: "Provides energy, e.g. batteries" },
+      { heading: "Wire", body: "Carries current through the circuit, e.g. copper wire" },
+      { heading: "Electrical device", body: "Converts electrical energy, e.g. bulb, motor" },
     ],
-    compareTitle: "Compare Series vs Parallel",
+    compareTitle: "Compare Circuit Connections",
     table: {
       head: ["Topic", "Series", "Parallel"],
       rows: [
-        ["Connection", "One single path", "Multiple paths"],
-        ["Brightness", "More bulbs → dimmer", "Each bulb equally bright"],
+        ["Connection", "Single path", "Multiple paths"],
+        ["Brightness", "More bulbs -> dimmer", "Each bulb equally bright"],
         ["If one bulb fails", "All go out", "Others stay lit"],
-        ["Example use", "Flashlight", "Home wiring"],
+        ["Example", "Flashlight", "Home wiring"],
       ],
     },
     back: "Back",
-    next: "Next",
+    next: "Back to Experiments",
   },
   ms: {
     badge: "Litar elektrik dekat kita",
-    title: "Ringkasan penting: litar harian",
-    sectionParts: "Bahagian litar elektrik",
+    title: "Ringkasan utama: litar elektrik",
+    sectionParts: "Komponen litar elektrik",
     parts: [
-      { heading: "Sumber kuasa", body: "Membekal tenaga, cth bateri", icon: "🔋" },
-      { heading: "Wayar", body: "Mengalirkan arus antara komponen, cth wayar kuprum", icon: "⚡" },
-      { heading: "Peranti elektrik", body: "Menukar tenaga elektrik, cth mentol, motor", icon: "💡" },
+      { heading: "Sumber kuasa", body: "Membekalkan tenaga, contohnya bateri" },
+      { heading: "Wayar", body: "Menyambung litar supaya arus mengalir, contohnya wayar kuprum" },
+      { heading: "Peranti elektrik", body: "Menukar tenaga elektrik, contohnya mentol, motor" },
     ],
-    compareTitle: "Banding siri vs selari",
+    compareTitle: "Perbandingan sambungan litar",
     table: {
-      head: ["Perkara", "Siri", "Selari"],
+      head: ["Topik", "Siri", "Selari"],
       rows: [
-        ["Sambungan", "Satu laluan sahaja", "Banyak laluan"],
-        ["Kecerahan", "Lebih banyak mentol → makin malap", "Setiap mentol sama terang"],
-        ["Jika satu mentol rosak", "Semua padam", "Yang lain masih menyala"],
-        ["Contoh guna", "Lampu suluh", "Pendawaian rumah"],
+        ["Sambungan", "Satu laluan", "Banyak laluan"],
+        ["Kecerahan", "Lebih banyak mentol -> lebih malap", "Setiap mentol sama terang"],
+        ["Jika satu mentol rosak", "Semua padam", "Mentol lain masih menyala"],
+        ["Contoh", "Lampu suluh", "Pendawaian rumah"],
       ],
     },
     back: "Kembali",
-    next: "Seterusnya",
+    next: "Kembali Pilih Eksperimen",
   },
 };
+
+const PART_ICONS = {
+  battery: "/images/p6/electric-circuit/batteries.svg",
+  wire: "/images/p6/electric-circuit/wire-clips.svg",
+  bulb: "/images/p6/electric-circuit/bulb-base.svg",
+};
+
+const PART_ICON_KEYS = ["battery", "wire", "bulb"];
 
 function LanguagePills({ lang, setLang }) {
   const pills = [
     { code: "th", label: "ไทย" },
     { code: "en", label: "English" },
-    { code: "ms", label: "Malay" },
+    { code: "ms", label: "Melayu" },
   ];
   return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 shadow-[0_12px_24px_rgba(0,0,0,0.12)] ring-2 ring-white/85 backdrop-blur-md">
+    <div className="inline-flex items-center gap-1 rounded-2xl bg-white p-2 shadow">
       {pills.map((p) => (
         <button
           key={p.code}
           type="button"
           onClick={() => setLang(p.code)}
-          className={`rounded-full px-4 py-2 text-[15px] font-black transition ${
-            lang === p.code
-              ? "bg-blue-600 text-white shadow-[0_8px_16px_rgba(37,99,235,0.35)]"
-              : "text-slate-800 hover:bg-white"
+          className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
+            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100 text-slate-800"
           }`}
         >
           {p.label}
@@ -96,15 +102,15 @@ function LanguagePills({ lang, setLang }) {
   );
 }
 
-function PartCard({ icon, heading, body }) {
+function PartCard({ iconKey, heading, body }) {
   return (
     <div className="flex min-w-[220px] flex-1 items-center gap-3 rounded-[18px] border-2 border-white/70 bg-white/85 px-4 py-3 shadow-[0_12px_22px_rgba(0,0,0,0.12)]">
-      <div className="grid h-[64px] w-[64px] place-items-center rounded-full bg-gradient-to-br from-amber-200 to-yellow-300 text-2xl shadow-[inset_0_4px_8px_rgba(255,255,255,0.8),0_8px_14px_rgba(0,0,0,0.12)]">
-        {icon}
+      <div className="grid h-[64px] w-[64px] place-items-center rounded-full bg-gradient-to-br from-amber-200 to-yellow-300 shadow-[inset_0_4px_8px_rgba(255,255,255,0.8),0_8px_14px_rgba(0,0,0,0.12)]">
+        <img src={PART_ICONS[iconKey]} alt="" className="h-[44px] w-[44px] object-contain" />
       </div>
       <div className="flex flex-col gap-1">
         <div className="text-[18px] font-black text-slate-900">{heading}</div>
-        <div className="text-[15px] font-semibold text-slate-800 leading-tight">{body}</div>
+        <div className="text-[15px] font-semibold leading-tight text-slate-800">{body}</div>
       </div>
     </div>
   );
@@ -144,8 +150,8 @@ export default function P6ElectricCircuitKeySummary() {
           <div className="grid gap-4 rounded-3xl border-2 border-white/75 bg-white/75 p-[clamp(14px,1.6vw,20px)]">
             <div className="text-[clamp(22px,1.8vw,30px)] font-black text-slate-900">{t.sectionParts}</div>
             <div className="grid gap-3 min-[900px]:grid-cols-3">
-              {t.parts.map((p) => (
-                <PartCard key={p.heading} {...p} />
+              {t.parts.map((p, index) => (
+                <PartCard key={p.heading} iconKey={PART_ICON_KEYS[index] ?? "battery"} {...p} />
               ))}
             </div>
 
@@ -179,30 +185,32 @@ export default function P6ElectricCircuitKeySummary() {
             </div>
           </div>
         </div>
-
-        <div className="mt-1 flex justify-end gap-2">
-          <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
-            onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
-            type="button"
-            aria-label={t.back}
-            title={t.back}
-          >
-            ←
-          </button>
-          <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-blue-600 text-[28px] font-black leading-none text-white shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
-            onClick={() => navigate("/p6/electric-circuit/experiments")}
-            type="button"
-            aria-label={t.next}
-            title={t.next}
-          >
-            →
-          </button>
-        </div>
       </div>
 
-      <div className="pointer-events-auto fixed left-4 bottom-4 z-20 max-sm:left-3 max-sm:bottom-3">
+      <div className="fixed bottom-3 right-3 z-20 flex flex-nowrap gap-2">
+        <button
+          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
+          type="button"
+          aria-label={t.back}
+          title={t.back}
+        >
+          <span className="text-xl leading-none">←</span>
+          <span>{t.back}</span>
+        </button>
+        <button
+          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          onClick={() => navigate("/p6/electric-circuit/experiments")}
+          type="button"
+          aria-label={t.next}
+          title={t.next}
+        >
+          <span>{t.next}</span>
+          <span className="text-xl leading-none">→</span>
+        </button>
+      </div>
+
+      <div className="pointer-events-auto fixed bottom-4 left-4 z-20 max-sm:bottom-3 max-sm:left-3">
         <LanguagePills lang={lang} setLang={setLang} />
       </div>
     </div>

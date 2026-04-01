@@ -9,6 +9,8 @@ const kittens = Array.from({ length: 4 }, (_, index) => ({
   genotype: "Aa",
 }));
 
+const GENOTYPE_OPTIONS = ["AA", "Aa", "aa"];
+
 const BLACK_CAT_IMG = "/images/p5/cats/black-18.jpg";
 const WHITE_CAT_IMG = "/images/p5/cats/white-6.jpg";
 
@@ -25,12 +27,20 @@ const TEXT = {
     badgeB:
       "a \u0e41\u0e17\u0e19\u0e41\u0e2d\u0e25\u0e25\u0e35\u0e25\u0e02\u0e2d\u0e07\u0e02\u0e19\u0e41\u0e21\u0e27\u0e2a\u0e35\u0e02\u0e32\u0e27",
     sideNote:
-      "\u0e01\u0e14\u0e17\u0e35\u0e48\u0e27\u0e07\u0e01\u0e25\u0e21\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01\u0e40\u0e1e\u0e37\u0e48\u0e2d\u0e40\u0e09\u0e25\u0e22\u0e17\u0e35\u0e25\u0e30\u0e15\u0e31\u0e27",
+      "\u0e40\u0e25\u0e37\u0e2d\u0e01 AA, Aa \u0e2b\u0e23\u0e37\u0e2d aa \u0e43\u0e2b\u0e49\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e41\u0e15\u0e48\u0e25\u0e30\u0e15\u0e31\u0e27 \u0e41\u0e25\u0e49\u0e27\u0e01\u0e14\u0e1b\u0e38\u0e48\u0e21\u0e40\u0e09\u0e25\u0e22",
     reset: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15",
     resetAria: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15\u0e04\u0e33\u0e15\u0e2d\u0e1a\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01",
+    reveal: "\u0e40\u0e09\u0e25\u0e22",
+    revealAria: "\u0e40\u0e09\u0e25\u0e22\u0e04\u0e33\u0e15\u0e2d\u0e1a\u0e23\u0e38\u0e48\u0e19\u0e25\u0e39\u0e01",
     blackCatAlt: "\u0e41\u0e21\u0e27\u0e2a\u0e35\u0e14\u0e33",
     whiteCatAlt: "\u0e41\u0e21\u0e27\u0e2a\u0e35\u0e02\u0e32\u0e27",
     kittenAlt: "\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e2a\u0e35\u0e14\u0e33",
+    optionAlt: "\u0e15\u0e31\u0e27\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e08\u0e35\u0e19\u0e02\u0e2d\u0e07\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27",
+    correct: "\u0e16\u0e39\u0e01",
+    incorrect: "\u0e1c\u0e34\u0e14",
+    correctAnswer: "\u0e40\u0e09\u0e25\u0e22",
+    noAnswer: "\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49\u0e40\u0e25\u0e37\u0e2d\u0e01",
+    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
   },
   en: {
     title: "Inheritance of Cat Fur Traits",
@@ -39,12 +49,20 @@ const TEXT = {
     geneText: "The fur trait is controlled by\n2 alleles:",
     badgeA: "A represents black fur allele",
     badgeB: "a represents white fur allele",
-    sideNote: "Tap each kitten to reveal one trait at a time",
+    sideNote: "Choose AA, Aa, or aa for each kitten, then press Reveal",
     reset: "Reset",
     resetAria: "Reset offspring answers",
+    reveal: "Reveal",
+    revealAria: "Reveal offspring answers",
     blackCatAlt: "black cat",
     whiteCatAlt: "white cat",
     kittenAlt: "black kitten",
+    optionAlt: "kitten genotype option",
+    correct: "Correct",
+    incorrect: "Incorrect",
+    correctAnswer: "Answer",
+    noAnswer: "No answer selected",
+    back: "Back",
   },
   ms: {
     title: "Pewarisan Ciri Bulu Kucing",
@@ -53,19 +71,29 @@ const TEXT = {
     geneText: "Ciri bulu dikawal oleh\n2 alel:",
     badgeA: "A mewakili alel bulu hitam",
     badgeB: "a mewakili alel bulu putih",
-    sideNote: "Tekan setiap anak kucing untuk lihat satu demi satu",
+    sideNote: "Pilih AA, Aa, atau aa bagi setiap anak kucing, kemudian tekan Jawapan",
     reset: "Set semula",
     resetAria: "Set semula jawapan anak",
+    reveal: "Jawapan",
+    revealAria: "Tunjukkan jawapan anak",
     blackCatAlt: "kucing hitam",
     whiteCatAlt: "kucing putih",
     kittenAlt: "anak kucing hitam",
+    optionAlt: "pilihan genotip anak kucing",
+    correct: "Betul",
+    incorrect: "Salah",
+    correctAnswer: "Jawapan",
+    noAnswer: "Belum pilih",
+    back: "Kembali",
   },
 };
 
 export default function P5GeneticsAnimals() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const [revealedKittens, setRevealedKittens] = useState(() => kittens.map(() => false));
+  const [selectedGenotypes, setSelectedGenotypes] = useState(() => kittens.map(() => ""));
+  const [showAnswers, setShowAnswers] = useState(false);
+  const [activeKittenId, setActiveKittenId] = useState(null);
   const [lineLayout, setLineLayout] = useState(null);
   const stageRef = useRef(null);
   const parentGenotypeRefs = useRef([]);
@@ -132,17 +160,25 @@ export default function P5GeneticsAnimals() {
   }, []);
 
   const shift = (point, dx = 0, dy = 0) => ({ x: point.x + dx, y: point.y + dy });
-  const hasRevealed = revealedKittens.some(Boolean);
-  const revealKitten = (id) => {
-    setRevealedKittens((prev) => {
-      if (prev[id]) return prev;
+  const hasSelections = selectedGenotypes.some(Boolean);
+  const getGenotypeImage = (genotype) => (genotype === "aa" ? WHITE_CAT_IMG : BLACK_CAT_IMG);
+  const selectGenotype = (id, genotype) => {
+    setSelectedGenotypes((prev) => {
+      if (prev[id] === genotype) return prev;
       const next = [...prev];
-      next[id] = true;
+      next[id] = genotype;
       return next;
     });
+    setActiveKittenId(null);
   };
   const resetKittens = () => {
-    setRevealedKittens(kittens.map(() => false));
+    setSelectedGenotypes(kittens.map(() => ""));
+    setShowAnswers(false);
+    setActiveKittenId(null);
+  };
+  const revealAnswers = () => {
+    setShowAnswers(true);
+    setActiveKittenId(null);
   };
 
   const lineSegments = lineLayout
@@ -225,24 +261,57 @@ export default function P5GeneticsAnimals() {
 
             <div className="p5ga-kitten-row">
               {kittens.map((kitten) => {
-                const isRevealed = revealedKittens[kitten.id];
+                const selectedGenotype = selectedGenotypes[kitten.id];
+                const displayedGenotype = showAnswers ? kitten.genotype : selectedGenotype;
+                const displayedImage = displayedGenotype ? getGenotypeImage(displayedGenotype) : null;
+                const isChooserOpen = activeKittenId === kitten.id && !showAnswers;
+                const isCorrect = selectedGenotype === kitten.genotype;
                 return (
                   <div key={kitten.id} className="p5ga-kitten-block">
                     <button
                       type="button"
-                      className="p5ga-kitten-btn"
-                      onClick={() => revealKitten(kitten.id)}
-                      disabled={isRevealed}
-                      aria-label={t.sideNote}
+                      className="p5ga-kitten-trigger"
+                      onClick={() => setActiveKittenId((prev) => (prev === kitten.id ? null : kitten.id))}
+                      disabled={showAnswers}
                     >
                       <div
-                        className={`p5ga-kitten ${isRevealed ? "is-revealed" : ""}`}
+                        className={`p5ga-kitten ${displayedImage ? "is-revealed" : ""} ${isChooserOpen ? "is-active" : ""}`}
                         ref={(node) => (kittenRefs.current[kitten.id] = node)}
                       >
-                        {isRevealed ? <img src={BLACK_CAT_IMG} alt={t.kittenAlt} className="p5ga-kitten-img" /> : null}
+                        {displayedImage ? <img src={displayedImage} alt={t.kittenAlt} className="p5ga-kitten-img" /> : null}
                       </div>
                     </button>
-                    <p className="p5ga-kitten-genotype">{isRevealed ? kitten.genotype : ".........."}</p>
+                    <p className="p5ga-kitten-genotype">{displayedGenotype || ".........."}</p>
+                    {showAnswers ? (
+                      <div className={`p5ga-feedback ${isCorrect ? "is-correct" : "is-incorrect"}`}>
+                        <p className="p5ga-feedback-status">{isCorrect ? t.correct : t.incorrect}</p>
+                        {!isCorrect ? (
+                          <p className="p5ga-feedback-answer">
+                            {selectedGenotype ? null : `${t.noAnswer} `}
+                            {t.correctAnswer}: {kitten.genotype}
+                          </p>
+                        ) : null}
+                      </div>
+                    ) : null}
+                    {isChooserOpen ? (
+                      <div className="p5ga-choice-row" role="group" aria-label={t.optionAlt}>
+                        {GENOTYPE_OPTIONS.map((option) => (
+                          <button
+                            key={option}
+                            type="button"
+                            className={`p5ga-choice ${selectedGenotype === option ? "is-selected" : ""}`}
+                            onClick={() => selectGenotype(kitten.id, option)}
+                          >
+                            <img
+                              src={getGenotypeImage(option)}
+                              alt={t.optionAlt}
+                              className="p5ga-choice-img"
+                            />
+                            <span>{option}</span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
                   </div>
                 );
               })}
@@ -262,10 +331,19 @@ export default function P5GeneticsAnimals() {
               type="button"
               className="p5ga-reset"
               onClick={resetKittens}
-              disabled={!hasRevealed}
+              disabled={!hasSelections && !showAnswers}
               aria-label={t.resetAria}
             >
               {t.reset}
+            </button>
+            <button
+              type="button"
+              className="p5ga-reveal"
+              onClick={revealAnswers}
+              disabled={showAnswers}
+              aria-label={t.revealAria}
+            >
+              {t.reveal}
             </button>
             <p className="p5ga-side-note">{t.sideNote}</p>
           </aside>
@@ -294,18 +372,24 @@ export default function P5GeneticsAnimals() {
             >
               {labels.ms}
             </button>
-            <button type="button" className="p5ga-audio" aria-label="audio">
-              {"\uD83D\uDD0A"}
-            </button>
           </div>
 
-          <button
-            type="button"
-            className="p5ga-next"
-            onClick={() => navigate("/p5/life/genetics/animals/summary")}
-          >
-            {NEXT_LABEL[lang]}
-          </button>
+          <div className="p5ga-actions">
+            <button
+              type="button"
+              className="p5ga-back"
+              onClick={() => navigate("/p5/life/genetics")}
+            >
+              {t.back}
+            </button>
+            <button
+              type="button"
+              className="p5ga-next"
+              onClick={() => navigate("/p5/life/genetics/animals/summary")}
+            >
+              {NEXT_LABEL[lang]}
+            </button>
+          </div>
         </footer>
       </div>
     </LabLayout>

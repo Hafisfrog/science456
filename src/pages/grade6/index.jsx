@@ -20,7 +20,7 @@ const EXPERIMENTS = [
       en: "Generating Electric Force",
       ms: "Penghasilan Daya Elektrik",
     },
-    image: "/images/p6.png",
+    image: "/images/p6/equipment/balloons-real.svg",
     path: "/p6/experiment/electric-generation/materials?from=unit",
   },
   {
@@ -35,7 +35,7 @@ const EXPERIMENTS = [
       en: "Effects of Electric Force",
       ms: "Kesan Daya Elektrik",
     },
-    image: "/images/p6.png",
+    image: "/images/p6/force-effect/comb-real.svg",
     path: "/p6/experiment/electric-force-effect",
   },
 ];
@@ -44,19 +44,19 @@ const PAGE_COPY = {
   th: {
     title: "แรงไฟฟ้าน่ารู้",
     subtitle: "เลือกการทดลอง",
-    backLabel: "กลับคำศัพท์",
+    backLabel: "ย้อนกลับ",
     languageLabel: "เลือกภาษา",
   },
   en: {
     title: "Electric Force",
     subtitle: "Choose an Experiment",
-    backLabel: "Back to Vocabulary",
+    backLabel: "Back",
     languageLabel: "Choose language",
   },
   ms: {
     title: "Daya Elektrik",
     subtitle: "Pilih Eksperimen",
-    backLabel: "Kembali ke Kosa Kata",
+    backLabel: "Kembali",
     languageLabel: "Pilih bahasa",
   },
 };
@@ -152,17 +152,18 @@ export default function Grade6() {
         </div>
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-6 md:right-6">
-        <button
-          className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-2xl text-slate-700 shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
-          type="button"
-          onClick={() => navigate(backPath)}
-          aria-label={copy.backLabel}
-          title={copy.backLabel}
-        >
-          ←
-        </button>
-      </div>
+       <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-6 md:right-6">
+         <button
+           className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
+           type="button"
+           onClick={() => navigate(backPath)}
+           aria-label={copy.backLabel}
+           title={copy.backLabel}
+         >
+           <span className="text-2xl leading-none">←</span>
+           <span className="text-sm font-bold leading-none">{copy.backLabel}</span>
+         </button>
+       </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 .p5gh-page {
   height: 100%;
-  background: linear-gradient(180deg, #d8deec 0%, #d1d7e4 100%);
-  padding: 8px 14px;
+  background: linear-gradient(180deg, #ffffff 0 calc(100% - 86px), #9dcc53 calc(100% - 86px) 100%);
+  padding: 8px 14px 0;
   display: flex;
   flex-direction: column;
   font-family: "Prompt", sans-serif;
@@ -12,15 +12,10 @@
   flex: 1;
   min-height: 0;
   padding: 14px 16px 8px;
-  background:
-    radial-gradient(36% 30% at 24% 66%, rgba(167, 207, 150, 0.28) 0 58%, transparent 59%),
-    radial-gradient(38% 30% at 70% 54%, rgba(167, 207, 150, 0.24) 0 58%, transparent 59%),
-    linear-gradient(180deg, #f5f7f4 0%, #eff4ec 100%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 28px 28px 0 0;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    0 22px 42px rgba(24, 34, 58, 0.16);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -37,7 +32,7 @@
   padding: 8px 16px;
   border: 4px solid #111827;
   border-radius: 26px;
-  background: #fff;
+  background: #ffffff;
   font-size: clamp(24px, 1.75vw, 36px);
   font-weight: 900;
   line-height: 1.2;
@@ -78,6 +73,66 @@
   font-weight: 900;
 }
 
+.p5gh-summary-score,
+.p5gh-summary-wrong,
+.p5gh-summary-correct {
+  margin: 0;
+  padding: 6px 8px;
+  border-radius: 12px;
+  font-size: clamp(12px, 0.86vw, 16px);
+  line-height: 1.2;
+  font-weight: 800;
+  text-align: center;
+}
+
+.p5gh-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(2px);
+}
+
+.p5gh-modal {
+  width: min(520px, calc(100vw - 40px));
+  padding: 20px 18px 18px;
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.24);
+  display: grid;
+  gap: 10px;
+}
+
+.p5gh-modal-close {
+  justify-self: center;
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 22px 10px;
+  background: linear-gradient(180deg, #ff8a66, #ef5a3b);
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.p5gh-summary-score {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+.p5gh-summary-wrong {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.p5gh-summary-correct {
+  background: #dcfce7;
+  color: #166534;
+}
+
 .p5gh-reset {
   margin-top: 10px;
   border: 0;
@@ -100,21 +155,44 @@
   cursor: not-allowed;
 }
 
+.p5gh-reveal {
+  margin-top: 8px;
+  border: 0;
+  border-radius: 999px;
+  padding: 6px 14px 8px;
+  background: linear-gradient(180deg, #ff8a66, #ef5a3b);
+  box-shadow:
+    inset 0 0 0 3px rgba(161, 64, 27, 0.24),
+    0 6px 14px rgba(194, 84, 47, 0.28);
+  color: #fff;
+  font-size: clamp(16px, 0.95vw, 20px);
+  line-height: 1;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.p5gh-reveal:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .p5gh-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   grid-template-rows: repeat(2, minmax(0, 1fr));
   height: 100%;
   border: 3px solid #111827;
+  background: #ffffff;
 }
 
 .p5gh-card {
   min-height: 0;
   border-right: 3px solid #111827;
   border-bottom: 3px solid #111827;
-  background: rgba(255, 255, 255, 0.06);
+  background: #ffffff;
   display: flex;
   flex-direction: column;
+  padding-bottom: 6px;
 }
 
 .p5gh-card:nth-child(6n) {
@@ -131,6 +209,7 @@
   display: grid;
   place-items: center;
   padding-top: 6px;
+  overflow: hidden;
 }
 
 .p5gh-choice {
@@ -139,6 +218,19 @@
   background: transparent;
   cursor: pointer;
   flex: 1;
+}
+
+.p5gh-picked {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 150%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(239, 68, 68, 0.95);
+  transform: translate(-50%, -50%) rotate(-34deg);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  pointer-events: none;
 }
 
 .p5gh-image {
@@ -187,65 +279,140 @@
   font-size: clamp(14px, 1.02vw, 21px);
   line-height: 1.15;
   font-weight: 800;
+  position: relative;
+  z-index: 2;
 }
 
 .p5gh-ground {
   height: 74px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 20%),
-    linear-gradient(180deg, #a7d45a 0 46%, #95c748 47% 100%);
+  background: #9dcc53;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   padding: 0 10px 6px;
-  border-radius: 0 0 26px 26px;
-  box-shadow: 0 16px 30px rgba(24, 34, 58, 0.14);
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .p5gh-lang {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 5px;
-  border: 4px solid #87b6ff;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #f5f9ff, #ebf2ff);
+  padding: 6px 8px;
+  border: 2px solid #bfe5c9;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 10px 24px rgba(75, 123, 92, 0.18);
 }
 
 .p5gh-lang button {
   border: 0;
   border-radius: 999px;
-  padding: 5px 12px;
+  min-width: 74px;
+  min-height: 38px;
+  padding: 8px 18px;
   font-size: clamp(14px, 0.8vw, 18px);
-  font-weight: 700;
-  color: #1f8fb7;
-  background: #9bd7ff;
+  font-weight: 800;
+  color: #0f6c5c;
+  background: linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%);
   cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transition:
+    transform 0.16s ease,
+    background-color 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.p5gh-lang button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #f3fcf6 0%, #e8f7ee 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.88),
+    0 6px 14px rgba(79, 138, 98, 0.14);
 }
 
 .p5gh-lang button.is-active {
-  background: #5cb0ff;
+  background: linear-gradient(180deg, #12c06d 0%, #06a85d 100%);
   color: #fff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 8px 16px rgba(6, 168, 93, 0.28);
 }
 
-.p5gh-lang .p5gh-audio {
-  background: #73a8ff;
-  color: #fff;
+.p5gh-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
+.p5gh-back,
 .p5gh-next {
   border: 0;
   border-radius: 999px;
-  background: linear-gradient(180deg, #ff6767, #e63f3f);
-  padding: 7px 20px 9px;
-  box-shadow:
-    inset 0 0 0 4px rgba(171, 50, 50, 0.35),
-    0 10px 18px rgba(172, 46, 46, 0.32);
-  color: #fff;
   font-size: clamp(20px, 1.4vw, 30px);
   line-height: 1;
   font-weight: 800;
   cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease;
+}
+
+.p5gh-back {
+  padding: 10px 24px 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 0 0 2px rgba(203, 213, 225, 0.88),
+    0 4px 0 rgba(148, 163, 184, 0.55),
+    0 12px 18px rgba(15, 23, 42, 0.12);
+  color: #0f172a;
+}
+
+.p5gh-next {
+  background: linear-gradient(180deg, #ff766d 0%, #f34f44 55%, #e94239 100%);
+  padding: 10px 26px 12px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 0 0 2px rgba(205, 65, 56, 0.95),
+    0 4px 0 rgba(182, 53, 46, 0.95),
+    0 12px 18px rgba(172, 46, 46, 0.28);
+  color: #fff;
+}
+
+.p5gh-back:hover,
+.p5gh-next:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.02);
+}
+
+.p5gh-back:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 2px rgba(203, 213, 225, 0.9),
+    0 6px 0 rgba(148, 163, 184, 0.58),
+    0 16px 24px rgba(15, 23, 42, 0.14);
+}
+
+.p5gh-next:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 0 0 2px rgba(205, 65, 56, 0.98),
+    0 6px 0 rgba(182, 53, 46, 1),
+    0 16px 24px rgba(172, 46, 46, 0.32);
+}
+
+.p5gh-back:active,
+.p5gh-next:active {
+  transform: translateY(2px);
+}
+
+.p5gh-back:focus-visible,
+.p5gh-next:focus-visible {
+  outline: 3px solid rgba(59, 130, 246, 0.35);
+  outline-offset: 2px;
 }
 
 @media (max-width: 1180px) {
@@ -273,7 +440,7 @@
   }
 
   .p5gh-card {
-    min-height: 148px;
+    min-height: 210px;
   }
 
   .p5gh-choice {
@@ -347,5 +514,16 @@
   .p5gh-lang {
     width: 100%;
     justify-content: center;
+  }
+
+  .p5gh-lang button {
+    min-width: 68px;
+    min-height: 34px;
+    padding: 7px 14px;
+  }
+
+  .p5gh-actions {
+    width: 100%;
+    justify-content: flex-end;
   }
 }

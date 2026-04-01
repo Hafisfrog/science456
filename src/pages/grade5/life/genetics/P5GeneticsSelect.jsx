@@ -2,6 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
 
+const LANG_TO_VOICE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
 const PAGE_TEXT = {
   th: {
     chip: "\u0e0a\u0e31\u0e49\u0e19\u0e1b\u0e23\u0e30\u0e16\u0e21\u0e28\u0e36\u0e01\u0e29\u0e32\u0e1b\u0e35\u0e17\u0e35\u0e48 5",
@@ -15,6 +21,8 @@ const PAGE_TEXT = {
           "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e2a\u0e31\u0e15\u0e27\u0e4c",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
+        image: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5/cats/black-18.jpg",
       },
       {
         id: 7,
@@ -23,6 +31,8 @@ const PAGE_TEXT = {
           "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
+        image: "https://images.pexels.com/photos/1407305/pexels-photo-1407305.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5/tall.png",
       },
       {
         id: 8,
@@ -31,6 +41,8 @@ const PAGE_TEXT = {
           "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
+        image: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5.png",
       },
     ],
   },
@@ -45,6 +57,8 @@ const PAGE_TEXT = {
         label: "Genetic Traits of Animals",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
+        image: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5/cats/black-18.jpg",
       },
       {
         id: 7,
@@ -52,6 +66,8 @@ const PAGE_TEXT = {
         label: "Genetic Traits of Plants",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
+        image: "https://images.pexels.com/photos/1407305/pexels-photo-1407305.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5/tall.png",
       },
       {
         id: 8,
@@ -59,6 +75,8 @@ const PAGE_TEXT = {
         label: "Genetic Traits of Humans",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
+        image: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5.png",
       },
     ],
   },
@@ -73,6 +91,8 @@ const PAGE_TEXT = {
         label: "Ciri Genetik Haiwan",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
+        image: "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5/cats/black-18.jpg",
       },
       {
         id: 7,
@@ -80,6 +100,8 @@ const PAGE_TEXT = {
         label: "Ciri Genetik Tumbuhan",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
+        image: "https://images.pexels.com/photos/1407305/pexels-photo-1407305.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5/tall.png",
       },
       {
         id: 8,
@@ -87,6 +109,8 @@ const PAGE_TEXT = {
         label: "Ciri Genetik Manusia",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
+        image: "https://images.pexels.com/photos/762020/pexels-photo-762020.jpeg?auto=compress&cs=tinysrgb&w=900&h=600&fit=crop",
+        fallbackImage: "/images/p5.png",
       },
     ],
   },
@@ -98,46 +122,66 @@ export default function P5GeneticsSelect() {
   const t = PAGE_TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
 
-  return (
-    <div className="p5gen-page">
-      <div className="p5gen-sky" />
-      <div className="p5gen-cloud cloud-a" />
-      <div className="p5gen-cloud cloud-b" />
-      <div className="p5gen-sun" />
-      <div className="p5gen-halo" />
-      <div className="p5gen-ground" />
-      <div className="p5gen-fence left" />
-      <div className="p5gen-fence right" />
+  const speakCard = (event, exp) => {
+    event.stopPropagation();
+    if (typeof window === "undefined" || !("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
+      return;
+    }
 
+    const synth = window.speechSynthesis;
+    synth.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(`${exp.title}. ${exp.label}`);
+    utterance.lang = LANG_TO_VOICE[lang];
+    synth.speak(utterance);
+  };
+
+  return (
+    <div className="p5gen-page notranslate" translate="no">
       <button type="button" className="p5gen-back" onClick={() => navigate("/grades")}>
         {t.back}
       </button>
 
       <main className="p5gen-main">
-        <div className="p5gen-chip">{t.chip}</div>
-
-        <div className="p5gen-titlebox">
-          <span className="p5gen-dot" />
-          <h1>{t.title}</h1>
+        <div className="p5gen-heading">
+          <div className="p5gen-chip notranslate" translate="no">Science Lab</div>
+          <h1 className="notranslate" translate="no">{t.title}</h1>
+          <p className="notranslate" translate="no">{t.chip}</p>
         </div>
 
-        <section className="p5gen-map">
-          <img className="p5gen-character" src="/images/p4/exp1/character-girl.png" alt="student" />
-
-          <div className="p5gen-rail" />
-          <div className="p5gen-list">
-            {t.experiments.map((exp) => (
-              <button
-                key={exp.id}
-                type="button"
-                className={`p5gen-row ${exp.tone}`}
-                onClick={() => navigate(exp.path)}
-              >
-                <span className="p5gen-row-title">{exp.title}</span>
-                <span className="p5gen-row-label">{exp.label}</span>
-              </button>
-            ))}
-          </div>
+        <section className="p5gen-card-grid">
+          {t.experiments.map((exp) => (
+            <button
+              key={exp.id}
+              type="button"
+              className={`p5gen-card ${exp.tone}`}
+              onClick={() => navigate(exp.path)}
+            >
+              <div className="p5gen-card-media">
+                <img
+                  src={exp.image}
+                  alt={exp.label}
+                  className="p5gen-card-image"
+                  referrerPolicy="no-referrer"
+                  onError={(event) => {
+                    event.currentTarget.src = exp.fallbackImage;
+                  }}
+                />
+              </div>
+              <div className="p5gen-card-body">
+                <button
+                  type="button"
+                  className="p5gen-card-audio"
+                  aria-label={`play ${exp.title}`}
+                  onClick={(event) => speakCard(event, exp)}
+                >
+                  {"\uD83D\uDD0A"}
+                </button>
+                <span className="p5gen-card-kicker notranslate" translate="no">{exp.title}</span>
+                <span className="p5gen-card-title notranslate" translate="no">{exp.label}</span>
+              </div>
+            </button>
+          ))}
         </section>
       </main>
 
@@ -163,7 +207,6 @@ export default function P5GeneticsSelect() {
         >
           {labels.ms}
         </button>
-        <button type="button" aria-label="audio" className="p5gen-audio">{"\uD83D\uDD0A"}</button>
       </div>
     </div>
   );

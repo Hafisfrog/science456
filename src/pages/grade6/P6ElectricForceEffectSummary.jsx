@@ -1,4 +1,11 @@
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "English" },
+  { id: "ms", label: "Melayu" },
+];
 
 const formatTime = (totalSeconds) => {
   const safe = Number.isFinite(totalSeconds) && totalSeconds >= 0 ? totalSeconds : 0;
@@ -24,10 +31,18 @@ export default function P6ElectricForceEffectSummary() {
   const timeParam = Number(searchParams.get("time") || 0);
   const equipmentParam = searchParams.get("equipment");
   const summaryItems = SUMMARY_BY_EQUIPMENT[equipmentParam] || SUMMARY_BY_EQUIPMENT.balloon;
+  const [language, setLanguage] = useState("th");
+  const backLabel = language === "th" ? "ย้อนกลับ" : language === "en" ? "Back" : "Kembali";
+  const nextLabel =
+    language === "th"
+      ? "สรุปสาระสำคัญ"
+      : language === "en"
+        ? "Key Takeaways"
+        : "Ringkasan Utama";
 
   const pageBg = {
     background:
-      "radial-gradient(circle at 25% 12%, rgba(255, 255, 255, 0.7), transparent 55%), radial-gradient(circle at 85% 18%, rgba(255, 255, 255, 0.55), transparent 52%), repeating-linear-gradient(0deg, transparent 0 26px, rgba(44, 112, 201, 0.06) 26px 27px), repeating-linear-gradient(90deg, transparent 0 26px, rgba(44, 112, 201, 0.06) 26px 27px), linear-gradient(180deg, #e8f7ff, #dff3ff 55%, #edf9ff)",
+      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
   };
 
   return (
@@ -35,38 +50,8 @@ export default function P6ElectricForceEffectSummary() {
       className="grid min-h-screen place-items-center p-[clamp(18px,4vw,46px)] text-slate-900"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
-      <div className="relative w-[min(1100px,100%)]">
-        <div className="relative overflow-hidden rounded-[22px] border-2 border-white/75 bg-[#e7f7ff]/92 p-[clamp(22px,4vw,34px)] pr-[clamp(70px,10vw,110px)] shadow-[0_28px_56px_rgba(17,24,39,0.14)] backdrop-blur-[10px] max-[720px]:pr-[22px]">
-          <button
-            className="absolute right-[18px] top-[18px] grid h-[58px] w-[58px] place-items-center rounded-[18px] border-2 border-slate-900/35 bg-white/75 shadow-[0_14px_22px_rgba(17,24,39,0.16)] max-[720px]:static max-[720px]:mb-2.5 max-[720px]:ml-auto"
-            type="button"
-            aria-label="sound"
-          >
-            <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-              <path
-                d="M14 26h12l14-10v32l-14-10H14z"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M46 22c4 4 4 16 0 20"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-              <path
-                d="M52 16c7 7 7 25 0 32"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
-
+      <div className="relative flex min-h-[calc(100vh-90px)] w-[min(1100px,100%)] flex-col">
+        <div className="relative overflow-hidden rounded-[22px] bg-[#e7f7ff]/92 p-[clamp(22px,4vw,34px)] shadow-[0_28px_56px_rgba(17,24,39,0.14)] backdrop-blur-[10px]">
           <h1 className="mb-[14px] mt-0 text-[clamp(22px,2.6vw,30px)] font-black">สรุปผลการทดลอง</h1>
 
           <ol className="m-0 grid gap-[18px] pl-[22px]">
@@ -84,26 +69,51 @@ export default function P6ElectricForceEffectSummary() {
           )}
         </div>
 
-        <div className="mt-[18px] flex flex-wrap justify-between gap-3 max-[720px]:justify-center">
-          <button
-            className="cursor-pointer rounded-2xl bg-white/95 px-[18px] py-3 font-black text-slate-900 shadow-[0_16px_28px_rgba(17,24,39,0.14)] transition hover:-translate-y-0.5"
-            type="button"
-            onClick={() => navigate("/p6/experiment/electric-force-effect/sim")}
-          >
-            ← กลับหน้าทดลอง
-          </button>
-        </div>
+        <div className="mt-auto" />
 
-        <div className="relative mt-[18px] h-[220px] overflow-hidden rounded-[18px] bg-gradient-to-b from-[#e7f7ff]/0 to-sky-300/35" aria-hidden="true">
-          <div
-            className="absolute inset-[-30%_-10%_-10%_-10%] origin-top"
-            style={{
-              transform: "perspective(700px) rotateX(65deg)",
-              background:
-                "repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.85) 0 3px, transparent 3px 44px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0 3px, transparent 3px 88px)",
-            }}
-          />
-        </div>
+        <div className="mt-auto" />
+      </div>
+
+      <div className="fixed bottom-6 left-6 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
+        {LANGUAGE_OPTIONS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLanguage(item.id)}
+            className={`rounded-xl px-4 py-2 font-bold ${
+              language === item.id ? "bg-sky-500 text-white" : "bg-sky-100"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="fixed bottom-6 right-6 z-20 flex gap-3">
+        <button
+          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
+          type="button"
+          onClick={() =>
+            navigate(
+              `/p6/experiment/electric-force-effect/result?time=${Number.isFinite(timeParam) ? timeParam : 0}`
+            )
+          }
+          aria-label={backLabel}
+          title={backLabel}
+        >
+          <span className="text-[22px] leading-none">←</span>
+          <span className="text-sm font-black leading-none">{backLabel}</span>
+        </button>
+        <button
+          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+          type="button"
+          onClick={() => navigate("/p6/experiment/electric-force-effect/key-summary")}
+          aria-label={nextLabel}
+          title={nextLabel}
+        >
+          <span className="text-sm font-black leading-none">{nextLabel}</span>
+          <span className="text-[22px] leading-none">→</span>
+        </button>
       </div>
     </div>
   );

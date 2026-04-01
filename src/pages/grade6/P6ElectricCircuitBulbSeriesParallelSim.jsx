@@ -1,43 +1,54 @@
-import { useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./P6ElectricCircuitBulbSeriesParallelSim.css";
+
+const DEVICE_MEDIA = {
+  holder: {
+    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
+  },
+  bulb: {
+    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
+  },
+};
 
 const TEXT = {
   th: {
     badge: "ไฟฟ้ารอบตัวคุณ",
     title: "จำลองการต่อหลอดไฟแบบอนุกรมและขนาน",
-    instruction: "คลิกที่หลอดไฟเพื่อถอดออกหรือใส่กลับ แล้วดูผลที่เกิดขึ้น",
+    previewLabel: "ตัวอย่าง",
+    trialLabel: "ทดลอง",
     series: {
-      heading: "ต่อแบบอนุกรม",
-      on: "วงจรปิด → ทั้งสองหลอดสว่าง",
-      off: "ถอดหลอดหนึ่งออก → วงจรเปิด ทั้งสองหลอดดับ",
+      heading: "ต่อแบบขนาน",
+      on: "วงจรปิด -> ทั้งสองหลอดสว่าง",
+      off: "ถอดหลอดหนึ่งดวง -> วงจรเปิด ทั้งสองหลอดดับ",
     },
     parallel: {
-      heading: "ต่อแบบขนาน",
-      on: "วงจรปิด → ทั้งสองหลอดสว่าง",
-      oneOn: "ถอดหลอดหนึ่งออก → อีกหลอดยังสว่าง เพราะยังมีทางเดินกระแส",
+      heading: "ต่อแบบอนุกรม",
+      on: "วงจรปิด -> ทั้งสองหลอดสว่าง",
+      oneOn: "ถอดหลอดหนึ่งดวง -> อีกหลอดยังสว่าง เพราะยังมีทางเดินกระแส",
     },
-    reset: "เริ่มใหม่",
     back: "ย้อนกลับ",
     next: "ต่อไป",
     lang: { th: "ไทย", en: "English", ms: "Melayu" },
   },
   en: {
     badge: "Electricity Around You",
-    title: "Simulate Series vs Parallel Bulb Circuits",
-    instruction: "Click a bulb to remove or attach it, then observe the result.",
+    title: "Simulate Series and Parallel Bulb Circuits",
+    previewLabel: "Example",
+    trialLabel: "Try It",
     series: {
       heading: "Series connection",
-      on: "Circuit closed → both bulbs light up",
-      off: "Remove one bulb → circuit opens, both bulbs go off",
+      on: "Circuit closed -> both bulbs light up",
+      off: "Remove one bulb -> circuit opens, both bulbs go off",
     },
     parallel: {
       heading: "Parallel connection",
-      on: "Circuit closed → both bulbs light up",
-      oneOn: "Remove one bulb → the other stays on because its path is still complete",
+      on: "Circuit closed -> both bulbs light up",
+      oneOn: "Remove one bulb -> the other stays on",
     },
-    reset: "Reset",
     back: "Back",
     next: "Next",
     lang: { th: "Thai", en: "English", ms: "Malay" },
@@ -45,18 +56,18 @@ const TEXT = {
   ms: {
     badge: "Litar elektrik dekat kita",
     title: "Simulasi sambungan mentol siri dan selari",
-    instruction: "Klik mentol untuk tanggal atau pasang semula, kemudian lihat kesannya.",
+    previewLabel: "Contoh",
+    trialLabel: "Uji",
     series: {
       heading: "Sambungan siri",
-      on: "Litar tertutup → kedua‑dua mentol menyala",
-      off: "Tanggal satu mentol → litar terbuka, kedua‑dua mentol padam",
+      on: "Litar tertutup -> kedua-dua mentol menyala",
+      off: "Tanggal satu mentol -> litar terbuka, kedua-dua mentol padam",
     },
     parallel: {
       heading: "Sambungan selari",
-      on: "Litar tertutup → kedua‑dua mentol menyala",
-      oneOn: "Tanggal satu mentol → mentol lain masih menyala kerana laluan masih lengkap",
+      on: "Litar tertutup -> kedua-dua mentol menyala",
+      oneOn: "Tanggal satu mentol -> mentol lain masih menyala",
     },
-    reset: "Set semula",
     back: "Kembali",
     next: "Seterusnya",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
@@ -71,132 +82,134 @@ function LanguagePills({ lang, setLang, labels }) {
   ];
 
   return (
-    <div className="p6-circuit-bsp-sim-lang shadow-[0_12px_24px_rgba(0,0,0,0.12)] ring-2 ring-white/85">
+    <div className="inline-flex items-center gap-1">
       {pills.map((p) => (
         <button
           key={p.code}
           type="button"
           onClick={() => setLang(p.code)}
-          className={`rounded-full px-2 py-1 text-[15px] font-black transition ${
+          className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
             lang === p.code
-              ? "bg-blue-600 text-white shadow-[0_8px_16px_rgba(37,99,235,0.35)]"
-              : "text-slate-800 hover:bg-white"
+              ? "bg-sky-500 text-white"
+              : "bg-sky-100 text-slate-800"
           }`}
         >
-          <span>{p.label}</span>
+          {p.label}
         </button>
       ))}
     </div>
   );
 }
 
-function Bulb({ cx, cy, isOn, onToggle, clickable = true }) {
-  const glassId = `glass-${cx}-${cy}`;
-  const glowId = `glow-${cx}-${cy}`;
-
+function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   return (
-    <g
-      className={`p6-circuit-bsp-sim-bulb ${clickable ? "is-clickable" : ""} ${!isOn && clickable ? "is-removed" : ""}`}
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={(event) => {
+        if (event.currentTarget.dataset.fallbackApplied === "true") return;
+        event.currentTarget.dataset.fallbackApplied = "true";
+        event.currentTarget.src = fallbackSrc;
+      }}
+    />
+  );
+}
+
+function BulbNode({ isOn, onToggle, clickable = true }) {
+  return (
+    <button
+      type="button"
+      className={`p6-circuit-bsp-sim-bulb-node ${clickable ? "is-clickable" : ""} ${!isOn ? "is-removed" : ""}`}
       onClick={clickable ? onToggle : undefined}
-      role={clickable ? "button" : undefined}
-      tabIndex={clickable ? 0 : undefined}
+      aria-label={clickable ? "toggle bulb" : undefined}
+      disabled={!clickable}
     >
-      <defs>
-        <radialGradient id={glowId} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#fde68a" stopOpacity="0.8" />
-          <stop offset="55%" stopColor="#fbbf24" stopOpacity="0.65" />
-          <stop offset="100%" stopColor="#fbbf24" stopOpacity="0" />
-        </radialGradient>
-        <radialGradient id={glassId} cx="50%" cy="38%" r="62%">
-          <stop offset="0%" stopColor={isOn ? "#fff7d6" : "#f8fafc"} />
-          <stop offset="60%" stopColor={isOn ? "#fde047" : "#e2e8f0"} />
-          <stop offset="100%" stopColor={isOn ? "#facc15" : "#cbd5e1"} />
-        </radialGradient>
-      </defs>
-
-      {isOn && <circle cx={cx} cy={cy} r={34} fill={`url(#${glowId})`} className="bulb-glow" />}
-
-      <circle cx={cx} cy={cy} r={26} fill={`url(#${glassId})`} stroke={isOn ? "#f59e0b" : "#94a3b8"} strokeWidth={3} />
-
-      <path
-        d={`M ${cx - 6} ${cy + 4} q 6 -6 12 0`}
-        fill="none"
-        stroke={isOn ? "#ca8a04" : "#475569"}
-        strokeWidth={3.5}
-        strokeLinecap="round"
+      {isOn && <span className="p6-circuit-bsp-sim-bulb-glow" />}
+      <EquipmentImage
+        src={DEVICE_MEDIA.bulb.image}
+        fallbackSrc={DEVICE_MEDIA.bulb.fallbackImage}
+        alt="bulb"
+        className="p6-circuit-bsp-sim-bulb-img"
       />
-      <path
-        d={`M ${cx - 12} ${cy + 10} h 24`}
-        stroke="#0f172a"
-        strokeWidth={3}
-        strokeLinecap="round"
-      />
-
-      <rect x={cx - 12} y={cy + 18} width={24} height={15} rx={4} fill="#0f172a" />
-      <rect x={cx - 12} y={cy + 18} width={24} height={7} rx={4} fill="#1e293b" />
-      <rect x={cx - 8} y={cy + 12} width={16} height={8} rx={3} fill="#e2e8f0" opacity={0.85} />
-    </g>
+    </button>
   );
 }
 
-function SeriesCircuit({ removed, onToggle }) {
+function SeriesCircuit({ removed, onToggle, interactive = true }) {
   const bulbOn = !removed;
-
   return (
-    <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-label="Series circuit">
-      <rect x="18" y="70" width="26" height="70" rx="6" fill="#0ea5e9" />
-      <rect x="44" y="70" width="24" height="70" rx="6" fill="#0284c7" />
-      <path
-        d="M68 78 H120 L120 94 M120 116 L120 134 H68 V154 H292 V134"
-        fill="none"
-        stroke="#0f172a"
-        strokeWidth={6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M292 134 V78 H220"
-        fill="none"
-        stroke="#0f172a"
-        strokeWidth={6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      <Bulb cx={160} cy={106} isOn={bulbOn} onToggle={onToggle} />
-      <Bulb cx={240} cy={106} isOn={bulbOn} onToggle={onToggle} />
-    </svg>
+    <div
+      className={`p6-circuit-bsp-sim-board ${interactive ? "" : "is-preview"}`}
+      aria-label="Series circuit"
+    >
+      <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-hidden="true">
+        <path d="M116 66 H142" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
+        <path d="M174 66 H206" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
+        <path d="M238 66 H264 V128 H236" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M186 128 H116 V66" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      <div className="p6-circuit-bsp-sim-holder p6-circuit-bsp-sim-holder-s">
+        <EquipmentImage
+          src={DEVICE_MEDIA.holder.image}
+          fallbackSrc={DEVICE_MEDIA.holder.fallbackImage}
+          alt="holder"
+          className="p6-circuit-bsp-sim-holder-img"
+        />
+      </div>
+      <div className="p6-circuit-bsp-sim-bulb-a p6-circuit-bsp-sim-bulb-s1">
+        <BulbNode isOn={bulbOn} onToggle={onToggle} clickable={interactive} />
+      </div>
+      <div className="p6-circuit-bsp-sim-bulb-b p6-circuit-bsp-sim-bulb-s2">
+        <BulbNode isOn={bulbOn} onToggle={onToggle} clickable={interactive} />
+      </div>
+    </div>
   );
 }
 
-function ParallelCircuit({ removed, onToggle }) {
+function ParallelCircuit({ removed, onToggle, interactive = true }) {
   const bulb1On = !removed;
   const bulb2On = true;
-
   return (
-    <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-label="Parallel circuit">
-      <rect x="18" y="70" width="26" height="70" rx="6" fill="#0ea5e9" />
-      <rect x="44" y="70" width="24" height="70" rx="6" fill="#0284c7" />
-      <path
-        d="M68 86 H140 V66 H280 V86 M140 146 V166 H280 V146"
-        fill="none"
-        stroke="#0f172a"
-        strokeWidth={6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M140 86 V146 M280 86 V146"
-        fill="none"
-        stroke="#0f172a"
-        strokeWidth={6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+    <div
+      className={`p6-circuit-bsp-sim-board ${interactive ? "" : "is-preview"}`}
+      aria-label="Parallel circuit"
+    >
+      <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-hidden="true">
+        <path d="M116 74 H264 V134 H116 Z" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M190 74 V92" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
+        <path d="M190 112 V134" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
+      </svg>
+      <div className="p6-circuit-bsp-sim-holder p6-circuit-bsp-sim-holder-p">
+        <EquipmentImage
+          src={DEVICE_MEDIA.holder.image}
+          fallbackSrc={DEVICE_MEDIA.holder.fallbackImage}
+          alt="holder"
+          className="p6-circuit-bsp-sim-holder-img"
+        />
+      </div>
+      <div className="p6-circuit-bsp-sim-bulb-p1 p6-circuit-bsp-sim-bulb-p-top">
+        <BulbNode isOn={bulb1On} onToggle={onToggle} clickable={interactive} />
+      </div>
+      <div className="p6-circuit-bsp-sim-bulb-p2 p6-circuit-bsp-sim-bulb-p-mid">
+        <BulbNode isOn={bulb2On} onToggle={() => {}} clickable={false} />
+      </div>
+    </div>
+  );
+}
 
-      <Bulb cx={190} cy={106} isOn={bulb1On} onToggle={onToggle} />
-      <Bulb cx={230} cy={146} isOn={bulb2On} onToggle={() => {}} clickable={false} />
-    </svg>
+function DualPanel({ leftTitle, rightTitle, leftBody, rightBody }) {
+  return (
+    <div className="p6-circuit-bsp-sim-dual">
+      <div className="p6-circuit-bsp-sim-panel">
+        <div className="p6-circuit-bsp-sim-panel-head">{leftTitle}</div>
+        {leftBody}
+      </div>
+      <div className="p6-circuit-bsp-sim-panel">
+        <div className="p6-circuit-bsp-sim-panel-head">{rightTitle}</div>
+        {rightBody}
+      </div>
+    </div>
   );
 }
 
@@ -205,92 +218,117 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
   const [lang, setLang] = useState("th");
   const [seriesRemoved, setSeriesRemoved] = useState(false);
   const [parallelRemoved, setParallelRemoved] = useState(false);
-
-  const t = useMemo(() => TEXT[lang] ?? TEXT.en, [lang]);
+  const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
 
   const pageBg = {
     background:
       "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
   };
 
-  const handleReset = () => {
-    setSeriesRemoved(false);
-    setParallelRemoved(false);
-  };
-
   return (
     <div
-      className="p6-circuit-bsp-sim-page relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      className="p6-circuit-bsp-sim-page relative min-h-screen overflow-x-hidden overflow-y-scroll text-slate-900"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {t.badge}
-        </div>
-        <h1 className="m-0 text-[clamp(32px,2.3vw,50px)] font-black leading-[1.05]">{t.title}</h1>
-
-        <div className="p6-circuit-bsp-sim-card relative rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
-          <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
-
-          <div className="p6-circuit-bsp-sim-inner shadow-[inset_0_0_0_2px_rgba(255,255,255,0.85),0_16px_26px_rgba(17,24,39,0.16)]">
-            <div className="p6-circuit-bsp-sim-toolbar">
-              <button
-                type="button"
-                className="p6-circuit-bsp-sim-play rounded-2xl bg-white shadow-[0_10px_18px_rgba(17,24,39,0.16)]"
-                onClick={handleReset}
-                title={t.reset}
-                aria-label={t.reset}
-              >
-                <svg viewBox="0 0 72 72" aria-hidden="true" focusable="false">
-                  <circle cx="36" cy="36" r="34" fill="#1d4ed8" />
-                  <path d="M30 24 L50 36 L30 48 Z" fill="#e0f2fe" />
-                </svg>
-              </button>
-              <div className="p6-circuit-bsp-sim-label">{t.instruction}</div>
-            </div>
-
-            <div className="p6-circuit-bsp-sim-table">
-              <div className="p6-circuit-bsp-sim-head">{t.series.heading}</div>
-              <div className="p6-circuit-bsp-sim-head">{t.parallel.heading}</div>
-
-              <div className="p6-circuit-bsp-sim-cell">
-                <SeriesCircuit removed={seriesRemoved} onToggle={() => setSeriesRemoved((v) => !v)} />
-                <div className="p6-circuit-bsp-sim-status">{seriesRemoved ? t.series.off : t.series.on}</div>
-              </div>
-
-              <div className="p6-circuit-bsp-sim-cell">
-                <ParallelCircuit removed={parallelRemoved} onToggle={() => setParallelRemoved((v) => !v)} />
-                <div className="p6-circuit-bsp-sim-status">{parallelRemoved ? t.parallel.oneOn : t.parallel.on}</div>
-              </div>
-            </div>
-
-            <div className="p6-circuit-bsp-sim-bottom">
-              <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-1 flex flex-nowrap justify-end gap-2">
+      <div className="p6-circuit-bsp-sim-stage relative z-[1] mx-auto">
+        <div className="p6-circuit-bsp-sim-side p6-circuit-bsp-sim-side-left">
           <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[26px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+            className="p6-circuit-bsp-sim-back"
             onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/steps")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            ←
+            ← {t.back}
           </button>
-          <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-blue-600 text-[26px] font-black leading-none text-white shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
-            onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
-            type="button"
-            aria-label={t.next}
-            title={t.next}
-          >
-            →
-          </button>
+
+          <div className="p6-circuit-bsp-sim-titlecard">
+            <div className="p6-circuit-bsp-sim-badge">{t.badge}</div>
+            <h1 className="p6-circuit-bsp-sim-title">{t.title}</h1>
+          </div>
+
         </div>
+
+        <div className="p6-circuit-bsp-sim-center">
+          <div className="p6-circuit-bsp-sim-inner">
+            <div className="p6-circuit-bsp-sim-table">
+              <div className="p6-circuit-bsp-sim-head">{t.series.heading}</div>
+              <div className="p6-circuit-bsp-sim-cell">
+                <DualPanel
+                  leftTitle={t.previewLabel}
+                  rightTitle={t.trialLabel}
+                  leftBody={
+                    <>
+                      <SeriesCircuit removed={false} onToggle={() => {}} interactive={false} />
+                      <div className="p6-circuit-bsp-sim-status">{t.series.on}</div>
+                    </>
+                  }
+                  rightBody={
+                    <>
+                      <SeriesCircuit removed={seriesRemoved} onToggle={() => setSeriesRemoved((v) => !v)} />
+                      <div className="p6-circuit-bsp-sim-status">{seriesRemoved ? t.series.off : t.series.on}</div>
+                    </>
+                  }
+                />
+              </div>
+              <div className="p6-circuit-bsp-sim-head">{t.parallel.heading}</div>
+              <div className="p6-circuit-bsp-sim-cell">
+                <DualPanel
+                  leftTitle={t.previewLabel}
+                  rightTitle={t.trialLabel}
+                  leftBody={
+                    <>
+                      <ParallelCircuit removed={false} onToggle={() => {}} interactive={false} />
+                      <div className="p6-circuit-bsp-sim-status">{t.parallel.on}</div>
+                    </>
+                  }
+                  rightBody={
+                    <>
+                      <ParallelCircuit removed={parallelRemoved} onToggle={() => setParallelRemoved((v) => !v)} />
+                      <div className="p6-circuit-bsp-sim-status">{parallelRemoved ? t.parallel.oneOn : t.parallel.on}</div>
+                    </>
+                  }
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="p6-circuit-bsp-sim-side p6-circuit-bsp-sim-side-right">
+          <div className="p6-circuit-bsp-sim-bubble">{t.title}</div>
+          <img
+            className="p6-circuit-bsp-sim-character"
+            src="/images/p4/exp1/character-boy.png"
+            alt="นักเรียน"
+          />
+          <div className="mt-auto flex items-center justify-center gap-4">
+            <button
+              className="p6-circuit-bsp-sim-action p6-circuit-bsp-sim-action-secondary"
+              onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/steps")}
+              type="button"
+            >
+              <span>←</span>
+              <span>{t.back}</span>
+            </button>
+            <button
+              className="p6-circuit-bsp-sim-action p6-circuit-bsp-sim-action-primary"
+              onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/summary")}
+              type="button"
+            >
+              <span>→</span>
+              <span>{t.next}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="fixed bottom-3 left-3 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow">
+        <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
       </div>
     </div>
   );
 }
+

@@ -7,35 +7,40 @@ const EQUIPMENT_ITEMS = [
     id: "bulb",
     title: "หลอดไฟพร้อมฐาน",
     subtitle: "1 ชุด",
-    image: "/images/p6/electric-circuit/bulb-base.svg",
+    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
     frameClass: "p6-force-recap-frame-gold",
   },
   {
     id: "wire",
     title: "สายไฟพร้อมหัวหนีบ",
     subtitle: "2 เส้น",
-    image: "/images/p6/electric-circuit/wire-clips.svg",
+    image: "/images/p6/electric-circuit/wire-clips-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/wire-clips.svg",
     frameClass: "p6-force-recap-frame-blue",
   },
   {
     id: "switch",
     title: "สวิตช์",
     subtitle: "1 อัน",
-    image: "/images/p6/electric-circuit/switch.svg",
+    image: "/images/p6/electric-circuit/switch-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/switch.svg",
     frameClass: "p6-force-recap-frame-green",
   },
   {
     id: "holder",
     title: "กระบะใส่ถ่านไฟฉาย",
     subtitle: "พร้อม 4 ช่อง",
-    image: "/images/p6/electric-circuit/battery-holder.svg",
+    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
     frameClass: "p6-force-recap-frame-peach",
   },
   {
     id: "cell",
     title: "ถ่านไฟฉาย",
     subtitle: "4 ก้อน",
-    image: "/images/p6/electric-circuit/batteries.svg",
+    image: "/images/p6/electric-circuit/battery-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/batteries.svg",
     frameClass: "p6-force-recap-frame-rose",
   },
 ];
@@ -52,6 +57,13 @@ function speakText(text) {
   utterance.rate = 0.95;
 
   window.speechSynthesis.speak(utterance);
+}
+
+function handleEquipmentImageError(event, fallbackImage) {
+  if (fallbackImage && event.currentTarget.dataset.fallbackApplied !== "true") {
+    event.currentTarget.dataset.fallbackApplied = "true";
+    event.currentTarget.src = fallbackImage;
+  }
 }
 
 export default function P6ElectricForceRecap() {
@@ -115,9 +127,17 @@ export default function P6ElectricForceRecap() {
                   onClick={() => onSpeak(`${item.title} ${item.subtitle}`)}
                   aria-label={`ฟังชื่อ ${item.title}`}
                 >
-                  <div className={`p6-force-recap-item-icon ${item.frameClass}`}>
-                    <img src={item.image} alt={item.title} loading="lazy" />
-                  </div>
+                    <div className={`p6-force-recap-item-icon ${item.frameClass}`}>
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        loading="lazy"
+                        data-fallback-applied="false"
+                        onError={(event) =>
+                          handleEquipmentImageError(event, item.fallbackImage)
+                        }
+                      />
+                    </div>
                   <div className="p6-force-recap-item-title">{item.title}</div>
                   <div className="p6-force-recap-item-subtitle">{item.subtitle}</div>
                 </button>

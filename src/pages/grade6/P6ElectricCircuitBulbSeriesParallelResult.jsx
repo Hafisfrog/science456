@@ -9,14 +9,14 @@ const TEXT = {
     intro: "จากการทดลองต่อหลอดไฟฟ้าในวงจรไฟฟ้าแบบอนุกรมและขนาน พบว่า",
     series: {
       heading: "การต่อแบบอนุกรม",
-      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟดวงที่เหลือก็จะดับตามไปด้วย",
+      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟดวงที่เหลือจะดับตามไปด้วย เพราะวงจรเปิด",
     },
     parallel: {
       heading: "การต่อแบบขนาน",
-      body: "เมื่อหลอดไฟดวงใดดวงหนึ่งดับ หลอดไฟอีกดวงที่เหลือจะสว่างอยู่",
+      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงที่เหลือยังสว่างอยู่ เพราะยังมีทางเดินกระแสไฟฟ้า",
     },
     back: "ย้อนกลับ",
-    next: "ต่อไป",
+    next: "สรุปสาระสำคัญ",
   },
   en: {
     badge: "Electricity Around You",
@@ -32,7 +32,7 @@ const TEXT = {
       body: "If one bulb goes out, the other bulb stays lit because its path is still complete.",
     },
     back: "Back",
-    next: "Next",
+    next: "Key Summary",
   },
   ms: {
     badge: "Litar elektrik dekat kita",
@@ -48,7 +48,7 @@ const TEXT = {
       body: "Apabila satu mentol padam, mentol lain masih menyala kerana laluan masih lengkap.",
     },
     back: "Kembali",
-    next: "Seterusnya",
+    next: "Ringkasan Utama",
   },
 };
 
@@ -56,20 +56,18 @@ function LanguagePills({ lang, setLang }) {
   const pills = [
     { code: "th", label: "ไทย" },
     { code: "en", label: "English" },
-    { code: "ms", label: "Malay" },
+    { code: "ms", label: "Melayu" },
   ];
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 shadow-[0_12px_24px_rgba(0,0,0,0.12)] ring-2 ring-white/85 backdrop-blur-md">
+    <div className="inline-flex items-center gap-1 rounded-2xl bg-white p-2 shadow">
       {pills.map((p) => (
         <button
           key={p.code}
           type="button"
           onClick={() => setLang(p.code)}
-          className={`rounded-full px-4 py-2 text-[15px] font-black transition ${
-            lang === p.code
-              ? "bg-blue-600 text-white shadow-[0_8px_16px_rgba(37,99,235,0.35)]"
-              : "text-slate-800 hover:bg-white"
+          className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
+            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100 text-slate-800"
           }`}
         >
           {p.label}
@@ -131,29 +129,32 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
           </div>
         </div>
 
-        <div className="mt-1 flex flex-nowrap justify-end gap-2">
-          <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-white text-[28px] font-black leading-none text-slate-900 shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
-            onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
-            type="button"
-            aria-label={t.back}
-            title={t.back}
-          >
-            ←
-          </button>
-          <button
-            className="inline-flex h-16 w-16 items-center justify-center rounded-[20px] bg-blue-600 text-[28px] font-black leading-none text-white shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
-            onClick={() => navigate("/p6/electric-circuit/key-summary")}
-            type="button"
-            aria-label={t.next}
-            title={t.next}
-          >
-            →
-          </button>
-        </div>
       </div>
 
-      <div className="pointer-events-auto fixed left-4 bottom-4 z-20 max-sm:left-3 max-sm:bottom-3">
+      <div className="fixed bottom-3 right-3 z-20 flex flex-nowrap gap-2">
+        <button
+          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/summary")}
+          type="button"
+          aria-label={t.back}
+          title={t.back}
+        >
+          <span className="text-xl leading-none">←</span>
+          <span>{t.back}</span>
+        </button>
+        <button
+          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          onClick={() => navigate("/p6/electric-circuit/key-summary")}
+          type="button"
+          aria-label={t.next}
+          title={t.next}
+        >
+          <span>{t.next}</span>
+          <span className="text-xl leading-none">→</span>
+        </button>
+      </div>
+
+      <div className="pointer-events-auto fixed bottom-4 left-4 z-20 max-sm:bottom-3 max-sm:left-3">
         <LanguagePills lang={lang} setLang={setLang} />
       </div>
     </div>

@@ -1,23 +1,26 @@
 <svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <ellipse cx="160" cy="222" rx="54" ry="14" fill="#C7D2E2" fill-opacity="0.45"/>
-  <ellipse cx="160" cy="86" rx="66" ry="72" fill="url(#paint0_radial)" stroke="#1E3154" stroke-width="7"/>
-  <path d="M122 118C124.5 144.5 139.5 159.5 160 176C180.5 159.5 195.5 144.5 198 118" stroke="#6C5730" stroke-width="6" stroke-linecap="round"/>
-  <path d="M145 95L156 113L165 98L175 113L183 91" stroke="#F3C84A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-  <ellipse cx="137" cy="63" rx="18" ry="12" fill="white" fill-opacity="0.6"/>
-  <path d="M138 156H182V178H138V156Z" fill="url(#paint1_linear)" stroke="#56657D" stroke-width="5"/>
-  <path d="M134 178H186V192H134V178Z" fill="#8D99AA"/>
-  <path d="M136 194H184V206H136V194Z" fill="#748196"/>
-  <path d="M142 208H178V222H142V208Z" fill="#5E6B80"/>
-  <rect x="153" y="222" width="14" height="22" rx="5" fill="#475569"/>
+  <ellipse cx="160" cy="223" rx="58" ry="14" fill="#C7D2E2" fill-opacity="0.38"/>
   <defs>
-    <radialGradient id="paint0_radial" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(137 54) rotate(57.2049) scale(109.025 102.155)">
-      <stop stop-color="#FFFCE7"/>
-      <stop offset="0.55" stop-color="#FFE389"/>
-      <stop offset="1" stop-color="#F1B74F"/>
+    <radialGradient id="glassGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(138 56) rotate(59) scale(112 104)">
+      <stop offset="0" stop-color="#FFFDF0"/>
+      <stop offset="0.56" stop-color="#FFE08D"/>
+      <stop offset="1" stop-color="#EEB049"/>
     </radialGradient>
-    <linearGradient id="paint1_linear" x1="160" y1="156" x2="160" y2="178" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#D5DDE7"/>
-      <stop offset="1" stop-color="#95A1B2"/>
+    <linearGradient id="baseMetal" x1="160" y1="162" x2="160" y2="205" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#D6DDE6"/>
+      <stop offset="1" stop-color="#7F8D9F"/>
     </linearGradient>
   </defs>
+
+  <path d="M160 18C122 18 96 47 96 87C96 117 110 138 128 154C139 164 145 172 145 181H175C175 172 181 164 192 154C210 138 224 117 224 87C224 47 198 18 160 18Z" fill="url(#glassGlow)" stroke="#243B63" stroke-width="6"/>
+  <path d="M128 118C131 144 143 158 160 172C177 158 189 144 192 118" stroke="#7A5B2B" stroke-width="5" stroke-linecap="round"/>
+  <path d="M142 93L152 110L160 97L169 110L178 92" stroke="#F0C248" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M152 110V132M169 110V132" stroke="#9A7A34" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="137" cy="61" rx="18" ry="11" fill="white" fill-opacity="0.56"/>
+
+  <rect x="139" y="181" width="42" height="14" rx="4" fill="url(#baseMetal)" stroke="#5E6B80" stroke-width="4"/>
+  <rect x="136" y="195" width="48" height="12" rx="4" fill="#98A4B5"/>
+  <rect x="138" y="207" width="44" height="11" rx="4" fill="#7B889A"/>
+  <rect x="145" y="218" width="30" height="12" rx="4" fill="#5D6A7E"/>
+  <rect x="155" y="230" width="10" height="16" rx="4" fill="#465467"/>
 </svg>

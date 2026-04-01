@@ -9,7 +9,7 @@ const LESSONS = [
       en: "Electric Force",
       ms: "Daya Elektrik",
     },
-    image: "/images/p6.png",
+    image: "/images/p6/equipment/balloons-real.svg",
     to: "/p6/electric-force",
   },
   {
@@ -19,7 +19,7 @@ const LESSONS = [
       en: "Electric Circuit",
       ms: "Litar Elektrik",
     },
-    image: "/images/p6.png",
+    image: "/images/p6/electric-circuit/batteries.svg",
     to: "/p6/electric-circuit",
   },
 ];
@@ -51,6 +51,12 @@ export default function P6() {
     background:
       "radial-gradient(80% 60% at 50% 34%, #f6efef 0 62%, transparent 63%), radial-gradient(31% 24% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(31% 24% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
   };
+
+  const backLabel = {
+    th: "ย้อนกลับ",
+    en: "Back",
+    ms: "Kembali",
+  }[lang];
 
   return (
     <div
@@ -108,12 +114,12 @@ export default function P6() {
                   {lesson.title[lang]}
                 </h2>
 
-                <button
+                {/* <button
                   onClick={() => speakText(lesson.title[lang], voiceMap[lang])}
                   className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-xl shadow hover:bg-blue-200"
                 >
                   🔊
-                </button>
+                </button> */}
 
               </div>
 
@@ -157,17 +163,14 @@ export default function P6() {
       <div className="fixed bottom-3 right-3 z-20 flex gap-3 md:bottom-6 md:right-6">
 
         <button
-          className="h-14 w-14 rounded-2xl bg-white text-2xl shadow-lg"
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow-lg"
           onClick={() => navigate("/grades")}
+          type="button"
+          aria-label={backLabel}
+          title={backLabel}
         >
-          ←
-        </button>
-
-        <button
-          className="h-14 w-14 rounded-2xl bg-blue-600 text-2xl text-white shadow-lg"
-          onClick={() => navigate("/p6/electric-force")}
-        >
-          →
+          <span className="text-2xl leading-none">←</span>
+          <span className="text-sm font-bold leading-none">{backLabel}</span>
         </button>
 
       </div>

@@ -170,16 +170,17 @@ export default function P6ElectricCircuitExperimentSelect() {
       </div>
 
       {/* Navigation */}
-      <div className="fixed bottom-3 right-3 flex gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex gap-3 pointer-events-auto">
         <button
-          className="h-14 w-14 rounded-2xl bg-white text-2xl shadow"
+          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
           onClick={() => navigate(backPath)}
+          type="button"
+          aria-label="กลับหน้าคำศัพท์"
         >
-          ←
+          <span className="text-xl leading-none">←</span>
+          <span>กลับหน้าคำศัพท์</span>
         </button>
-
       </div>
     </div>
   );
 }
-

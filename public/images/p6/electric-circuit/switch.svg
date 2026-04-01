@@ -1,19 +1,25 @@
 <svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <ellipse cx="162" cy="226" rx="66" ry="14" fill="#C7D2E2" fill-opacity="0.4"/>
-  <g transform="rotate(18 162 126)">
-    <rect x="116" y="52" width="92" height="150" rx="24" fill="url(#paint0_linear)" stroke="#334155" stroke-width="6"/>
-    <rect x="132" y="78" width="60" height="98" rx="16" fill="#364152"/>
-    <path d="M146 102L176 88V128L146 114V102Z" fill="#94A3B8"/>
-    <path d="M158 146H172" stroke="#CBD5E1" stroke-width="5" stroke-linecap="round"/>
-    <path d="M150 84H178" stroke="#1F2937" stroke-width="4" stroke-linecap="round"/>
-    <path d="M150 168H178" stroke="#1F2937" stroke-width="4" stroke-linecap="round"/>
-    <text x="162" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1F2937">ON</text>
-    <text x="162" y="194" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#1F2937">OFF</text>
-  </g>
+  <ellipse cx="161" cy="225" rx="68" ry="14" fill="#C7D2E2" fill-opacity="0.36"/>
   <defs>
-    <linearGradient id="paint0_linear" x1="162" y1="52" x2="162" y2="202" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#EEF2F7"/>
-      <stop offset="1" stop-color="#C3CCD8"/>
+    <linearGradient id="switchBody" x1="123" y1="56" x2="203" y2="198" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E9EEF4"/>
+      <stop offset="1" stop-color="#BFC9D5"/>
+    </linearGradient>
+    <linearGradient id="switchLever" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#C3CEDA"/>
+      <stop offset="1" stop-color="#768497"/>
     </linearGradient>
   </defs>
+
+  <g transform="rotate(17 161 128)">
+    <rect x="118" y="54" width="86" height="146" rx="22" fill="url(#switchBody)" stroke="#334155" stroke-width="6"/>
+    <rect x="134" y="80" width="54" height="96" rx="14" fill="#374151"/>
+    <path d="M146 104L176 89V128L146 113V104Z" fill="url(#switchLever)" stroke="#4B5563" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="148" cy="108" r="4" fill="#1F2937"/>
+    <path d="M154 146H168" stroke="#D9E1EA" stroke-width="5" stroke-linecap="round"/>
+    <path d="M149 88H173" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <path d="M149 168H173" stroke="#0F172A" stroke-width="4" stroke-linecap="round"/>
+    <text x="161" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#1F2937">ON</text>
+    <text x="161" y="193" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#1F2937">OFF</text>
+  </g>
 </svg>

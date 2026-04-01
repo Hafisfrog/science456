@@ -61,6 +61,8 @@ import P5GeneticsPlants from "../pages/grade5/life/genetics/P5GeneticsPlants";
 import P5GeneticsPlantsSummary from "../pages/grade5/life/genetics/P5GeneticsPlantsSummary";
 import P5GeneticsHumans from "../pages/grade5/life/genetics/P5GeneticsHumans";
 import P5GeneticsHumansSummary from "../pages/grade5/life/genetics/P5GeneticsHumansSummary";
+import P5GeneticsHumansSummary2 from "../pages/grade5/life/genetics/P5GeneticsHumansSummary2";
+import P5GeneticsHumansSummary3 from "../pages/grade5/life/genetics/P5GeneticsHumansSummary3";
 
 // ===== ป.6 =====
 import P6 from "../pages/grade6/P6";
@@ -72,10 +74,15 @@ import P6ElectricGenerationSteps from "../pages/grade6/P6ElectricGenerationSteps
 import P6ElectricGenerationSim from "../pages/grade6/P6ElectricGenerationSim";
 import P6ElectricGenerationResult from "../pages/grade6/P6ElectricGenerationResult";
 import P6ElectricGenerationSummary from "../pages/grade6/P6ElectricGenerationSummary";
+import P6ElectricGenerationKeySummary from "../pages/grade6/P6ElectricGenerationKeySummary";
+import P6ElectricGenerationConclusion from "../pages/grade6/P6ElectricGenerationConclusion";
+import P6ElectricGenerationConclusionQuestion from "../pages/grade6/P6ElectricGenerationConclusionQuestion";
 import P6ElectricForceEffect from "../pages/grade6/P6ElectricForceEffect";
 import P6ElectricForceEffectSteps from "../pages/grade6/P6ElectricForceEffectSteps";
 import P6ElectricForceEffectSim from "../pages/grade6/P6ElectricForceEffectSim";
+import P6ElectricForceEffectResult from "../pages/grade6/P6ElectricForceEffectResult";
 import P6ElectricForceEffectSummary from "../pages/grade6/P6ElectricForceEffectSummary";
+import P6ElectricForceEffectKeySummary from "../pages/grade6/P6ElectricForceEffectKeySummary";
 import P6ElectricForceRecap from "../pages/grade6/P6ElectricForceRecap";
 import P6ElectricCircuitObjectives from "../pages/grade6/P6ElectricCircuitObjectives";
 import P6ElectricCircuitVocab from "../pages/grade6/P6ElectricCircuitVocab";
@@ -83,12 +90,14 @@ import P6ElectricCircuitIntro from "../pages/grade6/P6ElectricCircuitIntro";
 import P6ElectricCircuitMaterials from "../pages/grade6/P6ElectricCircuitMaterials";
 import P6ElectricCircuitSteps from "../pages/grade6/P6ElectricCircuitSteps";
 import P6ElectricCircuitResults from "../pages/grade6/P6ElectricCircuitResults";
+import P6ElectricCircuitResultOverview from "../pages/grade6/P6ElectricCircuitResultOverview";
 import P6ElectricCircuitSim from "../pages/grade6/P6ElectricCircuitSim";
 import P6ElectricCircuitExperimentSelect from "../pages/grade6/P6ElectricCircuitExperimentSelect";
 import P6ElectricCircuitBulbSeriesParallel from "../pages/grade6/P6ElectricCircuitBulbSeriesParallel";
 import P6ElectricCircuitBulbSeriesParallelSteps from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelSteps";
 import P6ElectricCircuitBulbSeriesParallelSim from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelSim";
 import P6ElectricCircuitBulbSeriesParallelResult from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelResult";
+import P6ElectricCircuitBulbSeriesParallelSummary from "../pages/grade6/P6ElectricCircuitBulbSeriesParallelSummary";
 import P6ElectricCircuitKeySummary from "../pages/grade6/P6ElectricCircuitKeySummary";
 
 export default function OtherRoutes() {
@@ -158,6 +167,8 @@ export default function OtherRoutes() {
       <Route path="/p5/life/genetics/plants/summary" element={<P5GeneticsPlantsSummary />} />
       <Route path="/p5/life/genetics/humans" element={<P5GeneticsHumans />} />
       <Route path="/p5/life/genetics/humans/summary" element={<P5GeneticsHumansSummary />} />
+      <Route path="/p5/life/genetics/humans/summary-2" element={<P5GeneticsHumansSummary2 />} />
+      <Route path="/p5/life/genetics/humans/summary-3" element={<P5GeneticsHumansSummary3 />} />
 
       <Route path="/p6" element={<P6 />} />
       <Route path="/p6/electric-force" element={<P6ElectricObjectives />} />
@@ -178,10 +189,15 @@ export default function OtherRoutes() {
       <Route path="/p6/electric-circuit/materials" element={<P6ElectricCircuitMaterials />} />
       <Route path="/p6/electric-circuit/steps" element={<P6ElectricCircuitSteps />} />
       <Route path="/p6/electric-circuit/sim" element={<P6ElectricCircuitSim />} />
-      <Route path="/p6/electric-circuit/result" element={<P6ElectricCircuitResults />} />
+      <Route path="/p6/electric-circuit/result" element={<P6ElectricCircuitResultOverview />} />
+      <Route path="/p6/electric-circuit/result-summary" element={<P6ElectricCircuitResults />} />
       <Route path="/p6/electric-circuit/bulb-series-parallel" element={<P6ElectricCircuitBulbSeriesParallel />} />
       <Route path="/p6/electric-circuit/bulb-series-parallel/steps" element={<P6ElectricCircuitBulbSeriesParallelSteps />} />
       <Route path="/p6/electric-circuit/bulb-series-parallel/sim" element={<P6ElectricCircuitBulbSeriesParallelSim />} />
+      <Route
+        path="/p6/electric-circuit/bulb-series-parallel/summary"
+        element={<P6ElectricCircuitBulbSeriesParallelSummary />}
+      />
       <Route
         path="/p6/electric-circuit/bulb-series-parallel/result"
         element={<P6ElectricCircuitBulbSeriesParallelResult />}
@@ -195,11 +211,22 @@ export default function OtherRoutes() {
       <Route path="/p6/experiment/electric-generation/sim" element={<P6ElectricGenerationSim />} />
       <Route path="/p6/experiment/electric-generation/result" element={<P6ElectricGenerationResult />} />
       <Route path="/p6/experiment/electric-generation/summary" element={<P6ElectricGenerationSummary />} />
+      <Route path="/p6/experiment/electric-generation/key-summary" element={<P6ElectricGenerationKeySummary />} />
+      <Route
+        path="/p6/experiment/electric-generation/summary-2"
+        element={<P6ElectricGenerationConclusion />}
+      />
+      <Route
+        path="/p6/experiment/electric-generation/summary-3"
+        element={<P6ElectricGenerationConclusionQuestion />}
+      />
 
       <Route path="/p6/experiment/electric-force-effect" element={<P6ElectricForceEffect />} />
       <Route path="/p6/experiment/electric-force-effect/steps" element={<P6ElectricForceEffectSteps />} />
       <Route path="/p6/experiment/electric-force-effect/sim" element={<P6ElectricForceEffectSim />} />
+      <Route path="/p6/experiment/electric-force-effect/result" element={<P6ElectricForceEffectResult />} />
       <Route path="/p6/experiment/electric-force-effect/summary" element={<P6ElectricForceEffectSummary />} />
+      <Route path="/p6/experiment/electric-force-effect/key-summary" element={<P6ElectricForceEffectKeySummary />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
