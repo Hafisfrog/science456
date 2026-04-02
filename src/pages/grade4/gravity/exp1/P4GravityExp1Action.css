@@ -16,13 +16,14 @@
   object-fit:cover;
   filter: blur(2px) brightness(.90);
   transform: scale(1.02);
-  z-index:-2;
+  z-index:0;
 }
 
 .lab2-wrap{
   width:100%;
   min-height:100%;
   position:relative;
+  z-index:1;
   padding:18px;
   display:grid;
   grid-template-columns: 330px 1fr 300px;

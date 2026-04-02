@@ -86,10 +86,9 @@ export default function P4GravityExp1Result() {
 
   const assets = useMemo(
     () => ({
-      bg: "/images/p4/exp1/bg-result.jpg",
       ball: "/images/p4/exp1/soccer-ball.png",
       bocce: "/images/p4/exp1/bocce.png",
-      feather: "/images/p4/exp1/feather.png",
+      feather: "/images/p4/exp2/feather2.png",
     }),
     []
   );
@@ -153,7 +152,11 @@ export default function P4GravityExp1Result() {
 
   return (
     <div className="res-page">
-      <img className="res-bg" src={assets.bg} alt="background" />
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
 
       <div className="res-shell">
         <div className="res-head">

@@ -265,7 +265,7 @@
   position: relative;
   font-size: 18px;
   font-weight: 800;
-  color: #0f172a;
+  color: #dc2626;
   line-height: 1.6;
   padding: 16px 64px 16px 18px;
   border-radius: 18px;
@@ -354,6 +354,7 @@
 
 .ans2-bold {
   font-weight: 1000;
+  color: #b91c1c;
 }
 
 .ans2-navDock {

@@ -229,7 +229,12 @@ export default function P4GravityExp3Action() {
           <img className="e3a-panelBg" src={assets.earthBg} alt="earth background" />
 
           <div className="e3a-panelTop">
-            <div className="e3a-badge earth">{t.earth}</div>
+            <div className="e3a-badge earth">
+              <span>{t.earth}</span>
+              <span className="e3a-badgeEmoji" aria-hidden="true">
+                🌍
+              </span>
+            </div>
             <div className="e3a-measure">
               <div className="k">{t.wEarth}</div>
               <div className="v">{readout ? `${fmtN(readout.earthN)} ${lang === "th" ? t.unitN : "N"}` : "—"}</div>
@@ -257,7 +262,12 @@ export default function P4GravityExp3Action() {
           <img className="e3a-panelBg" src={assets.moonBg} alt="moon background" />
 
           <div className="e3a-panelTop">
-            <div className="e3a-badge moon">{t.moon}</div>
+            <div className="e3a-badge moon">
+              <span>{t.moon}</span>
+              <span className="e3a-badgeEmoji" aria-hidden="true">
+                🌙
+              </span>
+            </div>
             <div className="e3a-measure">
               <div className="k">{t.wMoon}</div>
               <div className="v">{readout ? `${fmtN(readout.moonN)} ${lang === "th" ? t.unitN : "N"}` : "—"}</div>
