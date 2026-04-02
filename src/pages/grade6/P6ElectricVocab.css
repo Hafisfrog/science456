@@ -93,7 +93,7 @@
   min-height: 0;
   overflow: hidden;
   border-radius: 28px;
-  box-shadow: 0 20px 38px rgba(28, 43, 64, 0.14);
+  box-shadow: 0 18px 34px rgba(28, 43, 64, 0.1);
 }
 
 .p6-vocab-table {
@@ -121,43 +121,43 @@
 .p6-vocab-table tbody td {
   font-size: clamp(20px, 1.35vw, 30px);
   font-weight: 600;
-  border-top: 1px solid rgba(20, 31, 48, 0.08);
+  border-top: 1px solid rgba(20, 31, 48, 0.06);
 }
 
 .p6-vocab-table .col-th {
   width: 22%;
-  background: #c8ddf4;
+  background: #d6e2f0;
 }
 
 .p6-vocab-table .col-ms {
   width: 26%;
-  background: #edd79b;
+  background: #f3e7be;
 }
 
 .p6-vocab-table .col-en {
   width: 28%;
-  background: #d7b4d6;
+  background: #ebd4e5;
 }
 
 .p6-vocab-table .col-voice {
   width: 24%;
-  background: #cde8da;
+  background: #e2f1e7;
 }
 
 .p6-vocab-table thead .col-th {
-  background: #9ebde4;
+  background: #aac2e0;
 }
 
 .p6-vocab-table thead .col-ms {
-  background: #e2c879;
+  background: #eed47f;
 }
 
 .p6-vocab-table thead .col-en {
-  background: #b487b1;
+  background: #b992bc;
 }
 
 .p6-vocab-table thead .col-voice {
-  background: #b9dfca;
+  background: #c9e6d3;
 }
 
 .p6-vocab-voice-group {
@@ -176,7 +176,7 @@
   font-weight: 800;
   cursor: pointer;
   color: #1e293b;
-  box-shadow: 0 6px 12px rgba(41, 56, 74, 0.14);
+  box-shadow: 0 5px 10px rgba(41, 56, 74, 0.1);
   transition: transform 0.12s ease, filter 0.12s ease;
 }
 
@@ -186,15 +186,15 @@
 }
 
 .p6-vocab-voice-chip.th {
-  background: #d9e6ff;
+  background: #dce6f8;
 }
 
 .p6-vocab-voice-chip.ms {
-  background: #fff2a8;
+  background: #faebaa;
 }
 
 .p6-vocab-voice-chip.en {
-  background: #e8c6e3;
+  background: #e7cde3;
 }
 
 .p6-vocab-actions {

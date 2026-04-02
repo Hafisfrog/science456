@@ -243,25 +243,29 @@ export default function P5GeneticsHumans() {
           <div className="p5gh-topic" translate="no">{t.topic}</div>
 
           <div className="p5gh-content">
-            <div className="p5gh-start-wrap">
-              <div className="p5gh-start-icon">{"\u25B6"}</div>
-              <p translate="no">{t.tapImage}</p>
-              <button
-                type="button"
-                className="p5gh-reset"
-                onClick={resetAnswers}
-                disabled={!hasAnswers && !showResults}
-              >
-                {t.reset}
-              </button>
-              <button
-                type="button"
-                className="p5gh-reveal"
-                onClick={revealAnswers}
-                disabled={!hasAnswers}
-              >
-                {t.reveal}
-              </button>
+            <div className="p5gh-toolbar">
+              <div className="p5gh-start-wrap">
+                <div className="p5gh-start-icon">{"\u25B6"}</div>
+                <p translate="no">{t.tapImage}</p>
+              </div>
+              <div className="p5gh-toolbar-actions">
+                <button
+                  type="button"
+                  className="p5gh-reset"
+                  onClick={resetAnswers}
+                  disabled={!hasAnswers && !showResults}
+                >
+                  {t.reset}
+                </button>
+                <button
+                  type="button"
+                  className="p5gh-reveal"
+                  onClick={revealAnswers}
+                  disabled={!hasAnswers}
+                >
+                  {t.reveal}
+                </button>
+              </div>
             </div>
 
             <div className="p5gh-grid">

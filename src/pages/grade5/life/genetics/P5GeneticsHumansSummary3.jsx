@@ -3,83 +3,49 @@ import LabLayout from "../../../../components/LabLayout";
 import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumansSummary3.css";
 
+const FAMILY_TREE_SPRITE = "/images/p5/family-tree-real.png";
+
 const FAMILY_MEMBERS = {
   top: [
     {
       id: "grandma-1",
-      tone: "blue",
-      skin: "#f6d1b1",
-      hair: "#d9e1ea",
-      shirt: "#5ec0cf",
-      hairStyle: "short-soft",
+      pos: "-72px -1px",
     },
     {
       id: "grandpa-1",
-      tone: "blue",
-      skin: "#e9b488",
-      hair: "#f2f2f2",
-      shirt: "#f0a538",
-      hairStyle: "short-bald",
+      pos: "-128px -1px",
     },
     {
       id: "grandma-2",
-      tone: "teal",
-      skin: "#efbd98",
-      hair: "#f7d3b6",
-      shirt: "#8fd0df",
-      hairStyle: "short-part",
+      pos: "-231px -1px",
     },
     {
       id: "grandpa-2",
-      tone: "teal",
-      skin: "#9f623f",
-      hair: "#5b371f",
-      shirt: "#f3be36",
-      hairStyle: "close-crop",
+      pos: "-286px -1px",
     },
   ],
   middle: [
     {
       id: "mother",
-      tone: "blue",
-      skin: "#e6b18e",
-      hair: "#263655",
-      shirt: "#4db8c0",
-      hairStyle: "long-wave",
+      pos: "-112px -116px",
     },
     {
       id: "father",
-      tone: "teal",
-      skin: "#d79a6e",
-      hair: "#3d2d24",
-      shirt: "#4f9fd4",
-      hairStyle: "short-top",
+      pos: "-208px -116px",
     },
   ],
   bottom: [
     {
       id: "child-1",
-      tone: "blue",
-      skin: "#efc79d",
-      hair: "#6f4f2c",
-      shirt: "#51b7c7",
-      hairStyle: "short-kid",
+      pos: "-78px -226px",
     },
     {
       id: "child-2",
-      tone: "teal",
-      skin: "#f0b582",
-      hair: "#5b3928",
-      shirt: "#f59f39",
-      hairStyle: "ponytail",
+      pos: "-153px -226px",
     },
     {
       id: "child-3",
-      tone: "gold",
-      skin: "#b16b3f",
-      hair: "#513122",
-      shirt: "#f0b332",
-      hairStyle: "curly-kid",
+      pos: "-252px -226px",
     },
   ],
 };
@@ -181,69 +147,63 @@ export default function P5GeneticsHumansSummary3() {
 
               <div className="p5ghs3-family">
                 <svg className="p5ghs3-tree-lines" viewBox="0 0 520 440" aria-hidden="true">
-                  <path d="M55 84V108" />
+                  <path d="M59 84V108" />
                   <path d="M143 84V108" />
-                  <path d="M231 84V108" />
-                  <path d="M319 84V108" />
-                  <path d="M55 108H319" />
-                  <path d="M187 108V150" />
-                  <path d="M155 150H243" />
-                  <path d="M155 150V188" />
-                  <path d="M243 150V188" />
-                  <path d="M155 262V300" />
-                  <path d="M243 262V300" />
-                  <path d="M155 300H243" />
-                  <path d="M199 300V344" />
-                  <path d="M51 344H235" />
-                  <path d="M51 344V358" />
-                  <path d="M143 344V358" />
-                  <path d="M235 344V358" />
+                  <path d="M227 84V108" />
+                  <path d="M311 84V108" />
+                  <path d="M59 108H311" />
+                  <path d="M185 108V150" />
+                  <path d="M159 150H255" />
+                  <path d="M159 150V188" />
+                  <path d="M255 150V188" />
+                  <path d="M159 262V300" />
+                  <path d="M255 262V300" />
+                  <path d="M159 300H255" />
+                  <path d="M207 300V344" />
+                  <path d="M55 344H255" />
+                  <path d="M55 344V358" />
+                  <path d="M155 344V358" />
+                  <path d="M255 344V358" />
                 </svg>
 
                 <div className="p5ghs3-generation top">
                   {FAMILY_MEMBERS.top.map((member) => (
-                    <span
-                      key={member.id}
-                      className={`p5ghs3-avatar ${member.tone}`}
-                      style={{ "--skin": member.skin, "--hair": member.hair, "--shirt": member.shirt }}
-                    >
-                      <span className="p5ghs3-avatar-inner">
-                        <span className={`p5ghs3-hair ${member.hairStyle}`} />
-                        <span className="p5ghs3-head" />
-                        <span className="p5ghs3-body" />
-                      </span>
+                    <span key={member.id} className="p5ghs3-avatar">
+                      <span
+                        className="p5ghs3-avatar-image"
+                        style={{
+                          backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
+                          backgroundPosition: member.pos,
+                        }}
+                      />
                     </span>
                   ))}
                 </div>
 
                 <div className="p5ghs3-generation middle">
                   {FAMILY_MEMBERS.middle.map((member) => (
-                    <span
-                      key={member.id}
-                      className={`p5ghs3-avatar ${member.tone}`}
-                      style={{ "--skin": member.skin, "--hair": member.hair, "--shirt": member.shirt }}
-                    >
-                      <span className="p5ghs3-avatar-inner">
-                        <span className={`p5ghs3-hair ${member.hairStyle}`} />
-                        <span className="p5ghs3-head" />
-                        <span className="p5ghs3-body" />
-                      </span>
+                    <span key={member.id} className="p5ghs3-avatar">
+                      <span
+                        className="p5ghs3-avatar-image"
+                        style={{
+                          backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
+                          backgroundPosition: member.pos,
+                        }}
+                      />
                     </span>
                   ))}
                 </div>
 
                 <div className="p5ghs3-generation bottom">
                   {FAMILY_MEMBERS.bottom.map((member) => (
-                    <span
-                      key={member.id}
-                      className={`p5ghs3-avatar ${member.tone}`}
-                      style={{ "--skin": member.skin, "--hair": member.hair, "--shirt": member.shirt }}
-                    >
-                      <span className="p5ghs3-avatar-inner">
-                        <span className={`p5ghs3-hair ${member.hairStyle}`} />
-                        <span className="p5ghs3-head" />
-                        <span className="p5ghs3-body" />
-                      </span>
+                    <span key={member.id} className="p5ghs3-avatar">
+                      <span
+                        className="p5ghs3-avatar-image"
+                        style={{
+                          backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
+                          backgroundPosition: member.pos,
+                        }}
+                      />
                     </span>
                   ))}
                 </div>

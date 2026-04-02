@@ -86,6 +86,7 @@
 .p5ghs3-generation.top {
   left: 18px;
   top: 10px;
+  gap: 2px;
 }
 
 .p5ghs3-generation.middle {
@@ -117,132 +118,28 @@
 }
 
 .p5ghs3-avatar {
-  width: 74px;
-  height: 74px;
+  width: 82px;
+  height: 82px;
   border-radius: 999px;
   display: block;
-  padding: 3px;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  padding: 0;
+  background: #ffffff;
+  border: 3px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   position: relative;
+  overflow: hidden;
 }
 
-.p5ghs3-avatar-inner {
-  position: relative;
+.p5ghs3-avatar-image {
+  display: block;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   border-radius: 999px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06));
+  background-repeat: no-repeat;
+  background-size: 379px 309px;
+  transform: scale(1.18);
+  transform-origin: center;
 }
-
-.p5ghs3-head {
-  position: absolute;
-  left: 50%;
-  top: 22px;
-  width: 28px;
-  height: 30px;
-  transform: translateX(-50%);
-  border-radius: 46% 46% 44% 44%;
-  background: var(--skin);
-  z-index: 2;
-}
-
-.p5ghs3-body {
-  position: absolute;
-  left: 50%;
-  bottom: -6px;
-  width: 48px;
-  height: 30px;
-  transform: translateX(-50%);
-  border-radius: 24px 24px 10px 10px;
-  background: var(--shirt);
-  z-index: 1;
-}
-
-.p5ghs3-hair {
-  position: absolute;
-  left: 50%;
-  top: 12px;
-  transform: translateX(-50%);
-  background: var(--hair);
-  z-index: 3;
-}
-
-.p5ghs3-hair.short-soft {
-  width: 34px;
-  height: 18px;
-  border-radius: 18px 18px 10px 10px;
-}
-
-.p5ghs3-hair.short-bald {
-  width: 34px;
-  height: 13px;
-  border-radius: 18px 18px 6px 6px;
-}
-
-.p5ghs3-hair.short-part {
-  width: 34px;
-  height: 20px;
-  border-radius: 18px 18px 12px 12px;
-  clip-path: polygon(0 16%, 80% 0, 100% 100%, 0 100%);
-}
-
-.p5ghs3-hair.close-crop {
-  width: 30px;
-  height: 15px;
-  border-radius: 14px 14px 8px 8px;
-}
-
-.p5ghs3-hair.long-wave {
-  width: 44px;
-  height: 32px;
-  top: 9px;
-  border-radius: 20px 20px 18px 18px;
-}
-
-.p5ghs3-hair.short-top {
-  width: 32px;
-  height: 16px;
-  border-radius: 16px 16px 8px 8px;
-}
-
-.p5ghs3-hair.short-kid {
-  width: 28px;
-  height: 15px;
-  border-radius: 14px 14px 8px 8px;
-}
-
-.p5ghs3-hair.ponytail {
-  width: 38px;
-  height: 25px;
-  top: 9px;
-  border-radius: 18px 18px 14px 14px;
-}
-
-.p5ghs3-hair.ponytail::after {
-  content: "";
-  position: absolute;
-  right: -3px;
-  top: 10px;
-  width: 8px;
-  height: 14px;
-  border-radius: 999px;
-  background: var(--hair);
-}
-
-.p5ghs3-hair.curly-kid {
-  width: 34px;
-  height: 18px;
-  border-radius: 999px;
-  box-shadow:
-    -8px 2px 0 0 var(--hair),
-    8px 2px 0 0 var(--hair),
-    0 0 0 0 var(--hair);
-}
-
-.p5ghs3-avatar.blue { background: linear-gradient(180deg, #2b7db4, #9fd7ff); }
-.p5ghs3-avatar.teal { background: linear-gradient(180deg, #37aaab, #b5f1ea); }
-.p5ghs3-avatar.gold { background: linear-gradient(180deg, #f0a623, #ffe08a); }
 
 .p5ghs3-bubble {
   position: absolute;
