@@ -128,16 +128,19 @@ export default function P4GravityExp1Action() {
   }, []);
 
   const t = text[lang];
+  const langLabels = {
+    th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    en: { th: "Thai", en: "English", ms: "Malay" },
+    ms: { th: "Thai", en: "English", ms: "Malay" },
+  };
 
   // ✅ รูปต่างๆ เปลี่ยนเองได้ (public/images/...)
   const assets = useMemo(() => {
     return {
-      bg: "/images/p4/exp1/bg-lab.jpg",
-
       // วัตถุ
       ball: "/images/p4/exp1/soccer-ball.png",
       bocce: "/images/p4/exp1/bocce.png",
-      feather: "/images/p4/exp1/feather.png",
+      feather: "/images/p4/exp2/feather2.png",
 
       // แท่นวางวัตถุ
       platform: "/images/p4/exp1/platform.png",
@@ -343,7 +346,11 @@ export default function P4GravityExp1Action() {
 
   return (
     <div className="lab2-page">
-      <img className="lab2-bg" src={assets.bg} alt="bg" />
+      <img
+        src="/images/p4/backgrounds-p4.jpg"
+        alt="Laboratory background"
+        className="lab2-bg"
+      />
 
       <div className="lab2-wrap">
         {/* Top bar */}
@@ -434,21 +441,21 @@ export default function P4GravityExp1Action() {
                 onClick={() => setLang("th")}
                 type="button"
               >
-                ไทย
+                {langLabels[lang].th}
               </button>
               <button
                 className={`lang-btn ${lang === "en" ? "active" : ""}`}
                 onClick={() => setLang("en")}
                 type="button"
               >
-                English
+                {langLabels[lang].en}
               </button>
               <button
                 className={`lang-btn ${lang === "ms" ? "active" : ""}`}
                 onClick={() => setLang("ms")}
                 type="button"
               >
-                Melayu
+                {langLabels[lang].ms}
               </button>
             </div>
           </div>

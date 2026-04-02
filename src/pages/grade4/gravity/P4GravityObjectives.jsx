@@ -44,7 +44,7 @@ export default function P4GravityObjectives() {
         next: "Kosa Kata",
         speak: "Dengar",
         langTh: "Thai",
-        langEn: "Inggeris",
+        langEn: "English",
         langMs: "Melayu",
       },
     };
@@ -75,14 +75,14 @@ export default function P4GravityObjectives() {
   };
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,#f0f9ff_0%,#dceefb_42%,#d1e7f8_100%)] font-['Prompt',sans-serif] before:pointer-events-none before:absolute before:inset-0 before:-z-[1] before:content-[''] before:[background:radial-gradient(420px_320px_at_8%_82%,rgba(56,189,248,.18),transparent_65%),radial-gradient(380px_280px_at_95%_22%,rgba(59,130,246,.20),transparent_70%),radial-gradient(240px_200px_at_66%_8%,rgba(255,255,255,.32),transparent_70%)]">
+    <div className="relative h-screen w-screen overflow-hidden font-['Prompt',sans-serif]">
       <img
-        src="/images/p4/sim/sball.png"
+        src="/images/p4/backgrounds-p4.jpg"
         alt="Laboratory background"
-        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+        className="absolute inset-0 h-full w-full object-cover brightness-[0.9]"
       />
 
-      <div className="relative h-full w-full bg-[linear-gradient(120deg,rgba(255,255,255,.30),rgba(255,255,255,.14)),repeating-linear-gradient(135deg,rgba(255,255,255,.08)_0px,rgba(255,255,255,.08)_20px,rgba(255,255,255,0)_20px,rgba(255,255,255,0)_48px)] p-6 backdrop-blur-[12px] before:pointer-events-none before:absolute before:inset-0 before:content-[''] before:[background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.02)),radial-gradient(circle_at_50%_0%,rgba(255,255,255,.20),transparent_55%)] max-[640px]:p-4">
+      <div className="relative h-full w-full bg-[linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.02))] p-6 max-[640px]:p-4">
         <div className="mt-[22px] text-center">
           <div className="inline-block rounded-2xl bg-white/90 px-[18px] py-[10px] text-2xl font-black text-blue-900 shadow-[0_10px_22px_rgba(0,0,0,.14)] max-[640px]:text-lg">
             {t.grade}
@@ -187,14 +187,14 @@ export default function P4GravityObjectives() {
             onClick={() => navigate("/p4")}
             type="button"
           >
-            ← {t.back}
+            « {t.back}
           </button>
           <button
             className="cursor-pointer rounded-[20px] border-none bg-gradient-to-br from-blue-600 to-blue-700 px-[22px] py-[14px] text-lg font-black text-white shadow-[0_12px_24px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[14px] max-[640px]:py-3 max-[640px]:text-base"
             onClick={() => navigate("/p4/gravity")}
             type="button"
           >
-            {t.next} →
+            {t.next} »
           </button>
         </div>
       </div>

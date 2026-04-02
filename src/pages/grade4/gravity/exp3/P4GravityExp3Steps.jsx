@@ -18,7 +18,7 @@ export default function P4GravityExp3Steps() {
       itemBook: "/images/p4/exp3/book.png",
       itemRock: "/images/p4/exp3/rock.png",
       itemMango: "/images/p4/exp3/mango.png",
-      itemScale: "/images/p4/exp3/scale.png",
+      itemScale: "/images/p4/exp3/spring-scale.png",
     };
   }, []);
 
@@ -181,9 +181,9 @@ export default function P4GravityExp3Steps() {
             {/* ✅ sticky header */}
             <div className="e3s-head">
               <div className="e3s-title">{t.title}</div>
-              <button className="e3s-headSpeak" type="button" onClick={speakTitleOnly} title={t.speakTitleOnly}>
+              {/* <button className="e3s-headSpeak" type="button" onClick={speakTitleOnly} title={t.speakTitleOnly}>
                 🔊 <span>{t.speakTitleOnly}</span>
-              </button>
+              </button> */}
             </div>
 
             {/* ✅ scrollable content */}

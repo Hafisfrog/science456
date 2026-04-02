@@ -69,8 +69,12 @@ export default function P4Gravity() {
       />
 
       <div className="relative z-10">
-        <h1 className="text-[48px] font-extrabold text-[#2563eb] max-[900px]:text-[40px] max-[640px]:text-[32px]">{t.title}</h1>
-        <p className="mt-3 text-[24px] font-semibold text-gray-700 max-[900px]:text-[20px] max-[640px]:text-[18px]">{t.sub}</p>
+        <h1 className="text-[48px] font-extrabold text-[#edf4ff] drop-shadow-[0_10px_24px_rgba(8,15,35,0.55)] max-[900px]:text-[40px] max-[640px]:text-[32px]">
+          {t.title}
+        </h1>
+        <p className="mt-3 text-[24px] font-semibold text-[#d7e6ff] drop-shadow-[0_6px_18px_rgba(8,15,35,0.45)] max-[900px]:text-[20px] max-[640px]:text-[18px]">
+          {t.sub}
+        </p>
 
         <div
           className="mx-auto mt-10 grid max-w-[1200px] gap-6"
@@ -134,7 +138,7 @@ export default function P4Gravity() {
           onClick={() => navigate("/p4/gravity/objectives")}
           type="button"
         >
-          {"<"} {t.back}
+          « {t.back}
         </button>
       </div>
     </div>

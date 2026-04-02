@@ -10,13 +10,13 @@ export default function P4Summarize() {
 
   const assets = useMemo(
     () => ({  
-      earth: "/images/p4-gravity.png",
-      scale: "/images/p4/exp2/spring-scale.png",
-      ruler: "/images/p4/exp1/ruler1.png",
-      branchFall: "/images/p4-gravity.png",
-      cityGround: "/images/p4-gravity.png",
-      massBalance: "/images/p4-gravity.png",
-      distanceGravity: "/images/p4-gravity.png",
+      earth: "/images/p4/log.png",
+      scale: "/images/p4/logjang.png",
+      // ruler: "/images/p4/logjang.png",
+      branchFall: "/images/p4/applong.png",
+      cityGround: "/images/p4/logmeng.png",
+      massBalance: "/images/p4/loglog.png",
+      distanceGravity: "/images/p4/logjaw.png",
     }),
     []
   );
@@ -56,7 +56,7 @@ export default function P4Summarize() {
         chipMs: "มลายู",
         back: "ย้อนกลับ",
         next: "ต่อไป",
-        listenAll: "ฟังทั้งหมด",
+        // listenAll: "ฟังทั้งหมด",
       },
       en: {
         title: "Key Summary: Earth's Gravity",
@@ -91,7 +91,7 @@ export default function P4Summarize() {
         chipMs: "Malay",
         back: "Back",
         next: "Next",
-        listenAll: "Listen all",
+        // listenAll: "Listen all",
       },
       ms: {
         title: "Ringkasan Utama: Daya Graviti Bumi",
@@ -126,7 +126,7 @@ export default function P4Summarize() {
         chipMs: "Malay",
         back: "Kembali",
         next: "Seterusnya",
-        listenAll: "Dengar semua",
+        // listenAll: "Dengar semua",
       },
     }),
     []
@@ -154,7 +154,7 @@ export default function P4Summarize() {
       type="button"
       onClick={() => speak(text)}
       title={t.listenAll}
-      aria-label={t.listenAll}
+      // aria-label={t.listenAll}
     >
       {SPEAKER_ICON}
     </button>
@@ -261,9 +261,9 @@ export default function P4Summarize() {
         <button className={`p4sum-chip ${lang === "ms" ? "active" : ""}`} type="button" onClick={() => setLang("ms")}>
           {t.chipMs}
         </button>
-        <button className="p4sum-chipAudio" type="button" onClick={speakAll} title={t.listenAll}>
+        {/* <button className="p4sum-chipAudio" type="button" onClick={speakAll} title={t.listenAll}>
           {SPEAKER_ICON}
-        </button>
+        </button> */}
       </div>
 
       <div className="p4sum-actions">

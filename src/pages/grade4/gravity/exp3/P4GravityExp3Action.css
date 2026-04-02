@@ -51,6 +51,9 @@
   z-index:2;
 }
 .e3a-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
   padding:10px 14px;
   border-radius:999px;
   font-weight:1100;
@@ -60,6 +63,11 @@
 }
 .e3a-badge.earth{ color:#0f172a; background:rgba(191, 219, 254, .92); }
 .e3a-badge.moon{ color:#0f172a; background:rgba(243, 244, 246, .92); }
+.e3a-badgeEmoji{
+  font-size:20px;
+  line-height:1;
+  flex:0 0 auto;
+}
 
 .e3a-measure{
   min-width: 260px;
@@ -515,7 +523,8 @@
   }
   .e3a-panel.earth{ border-right:none; border-bottom:4px solid rgba(255,255,255,.45); }
   .e3a-panelTop{ top:12px; left:12px; right:12px; }
-  .e3a-badge{ padding:7px 10px; font-size:13px; }
+  .e3a-badge{ padding:7px 10px; font-size:13px; gap:6px; }
+  .e3a-badgeEmoji{ font-size:18px; }
   .e3a-measure{ min-width: 170px; padding:8px 10px; border-radius:12px; }
   .e3a-measure .k{ font-size:11px; }
   .e3a-measure .v{ font-size:20px; }
@@ -625,6 +634,7 @@
   .e3a-split{ grid-template-rows: 214px 214px; }
   .e3a-panelTop{ left:10px; right:10px; }
   .e3a-badge{ font-size:12px; }
+  .e3a-badgeEmoji{ font-size:16px; }
   .e3a-measure{ min-width: 138px; }
   .e3a-measure .k{ font-size:10px; }
   .e3a-measure .v{ font-size:16px; }

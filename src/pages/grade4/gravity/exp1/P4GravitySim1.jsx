@@ -36,6 +36,11 @@ export default function P4GravitySim1() {
   }, []);
 
   const t = copy[lang];
+  const langLabels = {
+    th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    en: { th: "Thai", en: "English", ms: "Malay" },
+    ms: { th: "Thai", en: "English", ms: "Malay" },
+  };
 
   const stopAudio = () => {
     if (audioRef.current) {
@@ -149,31 +154,37 @@ export default function P4GravitySim1() {
         <div className="absolute bottom-4 left-4 z-20 flex items-center gap-3 rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_12px_24px_rgba(0,0,0,.14)]">
           <div className="flex items-center gap-[10px]">
             <button
-              className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black transition duration-150 hover:-translate-y-0.5 ${
-                lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+                lang === "th"
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
               }`}
               onClick={() => setLang("th")}
               type="button"
             >
-              ไทย
+              {langLabels[lang].th}
             </button>
             <button
-              className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black transition duration-150 hover:-translate-y-0.5 ${
-                lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+                lang === "en"
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
               }`}
               onClick={() => setLang("en")}
               type="button"
             >
-              อังกฤษ
+              {langLabels[lang].en}
             </button>
             <button
-              className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black transition duration-150 hover:-translate-y-0.5 ${
-                lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+                lang === "ms"
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
               }`}
               onClick={() => setLang("ms")}
               type="button"
             >
-              มลายู
+              {langLabels[lang].ms}
             </button>
           </div>
         </div>
