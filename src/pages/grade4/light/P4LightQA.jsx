@@ -37,7 +37,7 @@ const UI = {
     ],
     speakLabel: "🔊 ฟังคำอธิบาย (ไทย / English / Malay)",
     back: "◀ กลับ",
-    finish: "🎉 จบบทเรียน ▶",
+    finish: "🎉 ไปต่อ ▶",
   },
   en: {
     header: "📣 Question and Answer: Medium of Light",
@@ -139,44 +139,16 @@ export default function P4LightQA() {
   );
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#8fb1bf] p-6 font-['Prompt',sans-serif]">
-      <svg
-        className="pointer-events-none absolute inset-0 h-full w-full"
-        viewBox="0 0 1440 900"
-        preserveAspectRatio="xMidYMid slice"
-      >
-        <defs>
-          <linearGradient id="qa-bg" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#a5b2ba" />
-            <stop offset="45%" stopColor="#8ab2bf" />
-            <stop offset="100%" stopColor="#4f7f97" />
-          </linearGradient>
-          <linearGradient id="qa-glass" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#c7f2ff" stopOpacity="0.85" />
-            <stop offset="100%" stopColor="#88d3e8" stopOpacity="0.85" />
-          </linearGradient>
-        </defs>
-        <rect width="1440" height="900" fill="url(#qa-bg)" />
-        <path d="M0 0H1440V120C1060 200 380 200 0 120Z" fill="#9aa1a9" />
-        <rect x="0" y="120" width="1440" height="170" fill="#6d8698" />
-        <rect x="80" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
-        <rect x="260" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
-        <rect x="440" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
-        <rect x="850" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
-        <rect x="1030" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
-        <rect x="1210" y="140" width="150" height="140" rx="10" fill="url(#qa-glass)" />
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-sky-100 via-cyan-100 to-blue-200 font-['Prompt',sans-serif]">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/materials/back.png')" }}
+      />
+      <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(186,230,253,0.8),transparent_40%)]" />
 
-        <rect x="300" y="0" width="6" height="120" fill="#2f3c44" />
-        <path d="M260 120H350L330 170H280Z" fill="#2f3c44" />
-        <polygon points="280,170 330,170 360,270 250,270" fill="rgba(190,230,240,0.35)" />
-
-        <rect x="1134" y="0" width="6" height="120" fill="#2f3c44" />
-        <path d="M1094 120H1184L1164 170H1114Z" fill="#2f3c44" />
-        <polygon points="1114,170 1164,170 1194,270 1084,270" fill="rgba(190,230,240,0.35)" />
-      </svg>
-
-      <div className="relative z-10 mx-auto max-w-6xl">
-        <h1 className="mx-auto mb-4 w-fit rounded-md border-4 border-slate-900 bg-white px-6 py-3 text-center text-xl font-extrabold text-slate-900 shadow-[0_6px_18px_rgba(0,0,0,0.25)] sm:text-3xl">
+      <div className="relative z-10 min-h-screen overflow-y-auto p-4 sm:p-6">
+      <div className="mx-auto max-w-6xl">
+        <h1 className="mx-auto mb-4 w-fit rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
           {content.header}
         </h1>
 
@@ -188,22 +160,22 @@ export default function P4LightQA() {
           />
 
           <div className="ml-[230px] max-[900px]:ml-[190px] max-[640px]:ml-0">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-md border-2 border-slate-900 bg-[#ffd95a] px-3 py-1.5 text-base font-bold text-slate-900 shadow-[0_4px_10px_rgba(0,0,0,0.18)]">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-xl border-2 border-sky-300 bg-sky-50 px-3 py-1.5 text-base font-bold text-sky-800 shadow-[0_6px_14px_rgba(14,116,144,0.16)]">
               📣 คำถามมีคำตอบ
             </div>
 
-            <div className="mb-4 text-base font-semibold text-slate-900 sm:text-lg">
+            <div className="mb-4 text-base font-semibold text-sky-950 sm:text-lg">
               1. {content.questionText}
             </div>
 
             <div className="relative">
-              <div className="pointer-events-none absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-[28px] bg-[#2bb3a8]" />
-              <div className="rounded-[28px] border-[6px] border-slate-800 bg-white p-6 shadow-[0_12px_26px_rgba(0,0,0,0.25)]">
-                <div className="mb-4 text-base font-semibold text-slate-900 sm:text-lg">
+              <div className="pointer-events-none absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-[28px] bg-cyan-300/70" />
+              <div className="rounded-[28px] border-[4px] border-sky-300 bg-white/95 p-6 shadow-[0_12px_26px_rgba(14,116,144,0.22)] backdrop-blur-sm">
+                <div className="mb-4 text-base font-semibold text-sky-900 sm:text-lg">
                   {content.answerTitle}
                 </div>
 
-                <div className="space-y-4 text-slate-800">
+                <div className="space-y-4 text-sky-950">
                   {content.cards.map((card) => (
                     <div key={card.number} className="leading-relaxed">
                       <div className="font-bold">
@@ -222,8 +194,8 @@ export default function P4LightQA() {
           </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center gap-4">
-          <div className="rounded-2xl bg-white/90 p-3 shadow-[0_6px_16px_rgba(0,0,0,0.18)]">
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+          <div className="rounded-2xl border border-sky-200 bg-white/85 p-3 shadow-[0_6px_16px_rgba(14,116,144,0.18)] backdrop-blur-sm">
             <SpeakButton
               th={speakTexts.th}
               en={speakTexts.en}
@@ -236,19 +208,20 @@ export default function P4LightQA() {
           <div className="ml-auto flex gap-3">
             <button
               onClick={() => navigate("/p4/light/summary")}
-              className="rounded-full bg-slate-600 px-6 py-3 text-base font-semibold text-white shadow-[0_6px_14px_rgba(0,0,0,0.25)] transition hover:bg-slate-700"
+              className="rounded-full bg-slate-600 px-6 py-3 text-base font-semibold text-white shadow-[0_6px_14px_rgba(71,85,105,0.28)] transition hover:bg-slate-700"
             >
               {content.back}
             </button>
 
             <button
-              onClick={() => navigate("/p4")}
-              className="rounded-full bg-red-500 px-7 py-3 text-base font-bold text-white shadow-[0_8px_18px_rgba(0,0,0,0.3)] transition hover:scale-105 hover:bg-red-600"
+              onClick={() => navigate("/p4/light/concept")}
+              className="rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 px-7 py-3 text-base font-bold text-white shadow-[0_8px_18px_rgba(14,116,144,0.3)] transition hover:scale-105 hover:brightness-105"
             >
               {content.finish}
             </button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -87,14 +87,15 @@ export default function P4LightObjective() {
   };
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,#f0f9ff_0%,#dceefb_42%,#d1e7f8_100%)] font-['Prompt',sans-serif] before:pointer-events-none before:absolute before:inset-0 before:-z-[1] before:content-[''] before:[background:radial-gradient(420px_320px_at_8%_82%,rgba(56,189,248,.18),transparent_65%),radial-gradient(380px_280px_at_95%_22%,rgba(59,130,246,.20),transparent_70%),radial-gradient(240px_200px_at_66%_8%,rgba(255,255,255,.32),transparent_70%)]">
-      <img
-        className="absolute inset-0 -z-[2] h-full w-full scale-[1.03] object-cover [filter:blur(1.5px)_brightness(.86)_saturate(1.08)]"
-        src="/images/p4/light.png"
-        alt="bg"
+    <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 font-['Prompt',sans-serif]">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/images/materials/back.png')" }}
       />
+      <div className="pointer-events-none absolute left-1/2 top-[-13rem] h-[28rem] w-[140%] -translate-x-1/2 rounded-b-[100%] bg-sky-100/70" />
+      <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(90deg,rgba(15,23,42,0.35)_0px,rgba(15,23,42,0.35)_10px,transparent_10px,transparent_190px)]" />
 
-      <div className="relative h-full w-full bg-[linear-gradient(120deg,rgba(255,255,255,.30),rgba(255,255,255,.14)),repeating-linear-gradient(135deg,rgba(255,255,255,.08)_0px,rgba(255,255,255,.08)_20px,rgba(255,255,255,0)_20px,rgba(255,255,255,0)_48px)] p-6 backdrop-blur-[12px] before:pointer-events-none before:absolute before:inset-0 before:content-[''] before:[background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.02)),radial-gradient(circle_at_50%_0%,rgba(255,255,255,.20),transparent_55%)] max-[640px]:p-4">
+      <div className="relative h-full w-full p-6 max-[640px]:p-4">
         <div className="mt-[22px] text-center">
           <div className="inline-block rounded-2xl bg-white/90 px-[18px] py-[10px] text-2xl font-black text-blue-900 shadow-[0_10px_22px_rgba(0,0,0,.14)] max-[640px]:text-lg">
             {t.gradeLabel}

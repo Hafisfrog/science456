@@ -1,6 +1,12 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import SpeakButton from "../../../components/SpeakButton";
+
+const SPEECH_LOCALES = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
 
 const MATERIAL_NAMES = {
   "/images/materials/l1.png": { th: "กระจกใส", en: "Clear Glass", ms: "Kaca Jernih" },
@@ -14,103 +20,93 @@ const MATERIAL_NAMES = {
   "/images/materials/l6.png": { th: "เหล็ก", en: "Steel", ms: "Besi" },
 };
 
-const TYPE_ICON = {
-  transparent: "🔆",
-  translucent: "🌫️",
-  opaque: "⬛",
-};
-
-const RESULT_TEXT = {
-  th: {
-    transparent: "เห็นชัดเจน",
-    translucent: "เห็นไม่ชัด",
-    opaque: "มองไม่เห็น",
+const FALLBACK_BY_TYPE = {
+  transparent: {
+    th: ["กระจกใส", "พลาสติกใส", "แก้วใส"],
+    en: ["Clear Glass", "Clear Plastic", "Clear Cup"],
+    ms: ["Kaca Jernih", "Plastik Jernih", "Gelas Jernih"],
   },
-  en: {
-    transparent: "Clearly visible",
-    translucent: "Not clearly visible",
-    opaque: "Not visible",
+  translucent: {
+    th: ["กระจกฝ้า", "กระดาษไข", "หมอก"],
+    en: ["Frosted Glass", "Wax Paper", "Fog"],
+    ms: ["Kaca Kabur", "Kertas Surih", "Kabus"],
   },
-  ms: {
-    transparent: "Nampak jelas",
-    translucent: "Kurang jelas",
-    opaque: "Tidak nampak",
+  opaque: {
+    th: ["แผ่นไม้", "เหล็ก", "ผนังปูน"],
+    en: ["Wooden Board", "Steel", "Cement Wall"],
+    ms: ["Papan Kayu", "Besi", "Dinding Simen"],
   },
 };
 
 const UI = {
   th: {
-    header: "📘 สรุปความรู้เรื่อง ตัวกลางของแสง",
-    subHeader: (count) => `จากการทดลองทั้งหมด ${count} ครั้ง`,
-    knowledgeTitle: "💡 ความรู้ที่ได้จากการทดลอง",
-    knowledgeItems: [
-      "• วัตถุโปร่งใส แสงผ่านได้ทั้งหมด มองเห็นชัด",
-      "• วัตถุโปร่งแสง แสงผ่านบางส่วน มองเห็นไม่ชัด",
-      "• วัตถุทึบแสง แสงผ่านไม่ได้",
+    title: "สรุปผลการทดลอง",
+    intro1: "จากการทำกิจกรรม พบว่า เมื่อนำวัตถุต่าง ๆ มากั้นแสง วัตถุแต่ละชนิดจะยอมให้แสงผ่านได้ต่าง",
+    intro2: "กัน ซึ่งจำแนกวัตถุตามลักษณะที่กั้นแสงได้ ดังนี้",
+    summaryBullets: [
+      "วัตถุที่ยอมให้แสงผ่านได้ดี ได้แก่ กระจกใส พลาสติกใส และแก้วใส",
+      "วัตถุที่ยอมให้แสงผ่านได้บ้าง ได้แก่ กระจกฝ้า กระดาษไข และ หมอก",
+      "วัตถุที่ไม่ยอมให้แสงผ่านได้ ได้แก่ แผ่นไม้ เหล็ก และผนังปูน",
     ],
-    resultsTitle: "📊 รายการผลการทดลอง",
-    noResults: "ยังไม่มีผลการทดลอง",
-    speakLabel: "🔊 ฟังสรุปผล (ไทย / English / Malay)",
+    lineTransparent: "วัสดุที่ให้แสงผ่านได้ดี:",
+    lineTranslucent: "วัสดุที่ให้แสงผ่านได้บางส่วน:",
+    lineOpaque: "วัสดุที่ไม่ให้แสงผ่าน:",
+    andWord: "และ",
+    listenSummary: "🔊 ฟังข้อความสรุป",
+    noMalayVoice: "ไม่พบเสียงภาษามลายู (ms-MY) ในอุปกรณ์นี้ จึงงดอ่านเพื่อป้องกันเสียงเพี้ยน",
     back: "◀ กลับ",
     next: "ทำแบบทดสอบ ▶",
   },
   en: {
-    header: "📘 Knowledge Summary: Medium of Light",
-    subHeader: (count) => `From ${count} experiment records`,
-    knowledgeTitle: "💡 Key Learnings",
-    knowledgeItems: [
-      "• Transparent objects allow all light to pass, so objects are clearly visible.",
-      "• Translucent objects allow some light to pass, so objects are unclear.",
-      "• Opaque objects do not allow light to pass.",
-    ],
-    resultsTitle: "📊 Experiment Results",
-    noResults: "No experiment results yet",
-    speakLabel: "🔊 Listen to summary (Thai / English / Malay)",
+    title: "Experiment Summary",
+    intro1:
+      "From this activity, we found that when different materials block light, each material lets light pass differently.",
+    intro2: "The materials can be grouped by how much light they allow through:",
+    lineTransparent: "Materials that let light pass well:",
+    lineTranslucent: "Materials that let some light pass:",
+    lineOpaque: "Materials that do not let light pass:",
+    andWord: "and",
+    listenSummary: "🔊 Listen to summary",
+    noMalayVoice: "Malay voice (ms-MY) is not available on this device, so reading is skipped to avoid mispronunciation.",
     back: "◀ Back",
     next: "Take Quiz ▶",
   },
   ms: {
-    header: "📘 Ringkasan Pengetahuan: Medium Cahaya",
-    subHeader: (count) => `Daripada ${count} rekod eksperimen`,
-    knowledgeTitle: "💡 Pengetahuan Utama",
-    knowledgeItems: [
-      "• Objek lutsinar membenarkan semua cahaya melalui, jadi objek nampak jelas.",
-      "• Objek lut separa membenarkan sebahagian cahaya melalui, jadi objek kurang jelas.",
-      "• Objek legap tidak membenarkan cahaya melalui.",
-    ],
-    resultsTitle: "📊 Keputusan Eksperimen",
-    noResults: "Belum ada keputusan eksperimen",
-    speakLabel: "🔊 Dengar ringkasan (Thai / English / Malay)",
+    title: "Ringkasan Eksperimen",
+    intro1:
+      "Daripada aktiviti ini, didapati apabila bahan yang berbeza menghalang cahaya, setiap bahan membenarkan cahaya menembusi pada tahap berbeza.",
+    intro2: "Bahan boleh dikelaskan mengikut keupayaan menembusi cahaya seperti berikut:",
+    lineTransparent: "Bahan yang membenarkan cahaya menembusi dengan baik:",
+    lineTranslucent: "Bahan yang membenarkan sebahagian cahaya menembusi:",
+    lineOpaque: "Bahan yang tidak membenarkan cahaya menembusi:",
+    andWord: "dan",
+    listenSummary: "🔊 Dengar ringkasan",
+    noMalayVoice: "Suara Bahasa Melayu (ms-MY) tidak ditemui pada peranti ini, bacaan dihentikan untuk elak sebutan tersalah.",
     back: "◀ Kembali",
     next: "Jawab Kuiz ▶",
   },
 };
 
+function formatList(items, fallbackItems, language, andWord) {
+  const names = (items?.length ? items : fallbackItems).filter(Boolean);
+  const uniqueNames = [...new Set(names)];
+
+  if (uniqueNames.length === 0) return "-";
+  if (uniqueNames.length === 1) return uniqueNames[0];
+  if (uniqueNames.length === 2) return `${uniqueNames[0]} ${andWord} ${uniqueNames[1]}`;
+
+  if (language === "th") {
+    return `${uniqueNames.slice(0, -1).join(" ")} ${andWord} ${uniqueNames[uniqueNames.length - 1]}`;
+  }
+  return `${uniqueNames.slice(0, -1).join(", ")}, ${andWord} ${uniqueNames[uniqueNames.length - 1]}`;
+}
+
 export default function P4LightSummary() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [language, setLanguage] = useState("th");
-
   const allResults = useMemo(() => state?.allResults ?? [], [state]);
   const ui = UI[language] ?? UI.th;
-
-  const counts = useMemo(
-    () => ({
-      transparent: allResults.filter((r) => (r.material?.type || r.type) === "transparent").length,
-      translucent: allResults.filter((r) => (r.material?.type || r.type) === "translucent").length,
-      opaque: allResults.filter((r) => (r.material?.type || r.type) === "opaque").length,
-    }),
-    [allResults]
-  );
-
-  const speakTexts = useMemo(
-    () => ({
-      th: `สรุปบทเรียนเรื่องตัวกลางของแสง จากการทดลองทั้งหมด ${allResults.length} ครั้ง โปร่งใส ${counts.transparent} ครั้ง โปร่งแสง ${counts.translucent} ครั้ง และทึบแสง ${counts.opaque} ครั้ง`,
-      en: `Summary of medium of light lesson from ${allResults.length} experiments. Transparent ${counts.transparent}, translucent ${counts.translucent}, and opaque ${counts.opaque}.`,
-      ms: `Ringkasan pembelajaran medium cahaya daripada ${allResults.length} eksperimen. Lutsinar ${counts.transparent}, lut separa ${counts.translucent}, dan legap ${counts.opaque}.`,
-    }),
-    [allResults.length, counts]
-  );
 
   useEffect(() => {
     if (!allResults.length) {
@@ -118,84 +114,237 @@ export default function P4LightSummary() {
     }
   }, [allResults.length, navigate]);
 
-  const getMaterialName = (item) => {
-    const img = item.material?.img;
-    if (img && MATERIAL_NAMES[img]?.[language]) return MATERIAL_NAMES[img][language];
+  const groupedNames = useMemo(() => {
+    const grouped = {
+      transparent: [],
+      translucent: [],
+      opaque: [],
+    };
 
-    const itemName = item.material?.name;
-    if (typeof itemName === "string") return itemName;
-    if (itemName && typeof itemName === "object") return itemName[language] || itemName.th || itemName.en;
+    allResults.forEach((item) => {
+      const type = item.material?.type || item.type || "opaque";
+      if (!grouped[type]) return;
 
-    return "-";
+      const imgName = MATERIAL_NAMES[item.material?.img]?.[language];
+      let name = imgName || item.material?.name;
+
+      if (name && typeof name === "object") {
+        name = name[language] || name.th || name.en || name.ms;
+      }
+      if (!name) return;
+
+      if (!grouped[type].includes(name)) {
+        grouped[type].push(name);
+      }
+    });
+
+    return grouped;
+  }, [allResults, language]);
+
+  const langButtonText = useMemo(
+    () => ({
+      th: UI.th.title,
+      en: UI.en.title,
+      ms: UI.ms.title,
+    }),
+    []
+  );
+
+  const buildSummarySpeechText = () => {
+    if (language === "th") {
+      return `${ui.title} ${ui.intro1} ${ui.intro2} ${ui.summaryBullets.join(" ")}`;
+    }
+
+    const transparentText = formatList(
+      groupedNames.transparent,
+      FALLBACK_BY_TYPE.transparent[language] || FALLBACK_BY_TYPE.transparent.th,
+      language,
+      ui.andWord
+    );
+    const translucentText = formatList(
+      groupedNames.translucent,
+      FALLBACK_BY_TYPE.translucent[language] || FALLBACK_BY_TYPE.translucent.th,
+      language,
+      ui.andWord
+    );
+    const opaqueText = formatList(
+      groupedNames.opaque,
+      FALLBACK_BY_TYPE.opaque[language] || FALLBACK_BY_TYPE.opaque.th,
+      language,
+      ui.andWord
+    );
+
+    return `${ui.title}. ${ui.intro1} ${ui.intro2} ${ui.lineTransparent} ${transparentText}. ${ui.lineTranslucent} ${translucentText}. ${ui.lineOpaque} ${opaqueText}.`;
   };
 
-  const getResultText = (type) => {
-    const textMap = RESULT_TEXT[language] ?? RESULT_TEXT.th;
-    return textMap[type] ?? textMap.opaque;
+  const speakSummary = () => {
+    if (
+      typeof window === "undefined" ||
+      typeof SpeechSynthesisUtterance === "undefined" ||
+      !window.speechSynthesis
+    ) {
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    const text = buildSummarySpeechText();
+    const targetLocale = SPEECH_LOCALES[language] || "th-TH";
+
+    const doSpeak = () => {
+      const voices = synth.getVoices();
+      const localeLower = targetLocale.toLowerCase();
+      const prefix = localeLower.split("-")[0];
+
+      let voice =
+        voices.find((v) => v.lang?.toLowerCase() === localeLower) ||
+        voices.find((v) => v.lang?.toLowerCase().startsWith(prefix));
+
+      if (language === "ms") {
+        // Prefer Malay voice, then Indonesian as the closest fallback, then any available voice.
+        voice =
+          voices.find((v) => v.lang?.toLowerCase() === "ms-my") ||
+          voices.find((v) => v.lang?.toLowerCase().startsWith("ms")) ||
+          voices.find((v) => /malay|melayu/i.test(v.name || "")) ||
+          voices.find((v) => v.lang?.toLowerCase() === "id-id") ||
+          voices.find((v) => v.lang?.toLowerCase().startsWith("id")) ||
+          voices.find((v) => /indonesian|bahasa/i.test(v.name || "")) ||
+          voices.find((v) => v.lang?.toLowerCase().startsWith("en")) ||
+          voices[0];
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (voice) utterance.voice = voice;
+      utterance.lang = voice?.lang || targetLocale;
+      utterance.rate = language === "ms" ? 0.9 : 0.92;
+      utterance.pitch = 1;
+
+      synth.cancel();
+      synth.speak(utterance);
+    };
+
+    const voices = synth.getVoices();
+    if (voices.length) {
+      doSpeak();
+      return;
+    }
+
+    let spoke = false;
+    const speakOnce = () => {
+      if (spoke) return;
+      spoke = true;
+      doSpeak();
+    };
+    const onVoicesChanged = () => {
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      speakOnce();
+    };
+
+    synth.addEventListener("voiceschanged", onVoicesChanged);
+    setTimeout(() => {
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      speakOnce();
+    }, 500);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 p-6">
-      <div className="mx-auto max-w-6xl space-y-6">
-        <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-lg">
-          <h1 className="text-2xl font-bold text-blue-800 sm:text-3xl">{ui.header}</h1>
-          <p className="mt-1 text-blue-600">{ui.subHeader(allResults.length)}</p>
-        </div>
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#dceaf5] via-[#d6e6f2] to-[#c7d9e8] font-['Prompt',sans-serif]">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90"
+        style={{ backgroundImage: "url('/images/materials/back.png')" }}
+      />
+      <div className="pointer-events-none absolute inset-0 opacity-45 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.84),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(220,235,246,0.88),transparent_40%),linear-gradient(180deg,rgba(238,246,252,0.4),rgba(201,219,235,0.32))]" />
 
-        <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-lg">
-          <h2 className="mb-4 text-xl font-bold text-blue-800">{ui.knowledgeTitle}</h2>
-          <ul className="space-y-2 text-gray-700">
-            {ui.knowledgeItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="rounded-2xl border border-blue-200 bg-white p-6 shadow-lg">
-          <h2 className="mb-4 text-xl font-bold text-blue-800">{ui.resultsTitle}</h2>
-
-          {allResults.length === 0 ? (
-            <div className="rounded-xl border border-blue-100 bg-blue-50 p-4 text-sm text-slate-600">{ui.noResults}</div>
-          ) : (
-            <div className="space-y-3">
-              {allResults.map((item, idx) => {
-                const type = item.material?.type || item.type || "opaque";
-                return (
-                  <div key={`${idx}-${item.id ?? "row"}`} className="flex items-center gap-4 rounded-xl border border-blue-100 bg-blue-50 p-3">
-                    <img src={item.material?.img} alt="" className="h-12 w-12 object-contain" />
-
-                    <div className="flex-1">
-                      <div className="font-semibold text-gray-800">{getMaterialName(item)}</div>
-                      <div className="text-sm text-gray-600">
-                        {TYPE_ICON[type]} {getResultText(type)}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+      <div className="relative z-10 min-h-screen overflow-y-auto p-3 sm:h-screen sm:min-h-0 sm:overflow-hidden sm:p-4">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 sm:h-full sm:gap-4">
+          <div className="overflow-hidden rounded-[28px] border border-[#bfd3e3] bg-[linear-gradient(180deg,rgba(244,248,251,0.88),rgba(228,237,245,0.82))] shadow-[0_16px_38px_rgba(106,138,165,0.16)] backdrop-blur-md sm:flex sm:min-h-0 sm:flex-1 sm:flex-col">
+            <div className="border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-3 text-[#133149] sm:p-4">
+              <h2 className="text-lg font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] sm:text-xl">{ui.title}</h2>
             </div>
-          )}
-        </div>
 
-        <div className="rounded-xl border-2 border-blue-200 bg-white p-4">
-          <p className="mb-2 text-sm font-semibold text-blue-700">{ui.speakLabel}</p>
-          <SpeakButton th={speakTexts.th} en={speakTexts.en} ms={speakTexts.ms} activeLang={language} onLanguageChange={setLanguage} />
-        </div>
+            <div className="p-4 text-[14px] leading-7 text-[#1f3d58] sm:flex-1 sm:overflow-y-auto sm:p-6 sm:text-base sm:leading-8">
+              <p>{ui.intro1}</p>
+              <p>{ui.intro2}</p>
 
-        <div className="flex justify-between pt-2">
-          <button
-            onClick={() => navigate("/p4/light/record", { state: { pendingResults: allResults } })}
-            className="rounded-xl bg-gray-500 px-6 py-3 text-white transition hover:bg-gray-600"
-          >
-            {ui.back}
-          </button>
+              {language === "th" ? (
+                <ul className="mt-2 space-y-2 sm:mt-3">
+                  {ui.summaryBullets.map((text) => (
+                    <li key={text}>• {text}</li>
+                  ))}
+                </ul>
+              ) : (
+                <ul className="mt-2 space-y-2 sm:mt-3">
+                  <li>
+                    • {ui.lineTransparent}{" "}
+                    {formatList(
+                      groupedNames.transparent,
+                      FALLBACK_BY_TYPE.transparent[language] || FALLBACK_BY_TYPE.transparent.th,
+                      language,
+                      ui.andWord
+                    )}
+                  </li>
+                  <li>
+                    • {ui.lineTranslucent}{" "}
+                    {formatList(
+                      groupedNames.translucent,
+                      FALLBACK_BY_TYPE.translucent[language] || FALLBACK_BY_TYPE.translucent.th,
+                      language,
+                      ui.andWord
+                    )}
+                  </li>
+                  <li>
+                    • {ui.lineOpaque}{" "}
+                    {formatList(
+                      groupedNames.opaque,
+                      FALLBACK_BY_TYPE.opaque[language] || FALLBACK_BY_TYPE.opaque.th,
+                      language,
+                      ui.andWord
+                    )}
+                  </li>
+                </ul>
+              )}
 
-          <button
-            onClick={() => navigate("/p4/light/qa")}
-            className="rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-3 text-white transition hover:shadow-lg"
-          >
-            {ui.next}
-          </button>
+              <div className="mt-4 flex justify-end">
+                <button
+                  type="button"
+                  onClick={speakSummary}
+                  aria-label={ui.listenSummary}
+                  title={ui.listenSummary}
+                  className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#a9c6dc] bg-[#edf4fa] text-2xl text-[#537391] transition hover:bg-[#dfeaf3] hover:shadow-[0_8px_18px_rgba(122,146,167,0.18)]"
+                >
+                  🔊
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="sm:shrink-0">
+            <SpeakButton
+              th={langButtonText.th}
+              en={langButtonText.en}
+              ms={langButtonText.ms}
+              activeLang={language}
+              onLanguageChange={setLanguage}
+              variant="segmented"
+            />
+          </div>
+
+          <div className="flex justify-between gap-3 sm:shrink-0 sm:gap-4">
+            <button
+              type="button"
+              onClick={() => navigate("/p4/light/record", { state: { pendingResults: allResults } })}
+              className="rounded-2xl border border-[#adc7db] bg-[linear-gradient(180deg,rgba(227,236,244,0.96),rgba(198,213,226,0.96))] px-4 py-2.5 text-sm text-[#23445f] shadow-[0_10px_24px_rgba(122,146,167,0.14)] transition hover:brightness-105 sm:px-6 sm:py-3 sm:text-base"
+            >
+              {ui.back}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate("/p4/light/qa")}
+              className="rounded-2xl border border-[#8fb3cf] bg-gradient-to-r from-[#93bad6] to-[#7fa7c5] px-4 py-2.5 text-sm text-[#10304a] shadow-[0_10px_24px_rgba(109,139,165,0.18)] transition hover:brightness-105 sm:px-6 sm:py-3 sm:text-base"
+            >
+              {ui.next}
+            </button>
+          </div>
         </div>
       </div>
     </div>

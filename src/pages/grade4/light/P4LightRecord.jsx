@@ -2,6 +2,12 @@
 import { useEffect, useMemo, useState } from "react";
 import SpeakButton from "../../../components/SpeakButton";
 
+const SPEECH_LOCALES = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
 const MATERIAL_NAMES = {
   "/images/materials/l1.png": { th: "กระจกใส", en: "Clear Glass", ms: "Kaca Jernih" },
   "/images/materials/l10.png": { th: "แก้วใส", en: "Clear Cup", ms: "Gelas Jernih" },
@@ -35,6 +41,7 @@ const UI = {
       "• วัตถุทึบแสง แสงผ่านไม่ได้ มองไม่เห็น",
     ],
     speakLabel: "🔊 ฟังสรุปผล (ไทย / English / Malay)",
+    rowSpeak: "ฟังผล",
     addMore: "ทดลองเพิ่ม",
     next: "ไปต่อ",
   },
@@ -58,6 +65,7 @@ const UI = {
       "• Opaque objects do not let light pass and cannot be seen through.",
     ],
     speakLabel: "🔊 Listen to summary (Thai / English / Malay)",
+    rowSpeak: "Listen",
     addMore: "Try More",
     next: "Next",
   },
@@ -81,6 +89,7 @@ const UI = {
       "• Objek legap tidak membenarkan cahaya melalui dan tidak boleh dilihat tembus.",
     ],
     speakLabel: "🔊 Dengar ringkasan (Thai / English / Malay)",
+    rowSpeak: "Dengar",
     addMore: "Cuba Lagi",
     next: "Seterusnya",
   },
@@ -131,41 +140,135 @@ export default function P4LightRecord() {
     const byImage = MATERIAL_NAMES[item.material.img]?.[language];
     return byImage || item.material.name;
   };
+  const getRowLabels = (item) => {
+    if (item.material.type === "transparent") {
+      return { passLabel: ui.passGood, classifyLabel: ui.transparent };
+    }
+    if (item.material.type === "translucent") {
+      return { passLabel: ui.passSome, classifyLabel: ui.translucent };
+    }
+    return { passLabel: ui.passNone, classifyLabel: ui.opaque };
+  };
+  const buildRowSpeakText = (item) => {
+    const materialName = getMaterialName(item);
+    const { passLabel, classifyLabel } = getRowLabels(item);
+
+    if (language === "en") {
+      return `${materialName}. ${ui.lightPass}: ${passLabel}. ${ui.classifyAs}: ${classifyLabel}.`;
+    }
+    if (language === "ms") {
+      return `${materialName}. ${ui.lightPass}: ${passLabel}. ${ui.classifyAs}: ${classifyLabel}.`;
+    }
+    return `${materialName} ${ui.lightPass} ${passLabel} ${ui.classifyAs} ${classifyLabel}`;
+  };
+  const tableBorderClass = "border-[1.5px] border-[#a9c6dc]";
+  const tableCellClass = `${tableBorderClass} bg-white/42`;
+  const tableHeaderTopClass = `${tableBorderClass} bg-[#d7e6f1]/92 text-[#17344d]`;
+  const tableHeaderSubClass = `${tableBorderClass} bg-[#e6f0f7]/92 text-[#23445f]`;
+  const speakRowResult = (item) => {
+    if (
+      typeof window === "undefined" ||
+      typeof SpeechSynthesisUtterance === "undefined" ||
+      !window.speechSynthesis
+    ) {
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    const text = buildRowSpeakText(item);
+    const targetLocale = SPEECH_LOCALES[language] || "th-TH";
+
+    const doSpeak = () => {
+      const voices = synth.getVoices();
+      const localeLower = targetLocale.toLowerCase();
+      const prefix = localeLower.split("-")[0];
+
+      let voice =
+        voices.find((v) => v.lang?.toLowerCase() === localeLower) ||
+        voices.find((v) => v.lang?.toLowerCase().startsWith(prefix));
+
+      if (language === "ms") {
+        // Prefer Malay voice, then Indonesian as closest fallback.
+        voice =
+          voices.find((v) => v.lang?.toLowerCase() === "ms-my") ||
+          voices.find((v) => v.lang?.toLowerCase().startsWith("ms")) ||
+          voices.find((v) => /malay|melayu/i.test(v.name || "")) ||
+          voices.find((v) => v.lang?.toLowerCase() === "id-id") ||
+          voices.find((v) => v.lang?.toLowerCase().startsWith("id")) ||
+          voices.find((v) => /indonesian|bahasa/i.test(v.name || "")) ||
+          voices.find((v) => v.lang?.toLowerCase().startsWith("en")) ||
+          voices[0];
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (voice) utterance.voice = voice;
+      utterance.lang = voice?.lang || targetLocale;
+      utterance.rate = language === "ms" ? 0.9 : 0.92;
+      utterance.pitch = 1;
+      synth.cancel();
+      synth.speak(utterance);
+    };
+
+    const voices = synth.getVoices();
+    if (voices.length) {
+      doSpeak();
+      return;
+    }
+
+    let spoke = false;
+    const speakOnce = () => {
+      if (spoke) return;
+      spoke = true;
+      doSpeak();
+    };
+    const onVoicesChanged = () => {
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      speakOnce();
+    };
+
+    synth.addEventListener("voiceschanged", onVoicesChanged);
+    setTimeout(() => {
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      speakOnce();
+    }, 500);
+  };
 
   return (
-    <div className="min-h-screen overflow-y-auto bg-gradient-to-br from-blue-50 to-cyan-50 p-4">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-6 rounded-2xl border border-blue-200 bg-white/80 p-6 shadow-lg backdrop-blur-md">
-          <h1 className="mb-2 text-3xl font-bold text-blue-800">{ui.title}</h1>
-          <p className="text-blue-600">{ui.subtitle(pendingResults.length)}</p>
-        </div>
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#dceaf5] via-[#d6e6f2] to-[#c7d9e8] font-['Prompt',sans-serif]">
+      <div
+        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-90"
+        style={{ backgroundImage: "url('/images/materials/back.png')" }}
+      />
+      <div className="pointer-events-none absolute inset-0 opacity-45 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.84),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(220,235,246,0.88),transparent_40%),linear-gradient(180deg,rgba(238,246,252,0.4),rgba(201,219,235,0.32))]" />
 
-        <div className="mb-6 overflow-hidden rounded-2xl border-2 border-blue-300 bg-white shadow-xl">
-          <div className="bg-gradient-to-r from-blue-600 to-cyan-600 p-4 text-white">
-            <h2 className="text-xl font-bold">{ui.tableTitle}</h2>
+      <div className="relative z-10 min-h-screen overflow-y-auto p-4">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-6 overflow-hidden rounded-[28px] border border-[#bfd3e3] bg-[linear-gradient(180deg,rgba(244,248,251,0.88),rgba(228,237,245,0.82))] shadow-[0_16px_38px_rgba(106,138,165,0.16)] backdrop-blur-md">
+          <div className="border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-4 text-[#133149]">
+            <h2 className="text-xl font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.35)]">{ui.tableTitle}</h2>
           </div>
 
           <div className="overflow-x-auto p-4">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="bg-blue-100">
-                  <th className="border-2 border-blue-300 p-3 text-left" rowSpan="2">
+                <tr className="bg-transparent">
+                  <th className={`${tableHeaderTopClass} p-3 text-left`} rowSpan="2">
                     {ui.objectName}
                   </th>
-                  <th className="border-2 border-blue-300 p-3 text-center" colSpan="3">
+                  <th className={`${tableHeaderTopClass} p-3 text-center`} colSpan="3">
                     {ui.lightPass}
                   </th>
-                  <th className="border-2 border-blue-300 p-3 text-center" colSpan="3">
+                  <th className={`${tableHeaderTopClass} p-3 text-center`} colSpan="3">
                     {ui.classifyAs}
                   </th>
                 </tr>
-                <tr className="bg-blue-50">
-                  <th className="border-2 border-blue-300 p-2 text-center">{ui.passGood}</th>
-                  <th className="border-2 border-blue-300 p-2 text-center">{ui.passSome}</th>
-                  <th className="border-2 border-blue-300 p-2 text-center">{ui.passNone}</th>
-                  <th className="border-2 border-blue-300 p-2 text-center">{ui.transparent}</th>
-                  <th className="border-2 border-blue-300 p-2 text-center">{ui.translucent}</th>
-                  <th className="border-2 border-blue-300 p-2 text-center">{ui.opaque}</th>
+                <tr className="bg-transparent">
+                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.passGood}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.passSome}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.passNone}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.transparent}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.translucent}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.opaque}</th>
                 </tr>
               </thead>
               <tbody>
@@ -175,71 +278,78 @@ export default function P4LightRecord() {
                   const isOpaque = item.material.type === "opaque";
 
                   return (
-                    <tr key={index} className="transition hover:bg-blue-50">
-                      <td className="border-2 border-blue-300 p-3 font-medium">
-                        <div className="flex items-center gap-2">
-                          <div
-                            className={`h-8 w-8 rounded p-1 ${
-                              isTransparent ? "bg-blue-100" : isTranslucent ? "bg-yellow-100" : "bg-gray-100"
-                            }`}
-                          >
-                            <img src={item.material.img} alt="" className="h-full w-full object-contain" />
+                    <tr key={index} className="transition hover:bg-[#edf4fa]/85">
+                      <td className={`${tableCellClass} p-3 font-medium text-[#17344d]`}>
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`h-10 w-10 rounded-xl border border-white/60 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] ${
+                                isTransparent
+                                  ? "bg-[#d8e9f5]"
+                                  : isTranslucent
+                                    ? "bg-[#e9edf2]"
+                                    : "bg-[#dde4ec]"
+                              }`}
+                            >
+                              <img src={item.material.img} alt="" className="h-full w-full object-contain" />
+                            </div>
+                            <span>{getMaterialName(item)}</span>
                           </div>
-                          {getMaterialName(item)}
+
+                          <button
+                            type="button"
+                            onClick={() => speakRowResult(item)}
+                            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#a9c6dc] bg-[#edf4fa] text-sm text-[#537391] transition hover:bg-[#dfeaf3]"
+                            aria-label={`${ui.rowSpeak} ${getMaterialName(item)}`}
+                          >
+                            🔊
+                          </button>
                         </div>
                       </td>
 
-                      <td className="border-2 border-blue-300 p-3 text-center text-2xl">{isTransparent && "✓"}</td>
-                      <td className="border-2 border-blue-300 p-3 text-center text-2xl">{isTranslucent && "~"}</td>
-                      <td className="border-2 border-blue-300 p-3 text-center text-2xl">{isOpaque && "✗"}</td>
+                      <td className={`${tableCellClass} p-3 text-center text-2xl text-[#17344d]`}>{isTransparent && "✓"}</td>
+                      <td className={`${tableCellClass} p-3 text-center text-2xl text-[#17344d]`}>{isTranslucent && "✓"}</td>
+                      <td className={`${tableCellClass} p-3 text-center text-2xl text-[#17344d]`}>{isOpaque && "✓"}</td>
 
-                      <td className="border-2 border-blue-300 p-3 text-center text-2xl">{isTransparent && "✓"}</td>
-                      <td className="border-2 border-blue-300 p-3 text-center text-2xl">{isTranslucent && "✓"}</td>
-                      <td className="border-2 border-blue-300 p-3 text-center text-2xl">{isOpaque && "✓"}</td>
+                      <td className={`${tableCellClass} p-3 text-center text-2xl text-[#17344d]`}>{isTransparent && "✓"}</td>
+                      <td className={`${tableCellClass} p-3 text-center text-2xl text-[#17344d]`}>{isTranslucent && "✓"}</td>
+                      <td className={`${tableCellClass} p-3 text-center text-2xl text-[#17344d]`}>{isOpaque && "✓"}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-        </div>
+          </div>
 
-        <div className="mb-6 rounded-xl border-2 border-green-300 bg-green-50 p-4">
-          <h3 className="mb-2 font-bold text-green-800">{ui.summaryTitle}</h3>
-          <ul className="space-y-1 text-sm">
-            {ui.summaryItems.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
+          <div className="mb-6">
+            <SpeakButton
+              th={speakTexts.th}
+              en={speakTexts.en}
+              ms={speakTexts.ms}
+              activeLang={language}
+              onLanguageChange={setLanguage}
+              variant="segmented"
+            />
+          </div>
 
-        <div className="mb-6 rounded-xl border-2 border-blue-200 bg-white p-4">
-          <p className="mb-2 text-sm font-semibold text-blue-700">{ui.speakLabel}</p>
-          <SpeakButton
-            th={speakTexts.th}
-            en={speakTexts.en}
-            ms={speakTexts.ms}
-            activeLang={language}
-            onLanguageChange={setLanguage}
-          />
-        </div>
+          <div className="flex justify-between gap-4">
+            <button
+              onClick={() => navigate("/p4/light/experiment")}
+              className="flex items-center gap-2 rounded-2xl border border-[#adc7db] bg-[linear-gradient(180deg,rgba(227,236,244,0.96),rgba(198,213,226,0.96))] px-6 py-3 text-[#23445f] shadow-[0_10px_24px_rgba(122,146,167,0.14)] transition hover:brightness-105"
+            >
+              <span>◀</span>
+              {ui.addMore}
+            </button>
 
-        <div className="flex justify-between gap-4">
-          <button
-            onClick={() => navigate("/p4/light/experiment")}
-            className="flex items-center gap-2 rounded-xl bg-gray-500 px-6 py-3 text-white transition hover:bg-gray-600"
-          >
-            <span>◀</span>
-            {ui.addMore}
-          </button>
-
-          <button
-            onClick={goToSummary}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-3 text-white transition hover:shadow-lg"
-          >
-            {ui.next}
-            <span>▶</span>
-          </button>
+            <button
+              onClick={goToSummary}
+              className="flex items-center gap-2 rounded-2xl border border-[#8fb3cf] bg-gradient-to-r from-[#93bad6] to-[#7fa7c5] px-6 py-3 text-[#10304a] shadow-[0_10px_24px_rgba(109,139,165,0.18)] transition hover:brightness-105"
+            >
+              {ui.next}
+              <span>▶</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
