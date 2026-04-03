@@ -10,7 +10,7 @@ export default function P4Gravity() {
       th: {
         title: "แรงโน้มถ่วงของโลก",
         sub: "เลือกการทดลอง",
-        back: "กลับหน้า ป.4",
+        back: "ย้อนกลับ",
         exp1Title: "การทดลองที่ 1",
         exp1Desc: "ผลของแรงโน้มถ่วง",
         exp2Title: "การทดลองที่ 2",
@@ -24,7 +24,7 @@ export default function P4Gravity() {
       en: {
         title: "Earth's Gravity",
         sub: "Choose an experiment",
-        back: "Back to Grade 4",
+        back: "Back",
         exp1Title: "Experiment 1",
         exp1Desc: "Effects of Gravity",
         exp2Title: "Experiment 2",
@@ -38,7 +38,7 @@ export default function P4Gravity() {
       ms: {
         title: "Graviti Bumi",
         sub: "Pilih eksperimen",
-        back: "Kembali ke Tahun 4",
+        back: "Kembali",
         exp1Title: "Eksperimen 1",
         exp1Desc: "Kesan Graviti",
         exp2Title: "Eksperimen 2",
@@ -63,7 +63,7 @@ export default function P4Gravity() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#eaf7fb] px-6 pb-[140px] pt-12 text-center max-[640px]:px-[14px] max-[640px]:pb-[150px] max-[640px]:pt-7">
       <img
-        src="/images/p4/backgrounds-p4.jpg"
+        src="/images/backgroundss.jpg"
         alt="Laboratory background"
         className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
@@ -81,7 +81,7 @@ export default function P4Gravity() {
           style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
         >
           <div className={cardClass} onClick={() => navigate("/p4/gravity/vocab")}>
-            <img src="/images/p4.png" alt="" className={imageClass} />
+            <img src="/images/pp4.jpg" alt="" className={imageClass} />
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp1Title}</div>
               <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp1Desc}</div>
@@ -89,7 +89,7 @@ export default function P4Gravity() {
           </div>
 
           <div className={cardClass} onClick={() => navigate("/p4/gravity/exp2/vocab")}>
-            <img src="/images/p4/action.png" alt="" className={imageClass} />
+            <img src="/images/p4/action.jpg" alt="" className={imageClass} />
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp2Title}</div>
               <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp2Desc}</div>

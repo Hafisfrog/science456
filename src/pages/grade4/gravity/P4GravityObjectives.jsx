@@ -15,7 +15,7 @@ export default function P4GravityObjectives() {
         obj1: "สังเกตและระบุผลของแรงโน้มถ่วงที่มีต่อวัตถุได้",
         obj2: "ปฏิบัติการทดลองเกี่ยวกับผลของแรงโน้มถ่วงที่มีต่อวัตถุได้ครบทุกขั้นตอน",
         back: "ย้อนกลับ",
-        next: "ไปคำศัพท์",
+        next: "ต่อไป",
         speak: "ฟัง",
         langTh: "ไทย",
         langEn: "อังกฤษ",
@@ -28,7 +28,7 @@ export default function P4GravityObjectives() {
         obj1: "Observe and describe the effect of gravity on objects.",
         obj2: "Carry out a gravity experiment by following all steps.",
         back: "Back",
-        next: "Vocabulary",
+        next: "Next",
         speak: "Listen",
         langTh: "Thai",
         langEn: "English",
@@ -41,7 +41,7 @@ export default function P4GravityObjectives() {
         obj1: "Memerhati dan menerangkan kesan graviti terhadap objek.",
         obj2: "Menjalankan eksperimen graviti dengan mengikuti semua langkah.",
         back: "Kembali",
-        next: "Kosa Kata",
+        next: "Seterusnya",
         speak: "Dengar",
         langTh: "Thai",
         langEn: "English",
@@ -89,7 +89,7 @@ export default function P4GravityObjectives() {
           </div>
 
           <div className="mt-4 flex items-center justify-center gap-3">
-            <h1 className="m-0 text-6xl font-black text-gray-900 [text-shadow:0_4px_0_rgba(255,255,255,.6)] max-[900px]:text-[42px] max-[640px]:text-[34px]">
+            <h1 className="m-0 text-6xl font-black text-[#eef5ff] drop-shadow-[0_10px_24px_rgba(8,15,35,0.55)] max-[900px]:text-[42px] max-[640px]:text-[34px]">
               {t.title}
             </h1>
             <button

@@ -1,7 +1,4 @@
-/* ============================= */
-/* PAGE FULLSCREEN FIX */
-/* ============================= */
-html, body, #root {
+﻿html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -9,86 +6,87 @@ html, body, #root {
   overflow-x: hidden;
 }
 
-/* หน้า */
 .p4-page {
+  position: relative;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
-  padding: 56px 0; /* เว้นแค่บนล่าง ไม่มีซ้ายขวา */
-  background: linear-gradient(180deg, #f0f9ff, #e6f4ff);
-  font-family: 'Prompt', sans-serif;
-  overflow-x: hidden;
+  padding: 56px 0 160px;
   box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: 'Prompt', sans-serif;
+  background: linear-gradient(180deg, #f0f9ff 0%, #e6f4ff 100%);
 }
 
-/* ============================= */
-/* Header */
-/* ============================= */
+.p4-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.p4-content {
+  position: relative;
+  z-index: 1;
+}
+
 .p4-header {
-  text-align: center;
   margin-bottom: 36px;
+  text-align: center;
 }
 
 .p4-header h1 {
   margin: 0;
   font-size: 46px;
   font-weight: 800;
-  color: #2563eb;
+  color: #eef5ff;
+  text-shadow: 0 10px 24px rgba(8, 15, 35, 0.55);
 }
 
 .p4-header p {
   margin-top: 10px;
   font-size: 20px;
-  color: #374151;
+  color: #d7e6ff;
+  text-shadow: 0 6px 18px rgba(8, 15, 35, 0.45);
 }
 
-/* ============================= */
-/* Grid */
-/* ============================= */
 .p4-grid {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 28px;
-  padding: 0 20px; /* เว้นขอบด้านในเฉพาะ grid */
-  box-sizing: border-box;
 }
 
-/* ============================= */
-/* Card */
-/* ============================= */
 .p4-card {
-  background: white;
-  border-radius: 26px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 14px 30px rgba(0,0,0,.12);
-  transition: transform .18s ease, box-shadow .18s ease;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 16px 34px rgba(33, 53, 95, 0.15);
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
 
 .p4-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0,0,0,.18);
+  box-shadow: 0 22px 42px rgba(33, 53, 95, 0.2);
 }
 
-/* ============================= */
-/* Image */
-/* ============================= */
 .p4-card-img {
   width: 100%;
   height: 360px;
   object-fit: cover;
 }
 
-/* ============================= */
-/* Body */
-/* ============================= */
 .p4-card-body {
-  padding: 22px 22px 26px;
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 22px 26px;
 }
 
 .p4-card-body h2 {
@@ -96,62 +94,107 @@ html, body, #root {
   font-size: 26px;
   font-weight: 800;
   color: #111827;
+  text-align: center;
 }
 
-.p4-card-body p {
-  margin-top: 10px;
-  font-size: 17px;
-  line-height: 1.5;
-  color: #374151;
+.p4-back-btn {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 12;
+  border: none;
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #213a8f;
+  font-family: 'Prompt', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
+  transition: transform .18s ease, box-shadow .18s ease;
 }
 
-/* ============================= */
-/* Footer tags */
-/* ============================= */
-.p4-card-footer {
-  margin-top: 16px;
-  display: flex;
-  flex-wrap: wrap;
+.p4-back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26);
+}
+
+.p4-back-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+.p4-langbar {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 12;
+  display: inline-flex;
   gap: 8px;
+  padding: 10px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 40px rgba(111, 144, 186, 0.2);
 }
 
-.tag {
-  padding: 6px 12px;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 999px;
-  background: #dbeafe;
-  color: #1e40af;
+.p4-langbtn {
+  min-width: 88px;
+  border: 0;
+  border-radius: 16px;
+  padding: 11px 14px;
+  background: #eaf3ff;
+  color: #172033;
+  font-family: 'Prompt', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: none;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease;
 }
 
-/* ============================= */
-/* Disabled */
-/* ============================= */
-.p4-card.disabled {
-  cursor: default;
-  background: #f3f4f6;
+.p4-langbtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(111, 144, 186, 0.14);
+}
+
+.p4-langbtn.is-active {
+  background: #bdd9f8;
+  color: #172033;
   box-shadow: none;
 }
 
-.p4-card.disabled:hover {
-  transform: none;
+@media (max-width: 900px) {
+  .p4-page {
+    padding-bottom: 200px;
+  }
+
+  .p4-langbar {
+    gap: 8px;
+    padding: 9px 11px;
+    border-radius: 18px;
+  }
+
+  .p4-langbtn {
+    min-width: 80px;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 15px;
+  }
+
+  .p4-back-btn {
+    right: 20px;
+    bottom: 20px;
+    padding: 13px 16px;
+    font-size: 18px;
+  }
 }
 
-.p4-coming {
-  height: 100%;
-  min-height: 240px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 700;
-  color: #6b7280;
-}
-
-/* ============================= */
-/* Responsive */
-/* ============================= */
 @media (max-width: 768px) {
+  .p4-page {
+    padding: 42px 0 228px;
+  }
+
   .p4-header h1 {
     font-size: 36px;
   }
@@ -159,32 +202,26 @@ html, body, #root {
   .p4-header p {
     font-size: 18px;
   }
-}
 
-/* ============================= */
-/* ปุ่มย้อนกลับ */
-/* ============================= */
-.back-home-btn{
-  border: none;
-  cursor: pointer;
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #ffffff, #f0f9ff);
-  color: #1e3a8a;
-  box-shadow: 0 8px 18px rgba(0,0,0,.15);
-  font-family: 'Prompt', sans-serif;
-  transition: all .15s ease;
-}
+  .p4-langbar {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    justify-content: space-between;
+  }
 
-.back-home-btn:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0,0,0,.2);
-  background: linear-gradient(135deg, #e0f2fe, #ffffff);
-}
+  .p4-langbtn {
+    min-width: 0;
+    flex: 1 1 0;
+    padding: 10px 7px;
+    font-size: 14px;
+  }
 
-.back-home-btn:active{
-  transform: translateY(1px);
-  box-shadow: 0 6px 14px rgba(0,0,0,.18);
+  .p4-back-btn {
+    left: 16px;
+    right: 16px;
+    bottom: 100px;
+    text-align: center;
+    font-size: 18px;
+  }
 }
