@@ -1,0 +1,97 @@
+.p5gen-lang,
+.p5ga-lang,
+.p5gp-lang,
+.p5gh-lang,
+.p5ghs-lang,
+.p5ghs2-lang,
+.p5ghs3-lang,
+.p5gas-lang,
+.p5gps-lang {
+  gap: 10px !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12) !important;
+}
+
+.p5gen-lang button,
+.p5ga-lang button,
+.p5gp-lang button,
+.p5gh-lang button,
+.p5ghs2-lang button,
+.p5ghs3-lang button,
+.p5ghs-lang button:not(.p5ghs-audio),
+.p5gas-lang button:not(.p5gas-audio),
+.p5gps-lang button:not(.p5gps-audio) {
+  border: 0 !important;
+  border-radius: 14px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 10px 14px !important;
+  font-size: 16px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  color: #0f172a !important;
+  background: #e6f2ff !important;
+  box-shadow: none !important;
+  transition:
+    transform 0.16s ease,
+    background-color 0.16s ease,
+    color 0.16s ease !important;
+}
+
+.p5gen-lang button:hover,
+.p5ga-lang button:hover,
+.p5gp-lang button:hover,
+.p5gh-lang button:hover,
+.p5ghs2-lang button:hover,
+.p5ghs3-lang button:hover,
+.p5ghs-lang button:not(.p5ghs-audio):hover,
+.p5gas-lang button:not(.p5gas-audio):hover,
+.p5gps-lang button:not(.p5gps-audio):hover {
+  transform: translateY(-1px) !important;
+  background: #d9edff !important;
+}
+
+.p5gen-lang button.is-active,
+.p5ga-lang button.is-active,
+.p5gp-lang button.is-active,
+.p5gh-lang button.is-active,
+.p5ghs2-lang button.is-active,
+.p5ghs3-lang button.is-active,
+.p5ghs-lang button.is-active:not(.p5ghs-audio),
+.p5gas-lang button.is-active:not(.p5gas-audio),
+.p5gps-lang button.is-active:not(.p5gps-audio) {
+  color: #0f172a !important;
+  background: #bae6fd !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 980px) {
+  .p5gen-lang,
+  .p5ga-lang,
+  .p5gp-lang,
+  .p5gh-lang,
+  .p5ghs-lang,
+  .p5ghs2-lang,
+  .p5ghs3-lang,
+  .p5gas-lang,
+  .p5gps-lang {
+    gap: 8px !important;
+    padding: 10px !important;
+  }
+
+  .p5gen-lang button,
+  .p5ga-lang button,
+  .p5gp-lang button,
+  .p5gh-lang button,
+  .p5ghs2-lang button,
+  .p5ghs3-lang button,
+  .p5ghs-lang button:not(.p5ghs-audio),
+  .p5gas-lang button:not(.p5gas-audio),
+  .p5gps-lang button:not(.p5gps-audio) {
+    padding: 10px 12px !important;
+    font-size: 15px !important;
+  }
+}

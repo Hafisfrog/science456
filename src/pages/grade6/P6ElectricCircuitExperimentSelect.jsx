@@ -154,19 +154,35 @@ export default function P6ElectricCircuitExperimentSelect() {
       </div>
 
       {/* Language */}
-      <div className="fixed bottom-3 left-3 flex gap-2 rounded-2xl bg-white p-2 shadow">
-        {LANGUAGE_OPTIONS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLang(item.id)}
-            className={`rounded-xl px-4 py-2 font-bold ${lang === item.id
-                ? "bg-blue-500 text-white"
-                : "bg-slate-100 text-slate-700"
-              }`}
-          >
-            {item.label}
-          </button>
-        ))}
+    <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+
+        <button
+          onClick={() => setLang("th")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          ไทย
+        </button>
+
+        <button
+          onClick={() => setLang("en")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          English
+        </button>
+
+        <button
+          onClick={() => setLang("ms")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          Melayu
+        </button>
+
       </div>
 
       {/* Navigation */}

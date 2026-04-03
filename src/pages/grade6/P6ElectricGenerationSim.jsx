@@ -52,6 +52,8 @@ const UI_TEXT = {
     summaryReady: "สรุปผลทั้งหมด",
     summaryProgress: "กรุณาทำการทดลองให้ครบทั้ง 3 ครั้งก่อนสรุปผล",
     summaryDone: "ทดลองครบทั้ง 3 ครั้งแล้ว ไปดูสรุปผลทั้งหมดได้เลย",
+    stageTitle: "พื้นที่ทดลองไฟฟ้าสถิต",
+    stageHint: "เลือกรอบการทดลอง แล้วสังเกตว่าลูกโป่งดูดเศษกระดาษได้มากขึ้นเมื่อขัดถูนานขึ้น",
   },
   en: {
     back: "Back",
@@ -94,6 +96,8 @@ const UI_TEXT = {
     summaryReady: "View Full Summary",
     summaryProgress: "Complete all 3 trials before viewing the full summary",
     summaryDone: "All 3 trials are complete. Open the full summary.",
+    stageTitle: "Static Electricity Zone",
+    stageHint: "Choose a trial and observe how the balloon attracts more paper bits when it is rubbed longer.",
   },
   ms: {
     back: "Kembali",
@@ -136,6 +140,8 @@ const UI_TEXT = {
     summaryReady: "Lihat Ringkasan Penuh",
     summaryProgress: "Lengkapkan 3 ujian dahulu sebelum melihat ringkasan penuh",
     summaryDone: "Semua 3 ujian telah lengkap. Buka ringkasan penuh.",
+    stageTitle: "Ruang Eksperimen Elektrik Statik",
+    stageHint: "Pilih ujian dan perhatikan bagaimana belon menarik lebih banyak cebisan kertas apabila digosok lebih lama.",
   },
 };
 
@@ -154,6 +160,10 @@ const PAPER_BASE = [
   { left: 90, top: 12, rotate: 8 },
   { left: 48, top: 34, rotate: -4 },
   { left: 76, top: 36, rotate: 14 },
+  { left: 12, top: 34, rotate: 9 },
+  { left: 30, top: 42, rotate: -10 },
+  { left: 62, top: 42, rotate: 7 },
+  { left: 96, top: 30, rotate: -14 },
 ];
 
 const PAPER_TESTING = {
@@ -186,6 +196,10 @@ const PAPER_TESTING = {
     { x: 20, y: -14, opacity: 0.82, scale: 1.07 },
     { x: 2, y: -12, opacity: 0.82, scale: 1.07 },
     { x: 8, y: -8, opacity: 0.6, scale: 1.02 },
+    { x: -16, y: -10, opacity: 0.8, scale: 1.05 },
+    { x: -2, y: -4, opacity: 0.72, scale: 1.04 },
+    { x: 14, y: -6, opacity: 0.76, scale: 1.05 },
+    { x: 24, y: -10, opacity: 0.78, scale: 1.05 },
   ],
 };
 
@@ -525,7 +539,7 @@ export default function P6ElectricGenerationSim() {
   const papersStyle = getPapersContainerStyle({ trialLevel, started, isTesting });
   const resultData = resultTrialId ? TRIAL_RESULTS[resultTrialId] : null;
   const resultPaperCount =
-    resultData?.intensity === "high" ? 8 : resultData?.intensity === "mid" ? 4 : 0;
+    resultData?.intensity === "high" ? 12 : resultData?.intensity === "mid" ? 4 : 0;
   const resultCompletedCount = resultTrialId
     ? Array.from(new Set([...completedTrials, resultTrialId])).length
     : completedCount;
@@ -562,7 +576,7 @@ export default function P6ElectricGenerationSim() {
       <style>{forceEffectSimStyles}</style>
 
       <div
-        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[380px_minmax(0,1fr)_380px] gap-[clamp(10px,1.6vw,18px)] p-[clamp(10px,1.5vw,16px)]"
+        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)_420px] gap-[clamp(10px,1.6vw,18px)] p-[clamp(10px,1.5vw,16px)]"
         style={{
           background:
             "linear-gradient(180deg, rgba(251, 252, 254, 0.8), rgba(244, 246, 249, 0.8))",
@@ -571,29 +585,18 @@ export default function P6ElectricGenerationSim() {
         }}
       >
         <div className="flex h-full flex-col items-start gap-3 rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-3 py-2 text-slate-700 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
-            type="button"
-            onClick={() => navigate("/p6/experiment/electric-generation/steps")}
-            aria-label={t.back}
-            title={t.back}
-          >
-            <span className="text-[18px] leading-none">←</span>
-            <span className="text-[13px] font-black leading-none">{t.back}</span>
-          </button>
-
-          <div className="w-full rounded-[22px] border border-slate-300/50 bg-white/95 p-4 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
-            <div className="mb-3 rounded-[12px] bg-sky-100 px-3 py-2 text-[15px] font-black text-slate-900">
+          <div className="w-full rounded-[24px] border border-slate-300/50 bg-white/95 p-5 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
+            <div className="mb-4 rounded-[14px] bg-sky-100 px-4 py-3 text-[17px] font-black text-slate-900">
               {t.selectTrial}
             </div>
-            <div className="grid gap-3">
+            <div className="grid gap-4">
               {trialOptions.map((item) => {
                 const done = completedTrials.includes(item.id);
                 const active = selectedTrial === item.id;
                 return (
                   <button
                     key={item.id}
-                    className={`flex w-full items-center justify-between gap-3 rounded-[16px] border-2 px-4 py-3 text-left text-[14px] font-bold transition hover:-translate-y-0.5 ${
+                    className={`flex w-full items-center justify-between gap-3 rounded-[18px] border-2 px-5 py-5 text-left text-[16px] font-bold transition hover:-translate-y-0.5 ${
                       active
                         ? "border-blue-500 bg-blue-100 text-blue-900"
                         : "border-slate-200 bg-slate-50 text-slate-800"
@@ -603,7 +606,7 @@ export default function P6ElectricGenerationSim() {
                   >
                     <span>{item.label[lang]}</span>
                     <span
-                      className={`grid h-7 w-7 place-items-center rounded-full border text-[12px] font-black ${
+                      className={`grid h-9 w-9 place-items-center rounded-full border text-[13px] font-black ${
                         done ? "border-blue-500 bg-white text-blue-600" : "border-slate-300 text-slate-300"
                       }`}
                     >
@@ -615,24 +618,63 @@ export default function P6ElectricGenerationSim() {
             </div>
           </div>
 
-          <div className="mt-auto w-fit flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
-            {LANGUAGE_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                className={`rounded-xl px-4 py-2 font-bold ${
-                  lang === option.id ? "bg-sky-500 text-white" : "bg-sky-100"
-                }`}
-                type="button"
-                onClick={() => setLang(option.id)}
-              >
-                {option.label}
-              </button>
-            ))}
+          <div className="w-full rounded-[24px] border border-slate-200/80 bg-[#eef5ff] p-5 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-[17px] font-black text-slate-900">{t.progress}</div>
+              <div className="rounded-full bg-blue-100 px-4 py-1.5 text-[15px] font-black text-blue-700">
+                {lang === "th" ? `ทำแล้ว ${completedCount}/${totalTrials}` : `${completedCount}/${totalTrials}`}
+              </div>
+            </div>
+            <div className="mt-5 h-5 overflow-hidden rounded-full bg-slate-200">
+              <div
+                className="h-full rounded-full bg-[linear-gradient(90deg,#60a5fa,#2563eb)] transition-all duration-300"
+                style={{ width: `${progressPercent}%` }}
+              />
+            </div>
+            <div className="mt-5 text-[14px] font-bold leading-[1.6] text-slate-700">
+              {allTrialsCompleted ? t.summaryDone : t.summaryProgress}
+            </div>
           </div>
+
+          <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+
+        <button
+          onClick={() => setLang("th")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          ไทย
+        </button>
+
+        <button
+          onClick={() => setLang("en")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          English
+        </button>
+
+        <button
+          onClick={() => setLang("ms")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          Melayu
+        </button>
+
+      </div>
         </div>
 
         <div className="relative h-full overflow-hidden rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
-          <div className="p6-force-sim-balloons p6-gen-balloons absolute bottom-[6%] left-1/2 z-[3] w-full -translate-x-1/2">
+          <div className="absolute left-4 top-4 z-[7] max-w-[320px] rounded-[20px] bg-white/90 px-5 py-3.5 text-slate-900 shadow-[0_14px_28px_rgba(15,23,42,0.14)] backdrop-blur-sm">
+            <div className="text-[17px] font-black">{t.stageTitle}</div>
+            <div className="mt-1 text-[13px] font-semibold leading-[1.5] text-slate-600">{t.stageHint}</div>
+          </div>
+
+          <div className="p6-force-sim-balloons p6-gen-balloons absolute bottom-[-20%] left-1/2 z-[3] w-full -translate-x-1/2">
             <div
               className="p6-force-sim-balloon left"
               style={{ "--base": "0px", "--shift": "0px" }}
@@ -648,7 +690,7 @@ export default function P6ElectricGenerationSim() {
 
           {started && isTesting && trialLevel !== "none" && (
             <div
-              className="p6-sim-mobile-papers pointer-events-none absolute left-[53%] top-[20%] z-[6] h-[86px] w-[120px] -translate-x-1/2"
+              className="p6-sim-mobile-papers pointer-events-none absolute left-[58%] top-[50%] z-[6] h-[86px] w-[120px] -translate-x-1/2"
               style={{ ...papersStyle, transform: "translateX(-40%) translateY(0px)" }}
             >
               {PAPER_BASE.map((_, idx) => {
@@ -667,7 +709,7 @@ export default function P6ElectricGenerationSim() {
           )}
           {trialLevel === "none" && selectedTrial && started && isTesting && (
             <div
-              className="p6-sim-mobile-papers pointer-events-none absolute left-[50%] top-[50%] z-[2] h-[90px] w-[140px] -translate-x-1/2"
+              className="p6-sim-mobile-papers pointer-events-none absolute left-[50%] top-[58%] z-[2] h-[90px] w-[140px] -translate-x-1/2"
               style={{ opacity: 1 }}
             >
               {PAPER_BASE.map((_, idx) => {
@@ -695,14 +737,14 @@ export default function P6ElectricGenerationSim() {
         </div>
 
         <div className="flex h-full flex-col items-center gap-4 rounded-[24px] border border-slate-200/80 bg-white/95 p-5 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
-          <div className="w-full rounded-[18px] border-[3px] border-slate-900 bg-white px-4 py-3 text-[15px] font-black text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
+          <div className="w-full rounded-[20px] border-[3px] border-slate-900 bg-white px-5 py-5 text-[18px] font-black text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
             {bubbleText}
           </div>
-          <div className="w-full rounded-[16px] border border-slate-200/80 bg-slate-50 px-4 py-3 text-center text-[14px] font-black text-slate-900 shadow-[0_10px_18px_rgba(15,23,42,0.12)]">
+          <div className="w-full rounded-[18px] border border-slate-200/80 bg-slate-50 px-4 py-4 text-center text-[16px] font-black text-slate-900 shadow-[0_10px_18px_rgba(15,23,42,0.12)]">
             {t.timer}: {formatTime(remaining)}
           </div>
           <img
-            className="h-[180px] w-auto"
+            className="h-[240px] w-auto"
             src="/images/p4/exp1/character-boy.png"
             alt="นักเรียน"
           />
@@ -726,7 +768,7 @@ export default function P6ElectricGenerationSim() {
                 started && durationSeconds > 0 && !isTesting ? false : !canStart
               }
             >
-              <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#fff2b5,#f59e0b)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
+              <span className="grid h-16 w-16 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#fff2b5,#f59e0b)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
                 {started && durationSeconds > 0 && !isTesting ? (
                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
                     <path d="M6 5h4v14H6V5zm6 7l6 4V8l-6 4z" fill="currentColor" />
@@ -737,7 +779,7 @@ export default function P6ElectricGenerationSim() {
                   </svg>
                 )}
               </span>
-              <span className="text-[14px] font-black">
+              <span className="text-[16px] font-black">
                 {started && durationSeconds > 0 && !isTesting ? t.skip : t.start}
               </span>
             </button>
@@ -746,7 +788,7 @@ export default function P6ElectricGenerationSim() {
               type="button"
               onClick={handleResetProgress}
             >
-              <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#e2e8f0,#94a3b8)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
+              <span className="grid h-16 w-16 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#e2e8f0,#94a3b8)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
                 <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
                   <path
                     d="M12 6a6 6 0 1 1-5.2 3H5.5a.75.75 0 0 1-.53-1.28l2.1-2.1a.75.75 0 0 1 1.06 0l2.1 2.1a.75.75 0 0 1-.53 1.28H8.05A4.5 4.5 0 1 0 12 7.5V6z"
@@ -754,7 +796,7 @@ export default function P6ElectricGenerationSim() {
                   />
                 </svg>
               </span>
-              <span className="text-[14px] font-black">{t.reset}</span>
+              <span className="text-[16px] font-black">{t.reset}</span>
             </button>
             {canShowResult && (
               <button
@@ -762,7 +804,7 @@ export default function P6ElectricGenerationSim() {
                 type="button"
                 onClick={handleShowResult}
               >
-                <span className="grid h-14 w-14 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#dbeafe,#60a5fa)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
+                <span className="grid h-16 w-16 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#dbeafe,#60a5fa)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
                     <path
                       d="M4 6h16v12H4zM7 10h10M7 14h6"
@@ -774,10 +816,20 @@ export default function P6ElectricGenerationSim() {
                     />
                   </svg>
                 </span>
-                <span className="text-[14px] font-black">{t.result}</span>
+                <span className="text-[16px] font-black">{t.result}</span>
               </button>
             )}
           </div>
+          <button
+            className="mt-4 inline-flex items-center gap-2 self-end rounded-[22px] bg-white px-5 py-3 text-[14px] font-black text-slate-700 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
+            type="button"
+            onClick={() => navigate("/p6/experiment/electric-generation/steps")}
+            aria-label={t.back}
+            title={t.back}
+          >
+            <span className="text-[18px] leading-none">←</span>
+            {t.back}
+          </button>
         </div>
 
         {resultData && (

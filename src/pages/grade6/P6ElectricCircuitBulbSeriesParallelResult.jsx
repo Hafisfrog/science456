@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TEXT = {
@@ -6,51 +6,64 @@ const TEXT = {
     badge: "วงจรไฟฟ้าใกล้ตัว",
     title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
     section: "สรุปผลการทดลอง",
-    intro: "จากการทดลองต่อหลอดไฟฟ้าในวงจรไฟฟ้าแบบอนุกรมและขนาน พบว่า",
+    intro: "จากการทำกิจกรรม พบว่า เมื่อเราต่อวงจรไฟฟ้าแบบอนุกรมและแบบขนาน หลอดไฟมีการทำงานแตกต่างกัน",
     series: {
       heading: "การต่อแบบอนุกรม",
-      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟดวงที่เหลือจะดับตามไปด้วย เพราะวงจรเปิด",
+      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงจะดับตามไปด้วย เพราะวงจรถูกตัดขาด กระแสไฟฟ้าไม่สามารถไหลผ่านได้ครบวงจร",
     },
     parallel: {
       heading: "การต่อแบบขนาน",
-      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงที่เหลือยังสว่างอยู่ เพราะยังมีทางเดินกระแสไฟฟ้า",
+      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงยังคงสว่างอยู่ เพราะยังมีอีกเส้นทางหนึ่งให้กระแสไฟฟ้าไหลผ่านได้",
     },
+    listen: "ฟังสรุป",
     back: "ย้อนกลับ",
-    next: "สรุปสาระสำคัญ",
+    next: "กลับเลือกการทดลอง",
   },
   en: {
     badge: "Electricity Around You",
     title: "Simple Electric Circuits",
     section: "Experiment Summary",
-    intro: "From experimenting with series and parallel bulb circuits, we found that",
+    intro: "From the activity, we found that bulbs work differently in series and parallel circuits.",
     series: {
       heading: "Series connection",
-      body: "If one bulb goes out, the remaining bulb also turns off because the circuit is open.",
+      body: "When one bulb goes out, the other bulb also goes out because the circuit is broken and current cannot flow through the whole circuit.",
     },
     parallel: {
       heading: "Parallel connection",
-      body: "If one bulb goes out, the other bulb stays lit because its path is still complete.",
+      body: "When one bulb goes out, the other bulb stays lit because there is still another path for the electric current to flow.",
     },
+    listen: "Listen",
     back: "Back",
-    next: "Key Summary",
+    next: "Back to experiments",
   },
   ms: {
     badge: "Litar elektrik dekat kita",
     title: "Litar elektrik mudah",
     section: "Rumusan eksperimen",
-    intro: "Daripada ujian sambungan mentol siri dan selari, didapati bahawa",
+    intro: "Daripada aktiviti ini, didapati bahawa mentol berfungsi secara berbeza dalam litar siri dan selari.",
     series: {
       heading: "Sambungan siri",
-      body: "Apabila satu mentol padam, mentol lain turut padam kerana litar terbuka.",
+      body: "Apabila satu mentol padam, mentol yang satu lagi turut padam kerana litar terputus dan arus elektrik tidak dapat mengalir dengan lengkap.",
     },
     parallel: {
       heading: "Sambungan selari",
-      body: "Apabila satu mentol padam, mentol lain masih menyala kerana laluan masih lengkap.",
+      body: "Apabila satu mentol padam, mentol yang satu lagi masih menyala kerana masih ada satu lagi laluan untuk arus elektrik mengalir.",
     },
+    listen: "Dengar rumusan",
     back: "Kembali",
-    next: "Ringkasan Utama",
+    next: "Kembali ke eksperimen",
   },
 };
+
+function speakText(text, lang) {
+  if (typeof window === "undefined" || !window.speechSynthesis || !text) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+  utterance.rate = 0.95;
+  utterance.pitch = 1;
+  window.speechSynthesis.speak(utterance);
+}
 
 function LanguagePills({ lang, setLang }) {
   const pills = [
@@ -81,6 +94,15 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const summarySpeech = [t.intro, t.series.heading, t.series.body, t.parallel.heading, t.parallel.body].join(" ");
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   const pageBg = {
     background:
@@ -107,28 +129,36 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
         </div>
         <h1 className="m-0 text-[clamp(32px,2.4vw,50px)] font-black leading-[1.05]">{t.title}</h1>
 
-        <div className="relative rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+        <div className="relative grid gap-4 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(16px,2vw,24px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
           <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
 
-          <div className="grid gap-3 rounded-3xl border-2 border-white/75 bg-white/70 p-[clamp(16px,2vw,24px)]">
+          <div className="relative z-[1] flex flex-wrap items-center justify-between gap-3">
             <div className="inline-flex w-fit items-center gap-2.5 rounded-full bg-blue-600/20 px-4 py-1.5 text-[clamp(22px,1.6vw,30px)] font-black text-slate-900">
               {t.section}
             </div>
+            <button
+              type="button"
+              onClick={() => speakText(summarySpeech, lang)}
+              aria-label={t.listen}
+              title={t.listen}
+              className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-[26px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
+            >
+              {"\uD83D\uDD0A"}
+            </button>
+          </div>
 
-            <p className="m-0 text-[clamp(18px,1.6vw,26px)] font-bold leading-[1.4] text-slate-900">{t.intro}</p>
+          <p className="relative z-[1] m-0 text-[clamp(18px,1.6vw,26px)] font-bold leading-[1.4] text-slate-900">{t.intro}</p>
 
-            <div className="space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
-              <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.series.heading}</div>
-              <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.series.body}</div>
-            </div>
+          <div className="relative z-[1] space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
+            <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.series.heading}</div>
+            <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.series.body}</div>
+          </div>
 
-            <div className="space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
-              <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.parallel.heading}</div>
-              <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.parallel.body}</div>
-            </div>
+          <div className="relative z-[1] space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
+            <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.parallel.heading}</div>
+            <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.parallel.body}</div>
           </div>
         </div>
-
       </div>
 
       <div className="fixed bottom-3 right-3 z-20 flex flex-nowrap gap-2">
@@ -139,7 +169,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-xl leading-none">←</span>
+          <span className="text-xl leading-none">{"\u2190"}</span>
           <span>{t.back}</span>
         </button>
         <button
@@ -150,12 +180,39 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
           title={t.next}
         >
           <span>{t.next}</span>
-          <span className="text-xl leading-none">→</span>
+          <span className="text-xl leading-none">{"\u2192"}</span>
         </button>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-4 left-4 z-20 max-sm:bottom-3 max-sm:left-3">
-        <LanguagePills lang={lang} setLang={setLang} />
+     <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+
+        <button
+          onClick={() => setLang("th")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          ไทย
+        </button>
+
+        <button
+          onClick={() => setLang("en")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          English
+        </button>
+
+        <button
+          onClick={() => setLang("ms")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          Melayu
+        </button>
+
       </div>
     </div>
   );

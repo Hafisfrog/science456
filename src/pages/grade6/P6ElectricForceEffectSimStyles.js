@@ -41,7 +41,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   height: 100dvh;
   margin: 0;
   display: grid;
-  grid-template-columns: 380px minmax(0, 1fr) 380px;
+  grid-template-columns: 420px minmax(0, 1fr) 420px;
   gap: clamp(10px, 1.6vw, 18px);
   align-items: stretch;
   padding: clamp(10px, 1.5vw, 16px);
@@ -83,23 +83,23 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  border-radius: 22px;
-  background: #ffffff;
-  border: 1px solid rgba(191, 219, 254, 0.95);
-  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 0;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
 }
 
 .p6-force-sim-langchip {
   border: none;
   cursor: pointer;
-  border-radius: 18px;
-  min-width: 98px;
-  min-height: 44px;
-  padding: 8px 18px;
-  background: #dcefff;
-  color: #111827;
+  border-radius: 14px;
+  min-width: 0;
+  min-height: 0;
+  padding: 10px 14px;
+  background: #e6f2ff;
+  color: #0f172a;
   font-family: inherit;
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 900;
   line-height: 1;
   box-shadow: none;
@@ -108,12 +108,13 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-langchip:hover {
   transform: translateY(-1px);
-  filter: brightness(0.98);
+  filter: none;
+  background: #d9edff;
 }
 
 .p6-force-sim-langchip.active {
-  background: #1499e6;
-  color: #ffffff;
+  background: #bae6fd;
+  color: #0f172a;
   box-shadow: none;
 }
 
@@ -124,7 +125,8 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   flex-direction: column;
   gap: 10px;
   align-self: stretch;
-  padding: 62px 16px 16px;
+  padding: 16px;
+  padding-bottom: 110px;
   border-radius: 22px;
   background: var(--force-panel);
   border: 1px solid var(--force-border);
@@ -561,7 +563,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   display: grid;
   justify-items: center;
   gap: 8px;
-  padding: 56px 10px 10px;
+  padding: 16px 14px 14px;
   border-radius: 24px;
   background: var(--force-panel);
   border: 1px solid var(--force-border);
@@ -575,9 +577,9 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   background: #ffffff;
   border: 4px solid rgba(15, 23, 42, 0.95);
   border-radius: 22px;
-  padding: 10px 12px 12px;
+  padding: 14px 16px 16px;
   font-weight: 900;
-  font-size: clamp(16px, 1.25vw, 18px);
+  font-size: clamp(18px, 1.35vw, 22px);
   box-shadow: 0 18px 30px rgba(17, 24, 39, 0.16);
   line-height: 1.25;
 }
@@ -596,7 +598,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-character {
-  width: clamp(158px, 18vh, 208px);
+  width: clamp(210px, 24vh, 280px);
   max-width: 100%;
   filter: drop-shadow(0 22px 24px rgba(17, 24, 39, 0.2));
 }
@@ -622,8 +624,8 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-start-icon {
-  width: 64px;
-  height: 64px;
+  width: 76px;
+  height: 76px;
   border-radius: 999px;
   display: grid;
   place-items: center;
@@ -640,7 +642,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-start-label {
   font-weight: 900;
-  font-size: 16px;
+  font-size: 18px;
   color: #0f172a;
 }
 
@@ -659,8 +661,8 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-reset-icon {
-  width: 64px;
-  height: 64px;
+  width: 76px;
+  height: 76px;
   border-radius: 999px;
   display: grid;
   place-items: center;
@@ -739,6 +741,82 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 .p6-force-sim-summary-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 18px 30px rgba(239, 68, 68, 0.3);
+}
+
+.p6-force-sim-progress {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 22px;
+  border: 1px solid rgba(191, 219, 254, 0.9);
+  background: #eef5ff;
+  box-shadow: 0 12px 22px rgba(15, 23, 42, 0.12);
+  padding: 14px;
+}
+
+.p6-force-sim-progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.p6-force-sim-progress-title {
+  font-size: 16px;
+  font-weight: 1000;
+  color: #0f172a;
+}
+
+.p6-force-sim-progress-pill {
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-size: 14px;
+  font-weight: 1000;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+.p6-force-sim-progress-bar {
+  margin-top: 12px;
+  height: 14px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #d9e3f0;
+}
+
+.p6-force-sim-progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #60a5fa, #2563eb);
+  transition: width 0.25s ease;
+}
+
+.p6-force-sim-progress-text {
+  margin-top: 12px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.p6-force-sim-backBottom {
+  margin-top: auto;
+  border: none;
+  cursor: pointer;
+  border-radius: 18px;
+  padding: 12px 20px;
+  min-width: 150px;
+  background: linear-gradient(135deg, #ffffff, #f4f8ff);
+  color: #1e293b;
+  font-size: 15px;
+  font-weight: 900;
+  box-shadow: 0 12px 20px rgba(17, 24, 39, 0.14);
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.p6-force-sim-backBottom:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 24px rgba(17, 24, 39, 0.18);
 }
 
 .p6-force-sim-menu {
@@ -1003,14 +1081,14 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   .p6-force-sim-langbar {
     align-self: center;
     gap: 8px;
-    padding: 8px 10px;
+    padding: 6px;
   }
 
   .p6-force-sim-langchip {
-    min-width: 88px;
-    min-height: 42px;
+    min-width: 72px;
+    min-height: 36px;
     padding: 8px 14px;
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 `;

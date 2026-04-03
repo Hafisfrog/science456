@@ -1,51 +1,62 @@
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
-import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumansSummary3.css";
+import "./p5GeneticsLangShared.css";
 
-const FAMILY_TREE_SPRITE = "/images/p5/family-tree-real.png";
+const FAMILY_TREE_SPRITE = "/images/p5/fam.png";
 
 const FAMILY_MEMBERS = {
   top: [
     {
       id: "grandma-1",
-      pos: "-72px -1px",
+      pos: "0% 0%",
+      scale: 1.18,
     },
     {
       id: "grandpa-1",
-      pos: "-128px -1px",
+      pos: "50% 0%",
+      scale: 1.16,
     },
     {
       id: "grandma-2",
-      pos: "-231px -1px",
+      pos: "100% 0%",
+      scale: 1.18,
     },
     {
       id: "grandpa-2",
-      pos: "-286px -1px",
+      pos: "0% 33.333%",
+      scale: 1.18,
     },
   ],
   middle: [
     {
       id: "mother",
-      pos: "-112px -116px",
+      pos: "100% 33.333%",
+      scale: 1.22,
     },
     {
       id: "father",
-      pos: "-208px -116px",
+      pos: "50% 33.333%",
+      scale: 1.18,
     },
   ],
   bottom: [
     {
       id: "child-1",
-      pos: "-78px -226px",
+      pos: "0% 66.667%",
+      scale: 1.22,
     },
     {
       id: "child-2",
-      pos: "-153px -226px",
+      pos: "0% 100%",
+      scale: 1.2,
     },
     {
       id: "child-3",
-      pos: "-252px -226px",
+      pos: "50% 100%",
+      scale: 1.16,
     },
   ],
 };
@@ -131,6 +142,75 @@ export default function P5GeneticsHumansSummary3() {
   const { lang, setLang } = useP5GeneticsLang();
   const labels = LANG_BUTTON_TEXT[lang];
   const t = TEXT[lang];
+  const familyRef = useRef(null);
+  const topRefs = useRef([]);
+  const middleRefs = useRef([]);
+  const bottomRefs = useRef([]);
+  const [treeLines, setTreeLines] = useState([]);
+  const selectExperimentsLabel =
+    lang === "th"
+      ? "กลับไปหน้าเลือกการทดลอง"
+      : lang === "ms"
+        ? "Kembali ke Pilihan Eksperimen"
+        : "Back to Experiment Selection";
+
+  useEffect(() => {
+    const familyNode = familyRef.current;
+    if (!familyNode) return undefined;
+
+    const readPoint = (node) => {
+      if (!node) return null;
+      const hostRect = familyNode.getBoundingClientRect();
+      const rect = node.getBoundingClientRect();
+      return {
+        x: rect.left - hostRect.left + rect.width / 2,
+        y: rect.top - hostRect.top + rect.height / 2,
+        r: rect.width / 2,
+      };
+    };
+
+    const measure = () => {
+      const top = topRefs.current.map(readPoint).filter(Boolean);
+      const middle = middleRefs.current.map(readPoint).filter(Boolean);
+      const bottom = bottomRefs.current.map(readPoint).filter(Boolean);
+
+      if (top.length !== FAMILY_MEMBERS.top.length || middle.length !== FAMILY_MEMBERS.middle.length || bottom.length !== FAMILY_MEMBERS.bottom.length) {
+        return;
+      }
+
+      const topRailY = Math.max(...top.map((point) => point.y + point.r)) + 10;
+      const topCenterX = (top[0].x + top[top.length - 1].x) / 2;
+      const parentUpperRailY = Math.min(...middle.map((point) => point.y - point.r)) - 10;
+      const parentLowerRailY = Math.max(...middle.map((point) => point.y + point.r)) + 12;
+      const parentCenterX = (middle[0].x + middle[middle.length - 1].x) / 2;
+      const childRailY = Math.min(...bottom.map((point) => point.y - point.r)) - 12;
+
+      setTreeLines([
+        ...top.flatMap((point) => [{ x1: point.x, y1: point.y + point.r, x2: point.x, y2: topRailY }]),
+        { x1: top[0].x, y1: topRailY, x2: top[top.length - 1].x, y2: topRailY },
+        { x1: topCenterX, y1: topRailY, x2: topCenterX, y2: parentUpperRailY },
+        { x1: middle[0].x, y1: parentUpperRailY, x2: middle[middle.length - 1].x, y2: parentUpperRailY },
+        ...middle.flatMap((point) => [
+          { x1: point.x, y1: parentUpperRailY, x2: point.x, y2: point.y - point.r },
+          { x1: point.x, y1: point.y + point.r, x2: point.x, y2: parentLowerRailY },
+        ]),
+        { x1: middle[0].x, y1: parentLowerRailY, x2: middle[middle.length - 1].x, y2: parentLowerRailY },
+        { x1: parentCenterX, y1: parentLowerRailY, x2: parentCenterX, y2: childRailY },
+        { x1: bottom[0].x, y1: childRailY, x2: bottom[bottom.length - 1].x, y2: childRailY },
+        ...bottom.flatMap((point) => [{ x1: point.x, y1: childRailY, x2: point.x, y2: point.y - point.r }]),
+      ]);
+    };
+
+    measure();
+    const resizeObserver = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    resizeObserver?.observe(familyNode);
+    window.addEventListener("resize", measure);
+
+    return () => {
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -145,35 +225,30 @@ export default function P5GeneticsHumansSummary3() {
               <h2>{t.leftTitle}</h2>
               <p className="p5ghs3-left-sub">{t.leftSub}</p>
 
-              <div className="p5ghs3-family">
+              <div ref={familyRef} className="p5ghs3-family">
                 <svg className="p5ghs3-tree-lines" viewBox="0 0 520 440" aria-hidden="true">
-                  <path d="M59 84V108" />
-                  <path d="M143 84V108" />
-                  <path d="M227 84V108" />
-                  <path d="M311 84V108" />
-                  <path d="M59 108H311" />
-                  <path d="M185 108V150" />
-                  <path d="M159 150H255" />
-                  <path d="M159 150V188" />
-                  <path d="M255 150V188" />
-                  <path d="M159 262V300" />
-                  <path d="M255 262V300" />
-                  <path d="M159 300H255" />
-                  <path d="M207 300V344" />
-                  <path d="M55 344H255" />
-                  <path d="M55 344V358" />
-                  <path d="M155 344V358" />
-                  <path d="M255 344V358" />
+                  {treeLines.map((line, index) => (
+                    <line
+                      key={`${line.x1}-${line.y1}-${line.x2}-${line.y2}-${index}`}
+                      x1={line.x1}
+                      y1={line.y1}
+                      x2={line.x2}
+                      y2={line.y2}
+                    />
+                  ))}
                 </svg>
 
                 <div className="p5ghs3-generation top">
-                  {FAMILY_MEMBERS.top.map((member) => (
+                  {FAMILY_MEMBERS.top.map((member, index) => (
                     <span key={member.id} className="p5ghs3-avatar">
                       <span
+                        ref={(node) => (topRefs.current[index] = node)}
                         className="p5ghs3-avatar-image"
                         style={{
                           backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
+                          backgroundSize: "300% 400%",
                           backgroundPosition: member.pos,
+                          transform: `scale(${member.scale ?? 1.4})`,
                         }}
                       />
                     </span>
@@ -181,13 +256,16 @@ export default function P5GeneticsHumansSummary3() {
                 </div>
 
                 <div className="p5ghs3-generation middle">
-                  {FAMILY_MEMBERS.middle.map((member) => (
+                  {FAMILY_MEMBERS.middle.map((member, index) => (
                     <span key={member.id} className="p5ghs3-avatar">
                       <span
+                        ref={(node) => (middleRefs.current[index] = node)}
                         className="p5ghs3-avatar-image"
                         style={{
                           backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
+                          backgroundSize: "300% 400%",
                           backgroundPosition: member.pos,
+                          transform: `scale(${member.scale ?? 1.4})`,
                         }}
                       />
                     </span>
@@ -195,13 +273,16 @@ export default function P5GeneticsHumansSummary3() {
                 </div>
 
                 <div className="p5ghs3-generation bottom">
-                  {FAMILY_MEMBERS.bottom.map((member) => (
+                  {FAMILY_MEMBERS.bottom.map((member, index) => (
                     <span key={member.id} className="p5ghs3-avatar">
                       <span
+                        ref={(node) => (bottomRefs.current[index] = node)}
                         className="p5ghs3-avatar-image"
                         style={{
                           backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
+                          backgroundSize: "300% 400%",
                           backgroundPosition: member.pos,
+                          transform: `scale(${member.scale ?? 1.4})`,
                         }}
                       />
                     </span>
@@ -295,7 +376,7 @@ export default function P5GeneticsHumansSummary3() {
               {t.back}
             </button>
             <button type="button" className="p5ghs3-next" onClick={() => navigate("/p5/life/genetics")}>
-              {NEXT_LABEL[lang]}
+              {selectExperimentsLabel}
             </button>
           </div>
         </footer>

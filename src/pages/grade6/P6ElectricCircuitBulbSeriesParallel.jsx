@@ -17,7 +17,7 @@ const TRANSLATIONS = {
   th: {
     badge: "วงจรไฟฟ้าใกล้ตัว",
     title: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
-    equipmentHeading: "อุปกรณ์ที่ต้องเตรียม",
+    equipmentHeading: "อุปกรณ์",
     back: "ย้อนกลับ",
     next: "ขั้นตอน",
     sound: "เปิดเสียง",
@@ -196,6 +196,37 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
           </div>
         </div>
 
+        <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+
+        <button
+          onClick={() => setLang("th")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          ไทย
+        </button>
+
+        <button
+          onClick={() => setLang("en")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          English
+        </button>
+
+        <button
+          onClick={() => setLang("ms")}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
+        >
+          Melayu
+        </button>
+
+      </div>
+
         <div className="fixed bottom-3 right-3 z-20 flex gap-3">
           <button
             className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
@@ -220,24 +251,7 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
         </div>
       </div>
 
-      <div className="fixed bottom-3 left-3 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow">
-        <div className="inline-flex items-center gap-1">
-          {["th", "en", "ms"].map((code) => (
-            <button
-              key={code}
-              type="button"
-              onClick={() => setLang(code)}
-              className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
-                lang === code
-                  ? "bg-sky-500 text-white"
-                  : "bg-sky-100 text-slate-800"
-              }`}
-            >
-              {code === "th" ? "ไทย" : code === "en" ? "English" : "Melayu"}
-            </button>
-          ))}
-        </div>
-      </div>
+     
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { GRADE6_LANG_BAR_CLASS, grade6LangButtonClass } from "./grade6LangStyles";
 
 const LANGUAGES = [
   { key: "th", label: "ไทย" },
@@ -127,7 +128,7 @@ export default function Grade6() {
         </section>
       </div>
 
-      <div className="fixed bottom-3 left-3 z-20 rounded-[28px] bg-white/95 p-2 shadow-[0_16px_34px_rgba(23,34,49,0.18)] md:bottom-6 md:left-6">
+      <div className={`fixed bottom-3 left-3 z-20 md:bottom-6 md:left-6 ${GRADE6_LANG_BAR_CLASS}`}>
         <div className="flex items-center gap-2" role="group" aria-label={copy.languageLabel}>
           {LANGUAGES.map((option) => {
             const isActive = option.key === language;
@@ -137,11 +138,7 @@ export default function Grade6() {
                 key={option.key}
                 type="button"
                 onClick={() => setLanguage(option.key)}
-                className={`min-w-[82px] rounded-[18px] px-5 py-3 text-base font-bold transition ${
-                  isActive
-                    ? "bg-sky-500 text-white shadow-[0_8px_18px_rgba(14,165,233,0.35)]"
-                    : "bg-slate-200 text-slate-900 hover:-translate-y-0.5 hover:bg-slate-300"
-                }`}
+                className={grade6LangButtonClass(isActive)}
                 aria-pressed={isActive}
                 title={option.label}
               >

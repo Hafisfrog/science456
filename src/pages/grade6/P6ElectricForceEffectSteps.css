@@ -101,23 +101,24 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px;
-  border-radius: 18px;
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 18px rgba(15, 23, 42, 0.14);
+  padding: 6px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 34px rgba(23, 34, 49, 0.18);
 }
 
 .p6-force-steps-chip {
   border: none;
   cursor: pointer;
-  border-radius: 999px;
-  padding: 7px 14px;
+  border-radius: 16px;
+  min-width: 72px;
+  padding: 8px 16px;
   font-family: inherit;
-  font-size: clamp(15px, 1.6vw, 20px);
-  font-weight: 900;
-  color: #0369a1;
-  background: #d7edff;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  background: #e2e8f0;
   transition: transform 0.12s ease, filter 0.12s ease;
 }
 
@@ -128,25 +129,26 @@
 
 .p6-force-steps-chip.active {
   color: #ffffff;
-  background: #0ea5e9;
+  background: #1d4ed8;
+  box-shadow: 0 8px 18px rgba(29, 78, 216, 0.32);
 }
 
 .p6-force-steps-audio {
-  width: 42px;
-  height: 42px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 14px;
   cursor: pointer;
   display: grid;
   place-items: center;
-  color: #0369a1;
-  background: linear-gradient(180deg, #f8fcff, #e0f2fe);
-  border: 1px solid rgba(14, 165, 233, 0.36);
+  color: #1d4ed8;
+  background: linear-gradient(180deg, #f8fbff, #dbeafe);
+  border: 1px solid rgba(29, 78, 216, 0.2);
 }
 
 .p6-force-steps-audio svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 .p6-force-steps-actions {

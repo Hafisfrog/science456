@@ -131,28 +131,31 @@ export default function P6() {
       </section>
 
       {/* Language Buttons */}
-      <div className="fixed bottom-3 left-3 flex gap-2 bg-white/90 p-2 rounded-xl shadow-lg">
+      <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
 
         <button
           onClick={() => setLang("th")}
-          className={`px-4 py-2 rounded-lg font-bold ${lang === "th" ? "bg-blue-600 text-white" : "bg-slate-200"
-            }`}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
         >
           ไทย
         </button>
 
         <button
           onClick={() => setLang("en")}
-          className={`px-4 py-2 rounded-lg font-bold ${lang === "en" ? "bg-blue-600 text-white" : "bg-slate-200"
-            }`}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
         >
           English
         </button>
 
         <button
           onClick={() => setLang("ms")}
-          className={`px-4 py-2 rounded-lg font-bold ${lang === "ms" ? "bg-blue-600 text-white" : "bg-slate-200"
-            }`}
+          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          }`}
         >
           Melayu
         </button>
@@ -169,7 +172,6 @@ export default function P6() {
           aria-label={backLabel}
           title={backLabel}
         >
-          <span className="text-2xl leading-none">←</span>
           <span className="text-sm font-bold leading-none">{backLabel}</span>
         </button>
 

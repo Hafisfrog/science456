@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
 import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsPlants.css";
+import "./p5GeneticsLangShared.css";
 
 const TALL_PLANT_IMG = "/images/p5/tall.png";
 const SHORT_PLANT_IMG = "/images/p5/short.png";

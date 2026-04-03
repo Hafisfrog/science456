@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
 import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
+import "./p5GeneticsLangShared.css";
 
 const TEXT = {
   th: {
@@ -83,66 +84,24 @@ export default function P5GeneticsAnimalsSummary() {
         </section>
 
         <footer className="fixed bottom-3 left-3 right-3 z-20 flex items-center justify-between gap-3 max-[1180px]:flex-col max-[1180px]:items-stretch">
-          <div
-            className="flex items-center gap-2 rounded-[22px] border-2 bg-white/95 p-[6px_8px] shadow-[0_10px_24px_rgba(75,123,92,0.18)] max-[1180px]:justify-center"
-            style={{ borderColor: "#bfe5c9" }}
-          >
+          <div className="p5gas-lang max-[1180px]:justify-center">
             <button
               type="button"
-              className="rounded-full px-[18px] py-2 text-base font-extrabold transition duration-150 hover:-translate-y-px"
-              style={
-                lang === "th"
-                  ? {
-                      color: "#fff",
-                      background: "linear-gradient(180deg, #12c06d 0%, #06a85d 100%)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 16px rgba(6,168,93,0.28)",
-                    }
-                  : {
-                      color: "#0f6c5c",
-                      background: "linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
-                    }
-              }
+              className={lang === "th" ? "is-active" : ""}
               onClick={() => setLang("th")}
             >
               {labels.th}
             </button>
             <button
               type="button"
-              className="rounded-full px-[18px] py-2 text-base font-extrabold transition duration-150 hover:-translate-y-px"
-              style={
-                lang === "en"
-                  ? {
-                      color: "#fff",
-                      background: "linear-gradient(180deg, #12c06d 0%, #06a85d 100%)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 16px rgba(6,168,93,0.28)",
-                    }
-                  : {
-                      color: "#0f6c5c",
-                      background: "linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
-                    }
-              }
+              className={lang === "en" ? "is-active" : ""}
               onClick={() => setLang("en")}
             >
               {labels.en}
             </button>
             <button
               type="button"
-              className="rounded-full px-[18px] py-2 text-base font-extrabold transition duration-150 hover:-translate-y-px"
-              style={
-                lang === "ms"
-                  ? {
-                      color: "#fff",
-                      background: "linear-gradient(180deg, #12c06d 0%, #06a85d 100%)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 16px rgba(6,168,93,0.28)",
-                    }
-                  : {
-                      color: "#0f6c5c",
-                      background: "linear-gradient(180deg, #eefaf2 0%, #e5f5ea 100%)",
-                      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.8)",
-                    }
-              }
+              className={lang === "ms" ? "is-active" : ""}
               onClick={() => setLang("ms")}
             >
               {labels.ms}

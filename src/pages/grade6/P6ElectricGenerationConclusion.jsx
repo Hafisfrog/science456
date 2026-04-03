@@ -45,14 +45,14 @@ function LanguagePills({ lang, setLang, labels }) {
   ];
 
   return (
-    <div className="flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
+    <div className="flex max-w-[calc(100vw-24px)] flex-wrap items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
       {pills.map((p) => (
         <button
           key={p.code}
           type="button"
           onClick={() => setLang(p.code)}
-          className={`rounded-xl px-4 py-2 font-bold ${
-            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100"
+          className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            lang === p.code ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
           {p.label}
@@ -92,7 +92,7 @@ export default function P6ElectricGenerationConclusion() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-6 left-6 z-20">
+      <div className="pointer-events-auto fixed bottom-3 left-3 z-50">
         <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
       </div>
 

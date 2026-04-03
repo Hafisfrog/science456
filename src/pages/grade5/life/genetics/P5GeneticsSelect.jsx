@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
+import "./p5GeneticsLangShared.css";
 
 const LANG_TO_VOICE = {
   th: "th-TH",
@@ -138,7 +139,7 @@ export default function P5GeneticsSelect() {
 
   return (
     <div className="p5gen-page notranslate" translate="no">
-      <button type="button" className="p5gen-back" onClick={() => navigate("/grades")}>
+      <button type="button" className="p5gen-back" onClick={() => navigate("/p5/life")}>
         {t.back}
       </button>
 

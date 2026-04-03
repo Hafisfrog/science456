@@ -404,15 +404,8 @@ export default function P6ElectricForceEffectSim() {
     <div className="p6-force-sim-page">
       <style>{forceEffectSimStyles}</style>
       <div className="p6-force-sim-stage">
-        <button
-          className="p6-force-sim-backTop"
-          type="button"
-          onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
-        >
-          {t.backTop}
-        </button>
-
-        <div className="p6-force-sim-langbar">
+        {/* ภาษา */}
+        <div className="p6-force-sim-langbar">  
           {LANGUAGE_OPTIONS.map((item) => (
             <button
               key={item.id}
@@ -472,8 +465,21 @@ export default function P6ElectricForceEffectSim() {
               })}
             </div>
           </div>
-
-          {/* removed per request */}
+          <div className="p6-force-sim-progress">
+            <div className="p6-force-sim-progress-head">
+              <div className="p6-force-sim-progress-title">{t.progress}</div>
+              <div className="p6-force-sim-progress-pill">
+                {language === "th" ? `ทำแล้ว ${completedCount}/${totalTrials}` : `${completedCount}/${totalTrials}`}
+              </div>
+            </div>
+            <div className="p6-force-sim-progress-bar">
+              <div
+                className="p6-force-sim-progress-fill"
+                style={{ width: `${(completedCount / totalTrials) * 100}%` }}
+              />
+            </div>
+            <div className="p6-force-sim-progress-text">{summaryText || sequenceNotice || t.hiddenSummary}</div>
+          </div>
         </div>
 
         <div className="p6-force-sim-center">
@@ -646,6 +652,13 @@ export default function P6ElectricForceEffectSim() {
               {t.summary}
             </button>
           )}
+          <button
+            className="p6-force-sim-backBottom"
+            type="button"
+            onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
+          >
+            {language === "th" ? "ย้อนกลับ" : language === "en" ? "Back" : "Kembali"}
+          </button>
         </div>
       </div>
     </div>

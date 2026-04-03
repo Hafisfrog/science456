@@ -67,11 +67,7 @@ export default function P6ElectricForceEffectResult() {
           ))}
         </div>
 
-        {timeParam > 0 && (
-          <div className="mt-5 inline-flex items-center gap-2.5 rounded-full border-2 border-slate-900/20 bg-white px-4 py-2 text-base font-black shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
-            เวลาการถู: {formatTime(timeParam)}
-          </div>
-        )}
+       
 
         <div className="mt-auto" />
       </div>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
 import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsAnimals.css";
+import "./p5GeneticsLangShared.css";
 
 const kittens = Array.from({ length: 4 }, (_, index) => ({
   id: index,

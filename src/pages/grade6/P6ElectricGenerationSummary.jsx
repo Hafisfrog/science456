@@ -248,12 +248,14 @@ export default function P6ElectricGenerationSummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
+      <div className="fixed bottom-6 left-6 z-20 flex items-center gap-[10px] rounded-[18px] bg-white/90 p-[10px_12px] shadow-[0_10px_22px_rgba(0,0,0,.12)] max-[640px]:gap-2 max-[640px]:p-[10px]">
         {LANGUAGE_OPTIONS.map((option) => (
           <button
             key={option.id}
-            className={`rounded-xl px-4 py-2 font-bold ${
-              lang === option.id ? "bg-sky-500 text-white" : "bg-sky-100"
+            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
+              lang === option.id
+                ? "bg-sky-200"
+                : "bg-[#e6f2ff]"
             }`}
             type="button"
             onClick={() => setLang(option.id)}
