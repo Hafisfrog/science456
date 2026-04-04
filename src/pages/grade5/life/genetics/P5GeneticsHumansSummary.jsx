@@ -19,21 +19,21 @@ const TEXT = {
     title: "สรุปผลการทดลอง",
     summary:
       "จากภาพการทดลอง พบว่า\nลักษณะของคนแบ่งออกได้เป็น 2 ประเภท คือ\n1. ลักษณะทางพันธุกรรม\n2. ลักษณะที่เกิดจากการเรียนรู้หรือความชอบส่วนตัว",
-    back: "ย้อนกลับ",
+    back: "<< ย้อนกลับ",
     audio: "อ่านออกเสียง",
   },
   en: {
     title: "Experiment Summary",
     summary:
       "From the experiment, human traits can be grouped into 2 types:\n1. Inherited traits\n2. Traits formed by learning or personal preference",
-    back: "Back",
+    back: "<< Back",
     audio: "Play audio",
   },
   ms: {
     title: "Rumusan Eksperimen",
     summary:
       "Daripada eksperimen, ciri manusia boleh dibahagikan kepada 2 jenis:\n1. Ciri warisan\n2. Ciri yang terbentuk melalui pembelajaran atau minat peribadi",
-    back: "Kembali",
+    back: "<< Kembali",
     audio: "Main audio",
   },
 };

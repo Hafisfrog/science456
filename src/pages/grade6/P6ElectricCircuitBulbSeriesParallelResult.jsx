@@ -169,7 +169,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-xl leading-none">{"\u2190"}</span>
+          <span className="text-xl leading-none">&lt;&lt;</span>
           <span>{t.back}</span>
         </button>
         <button
@@ -180,7 +180,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
           title={t.next}
         >
           <span>{t.next}</span>
-          <span className="text-xl leading-none">{"\u2192"}</span>
+          <span className="text-xl leading-none">&gt;&gt;</span>
         </button>
       </div>
 

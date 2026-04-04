@@ -238,7 +238,7 @@ export default function P6ElectricCircuitMaterials() {
           onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
         >
-          <span className="text-xl leading-none">←</span>
+          <span className="text-xl leading-none">&lt;&lt;</span>
           <span>{t.back}</span>
         </button>
         <button
@@ -247,7 +247,7 @@ export default function P6ElectricCircuitMaterials() {
           type="button"
         >
           <span>{t.next}</span>
-          <span className="text-xl leading-none">→</span>
+          <span className="text-xl leading-none">&gt;&gt;</span>
         </button>
       </div>
       </div>

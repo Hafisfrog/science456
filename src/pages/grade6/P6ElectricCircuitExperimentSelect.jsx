@@ -193,7 +193,7 @@ export default function P6ElectricCircuitExperimentSelect() {
           type="button"
           aria-label="กลับหน้าคำศัพท์"
         >
-          <span className="text-xl leading-none">←</span>
+            <span className="text-xl leading-none">&lt;&lt;</span>
           <span>กลับหน้าคำศัพท์</span>
         </button>
       </div>

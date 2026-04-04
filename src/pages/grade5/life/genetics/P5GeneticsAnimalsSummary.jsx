@@ -13,7 +13,7 @@ const TEXT = {
     motherDesc: "\u0e02\u0e19\u0e2a\u0e35\u0e02\u0e32\u0e27",
     p2: "\u0e40\u0e21\u0e37\u0e48\u0e2d\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e40\u0e01\u0e34\u0e14\u0e02\u0e36\u0e49\u0e19 \u0e1e\u0e1a\u0e27\u0e48\u0e32",
     result: "\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e17\u0e38\u0e01\u0e15\u0e31\u0e27\u0e21\u0e35\u0e02\u0e19\u0e2a\u0e35\u0e14\u0e33",
-    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
+    back: "<< \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
     select: "\u0e01\u0e25\u0e31\u0e1a\u0e44\u0e1b\u0e2b\u0e19\u0e49\u0e32\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07",
   },
   en: {
@@ -25,7 +25,7 @@ const TEXT = {
     motherDesc: "white fur",
     p2: "When kittens were born, we found that",
     result: "all kittens had black fur.",
-    back: "Back",
+    back: "<< Back",
     select: "Back to Experiment Selection",
   },
   ms: {
@@ -37,7 +37,7 @@ const TEXT = {
     motherDesc: "bulu putih",
     p2: "Apabila anak kucing dilahirkan, didapati bahawa",
     result: "semua anak kucing berbulu hitam.",
-    back: "Kembali",
+    back: "<< Kembali",
     select: "Kembali ke Pilihan Eksperimen",
   },
 };

@@ -120,7 +120,7 @@ export default function P6ElectricCircuitVocab() {
             type="button"
             aria-label="ย้อนกลับ"
           >
-            <span className="p6-vocab-btn-icon">←</span>
+            <span className="p6-vocab-btn-icon">&lt;&lt;</span>
             <span>ย้อนกลับ</span>
           </button>
           <button
@@ -130,7 +130,7 @@ export default function P6ElectricCircuitVocab() {
             aria-label="เลือกการทดลอง"
           >
             <span>เลือกการทดลอง</span>
-            <span className="p6-vocab-btn-icon">→</span>
+            <span className="p6-vocab-btn-icon">&gt;&gt;</span>
           </button>
         </div>
       </div>

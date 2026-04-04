@@ -128,7 +128,7 @@ export default function P6ElectricGenerationKeySummary() {
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">←</span>
+          <span className="text-[22px] leading-none">&lt;&lt;</span>
           <span className="text-sm font-black leading-none">{t.back}</span>
         </button>
         <button
@@ -139,7 +139,7 @@ export default function P6ElectricGenerationKeySummary() {
           title={t.next}
         >
           <span className="text-sm font-black leading-none">{t.next}</span>
-          <span className="text-[22px] leading-none">→</span>
+          <span className="text-[22px] leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>

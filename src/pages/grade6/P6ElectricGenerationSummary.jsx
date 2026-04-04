@@ -235,14 +235,14 @@ export default function P6ElectricGenerationSummary() {
               type="button"
               onClick={() => navigate("/p6/experiment/electric-generation/sim")}
             >
-              <span className="text-[20px] leading-none">←</span> {t.back}
+              <span className="text-[20px] leading-none">&lt;&lt;</span> {t.back}
             </button>
             <button
               className="cursor-pointer rounded-[18px] bg-[#4b8bd1] px-5 py-3 text-sm font-black text-white shadow-[0_12px_24px_rgba(17,24,39,0.18)]"
               type="button"
               onClick={() => navigate("/p6/experiment/electric-generation/key-summary")}
             >
-              {t.retry} <span className="text-[18px] leading-none">→</span>
+              {t.retry} <span className="text-[18px] leading-none">&gt;&gt;</span>
             </button>
           </div>
         </div>

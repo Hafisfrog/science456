@@ -77,7 +77,7 @@ export default function P6ElectricGenerationConclusion() {
       }}
     >
       <div className="relative z-[1] mx-auto w-full max-w-[1200px]">
-        <div className="relative overflow-hidden rounded-[28px] bg-[#f6ece7] p-[clamp(20px,3vw,36px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
+        <div className="relative overflow-hidden rounded-[28px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(20px,3vw,36px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
           <h1 className="m-0 text-[clamp(26px,3.1vw,36px)] font-black text-slate-900">
             {t.title}
           </h1>
@@ -104,7 +104,7 @@ export default function P6ElectricGenerationConclusion() {
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">←</span>
+          <span className="text-[22px] leading-none">&lt;&lt;</span>
           <span className="text-sm font-black leading-none">{t.back}</span>
         </button>
         <button
@@ -115,7 +115,7 @@ export default function P6ElectricGenerationConclusion() {
           title={t.next}
         >
           <span className="text-sm font-black leading-none">{t.next}</span>
-          <span className="text-[22px] leading-none">→</span>
+          <span className="text-[22px] leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>

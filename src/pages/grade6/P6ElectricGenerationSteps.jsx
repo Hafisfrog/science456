@@ -209,7 +209,7 @@ export default function P6ElectricGenerationSteps() {
           aria-label={content.backToMaterials}
           title={content.backToMaterials}
         >
-          <span className="text-[28px] leading-none">←</span>
+          <span className="text-[28px] leading-none">&lt;&lt;</span>
           <span className="text-sm font-black leading-none">{backLabel}</span>
         </button>
 
@@ -221,7 +221,7 @@ export default function P6ElectricGenerationSteps() {
           title={content.start.replace("\n", " ")}
         >
           <span className="text-sm font-black leading-none">{nextLabel}</span>
-          <span className="text-[28px] leading-none">→</span>
+          <span className="text-[28px] leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>

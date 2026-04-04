@@ -41,7 +41,7 @@ const TEXT = {
     incorrect: "\u0e1c\u0e34\u0e14",
     correctAnswer: "\u0e40\u0e09\u0e25\u0e22",
     noAnswer: "\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e44\u0e14\u0e49\u0e40\u0e25\u0e37\u0e2d\u0e01",
-    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
+    back: "<< \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
   },
   en: {
     title: "Inheritance of Cat Fur Traits",
@@ -63,7 +63,7 @@ const TEXT = {
     incorrect: "Incorrect",
     correctAnswer: "Answer",
     noAnswer: "No answer selected",
-    back: "Back",
+    back: "<< Back",
   },
   ms: {
     title: "Pewarisan Ciri Bulu Kucing",
@@ -85,7 +85,7 @@ const TEXT = {
     incorrect: "Salah",
     correctAnswer: "Jawapan",
     noAnswer: "Belum pilih",
-    back: "Kembali",
+    back: "<< Kembali",
   },
 };
 

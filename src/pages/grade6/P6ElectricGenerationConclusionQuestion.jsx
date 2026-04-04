@@ -88,7 +88,7 @@ export default function P6ElectricGenerationConclusionQuestion() {
       }}
     >
       <div className="relative z-[1] mx-auto w-full max-w-[1280px]">
-        <div className="rounded-[24px] bg-[#f6ece7] p-[clamp(20px,3vw,32px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
+        <div className="rounded-[24px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(20px,3vw,32px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
           <QuestionBadge text={t.title} />
 
           <div className="mt-5 text-[clamp(22px,2.6vw,26px)] font-black text-slate-900">
@@ -117,7 +117,7 @@ export default function P6ElectricGenerationConclusionQuestion() {
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">←</span>
+          <span className="text-[22px] leading-none">&lt;&lt;</span>
           <span className="text-sm font-black leading-none">{t.back}</span>
         </button>
         <button
@@ -128,7 +128,7 @@ export default function P6ElectricGenerationConclusionQuestion() {
           title={t.next}
         >
           <span className="text-sm font-black leading-none">{t.next}</span>
-          <span className="text-[22px] leading-none">→</span>
+          <span className="text-[22px] leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>

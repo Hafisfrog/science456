@@ -147,7 +147,7 @@ export default function P6ElectricVocab() {
             type="button"
             aria-label={backLabel}
           >
-            <span className="p6-vocab-btn-icon">←</span>
+            <span className="p6-vocab-btn-icon">&lt;&lt;</span>
             {backLabel}
           </button>
           <button
@@ -157,7 +157,7 @@ export default function P6ElectricVocab() {
             aria-label={nextLabel}
           >
             {nextLabel}
-            <span className="p6-vocab-btn-icon">→</span>
+            <span className="p6-vocab-btn-icon">&gt;&gt;</span>
           </button>
         </div>
       </div>

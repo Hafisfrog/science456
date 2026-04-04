@@ -297,7 +297,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
           aria-label={t.nav.back}
           title={t.nav.back}
         >
-          <span className="text-xl leading-none">←</span>
+              <span className="text-xl leading-none">&lt;&lt;</span>
           <span>{t.nav.back}</span>
         </button>
         <button
@@ -308,7 +308,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
           title={t.nav.next}
         >
           <span>{t.nav.next}</span>
-          <span className="text-xl leading-none">→</span>
+              <span className="text-xl leading-none">&gt;&gt;</span>
         </button>
       </div>
 

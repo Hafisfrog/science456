@@ -79,7 +79,7 @@ const EQUIPMENT_LABEL = {
 
 const UI_TEXT = {
   th: {
-    backTop: "← ย้อนกลับ",
+    backTop: "<< ย้อนกลับ",
     selectTrial: "เลือกการทดลอง",
     start: "เริ่ม",
     progress: "ความคืบหน้า",
@@ -109,7 +109,7 @@ const UI_TEXT = {
     completeHint: 'ทำครบทุกการทดลองแล้ว กดปุ่ม "สรุปผลการทดลอง" ได้เลย',
   },
   en: {
-    backTop: "← Back",
+    backTop: "<< Back",
     selectTrial: "Select Trial",
     start: "Start",
     progress: "Progress",
@@ -119,7 +119,7 @@ const UI_TEXT = {
     selected: "Selected",
     currentTrial: "Current trial",
     hiddenSummary: 'Summary is hidden. Press "Experiment Summary" to view all results.',
-    backSteps: "← Back to steps",
+    backSteps: "<< Back to steps",
     summary: "Experiment Summary",
     reset: "Reset",
     stop: "Stop",
@@ -140,7 +140,7 @@ const UI_TEXT = {
     completeHint: 'All trials are done. Press "Experiment Summary".',
   },
   ms: {
-    backTop: "← Kembali",
+    backTop: "<< Kembali",
     selectTrial: "Pilih Ujian",
     start: "Mula",
     progress: "Kemajuan",
@@ -150,7 +150,7 @@ const UI_TEXT = {
     selected: "Pilihan",
     currentTrial: "Ujian semasa",
     hiddenSummary: 'Ringkasan disorok. Tekan "Ringkasan Eksperimen" untuk lihat semua hasil.',
-    backSteps: "← Kembali ke langkah",
+    backSteps: "<< Kembali ke langkah",
     summary: "Ringkasan Eksperimen",
     reset: "Mula semula",
     stop: "Berhenti",
@@ -657,7 +657,7 @@ export default function P6ElectricForceEffectSim() {
             type="button"
             onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
           >
-            {language === "th" ? "ย้อนกลับ" : language === "en" ? "Back" : "Kembali"}
+            {language === "th" ? "<< ย้อนกลับ" : language === "en" ? "<< Back" : "<< Kembali"}
           </button>
         </div>
       </div>

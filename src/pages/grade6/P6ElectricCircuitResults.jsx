@@ -150,7 +150,7 @@ export default function P6ElectricCircuitResults() {
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-xl leading-none">←</span>
+          <span className="text-xl leading-none">&lt;&lt;</span>
           <span>{t.back}</span>
         </button>
         <button
@@ -161,7 +161,7 @@ export default function P6ElectricCircuitResults() {
           title={t.next}
         >
           <span>{t.next}</span>
-          <span className="text-xl leading-none">→</span>
+          <span className="text-xl leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>

@@ -91,7 +91,7 @@ const TEXT = {
     f2Text: "เมื่อรุ่นลูกผสมกันเอง รุ่นหลานจะปรากฏลักษณะเด่นต่อลักษณะด้อยในอัตราส่วน 3 : 1",
     f1Dom: "แสดงลักษณะเด่นทั้งหมด",
     f2Dom: "แสดงลักษณะเด่น : ด้อย\nในอัตราส่วน 3 : 1",
-    back: "ย้อนกลับ",
+    back: "<< ย้อนกลับ",
   },
   en: {
     title: "Key Summary: Genetic Traits",
@@ -112,7 +112,7 @@ const TEXT = {
     f2Text: "When the F1 generation cross among themselves, the F2 generation shows dominant to recessive traits in a 3:1 ratio.",
     f1Dom: "All show the dominant trait",
     f2Dom: "Dominant : recessive\nratio 3 : 1",
-    back: "Back",
+    back: "<< Back",
   },
   ms: {
     title: "Rumusan Utama: Ciri Genetik",
@@ -133,7 +133,7 @@ const TEXT = {
     f2Text: "Apabila generasi F1 dikacukkan sesama sendiri, generasi F2 menunjukkan nisbah dominan kepada resesif 3 : 1.",
     f1Dom: "Semua menunjukkan ciri dominan",
     f2Dom: "Dominan : resesif\nnisbah 3 : 1",
-    back: "Kembali",
+    back: "<< Kembali",
   },
 };
 

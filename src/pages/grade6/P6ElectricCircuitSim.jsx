@@ -773,7 +773,7 @@ export default function P6ElectricCircuitSim() {
             aria-label={content.back}
             title={content.back}
           >
-            <span className="text-xl leading-none">←</span>
+            <span className="text-xl leading-none">&lt;&lt;</span>
             <span>{content.back}</span>
           </button>
           <button
@@ -787,7 +787,7 @@ export default function P6ElectricCircuitSim() {
             title={content.next}
           >
             <span>{content.next}</span>
-            <span className="text-xl leading-none">→</span>
+            <span className="text-xl leading-none">&gt;&gt;</span>
           </button>
         </div>
       </div>

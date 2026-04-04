@@ -36,7 +36,7 @@ const UI_TEXT = {
     trial2Short: "ครั้งที่ 2 (2 นาที)",
     trial3: "ครั้งที่ 3 ขัดถูด้วยผ้าแห้ง 5 นาที",
     trial3Short: "ครั้งที่ 3 (5 นาที)",
-    next: "ต่อไป »",
+    next: "ต่อไป >>",
     listen: "ฟังข้อความ",
     resultTitle: "ผลการทดลอง",
     objectColumn: "วัตถุ",
@@ -80,7 +80,7 @@ const UI_TEXT = {
     trial2Short: "Trial 2 (2 min)",
     trial3: "Trial 3: rub with a dry cloth for 5 minutes",
     trial3Short: "Trial 3 (5 min)",
-    next: "Next »",
+    next: "Next >>",
     listen: "Read screen",
     resultTitle: "Experiment Result",
     objectColumn: "Object",
@@ -124,7 +124,7 @@ const UI_TEXT = {
     trial2Short: "Ujian 2 (2 minit)",
     trial3: "Ujian 3: gosok dengan kain kering selama 5 minit",
     trial3Short: "Ujian 3 (5 minit)",
-    next: "Seterusnya »",
+    next: "Seterusnya >>",
     listen: "Baca skrin",
     resultTitle: "Hasil Eksperimen",
     objectColumn: "Objek",
@@ -827,7 +827,7 @@ export default function P6ElectricGenerationSim() {
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-[18px] leading-none">←</span>
+            <span className="text-[18px] leading-none">&lt;&lt;</span>
             {t.back}
           </button>
         </div>

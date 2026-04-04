@@ -12,9 +12,9 @@ const EXPERIMENTS = [
   {
     id: "exp-1",
     title: {
-      th: "การทดลองที่ 1",
-      en: "Experiment 1",
-      ms: "Eksperimen 1",
+      th: "การทดลองที่ 7",
+      en: "Experiment 7",
+      ms: "Eksperimen 7",
     },
     subtitle: {
       th: "การเกิดแรงไฟฟ้า",
@@ -27,9 +27,9 @@ const EXPERIMENTS = [
   {
     id: "exp-2",
     title: {
-      th: "การทดลองที่ 2",
-      en: "Experiment 2",
-      ms: "Eksperimen 2",
+      th: "การทดลองที่ 8",
+      en: "Experiment 8",
+      ms: "Eksperimen 8",
     },
     subtitle: {
       th: "ผลของแรงไฟฟ้า",
@@ -149,18 +149,18 @@ export default function Grade6() {
         </div>
       </div>
 
-       <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-6 md:right-6">
-         <button
-           className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
-           type="button"
-           onClick={() => navigate(backPath)}
-           aria-label={copy.backLabel}
-           title={copy.backLabel}
-         >
-           <span className="text-2xl leading-none">←</span>
-           <span className="text-sm font-bold leading-none">{copy.backLabel}</span>
-         </button>
-       </div>
+      <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-6 md:right-6">
+        <button
+          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
+          type="button"
+          onClick={() => navigate(backPath)}
+          aria-label={copy.backLabel}
+          title={copy.backLabel}
+        >
+          <span className="text-2xl leading-none">&lt;&lt;</span>
+          <span className="text-sm font-bold leading-none">{copy.backLabel}</span>
+        </button>
+      </div>
     </div>
   );
 }

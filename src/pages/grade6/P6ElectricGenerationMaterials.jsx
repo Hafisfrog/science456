@@ -226,7 +226,7 @@ export default function P6ElectricGenerationMaterials() {
           type="button"
           aria-label={backLabel}
         >
-          <span className="text-[28px] leading-none">←</span>
+          <span className="text-[28px] leading-none">&lt;&lt;</span>
           <span className="text-sm font-black leading-none">{backLabel}</span>
         </button>
 
@@ -237,7 +237,7 @@ export default function P6ElectricGenerationMaterials() {
           aria-label={nextLabel}
         >
           <span className="text-sm font-black leading-none">{nextLabel}</span>
-          <span className="text-[28px] leading-none">→</span>
+          <span className="text-[28px] leading-none">&gt;&gt;</span>
         </button>
 
       </div>

@@ -162,7 +162,7 @@ export default function P6ElectricObjectives() {
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-2xl leading-none">←</span>
+            <span className="text-2xl leading-none">&lt;&lt;</span>
             <span className="text-sm font-bold leading-none">{t.back}</span>
           </button>
 
@@ -173,7 +173,7 @@ export default function P6ElectricObjectives() {
             aria-label={t.next}
             title={t.next}
           >
-            <span className="text-2xl leading-none">→</span>
+            <span className="text-2xl leading-none">&gt;&gt;</span>
             <span className="text-sm font-bold leading-none">{t.next}</span>
           </button>
 

@@ -7,7 +7,7 @@ import "./p5GeneticsLangShared.css";
 const TEXT = {
   th: {
     title: "สรุปผลการทดลอง",
-    back: "ย้อนกลับ",
+    back: "<< ย้อนกลับ",
     inheritedTitle: "ลักษณะทางพันธุกรรมของคน",
     inheritedDesc: "เป็นลักษณะที่ถ่ายทอดมาจากพ่อแม่ และติดตัวมาตั้งแต่เกิด เช่น",
     inheritedItems: ["ตา 2 ชั้น", "จมูก", "รูปร่างใบหน้า", "ลักษณะผม (หยิก / ตรง)"],
@@ -17,7 +17,7 @@ const TEXT = {
   },
   en: {
     title: "Experiment Summary",
-    back: "Back",
+    back: "<< Back",
     inheritedTitle: "Inherited Human Traits",
     inheritedDesc: "These are traits passed down from parents and present since birth, such as:",
     inheritedItems: ["Double eyelid", "Nose shape", "Face shape", "Hair type (curly / straight)"],
@@ -27,7 +27,7 @@ const TEXT = {
   },
   ms: {
     title: "Rumusan Eksperimen",
-    back: "Kembali",
+    back: "<< Kembali",
     inheritedTitle: "Ciri Warisan Manusia",
     inheritedDesc: "Ciri ini diwarisi daripada ibu bapa dan ada sejak lahir, contohnya:",
     inheritedItems: ["Mata 2 kelopak", "Bentuk hidung", "Bentuk muka", "Jenis rambut (kerinting / lurus)"],

@@ -101,7 +101,7 @@ export default function P6ElectricForceEffectSummary() {
           aria-label={backLabel}
           title={backLabel}
         >
-          <span className="text-[22px] leading-none">←</span>
+          <span className="text-[22px] leading-none">&lt;&lt;</span>
           <span className="text-sm font-black leading-none">{backLabel}</span>
         </button>
         <button
@@ -112,7 +112,7 @@ export default function P6ElectricForceEffectSummary() {
           title={nextLabel}
         >
           <span className="text-sm font-black leading-none">{nextLabel}</span>
-          <span className="text-[22px] leading-none">→</span>
+          <span className="text-[22px] leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>
