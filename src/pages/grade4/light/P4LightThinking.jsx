@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LightLanguageSwitcher } from "./LightControls";
 
 // Change image paths here (images should be under public/)
 const PERSON_IMAGE_SRC = "/images/p4/ko.png";
@@ -11,7 +12,7 @@ const UI = {
     title: "คำถามชวนคิด",
     question: "1.ทำไมวัสดุแต่ละชนิดถึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน ?",
     answer: "มาหาคำตอบกัน",
-    start: "เริ่มการทดลอง",
+    start: "ไปต่อ",
     back: "ย้อนกลับ",
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
     speakText:
@@ -73,7 +74,7 @@ function BoxOnly({ toneClass, showPerson }) {
           <ImageSlot
             src={PERSON_IMAGE_SRC}
             alt="Pointing student"
-            className="h-[155px] w-[100px] object-contain sm:h-[210px] sm:w-[135px]"
+            className="h-[185px] w-[120px] object-contain sm:h-[250px] sm:w-[160px]"
           />
         )}
         <div className="h-52 w-44 sm:h-72 sm:w-60">
@@ -88,10 +89,31 @@ function BoxOnly({ toneClass, showPerson }) {
   );
 }
 
+function StartExperimentButton({ label, onClick }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex w-full max-w-[205px] flex-col items-center rounded-[20px] border border-white/70 bg-white/92 px-3.5 py-2.5 text-slate-900 shadow-[0_14px_30px_rgba(15,23,42,0.16)] transition hover:brightness-[1.02] sm:py-3"
+    >
+      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#cfe0f7] text-[1.3rem] leading-none text-black shadow-[inset_0_-4px_0_rgba(148,163,184,0.35),0_8px_18px_rgba(148,163,184,0.22)]">
+        <span className="ml-1">{"\u25B6"}</span>
+      </span>
+      <span className="mt-2 text-center text-[0.86rem] font-black leading-tight sm:text-[0.95rem]">
+        {label}
+      </span>
+    </button>
+  );
+}
+
 export default function P4LightThinking() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const content = UI[language] ?? UI.th;
+  const startButtonLabel =
+    language === "th" ? "เริ่มการทดลอง" : content.start;
+  const nextButtonLabel =
+    language === "th" ? "ต่อไป" : language === "ms" ? "Seterusnya" : "Next";
 
   const speak = () => {
     if (
@@ -118,7 +140,7 @@ export default function P4LightThinking() {
       />
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(186,230,253,0.8),transparent_40%)]" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1360px] flex-col px-3 pb-32 pt-4 sm:px-6">
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1360px] flex-col px-3 pb-6 pt-4 sm:px-6 sm:pb-8">
         <div className="mb-3 ml-auto text-right text-lg font-semibold text-sky-700 sm:text-xl">
           {content.classLabel}
         </div>
@@ -150,60 +172,56 @@ export default function P4LightThinking() {
           ))}
         </div>
 
-        <div className="fixed bottom-3 left-3 z-20 flex w-auto max-w-[calc(100vw-1.5rem)] flex-wrap items-center justify-start gap-1.5 rounded-2xl border border-slate-300 bg-slate-100/95 px-2 py-1.5 shadow-[0_8px_20px_rgba(59,130,246,0.18)]">
-          {["th", "en", "ms"].map((langKey) => (
-            <button
-              key={langKey}
-              type="button"
-              onClick={() => setLanguage(langKey)}
-              className={`rounded-full px-2.5 py-1 text-xs font-medium transition sm:px-3 sm:py-1.5 sm:text-sm ${
-                language === langKey
-                  ? LANG_CONFIG[langKey].toneClass
-                  : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-              }`}
-            >
-              {content.langLabel[langKey]}
-            </button>
-          ))}
-        </div>
+        <div className="-mt-3 flex flex-col gap-2 sm:-mt-4 sm:flex-row sm:items-start sm:justify-between lg:-mt-6">
+          <div className="flex flex-col gap-2 sm:self-end">
+            <LightLanguageSwitcher
+              value={language}
+              onChange={setLanguage}
+              labels={content.langLabel}
+            />
+          </div>
 
-        <div className="fixed bottom-3 right-3 z-20 flex w-auto max-w-[calc(100vw-1.5rem)] flex-col items-end gap-2">
-          <button
-            type="button"
-            onClick={speak}
-            className="relative w-auto rounded-lg border-2 border-black bg-white px-3 py-2 text-base font-bold text-slate-800 shadow-[0_10px_20px_rgba(0,0,0,0.18)] sm:px-4 sm:text-xl"
-          >
-            {content.answer}
-            <span className="absolute -top-3 left-1/2 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-2 border-black bg-yellow-400 text-sm font-extrabold text-black sm:h-7 sm:w-7 sm:text-base">
-              ?
-            </span>
-          </button>
+          <div className="ml-auto flex w-full max-w-[430px] flex-col items-end gap-1.5">
+            <div className="flex w-full flex-col items-end gap-2 sm:flex-row sm:items-start sm:justify-end">
+              <button
+                type="button"
+                onClick={speak}
+                className="relative w-fit rounded-[20px] border-2 border-black bg-white px-3.5 py-2.5 text-sm font-bold text-slate-800 shadow-[0_10px_20px_rgba(0,0,0,0.18)] sm:px-4 sm:py-3 sm:text-[1rem]"
+              >
+                {content.answer}
+                <span className="absolute -top-3 left-1/2 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-2 border-black bg-yellow-400 text-sm font-extrabold text-black sm:h-7 sm:w-7 sm:text-base">
+                  ?
+                </span>
+              </button>
 
-          <div className="flex w-auto flex-col gap-1.5 sm:flex-row sm:items-end">
-            <button
-              type="button"
-              onClick={() => navigate("/p4/light/intro")}
-              className="w-full rounded-full border border-slate-300 bg-white px-3 py-1.5 text-center text-xs font-medium text-slate-700 shadow-[0_8px_18px_rgba(0,0,0,0.15)] transition hover:bg-slate-100 sm:w-auto sm:px-4 sm:py-2 sm:text-sm"
-            >
-              ◀ {content.back}
-            </button>
+              <StartExperimentButton
+                label={startButtonLabel}
+                onClick={() => navigate("/p4/light/experiment")}
+              />
+            </div>
 
-            <button
-              type="button"
-              onClick={() => navigate("/p4/light/experiment")}
-              className="w-full rounded-xl border-2 border-slate-300 bg-white px-3 py-1.5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.16)] transition hover:bg-slate-50 sm:w-auto sm:px-4 sm:py-2"
-            >
-              <div className="mx-auto mb-0.5 flex h-7 w-7 items-center justify-center rounded-full bg-sky-200 text-base text-sky-700 shadow-inner sm:h-8 sm:w-8 sm:text-lg">
-                ▶
-              </div>
-              <div className="text-xs font-medium leading-tight text-slate-700 sm:text-sm">
-                {content.start}
-              </div>
-            </button>
+            <div className="flex w-full flex-col gap-2 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => navigate("/p4/light/intro")}
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[18px] bg-white px-3.5 py-1.5 text-[0.82rem] font-black text-slate-900 shadow-[0_12px_24px_rgba(15,23,42,0.14)] transition hover:brightness-[0.98] sm:min-h-[46px] sm:text-[0.9rem]"
+              >
+                <span aria-hidden="true">{"\u00AB"}</span>
+                <span>{content.back}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => navigate("/p4/light/experiment")}
+                className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-[18px] bg-gradient-to-b from-[#f13a3a] to-[#df2626] px-3.5 py-1.5 text-[0.82rem] font-black text-white shadow-[0_12px_24px_rgba(220,38,38,0.26)] transition hover:brightness-105 sm:min-h-[46px] sm:text-[0.9rem]"
+              >
+                <span>{nextButtonLabel}</span>
+                <span aria-hidden="true">{"\u00BB"}</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

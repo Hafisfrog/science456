@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { LightNavButtons } from "./LightControls";
 
 const VOCAB = [
   {
@@ -283,23 +284,12 @@ export default function P4LightVocab() {
         </div>
 
         <div className="mt-7 flex justify-end">
-          <div className="flex flex-wrap items-center justify-end gap-3">
-            <button
-              type="button"
-              className="rounded-full border border-[#8fb3e5] bg-white px-5 py-2.5 text-sm font-medium text-[#1f4d93] transition hover:bg-[#f2f7ff] hover:shadow"
-              onClick={() => navigate("/p4/light/objective")}
-            >
-              ย้อนกลับ
-            </button>
-
-            <button
-              type="button"
-              className="rounded-full bg-[#2d63d6] px-5 py-2.5 text-sm font-medium text-white transition hover:bg-[#255bc9] hover:shadow"
-              onClick={() => navigate("/p4/light/basic")}
-            >
-              ไปต่อ
-            </button>
-          </div>
+          <LightNavButtons
+            backLabel="ย้อนกลับ"
+            nextLabel="ไปต่อ"
+            onBack={() => navigate("/p4/light/objective")}
+            onNext={() => navigate("/p4/light/basic")}
+          />
         </div>
       </div>
     </div>

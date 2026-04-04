@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpeakButton from "../../../../components/SpeakButton";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const PAGE_COPY = {
   th: {
@@ -63,15 +63,6 @@ export default function P5FoodChainSteps() {
     }
   };
 
-  const speechByLang = useMemo(
-    () => ({
-      th: `${PAGE_COPY.th.stepLabel}. ${STEPS.map((s) => s.th).join(". ")}`,
-      en: `${PAGE_COPY.en.stepLabel}. ${STEPS.map((s) => s.en).join(". ")}`,
-      ms: `${PAGE_COPY.ms.stepLabel}. ${STEPS.map((s) => s.ms).join(". ")}`,
-    }),
-    []
-  );
-
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
       <div className="absolute inset-0 bg-white/5" />
@@ -120,32 +111,15 @@ export default function P5FoodChainSteps() {
         </div>
 
         <div className="mt-4 flex flex-wrap items-center gap-4">
-          <div className="rounded-2xl bg-white/90 p-3 shadow-[0_6px_16px_rgba(0,0,0,0.18)]">
-            <SpeakButton
-              th={speechByLang.th}
-              en={speechByLang.en}
-              ms={speechByLang.ms}
-              activeLang={activeLang}
-              onLanguageChange={setActiveLang}
-            />
-          </div>
+          <FoodChainLanguageSwitcher value={activeLang} onChange={setActiveLang} />
 
-          <div className="ml-auto flex gap-3">
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className="rounded-full bg-white px-5 py-2 text-sm font-bold text-slate-700 shadow-md transition hover:bg-slate-50 md:text-base"
-            >
-              ◀ {t.back}
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/p5/life/foodchain/select")}
-              className="rounded-full bg-gradient-to-r from-green-500 to-emerald-500 px-5 py-2 text-sm font-bold text-white shadow-md transition hover:opacity-95 md:text-base"
-            >
-              {t.next} ▶
-            </button>
-          </div>
+          <FoodChainNavButtons
+            className="ml-auto"
+            backLabel={t.back}
+            nextLabel={t.next}
+            onBack={() => navigate("/p5/life/foodchain/materials")}
+            onNext={() => navigate("/p5/life/foodchain/select")}
+          />
         </div>
       </div>
     </div>

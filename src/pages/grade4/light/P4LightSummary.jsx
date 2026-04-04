@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import SpeakButton from "../../../components/SpeakButton";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const SPEECH_LOCALES = {
   th: "th-TH",
@@ -55,7 +55,7 @@ const UI = {
     listenSummary: "🔊 ฟังข้อความสรุป",
     noMalayVoice: "ไม่พบเสียงภาษามลายู (ms-MY) ในอุปกรณ์นี้ จึงงดอ่านเพื่อป้องกันเสียงเพี้ยน",
     back: "◀ กลับ",
-    next: "ทำแบบทดสอบ ▶",
+    next: "ไปต่อ ▶",
   },
   en: {
     title: "Experiment Summary",
@@ -140,15 +140,6 @@ export default function P4LightSummary() {
 
     return grouped;
   }, [allResults, language]);
-
-  const langButtonText = useMemo(
-    () => ({
-      th: UI.th.title,
-      en: UI.en.title,
-      ms: UI.ms.title,
-    }),
-    []
-  );
 
   const buildSummarySpeechText = () => {
     if (language === "th") {
@@ -257,8 +248,17 @@ export default function P4LightSummary() {
       <div className="relative z-10 min-h-screen overflow-y-auto p-3 sm:h-screen sm:min-h-0 sm:overflow-hidden sm:p-4">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 sm:h-full sm:gap-4">
           <div className="overflow-hidden rounded-[28px] border border-[#bfd3e3] bg-[linear-gradient(180deg,rgba(244,248,251,0.88),rgba(228,237,245,0.82))] shadow-[0_16px_38px_rgba(106,138,165,0.16)] backdrop-blur-md sm:flex sm:min-h-0 sm:flex-1 sm:flex-col">
-            <div className="border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-3 text-[#133149] sm:p-4">
+            <div className="flex items-center justify-between gap-3 border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-3 text-[#133149] sm:p-4">
               <h2 className="text-lg font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] sm:text-xl">{ui.title}</h2>
+              <button
+                type="button"
+                onClick={speakSummary}
+                aria-label={ui.listenSummary}
+                title={ui.listenSummary}
+                className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#a9c6dc] bg-[#edf4fa] text-xl text-[#537391] transition hover:bg-[#dfeaf3] hover:shadow-[0_8px_18px_rgba(122,146,167,0.18)] sm:h-14 sm:w-14 sm:text-2xl"
+              >
+                🔊
+              </button>
             </div>
 
             <div className="p-4 text-[14px] leading-7 text-[#1f3d58] sm:flex-1 sm:overflow-y-auto sm:p-6 sm:text-base sm:leading-8">
@@ -303,47 +303,19 @@ export default function P4LightSummary() {
                 </ul>
               )}
 
-              <div className="mt-4 flex justify-end">
-                <button
-                  type="button"
-                  onClick={speakSummary}
-                  aria-label={ui.listenSummary}
-                  title={ui.listenSummary}
-                  className="inline-flex h-14 w-14 items-center justify-center rounded-full border border-[#a9c6dc] bg-[#edf4fa] text-2xl text-[#537391] transition hover:bg-[#dfeaf3] hover:shadow-[0_8px_18px_rgba(122,146,167,0.18)]"
-                >
-                  🔊
-                </button>
-              </div>
             </div>
           </div>
 
-          <div className="sm:shrink-0">
-            <SpeakButton
-              th={langButtonText.th}
-              en={langButtonText.en}
-              ms={langButtonText.ms}
-              activeLang={language}
-              onLanguageChange={setLanguage}
-              variant="segmented"
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <LightLanguageSwitcher value={language} onChange={setLanguage} />
+
+            <LightNavButtons
+              className="sm:shrink-0"
+              backLabel={ui.back}
+              nextLabel={ui.next}
+              onBack={() => navigate("/p4/light/record", { state: { pendingResults: allResults } })}
+              onNext={() => navigate("/p4/light/qa")}
             />
-          </div>
-
-          <div className="flex justify-between gap-3 sm:shrink-0 sm:gap-4">
-            <button
-              type="button"
-              onClick={() => navigate("/p4/light/record", { state: { pendingResults: allResults } })}
-              className="rounded-2xl border border-[#adc7db] bg-[linear-gradient(180deg,rgba(227,236,244,0.96),rgba(198,213,226,0.96))] px-4 py-2.5 text-sm text-[#23445f] shadow-[0_10px_24px_rgba(122,146,167,0.14)] transition hover:brightness-105 sm:px-6 sm:py-3 sm:text-base"
-            >
-              {ui.back}
-            </button>
-
-            <button
-              type="button"
-              onClick={() => navigate("/p4/light/qa")}
-              className="rounded-2xl border border-[#8fb3cf] bg-gradient-to-r from-[#93bad6] to-[#7fa7c5] px-4 py-2.5 text-sm text-[#10304a] shadow-[0_10px_24px_rgba(109,139,165,0.18)] transition hover:brightness-105 sm:px-6 sm:py-3 sm:text-base"
-            >
-              {ui.next}
-            </button>
           </div>
         </div>
       </div>

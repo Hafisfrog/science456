@@ -1,14 +1,25 @@
 ﻿import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpeakButton from "../../../components/SpeakButton";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
+
+const SPEECH_LOCALES = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
 
 const UI = {
   th: {
     header: "📣 คำถามมีคำตอบ : ตัวกลางของแสง",
     subHeader: "ทำไมเรามองเห็นวัตถุด้านหลังไม่เหมือนกัน ?",
+    headerSpeakLabel: "ฟังหัวข้อด้านบน",
     questionTitle: "❓ คำถามชวนคิด",
     questionText: "ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของด้านในได้ไม่เท่ากัน ?",
     answerTitle: "👉 เพราะวัสดุแต่ละชนิดยอมให้แสงผ่านได้ไม่เท่ากัน",
+    revealHint: "กดปุ่มเพื่อดูคำอธิบายของแต่ละข้อ",
+    hiddenPlaceholder: "กดปุ่มเฉลยคำตอบเพื่อดูคำอธิบาย",
+    reveal: "เฉลยคำตอบ",
+    hide: "ซ่อนคำตอบ",
     cards: [
       {
         number: "1",
@@ -35,16 +46,22 @@ const UI = {
         result: "ไม่สามารถมองเห็นด้านหลังได้",
       },
     ],
-    speakLabel: "🔊 ฟังคำอธิบาย (ไทย / English / Malay)",
+    topSpeakLabel: "ฟังคำถามด้านบน",
+    speakLabel: "ฟังคำอธิบายข้อนี้",
     back: "◀ กลับ",
     finish: "🎉 ไปต่อ ▶",
   },
   en: {
     header: "📣 Question and Answer: Medium of Light",
     subHeader: "Why do we see objects behind materials differently?",
+    headerSpeakLabel: "Listen to the top heading",
     questionTitle: "❓ Guiding Question",
     questionText: "Why do different materials make us see objects behind them differently?",
     answerTitle: "👉 Because each material allows light to pass through differently",
+    revealHint: "Press the button to reveal each explanation.",
+    hiddenPlaceholder: "Press show answer to reveal the explanation.",
+    reveal: "Show Answer",
+    hide: "Hide Answer",
     cards: [
       {
         number: "1",
@@ -71,16 +88,22 @@ const UI = {
         result: "Objects behind cannot be seen",
       },
     ],
-    speakLabel: "🔊 Listen to explanation (Thai / English / Malay)",
+    topSpeakLabel: "Listen to the question above",
+    speakLabel: "Listen to this card",
     back: "◀ Back",
     finish: "🎉 Finish Lesson ▶",
   },
   ms: {
     header: "📣 Soalan dan Jawapan: Medium Cahaya",
     subHeader: "Mengapa kita melihat objek di belakang bahan secara berbeza?",
+    headerSpeakLabel: "Dengar tajuk di atas",
     questionTitle: "❓ Soalan Pemikiran",
     questionText: "Mengapa bahan yang berbeza menyebabkan objek di belakang kelihatan tidak sama?",
     answerTitle: "👉 Kerana setiap bahan membenarkan cahaya melalui pada tahap berbeza",
+    revealHint: "Tekan butang untuk melihat penerangan bagi setiap jawapan.",
+    hiddenPlaceholder: "Tekan tunjuk jawapan untuk melihat penerangan.",
+    reveal: "Tunjuk Jawapan",
+    hide: "Sembunyikan Jawapan",
     cards: [
       {
         number: "1",
@@ -107,36 +130,142 @@ const UI = {
         result: "Objek di belakang tidak dapat dilihat",
       },
     ],
-    speakLabel: "🔊 Dengar penerangan (Thai / English / Malay)",
+    topSpeakLabel: "Dengar soalan di atas",
+    speakLabel: "Dengar kad ini",
     back: "◀ Kembali",
     finish: "🎉 Tamat Pelajaran ▶",
   },
 };
 
-function buildSpeakText(content) {
-  const cardsText = content.cards
-    .map(
-      (card) =>
-        `${card.title}. ${card.examples}. ${card.pass}. ${card.result}.`
-    )
-    .join(" ");
-
-  return `${content.questionText} ${content.answerTitle}. ${cardsText}`;
-}
+const CARD_THEMES = {
+  blue: {
+    card: "border-sky-200 bg-sky-50/95",
+    badge: "bg-sky-200 text-sky-900",
+    button: "from-sky-100 to-white text-sky-900 hover:from-sky-200 hover:to-sky-50",
+    answer: "border-sky-100 bg-white/95",
+    listen: "border-sky-200 bg-white/95 text-sky-800 hover:bg-sky-100",
+  },
+  amber: {
+    card: "border-amber-200 bg-amber-50/95",
+    badge: "bg-amber-200 text-amber-900",
+    button: "from-amber-100 to-white text-amber-900 hover:from-amber-200 hover:to-amber-50",
+    answer: "border-amber-100 bg-white/95",
+    listen: "border-amber-200 bg-white/95 text-amber-800 hover:bg-amber-100",
+  },
+  gray: {
+    card: "border-slate-200 bg-slate-50/95",
+    badge: "bg-slate-200 text-slate-900",
+    button: "from-slate-100 to-white text-slate-900 hover:from-slate-200 hover:to-slate-50",
+    answer: "border-slate-200 bg-white/95",
+    listen: "border-slate-200 bg-white/95 text-slate-700 hover:bg-slate-100",
+  },
+};
 
 export default function P4LightQA() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
-  const content = UI[language] ?? UI.th;
+  const [revealedAnswers, setRevealedAnswers] = useState({});
+  const content = useMemo(() => UI[language] ?? UI.th, [language]);
 
-  const speakTexts = useMemo(
-    () => ({
-      th: buildSpeakText(UI.th),
-      en: buildSpeakText(UI.en),
-      ms: buildSpeakText(UI.ms),
-    }),
-    []
-  );
+  const toggleAnswer = (cardNumber) => {
+    setRevealedAnswers((prev) => ({
+      ...prev,
+      [cardNumber]: !prev[cardNumber],
+    }));
+  };
+
+  const buildTopSpeechText = () => {
+    if (language === "th") {
+      return `${content.questionTitle} ${content.questionText}`;
+    }
+    return `${content.questionTitle}. ${content.questionText}.`;
+  };
+
+  const buildHeaderSpeechText = () => {
+    if (language === "th") {
+      return `${content.header} ${content.subHeader}`;
+    }
+    return `${content.header}. ${content.subHeader}.`;
+  };
+
+  const buildCardSpeechText = (card) => {
+    if (!card) return "";
+    if (language === "th") {
+      return `${card.title} ${card.examples} ${card.pass} ${card.result}`;
+    }
+    return `${card.title}. ${card.examples}. ${card.pass}. ${card.result}.`;
+  };
+
+  const speakText = (text) => {
+    if (
+      typeof window === "undefined" ||
+      typeof SpeechSynthesisUtterance === "undefined" ||
+      !window.speechSynthesis
+    ) {
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    const targetLocale = SPEECH_LOCALES[language] || SPEECH_LOCALES.th;
+
+    const doSpeak = () => {
+      const voices = synth.getVoices();
+      const localeLower = targetLocale.toLowerCase();
+      const prefix = localeLower.split("-")[0];
+
+      let voice =
+        voices.find((item) => item.lang?.toLowerCase() === localeLower) ||
+        voices.find((item) => item.lang?.toLowerCase().startsWith(prefix));
+
+      if (language === "ms") {
+        voice =
+          voices.find((item) => item.lang?.toLowerCase() === "ms-my") ||
+          voices.find((item) => item.lang?.toLowerCase().startsWith("ms")) ||
+          voices.find((item) => /malay|melayu/i.test(item.name || "")) ||
+          voices.find((item) => item.lang?.toLowerCase() === "id-id") ||
+          voices.find((item) => item.lang?.toLowerCase().startsWith("id")) ||
+          voices.find((item) => /indonesian|bahasa/i.test(item.name || "")) ||
+          voices.find((item) => item.lang?.toLowerCase().startsWith("en")) ||
+          voices[0];
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (voice) utterance.voice = voice;
+      utterance.lang = voice?.lang || targetLocale;
+      utterance.rate = language === "ms" ? 0.9 : 0.92;
+      utterance.pitch = 1;
+
+      synth.cancel();
+      synth.speak(utterance);
+    };
+
+    const voices = synth.getVoices();
+    if (voices.length) {
+      doSpeak();
+      return;
+    }
+
+    let spoke = false;
+    const speakOnce = () => {
+      if (spoke) return;
+      spoke = true;
+      doSpeak();
+    };
+    const onVoicesChanged = () => {
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      speakOnce();
+    };
+
+    synth.addEventListener("voiceschanged", onVoicesChanged);
+    setTimeout(() => {
+      synth.removeEventListener("voiceschanged", onVoicesChanged);
+      speakOnce();
+    }, 500);
+  };
+
+  const speakCard = (card) => {
+    speakText(buildCardSpeechText(card));
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-sky-100 via-cyan-100 to-blue-200 font-['Prompt',sans-serif]">
@@ -147,81 +276,142 @@ export default function P4LightQA() {
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(186,230,253,0.8),transparent_40%)]" />
 
       <div className="relative z-10 min-h-screen overflow-y-auto p-4 sm:p-6">
-      <div className="mx-auto max-w-6xl">
-        <h1 className="mx-auto mb-4 w-fit rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
-          {content.header}
-        </h1>
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-3 flex items-center justify-center gap-3">
+            <h1 className="m-0 w-fit rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
+              {content.header}
+            </h1>
+            <button
+              type="button"
+              onClick={() => speakText(buildHeaderSpeechText())}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-200 bg-white/95 text-lg text-sky-800 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-sky-100 sm:h-12 sm:w-12"
+              aria-label={content.headerSpeakLabel}
+              title={content.headerSpeakLabel}
+            >
+              🔊
+            </button>
+          </div>
+          <p className="mb-6 text-center text-sm font-semibold text-sky-900/85 sm:text-lg">
+            {content.subHeader}
+          </p>
 
-        <div className="relative">
-          <img
-            className="pointer-events-none absolute bottom-0 left-[-8px] h-auto w-[min(28%,280px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:w-[min(32%,240px)] max-[640px]:hidden"
-            src="/images/p4/exp3/teacher.png"
-            alt="teacher"
-          />
+          <div className="relative">
+            <img
+              className="pointer-events-none absolute bottom-0 left-[-36px] h-auto w-[min(28%,280px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:w-[min(32%,240px)] max-[640px]:hidden"
+              src="/images/p4/exp3/teacher.png"
+              alt="teacher"
+            />
 
-          <div className="ml-[230px] max-[900px]:ml-[190px] max-[640px]:ml-0">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-xl border-2 border-sky-300 bg-sky-50 px-3 py-1.5 text-base font-bold text-sky-800 shadow-[0_6px_14px_rgba(14,116,144,0.16)]">
-              📣 คำถามมีคำตอบ
-            </div>
-
-            <div className="mb-4 text-base font-semibold text-sky-950 sm:text-lg">
-              1. {content.questionText}
-            </div>
-
-            <div className="relative">
-              <div className="pointer-events-none absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-[28px] bg-cyan-300/70" />
-              <div className="rounded-[28px] border-[4px] border-sky-300 bg-white/95 p-6 shadow-[0_12px_26px_rgba(14,116,144,0.22)] backdrop-blur-sm">
-                <div className="mb-4 text-base font-semibold text-sky-900 sm:text-lg">
-                  {content.answerTitle}
+            <div className="ml-[230px] max-[900px]:ml-[190px] max-[640px]:ml-0">
+              <div className="mb-3 flex items-center gap-2">
+                <div className="inline-flex items-center gap-2 rounded-xl border-2 border-sky-300 bg-sky-50 px-3 py-1.5 text-base font-bold text-sky-800 shadow-[0_6px_14px_rgba(14,116,144,0.16)]">
+                  {content.questionTitle}
                 </div>
+                <button
+                  type="button"
+                  onClick={() => speakText(buildTopSpeechText())}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-sky-300 bg-white/95 text-lg text-sky-800 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-sky-100"
+                  aria-label={content.topSpeakLabel}
+                  title={content.topSpeakLabel}
+                >
+                  🔊
+                </button>
+              </div>
 
-                <div className="space-y-4 text-sky-950">
-                  {content.cards.map((card) => (
-                    <div key={card.number} className="leading-relaxed">
-                      <div className="font-bold">
-                        {card.number}. {card.title}{" "}
-                        <span className="font-normal">{card.examples}</span>
-                      </div>
-                      <div className="pl-5 text-sm font-semibold sm:text-base">
-                        {card.pass}
-                      </div>
-                      <div className="pl-5 text-sm sm:text-base">👉 {card.result}</div>
-                    </div>
-                  ))}
+              <div className="mb-4 text-base font-semibold text-sky-950 sm:text-lg">
+                {content.questionText}
+              </div>
+
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-[28px] bg-cyan-300/70" />
+                <div className="rounded-[28px] border-[4px] border-sky-300 bg-white/95 p-5 shadow-[0_12px_26px_rgba(14,116,144,0.22)] backdrop-blur-sm sm:p-6">
+                  <div className="mb-5 rounded-[22px] border border-sky-100 bg-sky-50/90 px-4 py-3 text-sm font-semibold text-sky-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:text-base">
+                    {content.revealHint}
+                  </div>
+
+                  <div className="grid gap-4">
+                    {content.cards.map((card) => {
+                      const theme = CARD_THEMES[card.color] ?? CARD_THEMES.blue;
+                      const isRevealed = Boolean(revealedAnswers[card.number]);
+
+                      return (
+                        <div
+                          key={card.number}
+                          className={`rounded-[24px] border-2 p-4 shadow-[0_14px_28px_rgba(15,23,42,0.08)] ${theme.card}`}
+                        >
+                          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                            <div className="flex items-start gap-3">
+                              <div
+                                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl text-base font-black ${theme.badge}`}
+                              >
+                                {card.number}
+                              </div>
+                              <div>
+                                <div className="text-base font-extrabold text-slate-900 sm:text-lg">
+                                  {card.title}
+                                </div>
+                                <div className="mt-1 text-sm text-slate-700 sm:text-base">
+                                  {card.examples}
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="flex shrink-0 items-center gap-2 self-start sm:self-auto">
+                              <button
+                                type="button"
+                                onClick={() => speakCard(card)}
+                                className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl border text-lg shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 ${theme.listen}`}
+                                aria-label={`${content.speakLabel}: ${card.title}`}
+                                title={`${content.speakLabel}: ${card.title}`}
+                              >
+                                🔊
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => toggleAnswer(card.number)}
+                                className={`inline-flex shrink-0 items-center justify-center rounded-2xl bg-gradient-to-b px-4 py-2 text-sm font-black shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 ${theme.button}`}
+                              >
+                                {isRevealed ? content.hide : content.reveal}
+                              </button>
+                            </div>
+                          </div>
+
+                          {isRevealed ? (
+                            <div
+                              className={`mt-4 rounded-[20px] border px-4 py-4 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${theme.answer}`}
+                            >
+                              <div className="text-sm font-bold text-sky-900 sm:text-base">
+                                {card.pass}
+                              </div>
+                              <div className="mt-1 text-sm sm:text-base">👉 {card.result}</div>
+                            </div>
+                          ) : (
+                            <div className="mt-4 rounded-[20px] border border-dashed border-slate-300/80 bg-white/70 px-4 py-4 text-sm font-semibold text-slate-500">
+                              {content.hiddenPlaceholder}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-4">
-          <div className="rounded-2xl border border-sky-200 bg-white/85 p-3 shadow-[0_6px_16px_rgba(14,116,144,0.18)] backdrop-blur-sm">
-            <SpeakButton
-              th={speakTexts.th}
-              en={speakTexts.en}
-              ms={speakTexts.ms}
-              activeLang={language}
-              onLanguageChange={setLanguage}
+            <LightLanguageSwitcher value={language} onChange={setLanguage} />
+
+            <LightNavButtons
+              className="ml-auto"
+              backLabel={content.back}
+              nextLabel={content.finish}
+              onBack={() => navigate("/p4/light/summary")}
+              onNext={() => navigate("/p4/light/concept")}
             />
           </div>
-
-          <div className="ml-auto flex gap-3">
-            <button
-              onClick={() => navigate("/p4/light/summary")}
-              className="rounded-full bg-slate-600 px-6 py-3 text-base font-semibold text-white shadow-[0_6px_14px_rgba(71,85,105,0.28)] transition hover:bg-slate-700"
-            >
-              {content.back}
-            </button>
-
-            <button
-              onClick={() => navigate("/p4/light/concept")}
-              className="rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 px-7 py-3 text-base font-bold text-white shadow-[0_8px_18px_rgba(14,116,144,0.3)] transition hover:scale-105 hover:brightness-105"
-            >
-              {content.finish}
-            </button>
-          </div>
         </div>
-      </div>
       </div>
     </div>
   );

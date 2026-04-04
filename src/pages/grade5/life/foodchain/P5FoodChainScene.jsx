@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const VOICE_LANG = {
   th: "th-TH",
@@ -53,8 +54,8 @@ const SCENE_ITEMS = [
       en: "Hawk / Consumer",
       ms: "Helang / Pengguna",
     },
-    containerClass: "top-[7%] left-[17%]",
-    imageClass: "w-24 sm:w-28 lg:w-32",
+    containerClass: "top-[6%] left-[15%]",
+    imageClass: "w-28 sm:w-32 lg:w-36",
     transformClass: "-rotate-6",
     badgeWidthClass: "max-w-[7.4rem] lg:max-w-[8.2rem]",
     depthClass: "z-40",
@@ -68,8 +69,8 @@ const SCENE_ITEMS = [
       en: "Bird / Consumer",
       ms: "Burung / Pengguna",
     },
-    containerClass: "top-[24%] right-[11%]",
-    imageClass: "w-14 sm:w-16 lg:w-20",
+    containerClass: "top-[23%] right-[8%]",
+    imageClass: "w-[4.4rem] sm:w-[5.2rem] lg:w-24",
     badgeWidthClass: "max-w-[6.2rem] lg:max-w-[7rem]",
     depthClass: "z-40",
   },
@@ -82,8 +83,8 @@ const SCENE_ITEMS = [
       en: "Rice Plant / Producer",
       ms: "Pokok Padi / Pengeluar",
     },
-    containerClass: "top-[27%] left-[1%]",
-    imageClass: "w-24 sm:w-28 lg:w-32",
+    containerClass: "top-[29%] left-[2%]",
+    imageClass: "w-28 sm:w-32 lg:w-36",
     badgeWidthClass: "max-w-[7.8rem] lg:max-w-[8.8rem]",
     depthClass: "z-30",
   },
@@ -96,8 +97,8 @@ const SCENE_ITEMS = [
       en: "Caterpillar / Consumer",
       ms: "Ulat / Pengguna",
     },
-    containerClass: "top-[41%] left-[21%]",
-    imageClass: "w-14 sm:w-16 lg:w-20",
+    containerClass: "top-[45%] left-[20%]",
+    imageClass: "w-[4.6rem] sm:w-[5.4rem] lg:w-24",
     transformClass: "rotate-6",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[7.6rem]",
     depthClass: "z-30",
@@ -111,8 +112,8 @@ const SCENE_ITEMS = [
       en: "Field Rat / Consumer",
       ms: "Tikus Sawah / Pengguna",
     },
-    containerClass: "top-[19%] left-[52%]",
-    imageClass: "w-16 sm:w-20 lg:w-24",
+    containerClass: "top-[20%] left-[48%]",
+    imageClass: "w-20 sm:w-24 lg:w-28",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[8rem]",
     depthClass: "z-30",
   },
@@ -125,8 +126,8 @@ const SCENE_ITEMS = [
       en: "Snake / Consumer",
       ms: "Ular / Pengguna",
     },
-    containerClass: "top-[49%] left-[43%]",
-    imageClass: "w-24 sm:w-28 lg:w-32",
+    containerClass: "top-[48%] left-[39%]",
+    imageClass: "w-28 sm:w-32 lg:w-36",
     transformClass: "-rotate-2",
     badgeWidthClass: "max-w-[6.4rem] lg:max-w-[7rem]",
     depthClass: "z-30",
@@ -140,8 +141,8 @@ const SCENE_ITEMS = [
       en: "Grass / Producer",
       ms: "Rumput / Pengeluar",
     },
-    containerClass: "top-[76%] left-[25%]",
-    imageClass: "w-[4.5rem] sm:w-20 lg:w-24",
+    containerClass: "top-[72%] left-[23%]",
+    imageClass: "w-[5.4rem] sm:w-24 lg:w-28",
     badgeWidthClass: "max-w-[6rem] lg:max-w-[6.8rem]",
     depthClass: "z-20",
   },
@@ -154,8 +155,8 @@ const SCENE_ITEMS = [
       en: "Grasshopper / Consumer",
       ms: "Belalang / Pengguna",
     },
-    containerClass: "top-[39%] left-[69%]",
-    imageClass: "w-[4.2rem] sm:w-[4.8rem] lg:w-[5.4rem]",
+    containerClass: "top-[39%] left-[68%]",
+    imageClass: "w-[5rem] sm:w-[5.8rem] lg:w-[6.6rem]",
     transformClass: "-rotate-6",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[7.8rem]",
     depthClass: "z-30",
@@ -169,8 +170,8 @@ const SCENE_ITEMS = [
       en: "Frog / Consumer",
       ms: "Katak / Pengguna",
     },
-    containerClass: "top-[83%] left-[57%]",
-    imageClass: "w-20 sm:w-24 lg:w-28",
+    containerClass: "top-[76%] left-[55%]",
+    imageClass: "w-24 sm:w-28 lg:w-32",
     transformClass: "-rotate-6",
     badgeWidthClass: "max-w-[6rem] lg:max-w-[6.8rem]",
     depthClass: "z-40",
@@ -184,8 +185,8 @@ const SCENE_ITEMS = [
       en: "Larva / Consumer",
       ms: "Jentik-jentik / Pengguna",
     },
-    containerClass: "top-[65%] left-[64%]",
-    imageClass: "w-9 sm:w-10 lg:w-12",
+    containerClass: "top-[64%] left-[67%]",
+    imageClass: "w-11 sm:w-12 lg:w-14",
     transformClass: "-rotate-12",
     badgeWidthClass: "max-w-[6.8rem] lg:max-w-[7.6rem]",
     depthClass: "z-20",
@@ -199,8 +200,8 @@ const SCENE_ITEMS = [
       en: "Aquatic Plant / Producer",
       ms: "Tumbuhan Air / Pengeluar",
     },
-    containerClass: "top-[84%] left-[44%]",
-    imageClass: "w-20 sm:w-24 lg:w-28",
+    containerClass: "top-[79%] left-[43%]",
+    imageClass: "w-24 sm:w-28 lg:w-32",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[8rem]",
     depthClass: "z-20",
   },
@@ -213,8 +214,8 @@ const SCENE_ITEMS = [
       en: "Fish / Consumer",
       ms: "Ikan / Pengguna",
     },
-    containerClass: "top-[56%] right-[10%]",
-    imageClass: "w-20 sm:w-24 lg:w-28",
+    containerClass: "top-[57%] right-[9%]",
+    imageClass: "w-24 sm:w-28 lg:w-32",
     transformClass: "-scale-x-100",
     badgeWidthClass: "max-w-[6rem] lg:max-w-[6.8rem]",
     depthClass: "z-20",
@@ -258,7 +259,7 @@ function SceneItem({
           src={item.img}
           alt={label}
           draggable="false"
-          className={`${item.imageClass} ${item.transformClass ?? ""} ${item.role === "consumer" ? "scale-[1.14] sm:scale-[1.18]" : ""} select-none object-contain drop-shadow-[0_10px_16px_rgba(15,23,42,0.18)]`}
+          className={`${item.imageClass} ${item.transformClass ?? ""} ${item.role === "consumer" ? "scale-[1.22] sm:scale-[1.26]" : "scale-[1.1] sm:scale-[1.14]"} select-none object-contain drop-shadow-[0_10px_16px_rgba(15,23,42,0.18)]`}
         />
 
         <button
@@ -407,21 +408,12 @@ export default function P5FoodChainScene() {
         {dragHintText}
       </div>
 
-      <div className="absolute bottom-3 left-3 z-50 flex flex-wrap items-center gap-2 rounded-full bg-white/72 p-1.5 shadow-[0_10px_26px_rgba(30,41,59,0.14)] backdrop-blur-sm sm:bottom-4 sm:left-4">
-        {["th", "en", "ms"].map((lang) => (
-          <button
-            key={lang}
-            type="button"
-            onClick={() => setActiveLang(lang)}
-            className={`rounded-full px-3 py-1.5 text-xs font-bold transition sm:px-4 ${
-              activeLang === lang
-                ? "bg-[#dcecff] text-[#1d4ed8]"
-                : "bg-white/88 text-slate-600 hover:bg-blue-50"
-            }`}
-          >
-            {ui.languages[lang]}
-          </button>
-        ))}
+      <div className="absolute bottom-3 left-3 z-50 sm:bottom-4 sm:left-4">
+        <FoodChainLanguageSwitcher
+          value={activeLang}
+          onChange={setActiveLang}
+          labels={ui.languages}
+        />
       </div>
 
       <button
@@ -449,22 +441,13 @@ export default function P5FoodChainScene() {
         />
       ))}
 
-      <div className="absolute bottom-3 right-3 z-50 flex flex-wrap justify-end gap-2 sm:bottom-4 sm:right-4">
-        <button
-          type="button"
-          onClick={() => navigate("/p5/life/foodchain/vocab")}
-          className="rounded-full border border-[#a5b4c7] bg-white/90 px-4 py-2 text-xs font-bold text-[#46678b] shadow-[0_8px_18px_rgba(71,85,105,0.14)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white sm:px-5 sm:text-sm"
-        >
-          {ui.back}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate("/p5/life/foodchain/materials")}
-          className="rounded-full bg-[linear-gradient(135deg,#38bdf8,#2563eb)] px-4 py-2 text-xs font-bold text-white shadow-[0_10px_22px_rgba(37,99,235,0.28)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(37,99,235,0.32)] sm:px-5 sm:text-sm"
-        >
-          {ui.next}
-        </button>
+      <div className="absolute bottom-3 right-3 z-50 sm:bottom-4 sm:right-4">
+        <FoodChainNavButtons
+          backLabel={ui.back}
+          nextLabel={ui.next}
+          onBack={() => navigate("/p5/life/foodchain/vocab")}
+          onNext={() => navigate("/p5/life/foodchain/materials")}
+        />
       </div>
     </div>
   );

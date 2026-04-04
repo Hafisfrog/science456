@@ -108,7 +108,7 @@
 
 .ans2-character {
   position: absolute;
-  left: 18px;
+  left: -20px;
   bottom: 18px;
   width: min(260px, 22vw);
   height: auto;
@@ -300,6 +300,36 @@
   margin-top: 14px;
   display: flex;
   align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ans2-cardSpeakBtn {
+  border: none;
+  cursor: pointer;
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 1000;
+  color: #0f172a;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(224, 242, 254, .95));
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, .12),
+    inset 0 1px 0 rgba(255, 255, 255, .95),
+    inset 0 -4px 0 rgba(148, 163, 184, .24);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+
+.ans2-cardSpeakBtn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 28px rgba(0, 0, 0, .16),
+    inset 0 1px 0 rgba(255, 255, 255, .95),
+    inset 0 -4px 0 rgba(148, 163, 184, .30);
+}
+
+.ans2-cardSpeakBtn:active {
+  transform: translateY(1px);
 }
 
 .ans2-revealBtn {
@@ -451,6 +481,7 @@
   }
 
   .ans2-character {
+    left: -14px;
     width: 200px;
   }
 
@@ -548,6 +579,13 @@
   }
 
   .ans2-revealBtn {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+
+  .ans2-cardSpeakBtn {
     width: 100%;
     padding: 10px 12px;
     border-radius: 12px;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const UI = {
   th: {
@@ -38,11 +39,6 @@ export default function P5FoodChainIntro() {
   const [language, setLanguage] = useState("th");
   const content = UI[language] ?? UI.th;
   const nextPath = "/p5/life/foodchain/vocab";
-  const languageButtons = [
-    { key: "th" },
-    { key: "en" },
-    { key: "ms" },
-  ];
 
   const speak = (text) => {
     try {
@@ -126,42 +122,21 @@ export default function P5FoodChainIntro() {
           </div>
         </div>
 
-        <div className="absolute bottom-4 left-4 z-30 flex items-center gap-1 rounded-[20px] bg-white/85 px-2 py-2 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm">
-          {languageButtons.map((lang) => {
-            const langKey = lang.key;
-            const isActive = language === langKey;
-            return (
-              <button
-                key={langKey}
-                type="button"
-                onClick={() => setLanguage(langKey)}
-                className={`rounded-[16px] px-2.5 py-1 text-xs font-bold text-black transition sm:px-3 sm:py-1 sm:text-[1.25rem] ${
-                  isActive
-                    ? "bg-[#9fd9ff]"
-                    : "bg-[#d8e4f3] hover:bg-[#c9dbef]"
-                }`}
-              >
-                {content.langLabel?.[langKey] ?? langKey.toUpperCase()}
-              </button>
-            );
-          })}
+        <div className="absolute bottom-4 left-4 z-30">
+          <FoodChainLanguageSwitcher
+            value={language}
+            onChange={setLanguage}
+            labels={content.langLabel}
+          />
         </div>
 
-        <div className="absolute bottom-4 right-4 z-30 flex gap-2 max-sm:bottom-20">
-          <button
-            type="button"
-            onClick={() => navigate("/p5/life")}
-            className="rounded-full border-2 border-[#9eb4cd] bg-white/95 px-4 py-1.5 text-base font-bold text-[#3b6c9f] shadow-[0_8px_20px_rgba(59,130,246,0.18)] transition hover:bg-white sm:px-6 sm:py-2 sm:text-xl"
-          >
-            {content.back}
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate(nextPath)}
-            className="rounded-full bg-[#2f78f2] px-4 py-1.5 text-base font-bold text-white shadow-[0_8px_20px_rgba(37,99,235,0.35)] transition hover:bg-[#2563eb] sm:px-6 sm:py-2 sm:text-xl"
-          >
-            {content.next}
-          </button>
+        <div className="absolute bottom-4 right-4 z-30 max-sm:bottom-20">
+          <FoodChainNavButtons
+            backLabel={content.back}
+            nextLabel={content.next}
+            onBack={() => navigate("/p5/life")}
+            onNext={() => navigate(nextPath)}
+          />
         </div>
       </div>
     </div>
