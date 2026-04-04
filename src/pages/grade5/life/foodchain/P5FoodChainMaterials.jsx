@@ -103,7 +103,7 @@ const PAGE_COPY = {
     title: "การทดลองที่ 5 เรื่อง ห่วงโซ่อาหาร",
     materials: "วัสดุอุปกรณ์",
     back: "ย้อนกลับ",
-    next: "ต่อไป",
+    next: "ไปต่อ",
   },
   en: {
     title: "Experiment 5: Food Chain",
