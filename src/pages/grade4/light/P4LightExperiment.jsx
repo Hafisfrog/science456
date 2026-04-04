@@ -839,8 +839,6 @@ export default function P4LightExperiment() {
         <LightNavButtons
           className="justify-end"
           size="large"
-          backLabel="ย้อนกลับ"
-          nextLabel="ไปต่อ"
           onBack={() => navigate("/p4/light/thinking")}
           onNext={goToRecordSummary}
         />
