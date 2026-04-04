@@ -17,7 +17,7 @@ const TOPIC_MEDIA = {
   },
   genetics: {
     image:
-      "https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg?auto=compress&cs=tinysrgb&w=1200&h=720&fit=crop",
+      "C:\Users\ASUS\Pictures\img project\familytree.png",
     fallbackImage: "/images/p5-genetic.png",
     imagePosition: "center 28%",
     accent: "from-sky-500 to-blue-600",
