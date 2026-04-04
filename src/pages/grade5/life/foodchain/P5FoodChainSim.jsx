@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const ANSWERS = [
   ["ต้นข้าว", "ตั๊กแตน", "กบ", "งู"],
@@ -89,12 +90,6 @@ const UI = {
     correctAnswerSpeech: "Jawapan betul",
   }
 };
-
-const LANGUAGE_BUTTONS = [
-  { key: "th", label: "ไทย", className: "bg-[#f3f7ff] text-[#1d4ed8]" },
-  { key: "en", label: "อังกฤษ", className: "bg-[#c8f5df] text-[#0b6d66]" },
-  { key: "ms", label: "มลายู", className: "bg-[#fff0b8] text-[#b25d00]" }
-];
 
 const getAnimalLabel = (name, language) =>
   ANIMAL_LABELS[name]?.[language] ?? ANIMAL_LABELS[name]?.th ?? name;
@@ -268,42 +263,17 @@ export default function P5FoodChainSim() {
       </div>
 
       <div className="fixed bottom-6 left-6 z-20">
-        <div className="flex items-center gap-1 rounded-[18px] bg-white px-2 py-1.5 shadow-[0_14px_32px_rgba(15,23,42,0.1)]">
-          {LANGUAGE_BUTTONS.map((button) => (
-            <button
-              key={button.key}
-              type="button"
-              onClick={() => setLanguage(button.key)}
-              className={`min-w-[58px] rounded-full px-3 py-1.5 text-sm font-extrabold transition-transform duration-200 hover:-translate-y-0.5 sm:min-w-[76px] sm:px-4 sm:py-2 sm:text-base ${
-                button.className
-              } ${
-                language === button.key
-                  ? "border-2 border-[#6d84a7] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.95)]"
-                  : "border-2 border-transparent"
-              }`}
-            >
-              {button.label}
-            </button>
-          ))}
-        </div>
+        <FoodChainLanguageSwitcher value={language} onChange={setLanguage} />
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex flex-col gap-3 sm:flex-row">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="inline-flex items-center justify-center rounded-full border border-slate-300/90 bg-white/85 px-7 py-3 text-base font-bold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.08)] backdrop-blur-sm transition duration-200 hover:-translate-y-0.5 hover:bg-white"
-        >
-          ← {ui.back}
-        </button>
+      <div className="fixed bottom-6 right-6 z-20">
+        <FoodChainNavButtons
+          backLabel={ui.back}
+          nextLabel={ui.next}
+          onBack={() => navigate(-1)}
+          onNext={() => navigate("/p5/life/foodchain/summary")}
+        />
 
-        <button
-          type="button"
-          onClick={() => navigate("/p5/life/foodchain/summary")}
-          className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-green-600 px-7 py-3 text-base font-bold text-white shadow-[0_14px_28px_rgba(22,163,74,0.24)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(22,163,74,0.3)]"
-        >
-          {ui.next} →
-        </button>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
 const LANG_TO_LOCALE = {
@@ -219,11 +220,6 @@ const materialImageClass = "w-24 sm:w-28 md:w-32 lg:w-36 mx-auto drop-shadow-xl"
 export default function P5FoodChainMaterials() {
   const navigate = useNavigate();
   const [activeLang, setActiveLang] = useState("th");
-  const languageButtons = [
-    { key: "th" },
-    { key: "en" },
-    { key: "ms" },
-  ];
 
   const t = PAGE_COPY[activeLang];
   const getName = (item) => item.name[activeLang] || item.name.th;
@@ -294,38 +290,20 @@ export default function P5FoodChainMaterials() {
         ))}
       </div>
 
-      <div className="absolute bottom-8 left-8 z-20 flex items-center gap-1 rounded-[20px] bg-white/85 px-2 py-2 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm">
-        {languageButtons.map((lang) => (
-          <button
-            key={lang.key}
-            type="button"
-            onClick={() => setActiveLang(lang.key)}
-            className={`rounded-[16px] px-2.5 py-1 text-xs font-bold text-black transition sm:px-3 sm:py-1 sm:text-[1.25rem] ${
-              activeLang === lang.key
-                ? "bg-[#9fd9ff]"
-                : "bg-[#d8e4f3] hover:bg-[#c9dbef]"
-            }`}
-          >
-            {LANGUAGE_LABELS[activeLang]?.[lang.key] ?? lang.key.toUpperCase()}
-          </button>
-        ))}
+      <div className="absolute bottom-8 left-8 z-20">
+        <FoodChainLanguageSwitcher
+          value={activeLang}
+          onChange={setActiveLang}
+          labels={LANGUAGE_LABELS[activeLang] ?? LANGUAGE_LABELS.th}
+        />
       </div>
-      <div className="absolute bottom-8 right-10 flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => navigate("/p5/life/foodchain/scene")}
-          className="rounded-full bg-blue-500 px-5 py-2 text-base text-white shadow-md hover:bg-blue-600"
-        >
-          ← {t.back}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => navigate("/p5/life/foodchain/steps")}
-          className="rounded-full bg-red-500 px-5 py-2 text-base text-white shadow-md hover:bg-red-600"
-        >
-          {t.next} →
-        </button>
+      <div className="absolute bottom-8 right-10">
+        <FoodChainNavButtons
+          backLabel={t.back}
+          nextLabel={t.next}
+          onBack={() => navigate("/p5/life/foodchain/scene")}
+          onNext={() => navigate("/p5/life/foodchain/steps")}
+        />
       </div>
     </div>
   );

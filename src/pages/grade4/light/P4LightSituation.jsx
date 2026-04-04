@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const CONTENT = {
   th: {
@@ -39,12 +40,6 @@ const CONTENT = {
     next: "Seterusnya ▶",
   },
 };
-
-const LANGUAGE_BUTTONS = [
-  { key: "th", label: "Thai", className: "bg-blue-100 text-blue-800 hover:bg-blue-200" },
-  { key: "en", label: "English", className: "bg-emerald-100 text-emerald-800 hover:bg-emerald-200" },
-  { key: "ms", label: "Malay", className: "bg-amber-100 text-amber-800 hover:bg-amber-200" },
-];
 
 const LANGUAGE_LABELS = {
   th: { th: "\u0E44\u0E17\u0E22", en: "\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29", ms: "\u0E21\u0E25\u0E32\u0E22\u0E39" },
@@ -108,38 +103,19 @@ export default function P4LightSituation() {
         </div>
 
         <div className="flex flex-wrap items-center gap-5">
-          <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-300 bg-slate-100/95 px-2 py-1.5 shadow-[0_8px_20px_rgba(59,130,246,0.18)]">
-            {LANGUAGE_BUTTONS.map((button) => (
-              <button
-                key={button.key}
-                type="button"
-                onClick={() => setLanguage(button.key)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${button.className} ${
-                  language === button.key ? "ring-2 ring-offset-2 ring-slate-500" : ""
-                }`}
-              >
-                {LANGUAGE_LABELS[language]?.[button.key] ?? button.label}
-              </button>
-            ))}
-          </div>
+          <LightLanguageSwitcher
+            value={language}
+            onChange={setLanguage}
+            labels={LANGUAGE_LABELS[language]}
+          />
 
-          <div className="ml-auto flex w-full justify-end gap-4 sm:w-auto">
-            <button
-              className="rounded-full bg-slate-600 px-6 py-3 text-base font-semibold text-white transition hover:bg-slate-700"
-              type="button"
-              onClick={() => navigate("/p4/light/basic")}
-            >
-              {content.back}
-            </button>
-
-            <button
-              className="rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 px-7 py-3 text-base font-bold text-white transition hover:opacity-90"
-              type="button"
-              onClick={() => navigate("/p4/light/select")}
-            >
-              {content.next}
-            </button>
-          </div>
+          <LightNavButtons
+            className="ml-auto w-full justify-end sm:w-auto"
+            backLabel={content.back}
+            nextLabel={content.next}
+            onBack={() => navigate("/p4/light/basic")}
+            onNext={() => navigate("/p4/light/select")}
+          />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpeakButton from "../../../../components/SpeakButton";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const VOICE_LANG = {
   th: "th-TH",
@@ -12,6 +12,12 @@ const VOICE_LABEL = {
   th: "เล่นเสียง",
   en: "Play audio",
   ms: "Main audio",
+};
+
+const LANGUAGE_LABELS = {
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  en: { th: "Thai", en: "English", ms: "Malay" },
+  ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
 
 const CONTENT = {
@@ -78,6 +84,7 @@ export default function P5FoodChainSummary() {
 
   const content = CONTENT[activeLang] ?? CONTENT.th;
   const voiceLabel = VOICE_LABEL[activeLang] ?? VOICE_LABEL.th;
+  const languageLabels = LANGUAGE_LABELS[activeLang] ?? LANGUAGE_LABELS.th;
 
   const speakText = (text) => {
     if (typeof window === "undefined" || !window.speechSynthesis || !text) {
@@ -125,33 +132,21 @@ export default function P5FoodChainSummary() {
             </div>
           </div>
 
-          <div className="mt-8">
-            <SpeakButton
-              th={`${CONTENT.th.paragraph1} ${CONTENT.th.paragraph2}`}
-              en={`${CONTENT.en.paragraph1} ${CONTENT.en.paragraph2}`}
-              ms={`${CONTENT.ms.paragraph1} ${CONTENT.ms.paragraph2}`}
-              activeLang={activeLang}
-              onLanguageChange={setActiveLang}
-            />
-          </div>
         </div>
 
-        <div className="mt-10 flex w-full max-w-[900px] justify-end gap-3">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="rounded-full bg-[#6b7280] px-7 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#5b6472] sm:px-9 sm:text-xl"
-          >
-            {content.back}
-          </button>
+        <div className="mt-auto flex w-full max-w-[900px] flex-col gap-4 pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <FoodChainLanguageSwitcher
+            value={activeLang}
+            onChange={setActiveLang}
+            labels={languageLabels}
+          />
 
-          <button
-            type="button"
-            onClick={() => navigate("/p5/life/foodchain/summary2")}
-            className="rounded-full bg-[#e53935] px-8 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-[#d32f2f] sm:px-10 sm:text-xl"
-          >
-            {content.next}
-          </button>
+          <FoodChainNavButtons
+            backLabel={content.back}
+            nextLabel={content.next}
+            onBack={() => navigate(-1)}
+            onNext={() => navigate("/p5/life/foodchain/summary2")}
+          />
         </div>
       </div>
     </div>

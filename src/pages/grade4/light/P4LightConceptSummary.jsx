@@ -1,5 +1,6 @@
 ﻿import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const SPEECH_LOCALES = {
   th: "th-TH",
@@ -11,7 +12,9 @@ const UI = {
   th: {
     pageTitle: "สรุปสาระสำคัญ : ตัวกลางของแสง",
     next: "จบบทเรียน",
+    listenTitle: "ฟังหัวข้อด้านบน",
     listen: "ฟังสรุป",
+    listenSection: "ฟังบล็อกนี้",
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
     sections: {
       transparent: {
@@ -34,7 +37,9 @@ const UI = {
   en: {
     pageTitle: "Key Summary: Medium of Light",
     next: "Next",
+    listenTitle: "Listen to the title",
     listen: "Listen",
+    listenSection: "Listen to this block",
     lang: { th: "Thai", en: "English", ms: "Malay" },
     sections: {
       transparent: {
@@ -57,7 +62,9 @@ const UI = {
   ms: {
     pageTitle: "Rumusan Penting: Medium Cahaya",
     next: "Seterusnya",
+    listenTitle: "Dengar tajuk di atas",
     listen: "Dengar",
+    listenSection: "Dengar blok ini",
     lang: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     sections: {
       transparent: {
@@ -161,7 +168,7 @@ export default function P4LightConceptSummary() {
     },
   ];
 
-  const speakText = useMemo(() => {
+  const summarySpeechText = useMemo(() => {
     const transparent = ui.sections.transparent;
     const translucent = ui.sections.translucent;
     const opaque = ui.sections.opaque;
@@ -169,11 +176,17 @@ export default function P4LightConceptSummary() {
     return `${ui.pageTitle}. ${transparent.title}. ${transparent.description}. ${transparent.tags.join(", ")}. ${translucent.title}. ${translucent.description}. ${translucent.tags.join(", ")}. ${opaque.title}. ${opaque.description}. ${opaque.tags.join(", ")}.`;
   }, [ui]);
 
-  const speakSummary = () => {
+  const buildSectionSpeechText = (section) => {
+    if (!section) return "";
+    return `${section.title}. ${section.description}. ${section.tags.join(", ")}.`;
+  };
+
+  const speakContent = (text) => {
     if (
       typeof window === "undefined" ||
       typeof SpeechSynthesisUtterance === "undefined" ||
-      !window.speechSynthesis
+      !window.speechSynthesis ||
+      !text
     ) {
       return;
     }
@@ -185,7 +198,7 @@ export default function P4LightConceptSummary() {
       const voices = synth.getVoices();
       const voice = pickVoice(voices, language, targetLocale);
 
-      const utterance = new SpeechSynthesisUtterance(speakText);
+      const utterance = new SpeechSynthesisUtterance(text);
       if (voice) utterance.voice = voice;
       utterance.lang = voice?.lang || targetLocale;
       utterance.rate = language === "ms" ? 0.9 : 0.92;
@@ -219,6 +232,14 @@ export default function P4LightConceptSummary() {
     }, 500);
   };
 
+  const speakSummary = () => {
+    speakContent(summarySpeechText);
+  };
+
+  const speakSection = (section) => {
+    speakContent(buildSectionSpeechText(section));
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#dbedf7] via-[#d4ebf8] to-[#cae1f5] font-['Prompt',sans-serif]">
       <div
@@ -229,9 +250,20 @@ export default function P4LightConceptSummary() {
 
       <div className="relative z-10 min-h-screen overflow-y-auto px-3 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
         <div className="mx-auto flex w-full max-w-[1260px] flex-col gap-3">
-          <h1 className="text-center text-3xl font-extrabold text-black drop-shadow-[0_2px_0_rgba(255,255,255,0.55)] sm:text-5xl">
-            {ui.pageTitle}
-          </h1>
+          <div className="flex items-center justify-center gap-3">
+            <h1 className="m-0 text-center text-3xl font-extrabold text-black drop-shadow-[0_2px_0_rgba(255,255,255,0.55)] sm:text-5xl">
+              {ui.pageTitle}
+            </h1>
+            <button
+              type="button"
+              onClick={() => speakContent(ui.pageTitle)}
+              aria-label={ui.listenTitle}
+              title={ui.listenTitle}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-sky-300 bg-white/85 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-100 sm:h-12 sm:w-12"
+            >
+              🔊
+            </button>
+          </div>
 
           <div className="relative">
             <div className="pointer-events-none absolute left-[5%] right-[5%] top-[58%] hidden h-16 -translate-y-1/2 rounded-full bg-gradient-to-r from-white/20 via-white/85 to-white/20 blur-[1px] lg:block" />
@@ -240,7 +272,18 @@ export default function P4LightConceptSummary() {
               <section className="relative flex min-h-[455px] flex-col overflow-hidden rounded-[52px] bg-[#8fd3e8]/58 p-4 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.45)]">
                 <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_18%_75%,#6ee7f9_0,transparent_35%),radial-gradient(circle_at_70%_25%,#d9f8ff_0,transparent_40%)]" />
                 <div className="relative z-10">
-                  <SectionBadge>{ui.sections.transparent.title}</SectionBadge>
+                  <div className="flex items-start justify-between gap-3">
+                    <SectionBadge>{ui.sections.transparent.title}</SectionBadge>
+                    <button
+                      type="button"
+                      onClick={() => speakSection(ui.sections.transparent)}
+                      aria-label={`${ui.listenSection}: ${ui.sections.transparent.title}`}
+                      title={`${ui.listenSection}: ${ui.sections.transparent.title}`}
+                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-sky-300 bg-white/85 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-50"
+                    >
+                      🔊
+                    </button>
+                  </div>
                   <p className="mt-2 text-lg leading-snug text-slate-900 sm:text-xl">
                     {ui.sections.transparent.description}
                   </p>
@@ -277,7 +320,18 @@ export default function P4LightConceptSummary() {
               <section className="relative flex min-h-[455px] flex-col overflow-hidden rounded-[52px] bg-[#d7d9dc]/64 p-4 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.5)]">
                 <div className="pointer-events-none absolute inset-0 opacity-45 [background:radial-gradient(circle_at_20%_80%,#cfd8dc_0,transparent_40%),radial-gradient(circle_at_80%_24%,#eff2f7_0,transparent_44%)]" />
                 <div className="relative z-10">
-                  <SectionBadge>{ui.sections.translucent.title}</SectionBadge>
+                  <div className="flex items-start justify-between gap-3">
+                    <SectionBadge>{ui.sections.translucent.title}</SectionBadge>
+                    <button
+                      type="button"
+                      onClick={() => speakSection(ui.sections.translucent)}
+                      aria-label={`${ui.listenSection}: ${ui.sections.translucent.title}`}
+                      title={`${ui.listenSection}: ${ui.sections.translucent.title}`}
+                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white/85 text-lg text-slate-700 shadow-[0_8px_18px_rgba(100,116,139,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-50"
+                    >
+                      🔊
+                    </button>
+                  </div>
                   <p className="mt-2 text-lg leading-snug text-slate-900 sm:text-xl">
                     {ui.sections.translucent.description}
                   </p>
@@ -313,7 +367,18 @@ export default function P4LightConceptSummary() {
               <section className="relative flex min-h-[455px] flex-col overflow-hidden rounded-[52px] bg-[#b4c1cc]/66 p-4 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.4)]">
                 <div className="pointer-events-none absolute inset-0 opacity-55 [background:radial-gradient(circle_at_25%_82%,#3b4754_0,transparent_48%),radial-gradient(circle_at_75%_38%,#94a3b8_0,transparent_40%)]" />
                 <div className="relative z-10">
-                  <SectionBadge>{ui.sections.opaque.title}</SectionBadge>
+                  <div className="flex items-start justify-between gap-3">
+                    <SectionBadge>{ui.sections.opaque.title}</SectionBadge>
+                    <button
+                      type="button"
+                      onClick={() => speakSection(ui.sections.opaque)}
+                      aria-label={`${ui.listenSection}: ${ui.sections.opaque.title}`}
+                      title={`${ui.listenSection}: ${ui.sections.opaque.title}`}
+                      className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-400 bg-white/85 text-lg text-slate-800 shadow-[0_8px_18px_rgba(71,85,105,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-50"
+                    >
+                      🔊
+                    </button>
+                  </div>
                   <p className="mt-2 text-lg leading-snug text-slate-900 sm:text-xl">
                     {ui.sections.opaque.description}
                   </p>
@@ -348,57 +413,30 @@ export default function P4LightConceptSummary() {
           </div>
 
           <div className="flex flex-wrap items-end justify-between gap-3">
-            <div className="inline-flex items-center gap-2 rounded-2xl border-[3px] border-[#8cc5f3] bg-white/75 p-1.5 shadow-[0_6px_14px_rgba(59,130,246,0.2)] backdrop-blur-sm">
-              {["th", "en", "ms"].map((key) => {
-                const isActive = language === key;
-                return (
-                  <button
-                    key={key}
-                    type="button"
-                    onClick={() => setLanguage(key)}
-                    className={`rounded-full px-4 py-1.5 text-base font-bold transition sm:px-5 ${
-                      isActive
-                        ? "bg-sky-200 text-sky-800"
-                        : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-                    }`}
-                  >
-                    {ui.lang[key]}
-                  </button>
-                );
-              })}
+            <div className="flex flex-wrap items-center gap-3">
+              <LightLanguageSwitcher
+                value={language}
+                onChange={setLanguage}
+                labels={ui.lang}
+              />
 
               <button
                 type="button"
                 onClick={speakSummary}
                 aria-label={ui.listen}
                 title={ui.listen}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-sky-300 bg-sky-50 text-lg text-sky-700 transition hover:bg-sky-100"
+                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-300 bg-sky-50 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-100"
               >
                 🔊
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-end gap-3">
-              <button
-                type="button"
-                onClick={() => navigate("/p4/light/qa")}
-                className="inline-flex items-center gap-2 rounded-full border-2 border-[#8fb3e5] bg-white px-5 py-1.5 text-xl font-bold text-[#1f4d93] shadow-[0_6px_0_#cbdcf5] transition hover:bg-[#f2f7ff] active:translate-y-[1px]"
-              >
-                <span aria-hidden="true" className="text-2xl leading-none">
-                  &larr;
-                </span>
-                {backLabel}
-              </button>
-
-              <button
-                type="button"
-                onClick={() => navigate("/p4")}
-                className="inline-flex items-center gap-2 rounded-full border-2 border-[#ce4455] bg-gradient-to-b from-[#ff707c] to-[#df4458] px-5 py-1.5 text-2xl font-extrabold text-white shadow-[0_6px_0_#b33547] transition hover:brightness-105 active:translate-y-[1px]"
-              >
-                {ui.next}
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-2xl leading-none">»</span>
-              </button>
-            </div>
+            <LightNavButtons
+              backLabel={backLabel}
+              nextLabel={ui.next}
+              onBack={() => navigate("/p4/light/qa")}
+              onNext={() => navigate("/p4")}
+            />
           </div>
         </div>
       </div>

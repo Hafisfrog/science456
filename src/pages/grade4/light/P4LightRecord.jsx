@@ -1,6 +1,6 @@
 ﻿import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
-import SpeakButton from "../../../components/SpeakButton";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const SPEECH_LOCALES = {
   th: "th-TH",
@@ -110,15 +110,6 @@ export default function P4LightRecord() {
       opaque: pendingResults.filter((item) => item.material.type === "opaque").length,
     }),
     [pendingResults]
-  );
-
-  const speakTexts = useMemo(
-    () => ({
-      th: `สรุปผลการทดลองเรื่องตัวกลางของแสง ทดลองทั้งหมด ${pendingResults.length} ครั้ง วัตถุโปร่งใส ${counts.transparent} ครั้ง วัตถุโปร่งแสง ${counts.translucent} ครั้ง และวัตถุทึบแสง ${counts.opaque} ครั้ง`,
-      en: `Light medium experiment summary. Total experiments ${pendingResults.length}. Transparent objects ${counts.transparent}, translucent objects ${counts.translucent}, and opaque objects ${counts.opaque}.`,
-      ms: `Ringkasan eksperimen medium cahaya. Jumlah eksperimen ${pendingResults.length} kali. Objek lutsinar ${counts.transparent}, objek lut separa ${counts.translucent}, dan objek legap ${counts.opaque}.`,
-    }),
-    [pendingResults.length, counts]
   );
 
   useEffect(() => {
@@ -322,33 +313,16 @@ export default function P4LightRecord() {
           </div>
           </div>
 
-          <div className="mb-6">
-            <SpeakButton
-              th={speakTexts.th}
-              en={speakTexts.en}
-              ms={speakTexts.ms}
-              activeLang={language}
-              onLanguageChange={setLanguage}
-              variant="segmented"
+          <div className="mb-6 flex flex-wrap items-center gap-4">
+            <LightLanguageSwitcher value={language} onChange={setLanguage} />
+
+            <LightNavButtons
+              className="ml-auto"
+              backLabel={ui.addMore}
+              nextLabel={ui.next}
+              onBack={() => navigate("/p4/light/experiment")}
+              onNext={goToSummary}
             />
-          </div>
-
-          <div className="flex justify-between gap-4">
-            <button
-              onClick={() => navigate("/p4/light/experiment")}
-              className="flex items-center gap-2 rounded-2xl border border-[#adc7db] bg-[linear-gradient(180deg,rgba(227,236,244,0.96),rgba(198,213,226,0.96))] px-6 py-3 text-[#23445f] shadow-[0_10px_24px_rgba(122,146,167,0.14)] transition hover:brightness-105"
-            >
-              <span>◀</span>
-              {ui.addMore}
-            </button>
-
-            <button
-              onClick={goToSummary}
-              className="flex items-center gap-2 rounded-2xl border border-[#8fb3cf] bg-gradient-to-r from-[#93bad6] to-[#7fa7c5] px-6 py-3 text-[#10304a] shadow-[0_10px_24px_rgba(109,139,165,0.18)] transition hover:brightness-105"
-            >
-              {ui.next}
-              <span>▶</span>
-            </button>
           </div>
         </div>
       </div>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SpeakButton from "../../../../components/SpeakButton";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
-function FlowArrow({ vertical = false, color = "#ff4d43" }) {
+function FlowArrow({ vertical = false, color = "#ff4d43", compact = false }) {
   if (vertical) {
     return (
       <svg viewBox="0 0 24 50" className="h-8 w-4 xl:h-10 xl:w-5" aria-hidden="true">
@@ -13,78 +13,54 @@ function FlowArrow({ vertical = false, color = "#ff4d43" }) {
   }
 
   return (
-    <svg viewBox="0 0 54 24" className="h-5 w-10 xl:h-6 xl:w-12" aria-hidden="true">
-      <path d="M4 12h34" stroke={color} strokeWidth="6" strokeLinecap="round" />
-      <path d="M30 4l16 8l-16 8" fill="none" stroke={color} strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      viewBox="0 0 54 24"
+      className={compact ? "h-4 w-8 sm:h-5 sm:w-9 xl:h-5 xl:w-10" : "h-5 w-10 xl:h-6 xl:w-12"}
+      aria-hidden="true"
+    >
+      <path d="M4 12h34" stroke={color} strokeWidth={compact ? "5" : "6"} strokeLinecap="round" />
+      <path
+        d="M30 4l16 8l-16 8"
+        fill="none"
+        stroke={color}
+        strokeWidth={compact ? "5" : "6"}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
 
-function ChainIcon({ kind }) {
-  if (kind === "carrot") {
-    return (
-      <g>
-        <path d="M16 12 C20 8, 28 8, 32 12 C30 16, 18 16, 16 12Z" fill="#6b8e23" />
-        <path d="M20 13 C22 10, 26 10, 28 13 L31 20 L17 20 Z" fill="#7aa43a" />
-        <path d="M13 42 C12 32, 20 25, 34 21 C46 18, 52 21, 55 26 C58 32, 55 37, 44 46 C33 55, 23 58, 17 56 C14 54, 13 49, 13 42 Z" fill="#f08a2b" />
-        <path d="M22 30 L43 24" stroke="#d86c1c" strokeWidth="2" />
-        <path d="M19 38 L39 33" stroke="#d86c1c" strokeWidth="2" />
-        <path d="M16 45 L33 41" stroke="#d86c1c" strokeWidth="2" />
-      </g>
-    );
-  }
-
-  if (kind === "rabbit") {
-    return (
-      <g>
-        <ellipse cx="31" cy="18" rx="7" ry="12" fill="#d7dbe7" />
-        <ellipse cx="42" cy="18" rx="7" ry="12" fill="#d7dbe7" />
-        <ellipse cx="31" cy="20" rx="3" ry="7" fill="#f2b7c9" />
-        <ellipse cx="42" cy="20" rx="3" ry="7" fill="#f2b7c9" />
-        <circle cx="36.5" cy="38" r="18" fill="#e8ecf7" />
-        <circle cx="30" cy="36" r="2.2" fill="#111827" />
-        <circle cx="43" cy="36" r="2.2" fill="#111827" />
-        <ellipse cx="36.5" cy="44" rx="4.5" ry="3.5" fill="#f2b7c9" />
-      </g>
-    );
-  }
-
-  if (kind === "snake") {
-    return (
-      <g>
-        <path
-          d="M10 48 C15 30, 33 28, 38 38 C41 45, 35 51, 28 51 C21 51, 16 46, 16 41 C16 35, 22 31, 28 31 C37 31, 45 37, 50 45"
-          fill="none"
-          stroke="#2cb67d"
-          strokeWidth="7"
-          strokeLinecap="round"
-        />
-        <circle cx="50" cy="45" r="5" fill="#2cb67d" />
-        <circle cx="52" cy="44" r="1.5" fill="#111827" />
-      </g>
-    );
-  }
-
-  return (
-    <g>
-      <ellipse cx="24" cy="44" rx="8" ry="7" fill="#c08a62" />
-      <path d="M18 46 L8 52 L17 42 Z" fill="#8b5e3c" />
-      <path d="M31 44 L50 38 L39 49 Z" fill="#9a6a47" />
-      <path d="M46 40 L57 36 L52 45 Z" fill="#7a4e32" />
-      <circle cx="28" cy="42" r="1.6" fill="#111827" />
-    </g>
-  );
-}
+const EXAMPLE_VISUALS = {
+  carrot: {
+    src: "/images/p5/k.png",
+    className: "h-[56%] w-auto",
+  },
+  rabbit: {
+    src: "/images/p5/t.png",
+    className: "h-[56%] w-auto",
+  },
+  snake: {
+    src: "/images/p5/snack.png",
+    className: "w-[52%] h-auto",
+  },
+  eagle: {
+    src: "/images/p5/y.png",
+    className: "w-[56%] h-auto",
+  },
+};
 
 function ExampleNode({ label, kind, ringClass }) {
+  const visual = EXAMPLE_VISUALS[kind] ?? EXAMPLE_VISUALS.carrot;
+
   return (
-    <div className="flex flex-col items-center gap-2 text-center">
-      <div className={`flex h-14 w-14 items-center justify-center rounded-full border-[3px] bg-white shadow-md xl:h-[4.6rem] xl:w-[4.6rem] ${ringClass}`}>
-        <svg viewBox="0 0 64 64" className="h-10 w-10 xl:h-12 xl:w-12" aria-hidden="true">
-          <ChainIcon kind={kind} />
-        </svg>
+    <div className="flex min-w-[4.25rem] flex-col items-center gap-2 text-center sm:min-w-[5rem] xl:min-w-[5.5rem]">
+      <div
+        className={`flex h-[4.5rem] w-[4.5rem] items-center justify-center rounded-full border-[4px] bg-white shadow-[0_10px_22px_rgba(15,23,42,0.12)] sm:h-[5.25rem] sm:w-[5.25rem] xl:h-[5.8rem] xl:w-[5.8rem] ${ringClass}`}
+      >
+        <img src={visual.src} alt="" className={`object-contain ${visual.className}`} />
       </div>
-      <span className="text-xs font-bold text-slate-800 xl:text-sm">{label}</span>
+      <span className="text-sm font-black text-slate-800 sm:text-base xl:text-[1rem]">{label}</span>
     </div>
   );
 }
@@ -184,16 +160,11 @@ function SectionVoiceButton({ onClick, label, className = "" }) {
   );
 }
 
-function ConsumerCard({ title, examples, visuals, toneClass, onSpeak, speechLabel }) {
+function ConsumerCard({ title, examples, visuals, toneClass }) {
   return (
     <div
-      className={`relative w-full max-w-[175px] rounded-[24px] border-[3px] bg-white/92 p-3.5 text-center shadow-lg xl:max-w-[198px] xl:rounded-[28px] xl:p-4 ${toneClass}`}
+      className={`w-full max-w-[175px] rounded-[24px] border-[3px] bg-white/92 p-3.5 text-center shadow-lg xl:max-w-[198px] xl:rounded-[28px] xl:p-4 ${toneClass}`}
     >
-      <SectionVoiceButton
-        onClick={onSpeak}
-        label={speechLabel}
-        className="absolute right-2.5 top-2.5 h-8 w-8 xl:h-9 xl:w-9"
-      />
       <div className="flex justify-center gap-2">
         {visuals.map((visual, index) => (
           <VisualBadge key={`${title}-${index}`} visual={visual} />
@@ -399,7 +370,7 @@ export default function P5FoodChainsss() {
           <SectionVoiceButton
             onClick={() => speakText(`${content.title}. ${content.intro}`)}
             label={voiceButtonLabel}
-            className="absolute right-3 top-3 xl:right-4 xl:top-4"
+            className="absolute bottom-3 right-4"
           />
           <h1 className="text-lg font-black tracking-tight text-[#1e1b16] sm:text-3xl lg:text-[1.8rem] xl:text-[2.4rem]">
             {content.title}
@@ -411,11 +382,11 @@ export default function P5FoodChainsss() {
 
         <div className="mt-3 grid gap-3 lg:min-h-0 lg:flex-1 lg:grid-cols-[0.82fr_1.18fr_0.82fr]">
           <div className="space-y-3">
-            <div className="relative rounded-[24px] bg-white/82 p-3.5 shadow-[0_14px_32px_rgba(34,197,94,0.14)] backdrop-blur-sm xl:rounded-[30px] xl:p-4">
+            <div className="relative rounded-[24px] bg-white/82 p-3.5 pb-20 shadow-[0_14px_32px_rgba(34,197,94,0.14)] backdrop-blur-sm xl:rounded-[30px] xl:p-4 xl:pb-20">
               <SectionVoiceButton
                 onClick={() => speakText(`${content.startTitle}. ${content.startDesc}`)}
                 label={voiceButtonLabel}
-                className="absolute right-3 top-3 xl:right-4 xl:top-4"
+                className="absolute bottom-1 right-3 xl:bottom-3 xl:right-4 xl:top-auto"
               />
               <h2 className="text-base font-black text-[#111827] sm:text-lg xl:text-xl">
                 {content.startTitle}
@@ -429,7 +400,7 @@ export default function P5FoodChainsss() {
               <SectionVoiceButton
                 onClick={() => speakText(`${content.producerTitle}. ${content.producerDesc}`)}
                 label={voiceButtonLabel}
-                className="absolute right-3 top-3 xl:right-4 xl:top-4"
+                className="absolute right-3 top-10 xl:right-4 xl:top-4"
               />
               <ProducerScene />
               <h2 className="mt-3 text-2xl font-black text-[#2ba14b] sm:text-3xl xl:text-[2.2rem]">
@@ -446,7 +417,7 @@ export default function P5FoodChainsss() {
               <SectionVoiceButton
                 onClick={() => speakText(`${content.principleTitle}. ${content.examplePrefix} ${exampleText}`)}
                 label={voiceButtonLabel}
-                className="absolute right-3 top-3 xl:right-4 xl:top-4"
+                className="absolute right-3 top-12 xl:right-4 xl:top-4"
               />
               <div className="mx-auto w-fit rounded-full bg-[#ff4d43] px-4 py-1.5 text-center text-sm font-black text-white shadow-sm sm:text-lg xl:text-xl">
                 {content.principleTitle}
@@ -454,13 +425,15 @@ export default function P5FoodChainsss() {
               <p className="mt-3 text-center text-sm font-semibold text-slate-900 sm:text-lg lg:text-[1.05rem] xl:text-[1.35rem]">
                 {content.examplePrefix} {exampleText}
               </p>
-              <div className="mt-3 flex flex-wrap items-center justify-center gap-2 xl:gap-3">
-                {content.exampleItems.map((item, index) => (
-                  <div key={item.key} className="flex items-center gap-2 xl:gap-3">
-                    <ExampleNode label={item.label} kind={item.key} ringClass={item.ringClass} />
-                    {index < content.exampleItems.length - 1 && <FlowArrow />}
-                  </div>
-                ))}
+              <div className="mt-4 overflow-x-auto pb-2">
+                <div className="mx-auto flex w-max min-w-full flex-nowrap items-start justify-center gap-2 sm:gap-3 xl:gap-4">
+                  {content.exampleItems.map((item, index) => (
+                    <div key={item.key} className="flex flex-none items-center gap-2 sm:gap-3 xl:gap-4">
+                      <ExampleNode label={item.label} kind={item.key} ringClass={item.ringClass} />
+                      {index < content.exampleItems.length - 1 && <FlowArrow compact />}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -468,7 +441,7 @@ export default function P5FoodChainsss() {
               <SectionVoiceButton
                 onClick={() => speakText(`${content.consumerTitle}. ${content.consumerDesc}`)}
                 label={voiceButtonLabel}
-                className="absolute right-3 top-3 xl:right-4 xl:top-4"
+                className="absolute right-3 top-12 xl:right-4 xl:top-4"
               />
               <div className="text-center">
                 <h2 className="text-2xl font-black text-[#ff4d43] sm:text-3xl xl:text-[2.2rem]">
@@ -487,8 +460,6 @@ export default function P5FoodChainsss() {
                       examples={item.examples}
                       visuals={CONSUMER_VISUALS[item.id]}
                       toneClass={item.toneClass}
-                      onSpeak={() => speakText(`${item.title}. ${item.examples}`)}
-                      speechLabel={voiceButtonLabel}
                     />
                     {index < content.consumerCards.length - 1 && (
                       <>
@@ -508,14 +479,16 @@ export default function P5FoodChainsss() {
 
           <div className="space-y-3">
             <div className="relative rounded-[24px] bg-white/82 p-3.5 shadow-[0_14px_32px_rgba(180,83,9,0.12)] backdrop-blur-sm xl:rounded-[30px] xl:p-4">
-              <SectionVoiceButton
-                onClick={() => speakText(`${content.directionTitle}. ${content.directionDesc}`)}
-                label={voiceButtonLabel}
-                className="absolute right-3 top-3 xl:right-4 xl:top-4"
-              />
-              <h2 className="text-right text-base font-black text-[#111827] sm:text-lg xl:text-xl">
-                {content.directionTitle}
-              </h2>
+              <div className="flex items-start justify-between gap-3">
+                <h2 className="flex-1 text-left text-base font-black text-[#111827] sm:text-lg xl:text-xl">
+                  {content.directionTitle}
+                </h2>
+                <SectionVoiceButton
+                  onClick={() => speakText(`${content.directionTitle}. ${content.directionDesc}`)}
+                  label={voiceButtonLabel}
+                  className="h-9 w-9 shrink-0 xl:h-10 xl:w-10"
+                />
+              </div>
               <p className="mt-2 text-sm leading-6 text-slate-800 xl:text-base xl:leading-7">
                 {content.directionDesc}
               </p>
@@ -525,7 +498,7 @@ export default function P5FoodChainsss() {
               <SectionVoiceButton
                 onClick={() => speakText(`${content.decomposerTitle}. ${content.decomposerDesc}`)}
                 label={voiceButtonLabel}
-                className="absolute right-3 top-3 xl:right-4 xl:top-4"
+                className="absolute right-3 top-10 xl:right-4 xl:top-4"
               />
               <DecomposerScene />
               <h2 className="mt-3 text-xl font-black leading-tight text-[#8a4e24] sm:text-3xl xl:text-[2.1rem]">
@@ -539,33 +512,14 @@ export default function P5FoodChainsss() {
         </div>
 
         <div className="mt-4 flex flex-col gap-3 pb-2 lg:mt-5 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-full rounded-2xl bg-white/84 p-2 shadow-lg backdrop-blur-sm">
-            <SpeakButton
-              th={`${CONTENT.th.intro} ${CONTENT.th.startDesc} ${CONTENT.th.consumerDesc} ${CONTENT.th.decomposerDesc}`}
-              en={`${CONTENT.en.intro} ${CONTENT.en.startDesc} ${CONTENT.en.consumerDesc} ${CONTENT.en.decomposerDesc}`}
-              ms={`${CONTENT.ms.intro} ${CONTENT.ms.startDesc} ${CONTENT.ms.consumerDesc} ${CONTENT.ms.decomposerDesc}`}
-              activeLang={activeLang}
-              onLanguageChange={setActiveLang}
-              variant="segmented"
-            />
-          </div>
+          <FoodChainLanguageSwitcher value={activeLang} onChange={setActiveLang} />
 
-          <div className="flex flex-wrap justify-end gap-3">
-            <button
-              type="button"
-              onClick={() => navigate(-1)}
-              className="rounded-full bg-[#6b7280] px-6 py-2.5 text-lg font-bold text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:shadow-xl xl:px-8 xl:py-3 xl:text-xl"
-            >
-              {content.back}
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate("/p5/life")}
-              className="rounded-full bg-gradient-to-r from-[#ff5b52] to-[#e74c3c] px-6 py-2.5 text-lg font-bold text-white shadow-[0_10px_24px_rgba(239,68,68,0.28)] transition hover:-translate-y-0.5 hover:shadow-xl xl:px-8 xl:py-3 xl:text-xl"
-            >
-              {content.next}
-            </button>
-          </div>
+          <FoodChainNavButtons
+            backLabel={content.back}
+            nextLabel={content.next}
+            onBack={() => navigate(-1)}
+            onNext={() => navigate("/p5/life")}
+          />
         </div>
       </div>
     </div>

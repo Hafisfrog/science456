@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LabLayout from "../../../components/LabLayout";
+import { LightNavButtons } from "./LightControls";
 
 export default function P4LightCheck() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function P4LightCheck() {
   };
 
   return (
-    <LabLayout title="ตรวจคำตอบการทดลอง" onNext={toSummary}>
+    <LabLayout title="ตรวจคำตอบการทดลอง">
       <div className="space-y-6">
         {/* สรุปวัตถุ */}
         <div className="bg-white border-4 border-black rounded-xl p-4 shadow">
@@ -69,24 +70,17 @@ export default function P4LightCheck() {
         </div>
 
         {/* ปุ่มนำทาง */}
-        <div className="flex justify-between pt-4">
-          <button
-            onClick={() =>
+        <div className="flex justify-end pt-4">
+          <LightNavButtons
+            backLabel="กลับไปแก้ไข"
+            nextLabel="สรุปผล"
+            onBack={() =>
               navigate("/p4/light/record", {
                 state: { material, observedResult },
               })
             }
-            className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600"
-          >
-            ◀ กลับไปแก้ไข
-          </button>
-
-          <button
-            onClick={toSummary}
-            className="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600"
-          >
-            สรุปผล ▶
-          </button>
+            onNext={toSummary}
+          />
         </div>
       </div>
     </LabLayout>

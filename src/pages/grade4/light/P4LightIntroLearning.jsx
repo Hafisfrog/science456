@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { LightNavButtons } from "./LightControls";
 
 const VOCAB = [
   {
@@ -70,23 +71,12 @@ export default function P4LightIntroLearning() {
         </div>
 
         <div className="mt-7 flex justify-end">
-          <div className="flex flex-wrap items-center justify-end gap-3">
-            <button
-              type="button"
-              className="rounded-full border border-sky-300 bg-white px-6 py-3 text-base font-semibold text-sky-700 transition hover:bg-sky-50 hover:shadow"
-              onClick={() => navigate("/p4/light")}
-            >
-              ย้อนกลับ
-            </button>
-
-            <button
-              type="button"
-              className="rounded-full bg-sky-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-sky-600 hover:shadow"
-              onClick={() => navigate("/p4/light/select")}
-            >
-              ไปต่อ
-            </button>
-          </div>
+          <LightNavButtons
+            backLabel="ย้อนกลับ"
+            nextLabel="ไปต่อ"
+            onBack={() => navigate("/p4/light")}
+            onNext={() => navigate("/p4/light/select")}
+          />
         </div>
       </div>
     </div>

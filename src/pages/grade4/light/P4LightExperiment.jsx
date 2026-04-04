@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { LightNavButtons } from "./LightControls";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const MATERIALS = [
@@ -511,10 +512,6 @@ export default function P4LightExperiment() {
       },
     });
   };
-  const resetExperimentCount = () => {
-    reset();
-    setExperimentResults([]);
-  };
 
   // ── Render ────────────────────────────────────────────────────────────────
   const rootStyle = isMobile
@@ -839,30 +836,14 @@ export default function P4LightExperiment() {
       </main>
 
       <div style={pageNavFloatingStyle}>
-        <button
-          type="button"
-          style={S.pageBackBtn}
-          className="btn-hover"
-          onClick={() => navigate("/p4/light/thinking")}
-        >
-          ย้อนกลับ
-        </button>
-        <button
-          type="button"
-          style={S.pageResetBtn}
-          className="btn-hover"
-          onClick={resetExperimentCount}
-        >
-          รีเซ็ตนับใหม่
-        </button>
-        <button
-          type="button"
-          style={S.pageNextBtn}
-          className="btn-hover"
-          onClick={goToRecordSummary}
-        >
-          ไปต่อ / ดูผลสรุป
-        </button>
+        <LightNavButtons
+          className="justify-end"
+          size="large"
+          backLabel="ย้อนกลับ"
+          nextLabel="ไปต่อ"
+          onBack={() => navigate("/p4/light/thinking")}
+          onNext={goToRecordSummary}
+        />
       </div>
     </div>
   );
@@ -1336,40 +1317,6 @@ const S = {
     display: "flex",
     alignItems: "center",
     gap: 8,
-  },
-  pageBackBtn: {
-    border: "1px solid #93c5fd",
-    background: "#ffffff",
-    color: "#1e3a8a",
-    borderRadius: 10,
-    padding: "8px 14px",
-    fontSize: 13,
-    fontWeight: 700,
-    cursor: "pointer",
-    fontFamily: "inherit",
-  },
-  pageResetBtn: {
-    border: "1px solid #fdba74",
-    background: "#fff7ed",
-    color: "#9a3412",
-    borderRadius: 10,
-    padding: "8px 14px",
-    fontSize: 13,
-    fontWeight: 700,
-    cursor: "pointer",
-    fontFamily: "inherit",
-  },
-  pageNextBtn: {
-    border: "1px solid #1d4ed8",
-    background: "linear-gradient(135deg, #38bdf8, #2563eb)",
-    color: "#ffffff",
-    borderRadius: 10,
-    padding: "8px 14px",
-    fontSize: 13,
-    fontWeight: 700,
-    cursor: "pointer",
-    fontFamily: "inherit",
-    boxShadow: "0 8px 22px rgba(59,130,246,0.35)",
   },
 };
 

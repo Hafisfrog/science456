@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
+import { FoodChainNavButtons } from "./FoodChainControls";
 
 // เฉลยตัวอย่าง (คุณสามารถปรับได้ภายหลัง)
 const ANSWER_KEY = [
@@ -91,28 +92,21 @@ export default function P5FoodChainCheck() {
         </div>
 
         {/* ปุ่มนำทาง */}
-        <div className="flex justify-between pt-4">
-          <button
-            onClick={() =>
+        <div className="flex justify-end pt-4">
+          <FoodChainNavButtons
+            backLabel="แก้ไขคำตอบ"
+            nextLabel="สรุปผล"
+            onBack={() =>
               navigate("/p5/life/foodchain/sim", {
                 state: { chains },
               })
             }
-            className="bg-gray-500 text-white px-6 py-2 rounded-full hover:bg-gray-600"
-          >
-            ◀ แก้ไขคำตอบ
-          </button>
-
-          <button
-            onClick={() =>
+            onNext={() =>
               navigate("/p5/life/foodchain/summary", {
                 state: { chains, results },
               })
             }
-            className="bg-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600"
-          >
-            สรุปผล ▶
-          </button>
+          />
         </div>
       </div>
     </LabLayout>

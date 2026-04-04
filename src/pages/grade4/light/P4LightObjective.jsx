@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const CONTENT = {
   th: {
@@ -164,51 +165,17 @@ export default function P4LightObjective() {
           alt="character"
         />
 
-        <div className="absolute bottom-6 left-6 z-20 flex items-center gap-[10px] rounded-[18px] bg-white/90 p-[10px_12px] shadow-[0_10px_22px_rgba(0,0,0,.12)] max-[640px]:bottom-3 max-[640px]:left-3 max-[640px]:gap-2 max-[640px]:p-[10px]">
-          <button
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === "th" ? "bg-sky-200" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("th")}
-            type="button"
-          >
-            {labels.th}
-          </button>
-          <button
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === "en" ? "bg-sky-200" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {labels.en}
-          </button>
-          <button
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === "ms" ? "bg-sky-200" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("ms")}
-            type="button"
-          >
-            {labels.ms}
-          </button>
+        <div className="absolute bottom-6 left-6 z-20 max-[640px]:bottom-3 max-[640px]:left-3">
+          <LightLanguageSwitcher value={lang} onChange={setLang} labels={labels} />
         </div>
 
-        <div className="absolute bottom-6 right-6 z-20 flex gap-3 max-[640px]:bottom-3 max-[640px]:right-3 max-[640px]:gap-2">
-          <button
-            className="cursor-pointer rounded-[20px] border-none bg-white/90 px-[22px] py-[14px] text-lg font-black text-gray-900 shadow-[0_12px_24px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[14px] max-[640px]:py-3 max-[640px]:text-base"
-            onClick={() => navigate("/p4")}
-            type="button"
-          >
-            {t.back}
-          </button>
-          <button
-            className="cursor-pointer rounded-[20px] border-none bg-gradient-to-br from-blue-600 to-blue-700 px-[22px] py-[14px] text-lg font-black text-white shadow-[0_12px_24px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[14px] max-[640px]:py-3 max-[640px]:text-base"
-            onClick={() => navigate("/p4/light/vocab")}
-            type="button"
-          >
-            {t.next}
-          </button>
+        <div className="absolute bottom-6 right-6 z-20 max-[640px]:bottom-3 max-[640px]:right-3">
+          <LightNavButtons
+            backLabel={t.back}
+            nextLabel={t.next}
+            onBack={() => navigate("/p4")}
+            onNext={() => navigate("/p4/light/vocab")}
+          />
         </div>
       </div>
     </div>
