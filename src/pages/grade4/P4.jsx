@@ -1,76 +1,139 @@
+﻿import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4.css";
 
 export default function P4() {
   const navigate = useNavigate();
+  const [lang, setLang] = useState("th");
+
+  const copy = useMemo(
+    () => ({
+      th: {
+        title: "วิทยาศาสตร์ ป.4",
+        subtitle: "เลือกหน่วยการเรียนรู้",
+        back: "ย้อนกลับ",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
+        cards: [
+          {
+            title: "แรงโน้มถ่วงของโลก",
+            image: "/images/p4/gravity.jpg",
+            alt: "แรงโน้มถ่วงของโลก",
+            onClick: () => navigate("/p4/gravity/objectives"),
+          },
+          {
+            title: "ตัวกลางของแสง",
+            image: "/images/p4/light.jpg",
+            alt: "ตัวกลางของแสง",
+            onClick: () => navigate("/p4/light/objective"),
+          },
+        ],
+      },
+      en: {
+        title: "Science Grade 4",
+        subtitle: "Choose a learning unit",
+        back: "Back",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
+        cards: [
+          {
+            title: "Earth's Gravity",
+            image: "/images/p4/gravity.jpg",
+            alt: "Earth's Gravity",
+            onClick: () => navigate("/p4/gravity/objectives"),
+          },
+          {
+            title: "Medium of Light",
+            image: "/images/p4/light.jpg",
+            alt: "Medium of Light",
+            onClick: () => navigate("/p4/light/objective"),
+          },
+        ],
+      },
+      ms: {
+        title: "Sains Tahun 4",
+        subtitle: "Pilih unit pembelajaran",
+        back: "Kembali",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
+        cards: [
+          {
+            title: "Graviti Bumi",
+            image: "/images/p4/gravity.jpg",
+            alt: "Graviti Bumi",
+            onClick: () => navigate("/p4/gravity/objectives"),
+          },
+          {
+            title: "Medium Cahaya",
+            image: "/images/p4/light.jpg",
+            alt: "Medium Cahaya",
+            onClick: () => navigate("/p4/light/objective"),
+          },
+        ],
+      },
+    }),
+    [navigate]
+  );
+
+  const t = copy[lang];
 
   return (
-    <div className="p4-page" style={{ position: "relative" }}>
-      {/* <BackButton /> */}
-      <button className="back-home-btn" onClick={() => navigate("/grades")}>
-          ← กลับหน้าเลือกชั้นเรียน
+    <div className="p4-page">
+      <img
+        src="/images/backgroundss.jpg"
+        alt="Laboratory background"
+        className="p4-bg absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
+
+      <button className="p4-back-btn" onClick={() => navigate("/grades")}>
+        « {t.back}
       </button>
 
-      {/* Header */}
-      <header className="p4-header">
-        <h1>วิทยาศาสตร์ ป.4</h1>
-        <p>เลือกหน่วยการเรียนรู้</p>
-      </header>
+      <div className="p4-content">
+        <header className="p4-header">
+          <h1>{t.title}</h1>
+          <p>{t.subtitle}</p>
+        </header>
 
-      {/* Content */}
-      <section className="p4-grid">
-        {/* การ์ด แรงโน้มถ่วง */}
-        <div
-          className="p4-card"
-          onClick={() => navigate("/p4/gravity/objectives")}
+        <section className="p4-grid">
+          {t.cards.map((card) => (
+            <div key={card.title} className="p4-card" onClick={card.onClick}>
+              <img src={card.image} alt={card.alt} className="p4-card-img" />
+
+              <div className="p4-card-body">
+                <h2>{card.title}</h2>
+              </div>
+            </div>
+          ))}
+        </section>
+      </div>
+
+      <div className="p4-langbar" aria-label="Language selector">
+        <button
+          type="button"
+          className={`p4-langbtn ${lang === "th" ? "is-active" : ""}`}
+          onClick={() => setLang("th")}
         >
-          <img
-            src="/images/p4/gravity.png"
-            alt="แรงโน้มถ่วงของโลก"
-            className="p4-card-img"
-          />
-
-          <div className="p4-card-body">
-            <h2>แรงโน้มถ่วงของโลก</h2>
-            {/* <p>
-              เรียนรู้ว่าทำไมวัตถุจึงตกลงสู่พื้น
-              ผ่านการจำลองและการทดลอง
-            </p>
-
-            <div className="p4-card-footer">
-              <span className="tag">การทดลอง</span>
-              <span className="tag">Simulation</span>
-              <span className="tag">คำศัพท์</span>
-            </div> */}
-          </div>
-        </div>
-
-        <div
-          className="p4-card"
-          onClick={() => navigate("/p4/light/objective")}
+          {t.chipTh}
+        </button>
+        <button
+          type="button"
+          className={`p4-langbtn ${lang === "en" ? "is-active" : ""}`}
+          onClick={() => setLang("en")}
         >
-          <img
-            src="/images/p4/light.png"
-            alt="แรงโน้มถ่วงของโลก"
-            className="p4-card-img"
-          />
-
-          <div className="p4-card-body">
-            <h2>ตัวกลางของแสง</h2>
-            {/* <p>
-              เรียนรู้ว่าทำไมวัตถุจึงตกลงสู่พื้น
-              ผ่านการจำลองและการทดลอง
-            </p>
-
-            <div className="p4-card-footer">
-              <span className="tag">การทดลอง</span>
-              <span className="tag">Simulation</span>
-              <span className="tag">คำศัพท์</span>
-            </div> */}
-          </div>
-        </div>
-
-      </section>
+          {t.chipEn}
+        </button>
+        <button
+          type="button"
+          className={`p4-langbtn ${lang === "ms" ? "is-active" : ""}`}
+          onClick={() => setLang("ms")}
+        >
+          {t.chipMs}
+        </button>
+      </div>
     </div>
   );
 }

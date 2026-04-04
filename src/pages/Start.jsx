@@ -11,20 +11,25 @@ export default function Start() {
 
   return (
     <div className="relative min-h-screen overflow-hidden text-slate-900" style={bgStyle}>
+      <img
+        src="/images/background-start.jpg"
+        alt="Laboratory background"
+        className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
+      />
       <div className="pointer-events-none absolute -right-28 -top-36 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.75),rgba(255,202,153,0.35))] opacity-80" />
       <div className="pointer-events-none absolute -bottom-36 -left-40 h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.75),rgba(141,210,255,0.35))] opacity-90" />
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1400px] flex-col items-center justify-center gap-8 px-6 py-8 md:flex-row md:gap-12 md:px-10 lg:px-14">
         <div className="flex flex-1 items-center justify-center">
           <img
-            src="/images/start-lab.png"
+            src="/images/start-labb.png"
             alt="Virtual Science Lab"
-            className="h-auto w-[min(520px,88%)] drop-shadow-[0_22px_35px_rgba(23,60,110,0.2)]"
+            className="h-auto w-[min(420px,78%)] drop-shadow-[0_22px_35px_rgba(23,60,110,0.2)]"
           />
         </div>
 
-        <div className="w-full max-w-[520px] flex-1 rounded-[32px] border border-white/80 bg-white/80 p-7 text-left shadow-[0_24px_60px_rgba(23,60,110,0.15)] sm:p-10">
-          <h1 className="mb-3 text-4xl font-extrabold tracking-[0.5px] text-[#2c70c9] sm:text-5xl">
+        <div className="w-full max-w-[620px] flex-1 rounded-[42px] border border-white/80 bg-white/80 p-7 text-left shadow-[0_24px_60px_rgba(23,60,110,0.15)] sm:p-15">
+          <h1 className="mb-3 whitespace-nowrap text-[2.8rem] font-extrabold leading-none tracking-[0.5px] text-[#2c70c9] sm:text-[3.4rem]">
             Virtual Science Lab
           </h1>
           <p className="mb-8 text-lg leading-relaxed text-slate-600 sm:text-2xl">ผจญภัยในห้องแล็บเสมือนจริง</p>
