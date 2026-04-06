@@ -18,7 +18,7 @@ export default function P4GravityExp2Materials() {
       ball: "/images/p4/exp1/soccer-ball.png",
       bocce: "/images/p4/exp1/bocce.png",
       feather: "/images/p4/exp1/feather.png",
-      springScale: "/images/p4/exp2/spring-scale.png",
+      springScale: "/images/p4/exp3/spring-scale.png",
     };
   }, []);
 

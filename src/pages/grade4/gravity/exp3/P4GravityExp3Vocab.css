@@ -1,8 +1,9 @@
-﻿.exp3-vocab-page {
+.exp3-vocab-page {
   min-height: 100vh;
-  padding: 50px 20px;
+  padding: 50px 20px 140px;
   background: linear-gradient(180deg, #f0f9ff, #e6f4ff);
   font-family: "Prompt", sans-serif;
+  position: relative;
 }
 
 .exp3-vocab-header {
@@ -95,6 +96,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
   font-family: "Prompt", sans-serif;
+  position: relative;
 }
 
 .audio-btn:hover {
@@ -115,11 +117,12 @@
 }
 
 .exp3-vocab-footer {
-  max-width: 1100px;
-  margin: 26px auto 0;
+  position: absolute;
+  right: 20px;
+  bottom: 32px;
   display: flex;
-  justify-content: space-between;
-  gap: 14px;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .back-home-btn,
@@ -133,6 +136,7 @@
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
   transition: transform 0.12s ease;
   font-family: "Prompt", sans-serif;
+  position: relative;
 }
 
 .back-home-btn {
@@ -206,8 +210,9 @@
   .cell-audio {
     min-width: 180px;
   }
-
   .exp3-vocab-footer {
+    position: static;
+    margin-top: 20px;
     flex-direction: column;
   }
 

@@ -93,7 +93,7 @@ export default function P4GravityVocab() {
     <div className="vocab-page">
       <header className="vocab-header">
         <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-        <p>เรื่อง แรงโน้มถ่วงของโลก</p>
+        <p>เรื่อง ผลของแรงโน้มถ่วง</p>
       </header>
 
       <div className="vocab-card">
@@ -120,7 +120,7 @@ export default function P4GravityVocab() {
                     MY
                   </button>
                   <button className="audio-btn en" type="button" onClick={() => playWord(row, "en")} title="ฟังภาษาอังกฤษ">
-                    GB
+                    EN
                   </button>
                 </td>
               </tr>

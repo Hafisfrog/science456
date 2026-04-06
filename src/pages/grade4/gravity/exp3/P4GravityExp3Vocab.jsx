@@ -39,7 +39,7 @@ export default function P4GravityExp3Vocab() {
     <div className="exp3-vocab-page">
       <header className="exp3-vocab-header">
         <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-        <p>เรื่อง การเปลี่ยนแปลงการเคลื่อนที่ของวัตถุ</p>
+        <p>เรื่อง แรงดึงดูดของโลกกับแรงดึงดูดของดวงจันทร์</p>
       </header>
 
       <div className="exp3-vocab-card">
@@ -66,7 +66,7 @@ export default function P4GravityExp3Vocab() {
                     MY
                   </button>
                   <button className="audio-btn en" onClick={() => speak(row.en, "en")}>
-                    GB
+                    EN
                   </button>
                 </td>
               </tr>

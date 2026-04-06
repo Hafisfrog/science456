@@ -29,6 +29,9 @@ export default function P4GravityExp1Action() {
 
   // stopwatch
   const [elapsedMs, setElapsedMs] = useState(0);
+  const [isCompactArena, setIsCompactArena] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth <= 640 : false
+  );
   const timerRef = useRef(null);
   const startAtRef = useRef(0);
   const audioCtxRef = useRef(null);
@@ -168,18 +171,25 @@ export default function P4GravityExp1Action() {
   };
 
   const layout = useMemo(() => {
-    const basePlatform = 170;
-    const baseGround = 470;
+    const basePlatform = isCompactArena ? 130 : 170;
+    const baseGround = isCompactArena ? 318 : 470;
+    const platformStep = isCompactArena ? 18 : 40;
+    const groundStep = isCompactArena ? 8 : 18;
+    const minPlatform = isCompactArena ? 84 : 80;
+    const maxPlatform = isCompactArena ? 150 : 260;
+    const minGround = isCompactArena ? 280 : 320;
+    const maxGround = isCompactArena ? 348 : 560;
+    const minFall = isCompactArena ? 146 : 120;
 
-    const platformY = basePlatform - (heightM - 2) * 40;
-    const groundY = baseGround + (heightM - 2) * 18;
+    const platformY = basePlatform - (heightM - 2) * platformStep;
+    const groundY = baseGround + (heightM - 2) * groundStep;
 
-    const p = Math.max(80, Math.min(platformY, 260));
-    const g = Math.max(320, Math.min(groundY, 560));
-    const fallY = Math.max(120, g - p);
+    const p = Math.max(minPlatform, Math.min(platformY, maxPlatform));
+    const g = Math.max(minGround, Math.min(groundY, maxGround));
+    const fallY = Math.max(minFall, g - p);
 
     return { platformY: p, groundY: g, fallY };
-  }, [heightM]);
+  }, [heightM, isCompactArena]);
 
   // ---------- stopwatch ----------
   const formatTime = (ms) => {
@@ -340,6 +350,16 @@ export default function P4GravityExp1Action() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsCompactArena(window.innerWidth <= 640);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const showViewResult = phase === "done";
