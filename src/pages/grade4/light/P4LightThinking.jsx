@@ -94,12 +94,12 @@ function StartExperimentButton({ label, onClick, className = "" }) {
     <button
       type="button"
       onClick={onClick}
-      className={`flex w-full max-w-[205px] flex-col items-center rounded-[20px] border border-white/70 bg-white/92 px-3.5 py-2.5 text-slate-900 shadow-[0_14px_30px_rgba(15,23,42,0.16)] transition hover:brightness-[1.02] sm:w-[205px] sm:py-3 ${className}`}
+      className={`flex w-full flex-col items-center rounded-[24px] border-[4px] border-[#616878] bg-white/96 px-3.5 py-3.5 text-slate-900 shadow-[0_14px_26px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:brightness-[1.01] sm:min-h-[136px] sm:rounded-[26px] sm:px-5 sm:py-4 ${className}`}
     >
-      <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#cfe0f7] text-[1.3rem] leading-none text-black shadow-[inset_0_-4px_0_rgba(148,163,184,0.35),0_8px_18px_rgba(148,163,184,0.22)]">
-        <span className="ml-1">{"\u25B6"}</span>
+      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#c7daf6] text-[1.45rem] leading-none text-black shadow-[inset_0_-6px_0_rgba(148,163,184,0.35),0_8px_16px_rgba(148,163,184,0.22)] sm:h-[56px] sm:w-[56px] sm:text-[1.7rem]">
+        <span className="ml-1.5">{"\u25B6"}</span>
       </span>
-      <span className="mt-2 text-center text-[0.86rem] font-black leading-tight sm:text-[0.95rem]">
+      <span className="mt-2.5 text-center text-[0.9rem] font-black leading-tight text-[#0b2246] sm:text-[1.35rem]">
         {label}
       </span>
     </button>
@@ -204,23 +204,23 @@ export default function P4LightThinking() {
             />
           </div>
 
-          <div className="ml-auto flex w-full flex-col gap-2 lg:max-w-[380px]">
+          <div className="ml-auto flex w-full flex-col gap-2.5 lg:max-w-[350px]">
             <div className="flex justify-center">
               <StartExperimentButton
-                label={startButtonLabel}
+                label={language === "th" ? "เริ่มการทดลอง" : startButtonLabel}
                 onClick={() => navigate("/p4/light/experiment")}
               />
             </div>
 
-            <div className="grid w-full gap-2 sm:grid-cols-2 sm:gap-3">
+            <div className="grid w-full gap-3 sm:grid-cols-2 sm:gap-4">
               <div className="flex sm:justify-start">
                 <button
                   type="button"
                   onClick={() => navigate("/p4/light/intro")}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#505b73] px-3.5 py-2 text-[0.86rem] font-black tracking-tight text-white shadow-[0_10px_20px_rgba(51,65,85,0.2)] transition hover:-translate-y-0.5 hover:bg-[#475167] sm:min-h-[50px] sm:px-5 sm:text-[1rem]"
+                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-white px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-[#0b2246] shadow-[0_10px_18px_rgba(15,23,42,0.14)] transition hover:-translate-y-0.5 hover:brightness-[1.01] sm:min-h-[52px] sm:text-[0.98rem]"
                 >
-                  <span aria-hidden="true" className="text-[1.1em] leading-none">
-                    {"\u25C0"}
+                  <span aria-hidden="true" className="text-[1em] leading-none">
+                    {"\u00AB"}
                   </span>
                   <span>{language === "th" ? "ย้อนกลับ" : content.back}</span>
                 </button>
@@ -230,11 +230,11 @@ export default function P4LightThinking() {
                 <button
                   type="button"
                   onClick={() => navigate("/p4/light/experiment")}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2d79ff] to-[#27bde9] px-3.5 py-2 text-[0.86rem] font-black tracking-tight text-white shadow-[0_10px_20px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:brightness-105 sm:min-h-[50px] sm:px-5 sm:text-[1rem]"
+                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-gradient-to-r from-[#2d79ff] via-[#2f94f1] to-[#27bde9] px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-white shadow-[0_10px_18px_rgba(37,99,235,0.2)] transition hover:-translate-y-0.5 hover:brightness-105 sm:min-h-[52px] sm:text-[0.98rem]"
                 >
                   <span>{language === "th" ? "ไปต่อ" : nextButtonLabel}</span>
-                  <span aria-hidden="true" className="text-[1.1em] leading-none">
-                    {"\u25B6"}
+                  <span aria-hidden="true" className="text-[1em] leading-none">
+                    {"\u00BB"}
                   </span>
                 </button>
               </div>

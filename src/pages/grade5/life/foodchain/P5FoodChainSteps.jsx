@@ -67,7 +67,7 @@ export default function P5FoodChainSteps() {
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
       <div className="absolute inset-0 bg-white/5" />
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-8 pt-8">
+      <div className="relative z-10 mx-auto max-w-6xl px-4 pb-32 pt-8 sm:pb-36">
         <div className="mx-auto w-fit rounded-md bg-[#b7f0a4] px-6 py-2 text-center text-xl font-extrabold text-slate-900 shadow-[0_4px_10px_rgba(0,0,0,0.15)] sm:text-2xl">
           {t.mainTitle}
         </div>
@@ -110,17 +110,19 @@ export default function P5FoodChainSteps() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-4">
-          <FoodChainLanguageSwitcher value={activeLang} onChange={setActiveLang} />
+      </div>
 
-          <FoodChainNavButtons
-            className="ml-auto"
-            backLabel={t.back}
-            nextLabel={t.next}
-            onBack={() => navigate("/p5/life/foodchain/materials")}
-            onNext={() => navigate("/p5/life/foodchain/select")}
-          />
-        </div>
+      <div className="absolute bottom-3 left-3 z-20 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5">
+        <FoodChainLanguageSwitcher value={activeLang} onChange={setActiveLang} />
+      </div>
+
+      <div className="absolute bottom-3 right-3 z-20 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5">
+        <FoodChainNavButtons
+          backLabel={t.back}
+          nextLabel={t.next}
+          onBack={() => navigate("/p5/life/foodchain/materials")}
+          onNext={() => navigate("/p5/life/foodchain/select")}
+        />
       </div>
     </div>
   );
