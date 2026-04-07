@@ -6,7 +6,7 @@ const TEXT = {
     badge: "วงจรไฟฟ้าใกล้ตัว",
     title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
     section: "สรุปผลการทดลอง",
-    intro: "จากการทำกิจกรรม พบว่า เมื่อเราต่อวงจรไฟฟ้าแบบอนุกรมและแบบขนาน หลอดไฟมีการทำงานแตกต่างกัน",
+    intro: "จากการทำกิจกรรม พบว่า เมื่อต่อวงจรไฟฟ้าแบบอนุกรมและแบบขนาน หลอดไฟมีการทำงานแตกต่างกัน",
     series: {
       heading: "การต่อแบบอนุกรม",
       body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงจะดับตามไปด้วย เพราะวงจรถูกตัดขาด กระแสไฟฟ้าไม่สามารถไหลผ่านได้ครบวงจร",
@@ -66,10 +66,16 @@ function speakText(text, lang) {
 }
 
 function LanguagePills({ lang, setLang }) {
+  const labels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
+
   const pills = [
-    { code: "th", label: "ไทย" },
-    { code: "en", label: "English" },
-    { code: "ms", label: "Melayu" },
+    { code: "th", label: labels.th },
+    { code: "en", label: labels.en },
+    { code: "ms", label: labels.ms },
   ];
 
   return (
@@ -184,35 +190,8 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
         </button>
       </div>
 
-     <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
-        <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          ไทย
-        </button>
-
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          English
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          Melayu
-        </button>
-
+      <div className="pointer-events-auto fixed bottom-3 left-3 z-20">
+        <LanguagePills lang={lang} setLang={setLang} />
       </div>
     </div>
   );

@@ -169,6 +169,7 @@ export default function P6ElectricCircuitResultOverview() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] || TEXT.th, [lang]);
+  const langLabels = t.langLabel;
 
   useEffect(() => () => window.speechSynthesis?.cancel(), []);
 
@@ -291,7 +292,7 @@ export default function P6ElectricCircuitResultOverview() {
             lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          ไทย
+          {langLabels.th}
         </button>
 
         <button
@@ -300,7 +301,7 @@ export default function P6ElectricCircuitResultOverview() {
             lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          English
+          {langLabels.en}
         </button>
 
         <button
@@ -309,7 +310,7 @@ export default function P6ElectricCircuitResultOverview() {
             lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          Melayu
+          {langLabels.ms}
         </button>
 
       </div>

@@ -66,6 +66,11 @@ export default function P6ElectricForceEffectSteps() {
   const [language, setLanguage] = useState("th");
 
   const t = CONTENT[language];
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[language];
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === language)?.speechLang ||
     "th-TH";
@@ -131,7 +136,7 @@ export default function P6ElectricForceEffectSteps() {
         </section>
 
         {/* LANGUAGE */}
-        <div className="fixed bottom-6 left-6 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
+        <div className="pointer-events-auto fixed bottom-6 left-6 z-20 flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
 
           {LANGUAGE_OPTIONS.map((item) => (
             <button
@@ -142,7 +147,7 @@ export default function P6ElectricForceEffectSteps() {
               }`}
               type="button"
             >
-              {item.label}
+              {langLabels[item.id]}
             </button>
           ))}
 

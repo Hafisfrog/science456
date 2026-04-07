@@ -107,6 +107,11 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
   const speechLang = useMemo(() => SPEECH_LANGUAGES[lang] ?? "th-TH", [lang]);
   const handleSpeak = useCallback((text) => speak(text, speechLang), [speechLang]);
 
@@ -157,7 +162,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
                   key={`${step.title}-${index}`}
                   className="flex items-center gap-4 rounded-[999px] border-[3px] border-slate-900 bg-white px-5 py-3 shadow-[0_18px_28px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                 >
-                  <div className="flex items-center gap-4 flex-1">
+                  <div className="flex flex-1 items-center gap-4">
                     <div className="grid h-[56px] w-[56px] place-items-center rounded-full bg-gradient-to-br from-[#f8d67b] to-[#e3a92a] text-[30px] font-black text-white shadow-[inset_0_-4px_0_rgba(0,0,0,0.16),0_10px_26px_rgba(12,13,71,0.2)]">
                       {index + 1}
                     </div>
@@ -199,36 +204,34 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
           </div>
         </div>
 
-        <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+        <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+          <button
+            onClick={() => setLang("th")}
+            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+              lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            }`}
+          >
+            {langLabels.th}
+          </button>
 
-        <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          ไทย
-        </button>
+          <button
+            onClick={() => setLang("en")}
+            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+              lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            }`}
+          >
+            {langLabels.en}
+          </button>
 
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          English
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          Melayu
-        </button>
-
-      </div>
+          <button
+            onClick={() => setLang("ms")}
+            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+              lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            }`}
+          >
+            {langLabels.ms}
+          </button>
+        </div>
 
         <div className="fixed bottom-3 right-3 z-20 flex gap-3">
           <button
@@ -238,7 +241,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
             aria-label={t.back}
             title={t.back}
           >
-              <span className="text-xl leading-none">&lt;&lt;</span>
+            <span className="text-xl leading-none">&lt;&lt;</span>
             <span>{t.back}</span>
           </button>
           <button
@@ -249,12 +252,10 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
             title={t.next}
           >
             <span>{t.next}</span>
-              <span className="text-xl leading-none">&gt;&gt;</span>
+            <span className="text-xl leading-none">&gt;&gt;</span>
           </button>
         </div>
       </div>
-
-    
     </div>
   );
 }

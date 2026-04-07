@@ -56,6 +56,11 @@ export default function P6ElectricCircuitObjectives() {
   const t = CONTENT[lang];
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || "th-TH";
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
 
   const pageBg = {
     background:
@@ -134,7 +139,7 @@ export default function P6ElectricCircuitObjectives() {
         </section>
       </div>
 
-      <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+      <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
         {LANGUAGE_OPTIONS.map((item) => (
           <button
             key={item.id}
@@ -144,9 +149,10 @@ export default function P6ElectricCircuitObjectives() {
                 ? "bg-[#bae6fd] text-slate-900"
                 : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
             }`}
+            title={langLabels[item.id]}
             type="button"
           >
-            {item.label}
+            {langLabels[item.id]}
           </button>
         ))}
       </div>

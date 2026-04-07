@@ -53,6 +53,11 @@ export default function P6ElectricCircuitExperimentSelect() {
   const t = LANG[lang];
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.voice || "th-TH";
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
 
   const experiments = [
     {
@@ -154,7 +159,7 @@ export default function P6ElectricCircuitExperimentSelect() {
       </div>
 
       {/* Language */}
-    <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+    <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
 
         <button
           onClick={() => setLang("th")}
@@ -162,7 +167,7 @@ export default function P6ElectricCircuitExperimentSelect() {
             lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          ไทย
+          {langLabels.th}
         </button>
 
         <button
@@ -171,7 +176,7 @@ export default function P6ElectricCircuitExperimentSelect() {
             lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          English
+          {langLabels.en}
         </button>
 
         <button
@@ -180,7 +185,7 @@ export default function P6ElectricCircuitExperimentSelect() {
             lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          Melayu
+          {langLabels.ms}
         </button>
 
       </div>

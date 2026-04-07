@@ -219,6 +219,11 @@ export default function P6ElectricForceEffectSim() {
   const [sequenceNotice, setSequenceNotice] = useState("");
   const [trialResults, setTrialResults] = useState({});
   const t = UI_TEXT[language];
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[language];
 
   const activeTrials = useMemo(() => TRIAL_OPTIONS, []);
   const totalTrials = TRIAL_OPTIONS.length;
@@ -413,7 +418,7 @@ export default function P6ElectricForceEffectSim() {
               className={`p6-force-sim-langchip ${language === item.id ? "active" : ""}`}
               onClick={() => setLanguage(item.id)}
             >
-              {item.label}
+              {langLabels[item.id]}
             </button>
           ))}
         </div>

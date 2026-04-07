@@ -5,6 +5,7 @@ const LANG = {
   th: {
     title: "การทดลองที่ 10 เรื่อง ผลของแรงไฟฟ้า",
     equipment: "อุปกรณ์",
+    hint: "แตะอุปกรณ์เพื่อฟังชื่อ",
     balloons: "ลูกโป่งที่เป่าให้พอง 2 ลูก",
     markers: "ปากกาเมจิก 2 ด้าม",
     tissue: "กระดาษเยื่อ",
@@ -34,9 +35,9 @@ const LANG = {
 };
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย", speechLang: "th-TH" },
-  { id: "en", label: "English", speechLang: "en-US" },
-  { id: "ms", label: "Melayu", speechLang: "ms-MY" },
+  { id: "th", speechLang: "th-TH" },
+  { id: "en", speechLang: "en-US" },
+  { id: "ms", speechLang: "ms-MY" },
 ];
 
 const EQUIPMENT_ITEMS = [
@@ -60,9 +61,7 @@ function speakText(text, lang) {
 function EquipmentCard({ item, label, lang }) {
   return (
     <div className="flex w-[clamp(220px,22vw,280px)] shrink-0 flex-col items-center">
-
       <div className="relative flex h-[clamp(190px,24vh,250px)] w-full items-center justify-center rounded-sm border-[4px] border-[#2d356e] bg-[#e1cbab] p-3 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]">
-
         <span className="absolute left-[6px] top-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
         <span className="absolute right-[6px] top-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
         <span className="absolute bottom-[6px] left-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
@@ -75,22 +74,21 @@ function EquipmentCard({ item, label, lang }) {
         />
       </div>
 
-      {/* TEXT + SPEAKER */}
       <div className="mt-3 flex items-center justify-center gap-2">
-
         <p className="text-center text-[clamp(18px,2.2vw,30px)] font-bold text-slate-900">
           {label}
         </p>
 
         <button
           onClick={() => speakText(label, lang)}
-          className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow hover:scale-105 transition"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+          type="button"
+          aria-label={label}
+          title={label}
         >
           🔊
         </button>
-
       </div>
-
     </div>
   );
 }
@@ -100,6 +98,11 @@ export default function P6ElectricForceEffect() {
   const [lang, setLang] = useState("th");
 
   const t = LANG[lang];
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || "th-TH";
 
@@ -122,14 +125,14 @@ export default function P6ElectricForceEffect() {
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="mx-auto flex h-full w-full max-w-[1240px] flex-col">
-
         <h1 className="text-center text-[clamp(34px,4vw,62px)] font-bold">
           {t.title}
         </h1>
 
         <div className="flex flex-1 flex-col pt-[20px]">
-
-          <h2 className="text-[clamp(40px,4.2vw,64px)] font-bold">{t.equipment}</h2>
+          <h2 className="text-[clamp(40px,4.2vw,64px)] font-bold">
+            {t.equipment}
+          </h2>
 
           <p className="mt-2 text-[clamp(16px,1.8vw,24px)] font-bold text-slate-700">
             {t.hint}
@@ -137,7 +140,6 @@ export default function P6ElectricForceEffect() {
 
           <div className="flex flex-1 items-center justify-center">
             <div className="flex w-full max-w-[1020px] justify-center gap-[40px]">
-
               {EQUIPMENT_ITEMS.map((item) => (
                 <EquipmentCard
                   key={item.id}
@@ -146,66 +148,69 @@ export default function P6ElectricForceEffect() {
                   lang={speechLang}
                 />
               ))}
-
             </div>
           </div>
-
         </div>
 
-        {/* LANGUAGE BUTTONS */}
-       <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+        <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+          <button
+            onClick={() => setLang("th")}
+            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+              lang === "th"
+                ? "bg-[#bae6fd] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            }`}
+            type="button"
+          >
+            {langLabels.th}
+          </button>
 
-        <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          ไทย
-        </button>
+          <button
+            onClick={() => setLang("en")}
+            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+              lang === "en"
+                ? "bg-[#bae6fd] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            }`}
+            type="button"
+          >
+            {langLabels.en}
+          </button>
 
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          English
-        </button>
+          <button
+            onClick={() => setLang("ms")}
+            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+              lang === "ms"
+                ? "bg-[#bae6fd] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            }`}
+            type="button"
+          >
+            {langLabels.ms}
+          </button>
+        </div>
 
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          Melayu
-        </button>
-
-      </div>
-
-        {/* NAVIGATION */}
         <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3">
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
+            className="inline-flex items-center justify-center gap-3 rounded-[22px] bg-white px-5 py-3.5 text-slate-900 shadow"
             onClick={() => navigate("/p6/electric-force/experiments")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-[22px] leading-none">&lt;&lt;</span>
-            <span className="text-sm font-black leading-none">{t.back}</span>
+            <span className="text-[24px] leading-none">&lt;&lt;</span>
+            <span className="text-base font-black leading-none">{t.back}</span>
           </button>
 
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+            className="inline-flex items-center justify-center gap-3 rounded-[22px] bg-blue-600 px-5 py-3.5 text-white shadow"
             onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            <span className="text-sm font-black leading-none">{t.next}</span>
-            <span className="text-[22px] leading-none">&gt;&gt;</span>
+            <span className="text-base font-black leading-none">{t.next}</span>
+            <span className="text-[24px] leading-none">&gt;&gt;</span>
           </button>
         </div>
       </div>

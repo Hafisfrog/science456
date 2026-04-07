@@ -123,6 +123,11 @@ export default function P6ElectricGenerationSummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = UI_TEXT[lang] || UI_TEXT.th;
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
   const completedCount = readCompletedTrials().length;
   const allTrialsCompleted = completedCount === 3;
   const summaryRows = [RESULTS[1], RESULTS[2], RESULTS[3]];
@@ -241,7 +246,7 @@ export default function P6ElectricGenerationSummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 flex items-center gap-[10px] rounded-[18px] bg-white/90 p-[10px_12px] shadow-[0_10px_22px_rgba(0,0,0,.12)] max-[640px]:gap-2 max-[640px]:p-[10px]">
+      <div className="pointer-events-auto fixed bottom-6 left-6 z-20 flex items-center gap-[10px] rounded-[18px] bg-white/90 p-[10px_12px] shadow-[0_10px_22px_rgba(0,0,0,.12)] max-[640px]:gap-2 max-[640px]:p-[10px]">
         {LANGUAGE_OPTIONS.map((option) => (
           <button
             key={option.id}
@@ -253,7 +258,7 @@ export default function P6ElectricGenerationSummary() {
             type="button"
             onClick={() => setLang(option.id)}
           >
-            {option.label}
+            {option.id === "th" ? langLabels.th : option.id === "en" ? langLabels.en : langLabels.ms}
           </button>
         ))}
       </div>

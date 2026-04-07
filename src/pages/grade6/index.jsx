@@ -67,6 +67,11 @@ export default function Grade6() {
   const [language, setLanguage] = useState("th");
   const backPath = "/p6/electric-force/vocab";
   const copy = PAGE_COPY[language];
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[language];
 
   const pageBg = {
     background:
@@ -140,9 +145,9 @@ export default function Grade6() {
                 onClick={() => setLanguage(option.key)}
                 className={grade6LangButtonClass(isActive)}
                 aria-pressed={isActive}
-                title={option.label}
+                title={option.key === "th" ? langLabels.th : option.key === "en" ? langLabels.en : langLabels.ms}
               >
-                {option.label}
+                {option.key === "th" ? langLabels.th : option.key === "en" ? langLabels.en : langLabels.ms}
               </button>
             );
           })}

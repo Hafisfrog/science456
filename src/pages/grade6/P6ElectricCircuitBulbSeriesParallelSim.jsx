@@ -233,6 +233,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
   const [parallelRemoved, setParallelRemoved] = useState(false);
   const [mode, setMode] = useState("parallel");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const langLabels = t.lang;
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, []);
@@ -332,7 +333,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
           </div>
         </div>
 
-        <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+        <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
 
         <button
           onClick={() => setLang("th")}
@@ -340,7 +341,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
             lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          ไทย
+          {langLabels.th}
         </button>
 
         <button
@@ -349,7 +350,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
             lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          English
+          {langLabels.en}
         </button>
 
         <button
@@ -358,7 +359,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
             lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          Melayu
+          {langLabels.ms}
         </button>
 
       </div>

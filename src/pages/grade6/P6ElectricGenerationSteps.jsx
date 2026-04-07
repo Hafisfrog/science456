@@ -2,9 +2,9 @@ import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const LANGS = [
-  { id: "th", label: "ไทย", voice: "th-TH" },
-  { id: "en", label: "English", voice: "en-US" },
-  { id: "ms", label: "Melayu", voice: "ms-MY" },
+  { id: "th", voice: "th-TH" },
+  { id: "en", voice: "en-US" },
+  { id: "ms", voice: "ms-MY" },
 ];
 
 const TEXT = {
@@ -75,18 +75,8 @@ function SpeakerIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-5 w-5">
       <path d="M4 9H8L13 5V19L8 15H4V9Z" fill="currentColor" />
-      <path
-        d="M16 9C17.3 10.1 17.3 13.9 16 15"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-      <path
-        d="M18.5 7C20.8 9.2 20.8 14.8 18.5 17"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <path d="M16 9C17.3 10.1 17.3 13.9 16 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path d="M18.5 7C20.8 9.2 20.8 14.8 18.5 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -98,9 +88,7 @@ function StepPill({ no, text, onSpeak, children }) {
         {no}
       </span>
       <div className="flex-1">
-        <div className="text-[clamp(20px,2vw,32px)] font-bold leading-tight text-slate-900">
-          {text}
-        </div>
+        <div className="text-[clamp(20px,2vw,32px)] font-bold leading-tight text-slate-900">{text}</div>
         {children}
       </div>
       <button
@@ -122,11 +110,14 @@ export default function P6ElectricGenerationSteps() {
   const [lang, setLang] = useState("th");
 
   const content = TEXT[lang];
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
   const voice = LANGS.find((item) => item.id === lang)?.voice || "th-TH";
-  const backLabel =
-    lang === "th" ? "ย้อนกลับ" : lang === "en" ? "Back" : "Kembali";
-  const nextLabel =
-    lang === "th" ? "ทดลอง" : lang === "en" ? "Experiment" : "Eksperimen";
+  const backLabel = lang === "th" ? "ย้อนกลับ" : lang === "en" ? "Back" : "Kembali";
+  const nextLabel = lang === "th" ? "ทดลอง" : lang === "en" ? "Experiment" : "Eksperimen";
 
   const from = searchParams.get("from");
   const materialsPath =
@@ -167,18 +158,16 @@ export default function P6ElectricGenerationSteps() {
             <StepPill no={3} text={content.steps[2]} onSpeak={() => speakText(content.steps[2], voice)} />
           </div>
         </section>
-
       </div>
 
-     <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
+      <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
         <button
           onClick={() => setLang("th")}
           className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
             lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          ไทย
+          {langLabels.th}
         </button>
 
         <button
@@ -187,7 +176,7 @@ export default function P6ElectricGenerationSteps() {
             lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          English
+          {langLabels.en}
         </button>
 
         <button
@@ -196,9 +185,8 @@ export default function P6ElectricGenerationSteps() {
             lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          Melayu
+          {langLabels.ms}
         </button>
-
       </div>
 
       <div className="fixed bottom-3 right-3 z-40 flex items-center gap-3 md:bottom-6 md:right-6">

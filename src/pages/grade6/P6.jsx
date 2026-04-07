@@ -58,6 +58,12 @@ export default function P6() {
     ms: "Kembali",
   }[lang];
 
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
+
   return (
     <div
       className="relative h-[100svh] overflow-hidden px-4 pb-6 pt-7 text-center md:px-6 md:pt-8"
@@ -139,7 +145,7 @@ export default function P6() {
             lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          ไทย
+          {langLabels.th}
         </button>
 
         <button
@@ -148,7 +154,7 @@ export default function P6() {
             lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          English
+          {langLabels.en}
         </button>
 
         <button
@@ -157,7 +163,7 @@ export default function P6() {
             lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          Melayu
+          {langLabels.ms}
         </button>
 
       </div>
@@ -166,13 +172,14 @@ export default function P6() {
       <div className="fixed bottom-3 right-3 z-20 flex gap-3 md:bottom-6 md:right-6">
 
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow-lg"
+          className="inline-flex items-center justify-center gap-3 rounded-[22px] bg-white px-6 py-4 text-slate-700 shadow-lg"
           onClick={() => navigate("/grades")}
           type="button"
           aria-label={backLabel}
           title={backLabel}
         >
-          <span className="text-sm font-bold leading-none">{backLabel}</span>
+          <span className="text-[22px] font-black leading-none">&lt;&lt;</span>
+          <span className="text-[18px] font-bold leading-none md:text-[20px]">{backLabel}</span>
         </button>
 
       </div>

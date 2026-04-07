@@ -5,12 +5,11 @@ const TEXT = {
   th: {
     title: "สรุปผลการทดลอง",
     summaryLines: [
-      "เมื่อขัดลูกโป่งทั้ง 2 ใบด้วยกระดาษเช็ด ลูกโป่งทั้งสองจะมีประจุชนิดเดียวกัน เมื่อนำมาเข้าใกล้กันจึงเกิดแรงผลักกัน",
+      "เมื่อลูกโป่งทั้ง 2 ใบถูกขัดด้วยกระดาษเช็ด ลูกโป่งทั้งสองจะมีประจุชนิดเดียวกัน เมื่อนำมาเข้าใกล้กันจึงเกิดแรงผลักกัน",
       "เมื่อขัดลูกโป่งเพียง 1 ใบ อีกใบไม่ได้ถู จะเกิดการเหนี่ยวนำประจุ เมื่อนำมาเข้าใกล้กันจึงเกิดแรงดึงดูดกัน",
     ],
     back: "ย้อนกลับ",
     next: "สรุป",
-    lang: { th: "ไทย", en: "English", ms: "Melayu" },
   },
   en: {
     title: "Experiment Summary",
@@ -20,7 +19,6 @@ const TEXT = {
     ],
     back: "Back",
     next: "Summary",
-    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     title: "Ringkasan Eksperimen",
@@ -30,43 +28,39 @@ const TEXT = {
     ],
     back: "Kembali",
     next: "Ringkasan",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
-
-function LanguagePills({ lang, setLang, labels }) {
-  const pills = [
-    { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
-    { code: "ms", label: labels.ms },
-  ];
-
-  return (
-    <div className="flex gap-3 rounded-2xl bg-white p-2 shadow-lg">
-      {pills.map((p) => (
-        <button
-          key={p.code}
-          type="button"
-          onClick={() => setLang(p.code)}
-          className={`rounded-xl px-4 py-2 font-bold ${
-            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100"
-          }`}
-        >
-          {p.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 export default function P6ElectricGenerationKeySummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
-  const visualTitle = lang === "th" ? "ภาพประกอบการทดลอง" : lang === "ms" ? "Ilustrasi Eksperimen" : "Experiment Illustration";
-  const level0Label = lang === "th" ? "ไม่ถู (0 นาที): ยังไม่ดูดเศษกระดาษ" : lang === "ms" ? "Tidak digosok (0 min): belum menarik kertas" : "No rub (0 min): no visible paper attraction";
-  const level2Label = lang === "th" ? "ถู 2 นาที: ดูดเศษกระดาษเล็กน้อย" : lang === "ms" ? "Gosok 2 minit: menarik sedikit" : "Rub 2 min: slight attraction";
-  const level5Label = lang === "th" ? "ถู 5 นาที: ดูดเศษกระดาษมากขึ้น" : lang === "ms" ? "Gosok 5 minit: menarik lebih banyak" : "Rub 5 min: stronger attraction";
+  const langLabels = {
+    th: { th: "ไทย", en: "English", ms: "Melayu" },
+    en: { th: "Thai", en: "English", ms: "Melayu" },
+    ms: { th: "Thai", en: "English", ms: "Melayu" },
+  }[lang];
+
+  const visualTitle =
+    lang === "th" ? "ภาพประกอบการทดลอง" : lang === "ms" ? "Ilustrasi Eksperimen" : "Experiment Illustration";
+  const level0Label =
+    lang === "th"
+      ? "ไม่ถู (0 นาที): ยังไม่ดูดเศษกระดาษ"
+      : lang === "ms"
+        ? "Tidak digosok (0 min): belum menarik kertas"
+        : "No rub (0 min): no visible paper attraction";
+  const level2Label =
+    lang === "th"
+      ? "ถู 2 นาที: ดูดเศษกระดาษเล็กน้อย"
+      : lang === "ms"
+        ? "Gosok 2 minit: menarik sedikit"
+        : "Rub 2 min: slight attraction";
+  const level5Label =
+    lang === "th"
+      ? "ถู 5 นาที: ดูดเศษกระดาษมากขึ้น"
+      : lang === "ms"
+        ? "Gosok 5 minit: menarik lebih banyak"
+        : "Rub 5 min: stronger attraction";
 
   return (
     <div
@@ -79,9 +73,7 @@ export default function P6ElectricGenerationKeySummary() {
     >
       <div className="relative z-[1] mx-auto flex w-full max-w-[1200px] flex-col gap-4">
         <div className="relative overflow-hidden rounded-[26px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(22px,3vw,34px)] shadow-[0_18px_30px_rgba(17,24,39,0.14)]">
-          <h1 className="m-0 text-[clamp(28px,3.2vw,40px)] font-black text-slate-900">
-            {t.title}
-          </h1>
+          <h1 className="m-0 text-[clamp(28px,3.2vw,40px)] font-black text-slate-900">{t.title}</h1>
 
           <div className="mt-4 grid gap-4 text-[clamp(16px,1.6vw,18px)] font-semibold leading-[1.7] text-slate-900">
             {(t.summaryLines || []).map((line, idx) => (
@@ -127,15 +119,14 @@ export default function P6ElectricGenerationKeySummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-3 left-3 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
+      <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
         <button
           onClick={() => setLang("th")}
           className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
             lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          ไทย
+          {langLabels.th}
         </button>
 
         <button
@@ -144,7 +135,7 @@ export default function P6ElectricGenerationKeySummary() {
             lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          English
+          {langLabels.en}
         </button>
 
         <button
@@ -153,9 +144,8 @@ export default function P6ElectricGenerationKeySummary() {
             lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
           }`}
         >
-          Melayu
+          {langLabels.ms}
         </button>
-
       </div>
 
       <div className="pointer-events-auto fixed bottom-6 right-6 z-20 flex gap-3">
