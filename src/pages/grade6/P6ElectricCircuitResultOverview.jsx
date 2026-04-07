@@ -2,9 +2,9 @@
 import { useNavigate } from "react-router-dom";
 
 const DEVICE_MEDIA = {
-  holder: {
-    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
-    fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
+  cell: {
+    image: "/images/p6/tanfaichai.jpg",
+    fallbackImage: "/images/p6/electric-circuit/batteries.svg",
   },
   bulb: {
     image: "/images/p6/electric-circuit/bulb-base-photo.webp",
@@ -94,24 +94,37 @@ function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
 
 function CircuitThumb({ cells }) {
   const glow = cells === 1 ? 0.28 : cells === 2 ? 0.5 : cells === 3 ? 0.72 : 0.95;
+  const wireStartX = 96;
+  const wireGap = 6;
+  const cellWidth = 20;
+  const cellGap = 2;
+  const cellsWidth = cells * cellWidth + Math.max(0, cells - 1) * cellGap;
+  const cellsLeft = wireStartX - wireGap - cellsWidth;
   return (
     <div className="relative h-[98px] w-[340px]">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 340 98" aria-hidden="true">
-        <path d="M96 52 C 126 52, 152 51, 174 50" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" />
+        <path d={`M${wireStartX} 52 C 126 52, 152 51, 174 50`} stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" />
         <path d="M196 50 C 218 50, 238 50, 258 50" stroke="#2563eb" strokeWidth="4" fill="none" strokeLinecap="round" />
       </svg>
 
-      <div className="absolute left-[6px] top-[20px] h-[62px] w-[142px]">
-        <div className="relative h-full w-full">
-          <EquipmentImage
-            src={DEVICE_MEDIA.holder.image}
-            fallbackSrc={DEVICE_MEDIA.holder.fallbackImage}
-            alt="battery holder"
-            className="h-full w-full object-contain"
-          />
-        </div>
+      <div
+        className="absolute top-[22px] flex h-[62px] items-end gap-0.5"
+        style={{ left: `${cellsLeft}px`, width: `${cellsWidth}px` }}
+      >
+        {Array.from({ length: cells }).map((_, idx) => (
+          <div
+            key={`result-cell-${cells}-${idx}`}
+            className="h-[54px] w-[20px] overflow-hidden rounded-[5px] border border-slate-300 bg-white/80"
+          >
+            <EquipmentImage
+              src={DEVICE_MEDIA.cell.image}
+              fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
+              alt={`battery ${idx + 1}`}
+              className="h-full w-full object-cover object-center mix-blend-multiply"
+            />
+          </div>
+        ))}
       </div>
-
       <div className="absolute left-[158px] top-[20px] h-[62px] w-[52px]">
         <EquipmentImage
           src={DEVICE_MEDIA.switch.image}
@@ -219,7 +232,20 @@ export default function P6ElectricCircuitResultOverview() {
                               aria-label={t.listen}
                               title={t.listen}
                             >
-                              <span aria-hidden="true">🔊</span>
+                              <svg
+                                aria-hidden="true"
+                                viewBox="0 0 24 24"
+                                className="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M11 5L6 9H3v6h3l5 4V5z" />
+                                <path d="M15 9.5a4 4 0 010 5" />
+                                <path d="M17.8 7a7.5 7.5 0 010 10" />
+                              </svg>
                             </button>
                           </div>
                         </td>
@@ -290,6 +316,7 @@ export default function P6ElectricCircuitResultOverview() {
     </div>
   );
 }
+
 
 
 

@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 const EQUIPMENT_MEDIA = {
   cell: {
-    image: "/images/p6/electric-circuit/battery-photo.webp",
+    image: "/images/p6/tanfaichai.jpg",
     fallbackImage: "/images/p6/electric-circuit/batteries.svg",
-    imageClassName: "max-w-[116px] min-[1400px]:max-w-[126px]",
+    imageClassName: "max-w-[56px] min-[1400px]:max-w-[62px]",
   },
   wire: {
     image: "/images/p6/electric-circuit/wire-clips-photo.webp",
@@ -106,6 +106,8 @@ function handleEquipmentImageError(event, fallbackImage, onImageError) {
 }
 
 function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
+  const isCell = item.id === "cell";
+
   return (
     <div className="group flex h-full w-full flex-col items-center gap-3 rounded-[28px] border-[3px] border-white/80 bg-white/95 px-4 py-5 text-center shadow-[0_16px_28px_rgba(15,23,42,0.14)] transition-transform duration-200 hover:-translate-y-1">
 
@@ -115,19 +117,44 @@ function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
             Image unavailable
           </div>
         ) : (
-          <img
-            src={item.image}
-            alt={item.title}
-            data-fallback-applied="false"
-            className={`h-auto max-h-[102px] w-full object-contain ${item.imageClassName}`}
-            onError={(event) =>
-              handleEquipmentImageError(
-                event,
-                item.fallbackImage,
-                onImageError
-              )
-            }
-          />
+          isCell ? (
+            <div className="flex items-end justify-center gap-0">
+              {[0, 1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  className="-mx-[1px] h-[64px] w-[24px] overflow-hidden rounded-[5px]"
+                >
+                  <img
+                    src={item.image}
+                    alt={`${item.title} ${index + 1}`}
+                    data-fallback-applied="false"
+                    className="h-[64px] w-[24px] object-cover object-center mix-blend-multiply"
+                    onError={(event) =>
+                      handleEquipmentImageError(
+                        event,
+                        item.fallbackImage,
+                        onImageError
+                      )
+                    }
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <img
+              src={item.image}
+              alt={item.title}
+              data-fallback-applied="false"
+              className={`h-auto max-h-[102px] w-full object-contain ${item.imageClassName}`}
+              onError={(event) =>
+                handleEquipmentImageError(
+                  event,
+                  item.fallbackImage,
+                  onImageError
+                )
+              }
+            />
+          )
         )}
       </div>
 

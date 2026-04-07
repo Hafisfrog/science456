@@ -434,6 +434,12 @@ export default function P6ElectricGenerationSim() {
     selectedTrial && (isTesting || completedTrials.includes(selectedTrial)),
   );
   const canSkip = Boolean(selectedTrial && durationSeconds > 0 && !isTesting);
+  const rubbingSpeedClass =
+    selectedTrial === "trial-3"
+      ? "p6-gen-rub-fastest"
+      : selectedTrial === "trial-2"
+        ? "p6-gen-rub-fast"
+        : "";
 
   const markTrialCompleted = () => {
     if (!selectedTrial) return;
@@ -676,17 +682,29 @@ export default function P6ElectricGenerationSim() {
 
           <div className="p6-force-sim-balloons p6-gen-balloons absolute bottom-[-20%] left-1/2 z-[3] w-full -translate-x-1/2">
             <div
-              className="p6-force-sim-balloon left"
+              className="p6-force-sim-balloon left p6-gen-balloon-tuned"
               style={{ "--base": "0px", "--shift": "0px" }}
               aria-label="balloon"
             >
               {isRubbing && (
-                <div className="p6-force-sim-rub rub-left" aria-hidden="true">
+                <div className={`p6-force-sim-rub rub-left ${rubbingSpeedClass}`} aria-hidden="true">
                   <div className="p6-force-sim-tissue" />
                 </div>
               )}
             </div>
           </div>
+
+          {selectedTrial !== "trial-1" && (
+            <img
+              className={`pointer-events-none absolute z-[5] h-[300px] w-auto transition-all duration-300 ${
+                isRubbing
+                  ? "bottom-[13%] right-[16%] opacity-100"
+                  : "bottom-[9%] right-[7%] opacity-90"
+              }`}
+              src="/images/p4/exp1/character-boy.png"
+              alt="นักเรียนกำลังถูลูกโป่ง"
+            />
+          )}
 
           {started && isTesting && trialLevel !== "none" && (
             <div
@@ -743,11 +761,6 @@ export default function P6ElectricGenerationSim() {
           <div className="w-full rounded-[18px] border border-slate-200/80 bg-slate-50 px-4 py-4 text-center text-[16px] font-black text-slate-900 shadow-[0_10px_18px_rgba(15,23,42,0.12)]">
             {t.timer}: {formatTime(remaining)}
           </div>
-          <img
-            className="h-[240px] w-auto"
-            src="/images/p4/exp1/character-boy.png"
-            alt="นักเรียน"
-          />
 
           <div className="mt-auto flex flex-wrap items-center justify-center gap-3">
             <button
@@ -963,6 +976,18 @@ export default function P6ElectricGenerationSim() {
           @keyframes p6-cloth-rub {
             0%, 100% { transform: translateX(-50%) rotate(-12deg); }
             50% { transform: translateX(calc(-50% + 10px)) translateY(2px) rotate(0deg); }
+          }
+          .p6-force-sim-rub.p6-gen-rub-fast .p6-force-sim-tissue {
+            animation-duration: 0.12s !important;
+          }
+          .p6-force-sim-rub.p6-gen-rub-fastest .p6-force-sim-tissue {
+            animation-duration: 0.09s !important;
+          }
+          .p6-gen-balloons .p6-force-sim-balloon.p6-gen-balloon-tuned {
+            width: clamp(156px, 17vw, 226px) !important;
+          }
+          .p6-gen-balloons .p6-force-sim-balloon.left.p6-gen-balloon-tuned {
+            --base: -160px;
           }
         `}</style>
       </div>

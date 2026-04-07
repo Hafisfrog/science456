@@ -18,15 +18,16 @@ const TEXT = {
   th: {
     badge: "ไฟฟ้ารอบตัวคุณ",
     title: "จำลองการต่อหลอดไฟแบบอนุกรมและขนาน",
-    previewLabel: "ตัวอย่าง",
-    trialLabel: "ทดลอง",
+    previewLabel: "ภาพอ้างอิง (แก้ไม่ได้)",
+    trialLabel: "พื้นที่ทดลอง (กดได้)",
+    steps: "วิธีใช้: 1) ดูภาพอ้างอิง 2) กดหลอดไฟในพื้นที่ทดลอง 3) ดูผลตอนนี้",
     series: {
-      heading: "ต่อแบบขนาน",
+      heading: "ต่อแบบอนุกรม",
       on: "วงจรปิด -> ทั้งสองหลอดสว่าง",
       off: "ถอดหลอดหนึ่งดวง -> วงจรเปิด ทั้งสองหลอดดับ",
     },
     parallel: {
-      heading: "ต่อแบบอนุกรม",
+      heading: "ต่อแบบขนาน",
       on: "วงจรปิด -> ทั้งสองหลอดสว่าง",
       oneOn: "ถอดหลอดหนึ่งดวง -> อีกหลอดยังสว่าง เพราะยังมีทางเดินกระแส",
     },
@@ -37,8 +38,9 @@ const TEXT = {
   en: {
     badge: "Electricity Around You",
     title: "Simulate Series and Parallel Bulb Circuits",
-    previewLabel: "Example",
-    trialLabel: "Try It",
+    previewLabel: "Reference (read-only)",
+    trialLabel: "Practice area (interactive)",
+    steps: "How to use: 1) See reference 2) Tap bulb in practice area 3) Read current result",
     series: {
       heading: "Series connection",
       on: "Circuit closed -> both bulbs light up",
@@ -56,8 +58,9 @@ const TEXT = {
   ms: {
     badge: "Litar elektrik dekat kita",
     title: "Simulasi sambungan mentol siri dan selari",
-    previewLabel: "Contoh",
-    trialLabel: "Uji",
+    previewLabel: "Rujukan (tidak boleh ubah)",
+    trialLabel: "Ruang uji (boleh tekan)",
+    steps: "Cara guna: 1) Lihat rujukan 2) Tekan mentol di ruang uji 3) Lihat hasil semasa",
     series: {
       heading: "Sambungan siri",
       on: "Litar tertutup -> kedua-dua mentol menyala",
@@ -136,6 +139,16 @@ function BulbNode({ isOn, onToggle, clickable = true }) {
   );
 }
 
+function WirePath({ d }) {
+  return (
+    <>
+      <path d={d} fill="none" stroke="rgba(2, 6, 23, 0.26)" strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="#0f172a" strokeWidth={8} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="rgba(148, 163, 184, 0.55)" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" />
+    </>
+  );
+}
+
 function SeriesCircuit({ removed, onToggle, interactive = true }) {
   const bulbOn = !removed;
   return (
@@ -144,10 +157,10 @@ function SeriesCircuit({ removed, onToggle, interactive = true }) {
       aria-label="Series circuit"
     >
       <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-hidden="true">
-        <path d="M116 66 H142" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
-        <path d="M174 66 H206" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
-        <path d="M238 66 H264 V128 H236" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M186 128 H116 V66" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
+        <WirePath d="M116 66 H142" />
+        <WirePath d="M174 66 H206" />
+        <WirePath d="M238 66 H264 V128 H236" />
+        <WirePath d="M186 128 H116 V66" />
       </svg>
       <div className="p6-circuit-bsp-sim-holder p6-circuit-bsp-sim-holder-s">
         <EquipmentImage
@@ -176,9 +189,9 @@ function ParallelCircuit({ removed, onToggle, interactive = true }) {
       aria-label="Parallel circuit"
     >
       <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-hidden="true">
-        <path d="M116 74 H264 V134 H116 Z" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M190 74 V92" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
-        <path d="M190 112 V134" fill="none" stroke="#0f172a" strokeWidth={6} strokeLinecap="round" />
+        <WirePath d="M116 74 H264 V134 H116 Z" />
+        <WirePath d="M190 74 V92" />
+        <WirePath d="M190 112 V134" />
       </svg>
       <div className="p6-circuit-bsp-sim-holder p6-circuit-bsp-sim-holder-p">
         <EquipmentImage
@@ -218,6 +231,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
   const [lang, setLang] = useState("th");
   const [seriesRemoved, setSeriesRemoved] = useState(false);
   const [parallelRemoved, setParallelRemoved] = useState(false);
+  const [mode, setMode] = useState("parallel");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -227,6 +241,16 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
     background:
       "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
   };
+
+  const isParallelMode = mode === "parallel";
+  const heading = isParallelMode ? t.parallel.heading : t.series.heading;
+  const resultText = isParallelMode
+    ? parallelRemoved
+      ? t.parallel.oneOn
+      : t.parallel.on
+    : seriesRemoved
+      ? t.series.off
+      : t.series.on;
 
   return (
     <div
@@ -255,40 +279,51 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
         <div className="p6-circuit-bsp-sim-center">
           <div className="p6-circuit-bsp-sim-inner">
             <div className="p6-circuit-bsp-sim-table">
-              <div className="p6-circuit-bsp-sim-head">{t.series.heading}</div>
-              <div className="p6-circuit-bsp-sim-cell">
-                <DualPanel
-                  leftTitle={t.previewLabel}
-                  rightTitle={t.trialLabel}
-                  leftBody={
-                    <>
-                      <SeriesCircuit removed={false} onToggle={() => {}} interactive={false} />
-                      <div className="p6-circuit-bsp-sim-status">{t.series.on}</div>
-                    </>
-                  }
-                  rightBody={
-                    <>
-                      <SeriesCircuit removed={seriesRemoved} onToggle={() => setSeriesRemoved((v) => !v)} />
-                      <div className="p6-circuit-bsp-sim-status">{seriesRemoved ? t.series.off : t.series.on}</div>
-                    </>
-                  }
-                />
+              <div className="p6-circuit-bsp-sim-mode-tabs">
+                <button
+                  type="button"
+                  className={`p6-circuit-bsp-sim-mode-tab ${isParallelMode ? "is-active is-parallel" : ""}`}
+                  onClick={() => setMode("parallel")}
+                >
+                  {t.parallel.heading}
+                </button>
+                <button
+                  type="button"
+                  className={`p6-circuit-bsp-sim-mode-tab ${!isParallelMode ? "is-active is-series" : ""}`}
+                  onClick={() => setMode("series")}
+                >
+                  {t.series.heading}
+                </button>
               </div>
-              <div className="p6-circuit-bsp-sim-head">{t.parallel.heading}</div>
+
+              <div className={`p6-circuit-bsp-sim-head ${isParallelMode ? "is-parallel" : "is-series"}`}>{heading}</div>
               <div className="p6-circuit-bsp-sim-cell">
+                <div className="p6-circuit-bsp-sim-steps">{t.steps}</div>
                 <DualPanel
                   leftTitle={t.previewLabel}
                   rightTitle={t.trialLabel}
                   leftBody={
                     <>
-                      <ParallelCircuit removed={false} onToggle={() => {}} interactive={false} />
-                      <div className="p6-circuit-bsp-sim-status">{t.parallel.on}</div>
+                      {isParallelMode ? (
+                        <ParallelCircuit removed={false} onToggle={() => {}} interactive={false} />
+                      ) : (
+                        <SeriesCircuit removed={false} onToggle={() => {}} interactive={false} />
+                      )}
+                      <div className="p6-circuit-bsp-sim-status">
+                        {isParallelMode ? t.parallel.on : t.series.on}
+                      </div>
                     </>
                   }
                   rightBody={
                     <>
-                      <ParallelCircuit removed={parallelRemoved} onToggle={() => setParallelRemoved((v) => !v)} />
-                      <div className="p6-circuit-bsp-sim-status">{parallelRemoved ? t.parallel.oneOn : t.parallel.on}</div>
+                      {isParallelMode ? (
+                        <ParallelCircuit removed={parallelRemoved} onToggle={() => setParallelRemoved((v) => !v)} />
+                      ) : (
+                        <SeriesCircuit removed={seriesRemoved} onToggle={() => setSeriesRemoved((v) => !v)} />
+                      )}
+                      <div className={`p6-circuit-bsp-sim-status is-result ${isParallelMode ? "is-parallel" : "is-series"}`}>
+                        {resultText}
+                      </div>
                     </>
                   }
                 />
@@ -329,7 +364,10 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
       </div>
 
         <div className="p6-circuit-bsp-sim-side p6-circuit-bsp-sim-side-right">
-          <div className="p6-circuit-bsp-sim-bubble">{t.title}</div>
+          <div className="p6-circuit-bsp-sim-bubble">
+            <div>{heading}</div>
+            <div className="mt-1 text-[13px] font-extrabold">{t.steps}</div>
+          </div>
           <img
             className="p6-circuit-bsp-sim-character"
             src="/images/p4/exp1/character-boy.png"

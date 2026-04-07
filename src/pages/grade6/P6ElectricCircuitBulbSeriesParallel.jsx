@@ -65,7 +65,7 @@ const EQUIPMENT = ["cell", "wire", "holder", "bulb"];
 
 const EQUIPMENT_MEDIA = {
   cell: {
-    image: "/images/p6/electric-circuit/battery-photo.webp",
+    image: "/images/p6/tanfaichai.jpg",
     fallbackImage: "/images/p6/electric-circuit/batteries.svg",
     imageClassName: "max-w-[116px] min-[1400px]:max-w-[126px]",
   },

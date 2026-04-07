@@ -144,14 +144,14 @@ export default function P6ElectricGenerationSummary() {
           "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
       }}
     >
-      <div className="relative isolate w-[min(1200px,96vw)] p-[clamp(18px,4vw,36px)]">
-        <div className="relative z-10 pb-[140px]">
-          <h1 className="mb-[18px] mt-0 text-center text-[clamp(26px,3vw,34px)] font-black text-slate-900">
+      <div className="relative isolate w-[min(1240px,97vw)] p-[clamp(16px,3vw,30px)]">
+        <div className="relative z-10 pb-[112px]">
+          <h1 className="mb-[14px] mt-0 text-center text-[clamp(30px,3.2vw,44px)] font-black text-slate-900">
             {t.title}
           </h1>
 
-          <div className="overflow-hidden rounded-[20px] border border-slate-400/45 bg-white shadow-[0_16px_30px_rgba(17,24,39,0.12)]">
-            <div className="grid grid-cols-1 items-center bg-[#fdeaa1] px-[10px] py-[14px] text-center text-base font-black text-slate-900 md:grid-cols-[1.1fr_1.2fr_0.8fr_1.6fr]">
+          <div className="overflow-hidden rounded-[24px] border border-slate-400/45 bg-white shadow-[0_20px_36px_rgba(17,24,39,0.14)]">
+            <div className="grid grid-cols-1 items-center bg-[#fdeaa1] px-[12px] py-[14px] text-center text-[clamp(20px,1.15vw,28px)] font-black text-slate-900 md:grid-cols-[1.1fr_1.2fr_0.8fr_1.6fr]">
               <div>{t.object}</div>
               <div>{t.outcome}</div>
               <div>{t.time}</div>
@@ -162,19 +162,19 @@ export default function P6ElectricGenerationSummary() {
               const paperCount = row.intensity === "high" ? 5 : row.intensity === "mid" ? 3 : 0;
               return (
                 <div
-                  className="grid grid-cols-1 gap-[10px] px-3 py-[18px] text-base font-bold text-slate-900 md:grid-cols-[1.1fr_1.2fr_0.8fr_1.6fr] md:items-center"
+                  className="grid grid-cols-1 gap-[10px] px-4 py-[14px] text-[clamp(18px,1.05vw,26px)] font-bold text-slate-900 md:grid-cols-[1.1fr_1.2fr_0.8fr_1.6fr] md:items-center"
                   key={`row-${index + 1}`}
                 >
-                  <div className="flex items-center gap-3 pl-[10px] md:justify-start">
+                  <div className="flex items-center gap-4 pl-[10px] md:justify-start">
                     <div
-                      className="relative h-[42px] w-[42px] rounded-full"
+                      className="relative h-[52px] w-[52px] rounded-full"
                       style={{
                         background:
                           "radial-gradient(circle at 30% 30%, #ffd7b0 0%, #f3a86e 45%, #e18a54 100%)",
                         boxShadow: "inset -5px -8px 12px rgba(102, 52, 25, 0.35)",
                       }}
                     >
-                      <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-[#e18a54]" />
+                      <span className="absolute bottom-[5px] right-[5px] h-[10px] w-[10px] rounded-full bg-[#e18a54]" />
                     </div>
                     <div>{t.balloonPaper}</div>
                   </div>
@@ -182,9 +182,9 @@ export default function P6ElectricGenerationSummary() {
                   <div className="text-center">{row.outcome[lang] || row.outcome.th}</div>
                   <div className="text-center">{row.time}</div>
 
-                  <div className="relative grid h-[90px] place-items-center">
+                  <div className="relative grid h-[92px] place-items-center">
                     <div
-                      className="relative h-[58px] w-[58px] rounded-full"
+                      className="relative h-[66px] w-[66px] rounded-full"
                       style={{
                         background:
                           "radial-gradient(circle at 30% 25%, #ffd3d3, #ea3b3b 45%, #b91c1c 74%, #7f1d1d)",
@@ -193,12 +193,12 @@ export default function P6ElectricGenerationSummary() {
                       }}
                     >
                       <span className="absolute inset-[10%] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.6),transparent_60%)]" />
-                      <span className="absolute -top-[6px] left-1/2 h-[10px] w-[10px] -translate-x-1/2 rounded-[4px] bg-[#991b1b] shadow-[0_4px_8px_rgba(15,23,42,0.2)]" />
+                      <span className="absolute -top-[7px] left-1/2 h-[11px] w-[11px] -translate-x-1/2 rounded-[4px] bg-[#991b1b] shadow-[0_4px_8px_rgba(15,23,42,0.2)]" />
                     </div>
 
                     {paperCount > 0 && (
                       <div
-                        className="absolute top-[18px] left-1/2 z-[2] h-[34px] w-[56px]"
+                        className="absolute top-[20px] left-1/2 z-[2] h-[40px] w-[64px]"
                         style={getPaperContainerStyle(row.intensity)}
                       >
                         {PAPER_POSITIONS.slice(0, paperCount).map((paper, paperIdx) => (
@@ -206,7 +206,7 @@ export default function P6ElectricGenerationSummary() {
                             key={paperIdx}
                             src="/images/p6/equipment/tissue-real.svg"
                             alt="paper"
-                            className="absolute h-[9px] w-[12px]"
+                            className="absolute h-[10px] w-[14px]"
                             style={{
                               left: `${paper.left}px`,
                               top: `${paper.top}px`,
@@ -216,13 +216,6 @@ export default function P6ElectricGenerationSummary() {
                         ))}
                       </div>
                     )}
-
-                    <div className="absolute bottom-[10px] left-1/2 h-[30px] w-0 -translate-x-1/2 border-l-2 border-dashed border-slate-800">
-                      <span
-                        className="absolute left-[-6px] top-[-6px] h-3 w-3 border-l-2 border-t-2 border-slate-800"
-                        style={{ transform: "rotate(45deg)" }}
-                      />
-                    </div>
                   </div>
                 </div>
               );

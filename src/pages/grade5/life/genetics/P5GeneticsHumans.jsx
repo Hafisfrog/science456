@@ -164,10 +164,10 @@ const TRAITS = [
   {
     id: "nose",
     inherited: true,
-    localImg: "/images/p5/humans/nose.jpg",
-    remoteImg:
-      "https://images.pexels.com/photos/9164794/pexels-photo-9164794.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
+    localImg: "/images/p6/sanjamukdong.jpg",
+    remoteImg: "/images/p6/sanjamukdong.jpg",
     imagePosition: "50% 46%",
+    useBgFill: true,
   },
   {
     id: "tongue",
@@ -203,6 +203,7 @@ export default function P5GeneticsHumans() {
   const t = TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
   const hasAnswers = Object.keys(selectedTraits).length > 0;
+  const withVersion = (url) => `${url}${url.includes("?") ? "&" : "?"}v=${IMAGE_VERSION}`;
 
   const toggleTrait = (traitId) => {
     setSelectedTraits((prev) => {
@@ -278,23 +279,35 @@ export default function P5GeneticsHumans() {
                     onClick={() => toggleTrait(trait.id)}
                   >
                     <div className="p5gh-image-wrap">
-                      <img
-                        src={`${trait.remoteImg}&v=${IMAGE_VERSION}`}
-                        alt={t.traits[trait.id]}
-                        className="p5gh-image"
-                        style={{ objectPosition: trait.imagePosition }}
-                        loading="lazy"
-                        referrerPolicy="no-referrer"
-                        onError={(event) => {
-                          const stage = event.currentTarget.dataset.fallbackStage || "remote";
-                          if (stage === "remote") {
-                            event.currentTarget.dataset.fallbackStage = "local";
-                            event.currentTarget.src = `${trait.localImg}?v=${IMAGE_VERSION}`;
-                            return;
-                          }
-                          event.currentTarget.src = `/images/p5.png?v=${IMAGE_VERSION}`;
-                        }}
-                      />
+                      {trait.useBgFill ? (
+                        <div
+                          className="p5gh-image p5gh-image-bgfill"
+                          role="img"
+                          aria-label={t.traits[trait.id]}
+                          style={{
+                            backgroundImage: `url("${withVersion(trait.localImg)}")`,
+                            backgroundPosition: trait.imagePosition,
+                          }}
+                        />
+                      ) : (
+                        <img
+                          src={withVersion(trait.remoteImg)}
+                          alt={t.traits[trait.id]}
+                          className="p5gh-image"
+                          style={{ objectPosition: trait.imagePosition }}
+                          loading="lazy"
+                          referrerPolicy="no-referrer"
+                          onError={(event) => {
+                            const stage = event.currentTarget.dataset.fallbackStage || "remote";
+                            if (stage === "remote") {
+                              event.currentTarget.dataset.fallbackStage = "local";
+                              event.currentTarget.src = withVersion(trait.localImg);
+                              return;
+                            }
+                            event.currentTarget.src = withVersion("/images/p5.png");
+                          }}
+                        />
+                      )}
                       {selectedTraits[trait.id] && !showResults ? <div className="p5gh-picked" aria-hidden="true" /> : null}
                       {showResults && selectedTraits[trait.id] ? (
                         <div

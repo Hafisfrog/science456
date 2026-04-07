@@ -154,7 +154,7 @@ const createBatteryPlacement = (count) =>
 
 const DEVICE_MEDIA = {
   cell: {
-    image: "/images/p6/electric-circuit/battery-photo.webp",
+    image: "/images/p6/tanfaichai.jpg",
     fallbackImage: "/images/p6/electric-circuit/batteries.svg",
   },
   holder: {
@@ -243,29 +243,26 @@ function EquipmentImage({ src, fallbackSrc, alt, className = "", style }) {
 }
 
 function BatteryToken({ dimmed = false, compact = false, fill = false }) {
+  const sizeClass = fill ? "h-full w-full" : compact ? "h-11 w-5" : "h-12 w-6";
+
   return (
-    <svg
-      className={`${fill ? "h-full w-full" : compact ? "h-11 w-11" : "h-12 w-12"}`}
-      viewBox="0 0 40 40"
+    <div
+      className={`relative overflow-hidden rounded-[6px] border ${sizeClass} ${
+        dimmed ? "border-slate-300 bg-slate-100" : "border-slate-500 bg-white"
+      }`}
       aria-hidden="true"
-      focusable="false"
     >
-      <rect
-        x="9"
-        y="4"
-        width="22"
-        height="32"
-        rx="6"
-        fill={dimmed ? "#dbe4ef" : "#5f7fa7"}
-        stroke={dimmed ? "#cbd5e1" : "#35516D"}
-        strokeWidth="1.5"
+      <EquipmentImage
+        src={DEVICE_MEDIA.cell.image}
+        fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
+        alt="battery"
+        className="h-full w-full max-w-none object-cover object-center mix-blend-multiply"
+        style={{
+          objectPosition: "50% 48%",
+          filter: dimmed ? "grayscale(0.45) saturate(0.7) brightness(1.06)" : "none",
+        }}
       />
-      <rect x="14" y="7" width="12" height="26" rx="4" fill={dimmed ? "#e2e8f0" : "#f5ca4e"} />
-      <rect x="16" y="10" width="8" height="20" rx="3" fill={dimmed ? "#cbd5e1" : "#d78c17"} />
-      <rect x="16" y="2.5" width="8" height="2.5" rx="1.25" fill={dimmed ? "#94a3b8" : "#d6dee8"} />
-      <rect x="14.5" y="18" width="11" height="2.6" rx="1.3" fill={dimmed ? "#b8c4d4" : "#29435f"} opacity="0.42" />
-      <rect x="17.2" y="12" width="2.1" height="15" rx="1.05" fill={dimmed ? "#d2dae6" : "rgba(255,255,255,0.26)"} />
-    </svg>
+    </div>
   );
 }
 
@@ -300,7 +297,7 @@ function BatteryHolderLive({ slotToBattery, onSlotDrop, onRemoveBattery, onHolde
               title={batteryId !== null ? filledTitle : emptyTitle}
             >
               <div className="h-[60px] w-[24px]">
-                {batteryId !== null ? <BatteryToken fill /> : <BatteryToken dimmed fill />}
+                {batteryId !== null ? <BatteryToken fill /> : null}
               </div>
             </button>
           );
@@ -453,16 +450,16 @@ export default function P6ElectricCircuitSim() {
   const connectedCount = WIRE_CONFIG.length;
   const isCircuitReady = true;
   const bulbLevel = isSwitchOn ? levelClass : "off";
-  const bulbGlowOpacity =
+  const bulbLightProfile =
     bulbLevel === "high"
-      ? 0.95
+      ? { glowOpacity: 1, glowSize: 176, blur: 5, bulbFilter: "brightness(1.34) saturate(1.26)", bulbScale: 1.08 }
       : bulbLevel === "mid-high"
-        ? 0.75
+        ? { glowOpacity: 0.84, glowSize: 154, blur: 4, bulbFilter: "brightness(1.24) saturate(1.18)", bulbScale: 1.05 }
         : bulbLevel === "mid"
-          ? 0.55
+          ? { glowOpacity: 0.66, glowSize: 136, blur: 3, bulbFilter: "brightness(1.16) saturate(1.12)", bulbScale: 1.03 }
           : bulbLevel === "low"
-            ? 0.35
-            : 0;
+            ? { glowOpacity: 0.46, glowSize: 118, blur: 2, bulbFilter: "brightness(1.08) saturate(1.05)", bulbScale: 1.01 }
+            : { glowOpacity: 0, glowSize: 112, blur: 1, bulbFilter: "brightness(0.98) saturate(0.95)", bulbScale: 1 };
 
   const handleBatteryDragStart = (batteryId, event) => {
     event.dataTransfer.setData("text/plain", String(batteryId));
@@ -701,10 +698,12 @@ export default function P6ElectricCircuitSim() {
 
                       <div className="absolute left-[438px] top-[36px] h-[112px] w-[112px]">
                         <div
-                          className="pointer-events-none absolute left-1/2 top-[46%] h-[122px] w-[122px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+                          className="pointer-events-none absolute left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full"
                           style={{
-                            background: `radial-gradient(circle, rgba(255,214,102,${bulbGlowOpacity}) 0%, rgba(255,214,102,0) 68%)`,
-                            filter: "blur(2px)",
+                            width: `${bulbLightProfile.glowSize}px`,
+                            height: `${bulbLightProfile.glowSize}px`,
+                            background: `radial-gradient(circle, rgba(255,214,102,${bulbLightProfile.glowOpacity}) 0%, rgba(255,214,102,0) 70%)`,
+                            filter: `blur(${bulbLightProfile.blur}px)`,
                           }}
                         />
                         <div className="relative z-10 h-full w-full">
@@ -713,6 +712,12 @@ export default function P6ElectricCircuitSim() {
                             fallbackSrc={DEVICE_MEDIA.bulb.fallbackImage}
                             alt="bulb"
                             className="h-full w-full object-contain"
+                            style={{
+                              filter: bulbLightProfile.bulbFilter,
+                              transform: `scale(${bulbLightProfile.bulbScale})`,
+                              transformOrigin: "50% 50%",
+                              transition: "filter 160ms ease, transform 160ms ease",
+                            }}
                           />
                         </div>
                       </div>

@@ -160,9 +160,41 @@
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 78px minmax(190px, auto) 78px minmax(190px, auto);
+  grid-template-rows: auto 78px minmax(190px, auto);
   background: rgba(255, 255, 255, 0.32);
   min-height: 0;
+}
+
+.p6-circuit-bsp-sim-mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 10px;
+  border-bottom: 3px solid rgba(15, 23, 42, 0.85);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.p6-circuit-bsp-sim-mode-tab {
+  border: 2px solid rgba(15, 23, 42, 0.25);
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-size: clamp(15px, 1vw, 18px);
+  font-weight: 900;
+  color: #0f172a;
+  background: #f8fafc;
+  cursor: pointer;
+}
+
+.p6-circuit-bsp-sim-mode-tab.is-active.is-parallel {
+  background: #e0f2fe;
+  border-color: #0284c7;
+  color: #075985;
+}
+
+.p6-circuit-bsp-sim-mode-tab.is-active.is-series {
+  background: #ffedd5;
+  border-color: #ea580c;
+  color: #9a3412;
 }
 
 .p6-circuit-bsp-sim-head {
@@ -175,6 +207,14 @@
   font-weight: 900;
   color: #0f172a;
   line-height: 1.25;
+}
+
+.p6-circuit-bsp-sim-head.is-parallel {
+  background: rgba(186, 230, 253, 0.45);
+}
+
+.p6-circuit-bsp-sim-head.is-series {
+  background: rgba(254, 215, 170, 0.45);
 }
 
 .p6-circuit-bsp-sim-cell {
@@ -200,7 +240,7 @@
 
 .p6-circuit-bsp-sim-panel {
   display: grid;
-  grid-template-rows: auto 1fr 108px;
+  grid-template-rows: auto 1fr auto auto;
   align-items: center;
   justify-items: center;
   border-right: 2px solid rgba(15, 23, 42, 0.85);
@@ -349,6 +389,55 @@
   overflow: hidden;
 }
 
+.p6-circuit-bsp-sim-status.is-result {
+  min-height: 90px;
+  height: auto;
+  border-style: solid;
+}
+
+.p6-circuit-bsp-sim-status.is-result.is-parallel {
+  border-color: rgba(2, 132, 199, 0.45);
+  background: rgba(224, 242, 254, 0.7);
+}
+
+.p6-circuit-bsp-sim-status.is-result.is-series {
+  border-color: rgba(234, 88, 12, 0.45);
+  background: rgba(255, 237, 213, 0.7);
+}
+
+.p6-circuit-bsp-sim-steps {
+  margin: 2px 4px 8px;
+  border-radius: 10px;
+  border: 1px dashed rgba(15, 23, 42, 0.35);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 8px 12px;
+  font-size: clamp(14px, 0.9vw, 16px);
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+}
+
+.p6-circuit-bsp-sim-work-actions {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+
+.p6-circuit-bsp-sim-work-btn {
+  border: 1px solid rgba(15, 23, 42, 0.35);
+  border-radius: 10px;
+  background: #ffffff;
+  color: #0f172a;
+  font-size: 14px;
+  font-weight: 900;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.p6-circuit-bsp-sim-work-btn.is-reset {
+  background: #e2e8f0;
+}
+
 @media (max-width: 1200px) {
   .p6-circuit-bsp-sim-stage {
     grid-template-columns: 260px minmax(0, 1fr) 260px;
@@ -364,7 +453,7 @@
   }
 
   .p6-circuit-bsp-sim-table {
-    grid-template-rows: 68px minmax(170px, auto) 68px minmax(170px, auto);
+    grid-template-rows: auto 68px minmax(170px, auto);
   }
 
   .p6-circuit-bsp-sim-dual {
@@ -384,10 +473,15 @@
     width: min(98%, 300px);
     height: 160px;
   }
+
+  .p6-circuit-bsp-sim-work-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 @media (max-width: 720px) {
   .p6-circuit-bsp-sim-table {
-    grid-template-rows: 64px minmax(150px, auto) 64px minmax(150px, auto);
+    grid-template-rows: auto 64px minmax(150px, auto);
   }
 }

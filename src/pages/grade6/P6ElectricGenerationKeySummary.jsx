@@ -63,6 +63,10 @@ export default function P6ElectricGenerationKeySummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const visualTitle = lang === "th" ? "ภาพประกอบการทดลอง" : lang === "ms" ? "Ilustrasi Eksperimen" : "Experiment Illustration";
+  const level0Label = lang === "th" ? "ไม่ถู (0 นาที): ยังไม่ดูดเศษกระดาษ" : lang === "ms" ? "Tidak digosok (0 min): belum menarik kertas" : "No rub (0 min): no visible paper attraction";
+  const level2Label = lang === "th" ? "ถู 2 นาที: ดูดเศษกระดาษเล็กน้อย" : lang === "ms" ? "Gosok 2 minit: menarik sedikit" : "Rub 2 min: slight attraction";
+  const level5Label = lang === "th" ? "ถู 5 นาที: ดูดเศษกระดาษมากขึ้น" : lang === "ms" ? "Gosok 5 minit: menarik lebih banyak" : "Rub 5 min: stronger attraction";
 
   return (
     <div
@@ -85,6 +89,40 @@ export default function P6ElectricGenerationKeySummary() {
                 {line}
               </p>
             ))}
+          </div>
+        </div>
+
+        <div className="mt-2 rounded-[22px] border border-white/90 bg-white/85 p-4 shadow-[0_14px_24px_rgba(17,24,39,0.12)]">
+          <p className="m-0 text-[clamp(16px,1.3vw,20px)] font-black text-slate-900">{visualTitle}</p>
+          <div className="mt-3 grid gap-4 md:grid-cols-3">
+            <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
+              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level0Label}</p>
+              <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
+                <span className="absolute left-1/2 top-1/2 h-[68px] w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_30%_25%,#ffd3d3,#ea3b3b_45%,#b91c1c_74%,#7f1d1d)] shadow-[inset_0_8px_14px_rgba(255,255,255,0.22),inset_0_-10px_14px_rgba(0,0,0,0.24)]" />
+              </div>
+            </article>
+
+            <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
+              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level2Label}</p>
+              <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
+                <span className="absolute left-1/2 top-1/2 h-[68px] w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_30%_25%,#ffd3d3,#ea3b3b_45%,#b91c1c_74%,#7f1d1d)] shadow-[inset_0_8px_14px_rgba(255,255,255,0.22),inset_0_-10px_14px_rgba(0,0,0,0.24)]" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[43%] top-[54px] h-[13px] w-auto rotate-[8deg] opacity-86" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[45%] top-[62px] h-[13px] w-auto rotate-[-14deg] opacity-82" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[49%] top-[68px] h-[13px] w-auto rotate-[16deg] opacity-80" />
+              </div>
+            </article>
+
+            <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
+              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level5Label}</p>
+              <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
+                <span className="absolute left-1/2 top-1/2 h-[68px] w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_30%_25%,#ffd3d3,#ea3b3b_45%,#b91c1c_74%,#7f1d1d)] shadow-[inset_0_8px_14px_rgba(255,255,255,0.22),inset_0_-10px_14px_rgba(0,0,0,0.24)]" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[43%] top-[50px] h-[13px] w-auto rotate-[8deg] opacity-90" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[45%] top-[54px] h-[13px] w-auto rotate-[-14deg] opacity-88" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[48%] top-[62px] h-[13px] w-auto rotate-[18deg] opacity-86" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[43%] top-[66px] h-[13px] w-auto rotate-[-10deg] opacity-84" />
+                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[49%] top-[72px] h-[13px] w-auto rotate-[6deg] opacity-82" />
+              </div>
+            </article>
           </div>
         </div>
       </div>

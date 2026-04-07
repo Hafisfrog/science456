@@ -39,7 +39,7 @@ const EQUIPMENT_ITEMS = [
     id: "cell",
     title: "ถ่านไฟฉาย",
     subtitle: "4 ก้อน",
-    image: "/images/p6/electric-circuit/battery-photo.webp",
+    image: "/images/p6/tanfaichai.jpg",
     fallbackImage: "/images/p6/electric-circuit/batteries.svg",
     frameClass: "p6-force-recap-frame-rose",
   },

@@ -223,11 +223,11 @@ const forceEffectSimStyles = `.p6-force-sim-page {
     0 28px 56px rgba(17, 24, 39, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.55);
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   padding: 16px 18px 14px;
   border: 2px solid rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .p6-force-sim-balloons {
@@ -257,11 +257,11 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-balloon.left {
-  --base: -185px;
+  --base: -172px;
 }
 
 .p6-force-sim-balloon.right {
-  --base: 185px;
+  --base: 172px;
 }
 
 .p6-force-sim-balloon::before {
@@ -287,19 +287,19 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-balloon.repel.left {
-  --shift: -56px;
+  --shift: -38px;
 }
 
 .p6-force-sim-balloon.repel.right {
-  --shift: 56px;
+  --shift: 38px;
 }
 
 .p6-force-sim-balloon.attract.left {
-  --shift: 56px;
+  --shift: 52px;
 }
 
 .p6-force-sim-balloon.attract.right {
-  --shift: -56px;
+  --shift: -52px;
 }
 
 .p6-force-sim-marker {
@@ -315,12 +315,12 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-marker.left {
-  --base: -190px;
+  --base: -168px;
   --tilt: -28deg;
 }
 
 .p6-force-sim-marker.right {
-  --base: 190px;
+  --base: 168px;
   --tilt: 28deg;
 }
 
@@ -353,19 +353,19 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-marker.attract.left {
-  --shift: 56px;
+  --shift: 48px;
 }
 
 .p6-force-sim-marker.repel.left {
-  --shift: -56px;
+  --shift: -34px;
 }
 
 .p6-force-sim-marker.attract.right {
-  --shift: -56px;
+  --shift: -48px;
 }
 
 .p6-force-sim-marker.repel.right {
-  --shift: 56px;
+  --shift: 34px;
 }
 
 .p6-force-sim-rub {
@@ -392,7 +392,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   border: 2px solid rgba(15, 23, 42, 0.12);
   box-shadow: 0 18px 26px rgba(17, 24, 39, 0.18);
   transform: translate(0, 0) rotate(-8deg);
-  animation: p6-force-rub 0.18s ease-in-out infinite alternate;
+  animation: p6-force-rub 0.11s ease-in-out infinite alternate;
   opacity: 0.95;
 }
 
@@ -408,7 +408,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   top: 20%;
   left: 26%;
   transform: translate(0, 0) rotate(8deg);
-  animation: p6-force-rub 0.18s ease-in-out infinite alternate-reverse;
+  animation: p6-force-rub 0.11s ease-in-out infinite alternate-reverse;
 }
 
 @keyframes p6-force-rub {

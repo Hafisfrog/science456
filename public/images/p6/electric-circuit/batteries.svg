@@ -1,49 +1,55 @@
 <svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <ellipse cx="160" cy="226" rx="86" ry="15" fill="#C7D2E2" fill-opacity="0.36"/>
   <defs>
-    <linearGradient id="batteryBody" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#F8C94D"/>
-      <stop offset="0.5" stop-color="#E4A52B"/>
-      <stop offset="1" stop-color="#B77312"/>
+    <linearGradient id="aaBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F8D26A"/>
+      <stop offset="0.48" stop-color="#E2A739"/>
+      <stop offset="1" stop-color="#A56A1D"/>
     </linearGradient>
-    <linearGradient id="batteryCap" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#F4F6F8"/>
-      <stop offset="1" stop-color="#AEB8C4"/>
+    <linearGradient id="aaCap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F7FAFD"/>
+      <stop offset="1" stop-color="#B8C2CE"/>
     </linearGradient>
-    <linearGradient id="batteryBand" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#1E293B"/>
-      <stop offset="1" stop-color="#334155"/>
+    <linearGradient id="aaBand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#121A29"/>
+      <stop offset="1" stop-color="#2A3448"/>
     </linearGradient>
   </defs>
 
-  <g transform="translate(84 88)">
-    <rect x="0" y="10" width="38" height="104" rx="14" fill="url(#batteryBody)" stroke="#8A5510" stroke-width="4"/>
-    <rect x="6" y="2" width="26" height="16" rx="8" fill="url(#batteryCap)" stroke="#98A4B3" stroke-width="2"/>
-    <rect x="4" y="54" width="30" height="14" rx="7" fill="url(#batteryBand)"/>
-    <rect x="9" y="19" width="7" height="83" rx="3.5" fill="white" fill-opacity="0.28"/>
-    <rect x="22" y="19" width="4" height="83" rx="2" fill="#8A5510" fill-opacity="0.24"/>
+  <ellipse cx="160" cy="228" rx="92" ry="15" fill="#BFCADB" fill-opacity="0.4"/>
+
+  <!-- Rear batteries -->
+  <g transform="translate(72 90)">
+    <rect x="0" y="20" width="44" height="108" rx="15" fill="url(#aaBody)" stroke="#805218" stroke-width="3"/>
+    <rect x="5" y="12" width="34" height="16" rx="8" fill="url(#aaCap)" stroke="#8D98A8" stroke-width="2"/>
+    <circle cx="22" cy="9" r="4.2" fill="#DCE2EA" stroke="#98A4B3" stroke-width="1.4"/>
+    <rect x="5" y="62" width="34" height="16" rx="8" fill="url(#aaBand)"/>
+    <rect x="9" y="30" width="8" height="88" rx="4" fill="white" fill-opacity="0.24"/>
+    <path d="M22 38V48M17 43H27" stroke="#6A4515" stroke-width="3.2" stroke-linecap="round"/>
   </g>
 
-  <g transform="translate(122 78)">
-    <rect x="0" y="10" width="42" height="114" rx="15" fill="url(#batteryBody)" stroke="#8A5510" stroke-width="4"/>
-    <rect x="7" y="0" width="28" height="18" rx="9" fill="url(#batteryCap)" stroke="#98A4B3" stroke-width="2"/>
-    <circle cx="21" cy="4" r="4" fill="#DDE3EA"/>
-    <rect x="6" y="56" width="30" height="14" rx="7" fill="url(#batteryBand)"/>
-    <rect x="10" y="18" width="7" height="91" rx="3.5" fill="white" fill-opacity="0.28"/>
-    <path d="M21 30V41M15 35.5H27" stroke="#6F4A12" stroke-width="4" stroke-linecap="round"/>
+  <g transform="translate(204 96)">
+    <rect x="0" y="16" width="40" height="100" rx="14" fill="url(#aaBody)" stroke="#805218" stroke-width="3"/>
+    <rect x="5" y="8" width="30" height="14" rx="7" fill="url(#aaCap)" stroke="#8D98A8" stroke-width="2"/>
+    <circle cx="20" cy="6" r="3.8" fill="#DCE2EA" stroke="#98A4B3" stroke-width="1.3"/>
+    <rect x="4" y="56" width="32" height="15" rx="7.5" fill="url(#aaBand)"/>
+    <rect x="9" y="24" width="7" height="82" rx="3.5" fill="white" fill-opacity="0.24"/>
   </g>
 
-  <g transform="translate(166 90)">
-    <rect x="0" y="10" width="38" height="102" rx="14" fill="url(#batteryBody)" stroke="#8A5510" stroke-width="4"/>
-    <rect x="6" y="2" width="26" height="16" rx="8" fill="url(#batteryCap)" stroke="#98A4B3" stroke-width="2"/>
-    <rect x="4" y="52" width="30" height="14" rx="7" fill="url(#batteryBand)"/>
-    <rect x="9" y="19" width="7" height="81" rx="3.5" fill="white" fill-opacity="0.28"/>
+  <!-- Front batteries -->
+  <g transform="translate(112 74)">
+    <rect x="0" y="16" width="48" height="124" rx="16" fill="url(#aaBody)" stroke="#7A4E17" stroke-width="3.4"/>
+    <rect x="6" y="6" width="36" height="18" rx="9" fill="url(#aaCap)" stroke="#8994A3" stroke-width="2"/>
+    <circle cx="24" cy="4" r="4.7" fill="#E3E9F0" stroke="#97A3B2" stroke-width="1.5"/>
+    <rect x="6" y="66" width="36" height="18" rx="9" fill="url(#aaBand)"/>
+    <rect x="11" y="26" width="8" height="102" rx="4" fill="white" fill-opacity="0.24"/>
+    <path d="M24 36V47M18 41.5H30" stroke="#624111" stroke-width="3.6" stroke-linecap="round"/>
   </g>
 
-  <g transform="translate(204 102)">
-    <rect x="0" y="10" width="36" height="92" rx="13" fill="url(#batteryBody)" stroke="#8A5510" stroke-width="4"/>
-    <rect x="6" y="2" width="24" height="16" rx="8" fill="url(#batteryCap)" stroke="#98A4B3" stroke-width="2"/>
-    <rect x="3" y="48" width="28" height="13" rx="6.5" fill="url(#batteryBand)"/>
-    <rect x="8" y="18" width="6" height="73" rx="3" fill="white" fill-opacity="0.28"/>
+  <g transform="translate(158 82)">
+    <rect x="0" y="18" width="46" height="116" rx="16" fill="url(#aaBody)" stroke="#7A4E17" stroke-width="3.2"/>
+    <rect x="6" y="8" width="34" height="17" rx="8.5" fill="url(#aaCap)" stroke="#8994A3" stroke-width="2"/>
+    <circle cx="23" cy="6" r="4.3" fill="#E3E9F0" stroke="#97A3B2" stroke-width="1.4"/>
+    <rect x="6" y="62" width="34" height="17" rx="8.5" fill="url(#aaBand)"/>
+    <rect x="10" y="28" width="8" height="95" rx="4" fill="white" fill-opacity="0.24"/>
   </g>
 </svg>
