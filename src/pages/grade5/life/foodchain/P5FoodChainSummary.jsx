@@ -104,7 +104,7 @@ export default function P5FoodChainSummary() {
     <div className="relative min-h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
       <div className="absolute inset-0 bg-white/5" />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center px-4 py-10 sm:px-6">
+      <div className="relative z-10 flex min-h-screen flex-col items-center px-4 pb-32 pt-10 sm:px-6 sm:pb-36">
         <h1 className="mb-8 text-center text-3xl font-bold text-slate-900 sm:text-5xl">
           {content.title}
         </h1>
@@ -134,20 +134,23 @@ export default function P5FoodChainSummary() {
 
         </div>
 
-        <div className="mt-auto flex w-full max-w-[900px] flex-col gap-4 pt-10 sm:flex-row sm:items-center sm:justify-between">
-          <FoodChainLanguageSwitcher
-            value={activeLang}
-            onChange={setActiveLang}
-            labels={languageLabels}
-          />
+      </div>
 
-          <FoodChainNavButtons
-            backLabel={content.back}
-            nextLabel={content.next}
-            onBack={() => navigate(-1)}
-            onNext={() => navigate("/p5/life/foodchain/summary2")}
-          />
-        </div>
+      <div className="absolute bottom-3 left-3 z-20 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5">
+        <FoodChainLanguageSwitcher
+          value={activeLang}
+          onChange={setActiveLang}
+          labels={languageLabels}
+        />
+      </div>
+
+      <div className="absolute bottom-3 right-3 z-20 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5">
+        <FoodChainNavButtons
+          backLabel={content.back}
+          nextLabel={content.next}
+          onBack={() => navigate(-1)}
+          onNext={() => navigate("/p5/life/foodchain/summary2")}
+        />
       </div>
     </div>
   );

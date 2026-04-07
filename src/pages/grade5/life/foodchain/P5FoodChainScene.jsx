@@ -1,12 +1,112 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
-const VOICE_LANG = {
+const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
+const LANG_TO_LOCALE = {
   th: "th-TH",
   en: "en-US",
   ms: "ms-MY",
 };
+
+const isSpeechSupported = () =>
+  typeof window !== "undefined" &&
+  typeof SpeechSynthesisUtterance !== "undefined" &&
+  !!window.speechSynthesis;
+
+const getVoiceTag = (voice) =>
+  `${voice?.name ?? ""} ${voice?.voiceURI ?? ""}`.toLowerCase();
+
+function pickVoice(voices, locale, langKey) {
+  const lowerLocale = locale.toLowerCase();
+  const langPrefix = lowerLocale.split("-")[0];
+
+  const exactMatch = voices.find(
+    (voice) => voice.lang?.toLowerCase() === lowerLocale
+  );
+  if (exactMatch) return exactMatch;
+
+  if (langKey === "ms") {
+    const msLangMatch = voices.find((voice) =>
+      voice.lang?.toLowerCase().startsWith("ms")
+    );
+    if (msLangMatch) return msLangMatch;
+
+    const malayNameMatch = voices.find((voice) =>
+      MALAY_VOICE_NAME_RE.test(getVoiceTag(voice))
+    );
+    if (malayNameMatch) return malayNameMatch;
+
+    const indonesiaFallback = voices.find((voice) =>
+      voice.lang?.toLowerCase().startsWith("id")
+    );
+    if (indonesiaFallback) return indonesiaFallback;
+
+    return null;
+  }
+
+  return (
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith(langPrefix)) ||
+    voices[0] ||
+    null
+  );
+}
+
+function formatSpeechText(text, langKey) {
+  if (!text) return "";
+
+  const separator =
+    langKey === "ms" ? " sebagai " : langKey === "en" ? ", " : ", ";
+
+  return text.replace(/\s*\/\s*/g, separator).replace(/\s+/g, " ").trim();
+}
+
+function speakWithBestVoice(text, langKey) {
+  if (!isSpeechSupported() || !text) return;
+
+  const synth = window.speechSynthesis;
+  const locale = LANG_TO_LOCALE[langKey] || LANG_TO_LOCALE.th;
+  const speechText = formatSpeechText(text, langKey);
+
+  const doSpeak = () => {
+    const voices = synth.getVoices();
+    const voice = pickVoice(voices, locale, langKey);
+    const utterance = new SpeechSynthesisUtterance(speechText);
+
+    if (voice) utterance.voice = voice;
+    utterance.lang = voice?.lang || locale;
+    utterance.rate = langKey === "ms" ? 0.88 : 0.92;
+    utterance.pitch = 1;
+
+    synth.cancel();
+    synth.resume();
+    synth.speak(utterance);
+  };
+
+  const voices = synth.getVoices();
+  if (voices.length) {
+    doSpeak();
+    return;
+  }
+
+  let spoken = false;
+  const speakOnce = () => {
+    if (spoken) return;
+    spoken = true;
+    doSpeak();
+  };
+
+  const handleVoicesChanged = () => {
+    synth.removeEventListener("voiceschanged", handleVoicesChanged);
+    speakOnce();
+  };
+
+  synth.addEventListener("voiceschanged", handleVoicesChanged);
+  setTimeout(() => {
+    synth.removeEventListener("voiceschanged", handleVoicesChanged);
+    speakOnce();
+  }, 700);
+}
 
 const UI_COPY = {
   th: {
@@ -54,7 +154,7 @@ const SCENE_ITEMS = [
       en: "Hawk / Consumer",
       ms: "Helang / Pengguna",
     },
-    containerClass: "top-[6%] left-[15%]",
+    containerClass: "top-[7%] left-[14%]",
     imageClass: "w-28 sm:w-32 lg:w-36",
     transformClass: "-rotate-6",
     badgeWidthClass: "max-w-[7.4rem] lg:max-w-[8.2rem]",
@@ -69,7 +169,11 @@ const SCENE_ITEMS = [
       en: "Bird / Consumer",
       ms: "Burung / Pengguna",
     },
-    containerClass: "top-[23%] right-[8%]",
+    containerClass: "top-[20%] right-[7%]",
+    labelRowClassByLang: {
+      en: "-translate-x-3 sm:-translate-x-4",
+      ms: "-translate-x-5 sm:-translate-x-7",
+    },
     imageClass: "w-[4.4rem] sm:w-[5.2rem] lg:w-24",
     badgeWidthClass: "max-w-[6.2rem] lg:max-w-[7rem]",
     depthClass: "z-40",
@@ -83,7 +187,11 @@ const SCENE_ITEMS = [
       en: "Rice Plant / Producer",
       ms: "Pokok Padi / Pengeluar",
     },
-    containerClass: "top-[29%] left-[2%]",
+    containerClass: "top-[33%] left-[2%]",
+    labelRowClassByLang: {
+      en: "translate-x-4 sm:translate-x-6",
+      ms: "translate-x-6 sm:translate-x-8",
+    },
     imageClass: "w-28 sm:w-32 lg:w-36",
     badgeWidthClass: "max-w-[7.8rem] lg:max-w-[8.8rem]",
     depthClass: "z-30",
@@ -97,7 +205,7 @@ const SCENE_ITEMS = [
       en: "Caterpillar / Consumer",
       ms: "Ulat / Pengguna",
     },
-    containerClass: "top-[45%] left-[20%]",
+    containerClass: "top-[45%] left-[23%]",
     imageClass: "w-[4.6rem] sm:w-[5.4rem] lg:w-24",
     transformClass: "rotate-6",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[7.6rem]",
@@ -112,7 +220,7 @@ const SCENE_ITEMS = [
       en: "Field Rat / Consumer",
       ms: "Tikus Sawah / Pengguna",
     },
-    containerClass: "top-[20%] left-[48%]",
+    containerClass: "top-[15%] left-[47%]",
     imageClass: "w-20 sm:w-24 lg:w-28",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[8rem]",
     depthClass: "z-30",
@@ -126,7 +234,7 @@ const SCENE_ITEMS = [
       en: "Snake / Consumer",
       ms: "Ular / Pengguna",
     },
-    containerClass: "top-[48%] left-[39%]",
+    containerClass: "top-[50%] left-[38%]",
     imageClass: "w-28 sm:w-32 lg:w-36",
     transformClass: "-rotate-2",
     badgeWidthClass: "max-w-[6.4rem] lg:max-w-[7rem]",
@@ -141,7 +249,7 @@ const SCENE_ITEMS = [
       en: "Grass / Producer",
       ms: "Rumput / Pengeluar",
     },
-    containerClass: "top-[72%] left-[23%]",
+    containerClass: "top-[81%] left-[28%]",
     imageClass: "w-[5.4rem] sm:w-24 lg:w-28",
     badgeWidthClass: "max-w-[6rem] lg:max-w-[6.8rem]",
     depthClass: "z-20",
@@ -155,7 +263,11 @@ const SCENE_ITEMS = [
       en: "Grasshopper / Consumer",
       ms: "Belalang / Pengguna",
     },
-    containerClass: "top-[39%] left-[68%]",
+    containerClass: "top-[42%] left-[67%]",
+    labelRowClassByLang: {
+      en: "-translate-x-3 sm:-translate-x-4",
+      ms: "-translate-x-5 sm:-translate-x-7",
+    },
     imageClass: "w-[5rem] sm:w-[5.8rem] lg:w-[6.6rem]",
     transformClass: "-rotate-6",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[7.8rem]",
@@ -170,7 +282,12 @@ const SCENE_ITEMS = [
       en: "Frog / Consumer",
       ms: "Katak / Pengguna",
     },
-    containerClass: "top-[76%] left-[55%]",
+    containerClass: "top-[79%] left-[60%]",
+    labelBlockClass: "-translate-y-1 sm:-translate-y-2",
+    labelRowClassByLang: {
+      en: "-translate-x-2 sm:-translate-x-3",
+      ms: "-translate-x-3 sm:-translate-x-5",
+    },
     imageClass: "w-24 sm:w-28 lg:w-32",
     transformClass: "-rotate-6",
     badgeWidthClass: "max-w-[6rem] lg:max-w-[6.8rem]",
@@ -185,7 +302,11 @@ const SCENE_ITEMS = [
       en: "Larva / Consumer",
       ms: "Jentik-jentik / Pengguna",
     },
-    containerClass: "top-[64%] left-[67%]",
+    containerClass: "top-[64%] left-[66%]",
+    labelRowClassByLang: {
+      en: "-translate-x-5 sm:-translate-x-7",
+      ms: "-translate-x-9 sm:-translate-x-12",
+    },
     imageClass: "w-11 sm:w-12 lg:w-14",
     transformClass: "-rotate-12",
     badgeWidthClass: "max-w-[6.8rem] lg:max-w-[7.6rem]",
@@ -197,10 +318,15 @@ const SCENE_ITEMS = [
     img: "/images/p5/lunamm.png",
     label: {
       th: "พืชน้ำ / ผู้ผลิต",
-      en: "Aquatic Plant / Producer",
-      ms: "Tumbuhan Air / Pengeluar",
+      en: "Water Plant / Producer",
+      ms: "Pokok Air / Pengeluar",
     },
-    containerClass: "top-[79%] left-[43%]",
+    containerClass: "top-[74%] left-[46%]",
+    labelBlockClass: "-translate-y-1 sm:-translate-y-2",
+    labelRowClassByLang: {
+      en: "-translate-x-2 sm:-translate-x-4",
+      ms: "-translate-x-3 sm:-translate-x-5",
+    },
     imageClass: "w-24 sm:w-28 lg:w-32",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[8rem]",
     depthClass: "z-20",
@@ -214,7 +340,11 @@ const SCENE_ITEMS = [
       en: "Fish / Consumer",
       ms: "Ikan / Pengguna",
     },
-    containerClass: "top-[57%] right-[9%]",
+    containerClass: "top-[62%] right-[5%]",
+    labelRowClassByLang: {
+      en: "-translate-x-3 sm:-translate-x-5",
+      ms: "-translate-x-5 sm:-translate-x-7",
+    },
     imageClass: "w-24 sm:w-28 lg:w-32",
     transformClass: "-scale-x-100",
     badgeWidthClass: "max-w-[6rem] lg:max-w-[6.8rem]",
@@ -222,20 +352,15 @@ const SCENE_ITEMS = [
   },
 ];
 
-const clampValue = (value, min, max) => Math.min(max, Math.max(min, value));
-
 function SceneItem({
   item,
   activeLang,
   onSpeak,
   voiceLabel,
-  offset,
-  isDragging,
-  onDragStart,
-  onDragMove,
-  onDragEnd,
 }) {
   const label = item.label[activeLang] ?? item.label.th;
+  const labelRowClass = item.labelRowClassByLang?.[activeLang] ?? "";
+  const labelBlockClass = item.labelBlockClass ?? "";
   const badgeTone =
     item.role === "producer"
       ? "border-emerald-200/90 bg-white/78"
@@ -243,45 +368,32 @@ function SceneItem({
 
   return (
     <div
-      className={`absolute ${item.containerClass} ${isDragging ? "z-[80] cursor-grabbing" : `${item.depthClass ?? "z-20"} cursor-grab`} flex flex-col items-center gap-1 select-none touch-none`}
-      style={{
-        transform: `translate3d(${offset.x}px, ${offset.y}px, 0)`,
-        transition: isDragging ? "none" : "transform 140ms ease-out",
-      }}
-      onPointerDown={(event) => onDragStart(item.key, event)}
-      onPointerMove={(event) => onDragMove(item.key, event)}
-      onPointerUp={(event) => onDragEnd(item.key, event)}
-      onPointerCancel={(event) => onDragEnd(item.key, event)}
-      aria-grabbed={isDragging}
+      className={`absolute ${item.containerClass} ${item.depthClass ?? "z-20"} flex flex-col items-center gap-1 select-none`}
     >
-      <div className="relative">
-        <img
-          src={item.img}
-          alt={label}
-          draggable="false"
-          className={`${item.imageClass} ${item.transformClass ?? ""} ${item.role === "consumer" ? "scale-[1.22] sm:scale-[1.26]" : "scale-[1.1] sm:scale-[1.14]"} select-none object-contain drop-shadow-[0_10px_16px_rgba(15,23,42,0.18)]`}
-        />
+      <img
+        src={item.img}
+        alt={label}
+        draggable="false"
+        className={`${item.imageClass} ${item.transformClass ?? ""} ${item.role === "consumer" ? "scale-[1.22] sm:scale-[1.26]" : "scale-[1.1] sm:scale-[1.14]"} select-none object-contain drop-shadow-[0_10px_16px_rgba(15,23,42,0.18)]`}
+      />
+
+      <div className={`flex items-center justify-center gap-1.5 ${labelBlockClass} ${labelRowClass}`}>
+        <div
+          className={`w-max max-w-[calc(100vw-4.5rem)] rounded-[15px] border px-2 py-0.5 text-center shadow-[0_8px_20px_rgba(148,163,184,0.14)] backdrop-blur-sm sm:max-w-none ${badgeTone}`}
+        >
+          <span className="block text-[11px] font-medium leading-tight text-slate-700 sm:whitespace-nowrap sm:text-[13px] lg:text-[15px]">
+            {label}
+          </span>
+        </div>
 
         <button
           type="button"
-          onPointerDown={(event) => event.stopPropagation()}
-          onClick={(event) => {
-            event.stopPropagation();
-            onSpeak(label);
-          }}
+          onClick={() => onSpeak(label)}
           aria-label={`${voiceLabel}: ${label}`}
-          className="absolute -right-1 -top-1 inline-flex h-5 w-5 items-center justify-center rounded-full border border-white/80 bg-[#eaf3ff]/95 text-[10px] text-[#2563eb] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#dcecff]"
+          className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/80 bg-[#eaf3ff]/95 text-xs text-[#2563eb] shadow-[0_6px_14px_rgba(59,130,246,0.18)] transition hover:bg-[#dcecff] sm:h-8 sm:w-8 sm:text-sm"
         >
           {"\uD83D\uDD0A"}
         </button>
-      </div>
-
-      <div
-        className={`rounded-[15px] border px-2 py-0.5 text-center shadow-[0_8px_20px_rgba(148,163,184,0.14)] backdrop-blur-sm ${badgeTone} ${item.badgeWidthClass}`}
-      >
-        <span className="block text-[9px] font-medium leading-tight text-slate-700 sm:text-[10px]">
-          {label}
-        </span>
       </div>
     </div>
   );
@@ -289,34 +401,19 @@ function SceneItem({
 
 export default function P5FoodChainScene() {
   const navigate = useNavigate();
-  const stageRef = useRef(null);
-  const dragStateRef = useRef(null);
   const [activeLang, setActiveLang] = useState("th");
-  const [draggingKey, setDraggingKey] = useState(null);
-  const [itemOffsets, setItemOffsets] = useState(() =>
-    Object.fromEntries(SCENE_ITEMS.map((item) => [item.key, { x: 0, y: 0 }]))
-  );
 
   const ui = UI_COPY[activeLang] ?? UI_COPY.th;
-  const dragHintText =
+  const sceneHintText =
     activeLang === "en"
-      ? "Drag each picture to place it yourself."
+      ? "Observe the living things in the food chain."
       : activeLang === "ms"
-        ? "Seret gambar untuk susun kedudukan sendiri."
-        : "ลากรูปด้วยเมาส์เพื่อจัดตำแหน่งเอง";
+        ? "Perhatikan kedudukan hidupan dalam rantaian makanan."
+        : "สังเกตตำแหน่งของสิ่งมีชีวิตในห่วงโซ่อาหาร";
 
   const speakText = (text) => {
     try {
-      if (typeof window === "undefined" || !text || !window.speechSynthesis) {
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = VOICE_LANG[activeLang] ?? VOICE_LANG.th;
-      utterance.rate = 0.95;
-      utterance.pitch = 1;
-      window.speechSynthesis.speak(utterance);
+      speakWithBestVoice(text, activeLang);
     } catch {
       // ignore speech issues on unsupported browsers
     }
@@ -326,86 +423,12 @@ export default function P5FoodChainScene() {
     speakText(SCENE_ITEMS.map((item) => item.label[activeLang] ?? item.label.th).join(". "));
   };
 
-  const handleDragStart = (itemKey, event) => {
-    if (event.pointerType === "mouse" && event.button !== 0) {
-      return;
-    }
-
-    const stageRect = stageRef.current?.getBoundingClientRect();
-    const itemRect = event.currentTarget.getBoundingClientRect();
-    const currentOffset = itemOffsets[itemKey] ?? { x: 0, y: 0 };
-
-    dragStateRef.current = {
-      key: itemKey,
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-      origin: currentOffset,
-      startLeft: stageRect ? itemRect.left - stageRect.left : 0,
-      startTop: stageRect ? itemRect.top - stageRect.top : 0,
-      maxLeft: stageRect ? Math.max(0, stageRect.width - itemRect.width) : Number.POSITIVE_INFINITY,
-      maxTop: stageRect ? Math.max(0, stageRect.height - itemRect.height) : Number.POSITIVE_INFINITY,
-    };
-
-    setDraggingKey(itemKey);
-    event.preventDefault();
-    event.currentTarget.setPointerCapture?.(event.pointerId);
-  };
-
-  const handleDragMove = (itemKey, event) => {
-    const dragState = dragStateRef.current;
-
-    if (!dragState || dragState.key !== itemKey || dragState.pointerId !== event.pointerId) {
-      return;
-    }
-
-    const deltaX = event.clientX - dragState.startX;
-    const deltaY = event.clientY - dragState.startY;
-    const nextLeft = clampValue(dragState.startLeft + deltaX, 0, dragState.maxLeft);
-    const nextTop = clampValue(dragState.startTop + deltaY, 0, dragState.maxTop);
-    const nextOffset = {
-      x: dragState.origin.x + (nextLeft - dragState.startLeft),
-      y: dragState.origin.y + (nextTop - dragState.startTop),
-    };
-
-    setItemOffsets((currentOffsets) => {
-      const currentOffset = currentOffsets[itemKey] ?? { x: 0, y: 0 };
-
-      if (currentOffset.x === nextOffset.x && currentOffset.y === nextOffset.y) {
-        return currentOffsets;
-      }
-
-      return {
-        ...currentOffsets,
-        [itemKey]: nextOffset,
-      };
-    });
-  };
-
-  const handleDragEnd = (itemKey, event) => {
-    const dragState = dragStateRef.current;
-
-    if (!dragState || dragState.key !== itemKey || dragState.pointerId !== event.pointerId) {
-      return;
-    }
-
-    if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
-    }
-
-    dragStateRef.current = null;
-    setDraggingKey((currentKey) => (currentKey === itemKey ? null : currentKey));
-  };
-
   return (
-    <div
-      ref={stageRef}
-      className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/fos.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif] text-slate-900"
-    >
+    <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/fos.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif] text-slate-900">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.08)_58%,rgba(255,255,255,0.03))]" />
 
       <div className="absolute left-1/2 top-3 z-50 max-w-[min(80vw,22rem)] -translate-x-1/2 rounded-full bg-white/78 px-4 py-2 text-center text-[10px] font-semibold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm sm:text-xs">
-        {dragHintText}
+        {sceneHintText}
       </div>
 
       <div className="absolute bottom-3 left-3 z-50 sm:bottom-4 sm:left-4">
@@ -419,7 +442,7 @@ export default function P5FoodChainScene() {
       <button
         type="button"
         onClick={speakAll}
-        className="absolute right-3 top-3 z-50 inline-flex items-center gap-2 rounded-full bg-white/78 px-3 py-2 text-xs font-bold text-[#2563eb] shadow-[0_10px_24px_rgba(59,130,246,0.14)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white sm:right-4 sm:top-4"
+        className="absolute right-3 top-3 z-50 inline-flex items-center gap-2.5 rounded-full bg-white/78 px-4 py-2.5 text-sm font-bold text-[#2563eb] shadow-[0_10px_24px_rgba(59,130,246,0.14)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white sm:right-4 sm:top-4 sm:px-5 sm:py-3 sm:text-base"
         aria-label={ui.listenAll}
       >
         <span>{"\uD83D\uDD0A"}</span>
@@ -433,11 +456,6 @@ export default function P5FoodChainScene() {
           activeLang={activeLang}
           onSpeak={speakText}
           voiceLabel={ui.listenOne}
-          offset={itemOffsets[item.key] ?? { x: 0, y: 0 }}
-          isDragging={draggingKey === item.key}
-          onDragStart={handleDragStart}
-          onDragMove={handleDragMove}
-          onDragEnd={handleDragEnd}
         />
       ))}
 
@@ -452,3 +470,5 @@ export default function P5FoodChainScene() {
     </div>
   );
 }
+
+

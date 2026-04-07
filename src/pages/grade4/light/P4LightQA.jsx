@@ -48,6 +48,7 @@ const UI = {
     ],
     topSpeakLabel: "ฟังคำถามด้านบน",
     speakLabel: "ฟังคำอธิบายข้อนี้",
+    answerSpeakLabel: "ฟังเฉลยข้อนี้",
     back: "◀ กลับ",
     finish: "🎉 ไปต่อ ▶",
   },
@@ -90,6 +91,7 @@ const UI = {
     ],
     topSpeakLabel: "Listen to the question above",
     speakLabel: "Listen to this card",
+    answerSpeakLabel: "Listen to this answer",
     back: "◀ Back",
     finish: "🎉 Finish Lesson ▶",
   },
@@ -132,6 +134,7 @@ const UI = {
     ],
     topSpeakLabel: "Dengar soalan di atas",
     speakLabel: "Dengar kad ini",
+    answerSpeakLabel: "Dengar jawapan ini",
     back: "◀ Kembali",
     finish: "🎉 Tamat Pelajaran ▶",
   },
@@ -191,9 +194,17 @@ export default function P4LightQA() {
   const buildCardSpeechText = (card) => {
     if (!card) return "";
     if (language === "th") {
-      return `${card.title} ${card.examples} ${card.pass} ${card.result}`;
+      return `${card.title} ${card.examples}`;
     }
-    return `${card.title}. ${card.examples}. ${card.pass}. ${card.result}.`;
+    return `${card.title}. ${card.examples}.`;
+  };
+
+  const buildAnswerSpeechText = (card) => {
+    if (!card) return "";
+    if (language === "th") {
+      return `${card.pass} ${card.result}`;
+    }
+    return `${card.pass}. ${card.result}.`;
   };
 
   const speakText = (text) => {
@@ -381,10 +392,26 @@ export default function P4LightQA() {
                             <div
                               className={`mt-4 rounded-[20px] border px-4 py-4 text-slate-950 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] ${theme.answer}`}
                             >
-                              <div className="text-sm font-bold text-sky-900 sm:text-base">
-                                {card.pass}
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="min-w-0 flex-1">
+                                  <div className="text-sm font-bold text-red-600 sm:text-base">
+                                    {card.pass}
+                                  </div>
+                                  <div className="mt-1 text-sm text-red-600 sm:text-base">
+                                    👉 {card.result}
+                                  </div>
+                                </div>
+
+                                <button
+                                  type="button"
+                                  onClick={() => speakText(buildAnswerSpeechText(card))}
+                                  className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-red-200 bg-white/95 text-lg text-red-500 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-red-50"
+                                  aria-label={`${content.answerSpeakLabel}: ${card.title}`}
+                                  title={`${content.answerSpeakLabel}: ${card.title}`}
+                                >
+                                  🔊
+                                </button>
                               </div>
-                              <div className="mt-1 text-sm sm:text-base">👉 {card.result}</div>
                             </div>
                           ) : (
                             <div className="mt-4 rounded-[20px] border border-dashed border-slate-300/80 bg-white/70 px-4 py-4 text-sm font-semibold text-slate-500">
