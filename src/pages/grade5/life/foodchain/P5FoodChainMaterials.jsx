@@ -122,7 +122,7 @@ const PAGE_COPY = {
 const LANGUAGE_LABELS = {
   th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   en: { th: "Thai", en: "English", ms: "Malay" },
-  ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+  ms: { th: "Thai", en: "English", ms: "Melayu" },
 };
 
 const topMaterials = [

@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
@@ -7,13 +7,13 @@ const UI = {
     title: "การทดลองที่ 4 เรื่อง ตัวกลางของแสง",
     stepLabel: "ขั้นตอนการทดลอง",
     steps: [
-      "เลือกวัตถุทดลอง",
+      "เลือกวัสดุทดลอง",
       "สังเกตผลที่แสดง",
-      "เปลี่ยนชนิดวัตถุและทำการทดลองซ้ำ",
+      "เปลี่ยนชนิดวัสดุและทำการทดลองซ้ำ",
       "บันทึกผลการทดลอง",
     ],
-    back: "◀ ย้อนกลับ",
-    start: "▶ ไปต่อ",
+    back: "ย้อนกลับ",
+    start: "ต่อไป",
     speakPrefix: "ขั้นตอนการทดลอง",
     speakDivider: "ข้อที่",
   },
@@ -26,8 +26,8 @@ const UI = {
       "Change the material type and repeat the test.",
       "Record the experiment result.",
     ],
-    back: "◀ Back",
-    start: "▶ Start Experiment",
+    back: "Back",
+    start: "Next",
     speakPrefix: "Experiment steps",
     speakDivider: "Step",
   },
@@ -40,15 +40,15 @@ const UI = {
       "Tukar jenis bahan dan ulang eksperimen.",
       "Catat keputusan eksperimen.",
     ],
-    back: "◀ Kembali",
-    start: "▶ Mula Eksperimen",
+    back: "Kembali",
+    start: "Seterusnya",
     speakPrefix: "Langkah eksperimen",
     speakDivider: "Langkah",
   },
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "\u0E44\u0E17\u0E22", en: "\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29", ms: "\u0E21\u0E25\u0E32\u0E22\u0E39" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
@@ -78,7 +78,7 @@ export default function P4LightIntro() {
   const content = UI[language] ?? UI.th;
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-4 pb-10 pt-6 font-['Prompt',sans-serif] sm:px-8">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-4 pb-28 pt-6 font-['Prompt',sans-serif] sm:px-8 sm:pb-32">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/materials/back.png')" }}
@@ -121,22 +121,23 @@ export default function P4LightIntro() {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <LightLanguageSwitcher
-            value={language}
-            onChange={setLanguage}
-            labels={LANGUAGE_LABELS[language]}
-          />
+      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher
+          value={language}
+          onChange={setLanguage}
+          labels={LANGUAGE_LABELS[language]}
+        />
+      </div>
 
-          <LightNavButtons
-            className="ml-auto"
-            backLabel={content.back}
-            nextLabel={content.start}
-            onBack={() => navigate("/p4/light/select")}
-            onNext={() => navigate("/p4/light/thinking")}
-          />
-        </div>
+      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <LightNavButtons
+          backLabel={content.back}
+          nextLabel={content.start}
+          onBack={() => navigate("/p4/light/select")}
+          onNext={() => navigate("/p4/light/thinking")}
+        />
       </div>
     </div>
   );

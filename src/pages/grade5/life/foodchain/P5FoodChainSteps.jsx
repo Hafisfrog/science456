@@ -1,25 +1,31 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
+import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const PAGE_COPY = {
   th: {
     mainTitle: "การทดลองที่ 5 เรื่อง ห่วงโซ่อาหาร",
     stepLabel: "ขั้นตอนการทดลอง",
     back: "ย้อนกลับ",
+    nextButton: "ต่อไป",
     next: "เริ่มการทดลอง",
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     mainTitle: "Experiment 5: Food Chain",
     stepLabel: "Experiment Steps",
     back: "Back",
+    nextButton: "Next",
     next: "Start Experiment",
+    langLabels: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     mainTitle: "Eksperimen 5: Rantaian Makanan",
     stepLabel: "Langkah Eksperimen",
     back: "Kembali",
+    nextButton: "Seterusnya",
     next: "Mula Eksperimen",
+    langLabels: { th: "Thai", en: "Inggeris", ms: "Melayu" },
   },
 };
 
@@ -109,21 +115,49 @@ export default function P5FoodChainSteps() {
             </div>
           </div>
         </div>
-
       </div>
 
       <div className="absolute bottom-3 left-3 z-20 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5">
-        <FoodChainLanguageSwitcher value={activeLang} onChange={setActiveLang} />
+        <FoodChainLanguageSwitcher
+          value={activeLang}
+          onChange={setActiveLang}
+          labels={t.langLabels}
+        />
       </div>
 
-      <div className="absolute bottom-3 right-3 z-20 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5">
-        <FoodChainNavButtons
-          backLabel={t.back}
-          nextLabel={t.next}
-          onBack={() => navigate("/p5/life/foodchain/materials")}
-          onNext={() => navigate("/p5/life/foodchain/select")}
-        />
+      <div className="absolute bottom-3 right-3 z-20 flex flex-col items-end gap-3 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5 lg:right-10">
+        <button
+          type="button"
+          onClick={() => navigate("/p5/life/foodchain/select")}
+          className="mr-5 flex w-[260px] flex-col items-center justify-center gap-3 rounded-[20px] bg-white/92 px-5 py-4 text-slate-900 shadow-[0_18px_36px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.24)] active:translate-y-px"
+        >
+          <span className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-blue-100 text-[28px] font-black text-slate-900 shadow-[inset_0_-5px_0_rgba(0,0,0,.10)]">
+            {"\u25B6"}
+          </span>
+          <span className="text-center text-[20px] font-black leading-[1.05]">{t.next}</span>
+        </button>
+
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => navigate("/p5/life/foodchain/materials")}
+            className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-white/95 px-8 py-3 text-[18px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.22)] active:translate-y-px"
+          >
+            <span aria-hidden="true">←</span>
+            <span>{t.back}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/p5/life/foodchain/select")}
+            className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#08c95a] px-8 py-3 text-[18px] font-black text-white shadow-[0_14px_28px_rgba(8,201,90,.24)] transition duration-150 hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_18px_34px_rgba(8,201,90,.3)] active:translate-y-px"
+          >
+            <span>{t.nextButton}</span>
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
       </div>
     </div>
   );
 }
+

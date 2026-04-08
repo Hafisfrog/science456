@@ -138,7 +138,7 @@ const UI_COPY = {
     next: "Seterusnya",
     languages: {
       th: "Thai",
-      en: "Inggeris",
+      en: "English",
       ms: "Melayu",
     },
   },
@@ -220,7 +220,7 @@ const SCENE_ITEMS = [
       en: "Field Rat / Consumer",
       ms: "Tikus Sawah / Pengguna",
     },
-    containerClass: "top-[15%] left-[47%]",
+    containerClass: "top-[29%] left-[47%]",
     imageClass: "w-20 sm:w-24 lg:w-28",
     badgeWidthClass: "max-w-[7rem] lg:max-w-[8rem]",
     depthClass: "z-30",
@@ -340,7 +340,8 @@ const SCENE_ITEMS = [
       en: "Fish / Consumer",
       ms: "Ikan / Pengguna",
     },
-    containerClass: "top-[62%] right-[5%]",
+    containerClass: "top-[53%] right-[5%]",
+    labelBlockClass: "-translate-y-2 sm:-translate-y-3",
     labelRowClassByLang: {
       en: "-translate-x-3 sm:-translate-x-5",
       ms: "-translate-x-5 sm:-translate-x-7",
@@ -427,7 +428,7 @@ export default function P5FoodChainScene() {
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/fos.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif] text-slate-900">
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.08)_58%,rgba(255,255,255,0.03))]" />
 
-      <div className="absolute left-1/2 top-3 z-50 max-w-[min(80vw,22rem)] -translate-x-1/2 rounded-full bg-white/78 px-4 py-2 text-center text-[10px] font-semibold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm sm:text-xs">
+      <div className="absolute left-1/2 top-3 z-50 max-w-[min(88vw,30rem)] -translate-x-1/2 rounded-full bg-white/78 px-6 py-3 text-center text-xs font-bold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm sm:px-8 sm:py-4 sm:text-lg">
         {sceneHintText}
       </div>
 
@@ -439,7 +440,7 @@ export default function P5FoodChainScene() {
         />
       </div>
 
-      <button
+      {/* <button
         type="button"
         onClick={speakAll}
         className="absolute right-3 top-3 z-50 inline-flex items-center gap-2.5 rounded-full bg-white/78 px-4 py-2.5 text-sm font-bold text-[#2563eb] shadow-[0_10px_24px_rgba(59,130,246,0.14)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white sm:right-4 sm:top-4 sm:px-5 sm:py-3 sm:text-base"
@@ -447,7 +448,7 @@ export default function P5FoodChainScene() {
       >
         <span>{"\uD83D\uDD0A"}</span>
         <span>{ui.listenAll}</span>
-      </button>
+      </button> */}
 
       {SCENE_ITEMS.map((item) => (
         <SceneItem

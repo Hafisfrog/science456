@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
@@ -54,31 +54,31 @@ const UI = {
   th: {
     title: "การทดลองที่ 4 เรื่อง ตัวกลางของแสง",
     label: "วัสดุอุปกรณ์",
-    back: "◀ ย้อนกลับ",
-    next: "ไปต่อ ▶",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
     speakText:
       "หน้าวัสดุอุปกรณ์การทดลองเรื่องตัวกลางของแสง ประกอบด้วยวัสดุโปร่งใส โปร่งแสง และทึบแสงหลายชนิด",
   },
   en: {
     title: "Experiment 4: Medium of Light",
     label: "Materials",
-    back: "◀ Back",
-    next: "Next ▶",
+    back: "Back",
+    next: "Next",
     speakText:
       "This materials page includes transparent, translucent, and opaque items used in the medium of light experiment.",
   },
   ms: {
     title: "Eksperimen 4: Medium Cahaya",
     label: "Bahan",
-    back: "◀ Kembali",
-    next: "Seterusnya ▶",
+    back: "Kembali",
+    next: "Seterusnya",
     speakText:
       "Halaman bahan ini mengandungi objek lut sinar, separa lut sinar, dan legap untuk eksperimen medium cahaya.",
   },
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "\u0E44\u0E17\u0E22", en: "\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29", ms: "\u0E21\u0E25\u0E32\u0E22\u0E39" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
@@ -101,7 +101,7 @@ export default function P4LightSelect() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-3 pb-8 pt-4 sm:px-6 sm:pb-10 sm:pt-5">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-3 pb-28 pt-4 sm:px-6 sm:pb-32 sm:pt-5">
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/materials/back.png')" }}
@@ -145,22 +145,23 @@ export default function P4LightSelect() {
             </div>
           ))}
         </div>
+      </div>
 
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <LightLanguageSwitcher
-            value={language}
-            onChange={setLanguage}
-            labels={LANGUAGE_LABELS[language]}
-          />
+      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher
+          value={language}
+          onChange={setLanguage}
+          labels={LANGUAGE_LABELS[language]}
+        />
+      </div>
 
-          <LightNavButtons
-            className="ml-auto"
-            backLabel={ui.back}
-            nextLabel={ui.next}
-            onBack={() => navigate("/p4/light/situation")}
-            onNext={() => navigate("/p4/light/intro")}
-          />
-        </div>
+      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <LightNavButtons
+          backLabel={ui.back}
+          nextLabel={ui.next}
+          onBack={() => navigate("/p4/light/situation")}
+          onNext={() => navigate("/p4/light/intro")}
+        />
       </div>
     </div>
   );
