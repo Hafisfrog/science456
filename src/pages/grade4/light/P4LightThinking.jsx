@@ -1,8 +1,7 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LightLanguageSwitcher } from "./LightControls";
 
-// Change image paths here (images should be under public/)
 const PERSON_IMAGE_SRC = "/images/p4/ko.png";
 const BOX_IMAGE_SRC = "/images/p4/op.png";
 
@@ -10,13 +9,15 @@ const UI = {
   th: {
     classLabel: "ห้องเรียนวิทยาศาสตร์",
     title: "คำถามชวนคิด",
-    question: "1.ทำไมวัสดุแต่ละชนิดถึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน ?",
+    question:
+      "1. ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน ?",
     answer: "มาหาคำตอบกัน",
-    start: "ไปต่อ",
+    start: "เริ่มการทดลอง",
+    next: "ไปต่อ",
     back: "ย้อนกลับ",
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
     speakText:
-      "คำถามชวนคิด ข้อที่ 1 ทำไมวัสดุแต่ละชนิดถึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน มาหาคำตอบกัน",
+      "คำถามชวนคิด ข้อที่ 1 ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน มาหาคำตอบกัน",
   },
   en: {
     classLabel: "Science Classroom",
@@ -24,6 +25,7 @@ const UI = {
     question: "1. Why do different materials let us see inside objects with different clarity?",
     answer: "Let's find the answer",
     start: "Start Experiment",
+    next: "Next",
     back: "Back",
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
     speakText:
@@ -36,6 +38,7 @@ const UI = {
       "1. Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",
     answer: "Mari cari jawapannya",
     start: "Mula Eksperimen",
+    next: "Seterusnya",
     back: "Kembali",
     langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     speakText:
@@ -125,10 +128,6 @@ export default function P4LightThinking() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const content = UI[language] ?? UI.th;
-  const startButtonLabel =
-    language === "th" ? "เริ่มการทดลอง" : content.start;
-  const nextButtonLabel =
-    language === "th" ? "ต่อไป" : language === "ms" ? "Seterusnya" : "Next";
 
   const speak = () => {
     if (
@@ -155,7 +154,7 @@ export default function P4LightThinking() {
       />
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(186,230,253,0.8),transparent_40%)]" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1360px] flex-col px-3 pb-6 pt-4 sm:px-6 sm:pb-8">
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1360px] flex-col px-3 pb-32 pt-4 sm:px-6 sm:pb-36">
         <div className="mb-3 ml-auto text-right text-lg font-semibold text-sky-700 sm:text-xl">
           {content.classLabel}
         </div>
@@ -194,51 +193,49 @@ export default function P4LightThinking() {
             className="z-20 ml-auto mt-2 lg:absolute lg:bottom-4 lg:right-4 xl:right-8"
           />
         </div>
+      </div>
 
-        <div className="-mt-1 flex flex-col gap-3 sm:-mt-2 lg:-mt-4 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex flex-col gap-2 sm:self-end">
-            <LightLanguageSwitcher
-              value={language}
-              onChange={setLanguage}
-              labels={content.langLabel}
-            />
+      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher
+          value={language}
+          onChange={setLanguage}
+          labels={content.langLabel}
+        />
+      </div>
+
+      <div className="fixed bottom-4 right-4 z-30 flex w-full max-w-[350px] flex-col gap-2.5 sm:bottom-6 sm:right-6">
+        <div className="flex justify-center">
+          <StartExperimentButton
+            label={content.start}
+            onClick={() => navigate("/p4/light/experiment")}
+          />
+        </div>
+
+        <div className="grid w-full gap-3 sm:grid-cols-2 sm:gap-4">
+          <div className="flex sm:justify-start">
+            <button
+              type="button"
+              onClick={() => navigate("/p4/light/intro")}
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-white px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-[#0b2246] shadow-[0_10px_18px_rgba(15,23,42,0.14)] transition hover:-translate-y-0.5 hover:brightness-[1.01] sm:min-h-[52px] sm:text-[0.98rem]"
+            >
+              <span aria-hidden="true" className="text-[1em] leading-none">
+                {"\u00AB"}
+              </span>
+              <span>{content.back}</span>
+            </button>
           </div>
 
-          <div className="ml-auto flex w-full flex-col gap-2.5 lg:max-w-[350px]">
-            <div className="flex justify-center">
-              <StartExperimentButton
-                label={language === "th" ? "เริ่มการทดลอง" : startButtonLabel}
-                onClick={() => navigate("/p4/light/experiment")}
-              />
-            </div>
-
-            <div className="grid w-full gap-3 sm:grid-cols-2 sm:gap-4">
-              <div className="flex sm:justify-start">
-                <button
-                  type="button"
-                  onClick={() => navigate("/p4/light/intro")}
-                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-white px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-[#0b2246] shadow-[0_10px_18px_rgba(15,23,42,0.14)] transition hover:-translate-y-0.5 hover:brightness-[1.01] sm:min-h-[52px] sm:text-[0.98rem]"
-                >
-                  <span aria-hidden="true" className="text-[1em] leading-none">
-                    {"\u00AB"}
-                  </span>
-                  <span>{language === "th" ? "ย้อนกลับ" : content.back}</span>
-                </button>
-              </div>
-
-              <div className="flex sm:justify-end">
-                <button
-                  type="button"
-                  onClick={() => navigate("/p4/light/experiment")}
-                  className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-gradient-to-r from-[#2d79ff] via-[#2f94f1] to-[#27bde9] px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-white shadow-[0_10px_18px_rgba(37,99,235,0.2)] transition hover:-translate-y-0.5 hover:brightness-105 sm:min-h-[52px] sm:text-[0.98rem]"
-                >
-                  <span>{language === "th" ? "ไปต่อ" : nextButtonLabel}</span>
-                  <span aria-hidden="true" className="text-[1em] leading-none">
-                    {"\u00BB"}
-                  </span>
-                </button>
-              </div>
-            </div>
+          <div className="flex sm:justify-end">
+            <button
+              type="button"
+              onClick={() => navigate("/p4/light/experiment")}
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-gradient-to-r from-[#2d79ff] via-[#2f94f1] to-[#27bde9] px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-white shadow-[0_10px_18px_rgba(37,99,235,0.2)] transition hover:-translate-y-0.5 hover:brightness-105 sm:min-h-[52px] sm:text-[0.98rem]"
+            >
+              <span>{content.next}</span>
+              <span aria-hidden="true" className="text-[1em] leading-none">
+                {"\u00BB"}
+              </span>
+            </button>
           </div>
         </div>
       </div>

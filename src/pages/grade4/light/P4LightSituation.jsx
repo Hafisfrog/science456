@@ -12,8 +12,8 @@ const CONTENT = {
     ],
     speakText:
       "สถานการณ์ปัญหา นักเรียนสวมบทบาทเป็นนักวิทยาศาสตร์ เพื่อสังเกตแสงที่ผ่านวัสดุแต่ละชนิด แล้วทายว่าสิ่งของในกล่องคืออะไร",
-    back: "◀ ย้อนกลับ",
-    next: "ไปต่อ ▶",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
     title: "Problem Situation",
@@ -24,8 +24,8 @@ const CONTENT = {
     ],
     speakText:
       "Problem situation: students act as scientists and observe light through different materials to identify objects inside mystery boxes.",
-    back: "◀ Back",
-    next: "Next ▶",
+    back: "Back",
+    next: "Next",
   },
   ms: {
     title: "Situasi Masalah",
@@ -36,13 +36,13 @@ const CONTENT = {
     ],
     speakText:
       "Situasi masalah: murid bertindak sebagai saintis dan memerhati cahaya melalui bahan yang berbeza untuk mengenal pasti objek dalam kotak misteri.",
-    back: "◀ Kembali",
-    next: "Seterusnya ▶",
+    back: "Kembali",
+    next: "Seterusnya",
   },
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "\u0E44\u0E17\u0E22", en: "\u0E2D\u0E31\u0E07\u0E01\u0E24\u0E29", ms: "\u0E21\u0E25\u0E32\u0E22\u0E39" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
@@ -102,21 +102,23 @@ export default function P4LightSituation() {
           </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-5">
-          <LightLanguageSwitcher
-            value={language}
-            onChange={setLanguage}
-            labels={LANGUAGE_LABELS[language]}
-          />
+      </div>
 
-          <LightNavButtons
-            className="ml-auto w-full justify-end sm:w-auto"
-            backLabel={content.back}
-            nextLabel={content.next}
-            onBack={() => navigate("/p4/light/basic")}
-            onNext={() => navigate("/p4/light/select")}
-          />
-        </div>
+      <div className="absolute bottom-4 left-4 z-20 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher
+          value={language}
+          onChange={setLanguage}
+          labels={LANGUAGE_LABELS[language]}
+        />
+      </div>
+
+      <div className="absolute bottom-4 right-4 z-20 sm:bottom-6 sm:right-6">
+        <LightNavButtons
+          backLabel={content.back}
+          nextLabel={content.next}
+          onBack={() => navigate("/p4/light/basic")}
+          onNext={() => navigate("/p4/light/select")}
+        />
       </div>
     </div>
   );

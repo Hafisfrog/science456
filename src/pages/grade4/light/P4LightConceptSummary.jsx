@@ -248,13 +248,13 @@ export default function P4LightConceptSummary() {
       />
       <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_18%_15%,rgba(255,255,255,0.9),transparent_40%),radial-gradient(circle_at_82%_8%,rgba(223,245,255,0.92),transparent_40%)]" />
 
-      <div className="relative z-10 min-h-screen overflow-y-auto px-3 pb-4 pt-3 sm:px-5 sm:pb-5 sm:pt-4">
+      <div className="relative z-10 min-h-screen overflow-y-auto px-3 pb-28 pt-3 sm:px-5 sm:pb-32 sm:pt-4">
         <div className="mx-auto flex w-full max-w-[1260px] flex-col gap-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="m-0 text-center text-3xl font-extrabold text-black drop-shadow-[0_2px_0_rgba(255,255,255,0.55)] sm:text-5xl">
               {ui.pageTitle}
             </h1>
-            <button
+            {/* <button
               type="button"
               onClick={() => speakContent(ui.pageTitle)}
               aria-label={ui.listenTitle}
@@ -262,7 +262,7 @@ export default function P4LightConceptSummary() {
               className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-sky-300 bg-white/85 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-100 sm:h-12 sm:w-12"
             >
               🔊
-            </button>
+            </button> */}
           </div>
 
           <div className="relative">
@@ -412,33 +412,34 @@ export default function P4LightConceptSummary() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-3">
-              <LightLanguageSwitcher
-                value={language}
-                onChange={setLanguage}
-                labels={ui.lang}
-              />
-
-              <button
-                type="button"
-                onClick={speakSummary}
-                aria-label={ui.listen}
-                title={ui.listen}
-                className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-300 bg-sky-50 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-100"
-              >
-                🔊
-              </button>
-            </div>
-
-            <LightNavButtons
-              backLabel={backLabel}
-              nextLabel={ui.next}
-              onBack={() => navigate("/p4/light/qa")}
-              onNext={() => navigate("/p4")}
-            />
-          </div>
         </div>
+      </div>
+
+      <div className="fixed bottom-4 left-4 z-30 flex items-center gap-3 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher
+          value={language}
+          onChange={setLanguage}
+          labels={ui.lang}
+        />
+
+        {/* <button
+          type="button"
+          onClick={speakSummary}
+          aria-label={ui.listen}
+          title={ui.listen}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-300 bg-sky-50 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-100"
+        >
+          🔊
+        </button> */}
+      </div>
+
+      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <LightNavButtons
+          backLabel={backLabel}
+          nextLabel={ui.next}
+          onBack={() => navigate("/p4/light/qa")}
+          onNext={() => navigate("/p4")}
+        />
       </div>
     </div>
   );

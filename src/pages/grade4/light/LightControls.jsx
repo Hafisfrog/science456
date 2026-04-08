@@ -62,10 +62,10 @@ export function LightNavButtons({
   const resolvedNextLabel = sanitizeNavLabel(nextLabel);
   const isLarge = size === "large";
   const displayBackLabel = isLarge
-    ? "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a"
+    ? (resolvedBackLabel || "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a")
     : resolvedBackLabel;
   const displayNextLabel = isLarge
-    ? "\u0e44\u0e1b\u0e15\u0e48\u0e2d"
+    ? (resolvedNextLabel || "\u0e44\u0e1b\u0e15\u0e48\u0e2d")
     : resolvedNextLabel;
   const wrapperClassName = isLarge ? "flex-nowrap gap-1.5 sm:gap-2" : "gap-2.5";
   const backButtonClassName = isLarge

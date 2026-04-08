@@ -154,7 +154,7 @@ const UI_COPY = {
     fillAllAlert: "Please fill every slot before continuing",
   },
   ms: {
-    languages: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+    languages: { th: "Thai", en: "English", ms: "Melayu" },
     activityBadge: "Aktiviti susun rantai makanan",
     pageTitle: "Bina rantai makanan mengikut urutan pemakanan",
     pageDescription:

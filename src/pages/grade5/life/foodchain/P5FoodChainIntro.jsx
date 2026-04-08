@@ -1,22 +1,28 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
+
+const IMAGE_CARD = {
+  src: "/images/p5-life.png",
+};
 
 const UI = {
   th: {
     grade: "ชั้นประถมศึกษาปีที่ 5",
     topic: "ชีวิตสัมพันธ์",
-    experiment: "การทดลองที่ 5",
+    experiment: "วิทยาศาสตร์ ป.5",
     lesson: "ห่วงโซ่อาหาร",
+    subtitle: "เลือกหน่วยการเรียนรู้",
     back: "ย้อนกลับ",
     next: "ไปต่อ",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มาลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     grade: "Grade 5",
     topic: "Interdependence",
-    experiment: "Experiment 5",
+    experiment: "Science Grade 5",
     lesson: "Food Chain",
+    subtitle: "Choose a learning unit",
     back: "Back",
     next: "Next",
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
@@ -24,11 +30,12 @@ const UI = {
   ms: {
     grade: "Tahun 5",
     topic: "Hidupan Saling Bergantung",
-    experiment: "Eksperimen 5",
+    experiment: "Sains Tahun 5",
     lesson: "Rantaian Makanan",
+    subtitle: "Pilih unit pembelajaran",
     back: "Kembali",
     next: "Seterusnya",
-    langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+    langLabel: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
@@ -62,11 +69,14 @@ export default function P5FoodChainIntro() {
   };
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat">
-      <div className="absolute inset-0 bg-white/5" />
+    <div className="relative min-h-screen w-full overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat">
+      <div className="absolute inset-0 bg-[#09101d]/72" />
+      <div className="pointer-events-none absolute inset-0 opacity-70 [background:radial-gradient(circle_at_left_10%,rgba(253,230,138,0.95)_0,rgba(253,230,138,0.12)_12%,transparent_26%),radial-gradient(circle_at_right_92%,rgba(251,191,36,0.9)_0,rgba(251,191,36,0.08)_10%,transparent_24%)]" />
+      <div className="pointer-events-none absolute left-0 top-[12%] h-[6px] w-full bg-gradient-to-r from-transparent via-[#e9d27a] to-transparent shadow-[0_0_30px_rgba(233,210,122,0.95)]" />
+      <div className="pointer-events-none absolute bottom-[8%] left-0 h-[6px] w-full bg-gradient-to-r from-transparent via-[#e9d27a] to-transparent shadow-[0_0_30px_rgba(233,210,122,0.95)]" />
 
-      <div className="relative z-10 flex h-full flex-col px-4 py-4 sm:px-8 sm:py-6">
-        <div className="absolute left-4 top-4 z-20 inline-flex w-fit items-center rounded-full bg-[#99e29f] px-3 py-1 text-lg font-extrabold text-[#2d8b57] [text-shadow:0_2px_0_#ffffff] sm:left-8 sm:top-6 sm:px-4 sm:py-1.5 sm:pr-10 sm:text-3xl">
+      <div className="relative z-10 flex min-h-screen flex-col px-4 py-4 sm:px-8 sm:py-6">
+        {/* <div className="absolute left-4 top-4 z-20 inline-flex w-fit items-center rounded-full bg-[#99e29f] px-3 py-1 text-lg font-extrabold text-[#2d8b57] [text-shadow:0_2px_0_#ffffff] sm:left-8 sm:top-6 sm:px-4 sm:py-1.5 sm:pr-10 sm:text-3xl">
           {content.grade}
           <button
             type="button"
@@ -76,48 +86,55 @@ export default function P5FoodChainIntro() {
           >
             {"\uD83D\uDD0A"}
           </button>
-        </div>
+        </div> */}
 
-        <div className="flex w-full flex-1 flex-col items-start justify-center gap-4 pb-20 pt-16 sm:flex-row sm:items-center sm:justify-center sm:gap-0 sm:pb-24 sm:pt-10">
-          <div className="relative w-full max-w-[560px]">
-            <div className="absolute -left-2 -top-2 h-5 w-5 rounded-sm border-2 border-[#1e3256] bg-[#f28a26] sm:h-7 sm:w-7 sm:border-[3px]" />
-            <div className="absolute -right-2 -top-2 h-5 w-5 rounded-sm border-2 border-[#1e3256] bg-[#f28a26] sm:h-7 sm:w-7 sm:border-[3px]" />
-            <div className="absolute -bottom-2 -left-2 h-5 w-5 rounded-sm border-2 border-[#1e3256] bg-[#f28a26] sm:h-7 sm:w-7 sm:border-[3px]" />
-            <div className="absolute -bottom-2 -right-2 h-5 w-5 rounded-sm border-2 border-[#1e3256] bg-[#f28a26] sm:h-7 sm:w-7 sm:border-[3px]" />
-
-            <div className="absolute inset-0 translate-x-1.5 translate-y-1.5 rounded-sm border-[3px] border-[#167b78] bg-[#2cb3ad] sm:translate-x-2 sm:translate-y-2 sm:border-4" />
-
-            <div className="relative rounded-sm border-[3px] border-[#1e3256] bg-[#f5e9c7] px-5 pt-3 pb-8 text-center text-2xl font-black text-black sm:border-4 sm:px-8 sm:pt-5 sm:pb-10 sm:text-5xl">
-              {content.topic}
-              <button
+        <div className="flex flex-1 flex-col items-center justify-center pb-24 pt-24 sm:pb-28 sm:pt-20">
+          <div className="text-center text-white">
+            <div className="relative inline-flex items-center justify-center">
+              <h1 className="text-4xl font-black tracking-tight drop-shadow-[0_5px_20px_rgba(0,0,0,0.45)] sm:text-6xl">
+                {content.experiment}
+              </h1>
+              {/* <button
                 type="button"
-                onClick={() => speak(content.topic)}
-                className="absolute bottom-2 right-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-xs text-[#2163a5] shadow-[0_4px_8px_rgba(0,0,0,0.12)] transition hover:bg-white sm:h-7 sm:w-7 sm:text-sm"
-                aria-label="Speak topic"
+                onClick={() => speak(content.experiment)}
+                className="absolute -right-10 top-1 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-sm text-[#2163a5] shadow-[0_4px_10px_rgba(0,0,0,0.16)] transition hover:bg-white sm:-right-12 sm:h-9 sm:w-9"
+                aria-label="Speak experiment"
               >
                 {"\uD83D\uDD0A"}
-              </button>
+              </button> */}
             </div>
+            <p className="mt-3 text-xl font-bold text-white/90 sm:text-3xl">{content.subtitle}</p>
           </div>
 
-          <div className="ml-2 hidden h-1 w-[18vw] min-w-[160px] max-w-[340px] rounded-full bg-[#17223e] sm:ml-0 sm:block" />
-
-          <div className="relative w-full max-w-[280px] sm:ml-4">
+          <div className="mt-8 w-full max-w-[620px]">
             <button
               type="button"
               onClick={() => navigate(nextPath)}
-              className="w-full rounded-2xl border-[3px] border-[#1a2454] bg-[#f5ecd7] px-4 pt-3 pb-8 text-left shadow-[6px_6px_0_#4a79ff] transition-transform hover:scale-[1.02] sm:border-4 sm:px-5 sm:pt-4 sm:pb-10"
+              className="group relative w-full overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_50px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.42)]"
             >
-              <p className="text-2xl font-extrabold text-[#49a52f] sm:text-3xl">{content.experiment}</p>
-              <p className="mt-1 text-3xl font-black text-black sm:text-4xl">{content.lesson}</p>
-            </button>
-            <button
-              type="button"
-              onClick={() => speak(`${content.experiment} ${content.lesson}`)}
-              className="absolute bottom-2 right-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white/90 text-xs text-[#2163a5] shadow-[0_4px_8px_rgba(0,0,0,0.12)] transition hover:bg-white sm:h-7 sm:w-7 sm:text-sm"
-              aria-label="Speak experiment"
-            >
-              {"\uD83D\uDD0A"}
+              <div className="aspect-[16/9] w-full overflow-hidden bg-[#d7ebff]">
+                <img
+                  src={IMAGE_CARD.src}
+                  alt={content.lesson}
+                  className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+
+              <div className="relative bg-white px-5 py-4 text-center sm:px-7 sm:py-5">
+                <p className="text-2xl font-black text-[#17223e] sm:text-[2rem]">{content.lesson}</p>
+                <p className="mt-1 text-sm font-semibold text-slate-500 sm:text-base">{content.topic}</p>
+                {/* <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    speak(`${content.topic} ${content.lesson}`);
+                  }}
+                  className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#eef7ff] text-base text-[#2163a5] shadow-[0_4px_10px_rgba(0,0,0,0.12)] transition hover:bg-white"
+                  aria-label="Speak topic and lesson"
+                >
+                  {"\uD83D\uDD0A"}
+                </button> */}
+              </div>
             </button>
           </div>
         </div>

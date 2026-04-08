@@ -321,6 +321,9 @@ export default function P4LightExperiment() {
 
   const meta = TYPE_META[selectedMaterial.type];
   const experimentCount = experimentResults.length;
+  const testedMaterialIds = new Set(
+    experimentResults.map((result) => result.material?.id).filter(Boolean)
+  );
   const isTight = viewportWidth > 0 && viewportWidth <= 420;
   const baseMaterialSize = isTight ? 130 : isMobile ? 150 : 190;
   const baseEmojiSize = isTight ? 78 : isMobile ? 90 : 112;
@@ -603,6 +606,7 @@ export default function P4LightExperiment() {
   const getMenuImageBtnStyle = (isSelected, isLast) => ({
     ...S.menuImageBtn,
     ...(isLast ? S.menuImageBtnLast : {}),
+    position: "relative",
     opacity: 1,
     transform: isSelected ? "translateY(-2px)" : "translateY(0)",
     background: isSelected
@@ -650,6 +654,28 @@ export default function P4LightExperiment() {
                 )}
                 onClick={() => selectMaterial(m)}
               >
+                {testedMaterialIds.has(m.id) && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: 8,
+                      right: 8,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 4,
+                      padding: "4px 8px",
+                      borderRadius: 999,
+                      background: "rgba(34,197,94,0.96)",
+                      color: "#ffffff",
+                      fontSize: 11,
+                      fontWeight: 800,
+                      boxShadow: "0 8px 16px rgba(34,197,94,0.28)",
+                    }}
+                  >
+                    <span aria-hidden="true">✓</span>
+                    <span>ทดลองแล้ว</span>
+                  </span>
+                )}
                 <div style={getMenuImageFrameStyle(selectedMaterial.id === m.id)}>
                   <img src={m.img} alt={m.name} style={S.menuImageThumb} />
                 </div>
@@ -835,14 +861,16 @@ export default function P4LightExperiment() {
         </div>
       </main>
 
-      <div style={pageNavFloatingStyle}>
-        <LightNavButtons
-          className="justify-end"
-          size="large"
-          onBack={() => navigate("/p4/light/thinking")}
-          onNext={goToRecordSummary}
-        />
-      </div>
+        <div style={pageNavFloatingStyle}>
+          <LightNavButtons
+            className="justify-end"
+            size="large"
+            backLabel="ย้อนกลับ"
+            nextLabel="ดูผลลัพธ์ทั้งหมด"
+            onBack={() => navigate("/p4/light/thinking")}
+            onNext={goToRecordSummary}
+          />
+        </div>
     </div>
   );
 }

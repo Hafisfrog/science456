@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+﻿import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { LightNavButtons } from "./LightControls";
 
@@ -73,19 +73,13 @@ function pickVoice(voices, locale, langKey) {
   if (exactMatch) return exactMatch;
 
   if (langKey === "ms") {
-    const msLangMatch = voices.find((voice) =>
-      voice.lang?.toLowerCase().startsWith("ms")
-    );
+    const msLangMatch = voices.find((voice) => voice.lang?.toLowerCase().startsWith("ms"));
     if (msLangMatch) return msLangMatch;
 
-    const malayNameMatch = voices.find((voice) =>
-      MALAY_VOICE_NAME_RE.test(getVoiceTag(voice))
-    );
+    const malayNameMatch = voices.find((voice) => MALAY_VOICE_NAME_RE.test(getVoiceTag(voice)));
     if (malayNameMatch) return malayNameMatch;
 
-    const indonesiaFallback = voices.find((voice) =>
-      voice.lang?.toLowerCase().startsWith("id")
-    );
+    const indonesiaFallback = voices.find((voice) => voice.lang?.toLowerCase().startsWith("id"));
     if (indonesiaFallback) return indonesiaFallback;
 
     return null;
@@ -194,7 +188,7 @@ export default function P4LightVocab() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#eef6ff] via-[#e9f2fb] to-[#dbe9f7] px-4 py-8 sm:px-6">
+    <div className="relative min-h-screen bg-gradient-to-b from-[#eef6ff] via-[#e9f2fb] to-[#dbe9f7] px-4 py-8 pb-28 sm:px-6 sm:pb-32">
       <div className="mx-auto max-w-5xl">
         <header className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-slate-600 sm:text-3xl">
@@ -283,10 +277,10 @@ export default function P4LightVocab() {
           </div>
         </div>
 
-        <div className="mt-7 flex justify-end">
+        <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
           <LightNavButtons
             backLabel="ย้อนกลับ"
-            nextLabel="ไปต่อ"
+            nextLabel="ต่อไป"
             onBack={() => navigate("/p4/light/objective")}
             onNext={() => navigate("/p4/light/basic")}
           />

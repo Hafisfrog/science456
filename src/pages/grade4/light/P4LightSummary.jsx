@@ -54,8 +54,8 @@ const UI = {
     andWord: "และ",
     listenSummary: "🔊 ฟังข้อความสรุป",
     noMalayVoice: "ไม่พบเสียงภาษามลายู (ms-MY) ในอุปกรณ์นี้ จึงงดอ่านเพื่อป้องกันเสียงเพี้ยน",
-    back: "◀ กลับ",
-    next: "ไปต่อ ▶",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
     title: "Experiment Summary",
@@ -68,8 +68,8 @@ const UI = {
     andWord: "and",
     listenSummary: "🔊 Listen to summary",
     noMalayVoice: "Malay voice (ms-MY) is not available on this device, so reading is skipped to avoid mispronunciation.",
-    back: "◀ Back",
-    next: "Take Quiz ▶",
+    back: "Back",
+    next: "Next",
   },
   ms: {
     title: "Ringkasan Eksperimen",
@@ -82,8 +82,8 @@ const UI = {
     andWord: "dan",
     listenSummary: "🔊 Dengar ringkasan",
     noMalayVoice: "Suara Bahasa Melayu (ms-MY) tidak ditemui pada peranti ini, bacaan dihentikan untuk elak sebutan tersalah.",
-    back: "◀ Kembali",
-    next: "Jawab Kuiz ▶",
+    back: "Kembali",
+    next: "Seterusnya",
   },
 };
 
@@ -245,7 +245,7 @@ export default function P4LightSummary() {
       />
       <div className="pointer-events-none absolute inset-0 opacity-45 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.84),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(220,235,246,0.88),transparent_40%),linear-gradient(180deg,rgba(238,246,252,0.4),rgba(201,219,235,0.32))]" />
 
-      <div className="relative z-10 min-h-screen overflow-y-auto p-3 sm:h-screen sm:min-h-0 sm:overflow-hidden sm:p-4">
+      <div className="relative z-10 min-h-screen overflow-y-auto p-3 pb-28 sm:h-screen sm:min-h-0 sm:overflow-hidden sm:p-4 sm:pb-32">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 sm:h-full sm:gap-4">
           <div className="overflow-hidden rounded-[28px] border border-[#bfd3e3] bg-[linear-gradient(180deg,rgba(244,248,251,0.88),rgba(228,237,245,0.82))] shadow-[0_16px_38px_rgba(106,138,165,0.16)] backdrop-blur-md sm:flex sm:min-h-0 sm:flex-1 sm:flex-col">
             <div className="flex items-center justify-between gap-3 border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-3 text-[#133149] sm:p-4">
@@ -306,18 +306,21 @@ export default function P4LightSummary() {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <LightLanguageSwitcher value={language} onChange={setLanguage} />
-
-            <LightNavButtons
-              className="sm:shrink-0"
-              backLabel={ui.back}
-              nextLabel={ui.next}
-              onBack={() => navigate("/p4/light/record", { state: { pendingResults: allResults } })}
-              onNext={() => navigate("/p4/light/qa")}
-            />
-          </div>
         </div>
+      </div>
+
+      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher value={language} onChange={setLanguage} />
+      </div>
+
+      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <LightNavButtons
+          className="sm:shrink-0"
+          backLabel={ui.back}
+          nextLabel={ui.next}
+          onBack={() => navigate("/p4/light/record", { state: { pendingResults: allResults } })}
+          onNext={() => navigate("/p4/light/qa")}
+        />
       </div>
     </div>
   );

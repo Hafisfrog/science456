@@ -49,8 +49,8 @@ const UI = {
     topSpeakLabel: "ฟังคำถามด้านบน",
     speakLabel: "ฟังคำอธิบายข้อนี้",
     answerSpeakLabel: "ฟังเฉลยข้อนี้",
-    back: "◀ กลับ",
-    finish: "🎉 ไปต่อ ▶",
+    back: "ย้อนกลับ",
+    finish: "ต่อไป",
   },
   en: {
     header: "📣 Question and Answer: Medium of Light",
@@ -92,8 +92,8 @@ const UI = {
     topSpeakLabel: "Listen to the question above",
     speakLabel: "Listen to this card",
     answerSpeakLabel: "Listen to this answer",
-    back: "◀ Back",
-    finish: "🎉 Finish Lesson ▶",
+    back: "Back",
+    finish: "Next",
   },
   ms: {
     header: "📣 Soalan dan Jawapan: Medium Cahaya",
@@ -135,8 +135,8 @@ const UI = {
     topSpeakLabel: "Dengar soalan di atas",
     speakLabel: "Dengar kad ini",
     answerSpeakLabel: "Dengar jawapan ini",
-    back: "◀ Kembali",
-    finish: "🎉 Tamat Pelajaran ▶",
+    back: "Kembali",
+    finish: "Seterusnya",
   },
 };
 
@@ -286,7 +286,7 @@ export default function P4LightQA() {
       />
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(186,230,253,0.8),transparent_40%)]" />
 
-      <div className="relative z-10 min-h-screen overflow-y-auto p-4 sm:p-6">
+      <div className="relative z-10 min-h-screen overflow-y-auto p-4 pb-28 sm:p-6 sm:pb-32">
         <div className="mx-auto max-w-6xl">
           <div className="mb-3 flex items-center justify-center gap-3">
             <h1 className="m-0 w-fit rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
@@ -427,18 +427,21 @@ export default function P4LightQA() {
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4">
-            <LightLanguageSwitcher value={language} onChange={setLanguage} />
-
-            <LightNavButtons
-              className="ml-auto"
-              backLabel={content.back}
-              nextLabel={content.finish}
-              onBack={() => navigate("/p4/light/summary")}
-              onNext={() => navigate("/p4/light/concept")}
-            />
-          </div>
         </div>
+      </div>
+
+      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+        <LightLanguageSwitcher value={language} onChange={setLanguage} />
+      </div>
+
+      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <LightNavButtons
+          className="ml-auto"
+          backLabel={content.back}
+          nextLabel={content.finish}
+          onBack={() => navigate("/p4/light/summary")}
+          onNext={() => navigate("/p4/light/concept")}
+        />
       </div>
     </div>
   );
