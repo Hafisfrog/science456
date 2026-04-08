@@ -9,7 +9,7 @@ const LESSONS = [
       en: "Electric Force",
       ms: "Daya Elektrik",
     },
-    image: "/images/p6/home/electric-force-card.png",
+    image: "/images/p6/fifanarup6.png",
     to: "/p6/electric-force",
   },
   {
@@ -19,7 +19,7 @@ const LESSONS = [
       en: "Electric Circuit",
       ms: "Litar Elektrik",
     },
-    image: "/images/p6/home/electric-circuit-card.png",
+    image: "/images/p6/fifawjp6.png",
     to: "/p6/electric-circuit",
   },
 ];
@@ -91,20 +91,20 @@ export default function P6() {
       </header>
 
       {/* Lesson Cards */}
-      <section className="mx-auto mt-4 flex w-full flex-1 items-start justify-center">
-        <div className="grid w-full max-w-[1320px] grid-cols-1 justify-items-center gap-8 lg:grid-cols-2 lg:gap-10">
+      <section className="mx-auto mt-3 flex w-full flex-1 items-start justify-center">
+        <div className="grid w-full max-w-[1160px] grid-cols-1 justify-items-center gap-6 lg:grid-cols-2 lg:gap-7">
 
           {LESSONS.map((lesson) => (
 
             <div
               key={lesson.id}
-              className="group flex h-[clamp(460px,56vh,560px)] w-[min(620px,44vw)] max-w-[94vw] flex-col overflow-hidden rounded-[36px] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
+              className="group flex h-[clamp(360px,45vh,430px)] w-[min(540px,40vw)] max-w-[94vw] flex-col overflow-hidden rounded-[32px] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
             >
 
               {/* Image */}
               <div
                 onClick={() => navigate(lesson.to)}
-                className="flex h-[clamp(250px,32vh,320px)] items-center justify-center overflow-hidden bg-slate-200 px-3 py-2 cursor-pointer"
+                className="flex h-[clamp(220px,28vh,270px)] items-center justify-center overflow-hidden bg-slate-200 px-2 pt-2 pb-1 cursor-pointer"
               >
                 <img
                   src={lesson.image}
@@ -114,7 +114,7 @@ export default function P6() {
               </div>
 
               {/* Title */}
-              <div className="flex flex-1 items-center justify-center gap-3 px-5 py-5 text-center">
+              <div className="flex min-h-[92px] items-center justify-center gap-3 px-5 py-3 text-center">
 
                 <h2 className="text-[clamp(28px,2.4vw,56px)] font-extrabold leading-[1.15] text-slate-900">
                   {lesson.title[lang]}

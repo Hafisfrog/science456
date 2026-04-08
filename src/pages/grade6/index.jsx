@@ -21,7 +21,7 @@ const EXPERIMENTS = [
       en: "Generating Electric Force",
       ms: "Penghasilan Daya Elektrik",
     },
-    image: "/images/p6/home/electric-force-card.png",
+    image: "/images/p6/todlong7p6.png",
     path: "/p6/experiment/electric-generation/materials?from=unit",
   },
   {
@@ -36,7 +36,7 @@ const EXPERIMENTS = [
       en: "Effects of Electric Force",
       ms: "Kesan Daya Elektrik",
     },
-    image: "/images/p6/home/electric-force-effect-card.png",
+    image: "/images/p6/todlonf8p6.png",
     path: "/p6/experiment/electric-force-effect",
   },
 ];
@@ -104,22 +104,22 @@ export default function Grade6() {
         <p className="mt-2 text-lg text-slate-700 md:text-[45px]">{copy.subtitle}</p>
 
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
-          <div className="grid w-full max-w-[1120px] grid-cols-1 justify-items-center gap-8 lg:translate-x-4 lg:grid-cols-2 xl:translate-x-5">
+          <div className="grid w-full max-w-[1020px] grid-cols-1 justify-items-center gap-6 lg:translate-x-4 lg:grid-cols-2 xl:translate-x-5">
             {EXPERIMENTS.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => navigate(item.path)}
-                className="group flex h-[430px] w-[520px] max-w-[92vw] flex-col overflow-hidden rounded-[30px] bg-white/95 text-left shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
+                className="group flex h-[360px] w-[470px] max-w-[92vw] flex-col overflow-hidden rounded-[28px] bg-white/95 text-left shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
               >
-                <div className="flex h-[260px] items-center justify-center overflow-hidden bg-slate-200">
+                <div className="flex h-[236px] items-center justify-center overflow-hidden bg-slate-200">
                   <img
                     src={item.image}
                     alt={item.subtitle[language]}
                     className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
                   />
                 </div>
-                <div className="flex-1 px-5 pb-5 pt-4 text-center">
+                <div className="px-5 pb-4 pt-3 text-center">
                   <div className="text-[clamp(18px,1.8vw,30px)] font-extrabold leading-[1.12] text-slate-900">
                     {item.title[language]}
                   </div>

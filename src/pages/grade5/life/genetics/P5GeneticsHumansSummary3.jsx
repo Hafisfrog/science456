@@ -1,62 +1,71 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
 import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumansSummary3.css";
 import "./p5GeneticsLangShared.css";
 
-const FAMILY_TREE_SPRITE = "/images/p5/fam.png";
+const FAMILY_TREE_SPRITE = "/images/p6/famtree.jpg";
 
 const FAMILY_MEMBERS = {
   top: [
     {
       id: "grandma-1",
-      pos: "0% 0%",
+      pos: "0% 66.667%",
       scale: 1.18,
+      offsetY: 26,
     },
     {
       id: "grandpa-1",
-      pos: "50% 0%",
-      scale: 1.16,
+      pos: "100% 66.667%",
+      scale: 1.18,
+      offsetY: 26,
     },
     {
       id: "grandma-2",
       pos: "100% 0%",
-      scale: 1.18,
+      scale: 1.12,
+      offsetY: 8,
     },
     {
       id: "grandpa-2",
-      pos: "0% 33.333%",
-      scale: 1.18,
+      pos: "50% 0%",
+      scale: 1.12,
+      offsetY: 8,
     },
   ],
   middle: [
     {
       id: "mother",
       pos: "100% 33.333%",
-      scale: 1.22,
+      scale: 1.14,
+      offsetY: 18,
     },
     {
       id: "father",
       pos: "50% 33.333%",
-      scale: 1.18,
+      scale: 1.14,
+      offsetY: 18,
     },
   ],
   bottom: [
     {
       id: "child-1",
-      pos: "0% 66.667%",
-      scale: 1.22,
+      pos: "0% 0%",
+      scale: 1.12,
+      offsetY: 8,
     },
     {
       id: "child-2",
-      pos: "0% 100%",
-      scale: 1.2,
+      pos: "0% 33.333%",
+      scale: 1.12,
+      offsetY: 18,
     },
     {
       id: "child-3",
-      pos: "50% 100%",
+      pos: "50% 66.667%",
       scale: 1.16,
+      offsetY: 24,
     },
   ],
 };
@@ -87,8 +96,8 @@ const TEXT = {
     rabbit2: "กระต่ายขนขาว ลักษณะด้อย",
     plant1: "ต้นสูงสีชมพู ลักษณะเด่น",
     plant2: "ต้นเตี้ยสีชมพู ลักษณะด้อย",
-    f1Text: "เมื่อลักษณะเด่นผสมกับลักษณะด้อย รุ่นลูกจะปรากฏลักษณะเด่นออกมา 100%",
-    f2Text: "เมื่อรุ่นลูกผสมกันเอง รุ่นหลานจะปรากฏลักษณะเด่นต่อลักษณะด้อยในอัตราส่วน 3 : 1",
+    f1Text: "เมื่อลักษณะเด่นผสมกับลักษณะด้อย รุ่นลูกจะแสดงลักษณะเด่นออกมา 100%",
+    f2Text: "เมื่อรุ่นลูกผสมกันเอง รุ่นหลานจะแสดงลักษณะเด่นต่อลักษณะด้อยในอัตราส่วน 3 : 1",
     f1Dom: "แสดงลักษณะเด่นทั้งหมด",
     f2Dom: "แสดงลักษณะเด่น : ด้อย\nในอัตราส่วน 3 : 1",
     back: "<< ย้อนกลับ",
@@ -147,12 +156,7 @@ export default function P5GeneticsHumansSummary3() {
   const middleRefs = useRef([]);
   const bottomRefs = useRef([]);
   const [treeLines, setTreeLines] = useState([]);
-  const selectExperimentsLabel =
-    lang === "th"
-      ? "กลับไปหน้าเลือกการทดลอง"
-      : lang === "ms"
-        ? "Kembali ke Pilihan Eksperimen"
-        : "Back to Experiment Selection";
+  const nextLabel = lang === "th" ? "ต่อไป" : lang === "ms" ? "Seterusnya" : "Next";
 
   useEffect(() => {
     const familyNode = familyRef.current;
@@ -178,12 +182,12 @@ export default function P5GeneticsHumansSummary3() {
         return;
       }
 
-      const topRailY = Math.max(...top.map((point) => point.y + point.r)) + 10;
+      const topRailY = Math.max(...top.map((point) => point.y + point.r)) + 14;
       const topCenterX = (top[0].x + top[top.length - 1].x) / 2;
-      const parentUpperRailY = Math.min(...middle.map((point) => point.y - point.r)) - 10;
-      const parentLowerRailY = Math.max(...middle.map((point) => point.y + point.r)) + 12;
+      const parentUpperRailY = Math.min(...middle.map((point) => point.y - point.r)) - 14;
+      const parentLowerRailY = Math.max(...middle.map((point) => point.y + point.r)) + 14;
       const parentCenterX = (middle[0].x + middle[middle.length - 1].x) / 2;
-      const childRailY = Math.min(...bottom.map((point) => point.y - point.r)) - 12;
+      const childRailY = Math.min(...bottom.map((point) => point.y - point.r)) - 14;
 
       setTreeLines([
         ...top.flatMap((point) => [{ x1: point.x, y1: point.y + point.r, x2: point.x, y2: topRailY }]),
@@ -240,15 +244,18 @@ export default function P5GeneticsHumansSummary3() {
 
                 <div className="p5ghs3-generation top">
                   {FAMILY_MEMBERS.top.map((member, index) => (
-                    <span key={member.id} className="p5ghs3-avatar">
+                    <span
+                      key={member.id}
+                      className="p5ghs3-avatar"
+                      ref={(node) => (topRefs.current[index] = node)}
+                    >
                       <span
-                        ref={(node) => (topRefs.current[index] = node)}
                         className="p5ghs3-avatar-image"
                         style={{
                           backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
                           backgroundSize: "300% 400%",
                           backgroundPosition: member.pos,
-                          transform: `scale(${member.scale ?? 1.4})`,
+                          transform: `translateY(${member.offsetY ?? 0}px) scale(${member.scale ?? 1.18})`,
                         }}
                       />
                     </span>
@@ -257,15 +264,18 @@ export default function P5GeneticsHumansSummary3() {
 
                 <div className="p5ghs3-generation middle">
                   {FAMILY_MEMBERS.middle.map((member, index) => (
-                    <span key={member.id} className="p5ghs3-avatar">
+                    <span
+                      key={member.id}
+                      className="p5ghs3-avatar"
+                      ref={(node) => (middleRefs.current[index] = node)}
+                    >
                       <span
-                        ref={(node) => (middleRefs.current[index] = node)}
                         className="p5ghs3-avatar-image"
                         style={{
                           backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
                           backgroundSize: "300% 400%",
                           backgroundPosition: member.pos,
-                          transform: `scale(${member.scale ?? 1.4})`,
+                          transform: `translateY(${member.offsetY ?? 0}px) scale(${member.scale ?? 1.18})`,
                         }}
                       />
                     </span>
@@ -274,15 +284,18 @@ export default function P5GeneticsHumansSummary3() {
 
                 <div className="p5ghs3-generation bottom">
                   {FAMILY_MEMBERS.bottom.map((member, index) => (
-                    <span key={member.id} className="p5ghs3-avatar">
+                    <span
+                      key={member.id}
+                      className="p5ghs3-avatar"
+                      ref={(node) => (bottomRefs.current[index] = node)}
+                    >
                       <span
-                        ref={(node) => (bottomRefs.current[index] = node)}
                         className="p5ghs3-avatar-image"
                         style={{
                           backgroundImage: `url(${FAMILY_TREE_SPRITE})`,
                           backgroundSize: "300% 400%",
                           backgroundPosition: member.pos,
-                          transform: `scale(${member.scale ?? 1.4})`,
+                          transform: `translateY(${member.offsetY ?? 0}px) scale(${member.scale ?? 1.18})`,
                         }}
                       />
                     </span>
@@ -376,7 +389,7 @@ export default function P5GeneticsHumansSummary3() {
               {t.back}
             </button>
             <button type="button" className="p5ghs3-next" onClick={() => navigate("/p5/life/genetics")}>
-              {selectExperimentsLabel}
+              {nextLabel} <span>&gt;&gt;</span>
             </button>
           </div>
         </footer>
@@ -384,3 +397,4 @@ export default function P5GeneticsHumansSummary3() {
     </LabLayout>
   );
 }
+

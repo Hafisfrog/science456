@@ -3,31 +3,58 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   font-family: "Prompt", sans-serif;
   background:
-    radial-gradient(28% 24% at 50% 16%, rgba(255, 244, 176, 0.22) 0 46%, transparent 47%),
-    radial-gradient(34% 30% at 24% 56%, rgba(180, 238, 164, 0.24) 0 56%, transparent 57%),
-    radial-gradient(36% 32% at 74% 42%, rgba(180, 238, 164, 0.22) 0 56%, transparent 57%),
-    linear-gradient(180deg, #fffef9 0%, #f7fbf1 82%, #b7df67 83%, #9fce4d 100%);
+    radial-gradient(64% 32% at 50% 16%, rgba(255, 248, 187, 0.4) 0 44%, transparent 72%),
+    radial-gradient(108% 44% at 48% 72%, rgba(172, 215, 124, 0.34) 0 40%, transparent 62%),
+    radial-gradient(92% 36% at 14% 78%, rgba(166, 219, 131, 0.32) 0 34%, transparent 58%),
+    radial-gradient(92% 36% at 86% 76%, rgba(157, 212, 124, 0.3) 0 36%, transparent 60%),
+    linear-gradient(180deg, #dff1ff 0%, #edf8ff 34%, #f7fbe9 50%, #c8e68a 62%, #b9de6f 80%, #acd25f 100%);
+}
+
+.p5ghs3-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(22% 13% at 20% 22%, rgba(255, 255, 255, 0.54) 0 52%, transparent 54%),
+    radial-gradient(20% 12% at 82% 25%, rgba(255, 255, 255, 0.48) 0 52%, transparent 54%),
+    radial-gradient(24% 12% at 52% 40%, rgba(255, 255, 255, 0.2) 0 50%, transparent 52%);
+  pointer-events: none;
+}
+
+.p5ghs3-page::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 82px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(68% 100% at 50% 50%, rgba(196, 229, 144, 0.42), rgba(196, 229, 144, 0.12) 64%, transparent 74%);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 .p5ghs3-sun {
   position: absolute;
-  top: 10px;
-  right: 8px;
-  width: 92px;
-  height: 92px;
+  top: 16px;
+  right: 14px;
+  width: 94px;
+  height: 94px;
   border-radius: 999px;
-  background: #ffef00;
+  background: radial-gradient(circle at 30% 28%, #fff58b 0 34%, #ffe34f 56%, #ffd22d 100%);
   box-shadow:
-    0 0 0 12px rgba(255, 132, 49, 0.9),
-    0 0 26px rgba(255, 195, 0, 0.45);
+    0 0 0 12px rgba(255, 156, 69, 0.85),
+    0 0 44px rgba(255, 214, 105, 0.46),
+    0 0 88px rgba(255, 225, 132, 0.28);
 }
 
 .p5ghs3-main {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   flex: 1;
   width: min(100%, 1520px);
   margin: 0 auto;
@@ -80,9 +107,11 @@
   padding-right: 180px;
   border-radius: 32px;
   background:
-    radial-gradient(32% 30% at 18% 18%, rgba(215, 247, 204, 0.38) 0 60%, transparent 61%),
-    radial-gradient(34% 28% at 72% 18%, rgba(224, 245, 210, 0.34) 0 60%, transparent 61%),
-    radial-gradient(55% 38% at 48% 72%, rgba(204, 238, 188, 0.42) 0 60%, transparent 61%);
+    radial-gradient(34% 28% at 18% 18%, rgba(221, 248, 213, 0.44) 0 58%, transparent 59%),
+    radial-gradient(36% 28% at 72% 18%, rgba(226, 246, 216, 0.38) 0 58%, transparent 59%),
+    radial-gradient(58% 40% at 48% 72%, rgba(206, 238, 190, 0.46) 0 58%, transparent 59%),
+    linear-gradient(180deg, rgba(254, 255, 252, 0.36), rgba(240, 252, 228, 0.24));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
   overflow: hidden;
 }
 
@@ -324,7 +353,14 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  padding: 0 14px 14px;
+  padding: 0 14px 24px;
+  background:
+    linear-gradient(180deg, rgba(184, 222, 101, 0.08) 0%, rgba(177, 216, 96, 0.18) 40%, rgba(170, 210, 88, 0.22) 100%),
+    repeating-linear-gradient(
+      -8deg,
+      rgba(130, 174, 59, 0.12) 0 2px,
+      rgba(130, 174, 59, 0) 2px 12px
+    );
 }
 
 .p5ghs3-fence {
@@ -563,7 +599,7 @@
 
   .p5ghs3-ground {
     height: 90px;
-    padding: 0 12px 12px;
+    padding: 0 12px 20px;
   }
 
   .p5ghs3-back,

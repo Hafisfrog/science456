@@ -138,7 +138,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 18px 0;
+  padding: 0;
+  overflow: hidden;
   background:
     radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.7), transparent 40%),
     linear-gradient(180deg, #f5f7fc 0%, #eef2fb 100%);
@@ -146,8 +147,8 @@
 
 .p5gen-card-image {
   width: 100%;
-  height: calc(100% - 8px);
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   object-position: center center;
   border-radius: 26px 26px 0 0;
   filter: drop-shadow(0 12px 22px rgba(31, 64, 124, 0.12));
@@ -291,7 +292,7 @@
 
   .p5gen-card-media {
     height: min(30vh, 220px);
-    padding: 14px 16px 0;
+    padding: 0;
   }
 }
 

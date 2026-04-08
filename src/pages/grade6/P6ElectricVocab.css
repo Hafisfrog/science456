@@ -1,5 +1,5 @@
 .p6-vocab-page {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   height: 100dvh;
   padding: 14px clamp(12px, 2.4vw, 30px) 10px;
@@ -51,7 +51,8 @@
 }
 
 .p6-vocab-shell {
-  max-width: 1500px;
+  width: min(96vw, 1280px);
+  max-width: 1280px;
   height: 100%;
   margin: 0 auto;
   display: grid;
@@ -85,11 +86,13 @@
   padding: 0;
   border: none;
   display: flex;
+  justify-content: center;
   min-height: 0;
 }
 
 .p6-vocab-table-wrap {
-  width: 100%;
+  width: min(96vw, 1240px);
+  margin: 0 auto;
   min-height: 0;
   overflow: hidden;
   border-radius: 28px;
@@ -100,7 +103,7 @@
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-  min-width: 860px;
+  min-width: 780px;
   height: 100%;
   border-radius: 16px;
   overflow: hidden;

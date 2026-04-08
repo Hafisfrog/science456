@@ -200,6 +200,7 @@ export default function P5GeneticsHumans() {
   const { lang, setLang } = useP5GeneticsLang();
   const [selectedTraits, setSelectedTraits] = useState({});
   const [showResults, setShowResults] = useState(false);
+  const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
   const hasAnswers = Object.keys(selectedTraits).length > 0;
@@ -215,16 +216,21 @@ export default function P5GeneticsHumans() {
       }
       return next;
     });
-    if (showResults) setShowResults(false);
+    if (showResults) {
+      setShowResults(false);
+      setShowSummaryModal(false);
+    }
   };
 
   const resetAnswers = () => {
     setSelectedTraits({});
     setShowResults(false);
+    setShowSummaryModal(false);
   };
 
   const revealAnswers = () => {
     setShowResults(true);
+    setShowSummaryModal(true);
   };
 
   const wrongItems = showResults
@@ -245,30 +251,9 @@ export default function P5GeneticsHumans() {
           <div className="p5gh-topic" translate="no">{t.topic}</div>
 
           <div className="p5gh-content">
-            <div className="p5gh-toolbar">
-              <div className="p5gh-start-wrap">
-                <div className="p5gh-start-icon">{"\u25B6"}</div>
-                <p translate="no">{t.tapImage}</p>
-              </div>
-              <div className="p5gh-toolbar-actions">
-                <button
-                  type="button"
-                  className="p5gh-reset"
-                  onClick={resetAnswers}
-                  disabled={!hasAnswers && !showResults}
-                >
-                  {t.reset}
-                </button>
-                <button
-                  type="button"
-                  className="p5gh-reveal"
-                  onClick={revealAnswers}
-                  disabled={!hasAnswers}
-                >
-                  {t.reveal}
-                </button>
-              </div>
-            </div>
+            <p className="p5gh-select-hint" translate="no">
+              {t.tapImage}
+            </p>
 
             <div className="p5gh-grid">
               {TRAITS.map((trait) => (
@@ -326,6 +311,25 @@ export default function P5GeneticsHumans() {
               ))}
             </div>
           </div>
+
+          <div className="p5gh-mid-actions">
+            <button
+              type="button"
+              className="p5gh-reset"
+              onClick={resetAnswers}
+              disabled={!hasAnswers && !showResults}
+            >
+              {t.reset}
+            </button>
+            <button
+              type="button"
+              className="p5gh-reveal"
+              onClick={revealAnswers}
+              disabled={!hasAnswers}
+            >
+              {t.reveal}
+            </button>
+          </div>
         </section>
 
         <footer className="p5gh-ground">
@@ -371,8 +375,8 @@ export default function P5GeneticsHumans() {
           </div>
         </footer>
 
-        {showResults ? (
-          <div className="p5gh-modal-backdrop" onClick={() => setShowResults(false)}>
+        {showSummaryModal ? (
+          <div className="p5gh-modal-backdrop" onClick={() => setShowSummaryModal(false)}>
             <div className="p5gh-modal" onClick={(event) => event.stopPropagation()}>
               <p className="p5gh-summary-score">
                 {t.score}: {correctCount}/{TRAITS.length}
@@ -384,7 +388,7 @@ export default function P5GeneticsHumans() {
               ) : (
                 <p className="p5gh-summary-correct">{t.allCorrect}</p>
               )}
-              <button type="button" className="p5gh-modal-close" onClick={() => setShowResults(false)}>
+              <button type="button" className="p5gh-modal-close" onClick={() => setShowSummaryModal(false)}>
                 {t.close}
               </button>
             </div>

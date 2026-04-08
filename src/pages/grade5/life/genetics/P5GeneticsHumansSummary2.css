@@ -6,23 +6,48 @@
   font-family: "Prompt", sans-serif;
   overflow: hidden;
   background:
-    radial-gradient(28% 24% at 50% 18%, rgba(255, 244, 176, 0.2) 0 46%, transparent 47%),
-    radial-gradient(34% 30% at 24% 58%, rgba(180, 238, 164, 0.24) 0 56%, transparent 57%),
-    radial-gradient(36% 32% at 74% 48%, rgba(180, 238, 164, 0.22) 0 56%, transparent 57%),
-    linear-gradient(180deg, #fffef9 0%, #f7fbf1 64%, #b7df67 65%, #9fce4d 100%);
+    radial-gradient(58% 36% at 50% 18%, rgba(255, 248, 187, 0.44) 0 48%, transparent 72%),
+    radial-gradient(110% 46% at 50% 70%, rgba(172, 215, 124, 0.35) 0 42%, transparent 66%),
+    radial-gradient(96% 38% at 18% 76%, rgba(167, 221, 135, 0.35) 0 36%, transparent 62%),
+    radial-gradient(96% 38% at 82% 74%, rgba(158, 213, 126, 0.32) 0 38%, transparent 64%),
+    linear-gradient(180deg, #dff1ff 0%, #edf8ff 34%, #f7fbe9 48%, #c8e68a 60%, #b9de6f 78%, #acd25f 100%);
+}
+
+.p5ghs2-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(92% 44% at 50% 58%, rgba(255, 255, 255, 0.24) 0 40%, transparent 68%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.p5ghs2-page::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 72px;
+  height: 132px;
+  border-radius: 50%;
+  background: radial-gradient(68% 110% at 50% 50%, rgba(196, 229, 144, 0.45), rgba(196, 229, 144, 0.12) 65%, transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 .p5ghs2-sun {
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 86px;
-  height: 86px;
+  top: 26px;
+  right: 30px;
+  width: 96px;
+  height: 96px;
   border-radius: 999px;
-  background: #ffef00;
+  background: radial-gradient(circle at 30% 28%, #fff58b 0 34%, #ffe34f 56%, #ffd22d 100%);
   box-shadow:
-    0 0 0 12px rgba(255, 132, 49, 0.9),
-    0 0 26px rgba(255, 195, 0, 0.45);
+    0 0 0 14px rgba(255, 156, 69, 0.85),
+    0 0 52px rgba(255, 214, 105, 0.5),
+    0 0 94px rgba(255, 225, 132, 0.32);
 }
 
 .p5ghs2-main {
@@ -109,6 +134,13 @@
   align-items: flex-end;
   justify-content: space-between;
   padding: 0 14px 14px;
+  background:
+    linear-gradient(180deg, rgba(184, 222, 101, 0.08) 0%, rgba(177, 216, 96, 0.18) 40%, rgba(170, 210, 88, 0.22) 100%),
+    repeating-linear-gradient(
+      -8deg,
+      rgba(130, 174, 59, 0.14) 0 2px,
+      rgba(130, 174, 59, 0) 2px 12px
+    );
 }
 
 .p5ghs2-fence {

@@ -22,8 +22,8 @@ const PAGE_TEXT = {
           "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e2a\u0e31\u0e15\u0e27\u0e4c",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
-        image: "/images/p5/genetics-transparent/animals-foxes.png",
-        fallbackImage: "/images/p5/genetics-transparent/animals-foxes.png",
+        image: "/images/p5/genetics/satp5.png",
+        fallbackImage: "/images/p5/genetics/satp5.png",
       },
       {
         id: 7,
@@ -32,8 +32,8 @@ const PAGE_TEXT = {
           "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
-        image: "/images/p5/genetics-transparent/plants-tree.png",
-        fallbackImage: "/images/p5/genetics-transparent/plants-tree.png",
+        image: "/images/p5/genetics/peuchp5.png",
+        fallbackImage: "/images/p5/genetics/peuchp5.png",
       },
       {
         id: 8,
@@ -42,8 +42,8 @@ const PAGE_TEXT = {
           "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
-        image: "/images/p5/genetics-transparent/humans-boy.png",
-        fallbackImage: "/images/p5/genetics-transparent/humans-boy.png",
+        image: "/images/p5/genetics/konp5.png",
+        fallbackImage: "/images/p5/genetics/konp5.png",
       },
     ],
   },
@@ -58,8 +58,8 @@ const PAGE_TEXT = {
         label: "Genetic Traits of Animals",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
-        image: "/images/p5/genetics-transparent/animals-foxes.png",
-        fallbackImage: "/images/p5/genetics-transparent/animals-foxes.png",
+        image: "/images/p5/genetics/satp5.png",
+        fallbackImage: "/images/p5/genetics/satp5.png",
       },
       {
         id: 7,
@@ -67,8 +67,8 @@ const PAGE_TEXT = {
         label: "Genetic Traits of Plants",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
-        image: "/images/p5/genetics-transparent/plants-tree.png",
-        fallbackImage: "/images/p5/genetics-transparent/plants-tree.png",
+        image: "/images/p5/genetics/peuchp5.png",
+        fallbackImage: "/images/p5/genetics/peuchp5.png",
       },
       {
         id: 8,
@@ -76,8 +76,8 @@ const PAGE_TEXT = {
         label: "Genetic Traits of Humans",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
-        image: "/images/p5/genetics-transparent/humans-boy.png",
-        fallbackImage: "/images/p5/genetics-transparent/humans-boy.png",
+        image: "/images/p5/genetics/konp5.png",
+        fallbackImage: "/images/p5/genetics/konp5.png",
       },
     ],
   },
@@ -92,8 +92,8 @@ const PAGE_TEXT = {
         label: "Ciri Genetik Haiwan",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
-        image: "/images/p5/genetics-transparent/animals-foxes.png",
-        fallbackImage: "/images/p5/genetics-transparent/animals-foxes.png",
+        image: "/images/p5/genetics/satp5.png",
+        fallbackImage: "/images/p5/genetics/satp5.png",
       },
       {
         id: 7,
@@ -101,8 +101,8 @@ const PAGE_TEXT = {
         label: "Ciri Genetik Tumbuhan",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
-        image: "/images/p5/genetics-transparent/plants-tree.png",
-        fallbackImage: "/images/p5/genetics-transparent/plants-tree.png",
+        image: "/images/p5/genetics/peuchp5.png",
+        fallbackImage: "/images/p5/genetics/peuchp5.png",
       },
       {
         id: 8,
@@ -110,8 +110,8 @@ const PAGE_TEXT = {
         label: "Ciri Genetik Manusia",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
-        image: "/images/p5/genetics-transparent/humans-boy.png",
-        fallbackImage: "/images/p5/genetics-transparent/humans-boy.png",
+        image: "/images/p5/genetics/konp5.png",
+        fallbackImage: "/images/p5/genetics/konp5.png",
       },
     ],
   },
@@ -212,4 +212,3 @@ export default function P5GeneticsSelect() {
     </div>
   );
 }
-

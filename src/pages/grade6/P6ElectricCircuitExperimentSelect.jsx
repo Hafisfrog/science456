@@ -64,14 +64,14 @@ export default function P6ElectricCircuitExperimentSelect() {
       id: "exp-1",
       title: t.exp1,
       subtitle: t.exp1sub,
-      image: "/images/p6.png",
+      image: "/images/p6/anukromp6.png",
       path: "/p6/electric-circuit/materials",
     },
     {
       id: "exp-2",
       title: t.exp2,
       subtitle: t.exp2sub,
-      image: "/images/p6.png",
+      image: "/images/p6/jromknanp6.png",
       path: "/p6/electric-circuit/bulb-series-parallel",
     },
   ];
@@ -109,27 +109,27 @@ export default function P6ElectricCircuitExperimentSelect() {
         </p>
 
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
-          <div className="grid w-full max-w-[1120px] grid-cols-1 justify-items-center gap-8 lg:grid-cols-2">
+          <div className="grid w-full max-w-[940px] grid-cols-1 justify-items-center gap-5 lg:grid-cols-2">
 
             {experiments.map((item) => (
               <button
                 key={item.id}
                 type="button"
                 onClick={() => navigate(item.path)}
-                className="group flex h-[430px] w-[520px] max-w-[92vw] flex-col overflow-hidden rounded-[30px] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition hover:-translate-y-2"
+                className="group flex h-[320px] w-[430px] max-w-[92vw] flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition hover:-translate-y-2"
               >
 
-                <div className="flex h-[260px] items-center justify-center bg-slate-200">
+                <div className="flex h-[190px] items-center justify-center overflow-hidden bg-slate-200">
                   <img
                     src={item.image}
                     alt={item.subtitle}
-                    className="h-full object-contain"
+                    className="block h-full w-full scale-[1.08] object-cover object-center"
                   />
                 </div>
 
-                <div className="flex-1 px-5 pt-4 text-center">
+                <div className="px-4 pt-2 pb-2 text-center">
 
-                  <div className="flex items-center justify-center gap-2 text-[26px] font-extrabold">
+                  <div className="flex items-center justify-center gap-2 text-[clamp(22px,1.85vw,34px)] font-extrabold leading-[1.1]">
 
                     {item.title}
 
@@ -145,7 +145,7 @@ export default function P6ElectricCircuitExperimentSelect() {
 
                   </div>
 
-                  <div className="mt-2 text-base text-slate-700">
+                  <div className="mt-1 text-[clamp(14px,1vw,20px)] text-slate-700">
                     {item.subtitle}
                   </div>
 

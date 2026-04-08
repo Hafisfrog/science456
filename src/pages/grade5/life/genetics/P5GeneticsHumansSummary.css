@@ -6,18 +6,45 @@
   flex-direction: column;
   font-family: "Prompt", sans-serif;
   background:
-    radial-gradient(34% 24% at 50% 18%, rgba(255, 243, 161, 0.3) 0 44%, transparent 45%),
-    radial-gradient(70% 44% at 16% 60%, rgba(201, 244, 190, 0.5) 0 48%, transparent 49%),
-    radial-gradient(64% 40% at 82% 56%, rgba(205, 243, 187, 0.48) 0 48%, transparent 49%),
-    linear-gradient(180deg, #eef8ff 0%, #fbfff8 48%, #d4ef8c 49%, #afd952 100%);
+    radial-gradient(58% 36% at 50% 18%, rgba(255, 248, 187, 0.44) 0 48%, transparent 72%),
+    radial-gradient(110% 46% at 50% 70%, rgba(172, 215, 124, 0.35) 0 42%, transparent 66%),
+    radial-gradient(96% 38% at 18% 76%, rgba(167, 221, 135, 0.35) 0 36%, transparent 62%),
+    radial-gradient(96% 38% at 82% 74%, rgba(158, 213, 126, 0.32) 0 38%, transparent 64%),
+    linear-gradient(180deg, #dff1ff 0%, #edf8ff 34%, #f7fbe9 48%, #c8e68a 60%, #b9de6f 78%, #acd25f 100%);
   overflow: hidden;
+}
+
+.p5ghs-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(92% 44% at 50% 58%, rgba(255, 255, 255, 0.24) 0 40%, transparent 68%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 42%);
+  pointer-events: none;
+}
+
+.p5ghs-page::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: 72px;
+  height: 132px;
+  border-radius: 50%;
+  background: radial-gradient(68% 110% at 50% 50%, rgba(196, 229, 144, 0.45), rgba(196, 229, 144, 0.12) 65%, transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 .p5ghs-cloud {
   position: absolute;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.9);
   filter: blur(1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    0 12px 18px rgba(108, 143, 170, 0.12);
 }
 
 .p5ghs-cloud::before,
@@ -74,33 +101,35 @@
   position: absolute;
   bottom: 110px;
   border-radius: 50%;
-  background: radial-gradient(circle at 50% 50%, rgba(194, 239, 180, 0.85), rgba(194, 239, 180, 0.25) 66%, transparent 67%);
+  background: radial-gradient(circle at 50% 50%, rgba(186, 228, 153, 0.82), rgba(166, 210, 132, 0.26) 62%, transparent 68%);
   pointer-events: none;
+  filter: blur(2px);
 }
 
 .p5ghs-hill-left {
-  left: -120px;
-  width: 620px;
-  height: 300px;
+  left: -100px;
+  width: 650px;
+  height: 320px;
 }
 
 .p5ghs-hill-right {
-  right: -80px;
-  width: 520px;
-  height: 250px;
+  right: -74px;
+  width: 560px;
+  height: 270px;
 }
 
 .p5ghs-sun {
   position: absolute;
-  top: 22px;
-  right: 26px;
-  width: 92px;
-  height: 92px;
+  top: 26px;
+  right: 30px;
+  width: 96px;
+  height: 96px;
   border-radius: 999px;
-  background: #ffef00;
+  background: radial-gradient(circle at 30% 28%, #fff58b 0 34%, #ffe34f 56%, #ffd22d 100%);
   box-shadow:
-    0 0 0 13px rgba(255, 139, 52, 0.92),
-    0 0 42px rgba(255, 203, 54, 0.4);
+    0 0 0 14px rgba(255, 156, 69, 0.85),
+    0 0 52px rgba(255, 214, 105, 0.5),
+    0 0 94px rgba(255, 225, 132, 0.32);
 }
 
 .p5ghs-main {
@@ -189,6 +218,13 @@
   align-items: flex-end;
   justify-content: space-between;
   padding: 0 14px 14px;
+  background:
+    linear-gradient(180deg, rgba(184, 222, 101, 0.08) 0%, rgba(177, 216, 96, 0.18) 40%, rgba(170, 210, 88, 0.22) 100%),
+    repeating-linear-gradient(
+      -8deg,
+      rgba(130, 174, 59, 0.14) 0 2px,
+      rgba(130, 174, 59, 0) 2px 12px
+    );
 }
 
 .p5ghs-fence {
