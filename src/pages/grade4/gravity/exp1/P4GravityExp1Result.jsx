@@ -29,9 +29,10 @@ export default function P4GravityExp1Result() {
         hitGround: "ตกพื้น",
         summaryTitle: "สรุปผลการทดลอง",
         summary:
-          "เมื่อปล่อยวัตถุจากที่สูง วัตถุจะตกลงสู่พื้นโลกเสมอ เพราะโลกมีแรงโน้มถ่วงดึงดูดวัตถุ วัตถุที่มีแรงต้านอากาศมาก เช่น ขนนก จะใช้เวลานานกว่าและอาจแกว่งไปมาได้",
-        // listen: "ฟังสรุป",
-        retry: "ทดลองใหม่",
+          "เมื่อเราปล่อยวัตถุให้ตกจากที่สูงหรือโยนวัตถุขึ้นไปในอากาศ วัตถุจะตกลงสู่พื้นโลกเสมอ\nเพราะโลกมีแรงโน้มถ่วงจึงดึงดูดวัตถุต่าง ๆ ให้ตกลงสู่พื้นได้",
+        listen: "ฟังสรุป",
+        back: "ย้อนกลับ",
+        retry: "ทดลองอีกครั้ง",
         next: "ต่อไป",
         empty: "ไม่พบวัตถุที่เลือก กรุณากลับไปเลือกวัตถุใหม่",
         th: "ไทย",
@@ -49,9 +50,10 @@ export default function P4GravityExp1Result() {
         hitGround: "Reached ground",
         summaryTitle: "Summary",
         summary:
-          "When objects are released from a height, they fall to the ground because of Earth's gravity. Objects with greater air resistance, such as feathers, take longer and may drift sideways.",
-        // listen: "Listen",
-        retry: "Try again",
+          "When we drop an object from a height or throw it up into the air, it always falls to the ground.\nBecause the Earth has gravity that pulls objects downward.",
+        listen: "Listen",
+        back: "Back",
+        retry: "Try Again",
         next: "Next",
         empty: "No selected objects were found. Please go back and choose objects again.",
         th: "Thai",
@@ -69,9 +71,10 @@ export default function P4GravityExp1Result() {
         hitGround: "Sampai tanah",
         summaryTitle: "Ringkasan",
         summary:
-          "Apabila objek dilepaskan dari ketinggian, ia jatuh ke tanah kerana graviti Bumi. Objek yang mempunyai rintangan udara lebih besar seperti bulu mengambil masa lebih lama dan boleh melayang ke sisi.",
-        // listen: "Dengar",
-        retry: "Cuba lagi",
+          "Apabila kita melepaskan objek dari tempat tinggi atau membaling objek ke udara, objek itu akan sentiasa jatuh ke tanah.\nKerana Bumi mempunyai graviti yang menarik objek ke bawah.",
+        listen: "Dengar",
+        back: "Kembali",
+        retry: "Cuba Lagi",
         next: "Seterusnya",
         empty: "Tiada objek yang dipilih. Sila kembali dan pilih objek sekali lagi.",
         th: "Thai",
@@ -223,7 +226,7 @@ export default function P4GravityExp1Result() {
           <div className="sum-head">
             <div className="sum-title">{t.summaryTitle}</div>
             <button className="sum-audio" onClick={speakSummary} type="button">
-              🔊 {t.listen}
+              🔊
             </button>
           </div>
           <div className="sum-text">{t.summary}</div>
@@ -242,13 +245,21 @@ export default function P4GravityExp1Result() {
         </button>
       </div>
 
-      <button className="res-retry" onClick={() => navigate(RETRY_PATH)} type="button">
-        ↻ {t.retry}
-      </button>
+      <div className="res-retryBar">
+        <button className="res-navBtn res-retryBtn" onClick={() => navigate(RETRY_PATH)} type="button">
+          ↺ {t.retry}
+        </button>
+      </div>
 
-      <button className="next-btn" onClick={() => navigate(CLASSROOM_PATH)} type="button">
-        {t.next} »
-      </button>
+      <div className="res-navBar">
+        <button className="res-navBtn res-backBtn" onClick={() => navigate(RETRY_PATH)} type="button">
+          « {t.back}
+        </button>
+
+        <button className="res-navBtn res-nextBtn" onClick={() => navigate(CLASSROOM_PATH)} type="button">
+          {t.next} »
+        </button>
+      </div>
     </div>
   );
 }

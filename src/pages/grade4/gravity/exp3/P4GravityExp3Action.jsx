@@ -1,15 +1,15 @@
-import { useMemo, useRef, useState } from "react";
+﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4GravityExp3Action.css";
 
 export default function P4GravityExp3Action() {
   const navigate = useNavigate();
 
-  // ✅ ปรับ path ให้ตรงโปรเจกต์คุณ
+  // โ… เธเธฃเธฑเธ path เนเธซเนเธ•เธฃเธเนเธเธฃเน€เธเธเธ•เนเธเธธเธ“
   const BACK_PATH = "/p4/gravity/exp3/question";
   const RESULT_PATH = "/p4/gravity/exp3/result";
 
-  // ภาษา
+  // เธ เธฒเธฉเธฒ
   const [lang, setLang] = useState("th"); // th | en | ms
 
   // speech
@@ -28,7 +28,7 @@ export default function P4GravityExp3Action() {
     }
   };
 
-  // ✅ assets
+  // โ… assets
   const assets = useMemo(() => {
     return {
       earthBg: "/images/p4/exp3/earth-side.png",
@@ -81,11 +81,11 @@ export default function P4GravityExp3Action() {
         obj_mango: "มะม่วง",
         selected: "วัตถุที่เลือก",
         savedTag: "บันทึกแล้ว",
-        // toastSaved: "บันทึกผลเรียบร้อยแล้ว",
-        // toastReset: "รีเซ็ตผลการทดลองเรียบร้อย",
+        // toastSaved: "เธเธฑเธเธ—เธถเธเธเธฅเน€เธฃเธตเธขเธเธฃเนเธญเธขเนเธฅเนเธง",
+        // toastReset: "เธฃเธตเน€เธเนเธ•เธเธฅเธเธฒเธฃเธ—เธ”เธฅเธญเธเน€เธฃเธตเธขเธเธฃเนเธญเธข",
       },
       en: {
-        title: "Earth’s gravity vs the Moon’s gravity",
+        title: "Earth's gravity vs the Moon's gravity",
         choose: "Choose an object",
         read: "Read measurement",
         save: "Save result",
@@ -98,9 +98,9 @@ export default function P4GravityExp3Action() {
         wMoon: "Weight on the Moon",
         mass: "Mass",
         unitN: "newton",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakAll: "Listen to page",
         obj_book: "Book",
         obj_rock: "Rock",
@@ -124,9 +124,9 @@ export default function P4GravityExp3Action() {
         wMoon: "Berat di Bulan",
         mass: "Jisim",
         unitN: "newton",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakAll: "Dengar satu halaman",
         obj_book: "Buku",
         obj_rock: "Batu",
@@ -152,27 +152,18 @@ export default function P4GravityExp3Action() {
 
   const [selectedId, setSelectedId] = useState("book");
   const selected = useMemo(() => items.find((x) => x.id === selectedId), [items, selectedId]);
-
-  // readout
-  const [readout, setReadout] = useState(null); // { earthN, moonN }
-  const doRead = () => {
-    if (!selected) return;
-    const earthN = selected.massKg * gEarth;
-    const moonN = selected.massKg * gMoon;
-    setReadout({ earthN, moonN });
-
-    speak(
-      `${t.selected}: ${labelOf(selected.id)}\n` +
-        `${t.mass}: ${fmtKg(selected.massKg)}\n` +
-        `${t.wEarth}: ${fmtN(earthN)} ${lang === "th" ? t.unitN : "N"}\n` +
-        `${t.wMoon}: ${fmtN(moonN)} ${lang === "th" ? t.unitN : "N"}`
-    );
-  };
+  const readout = useMemo(() => {
+    if (!selected) return null;
+    return {
+      earthN: selected.massKg * gEarth,
+      moonN: selected.massKg * gMoon,
+    };
+  }, [selected]);
 
   // records
   const [records, setRecords] = useState([]); // [{itemId, massKg, earthN, moonN, ts}]
 
-  // ✅ Toast state
+  // โ… Toast state
   const [toast, setToast] = useState(null); // { title, detail }
   const toastTimerRef = useRef(null);
   const showToast = (title, detail = "") => {
@@ -181,7 +172,7 @@ export default function P4GravityExp3Action() {
     toastTimerRef.current = window.setTimeout(() => setToast(null), 2200);
   };
 
-  // ✅ helper: เช็คว่าชิ้นนี้บันทึกแล้วไหม
+  // โ… helper: เน€เธเนเธเธงเนเธฒเธเธดเนเธเธเธตเนเธเธฑเธเธ—เธถเธเนเธฅเนเธงเนเธซเธก
   const isSaved = (itemId) => records.some((r) => r.itemId === itemId);
 
   const saveRecord = () => {
@@ -196,14 +187,13 @@ export default function P4GravityExp3Action() {
     });
 
     // const objName = labelOf(selected.id);
-    // showToast(`${objName} • ${t.toastSaved}`, `${t.wEarth}: ${fmtN(earthN)} N • ${t.wMoon}: ${fmtN(moonN)} N`);
+    // showToast(`${objName} โ€ข ${t.toastSaved}`, `${t.wEarth}: ${fmtN(earthN)} N โ€ข ${t.wMoon}: ${fmtN(moonN)} N`);
     // speak(`${objName} ${t.toastSaved}`);
   };
 
-  // ✅ RESET
+  // โ… RESET
   const resetAll = () => {
     setRecords([]);
-    setReadout(null);
     setToast(null);
     if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
     setSelectedId("book");
@@ -222,7 +212,7 @@ export default function P4GravityExp3Action() {
 
   return (
     <div className="e3a-page">
-      {/* 2 ช่องใหญ่ */}
+      {/* 2 เธเนเธญเธเนเธซเธเน */}
       <div className="e3a-split">
         {/* LEFT: EARTH */}
         <section className="e3a-panel earth" aria-label="Earth panel">
@@ -245,7 +235,7 @@ export default function P4GravityExp3Action() {
             <img className="e3a-boy earth" src={assets.boyEarth} alt="boy earth" draggable="false" />
           ) : null}
 
-          {/* ✅ SCALE + OBJECT (แสดงวัตถุบนตาชั่ง) */}
+          {/* โ… SCALE + OBJECT (เนเธชเธ”เธเธงเธฑเธ•เธ–เธธเธเธเธ•เธฒเธเธฑเนเธ) */}
           <div className="e3a-scaleWrap">
             {selected ? (
               <div className="e3a-objectOnScale" aria-label="selected object on earth scale">
@@ -278,7 +268,7 @@ export default function P4GravityExp3Action() {
             <img className="e3a-boy moon" src={assets.boyMoon} alt="boy moon" draggable="false" />
           ) : null}
 
-          {/* ✅ SCALE + OBJECT (แสดงวัตถุบนตาชั่ง) */}
+          {/* โ… SCALE + OBJECT (เนเธชเธ”เธเธงเธฑเธ•เธ–เธธเธเธเธ•เธฒเธเธฑเนเธ) */}
           <div className="e3a-scaleWrap">
             {selected ? (
               <div className="e3a-objectOnScale" aria-label="selected object on moon scale">
@@ -296,12 +286,12 @@ export default function P4GravityExp3Action() {
         <div className="e3a-title">
           {t.title}
           <button className="e3a-audioInline" type="button" onClick={speakAll} title={t.speakAll}>
-            🔊
+            {"\uD83D\uDD0A"}
           </button>
         </div>
       </div>
 
-      {/* ✅ bottom chooser */}
+      {/* โ… bottom chooser */}
       <div className="e3a-chooser">
         <div className="e3a-chooserHeader">
           <div className="e3a-chooserTitle">
@@ -325,7 +315,6 @@ export default function P4GravityExp3Action() {
                   type="button"
                   onClick={() => {
                     setSelectedId(it.id);
-                    setReadout(null);
                   }}
                   role="listitem"
                 >
@@ -345,54 +334,82 @@ export default function P4GravityExp3Action() {
             })}
           </div>
 
-          {/* ✅ ปุ่มฝั่งขวา: 3 แถวตามที่ขอ */}
+          {/* โ… เธเธธเนเธกเธเธฑเนเธเธเธงเธฒ: 3 เนเธ–เธงเธ•เธฒเธกเธ—เธตเนเธเธญ */}
           <div className="e3a-actions">
-            <button className="e3a-btn ghost" type="button" onClick={doRead}>
-              {t.read}
+            <button className="e3a-btn primary" type="button" onClick={saveRecord}>
+              {t.save}
             </button>
 
             <button className="e3a-btn soft" type="button" onClick={resetAll} title={t.reset}>
               ↺ {t.reset}
             </button>
 
-            <div className="e3a-actBottom">
-              <button className="e3a-btn primary" type="button" onClick={saveRecord}>
-                {t.save}
-              </button>
-
-              <button className="e3a-btn danger" type="button" onClick={goResult}>
-                {t.view}
-              </button>
-            </div>
-            <button className="e3a-btn ghost e3a-backAction" type="button" onClick={() => navigate(BACK_PATH)}>
-              ← {t.back}
+            <button className="e3a-btn danger" type="button" onClick={goResult}>
+              {t.view}
             </button>
+            {/* <button className="e3a-btn ghost e3a-backAction" type="button" onClick={() => navigate(BACK_PATH)}>
+              ← {t.back}
+            </button> */}
           </div>
         </div>
       </div>
 
       {/* bottom-left language + audio */}
-      <div className="e3a-langDock">
-        <button className={`e3a-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+            <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("th")}
+          type="button"
+        >
           {t.chipTh}
         </button>
-        <button className={`e3a-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
           {t.chipEn}
         </button>
-        <button className={`e3a-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("ms")}
+          type="button"
+        >
           {t.chipMs}
         </button>
-        {/* <button className="e3a-chipAudio" type="button" onClick={speakAll} title={t.speakAll}>
-          🔊
-        </button> */}
       </div>
 
-      {/* ✅ bottom-right back */}
-      <button className="e3a-backBR" type="button" onClick={() => navigate(BACK_PATH)} title={t.back}>
-        <span className="ico">«</span>
-      </button>
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
+          « {t.back}
+        </button>
 
-      {/* ✅ Toast */}
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={goResult}
+        >
+          {lang === "th" ? "ต่อไป" : lang === "ms" ? "Seterusnya" : "Next"} »
+        </button>
+      </div>
+
+      {/* โ… Toast */}
       {toast ? (
         <div className="e3a-toast" role="status" aria-live="polite">
           <div className="e3a-toastTitle">{toast.title}</div>
@@ -402,3 +419,4 @@ export default function P4GravityExp3Action() {
     </div>
   );
 }
+

@@ -1,6 +1,8 @@
 ﻿import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./P4GravityExp2Vocab.css";
+import "../exp1/P4GravityExp1Materials.css";
 
 const VOCAB = [
   {
@@ -48,6 +50,60 @@ const VOCAB = [
 export default function P4GravityExp2Vocab() {
   const navigate = useNavigate();
   const audioRef = useRef(null);
+  const [lang, setLang] = useState("th");
+
+  const text = {
+    th: {
+      title: "คำศัพท์วิทยาศาสตร์น่ารู้",
+      subtitle: "เรื่อง แรงดึงดูดของโลกกับน้ำหนักของวัตถุ",
+      colTh: "ภาษาไทย",
+      colMs: "ภาษามลายู",
+      colEn: "ภาษาอังกฤษ",
+      colAudio: "ฟังเสียง",
+      chipTh: "ไทย",
+      chipEn: "อังกฤษ",
+      chipMs: "มลายู",
+      back: "ย้อนกลับ",
+      next: "ต่อไป",
+      listenTh: "ฟังภาษาไทย",
+      listenMs: "ฟังภาษามลายู",
+      listenEn: "ฟังภาษาอังกฤษ",
+    },
+    en: {
+      title: "Science Vocabulary",
+      subtitle: "Topic: Earth's Gravity and Object Weight",
+      colTh: "Thai",
+      colMs: "Malay",
+      colEn: "English",
+      colAudio: "Audio",
+      chipTh: "Thai",
+      chipEn: "English",
+      chipMs: "Malay",
+      back: "Back",
+      next: "Next",
+      listenTh: "Listen in Thai",
+      listenMs: "Listen in Malay",
+      listenEn: "Listen in English",
+    },
+    ms: {
+      title: "Kosa Kata Sains",
+      subtitle: "Topik: Graviti Bumi dan berat objek",
+      colTh: "Bahasa Thai",
+      colMs: "Bahasa Melayu",
+      colEn: "Bahasa Inggeris",
+      colAudio: "Audio",
+      chipTh: "Thai",
+      chipEn: "English",
+      chipMs: "Melayu",
+      back: "Kembali",
+      next: "Seterusnya",
+      listenTh: "Dengar bahasa Thai",
+      listenMs: "Dengar bahasa Melayu",
+      listenEn: "Dengar bahasa Inggeris",
+    },
+  };
+
+  const t = text[lang];
 
   const stopAudio = () => {
     if (audioRef.current) {
@@ -90,18 +146,18 @@ export default function P4GravityExp2Vocab() {
   return (
     <div className="vocab-page" style={{ position: "relative" }}>
       <header className="vocab-header">
-        <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-        <p>เรื่อง แรงดึงดูดของโลกกับน้ำหนักของวัตถุ</p>
+        <h1>{t.title}</h1>
+        <p>{t.subtitle}</p>
       </header>
 
       <div className="vocab-card">
         <table className="vocab-table">
           <thead>
             <tr>
-              <th className="col-th">ภาษาไทย</th>
-              <th className="col-ms">ภาษามลายู</th>
-              <th className="col-en">ภาษาอังกฤษ</th>
-              <th className="col-audio">ฟังเสียง</th>
+              <th className="col-th">{t.colTh}</th>
+              <th className="col-ms">{t.colMs}</th>
+              <th className="col-en">{t.colEn}</th>
+              <th className="col-audio">{t.colAudio}</th>
             </tr>
           </thead>
           <tbody>
@@ -111,13 +167,13 @@ export default function P4GravityExp2Vocab() {
                 <td className="cell-ms">{row.ms}</td>
                 <td className="cell-en">{row.en}</td>
                 <td className="cell-audio">
-                  <button className="audio-btn th" type="button" onClick={() => playWord(row, "th")} title="ฟังภาษาไทย">
+                  <button className="audio-btn th" type="button" onClick={() => playWord(row, "th")} title={t.listenTh}>
                     TH
                   </button>
-                  <button className="audio-btn ms" type="button" onClick={() => playWord(row, "ms")} title="ฟังภาษามลายู">
+                  <button className="audio-btn ms" type="button" onClick={() => playWord(row, "ms")} title={t.listenMs}>
                     MY
                   </button>
-                  <button className="audio-btn en" type="button" onClick={() => playWord(row, "en")} title="ฟังภาษาอังกฤษ">
+                  <button className="audio-btn en" type="button" onClick={() => playWord(row, "en")} title={t.listenEn}>
                     EN
                   </button>
                 </td>
@@ -127,13 +183,33 @@ export default function P4GravityExp2Vocab() {
         </table>
       </div>
 
-      <div className="vocab-footer">
-        <button className="back-home-btn" type="button" onClick={() => navigate("/p4/gravity")}>
-          « ย้อนกลับ
+      {/* <div className="exp1m-langBar">
+        <button className={`exp1m-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+          {t.chipTh}
+        </button>
+        <button className={`exp1m-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+          {t.chipEn}
+        </button>
+        <button className={`exp1m-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+          {t.chipMs}
+        </button>
+      </div> */}
+
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate("/p4/gravity")}
+        >
+          « {t.back}
         </button>
 
-        <button className="btn-next" type="button" onClick={() => navigate("/p4/gravity/exp2/materials")}>
-          ต่อไป »
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate("/p4/gravity/exp2/materials")}
+        >
+          {t.next} »
         </button>
       </div>
     </div>

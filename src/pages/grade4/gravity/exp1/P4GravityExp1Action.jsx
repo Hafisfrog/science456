@@ -7,6 +7,7 @@ export default function P4GravityExp1Action() {
 
   // ✅ ปรับ path ให้ตรงโปรเจกต์คุณ
   const BACK_PATH = "/p4/gravity/exp1/question";
+  const NEXT_PATH = "/p4/gravity/exp1/result";
   const RESULT_PATH = "/p4/gravity/exp1/result";
 
   // ✅ ภาษา
@@ -48,7 +49,8 @@ export default function P4GravityExp1Action() {
     return {
       th: {
         topTitle: "ลงมือทดลองจริง: เลือกวัตถุ • ปรับความสูง • ปล่อย • จับเวลา",
-        back: "« ย้อนกลับ",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
         chooseTitle: "เลือกวัตถุ",
         chooseSub: "เลือกได้หลายชิ้น (เลือกอย่างน้อย 1 ชิ้น)",
         objBall: "ลูกบอล",
@@ -72,10 +74,14 @@ export default function P4GravityExp1Action() {
         mUnit: "m",
         langTitle: "ภาษา",
         langSub: "เลือกภาษาที่ต้องการ",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       en: {
         topTitle: "Real Experiment: Choose • Height • Drop • Time",
-        back: "« Back",
+        back: "Back",
+        next: "Next",
         chooseTitle: "Choose Objects",
         chooseSub: "Select multiple (at least 1)",
         objBall: "Ball",
@@ -99,10 +105,14 @@ export default function P4GravityExp1Action() {
         mUnit: "m",
         langTitle: "Language",
         langSub: "Choose a language",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
       },
       ms: {
         topTitle: "Eksperimen Sebenar: Pilih • Tinggi • Lepas • Masa",
-        back: "« Kembali",
+        back: "Kembali",
+        next: "Seterusnya",
         chooseTitle: "Pilih Objek",
         chooseSub: "Boleh pilih banyak (sekurang-kurangnya 1)",
         objBall: "Bola",
@@ -126,16 +136,14 @@ export default function P4GravityExp1Action() {
         mUnit: "m",
         langTitle: "Bahasa",
         langSub: "Pilih bahasa",
+        chipTh: "Thai",
+        chipEn: "English",
+        chipMs: "Malay",
       },
     };
   }, []);
 
   const t = text[lang];
-  const langLabels = {
-    th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
-    en: { th: "Thai", en: "English", ms: "Malay" },
-    ms: { th: "Thai", en: "English", ms: "Malay" },
-  };
 
   // ✅ รูปต่างๆ เปลี่ยนเองได้ (public/images/...)
   const assets = useMemo(() => {
@@ -147,6 +155,7 @@ export default function P4GravityExp1Action() {
 
       // แท่นวางวัตถุ
       platform: "/images/p4/exp1/platform.png",
+      character: "/images/p4/exp1/character-girl.png",
     };
   }, []);
 
@@ -172,9 +181,8 @@ export default function P4GravityExp1Action() {
 
   const layout = useMemo(() => {
     const basePlatform = isCompactArena ? 130 : 170;
-    const baseGround = isCompactArena ? 318 : 470;
+    const baseGround = isCompactArena ? 432 : 540;
     const platformStep = isCompactArena ? 18 : 40;
-    const groundStep = isCompactArena ? 8 : 18;
     const minPlatform = isCompactArena ? 84 : 80;
     const maxPlatform = isCompactArena ? 150 : 260;
     const minGround = isCompactArena ? 280 : 320;
@@ -182,7 +190,7 @@ export default function P4GravityExp1Action() {
     const minFall = isCompactArena ? 146 : 120;
 
     const platformY = basePlatform - (heightM - 2) * platformStep;
-    const groundY = baseGround + (heightM - 2) * groundStep;
+    const groundY = baseGround;
 
     const p = Math.max(minPlatform, Math.min(platformY, maxPlatform));
     const g = Math.max(minGround, Math.min(groundY, maxGround));
@@ -372,14 +380,22 @@ export default function P4GravityExp1Action() {
         className="lab2-bg"
       />
 
+      <div
+        className="lab2-overlay"
+        style={{
+          background:
+            "radial-gradient(1100px 700px at 50% 35%, rgba(255,255,255,.35), rgba(255,255,255,0) 65%), linear-gradient(180deg, rgba(10,16,32,.25), rgba(10,16,32,.70))",
+        }}
+      />
+
       <div className="lab2-wrap">
         {/* Top bar */}
-        <div className="lab2-topbar">
+        {/* <div className="lab2-topbar">
           <div className="lab2-top-title">{t.topTitle}</div>
 
-          {/* ✅ เอาพื้นที่ด้านขวาไว้บาลานซ์ (ไม่ให้ title ดูเอียง) */}
+          
           <div className="topbar-spacer" aria-hidden="true" />
-        </div>
+        </div> */}
 
         {/* LEFT COLUMN (แยก 2 กล่อง: วัตถุ + ภาษา) */}
         <div className="left-column">
@@ -387,7 +403,7 @@ export default function P4GravityExp1Action() {
           <div className="pane left">
             <div className="pane-head">
               <div className="pane-title">{t.chooseTitle}</div>
-              <div className="pane-sub">{t.chooseSub}</div>
+              {/* <div className="pane-sub">{t.chooseSub}</div> */}
             </div>
 
             <div className="choose-grid">
@@ -444,12 +460,12 @@ export default function P4GravityExp1Action() {
                 disabled={!canChangeSelection}
               />
 
-              <div className="height-hint">{t.heightHint}</div>
+              {/* <div className="height-hint">{t.heightHint}</div> */}
             </div>
           </div>
 
           {/* กล่องที่ 2: ภาษา */}
-          <div className="pane lang-pane">
+          {/* <div className="pane lang-pane">
             <div className="pane-head">
               <div className="pane-title">{t.langTitle}</div>
               <div className="pane-sub">{t.langSub}</div>
@@ -478,20 +494,15 @@ export default function P4GravityExp1Action() {
                 {langLabels[lang].ms}
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
 
         {/* RIGHT: ปล่อย + เวลา + ผล */}
         <div className="pane right">
           <div className="pane-head">
-            <div className="pane-title">{t.launcherTitle}</div>
-            <div className="pane-sub">{t.launcherSub}</div>
+            {/* <div className="pane-title">{t.launcherTitle}</div> */}
+            {/* <div className="pane-sub">{t.launcherSub}</div> */}
           </div>
-
-          <button className="play-btn" onClick={handleDrop} type="button" disabled={phase !== "idle"}>
-            <div className="play-icon">▶</div>
-            <div className="play-text">{t.dropBtn}</div>
-          </button>
 
           {phase === "countdown" && (
             <div className="countdown">
@@ -507,15 +518,6 @@ export default function P4GravityExp1Action() {
               <div className={`sw-time ${phase === "dropping" ? "running" : ""}`}>
                 {formatTime(elapsedMs)}
               </div>
-
-              <button
-                className="reset-btn"
-                onClick={handleReset}
-                disabled={phase === "countdown" || phase === "dropping"}
-                type="button"
-              >
-                {t.reset}
-              </button>
             </div>
 
             <div className="sw-note">
@@ -528,10 +530,6 @@ export default function P4GravityExp1Action() {
 
           <button className="result-btn" onClick={handleViewResult} type="button" disabled={!showViewResult}>
             {t.viewResult}
-          </button>
-
-          <button className="back-bottom-btn" onClick={() => navigate(BACK_PATH)} type="button">
-            {t.back}
           </button>
         </div>
 
@@ -557,6 +555,22 @@ export default function P4GravityExp1Action() {
 
             <div className="ground" title="ground">
               {t.ground}
+            </div>
+
+            <div className="arena-controls">
+              <button className="play-btn arena-play-btn" onClick={handleDrop} type="button" disabled={phase !== "idle"}>
+                <div className="play-icon">▶</div>
+                <div className="play-text">{t.dropBtn}</div>
+              </button>
+
+              <button
+                className="reset-btn arena-reset-btn"
+                onClick={handleReset}
+                disabled={phase === "countdown" || phase === "dropping"}
+                type="button"
+              >
+                {t.reset}
+              </button>
             </div>
           </div>
 
@@ -600,6 +614,62 @@ export default function P4GravityExp1Action() {
             )}
           </div>
         </div>
+      </div>
+
+      <img
+        src={assets.character}
+        alt="character"
+        className="lab2-character"
+        draggable="false"
+      />
+
+      <div className="lab2-langBar">
+        <button
+          className={`lab2-chip ${lang === "th" ? "active" : ""}`}
+          onClick={() => setLang("th")}
+          type="button"
+        >
+          {t.chipTh}
+        </button>
+
+        <button
+          className={`lab2-chip ${lang === "en" ? "active" : ""}`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
+        </button>
+
+        <button
+          className={`lab2-chip ${lang === "ms" ? "active" : ""}`}
+          onClick={() => setLang("ms")}
+          type="button"
+        >
+          {t.chipMs}
+        </button>
+      </div>
+
+      <div className="lab2-navBar">
+        <button
+          className="lab2-navBtn lab2-backBtn"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
+          « {t.back}
+        </button>
+
+        <button
+          className="lab2-navBtn lab2-nextBtn"
+          type="button"
+          onClick={() =>
+            navigate(NEXT_PATH, {
+              state: { selected, heightM, time: elapsedMs },
+            })
+          }
+          disabled={!showViewResult}
+        >
+          {t.next} »
+        </button>
       </div>
     </div>
   );

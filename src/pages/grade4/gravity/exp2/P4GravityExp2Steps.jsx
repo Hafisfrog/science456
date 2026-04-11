@@ -1,5 +1,6 @@
-import { useMemo, useRef, useState } from "react";
+﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../exp1/P4GravityExp1Materials.css";
 
 export default function P4GravityExp2Steps() {
   const navigate = useNavigate();
@@ -43,9 +44,9 @@ export default function P4GravityExp2Steps() {
         back: "Back",
         next: "Next",
         speak: "Listen",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       ms: {
         topic: "Eksperimen 2: Graviti Bumi dan Berat Objek",
@@ -57,9 +58,9 @@ export default function P4GravityExp2Steps() {
         back: "Kembali",
         next: "Seterusnya",
         speak: "Dengar",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
     };
   }, []);
@@ -148,54 +149,57 @@ export default function P4GravityExp2Steps() {
           </div>
         </div>
       </div>
+      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("th")}
+          type="button"
+        >
+          {t.chipTh}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("ms")}
+          type="button"
+        >
+          {t.chipMs}
+        </button>
+      </div>
 
-      <div className="fixed bottom-[10px] left-[10px] right-[10px] z-[25] flex items-center justify-between gap-3 min-[641px]:bottom-[18px] min-[641px]:left-[18px] min-[641px]:right-[18px] max-[640px]:flex-col max-[640px]:items-stretch max-[640px]:gap-[8px]">
-        <div className="flex flex-wrap gap-[6px] rounded-[12px] bg-white/90 px-2 py-2 shadow-[0_18px_40px_rgba(0,0,0,.22)] min-[641px]:gap-[10px] min-[641px]:rounded-[18px] min-[641px]:px-3 min-[641px]:py-[10px]">
-          <button
-            className={`cursor-pointer rounded-[10px] px-[10px] py-[8px] text-[13px] font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] min-[641px]:rounded-[14px] min-[641px]:px-[18px] min-[641px]:py-[10px] min-[641px]:text-[16px] ${
-              lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("th")}
-            type="button"
-          >
-            {t.chipTh}
-          </button>
-          <button
-            className={`cursor-pointer rounded-[10px] px-[10px] py-[8px] text-[13px] font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] min-[641px]:rounded-[14px] min-[641px]:px-[18px] min-[641px]:py-[10px] min-[641px]:text-[16px] ${
-              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {t.chipEn}
-          </button>
-          <button
-            className={`cursor-pointer rounded-[10px] px-[10px] py-[8px] text-[13px] font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] min-[641px]:rounded-[14px] min-[641px]:px-[18px] min-[641px]:py-[10px] min-[641px]:text-[16px] ${
-              lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("ms")}
-            type="button"
-          >
-            {t.chipMs}
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2 max-[640px]:justify-end min-[641px]:gap-3">
-          <button
-            className="cursor-pointer rounded-xl bg-white/95 px-[12px] py-[10px] text-[14px] font-black text-slate-900 shadow-[0_18px_40px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_rgba(0,0,0,.26)] active:translate-y-px min-[641px]:rounded-2xl min-[641px]:px-[18px] min-[641px]:py-3 min-[641px]:text-[16px]"
-            type="button"
-            onClick={() => navigate(BACK_PATH)}
-          >
-            « {t.back}
-          </button>
-          <button
-            className="cursor-pointer rounded-xl bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[14px] py-[10px] text-[14px] font-black text-white shadow-[0_18px_40px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_48px_rgba(0,0,0,.26)] active:translate-y-px min-[641px]:rounded-2xl min-[641px]:px-[18px] min-[641px]:py-3 min-[641px]:text-[16px]"
-            type="button"
-            onClick={() => navigate(NEXT_PATH)}
-          >
-            {t.next} »
-          </button>
-        </div>
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
+          « {t.back}
+        </button>
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(NEXT_PATH)}
+        >
+          {t.next} »
+        </button>
       </div>
     </div>
   );

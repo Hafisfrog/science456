@@ -157,7 +157,7 @@ export default function P4GravityExp1Answer() {
               <div className="ans2-titleWrap">
                 <div>
                   <div className="ans2-title">{t.title}</div>
-                  <div className="ans2-sub">{t.sub}</div>
+                  {/* <div className="ans2-sub">{t.sub}</div> */}
                 </div>
               </div>
 

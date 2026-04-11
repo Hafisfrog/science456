@@ -34,19 +34,26 @@
 
 .exp2r2-title{
   position:absolute;
-  left:26px;
-  top:18px;
-  display:inline-flex;
+  left:50%;
+  top:8px;
+  transform:translateX(-50%);
+  display:flex;
   align-items:center;
-  padding:10px 16px;
-  border-radius:16px;
-  font-size:30px;
+  justify-content:center;
+  min-width:360px;
+  max-width:min(760px, calc(100% - 64px));
+  padding:8px 30px 18px;
+  border-radius:24px;
+  font-size:40px;
   font-weight:1200;
   color:#f8fafc;
-  background:rgba(255,255,255,.10);
-  border:1px solid rgba(255,255,255,.18);
-  backdrop-filter:blur(8px);
-  box-shadow:0 18px 40px rgba(0,0,0,.35);
+  text-align:center;
+  letter-spacing:-0.02em;
+  line-height:1;
+  background:linear-gradient(135deg, rgba(15,23,42,.48), rgba(30,41,59,.28));
+  border:1px solid rgba(255,255,255,.22);
+  backdrop-filter:blur(14px);
+  box-shadow:0 22px 50px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.18);
 }
 
 .exp2r2-sheet{
@@ -87,8 +94,8 @@
   align-items:center;
   justify-content:center;
   text-align:center;
-  font-weight:1100;
-  font-size:20px;
+  font-weight:1200;
+  font-size:22px;
   color:#0f172a;
   background:linear-gradient(180deg,#fef3c7,#fde68a);
   border-right:1px solid #0f172a;
@@ -104,8 +111,8 @@
   display:flex;
   align-items:center;
   justify-content:center;
-  font-weight:1100;
-  font-size:18px;
+  font-weight:1200;
+  font-size:20px;
   color:#0f172a;
   background:linear-gradient(180deg,#fffbeb,#fde68a);
   border-right:1px solid #0f172a;
@@ -150,14 +157,14 @@
 }
 .exp2r2-dots{
   font-weight:900;
-  color:#64748b;
+  color:#dc2626;
   letter-spacing:1px;
 }
 
 .exp2r2-summaryTitle{
   margin-top:20px;
-  font-size:28px;
-  font-weight:1200;
+  font-size:32px;
+  font-weight:1300;
   color:#0f172a;
 }
 
@@ -172,7 +179,7 @@
   padding:16px 18px;
   box-shadow:0 14px 24px rgba(15,23,42,.10);
   display:flex;
-  align-items:flex-end;
+  align-items:flex-start;
   justify-content:space-between;
   gap:12px;
 }
@@ -305,10 +312,13 @@
     padding-bottom:146px;
   }
   .exp2r2-title{
-    left:12px;
-    top:12px;
-    font-size:24px;
-    padding:8px 12px;
+    left:50%;
+    top:8px;
+    transform:translateX(-50%);
+    min-width:0;
+    max-width:calc(100% - 32px);
+    font-size:32px;
+    padding:7px 18px 15px;
   }
   .exp2r2-sheet{
     left:10px;
@@ -324,7 +334,9 @@
   }
   .exp2r2-cell{ font-size:17px; }
   .exp2r2-objCell{ font-size:19px; }
-  .exp2r2-summaryTitle{ font-size:24px; }
+  .exp2r2-h{ font-size:20px; }
+  .exp2r2-subh{ font-size:18px; }
+  .exp2r2-summaryTitle{ font-size:28px; }
   .exp2r2-summaryText{ font-size:17px; }
   .exp2r2-langbar{
     max-width:calc(100% - 340px);
@@ -337,9 +349,13 @@
     padding-bottom:0;
   }
   .exp2r2-title{
-    right:12px;
-    font-size:20px;
-    padding:8px 12px;
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
+    max-width:calc(100% - 24px);
+    font-size:24px;
+    padding:7px 16px 13px;
+    top:6px;
   }
   .exp2r2-sheet{
     top:62px;
@@ -395,7 +411,7 @@
   }
   .exp2r2-summaryTitle{
     margin-top:16px;
-    font-size:22px;
+    font-size:25px;
   }
   .exp2r2-summaryBox{
     padding:14px;
@@ -469,7 +485,7 @@
     padding-bottom:0;
   }
   .exp2r2-title{
-    font-size:18px;
+    font-size:21px;
   }
   .exp2r2-sheet{
     bottom:268px;
