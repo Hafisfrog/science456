@@ -1,6 +1,21 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const DEVICE_MEDIA = {
+  cell: {
+    image: "/images/p6/tanfaichai.jpg",
+    fallbackImage: "/images/p6/electric-circuit/batteries.svg",
+  },
+  bulb: {
+    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
+  },
+  switch: {
+    image: "/images/p6/electric-circuit/switch-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/switch.svg",
+  },
+};
+
 const TEXT = {
   th: {
     badge: "วงจรไฟฟ้าใกล้ตัว",
@@ -47,12 +62,88 @@ function speakText(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
+function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={(event) => {
+        if (event.currentTarget.dataset.fallbackApplied === "true") return;
+        event.currentTarget.dataset.fallbackApplied = "true";
+        event.currentTarget.src = fallbackSrc;
+      }}
+    />
+  );
+}
+
+function CircuitSummaryVisual({ cells }) {
+  const glow = cells === 1 ? 0.22 : cells === 2 ? 0.5 : cells === 3 ? 0.75 : 1;
+  return (
+    <div className="relative mx-auto mt-5 h-[150px] w-full max-w-[560px]">
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 560 150" aria-hidden="true">
+        <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
+        <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#2563eb" strokeWidth="5" fill="none" strokeLinecap="round" />
+        <path d="M210 90 C 258 122, 302 134, 322 130" stroke="#111827" strokeOpacity="0.2" strokeWidth="8" fill="none" strokeLinecap="round" />
+        <path d="M210 90 C 258 122, 302 134, 322 130" stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
+        <path d="M356 130 C 404 142, 444 134, 436 92" stroke="#111827" strokeOpacity="0.2" strokeWidth="8" fill="none" strokeLinecap="round" />
+        <path d="M356 130 C 404 142, 444 134, 436 92" stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
+      </svg>
+
+      <div className="absolute left-[36px] top-[28px] h-[88px] w-[174px]">
+        <div className="absolute inset-0 rounded-[16px] border-[2px] border-[#2f4561] bg-gradient-to-b from-[#5d7697] to-[#2f4561]" />
+        <div className="absolute inset-x-[10px] top-[6px] h-[8px] rounded-full bg-[#23354b]/70" />
+        <div className="absolute left-1/2 top-[16px] flex -translate-x-1/2 gap-[4px]">
+          {[0, 1, 2, 3].map((idx) => (
+            <div key={idx} className="h-[56px] w-[27px] overflow-hidden rounded-[6px] border border-slate-300 bg-white/80">
+              {idx < cells ? (
+                <EquipmentImage
+                  src={DEVICE_MEDIA.cell.image}
+                  fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
+                  alt={`battery ${idx + 1}`}
+                  className="h-full w-full object-cover object-center mix-blend-multiply"
+                />
+              ) : null}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute left-[300px] top-[58px] h-[92px] w-[64px]">
+        <EquipmentImage
+          src={DEVICE_MEDIA.switch.image}
+          fallbackSrc={DEVICE_MEDIA.switch.fallbackImage}
+          alt="switch"
+          className="h-full w-full object-contain"
+        />
+      </div>
+
+      <div className="absolute left-[392px] top-[10px] h-[84px] w-[84px]">
+        <div
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[100px] w-[100px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+          style={{
+            background: `radial-gradient(circle, rgba(255,214,102,${glow}) 0%, rgba(255,214,102,0) 70%)`,
+            filter: "blur(3px)",
+          }}
+        />
+        <EquipmentImage
+          src={DEVICE_MEDIA.bulb.image}
+          fallbackSrc={DEVICE_MEDIA.bulb.fallbackImage}
+          alt="bulb"
+          className="relative z-10 h-full w-full object-contain"
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function P6ElectricCircuitResults() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const [summaryCells, setSummaryCells] = useState(4);
   const t = useMemo(() => TEXT[lang] || TEXT.th, [lang]);
   const langLabels = t.langLabel;
-
+  const nextLabel = lang === "th" ? "ต่อไป" : lang === "ms" ? "Seterusnya" : "Next";
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
@@ -108,6 +199,30 @@ export default function P6ElectricCircuitResults() {
             <p className="m-0 text-[clamp(20px,2.1vw,40px)] font-bold leading-[1.6] text-slate-900 max-[720px]:leading-[1.5]">
               {t.summary}
             </p>
+            <CircuitSummaryVisual cells={summaryCells} />
+            <div className="mt-3 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => setSummaryCells((prev) => Math.max(1, prev - 1))}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-2xl font-black text-slate-800 shadow"
+                aria-label="decrease battery"
+                title="decrease battery"
+              >
+                -
+              </button>
+              <div className="min-w-[110px] text-center text-[20px] font-black text-slate-800">
+                {summaryCells} ก้อน
+              </div>
+              <button
+                type="button"
+                onClick={() => setSummaryCells((prev) => Math.min(4, prev + 1))}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white text-2xl font-black text-slate-800 shadow"
+                aria-label="increase battery"
+                title="increase battery"
+              >
+                +
+              </button>
+            </div>
           </section>
         </div>
       </div>
@@ -156,13 +271,14 @@ export default function P6ElectricCircuitResults() {
           className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
           onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
-          aria-label={t.next}
-          title={t.next}
+          aria-label={nextLabel}
+          title={nextLabel}
         >
-          <span>{t.next}</span>
+          <span>{nextLabel}</span>
           <span className="text-xl leading-none">&gt;&gt;</span>
         </button>
       </div>
     </div>
   );
 }
+

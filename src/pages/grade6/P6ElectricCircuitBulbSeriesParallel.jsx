@@ -70,12 +70,12 @@ const EQUIPMENT_MEDIA = {
     imageClassName: "max-w-[116px] min-[1400px]:max-w-[126px]",
   },
   wire: {
-    image: "/images/p6/electric-circuit/wire-clips-photo.webp",
+    image: "/images/p6/electric-circuit/wire-clips-photo.png",
     fallbackImage: "/images/p6/electric-circuit/wire-clips.svg",
     imageClassName: "max-w-[122px] min-[1400px]:max-w-[134px]",
   },
   holder: {
-    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
+    image: "/images/p6/electric-circuit/battery-holder-empty.svg",
     fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
     imageClassName: "max-w-[132px] min-[1400px]:max-w-[144px]",
   },

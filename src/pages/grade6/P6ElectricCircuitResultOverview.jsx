@@ -93,39 +93,48 @@ function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
 }
 
 function CircuitThumb({ cells }) {
-  const glow = cells === 1 ? 0.28 : cells === 2 ? 0.5 : cells === 3 ? 0.72 : 0.95;
-  const wireStartX = 96;
-  const wireGap = 6;
-  const cellWidth = 20;
-  const cellGap = 2;
-  const cellsWidth = cells * cellWidth + Math.max(0, cells - 1) * cellGap;
-  const cellsLeft = wireStartX - wireGap - cellsWidth;
+  const glow = cells === 1 ? 0.22 : cells === 2 ? 0.48 : cells === 3 ? 0.74 : 1;
+  const slots = Array.from({ length: 4 }, (_, idx) => idx < cells);
   return (
-    <div className="relative h-[98px] w-[340px]">
-      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 340 98" aria-hidden="true">
-        <path d={`M${wireStartX} 52 C 126 52, 152 51, 174 50`} stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" />
-        <path d="M196 50 C 218 50, 238 50, 258 50" stroke="#2563eb" strokeWidth="4" fill="none" strokeLinecap="round" />
+    <div className="relative h-[118px] w-[360px]">
+      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 360 118" aria-hidden="true">
+        <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#111827" strokeOpacity="0.25" strokeWidth="6" fill="none" strokeLinecap="round" />
+        <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#2563eb" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+
+        <path d="M138 72 C 164 90, 190 98, 203 96" stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="round" />
+        <path d="M138 72 C 164 90, 190 98, 203 96" stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+
+        <path d="M224 96 C 252 104, 286 100, 284 69" stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="round" />
+        <path d="M224 96 C 252 104, 286 100, 284 69" stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="round" />
       </svg>
 
-      <div
-        className="absolute top-[22px] flex h-[62px] items-end gap-0.5"
-        style={{ left: `${cellsLeft}px`, width: `${cellsWidth}px` }}
-      >
-        {Array.from({ length: cells }).map((_, idx) => (
-          <div
-            key={`result-cell-${cells}-${idx}`}
-            className="h-[54px] w-[20px] overflow-hidden rounded-[5px] border border-slate-300 bg-white/80"
-          >
-            <EquipmentImage
-              src={DEVICE_MEDIA.cell.image}
-              fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
-              alt={`battery ${idx + 1}`}
-              className="h-full w-full object-cover object-center mix-blend-multiply"
-            />
-          </div>
-        ))}
+      <div className="absolute left-[16px] top-[26px] h-[74px] w-[124px]">
+        <div className="absolute inset-0 rounded-[14px] border-[2px] border-[#2f4561] bg-gradient-to-b from-[#5d7697] to-[#2f4561]" />
+        <div className="absolute inset-x-[8px] top-[6px] h-[6px] rounded-full bg-[#23354b]/70" />
+        <div className="absolute left-1/2 top-[14px] flex -translate-x-1/2 gap-[3px]">
+          {slots.map((filled, idx) => (
+            <div
+              key={`result-slot-${cells}-${idx}`}
+              className={`grid h-[52px] w-[24px] place-items-center rounded-[6px] border ${
+                filled ? "border-transparent bg-transparent" : "border-slate-300/80 bg-slate-100/90"
+              }`}
+            >
+              {filled ? (
+                <div className="h-[46px] w-[18px] overflow-hidden rounded-[4px] border border-slate-300 bg-white/80">
+                  <EquipmentImage
+                    src={DEVICE_MEDIA.cell.image}
+                    fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
+                    alt={`battery ${idx + 1}`}
+                    className="h-full w-full object-cover object-center mix-blend-multiply"
+                  />
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="absolute left-[158px] top-[20px] h-[62px] w-[52px]">
+
+      <div className="absolute left-[198px] top-[56px] h-[64px] w-[44px]">
         <EquipmentImage
           src={DEVICE_MEDIA.switch.image}
           fallbackSrc={DEVICE_MEDIA.switch.fallbackImage}
@@ -134,7 +143,7 @@ function CircuitThumb({ cells }) {
         />
       </div>
 
-      <div className="absolute left-[252px] top-[10px] h-[72px] w-[72px]">
+      <div className="absolute left-[252px] top-[18px] h-[72px] w-[72px]">
         <div
           className="pointer-events-none absolute left-1/2 top-1/2 h-[86px] w-[86px] -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -201,8 +210,7 @@ export default function P6ElectricCircuitResultOverview() {
         <h1 className="mt-2 text-[clamp(32px,2.5vw,52px)] font-black leading-[1.08] text-slate-900">{t.title}</h1>
 
         <div className="relative mt-3 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
-          <div className="rounded-[24px] border border-white/70 bg-[linear-gradient(180deg,rgba(200,238,250,0.85),rgba(176,224,245,0.78))] p-3">
-            <div className="rounded-[26px] bg-[#efe8dd] p-[clamp(16px,2vw,26px)] shadow-[0_14px_26px_rgba(0,0,0,0.14)]">
+          <div className="rounded-[26px] bg-[#efe8dd] p-[clamp(16px,2vw,26px)] shadow-[0_14px_26px_rgba(0,0,0,0.14)]">
               <div className="text-[clamp(24px,1.8vw,34px)] font-black text-slate-900">{t.section}</div>
 
               <div className="mt-4 overflow-x-auto rounded-[10px] border-2 border-slate-900 bg-[#f6f1e8]">
@@ -255,7 +263,6 @@ export default function P6ElectricCircuitResultOverview() {
                   </tbody>
                 </table>
               </div>
-            </div>
           </div>
         </div>
       </div>

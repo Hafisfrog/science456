@@ -1,0 +1,43 @@
+<svg width="320" height="260" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="shellTop" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5D7392"/>
+      <stop offset="1" stop-color="#2D415C"/>
+    </linearGradient>
+    <linearGradient id="shellFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#445C7A"/>
+      <stop offset="1" stop-color="#2A3D57"/>
+    </linearGradient>
+    <linearGradient id="shellSide" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#394F6D"/>
+      <stop offset="1" stop-color="#21334B"/>
+    </linearGradient>
+    <linearGradient id="cavity" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2D3F56"/>
+      <stop offset="1" stop-color="#1B2A3D"/>
+    </linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#E7EDF3"/>
+      <stop offset="1" stop-color="#9AA8BA"/>
+    </linearGradient>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.4"/>
+    </filter>
+  </defs>
+
+  <ellipse cx="160" cy="224" rx="88" ry="15" fill="#B7C3D6" fill-opacity="0.45"/>
+  <ellipse cx="160" cy="224" rx="88" ry="15" fill="#9EACBF" fill-opacity="0.14" filter="url(#softShadow)"/>
+
+  <path d="M90 108L124 86H214L238 104V162L206 188H110L90 172V108Z" fill="url(#shellTop)" stroke="#26384F" stroke-width="5"/>
+  <path d="M110 188V126L90 108V172L110 188Z" fill="url(#shellSide)" stroke="#26384F" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M206 188V126L238 104V162L206 188Z" fill="url(#shellFront)" stroke="#26384F" stroke-width="5" stroke-linejoin="round"/>
+
+  <path d="M118 118H206L200 160H124L118 118Z" fill="url(#cavity)" stroke="#1D2D42" stroke-width="3"/>
+  <rect x="118" y="112" width="92" height="10" rx="5" fill="#24364D" fill-opacity="0.95"/>
+  <rect x="126" y="96" width="10" height="24" rx="4.5" fill="url(#metal)"/>
+  <rect x="194" y="96" width="10" height="24" rx="4.5" fill="url(#metal)"/>
+
+  <path d="M124 86H214L220 92H118L124 86Z" fill="#8EA4BE" fill-opacity="0.45"/>
+  <path d="M114 130L124 122" stroke="#AFC0D3" stroke-opacity="0.4" stroke-width="3" stroke-linecap="round"/>
+  <path d="M200 122L210 130" stroke="#AFC0D3" stroke-opacity="0.26" stroke-width="3" stroke-linecap="round"/>
+</svg>

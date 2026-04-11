@@ -619,13 +619,6 @@ export default function P6ElectricForceEffectSim() {
         </div>
 
         <div className="p6-force-sim-right">
-          <div className="p6-force-sim-bubble">{bubbleText}</div>
-          <img className="p6-force-sim-character" src="/images/p4/exp1/character-boy.png" alt="นักเรียน" />
-          {started && (
-            <div className="p6-force-sim-timer">
-              {t.time}: {formatTime(seconds)}
-            </div>
-          )}
 
           <div className="p6-force-sim-actions">
             <button
@@ -669,3 +662,4 @@ export default function P6ElectricForceEffectSim() {
     </div>
   );
 }
+

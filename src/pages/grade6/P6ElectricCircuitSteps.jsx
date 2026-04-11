@@ -95,16 +95,11 @@ export default function P6ElectricCircuitSteps() {
       />
 
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {t.badge}
-        </div>
-
         <div className="text-[clamp(32px,2.5vw,54px)] font-black">{t.title}</div>
 
         <div className="rounded-[30px] bg-sky-200 p-[20px] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
-          <header className="mb-3">
+            <header className="mb-3">
               <h2 className="text-[clamp(38px,2.8vw,64px)] font-black">{t.heading}</h2>
-              <p className="mt-2 text-[18px] font-bold text-slate-700">{t.hint}</p>
             </header>
 
             <ol className="grid list-none gap-3 p-0">

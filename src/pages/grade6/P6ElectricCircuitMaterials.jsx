@@ -8,12 +8,12 @@ const EQUIPMENT_MEDIA = {
     imageClassName: "max-w-[56px] min-[1400px]:max-w-[62px]",
   },
   wire: {
-    image: "/images/p6/electric-circuit/wire-clips-photo.webp",
+    image: "/images/p6/electric-circuit/wire-clips-photo.png",
     fallbackImage: "/images/p6/electric-circuit/wire-clips.svg",
     imageClassName: "max-w-[122px] min-[1400px]:max-w-[134px]",
   },
   holder: {
-    image: "/images/p6/electric-circuit/battery-holder-photo.webp",
+    image: "/images/p6/electric-circuit/battery-holder-empty.svg",
     fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
     imageClassName: "max-w-[132px] min-[1400px]:max-w-[144px]",
   },
@@ -106,7 +106,7 @@ function handleEquipmentImageError(event, fallbackImage, onImageError) {
 }
 
 function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
-  const isCell = item.id === "cell";
+  const isBatteryCellGroup = item.id === "cell";
 
   return (
     <div className="group flex h-full w-full flex-col items-center gap-3 rounded-[28px] border-[3px] border-white/80 bg-white/95 px-4 py-5 text-center shadow-[0_16px_28px_rgba(15,23,42,0.14)] transition-transform duration-200 hover:-translate-y-1">
@@ -117,7 +117,7 @@ function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
             Image unavailable
           </div>
         ) : (
-          isCell ? (
+          isBatteryCellGroup ? (
             <div className="flex items-end justify-center gap-0">
               {[0, 1, 2, 3].map((index) => (
                 <div
@@ -232,10 +232,6 @@ export default function P6ElectricCircuitMaterials() {
     >
 
       <div className="mx-auto flex max-w-[1380px] flex-col gap-3">
-
-        <div className="inline-flex w-fit rounded-full bg-blue-500 px-4 py-2 font-black text-white">
-          {t.badge}
-        </div>
 
         <div className="text-[32px] font-black">
           {t.title}

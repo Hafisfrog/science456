@@ -8,7 +8,7 @@
 .p6-circuit-bsp-sim-stage {
   position: relative;
   display: grid;
-  grid-template-columns: 300px minmax(0, 1fr) 300px;
+  grid-template-columns: 300px minmax(0, 1fr);
   gap: 20px;
   width: 100%;
   min-height: 100dvh;
@@ -64,6 +64,12 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.p6-circuit-bsp-sim-selector {
+  display: grid;
+  gap: 12px;
+  margin-top: 4px;
 }
 
 .p6-circuit-bsp-sim-badge {
@@ -160,7 +166,7 @@
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 78px minmax(190px, auto);
+  grid-template-rows: 78px minmax(190px, auto);
   background: rgba(255, 255, 255, 0.32);
   min-height: 0;
 }
@@ -172,6 +178,14 @@
   padding: 10px;
   border-bottom: 3px solid rgba(15, 23, 42, 0.85);
   background: rgba(255, 255, 255, 0.65);
+}
+
+.p6-circuit-bsp-sim-mode-tabs.is-side {
+  border: 2px solid rgba(15, 23, 42, 0.2);
+  border-radius: 14px;
+  border-bottom: 2px solid rgba(15, 23, 42, 0.2);
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .p6-circuit-bsp-sim-mode-tab {
@@ -218,13 +232,8 @@
 }
 
 .p6-circuit-bsp-sim-cell {
-  border-bottom: 3px solid rgba(15, 23, 42, 0.85);
   display: block;
-  padding: 8px;
-}
-
-.p6-circuit-bsp-sim-cell:last-child {
-  border-bottom: none;
+  padding: 10px;
 }
 
 .p6-circuit-bsp-sim-svg {
@@ -236,6 +245,25 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   height: 100%;
+}
+
+.p6-circuit-bsp-sim-preview-wrap,
+.p6-circuit-bsp-sim-trial-only {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 2px solid rgba(15, 23, 42, 0.2);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.p6-circuit-bsp-sim-trial-only {
+  min-height: 100%;
+  align-content: center;
+  gap: 14px;
 }
 
 .p6-circuit-bsp-sim-panel {
@@ -265,6 +293,67 @@
   height: 170px;
 }
 
+.p6-circuit-bsp-sim-board.is-parallel-layout {
+  width: min(98%, 420px);
+  height: 250px;
+}
+
+.p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-battery-p {
+  --battery-w: 96px;
+  width: var(--battery-w);
+  height: 48px;
+  top: 24%;
+}
+
+.p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-node {
+  width: 76px;
+  height: 76px;
+}
+
+.p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-p1 {
+  top: 58%;
+}
+
+.p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-p2 {
+  top: 84%;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board {
+  width: min(98%, 620px);
+  height: 350px;
+  transform: scale(1.12);
+  transform-origin: top center;
+  margin-bottom: 28px;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout {
+  width: min(98%, 700px);
+  height: 430px;
+  transform: scale(1.12);
+  transform-origin: top center;
+  margin-bottom: 32px;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-battery-p {
+  --battery-w: 156px;
+  width: var(--battery-w);
+  height: 78px;
+  top: 24%;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-node {
+  width: 126px;
+  height: 126px;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-p1 {
+  top: 54%;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-p2 {
+  top: 80%;
+}
+
 .p6-circuit-bsp-sim-board .p6-circuit-bsp-sim-svg {
   position: absolute;
   inset: 0;
@@ -278,10 +367,95 @@
   height: 58px;
 }
 
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-holder {
+  width: 104px;
+  height: 78px;
+}
+
 .p6-circuit-bsp-sim-holder-s {
-  left: 58%;
-  top: 72%;
+  top: 24%;
+  width: 138px;
+  height: 54px;
   transform: translate(-50%, -50%);
+}
+
+.p6-circuit-bsp-sim-holder-s-left {
+  left: 44%;
+}
+
+.p6-circuit-bsp-sim-holder-s-right {
+  left: 56%;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-holder-s {
+  width: 212px;
+  height: 84px;
+}
+
+.p6-circuit-bsp-sim-battery {
+  --battery-w: 106px;
+  --battery-crop-scale: 1.16;
+  position: absolute;
+  top: 23.5%;
+  transform: translate(-50%, -50%);
+  width: var(--battery-w);
+  height: 52px;
+  overflow: hidden;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.p6-circuit-bsp-sim-battery-left {
+  left: calc(55% - (var(--battery-w) / 2) + 30px);
+}
+
+.p6-circuit-bsp-sim-battery-right {
+  left: calc(50% + (var(--battery-w) / 2) - 20px);
+}
+
+.p6-circuit-bsp-sim-battery-p {
+  left: 50%;
+  top: 16%;
+  --battery-w: 112px;
+  width: var(--battery-w);
+  height: 56px;
+}
+
+.p6-circuit-bsp-sim-battery-p-left {
+  left: 44%;
+}
+
+.p6-circuit-bsp-sim-battery-p-right {
+  left: 56%;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-battery {
+  --battery-w: 166px;
+  --battery-crop-scale: 1.22;
+  width: var(--battery-w);
+  height: 82px;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-battery-p {
+  --battery-w: 182px;
+  width: var(--battery-w);
+  height: 90px;
+}
+
+.p6-circuit-bsp-sim-battery-photo {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  margin-left: 0;
+  margin-top: 0;
+  transform: rotate(90deg) scale(var(--battery-crop-scale));
+  transform-origin: center;
+  mix-blend-mode: normal;
+  filter: none;
 }
 
 .p6-circuit-bsp-sim-holder-p {
@@ -296,13 +470,24 @@
   object-fit: contain;
 }
 
+.p6-circuit-bsp-sim-holder-s .p6-circuit-bsp-sim-holder-img {
+  transform: rotate(-90deg);
+  mix-blend-mode: darken;
+  filter: contrast(1.12) saturate(1.08) brightness(0.98) drop-shadow(0 5px 8px rgba(15, 23, 42, 0.24));
+}
+
 .p6-circuit-bsp-sim-bulb-node {
   position: relative;
-  width: 58px;
-  height: 58px;
+  width: 76px;
+  height: 76px;
   border: none;
   background: transparent;
   padding: 0;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-bulb-node {
+  width: 118px;
+  height: 118px;
 }
 
 .p6-circuit-bsp-sim-bulb-node.is-clickable {
@@ -319,8 +504,8 @@
   position: absolute;
   left: 50%;
   top: 48%;
-  width: 78px;
-  height: 78px;
+  width: 90px;
+  height: 90px;
   transform: translate(-50%, -50%);
   border-radius: 999px;
   background: radial-gradient(circle, rgba(253, 224, 71, 0.74) 0%, rgba(251, 191, 36, 0.52) 52%, rgba(251, 191, 36, 0) 100%);
@@ -328,8 +513,8 @@
 }
 
 .p6-circuit-bsp-sim-board.is-preview .p6-circuit-bsp-sim-bulb-glow {
-  width: 96px;
-  height: 96px;
+  width: 110px;
+  height: 110px;
   background: radial-gradient(circle, rgba(253, 224, 71, 0.92) 0%, rgba(251, 191, 36, 0.7) 56%, rgba(251, 191, 36, 0) 100%);
   filter: blur(8px);
 }
@@ -356,17 +541,51 @@
   transform: translate(-50%, -50%);
 }
 
+.p6-circuit-bsp-sim-bulb-s1 {
+  left: 36%;
+  top: 66.5%;
+}
+
+.p6-circuit-bsp-sim-bulb-s2 {
+  left: 64%;
+  top: 66.5%;
+}
+
+.p6-circuit-bsp-sim-label {
+  position: absolute;
+  bottom: -2px;
+  font-size: 22px;
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-label {
+  bottom: 2px;
+  font-size: 40px;
+}
+
+.p6-circuit-bsp-sim-label-a {
+  left: 36%;
+  transform: translateX(-50%);
+}
+
+.p6-circuit-bsp-sim-label-b {
+  left: 64%;
+  transform: translateX(-50%);
+}
+
 .p6-circuit-bsp-sim-bulb-p1 {
   position: absolute;
-  left: 52.8%;
-  top: 38%;
+  left: 50%;
+  top: 63%;
   transform: translate(-50%, -50%);
 }
 
 .p6-circuit-bsp-sim-bulb-p2 {
   position: absolute;
-  left: 52.8%;
-  top: 60%;
+  left: 50%;
+  top: 85%;
   transform: translate(-50%, -50%);
 }
 
@@ -438,9 +657,22 @@
   background: #e2e8f0;
 }
 
+.p6-circuit-bsp-sim-center-actions {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  z-index: 30;
+  padding: 8px 10px;
+}
+
 @media (max-width: 1200px) {
   .p6-circuit-bsp-sim-stage {
-    grid-template-columns: 260px minmax(0, 1fr) 260px;
+    grid-template-columns: 260px minmax(0, 1fr);
     min-height: 100dvh;
   }
 }
@@ -453,7 +685,7 @@
   }
 
   .p6-circuit-bsp-sim-table {
-    grid-template-rows: auto 68px minmax(170px, auto);
+    grid-template-rows: 68px minmax(170px, auto);
   }
 
   .p6-circuit-bsp-sim-dual {
@@ -474,14 +706,51 @@
     height: 160px;
   }
 
+  .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board {
+    width: min(98%, 520px);
+    height: 300px;
+  }
+
+  .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout {
+    width: min(98%, 560px);
+    height: 340px;
+  }
+
+  .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-bulb-node {
+    width: 70px;
+    height: 70px;
+  }
+
+  .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-holder-s {
+    width: 178px;
+    height: 70px;
+  }
+
+  .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-battery {
+    --battery-w: 136px;
+    --battery-crop-scale: 1.95;
+    width: var(--battery-w);
+    height: 66px;
+  }
+
+  .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-battery-p {
+    --battery-w: 148px;
+    width: var(--battery-w);
+    height: 74px;
+  }
+
   .p6-circuit-bsp-sim-work-actions {
     flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .p6-circuit-bsp-sim-center-actions {
     justify-content: center;
   }
 }
 
 @media (max-width: 720px) {
   .p6-circuit-bsp-sim-table {
-    grid-template-rows: auto 64px minmax(150px, auto);
+    grid-template-rows: 64px minmax(150px, auto);
   }
 }

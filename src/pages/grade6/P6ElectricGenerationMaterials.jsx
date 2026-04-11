@@ -26,8 +26,8 @@ const LANG = {
 };
 
 const EQUIPMENT_ITEMS = [
-  { id: "balloon", image: "/images/p6/equipment/balloons-real.svg" },
-  { id: "cloth", image: "/images/p6/equipment/cloth-real.svg" },
+  { id: "balloon", image: "/images/p6/equipment/lukpong-cut.png" },
+  { id: "cloth", image: "/images/p6/equipment/pahang-cut.png" },
   { id: "paper", image: "/images/p6/equipment/paper-bits-real.svg" },
 ];
 
@@ -62,12 +62,10 @@ function EquipmentCard({ item, label, lang, failed, onError }) {
   };
 
   return (
-    <div className="w-[240px] shrink-0 transition hover:scale-105">
-      <div className="relative flex h-[240px] items-center justify-center rounded-sm border-[4px] border-[#2d356e] bg-[#e1cbab] p-3 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]">
-        <span className="absolute left-[6px] top-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
-        <span className="absolute right-[6px] top-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
-        <span className="absolute bottom-[6px] left-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
-        <span className="absolute bottom-[6px] right-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
+    <div className="w-[250px] shrink-0 transition-transform duration-200 hover:-translate-y-1">
+      <div className="relative flex h-[246px] items-center justify-center rounded-[24px] border-[2px] border-[#7587af] bg-[linear-gradient(180deg,#ecdfc3_0%,#dfccaa_100%)] p-4 shadow-[0_12px_20px_rgba(20,33,64,0.2),inset_0_1px_0_rgba(255,255,255,0.72)]">
+        <div className="absolute inset-[7px] rounded-[18px] border border-[#f8f0dd]/70" />
+        <div className="absolute inset-[7px] rounded-[18px] bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.12),transparent_58%)]" />
 
         {failed ? (
           <div className="text-center text-lg font-bold text-slate-600">Image error</div>
@@ -75,7 +73,8 @@ function EquipmentCard({ item, label, lang, failed, onError }) {
           <img
             src={item.image}
             alt={label}
-            className="max-h-[170px] max-w-[170px] object-contain drop-shadow-[0_8px_12px_rgba(0,0,0,0.2)]"
+            className="max-h-[176px] max-w-[176px] object-contain drop-shadow-[0_12px_16px_rgba(0,0,0,0.3)]"
+            style={{ filter: "contrast(1.08) saturate(1.14)" }}
             onError={onError}
           />
         )}
@@ -138,7 +137,8 @@ export default function P6ElectricGenerationMaterials() {
         <h1 className="text-center text-[52px] font-bold text-black">{t.title}</h1>
         <h2 className="mt-8 text-[64px] font-bold">{t.equipment}</h2>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-x-16 gap-y-8">
+        <div className="mt-8">
+          <div className="flex flex-wrap justify-center gap-x-16 gap-y-8">
           {EQUIPMENT_ITEMS.map((item) => (
             <EquipmentCard
               key={item.id}
@@ -149,6 +149,7 @@ export default function P6ElectricGenerationMaterials() {
               onError={() => setBroken((prev) => ({ ...prev, [item.id]: true }))}
             />
           ))}
+          </div>
         </div>
       </div>
 

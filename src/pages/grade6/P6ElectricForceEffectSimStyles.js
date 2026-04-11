@@ -41,7 +41,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   height: 100dvh;
   margin: 0;
   display: grid;
-  grid-template-columns: 420px minmax(0, 1fr) 420px;
+  grid-template-columns: 420px minmax(0, 1fr);
   gap: clamp(10px, 1.6vw, 18px);
   align-items: stretch;
   padding: clamp(10px, 1.5vw, 16px);
@@ -213,7 +213,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-board {
   width: 100%;
-  max-width: 740px;
+  max-width: none;
   height: 100%;
   min-height: 0;
   background:
@@ -233,13 +233,13 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-balloons {
   position: relative;
-  height: clamp(280px, 42vh, 380px);
+  height: clamp(340px, 46vh, 430px);
   padding: 8px 8px 0;
 }
 
 .p6-force-sim-balloon {
   position: relative;
-  width: clamp(180px, 20vw, 260px);
+  width: clamp(230px, 24vw, 320px);
   aspect-ratio: 1 / 1.1;
   border-radius: 50% 50% 46% 46%;
   background:
@@ -559,17 +559,23 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-right {
-  position: relative;
+  position: absolute;
+  right: clamp(10px, 1.2vw, 18px);
+  top: clamp(10px, 1.2vw, 18px);
+  bottom: clamp(10px, 1.2vw, 18px);
+  width: min(350px, 28vw);
   z-index: 30;
-  display: grid;
-  justify-items: center;
-  gap: 8px;
-  padding: 16px 14px 14px;
-  border-radius: 24px;
-  background: var(--force-panel);
-  border: 1px solid var(--force-border);
-  box-shadow: 0 16px 30px rgba(17, 24, 39, 0.1);
-  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 8px 8px 10px;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
 .p6-force-sim-bubble {
@@ -610,6 +616,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   width: 100%;
   align-items: center;
   justify-content: center;
+  margin-top: 0;
   padding: 6px 0 0;
   gap: 16px;
   flex-wrap: wrap;
@@ -801,7 +808,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-backBottom {
-  margin-top: auto;
+  margin-top: 0;
   border: none;
   cursor: pointer;
   border-radius: 18px;
@@ -1010,6 +1017,11 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   }
 
   .p6-force-sim-right {
+    position: static;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    width: auto;
     grid-column: 1 / -1;
     max-width: 680px;
     margin: 0 auto;
@@ -1030,13 +1042,12 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 @media (max-height: 820px) and (min-width: 981px) {
   .p6-force-sim-stage {
-    grid-template-columns: 380px minmax(0, 1fr) 380px;
+    grid-template-columns: 380px minmax(0, 1fr);
     gap: 10px;
     padding: 10px;
   }
 
-  .p6-force-sim-sidebar,
-  .p6-force-sim-right {
+  .p6-force-sim-sidebar {
     padding-top: 52px;
   }
 

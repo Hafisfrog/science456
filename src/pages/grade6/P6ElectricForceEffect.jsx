@@ -41,7 +41,7 @@ const LANGUAGE_OPTIONS = [
 ];
 
 const EQUIPMENT_ITEMS = [
-  { id: "balloons", image: "/images/p6/equipment/balloons-real.svg" },
+  { id: "balloons", image: "/images/p6/equipment/lukpong-cut.png" },
   { id: "markers", image: "/images/p6/equipment/markers-real.svg" },
   { id: "tissue", image: "/images/p6/equipment/tissue-real.svg" },
 ];
@@ -59,19 +59,33 @@ function speakText(text, lang) {
 }
 
 function EquipmentCard({ item, label, lang }) {
+  const isBalloons = item.id === "balloons";
   return (
     <div className="flex w-[clamp(220px,22vw,280px)] shrink-0 flex-col items-center">
-      <div className="relative flex h-[clamp(190px,24vh,250px)] w-full items-center justify-center rounded-sm border-[4px] border-[#2d356e] bg-[#e1cbab] p-3 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.6)]">
-        <span className="absolute left-[6px] top-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
-        <span className="absolute right-[6px] top-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
-        <span className="absolute bottom-[6px] left-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
-        <span className="absolute bottom-[6px] right-[6px] h-7 w-7 border-[3px] border-[#2d356e]" />
+      <div className="relative flex h-[clamp(190px,24vh,250px)] w-full items-center justify-center rounded-[24px] border-[2px] border-[#7587af] bg-[linear-gradient(180deg,#ecdfc3_0%,#dfccaa_100%)] p-4 shadow-[0_12px_20px_rgba(20,33,64,0.2),inset_0_1px_0_rgba(255,255,255,0.72)]">
+        <div className="absolute inset-[7px] rounded-[18px] border border-[#f8f0dd]/70" />
+        <div className="absolute inset-[7px] rounded-[18px] bg-[radial-gradient(circle_at_50%_38%,rgba(255,255,255,0.12),transparent_58%)]" />
 
-        <img
-          src={item.image}
-          alt={label}
-          className="max-h-[72%] max-w-[72%] object-contain drop-shadow-[0_8px_12px_rgba(0,0,0,0.2)]"
-        />
+        {isBalloons ? (
+          <div className="flex items-end justify-center gap-2">
+            {[0, 1].map((idx) => (
+              <img
+                key={idx}
+                src={item.image}
+                alt={`${label} ${idx + 1}`}
+                className="max-h-[74%] w-[36%] object-contain drop-shadow-[0_12px_16px_rgba(0,0,0,0.3)]"
+                style={{ filter: "contrast(1.08) saturate(1.14)" }}
+              />
+            ))}
+          </div>
+        ) : (
+          <img
+            src={item.image}
+            alt={label}
+            className="max-h-[74%] max-w-[74%] object-contain drop-shadow-[0_12px_16px_rgba(0,0,0,0.3)]"
+            style={{ filter: "contrast(1.08) saturate(1.14)" }}
+          />
+        )}
       </div>
 
       <div className="mt-3 flex items-center justify-center gap-2">
@@ -133,10 +147,6 @@ export default function P6ElectricForceEffect() {
           <h2 className="text-[clamp(40px,4.2vw,64px)] font-bold">
             {t.equipment}
           </h2>
-
-          <p className="mt-2 text-[clamp(16px,1.8vw,24px)] font-bold text-slate-700">
-            {t.hint}
-          </p>
 
           <div className="flex flex-1 items-center justify-center">
             <div className="flex w-full max-w-[1020px] justify-center gap-[40px]">

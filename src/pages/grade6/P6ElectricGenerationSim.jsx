@@ -546,7 +546,6 @@ export default function P6ElectricGenerationSim() {
     return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
   };
 
-  const balloonStyle = getBalloonStyle({ trialLevel, started, isTesting, selectedTrial });
   const papersStyle = getPapersContainerStyle({ trialLevel, started, isTesting });
   const resultData = resultTrialId ? TRIAL_RESULTS[resultTrialId] : null;
   const resultPaperCount =
@@ -562,9 +561,6 @@ export default function P6ElectricGenerationSim() {
       : started
         ? t.timerDone
         : t.timerReady;
-  const bubbleText = selectedTrial
-    ? `${t.selectTrial}: ${selectedTrialLabel}. ${statusText}`
-    : t.chooseTrialFirst;
   const progressPercent = totalTrials ? (completedCount / totalTrials) * 100 : 0;
   const readScreenText = [
     t.title,
@@ -587,7 +583,7 @@ export default function P6ElectricGenerationSim() {
       <style>{forceEffectSimStyles}</style>
 
       <div
-        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)_420px] gap-[clamp(10px,1.6vw,18px)] p-[clamp(10px,1.5vw,16px)]"
+        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)] gap-[clamp(10px,1.6vw,18px)] p-[clamp(10px,1.5vw,16px)]"
         style={{
           background:
             "linear-gradient(180deg, rgba(251, 252, 254, 0.8), rgba(244, 246, 249, 0.8))",
@@ -680,19 +676,17 @@ export default function P6ElectricGenerationSim() {
         </div>
 
         <div className="relative h-full overflow-hidden rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
-          <div className="absolute left-4 top-4 z-[7] max-w-[320px] rounded-[20px] bg-white/90 px-5 py-3.5 text-slate-900 shadow-[0_14px_28px_rgba(15,23,42,0.14)] backdrop-blur-sm">
-            <div className="text-[17px] font-black">{t.stageTitle}</div>
-            <div className="mt-1 text-[13px] font-semibold leading-[1.5] text-slate-600">{t.stageHint}</div>
-          </div>
-
-          <div className="p6-force-sim-balloons p6-gen-balloons absolute bottom-[-20%] left-1/2 z-[3] w-full -translate-x-1/2">
+          <div className="p6-force-sim-balloons p6-gen-balloons absolute bottom-[-6%] left-[52%] z-[3] w-full -translate-x-1/2">
             <div
               className="p6-force-sim-balloon left p6-gen-balloon-tuned"
-              style={{ "--base": "0px", "--shift": "0px" }}
+              style={{ "--base": "-140px", "--shift": "0px" }}
               aria-label="balloon"
             >
               {isRubbing && (
-                <div className={`p6-force-sim-rub rub-left ${rubbingSpeedClass}`} aria-hidden="true">
+                <div
+                  className={`p6-force-sim-rub rub-right p6-gen-rub-near-hand ${rubbingSpeedClass}`}
+                  aria-hidden="true"
+                >
                   <div className="p6-force-sim-tissue" />
                 </div>
               )}
@@ -701,10 +695,10 @@ export default function P6ElectricGenerationSim() {
 
           {selectedTrial !== "trial-1" && (
             <img
-              className={`pointer-events-none absolute z-[5] h-[300px] w-auto transition-all duration-300 ${
+              className={`p6-gen-boy pointer-events-none absolute z-[5] h-[390px] w-auto transition-all duration-300 ${
                 isRubbing
-                  ? "bottom-[13%] right-[16%] opacity-100"
-                  : "bottom-[9%] right-[7%] opacity-90"
+                  ? "bottom-[24%] left-[44%] opacity-100 p6-gen-boy-rubbing"
+                  : "bottom-[20%] left-[50%] opacity-90"
               }`}
               src="/images/p4/exp1/character-boy.png"
               alt="นักเรียนกำลังถูลูกโป่ง"
@@ -713,8 +707,8 @@ export default function P6ElectricGenerationSim() {
 
           {started && isTesting && trialLevel !== "none" && (
             <div
-              className="p6-sim-mobile-papers pointer-events-none absolute left-[58%] top-[50%] z-[6] h-[86px] w-[120px] -translate-x-1/2"
-              style={{ ...papersStyle, transform: "translateX(-40%) translateY(0px)" }}
+              className="p6-sim-mobile-papers pointer-events-none absolute left-[45%] top-[42%] z-[6] h-[106px] w-[146px] -translate-x-1/2"
+              style={{ ...papersStyle, transform: "translateX(-40%) translateY(-8px)" }}
             >
               {PAPER_BASE.map((_, idx) => {
                 if (trialLevel === "mid" && idx > 4) return null;
@@ -723,7 +717,7 @@ export default function P6ElectricGenerationSim() {
                     key={idx}
                     src="/images/p6/equipment/tissue-real.svg"
                     alt="paper"
-                    className="absolute h-[22px] w-[28px]"
+                    className="absolute h-[28px] w-[36px]"
                     style={getPaperStyle({ index: idx, trialLevel, isTesting })}
                   />
                 );
@@ -732,7 +726,7 @@ export default function P6ElectricGenerationSim() {
           )}
           {trialLevel === "none" && selectedTrial && started && isTesting && (
             <div
-              className="p6-sim-mobile-papers pointer-events-none absolute left-[50%] top-[58%] z-[2] h-[90px] w-[140px] -translate-x-1/2"
+              className="p6-sim-mobile-papers pointer-events-none absolute left-[51%] top-[50%] z-[2] h-[110px] w-[164px] -translate-x-1/2"
               style={{ opacity: 1 }}
             >
               {PAPER_BASE.map((_, idx) => {
@@ -742,7 +736,7 @@ export default function P6ElectricGenerationSim() {
                     key={`none-${idx}`}
                     src="/images/p6/equipment/tissue-real.svg"
                     alt="paper"
-                    className="absolute h-[22px] w-[28px]"
+                    className="absolute h-[28px] w-[36px]"
                     style={{
                       ...getPaperStyle({ index: idx, trialLevel, isTesting }),
                       filter: "contrast(1.12) saturate(1.1)",
@@ -753,21 +747,16 @@ export default function P6ElectricGenerationSim() {
             </div>
           )}
           {selectedTrial && (
-            <div className="absolute bottom-[10%] left-1/2 z-[4] -translate-x-1/2 rounded-full border border-slate-200/80 bg-white px-4 py-2 text-[13px] font-black text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.14)]">
+            <div className="absolute right-5 top-4 z-[8] rounded-full border border-slate-200/80 bg-white px-6 py-3 text-[16px] font-black text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.14)]">
               {t.selectTrial}: {selectedTrialLabel}
             </div>
           )}
-        </div>
 
-        <div className="flex h-full flex-col items-center gap-4 rounded-[24px] border border-slate-200/80 bg-white/95 p-5 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
-          <div className="w-full rounded-[20px] border-[3px] border-slate-900 bg-white px-5 py-5 text-[18px] font-black text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
-            {bubbleText}
-          </div>
-          <div className="w-full rounded-[18px] border border-slate-200/80 bg-slate-50 px-4 py-4 text-center text-[16px] font-black text-slate-900 shadow-[0_10px_18px_rgba(15,23,42,0.12)]">
+          <div className="absolute right-4 top-[68px] z-[8] inline-flex items-center rounded-full border border-slate-200/80 bg-slate-50 px-6 py-3 text-[16px] font-black text-slate-900 shadow-[0_10px_18px_rgba(15,23,42,0.12)]">
             {t.timer}: {formatTime(remaining)}
           </div>
 
-          <div className="mt-auto flex flex-wrap items-center justify-center gap-3">
+          <div className="absolute bottom-6 left-[44%] z-[8] flex -translate-x-1/2 flex-wrap items-center justify-center gap-3">
             <button
               className={`grid place-items-center gap-1 ${
                 started && durationSeconds > 0 && !isTesting
@@ -838,8 +827,9 @@ export default function P6ElectricGenerationSim() {
               </button>
             )}
           </div>
+
           <button
-            className="mt-4 inline-flex items-center gap-2 self-end rounded-[22px] bg-white px-5 py-3 text-[14px] font-black text-slate-700 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
+            className="absolute bottom-4 right-4 z-[9] inline-flex items-center gap-2 rounded-[22px] bg-white px-5 py-3 text-[14px] font-black text-slate-700 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
             type="button"
             onClick={() => navigate("/p6/experiment/electric-generation/steps")}
             aria-label={t.back}
@@ -848,6 +838,7 @@ export default function P6ElectricGenerationSim() {
             <span className="text-[18px] leading-none">&lt;&lt;</span>
             {t.back}
           </button>
+
         </div>
 
         {resultData && (
@@ -896,16 +887,19 @@ export default function P6ElectricGenerationSim() {
 
                     <div className="relative grid h-[96px] place-items-center">
                       <div
-                        className="relative h-[62px] w-[62px] rounded-full"
+                        className="relative h-[68px] w-[64px] rounded-[48%]"
                         style={{
                           background:
-                            "radial-gradient(circle at 30% 25%, #ffd3d3, #ea3b3b 45%, #b91c1c 74%, #7f1d1d)",
+                            "radial-gradient(120% 120% at 30% 22%, #ffe3e3 0%, #ffabb0 28%, #f43f4a 52%, #c5162a 78%, #7f1020 100%)",
                           boxShadow:
-                            "inset 0 8px 14px rgba(255, 255, 255, 0.22), inset 0 -12px 18px rgba(0, 0, 0, 0.28), 0 10px 18px rgba(15, 23, 42, 0.18)",
+                            "inset 0 10px 16px rgba(255,255,255,0.22), inset 0 -14px 20px rgba(25, 7, 14, 0.34), 0 12px 20px rgba(15,23,42,0.2)",
+                          border: "1px solid rgba(255,255,255,0.36)",
                         }}
                       >
-                        <span className="absolute inset-[10%] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.6),transparent_60%)]" />
-                        <span className="absolute -top-[6px] left-1/2 h-[10px] w-[10px] -translate-x-1/2 rounded-[4px] bg-[#991b1b] shadow-[0_4px_8px_rgba(15,23,42,0.2)]" />
+                        <span className="absolute inset-[10%] rounded-[48%] bg-[radial-gradient(circle_at_28%_26%,rgba(255,255,255,0.62),transparent_62%)]" />
+                        <span className="absolute left-[22%] top-[24%] h-[18px] w-[16px] rounded-full bg-white/35 blur-[0.5px]" />
+                        <span className="absolute inset-x-[16%] bottom-[8%] h-[14px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(106,18,33,0.42),transparent_70%)]" />
+                        <span className="absolute -top-[7px] left-1/2 h-[11px] w-[11px] -translate-x-1/2 rounded-[5px] bg-[#9a1a2a] shadow-[0_4px_8px_rgba(15,23,42,0.22)]" />
                       </div>
 
                       {resultPaperCount > 0 && (
@@ -982,6 +976,22 @@ export default function P6ElectricGenerationSim() {
             0%, 100% { transform: translateX(-50%) rotate(-12deg); }
             50% { transform: translateX(calc(-50% + 10px)) translateY(2px) rotate(0deg); }
           }
+          @keyframes p6-gen-boy-rub {
+            0%, 100% { transform: translateX(0) translateY(0) rotate(-1deg); }
+            50% { transform: translateX(-18px) translateY(2px) rotate(1.6deg); }
+          }
+          .p6-gen-boy {
+            transform-origin: 38% 65%;
+          }
+          .p6-gen-boy-rubbing {
+            animation: p6-gen-boy-rub 0.22s ease-in-out infinite;
+          }
+          .p6-gen-rub-near-hand .p6-force-sim-tissue {
+            top: 25%;
+            left: 42%;
+            width: 50%;
+            animation-duration: 0.08s;
+          }
           .p6-force-sim-rub.p6-gen-rub-fast .p6-force-sim-tissue {
             animation-duration: 0.12s !important;
           }
@@ -989,7 +999,7 @@ export default function P6ElectricGenerationSim() {
             animation-duration: 0.09s !important;
           }
           .p6-gen-balloons .p6-force-sim-balloon.p6-gen-balloon-tuned {
-            width: clamp(156px, 17vw, 226px) !important;
+            width: clamp(250px, 27vw, 360px) !important;
           }
           .p6-gen-balloons .p6-force-sim-balloon.left.p6-gen-balloon-tuned {
             --base: -160px;

@@ -145,7 +145,7 @@ const getOptions = (content) =>
 
 const WIRE_CONFIG = [
   { id: "wireA", endpoint: "a2", fromAnchor: "batteryPos", toAnchor: "switchLeft", color: "#ef4444" },
-  { id: "wireB", endpoint: "b2", fromAnchor: "switchRight", toAnchor: "bulbBottom", color: "#2563eb" },
+  { id: "wireB", endpoint: "b2", fromAnchor: "switchRight", toAnchor: "bulbBottom", color: "#0b1020" },
   { id: "wireC", endpoint: "c2", fromAnchor: "bulbTop", toAnchor: "batteryNeg", color: "#10b981" },
 ];
 
@@ -156,6 +156,10 @@ const DEVICE_MEDIA = {
   cell: {
     image: "/images/p6/tanfaichai.jpg",
     fallbackImage: "/images/p6/electric-circuit/batteries.svg",
+  },
+  wire: {
+    image: "/images/p6/electric-circuit/wire-clips-photo.png",
+    fallbackImage: "/images/p6/electric-circuit/wire-clips.svg",
   },
   holder: {
     image: "/images/p6/electric-circuit/battery-holder-photo.webp",
@@ -215,7 +219,7 @@ function CircuitPreview({ cells, level }) {
       <circle cx="142" cy="34" r="11" fill="#ffd166" stroke="#1f2937" strokeWidth="2" />
       <path d="M136 46h12v8h-12z" fill="#94a3b8" />
       <path d="M138 54h8v8h-8z" fill="#64748b" />
-      <path d="M86 44c22 0 30-12 42-12" stroke="#2563eb" strokeWidth="3" fill="none" />
+      <path d="M86 44c22 0 30-12 42-12" stroke="#0b1020" strokeWidth="3" fill="none" />
       <path d="M14 44c14 0 22 12 34 12" stroke="#ef4444" strokeWidth="3" fill="none" />
       <rect x="92" y="56" width="18" height="8" rx="3" fill="#e2e8f0" stroke="#1f2937" strokeWidth="2" />
     </svg>
@@ -334,6 +338,19 @@ function SlideSwitch({ isOn, onChange }) {
   );
 }
 
+function ClipHead({ x, y, rotate = 0, color = "black" }) {
+  const isRed = color === "red";
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rotate})`} aria-hidden="true">
+      <rect x={-8} y={-2.8} width={7.8} height={5.6} rx={2.6} fill={isRed ? "#dc2626" : "#111827"} />
+      <rect x={-1.3} y={-1.7} width={4.8} height={3.4} rx={1.2} fill="#475569" />
+      <path d="M3.2 -2.4 L8.8 -1.4 L8.8 1.4 L3.2 2.4 Z" fill="#cbd5e1" />
+      <path d="M8.8 -1.4 L11.2 0 L8.8 1.4 Z" fill="#94a3b8" />
+      <path d="M3.2 -0.6 L8 -0.2 M3.2 0.6 L8 0.2" stroke="#e2e8f0" strokeWidth={0.45} strokeLinecap="round" />
+    </g>
+  );
+}
+
 export default function P6ElectricCircuitSim() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -342,7 +359,7 @@ export default function P6ElectricCircuitSim() {
   const options = useMemo(() => getOptions(content), [content]);
 
   const [selected, setSelected] = useState(1);
-  const [isSwitchOn, setIsSwitchOn] = useState(true);
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
   const [batteryPlacement, setBatteryPlacement] = useState(() => createBatteryPlacement(0));
   const dragAreaRef = useRef(null);
   const [area, setArea] = useState({ width: 0, height: 0 });
@@ -453,14 +470,14 @@ export default function P6ElectricCircuitSim() {
   const bulbLevel = isSwitchOn ? levelClass : "off";
   const bulbLightProfile =
     bulbLevel === "high"
-      ? { glowOpacity: 1, glowSize: 176, blur: 5, bulbFilter: "brightness(1.34) saturate(1.26)", bulbScale: 1.08 }
+      ? { glowOpacity: 1, glowSize: 208, blur: 7, bulbFilter: "brightness(1.62) saturate(1.46)", bulbScale: 1.12 }
       : bulbLevel === "mid-high"
-        ? { glowOpacity: 0.84, glowSize: 154, blur: 4, bulbFilter: "brightness(1.24) saturate(1.18)", bulbScale: 1.05 }
+        ? { glowOpacity: 0.74, glowSize: 176, blur: 5, bulbFilter: "brightness(1.38) saturate(1.28)", bulbScale: 1.08 }
         : bulbLevel === "mid"
-          ? { glowOpacity: 0.66, glowSize: 136, blur: 3, bulbFilter: "brightness(1.16) saturate(1.12)", bulbScale: 1.03 }
+          ? { glowOpacity: 0.48, glowSize: 148, blur: 4, bulbFilter: "brightness(1.2) saturate(1.16)", bulbScale: 1.04 }
           : bulbLevel === "low"
-            ? { glowOpacity: 0.46, glowSize: 118, blur: 2, bulbFilter: "brightness(1.08) saturate(1.05)", bulbScale: 1.01 }
-            : { glowOpacity: 0, glowSize: 112, blur: 1, bulbFilter: "brightness(0.98) saturate(0.95)", bulbScale: 1 };
+            ? { glowOpacity: 0.22, glowSize: 118, blur: 2, bulbFilter: "brightness(1.04) saturate(1.02)", bulbScale: 1.01 }
+            : { glowOpacity: 0, glowSize: 108, blur: 1, bulbFilter: "brightness(0.82) saturate(0.82)", bulbScale: 1 };
 
   const handleBatteryDragStart = (batteryId, event) => {
     event.dataTransfer.setData("text/plain", String(batteryId));
@@ -586,6 +603,55 @@ export default function P6ElectricCircuitSim() {
       "linear-gradient(180deg, #cde9f7 0%, #e9f5ff 32%, #d7ecf7 60%, #c2dbe9 100%), radial-gradient(120% 70% at 50% 20%, rgba(255,255,255,0.65), transparent 45%), radial-gradient(90% 60% at 20% 10%, rgba(255,255,255,0.35), transparent 40%)",
   };
 
+  const demoNodes = {
+    holder: { x: 154, y: 10, w: 232, h: 112 },
+    switcher: { x: 478, y: 76, w: 48, h: 84 },
+    bulb: { x: 522, y: 8, w: 112, h: 112 },
+  };
+  const equipmentShift = {
+    holder: { x: 14, y: 25 },
+    switcher: { x: 0, y: 50 },
+    bulb: { x: -30, y: 14 },
+  };
+  const wireShiftY = -16;
+  const topWireStart = {
+    x: demoNodes.holder.x + equipmentShift.holder.x + demoNodes.holder.w - 18,
+    y: demoNodes.holder.y + equipmentShift.holder.y + 36,
+  };
+  const topWireEnd = {
+    x: demoNodes.bulb.x + equipmentShift.bulb.x + 42,
+    y: demoNodes.bulb.y + equipmentShift.bulb.y + 66,
+  };
+  const redWireLeftStart = {
+    x: demoNodes.holder.x + demoNodes.holder.w - 8,
+    y: demoNodes.holder.y + 106 + wireShiftY,
+  };
+  const redWireLeftEnd = {
+    x: demoNodes.switcher.x + 4,
+    y: demoNodes.switcher.y + 66 + wireShiftY,
+  };
+  const redWireRightStart = {
+    x: demoNodes.switcher.x + demoNodes.switcher.w - 4,
+    y: demoNodes.switcher.y + 72 + wireShiftY,
+  };
+  const redWireRightEnd = {
+    x: demoNodes.bulb.x + 24,
+    y: demoNodes.bulb.y + 112 + wireShiftY,
+  };
+
+  const topWirePath = `M ${topWireStart.x} ${topWireStart.y}
+    C ${demoNodes.holder.x + equipmentShift.holder.x + demoNodes.holder.w + 88} ${demoNodes.holder.y + equipmentShift.holder.y - 26},
+      ${demoNodes.bulb.x + equipmentShift.bulb.x - 20} ${demoNodes.bulb.y + equipmentShift.bulb.y + 30},
+      ${topWireEnd.x} ${topWireEnd.y}`;
+  const redWireLeftPath = `M ${redWireLeftStart.x} ${redWireLeftStart.y}
+    C ${demoNodes.holder.x + demoNodes.holder.w + 12} ${demoNodes.holder.y + 162 + wireShiftY},
+      ${demoNodes.switcher.x - 18} ${demoNodes.switcher.y + 102 + wireShiftY},
+      ${redWireLeftEnd.x} ${redWireLeftEnd.y}`;
+  const redWireRightPath = `M ${redWireRightStart.x} ${redWireRightStart.y}
+    C ${demoNodes.switcher.x + 44} ${demoNodes.switcher.y + 96 + wireShiftY},
+      ${demoNodes.bulb.x + 44} ${demoNodes.bulb.y + 142 + wireShiftY},
+      ${redWireRightEnd.x} ${redWireRightEnd.y}`;
+
   return (
     <div
       className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-16 pt-3 text-slate-900 md:px-8"
@@ -612,45 +678,22 @@ export default function P6ElectricCircuitSim() {
         </div>
         <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">{content.title}</div>
 
-        <div className="relative min-h-0 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+        <div className="relative min-h-[620px] rounded-[30px] border-2 border-white bg-white p-[clamp(14px,1.6vw,20px)] pb-20 shadow-[0_20px_36px_rgba(17,24,39,0.12)]">
           <div className="mb-4">
             <div className="text-[clamp(20px,2.6vw,26px)] font-black text-slate-900">{content.chooseTitle}</div>
             <div className="mt-1 font-semibold text-slate-800">{content.chooseHint}</div>
           </div>
 
-          <div className="mt-4 rounded-[18px] border border-slate-900/25 bg-white/75 p-3.5 shadow-[0_14px_24px_rgba(15,23,42,0.1)]">
+          <div className="mt-4">
             <div className="mt-3">
-              <div className="rounded-2xl bg-white/90 p-4 shadow-[0_12px_22px_rgba(15,23,42,0.14)]">
-                <div className="flex items-center justify-between">
+              <div className="p-4">
+                <div className="flex items-center">
                   <div className="text-[clamp(18px,1.6vw,26px)] font-black text-slate-900">
                     {content.selectedLabel(insertedCount || selected)}
                   </div>
-                  <div
-                    className={`rounded-full px-3 py-1 text-xs font-black ${
-                      !isSwitchOn
-                        ? "bg-slate-100 text-slate-700"
-                        : bulbLevel === "high"
-                          ? "bg-green-100 text-green-700"
-                          : bulbLevel === "mid-high"
-                            ? "bg-amber-100 text-amber-700"
-                            : bulbLevel === "mid"
-                              ? "bg-sky-100 text-sky-700"
-                              : "bg-slate-100 text-slate-700"
-                    }`}
-                  >
-                    {!isSwitchOn
-                      ? content.switchStatus.off
-                      : bulbLevel === "high"
-                        ? content.switchStatus.high
-                        : bulbLevel === "mid-high"
-                          ? content.switchStatus.midHigh
-                          : bulbLevel === "mid"
-                            ? content.switchStatus.mid
-                            : content.switchStatus.low}
-                  </div>
                 </div>
 
-                <div className="mt-4 grid gap-3 rounded-[18px] border border-slate-200 bg-[radial-gradient(circle_at_30%_30%,#e0f2fe,#ffffff)] p-4">
+                <div className="mt-4 grid gap-3 p-0">
                   <div className="text-sm font-black text-slate-800">{content.looseCellsLabel}</div>
                   <div
                     className="flex min-h-12 w-fit min-w-[232px] flex-wrap items-center gap-2 rounded-lg border border-dashed border-slate-300 bg-white/60 p-2"
@@ -675,14 +718,50 @@ export default function P6ElectricCircuitSim() {
                     })}
                   </div>
 
-                  <div className="grid grid-cols-[1fr_auto] items-center gap-4">
-                    <div className="relative mx-auto h-[170px] w-full max-w-[620px]">
-                      <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 620 170" aria-hidden="true">
-                        <path d="M242 106 C 258 106, 272 98, 290 92" stroke="#ef4444" strokeWidth="4" fill="none" strokeLinecap="round" />
-                        <path d="M355 92 C 405 92, 435 92, 472 95" stroke="#2563eb" strokeWidth="4" fill="none" strokeLinecap="round" />
+                  <div className="grid gap-4">
+                    <div className="text-left text-[clamp(20px,1.2vw,28px)] font-bold text-slate-700">
+                      <div>{content.expectedPrefix}</div>
+                      <div className="text-[clamp(34px,2.2vw,48px)] font-black text-slate-900">
+                        {isSwitchOn
+                          ? insertedCount > 0
+                            ? options[insertedCount - 1]?.note
+                            : content.noCellsInserted
+                          : content.bulbOff}
+                      </div>
+                    </div>
+                    <div
+                      className="relative mx-auto mt-[-240px] h-[250px] w-full max-w-[760px]"
+                      style={{ transform: "scale(1.52)", transformOrigin: "top left" }}
+                    >
+                      <svg
+                        className="pointer-events-none absolute inset-0 h-full w-full"
+                        viewBox="0 0 760 170"
+                        aria-hidden="true"
+                      >
+                        <path d={topWirePath} stroke="#111827" strokeOpacity="0.25" strokeWidth="8" fill="none" strokeLinecap="round" />
+                        <path d={topWirePath} stroke="#0b1020" strokeWidth="5" fill="none" strokeLinecap="round" />
+
+                        <path d={redWireLeftPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
+                        <path d={redWireLeftPath} stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
+
+                        <path d={redWireRightPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
+                        <path d={redWireRightPath} stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
+
+                        <ClipHead x={topWireStart.x} y={topWireStart.y} rotate={180} color="black" />
+                        <ClipHead x={topWireEnd.x} y={topWireEnd.y} rotate={20} color="black" />
+                        <ClipHead x={redWireLeftStart.x} y={redWireLeftStart.y} rotate={208} color="red" />
+                        <ClipHead x={redWireLeftEnd.x} y={redWireLeftEnd.y} rotate={0} color="red" />
+                        <ClipHead x={redWireRightStart.x} y={redWireRightStart.y} rotate={180} color="red" />
+                        <ClipHead x={redWireRightEnd.x} y={redWireRightEnd.y} rotate={-24} color="red" />
                       </svg>
 
-                      <div className="absolute left-[18px] top-[56px] h-[112px] w-[232px] rounded-xl border border-slate-200 bg-white px-2 py-2 shadow-[0_8px_14px_rgba(15,23,42,0.1)]">
+                      <div
+                        className="absolute h-[112px] w-[232px] px-2 py-2"
+                        style={{
+                          left: demoNodes.holder.x + equipmentShift.holder.x,
+                          top: demoNodes.holder.y + equipmentShift.holder.y,
+                        }}
+                      >
                         <BatteryHolderLive
                           slotToBattery={slotToBattery}
                           onSlotDrop={handleSlotDrop}
@@ -693,11 +772,27 @@ export default function P6ElectricCircuitSim() {
                         />
                       </div>
 
-                      <div className="absolute left-[294px] top-[54px]">
+                      <div
+                        className="absolute"
+                        style={{
+                          left: demoNodes.switcher.x + equipmentShift.switcher.x,
+                          top: demoNodes.switcher.y + equipmentShift.switcher.y,
+                          transform: "scale(0.84)",
+                          transformOrigin: "top left",
+                        }}
+                      >
                         <SlideSwitch isOn={isSwitchOn} onChange={setIsSwitchOn} />
                       </div>
 
-                      <div className="absolute left-[438px] top-[36px] h-[112px] w-[112px]">
+                      <div
+                        className="absolute h-[112px] w-[112px]"
+                        style={{
+                          left: demoNodes.bulb.x + equipmentShift.bulb.x,
+                          top: demoNodes.bulb.y + equipmentShift.bulb.y,
+                          transform: "scale(1.18)",
+                          transformOrigin: "top left",
+                        }}
+                      >
                         <div
                           className="pointer-events-none absolute left-1/2 top-[46%] -translate-x-1/2 -translate-y-1/2 rounded-full"
                           style={{
@@ -721,16 +816,6 @@ export default function P6ElectricCircuitSim() {
                             }}
                           />
                         </div>
-                      </div>
-                    </div>
-                    <div className="text-right text-sm font-semibold text-slate-700">
-                      <div>{content.expectedPrefix}</div>
-                      <div className="text-lg font-black text-slate-900">
-                        {isSwitchOn
-                          ? insertedCount > 0
-                            ? options[insertedCount - 1]?.note
-                            : content.noCellsInserted
-                          : content.bulbOff}
                       </div>
                     </div>
                   </div>
