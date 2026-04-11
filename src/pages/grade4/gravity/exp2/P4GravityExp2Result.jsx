@@ -1,6 +1,7 @@
 ﻿import { useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./P4GravityExp2Result.css";
+import "../exp1/P4GravityExp1Materials.css";
 
 export default function P4GravityExp2Result() {
   const navigate = useNavigate();
@@ -44,8 +45,9 @@ export default function P4GravityExp2Result() {
         t3: "ครั้งที่ 3",
         avg: "น้ำหนัก\nเฉลี่ย",
         summaryTitle: "สรุปผลการทดลอง",
+        back: "ย้อนกลับ",
         retry: "ทดลองอีกครั้ง",
-        next: "ต่อไป »",
+        next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
@@ -56,7 +58,7 @@ export default function P4GravityExp2Result() {
         unitN: "นิวตัน",
         noData: "ยังไม่มีข้อมูล",
         summary:
-          "จากกิจกรรมนี้จะเห็นได้ว่ามวลของวัตถุมีผลต่อแรงโน้มถ่วงของโลกและน้ำหนักที่ชั่งได้ วัตถุที่มีมวลมากจะมีน้ำหนักมากกว่า ส่วนวัตถุที่มีมวลน้อยจะมีน้ำหนักน้อยกว่า",
+          "จากการทำกิจกรรม พบว่า มวลของวัตถุมีผลต่อแรงโน้มถ่วงของโลก โดยสังเกตได้จากการยืดของสปริง ในเครื่องชั่งสปริง \nโดยมวลมาก → แรงโน้มถ่วงมาก → น้ำหนักมาก \nมวลน้อย → แรงโน้มถ่วงน้อย → น้ำหนักน้อย \nดังนั้น แรงโน้มถ่วงของโลกที่กระทำต่อวัตถุแต่ละชนิดจึงมีค่าต่างกัน",
       },
       en: {
         title: "Experiment Results",
@@ -67,11 +69,12 @@ export default function P4GravityExp2Result() {
         t3: "Trial 3",
         avg: "Average\nWeight",
         summaryTitle: "Conclusion",
+        back: "Back",
         retry: "Try again",
-        next: "Next »",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        next: "Next",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakAll: "Listen to page",
         ball: "Ball",
         bocce: "Bocce Ball",
@@ -79,7 +82,7 @@ export default function P4GravityExp2Result() {
         unitN: "N",
         noData: "No data",
         summary:
-          "This activity shows that an object's mass affects gravity and the weight measured by the spring scale. Greater mass gives greater weight, while smaller mass gives smaller weight.",
+          "From the activity, it is found that the mass of an object affects Earth’s gravitational force, which can be observed from the extension of the spring in a spring balance. \nGreater mass → greater gravitational force → greater weight \nLess mass → less gravitational force → less weight \nTherefore, the Earth’s gravitational force acting on different objects is not the same.",
       },
       ms: {
         title: "Keputusan Eksperimen",
@@ -90,11 +93,12 @@ export default function P4GravityExp2Result() {
         t3: "Cubaan 3",
         avg: "Purata\nBerat",
         summaryTitle: "Rumusan",
+        back: "Kembali",
         retry: "Cuba lagi",
-        next: "Seterusnya »",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Melayu",
+        next: "Seterusnya",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakAll: "Dengar satu halaman",
         ball: "Bola",
         bocce: "Bola Bocce",
@@ -102,7 +106,7 @@ export default function P4GravityExp2Result() {
         unitN: "N",
         noData: "Tiada data",
         summary:
-          "Aktiviti ini menunjukkan bahawa jisim objek mempengaruhi graviti dan berat yang diukur dengan penimbang spring. Jisim yang lebih besar memberi berat yang lebih besar, manakala jisim yang lebih kecil memberi berat yang lebih kecil.",
+          "Daripada aktiviti ini, didapati bahawa jisim objek mempengaruhi daya graviti Bumi, yang dapat diperhatikan melalui pemanjangan spring dalam penimbang spring. \nJisim lebih besar → daya graviti lebih besar → berat lebih besar \nJisim lebih kecil → daya graviti lebih kecil → berat lebih kecil \nOleh itu, daya graviti Bumi yang bertindak ke atas setiap objek adalah berbeza.",
       },
     }),
     []
@@ -243,28 +247,62 @@ export default function P4GravityExp2Result() {
         </div>
       </div>
 
-      <div className="exp2r2-langbar">
-        <button className={`exp2r2-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
+      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("th")}
+          type="button"
+        >
           {t.chipTh}
         </button>
-        <button className={`exp2r2-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
           {t.chipEn}
         </button>
-        <button className={`exp2r2-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("ms")}
+          type="button"
+        >
           {t.chipMs}
         </button>
-        {/* <button className="exp2r2-speakBtn" type="button" onClick={speakPage} title={t.speakAll}>
-          🔊
-        </button> */}
       </div>
 
       <button className="exp2r2-retry" type="button" onClick={() => navigate(BACK_ACTION, { state: { lang } })}>
-        {t.retry}
+        ↺ {t.retry}
       </button>
 
-      <button className="exp2r2-next" type="button" onClick={() => navigate(NEXT_PATH)}>
-        {t.next}
-      </button>
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_ACTION, { state: { lang } })}
+        >
+          « {t.back}
+        </button>
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(NEXT_PATH)}
+        >
+          {t.next} »
+        </button>
+      </div>
     </div>
   );
 }

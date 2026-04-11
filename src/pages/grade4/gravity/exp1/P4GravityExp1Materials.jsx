@@ -15,7 +15,7 @@ export default function P4GravityExp1Materials() {
       bg: "/images/p4/sim/sball.png",
       ball: "/images/p4/exp1/soccer-ball.png",
       bocce: "/images/p4/exp1/bocce.png",
-      feather: "/images/p4/exp1/feather.png",
+      feather: "/images/p4/exp2/feather2.png",
       timer: "/images/p4/exp1/timer.png",
       ruler: "/images/p4/exp1/ruler1.png",
       platform: "/images/p4/exp1/platform.png",
@@ -47,9 +47,9 @@ export default function P4GravityExp1Materials() {
         badge: "Materials",
         back: "Back",
         next: "Next",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakAll: "Listen all",
         items: [
           { key: "ball", name: "Ball" },
@@ -65,9 +65,9 @@ export default function P4GravityExp1Materials() {
         badge: "Bahan & Peralatan",
         back: "Kembali",
         next: "Seterusnya",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakAll: "Dengar semua",
         items: [
           { key: "ball", name: "Bola" },
@@ -150,13 +150,13 @@ export default function P4GravityExp1Materials() {
 
       {/* top title */}
       <div className="absolute left-[18px] right-[18px] top-[18px] z-[6] flex items-center justify-center">
-        <div className="flex max-w-[min(1120px,calc(100%-240px))] items-center gap-3 rounded-[18px] border-2 border-slate-900/10 bg-white/95 px-[18px] py-[14px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:max-w-[calc(100%-40px)]">
-          <div className="text-[26px] font-black leading-tight text-slate-900 max-[980px]:text-[20px]">
+        <div className="flex max-w-[min(1240px,calc(100%-180px))] items-center gap-4 rounded-[20px] border-2 border-slate-900/10 bg-white/95 px-[24px] py-[16px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:max-w-[calc(100%-40px)]">
+          <div className="text-[32px] font-black leading-tight text-slate-900 max-[980px]:text-[24px]">
             {t.title}
           </div>
 
           <button
-            className={`h-11 w-11 shrink-0 rounded-[14px] text-[18px] shadow-[inset_0_-4px_0_rgba(0,0,0,.12),0_16px_28px_rgba(0,0,0,.16)] transition hover:-translate-y-0.5 hover:shadow-[inset_0_-4px_0_rgba(0,0,0,.12),0_20px_34px_rgba(0,0,0,.20)] active:translate-y-[1px] ${
+            className={`h-12 w-12 shrink-0 rounded-[14px] text-[20px] shadow-[inset_0_-4px_0_rgba(0,0,0,.12),0_16px_28px_rgba(0,0,0,.16)] transition hover:-translate-y-0.5 hover:shadow-[inset_0_-4px_0_rgba(0,0,0,.12),0_20px_34px_rgba(0,0,0,.20)] active:translate-y-[1px] ${
               isSpeaking("title") ? "bg-green-200 saturate-110" : "bg-blue-100"
             }`}
             type="button"
@@ -169,12 +169,12 @@ export default function P4GravityExp1Materials() {
       </div>
 
       {/* badge */}
-      <div className="absolute left-[18px] top-[118px] z-[6] flex items-center gap-[10px] rounded-2xl border-2 border-slate-900/15 bg-white/90 px-[14px] py-3 shadow-[0_16px_34px_rgba(0,0,0,.18)] max-[980px]:top-[126px] max-[720px]:top-[132px]">
-        <span className="text-[22px] font-black text-slate-900">{t.badge}</span>
+      <div className="absolute left-[140px] top-[118px] z-[6] flex items-center gap-[10px] rounded-2xl border-2 border-slate-900/15 bg-white/90 px-[14px] py-3 shadow-[0_16px_34px_rgba(0,0,0,.18)] max-[980px]:left-[36px] max-[980px]:top-[126px] max-[720px]:left-[18px] max-[720px]:top-[132px]">
+        <span className="text-[28px] font-black text-slate-900">{t.badge}</span>
       </div>
 
       {/* center */}
-      <div className="absolute bottom-[110px] left-[18px] right-[18px] top-[150px] z-[3] flex items-center justify-center max-[980px]:top-[190px] max-[720px]:bottom-[140px] max-[720px]:top-[205px]">
+      <div className="absolute bottom-[110px] left-[18px] right-[18px] top-[182px] z-[3] flex items-center justify-center max-[980px]:top-[210px] max-[720px]:bottom-[140px] max-[720px]:top-[220px]">
         <div className="max-h-full overflow-y-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="grid w-[min(760px,88vw)] grid-cols-3 justify-items-center gap-[12px] max-[980px]:w-[min(640px,90vw)] max-[980px]:grid-cols-2 max-[720px]:w-[min(420px,88vw)] max-[720px]:grid-cols-1 max-[720px]:gap-[14px]">
             {t.items.map((it) => (

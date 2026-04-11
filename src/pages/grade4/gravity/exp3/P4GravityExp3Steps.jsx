@@ -70,9 +70,9 @@ export default function P4GravityExp3Steps() {
         next: "Next",
         back: "Back",
 
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakTitleOnly: "Listen to title",
         speak: "Listen",
 
@@ -93,9 +93,9 @@ export default function P4GravityExp3Steps() {
         next: "Seterusnya",
         back: "Kembali",
 
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         speakTitleOnly: "Dengar tajuk",
         speak: "Dengar",
 
@@ -150,22 +150,6 @@ export default function P4GravityExp3Steps() {
         className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
       <div className="e3s-overlay" />
-
-      {/* language dock (ซ้ายล่าง) */}
-      <div className="e3s-langDock">
-        <button className={`e3s-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
-          {t.chipTh}
-        </button>
-        <button className={`e3s-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
-          {t.chipEn}
-        </button>
-        <button className={`e3s-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
-          {t.chipMs}
-        </button>
-        {/* <button className="e3s-chipAudio" type="button" onClick={speakAll} title={t.speakAll}>
-          🔊
-        </button> */}
-      </div>
 
       {/* Board stage */}
       <div className="e3s-stage">
@@ -246,13 +230,56 @@ export default function P4GravityExp3Steps() {
         </div>
       </div>
 
-      {/* bottom-right nav */}
-      <div className="e3s-nav">
-        <button className="e3s-back" type="button" onClick={() => navigate(BACK_PATH)}>
+      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("th")}
+          type="button"
+        >
+          {t.chipTh}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("ms")}
+          type="button"
+        >
+          {t.chipMs}
+        </button>
+      </div>
+
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
           « {t.back}
         </button>
 
-        <button className="e3s-next" type="button" onClick={() => navigate(NEXT_PATH)}>
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(NEXT_PATH)}
+        >
           {t.next} »
         </button>
       </div>

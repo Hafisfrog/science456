@@ -65,7 +65,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, .92);
+  background: rgba(255, 255, 255, .90);
   padding: 10px 12px;
   border-radius: 18px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, .22);
@@ -74,7 +74,7 @@
 .ans2-chip {
   border: none;
   cursor: pointer;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: 14px;
   font-size: 16px;
   font-weight: 1000;
@@ -97,7 +97,7 @@
   left: 0;
   right: 0;
   top: 60px;
-  bottom: 53px;
+  bottom: 110px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -389,40 +389,38 @@
 
 .ans2-navDock {
   position: absolute;
-  right: 22px;
-  bottom: 16px;
+  right: 18px;
+  bottom: 18px;
   z-index: 8;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
+  align-items: center;
 }
 
 .ans2-navMiniRow {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .ans2-navMiniBtn {
   border: none;
   cursor: pointer;
-  min-width: 112px;
-  height: 58px;
-  padding: 0 16px;
+  min-width: 124px;
+  height: 60px;
+  padding: 0 18px;
   border-radius: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 1000;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, .18), inset 0 -6px 0 rgba(148, 163, 184, .20);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, .22);
   transition: transform .12s ease, box-shadow .12s ease;
 }
 
 .ans2-navMiniBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 34px rgba(0, 0, 0, .20), inset 0 -6px 0 rgba(148, 163, 184, .24);
+  box-shadow: 0 28px 56px rgba(0, 0, 0, .26);
 }
 
 .ans2-navMiniBtn:active {
@@ -430,18 +428,13 @@
 }
 
 .ans2-navBackBtn {
-  background: linear-gradient(180deg, #ffffff, #f5f7ff);
+  background: rgba(255, 255, 255, .92);
   color: #0f172a;
 }
 
 .ans2-navNextBtn {
-  background: linear-gradient(180deg, #e34d41, #c7362b);
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
   color: #ffffff;
-  box-shadow: 0 14px 28px rgba(160, 28, 20, .26), inset 0 -6px 0 rgba(127, 29, 29, .22);
-}
-
-.ans2-navNextBtn:hover {
-  box-shadow: 0 18px 34px rgba(160, 28, 20, .30), inset 0 -6px 0 rgba(127, 29, 29, .26);
 }
 
 .ans2-navArrow {
@@ -487,13 +480,13 @@
 
   .ans2-langFloating {
     left: 12px;
-    bottom: 12px;
+    bottom: 18px;
   }
 }
 
 @media (max-width: 700px) {
   .ans2-page {
-    padding-bottom: 96px;
+    padding-bottom: 140px;
   }
 
   .ans2-stage {
@@ -538,13 +531,14 @@
     gap: 6px;
     padding: 8px;
     flex-wrap: wrap;
-    max-width: calc(100vw - 96px);
+    max-width: none;
+    width: 100%;
   }
 
   .ans2-chip {
-    flex: 1 1 calc(33.333% - 6px);
+    flex: 1 1 0;
     min-width: 0;
-    padding: 9px 10px;
+    padding: 10px 12px;
     font-size: 14px;
     text-align: center;
   }
@@ -609,17 +603,20 @@
   }
 
   .ans2-navDock {
+    left: 12px;
     right: 12px;
     bottom: 12px;
+    align-items: stretch;
   }
 
   .ans2-navMiniBtn {
-    min-width: 96px;
-    height: 50px;
-    padding: 0 12px;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 52px;
+    padding: 0 14px;
     border-radius: 16px;
     gap: 6px;
-    font-size: 14px;
+    font-size: 18px;
   }
 
   .ans2-navArrow {
@@ -659,12 +656,11 @@
   }
 
   .ans2-navMiniBtn {
-    min-width: 88px;
     height: 46px;
     padding: 0 10px;
     border-radius: 14px;
     gap: 6px;
-    font-size: 13px;
+    font-size: 16px;
   }
 
   .ans2-navArrow {

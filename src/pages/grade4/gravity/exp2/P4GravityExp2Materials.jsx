@@ -44,9 +44,9 @@ export default function P4GravityExp2Materials() {
         badge: "Materials",
         back: "Back",
         next: "Next",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         items: [
           { key: "ball", name: "Ball" },
           { key: "bocce", name: "Bocce Ball" },
@@ -59,9 +59,9 @@ export default function P4GravityExp2Materials() {
         badge: "Bahan & Peralatan",
         back: "Kembali",
         next: "Seterusnya",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         items: [
           { key: "ball", name: "Bola" },
           { key: "bocce", name: "Bola Bocce" },
@@ -130,8 +130,8 @@ export default function P4GravityExp2Materials() {
       <div className="exp1m-overlay" />
 
       <div className="absolute left-[18px] right-[18px] top-[18px] z-[6] flex items-center justify-center">
-        <div className="flex max-w-[min(1120px,calc(100%-240px))] items-center gap-3 rounded-[18px] border-2 border-slate-900/10 bg-white/95 px-[18px] py-[14px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:max-w-[calc(100%-40px)]">
-          <div className="text-[26px] font-black leading-tight text-slate-900 max-[980px]:text-[20px]">
+        <div className="flex max-w-[min(1260px,calc(100%-180px))] items-center gap-3 rounded-[18px] border-2 border-slate-900/10 bg-white/95 px-[24px] py-[16px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[980px]:max-w-[min(1120px,calc(100%-140px))] max-[720px]:max-w-[calc(100%-40px)] max-[720px]:px-[18px]">
+          <div className="text-[32px] font-black leading-tight text-slate-900 max-[980px]:text-[24px] max-[720px]:text-[20px]">
             {t.title}
           </div>
           <button
@@ -145,8 +145,8 @@ export default function P4GravityExp2Materials() {
         </div>
       </div>
 
-      <div className="absolute left-[18px] top-[118px] z-[6] flex items-center gap-[10px] rounded-2xl border-2 border-slate-900/15 bg-white/90 px-[14px] py-3 shadow-[0_16px_34px_rgba(0,0,0,.18)] max-[980px]:top-[126px] max-[720px]:top-[132px]">
-        <span className="text-[22px] font-black text-slate-900">{t.badge}</span>
+      <div className="absolute left-[132px] top-[138px] z-[6] flex items-center gap-[10px] rounded-2xl border-2 border-slate-900/15 bg-white/90 px-[18px] py-3 shadow-[0_16px_34px_rgba(0,0,0,.18)] max-[980px]:left-[36px] max-[980px]:top-[126px] max-[720px]:left-[18px] max-[720px]:top-[132px]">
+        <span className="text-[28px] font-black text-slate-900 max-[980px]:text-[25px] max-[720px]:text-[22px]">{t.badge}</span>
       </div>
 
       <div className="exp1m-center">
@@ -211,12 +211,20 @@ export default function P4GravityExp2Materials() {
         </button>
       </div>
 
-      <div className="exp1m-actionRow">
-        <button className="exp1m-backBtn" type="button" onClick={() => navigate(BACK_PATH)}>
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
           « {t.back}
         </button>
 
-        <button className="exp1m-nextBtn" type="button" onClick={() => navigate(NEXT_PATH)}>
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(NEXT_PATH)}
+        >
           {t.next} »
         </button>
       </div>

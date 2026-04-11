@@ -1,6 +1,7 @@
 ﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4GravityExp2Action.css";
+import "../exp1/P4GravityExp1Materials.css";
 
 export default function P4GravityExp2Action() {
   const navigate = useNavigate();
@@ -53,16 +54,15 @@ export default function P4GravityExp2Action() {
     () => ({
       th: {
         topTitle:
-          "ลงมือทดลองจริง: เลือกวัตถุ → วางบนเครื่องชั่งสปริง → อ่านค่าน้ำหนัก",
-        back: "ย้อนกลับ",
+          "ลงมือทดลองจริง: เลือกวัตถุ → วางบนเครื่องชั่งสปริง → บันทึกค่าน้ำหนัก",
         chooseTitle: "เลือกอุปกรณ์/วัตถุ",
-        chooseSub: "เลือกชิ้นที่ต้องการวางบนเครื่องชั่ง",
+        // chooseSub: "เลือกชิ้นที่ต้องการวางบนเครื่องชั่ง",
         selected: "วัตถุที่เลือก",
         mass: "มวล",
         weight: "น้ำหนัก",
-        hint: "น้ำหนักขึ้นกับมวลและแรงดึงดูดของโลก",
+        // hint: "น้ำหนักขึ้นกับมวลและแรงดึงดูดของโลก",
         recordTitle: "บันทึกผล",
-        recordSub: "เก็บค่าเพื่อเปรียบเทียบ",
+        // recordSub: "เก็บค่าเพื่อเปรียบเทียบ",
         colObj: "วัตถุ",
         colMass: "มวล",
         colW: "น้ำหนัก ",
@@ -70,6 +70,8 @@ export default function P4GravityExp2Action() {
         save: "+ บันทึกค่าน้ำหนัก",
         clear: "รีเซ็ตตาราง",
         viewAll: "ดูผลลัพธ์ทั้งหมด",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
         note:
           "ลองเลือกและบันทึกหลายชิ้น แล้วสังเกตว่าเมื่อมวลมากขึ้น น้ำหนักก็จะมากขึ้นตาม",
         groupBall: "ลูกบอล",
@@ -86,23 +88,21 @@ export default function P4GravityExp2Action() {
         chipMs: "มลายู",
         placedOnScale: "วางบนเครื่องชั่ง",
         recordedMark: "บันทึกแล้ว",
-        selectedMark: "เลือกแล้ว",
         stop: "หยุดเสียง",
         unitNewton: "นิวตัน",
         noteLabel: "หมายเหตุ",
       },
       en: {
         topTitle:
-          "Real experiment: choose an object, place it on the spring scale, then read the weight",
-        back: "Back",
+          "Hands-on experiment: Choose an object → Place it on a spring balance → Record the weight",
         chooseTitle: "Choose an Object",
-        chooseSub: "Select one piece to place on the scale",
+        // chooseSub: "Select one piece to place on the scale",
         selected: "Selected Object",
         mass: "Mass",
         weight: "Weight",
-        hint: "Weight depends on mass and Earth's gravity.",
+        // hint: "Weight depends on mass and Earth's gravity.",
         recordTitle: "Records",
-        recordSub: "Save values for comparison",
+        // recordSub: "Save values for comparison",
         colObj: "Object",
         colMass: "Mass",
         colW: "Weight",
@@ -110,6 +110,8 @@ export default function P4GravityExp2Action() {
         save: "+ Save weight",
         clear: "Clear table",
         viewAll: "View all results",
+        back: "Back",
+        next: "Next",
         note:
           "Select and record several pieces, then compare how greater mass leads to greater weight.",
         groupBall: "Ball",
@@ -121,28 +123,26 @@ export default function P4GravityExp2Action() {
         approxMass: "Approx. mass",
         speakAll: "Listen to page",
         speak: "Listen",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         placedOnScale: "Placed on scale",
         recordedMark: "Recorded",
-        selectedMark: "Selected",
         stop: "Stop audio",
         unitNewton: "newton",
         noteLabel: "Note",
       },
       ms: {
         topTitle:
-          "Eksperimen sebenar: pilih objek, letakkan pada penimbang spring, kemudian baca berat",
-        back: "Kembali",
+          "Eksperimen secara praktikal: Pilih objek → Letakkan pada penimbang spring → Catat nilai berat",
         chooseTitle: "Pilih Objek",
-        chooseSub: "Pilih satu keping untuk diletakkan pada penimbang",
+        // chooseSub: "Pilih satu keping untuk diletakkan pada penimbang",
         selected: "Objek Dipilih",
         mass: "Jisim",
         weight: "Berat",
-        hint: "Berat bergantung pada jisim dan graviti Bumi.",
+        // hint: "Berat bergantung pada jisim dan graviti Bumi.",
         recordTitle: "Rekod",
-        recordSub: "Simpan nilai untuk perbandingan",
+        // recordSub: "Simpan nilai untuk perbandingan",
         colObj: "Objek",
         colMass: "Jisim",
         colW: "Berat",
@@ -150,6 +150,8 @@ export default function P4GravityExp2Action() {
         save: "+ Simpan berat",
         clear: "Kosongkan jadual",
         viewAll: "Lihat semua keputusan",
+        back: "Kembali",
+        next: "Seterusnya",
         note:
           "Pilih dan rekod beberapa keping supaya anda dapat melihat bahawa jisim yang lebih besar memberi berat yang lebih besar.",
         groupBall: "Bola",
@@ -161,12 +163,11 @@ export default function P4GravityExp2Action() {
         approxMass: "Anggaran jisim",
         speakAll: "Dengar satu halaman",
         speak: "Dengar",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Melayu",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         placedOnScale: "Diletakkan pada penimbang",
         recordedMark: "Direkod",
-        selectedMark: "Dipilih",
         stop: "Henti audio",
         unitNewton: "newton",
         noteLabel: "Nota",
@@ -180,9 +181,8 @@ export default function P4GravityExp2Action() {
   const speakAll = () => {
     const message = [
       t.topTitle,
-      `${t.chooseTitle}: ${t.chooseSub}`,
-      t.hint,
-      `${t.recordTitle}: ${t.recordSub}`,
+      `${t.chooseTitle}`,
+      `${t.recordTitle}`,
       t.note,
     ].join("\n\n");
 
@@ -353,14 +353,14 @@ export default function P4GravityExp2Action() {
       </div>
 
       <div className="exp2a-wrap">
-        <section className="exp2a-pane">
+        <section className="exp2a-pane exp2a-paneLeft">
           <header className="exp2a-paneHead">
             <div className="exp2a-paneTitle">
               {t.chooseTitle}
               <button
                 className="exp2a-miniIcon"
                 type="button"
-                onClick={() => speak(`${t.chooseTitle}. ${t.chooseSub}`)}
+                onClick={() => speak(`${t.chooseTitle}`)}
                 title={t.speak}
                 aria-label={t.speak}
                 disabled={isSpeaking}
@@ -368,7 +368,7 @@ export default function P4GravityExp2Action() {
                 🔊
               </button>
             </div>
-            <div className="exp2a-paneSub">{t.chooseSub}</div>
+            {/* <div className="exp2a-paneSub">{t.chooseSub}</div> */}
           </header>
 
           <div className="exp2a-groups">
@@ -381,7 +381,6 @@ export default function P4GravityExp2Action() {
                 <div className="exp2a-cards">
                   {grouped[type].map((item) => {
                     const active = item.id === selectedId;
-                    const wasSelected = selectedIds.includes(item.id);
                     const recorded = Boolean(latestRecordById[item.id]);
 
                     return (
@@ -400,18 +399,9 @@ export default function P4GravityExp2Action() {
                         />
                         <div className="exp2a-cardInfo">
                           <div className="exp2a-cardTitle">{pieceLabel(item.piece)}</div>
-                          <div className="exp2a-cardMeta">
-                            {t.approxMass}: {fmtKg(item.massKg)}
-                          </div>
-
                           <div className="exp2a-tags">
-                            {wasSelected && <span className="exp2a-tag blue">✓ {t.selectedMark}</span>}
                             {recorded && <span className="exp2a-tag green">✓ {t.recordedMark}</span>}
                           </div>
-                        </div>
-
-                        <div className="exp2a-check" aria-hidden="true">
-                          {active ? "✓" : ""}
                         </div>
                       </button>
                     );
@@ -421,31 +411,6 @@ export default function P4GravityExp2Action() {
             ))}
           </div>
 
-          <div className="exp2a-langDock">
-            <div className="exp2a-lang">
-              <button
-                className={`exp2a-chip ${lang === "th" ? "active" : ""}`}
-                onClick={() => setLang("th")}
-                type="button"
-              >
-                {t.chipTh}
-              </button>
-              <button
-                className={`exp2a-chip ${lang === "en" ? "active" : ""}`}
-                onClick={() => setLang("en")}
-                type="button"
-              >
-                {t.chipEn}
-              </button>
-              <button
-                className={`exp2a-chip ${lang === "ms" ? "active" : ""}`}
-                onClick={() => setLang("ms")}
-                type="button"
-              >
-                {t.chipMs}
-              </button>
-            </div>
-          </div>
         </section>
 
         <section className="exp2a-stage">
@@ -517,7 +482,7 @@ export default function P4GravityExp2Action() {
                 </div>
               </div>
 
-              <div className="exp2a-hint">{t.hint}</div>
+              {/* <div className="exp2a-hint">{t.hint}</div> */}
 
               <button className="exp2a-btn primary exp2a-saveBottomBtn" type="button" onClick={addRecord}>
                 {t.save}
@@ -526,14 +491,14 @@ export default function P4GravityExp2Action() {
           </div>
         </section>
 
-        <section className="exp2a-pane">
+        <section className="exp2a-pane exp2a-paneRight">
           <header className="exp2a-paneHead">
             <div className="exp2a-paneTitle">
               {t.recordTitle}
               <button
                 className="exp2a-miniIcon"
                 type="button"
-                onClick={() => speak(`${t.recordTitle}. ${t.recordSub}`)}
+                onClick={() => speak(`${t.recordTitle}`)}
                 title={t.speak}
                 aria-label={t.speak}
                 disabled={isSpeaking}
@@ -541,7 +506,7 @@ export default function P4GravityExp2Action() {
                 🔊
               </button>
             </div>
-            <div className="exp2a-paneSub">{t.recordSub}</div>
+            {/* <div className="exp2a-paneSub">{t.recordSub}</div> */}
           </header>
 
           <div className="exp2a-tableTools">
@@ -582,26 +547,61 @@ export default function P4GravityExp2Action() {
               <button className="exp2a-btn danger" type="button" onClick={goResult}>
                 {t.viewAll}
               </button>
-              <button className="exp2a-btn ghost exp2a-backInlineBtn" type="button" onClick={() => navigate(BACK_PATH)}>
-                « {t.back}
-              </button>
             </div>
           </div>
         </section>
       </div>
 
-      <div className="exp2a-bottomBar">
-        <button className="exp2a-btn primary" type="button" onClick={addRecord}>
-          {t.save}
+      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("th")}
+          type="button"
+        >
+          {t.chipTh}
         </button>
-        <button className="exp2a-btn ghost" type="button" onClick={clearRecords}>
-          {t.clear}
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
         </button>
-        <button className="exp2a-btn danger" type="button" onClick={goResult}>
-          {t.viewAll}
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("ms")}
+          type="button"
+        >
+          {t.chipMs}
         </button>
-        <button className="exp2a-btn ghost" type="button" onClick={() => navigate(BACK_PATH)}>
+      </div>
+
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
           « {t.back}
+        </button>
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={goResult}
+        >
+          {t.next} »
         </button>
       </div>
     </div>

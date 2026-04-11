@@ -151,8 +151,7 @@ export default function P4GravitySim1() {
           {t.caption}
         </div>
 
-        <div className="absolute bottom-4 left-4 z-20 flex items-center gap-3 rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_12px_24px_rgba(0,0,0,.14)]">
-          <div className="flex items-center gap-[10px]">
+        <div className="absolute bottom-[18px] left-[18px] z-[7] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)]">
             <button
               className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
                 lang === "th"
@@ -186,13 +185,11 @@ export default function P4GravitySim1() {
             >
               {langLabels[lang].ms}
             </button>
-          </div>
         </div>
 
-        {/* bottom-right nav */}
-        <div className="absolute bottom-4 right-4 z-20 flex items-center gap-3 max-[640px]:gap-2">
+        <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
           <button
-            className="cursor-pointer rounded-[18px] bg-white/90 px-4 py-[12px] text-[18px] font-black text-[#0b1020] shadow-[0_12px_24px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_32px_rgba(0,0,0,.20)] max-[640px]:px-3 max-[640px]:py-[11px] max-[640px]:text-[16px]"
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={handleBack}
             type="button"
           >
@@ -200,7 +197,7 @@ export default function P4GravitySim1() {
           </button>
 
           <button
-            className="cursor-pointer rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-5 py-[12px] text-[20px] font-black text-white shadow-[0_14px_28px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.22)] max-[640px]:px-4 max-[640px]:py-[11px] max-[640px]:text-[17px]"
+            className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={handleNext}
             type="button"
           >

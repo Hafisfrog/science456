@@ -1,5 +1,6 @@
 ﻿import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../exp1/P4GravityExp1Materials.css";
 
 export default function P4GravityExp2Question() {
   const navigate = useNavigate();
@@ -7,7 +8,6 @@ export default function P4GravityExp2Question() {
 
   const BACK_PATH = "/p4/gravity/exp2/steps";
   const ACTION_PATH = "/p4/gravity/exp2/action";
-  const ANSWER_HINT_PATH = "/p4/gravity/exp2/answer";
 
   const assets = useMemo(() => {
     return {
@@ -26,32 +26,32 @@ export default function P4GravityExp2Question() {
         langMs: "มลายู",
         btnHint: "มาหาคำตอบ\nกัน",
         btnStart: "เริ่มการทดลอง",
-        back: "« ย้อนกลับ",
-        next: "ต่อไป »",
+        back: "ย้อนกลับ",
+        next: "ต่อไป",
         speak: "ฟังคำถาม",
       },
       en: {
         title: "Thinking Question",
         q1: "1. Have you ever wondered why all objects fall to the ground, and why different objects have different weights?",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Malay",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
         btnHint: "Find\nthe answer",
         btnStart: "Start Experiment",
-        back: "« Back",
-        next: "Next »",
+        back: "Back",
+        next: "Next",
         speak: "Listen",
       },
       ms: {
         title: "Soalan Berfikir",
         q1: "1. Pernahkah anda tertanya-tanya mengapa semua objek jatuh ke tanah, dan mengapa objek yang berbeza mempunyai berat yang berbeza?",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Malay",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
         btnHint: "Cari\njawapan",
         btnStart: "Mulakan Eksperimen",
-        back: "« Kembali",
-        next: "Seterusnya »",
+        back: "Kembali",
+        next: "Seterusnya",
         speak: "Dengar soalan",
       },
     };
@@ -117,59 +117,25 @@ export default function P4GravityExp2Question() {
         </div>
       </div>
 
-      <div className="absolute bottom-[clamp(14px,2.4vh,24px)] right-7 z-[4] flex flex-col gap-[12px] max-[680px]:bottom-[90px] max-[680px]:right-[18px] max-[760px]:bottom-4">
-        <button
-          className="mx-auto flex h-[92px] w-[240px] items-center justify-center gap-3 rounded-2xl bg-white/92 shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[210px] max-[880px]:h-[84px] max-[880px]:w-[210px]"
-          type="button"
-          onClick={() => navigate(ANSWER_HINT_PATH)}
-          title={t.btnHint.replace("\n", " ")}
-        >
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-amber-400 text-xl font-black text-slate-900 shadow-[inset_0_-4px_0_rgba(0,0,0,.12)]">
-            ?
-          </span>
-          <span className="whitespace-pre-line text-[20px] font-black leading-[1.05] text-slate-900 max-[880px]:text-lg">
-            {t.btnHint}
-          </span>
-        </button>
+      <button
+        className="absolute left-1/2 top-[56%] z-[12] flex w-[min(380px,24vw)] -translate-x-1/2 flex-col items-center gap-4 rounded-[28px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,.98),rgba(241,247,255,.96))] px-6 py-5 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,.22)] transition hover:-translate-x-1/2 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(15,23,42,.28)] active:translate-y-[1px] max-[1100px]:w-[min(350px,28vw)] max-[900px]:top-[62%] max-[900px]:w-[min(320px,32vw)] max-[700px]:top-[55%] max-[700px]:w-[min(280px,calc(100%-40px))] max-[700px]:gap-3 max-[700px]:rounded-[24px] max-[700px]:px-5 max-[700px]:py-4"
+        type="button"
+        onClick={() => navigate(ACTION_PATH)}
+        title={t.btnStart.replace("\n", " ")}
+      >
+        <span className="flex h-[74px] w-[74px] items-center justify-center rounded-full bg-[linear-gradient(180deg,#dbeafe,#c7dbff)] text-[36px] font-black text-slate-900 shadow-[inset_0_-6px_0_rgba(148,163,184,.35),0_8px_16px_rgba(148,163,184,.20)] max-[700px]:h-[62px] max-[700px]:w-[62px] max-[700px]:text-[30px]">
+          {"\u25B6"}
+        </span>
+        <span className="text-center text-[26px] font-black leading-none tracking-[-0.02em] text-slate-900 max-[900px]:text-[22px] max-[700px]:text-[18px]">
+          {t.btnStart}
+        </span>
+      </button>
 
-        <button
-          className="flex w-[280px] flex-col items-center justify-center gap-[8px] rounded-[18px] bg-white/92 px-5 py-[14px] shadow-[0_18px_36px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.26)] active:translate-y-px max-[680px]:w-[236px] max-[880px]:w-[236px] max-[880px]:py-[12px]"
-          type="button"
-          onClick={() => navigate(ACTION_PATH)}
-          title={t.btnStart.replace("\n", " ")}
-        >
-          <span className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-blue-100 text-[26px] font-black shadow-[inset_0_-5px_0_rgba(0,0,0,.12)] max-[880px]:h-[54px] max-[880px]:w-[54px] max-[880px]:text-2xl">
-            {"\u25B6"}
-          </span>
-          <span className="whitespace-pre-line text-center text-[20px] font-black leading-[1.05] text-slate-900 max-[880px]:text-[18px]">
-            {t.btnStart}
-          </span>
-        </button>
-
-        <div className="flex w-[280px] gap-[10px] max-[680px]:w-[236px] max-[680px]:gap-[8px]">
-          <button
-            className="flex-1 rounded-[16px] bg-white/95 px-[14px] py-[11px] text-[17px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[680px]:px-[10px] max-[680px]:py-[10px] max-[680px]:text-[15px]"
-            type="button"
-            onClick={() => navigate(BACK_PATH)}
-          >
-            {t.back}
-          </button>
-
-          <button
-            className="flex-1 rounded-[16px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[14px] py-[11px] text-[17px] font-black text-white shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[680px]:px-[10px] max-[680px]:py-[10px] max-[680px]:text-[15px]"
-            type="button"
-            onClick={() => navigate(ACTION_PATH)}
-          >
-            {t.next}
-          </button>
-        </div>
-      </div>
-
-      <div className="absolute bottom-4 left-[18px] z-[5] flex items-center gap-[10px] rounded-[18px] bg-white/92 px-3 py-[10px] shadow-[0_18px_38px_rgba(0,0,0,.22)]">
+      <div className="absolute bottom-[18px] left-[18px] z-20 flex gap-[10px] rounded-[18px] bg-white/92 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[700px]:bottom-[12px] max-[700px]:left-[12px] max-[700px]:gap-[6px] max-[700px]:rounded-[12px] max-[700px]:p-[7px]">
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
             lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-          }`}
+          } max-[700px]:rounded-[10px] max-[700px]:px-[10px] max-[700px]:py-[8px] max-[700px]:text-[13px]`}
           onClick={() => setLang("th")}
           type="button"
         >
@@ -178,7 +144,7 @@ export default function P4GravityExp2Question() {
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
             lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-          }`}
+          } max-[700px]:rounded-[10px] max-[700px]:px-[10px] max-[700px]:py-[8px] max-[700px]:text-[13px]`}
           onClick={() => setLang("en")}
           type="button"
         >
@@ -187,11 +153,28 @@ export default function P4GravityExp2Question() {
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
             lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-          }`}
+          } max-[700px]:rounded-[10px] max-[700px]:px-[10px] max-[700px]:py-[8px] max-[700px]:text-[13px]`}
           onClick={() => setLang("ms")}
           type="button"
         >
           {t.langMs}
+        </button>
+      </div>
+
+      <div className="absolute bottom-[18px] right-[18px] z-20 flex items-center gap-3 max-[700px]:bottom-[12px] max-[700px]:right-[12px] max-[700px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[700px]:rounded-[12px] max-[700px]:px-[10px] max-[700px]:py-[10px] max-[700px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(BACK_PATH)}
+        >
+          « {t.back}
+        </button>
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[700px]:rounded-[12px] max-[700px]:px-[12px] max-[700px]:py-[10px] max-[700px]:text-[15px]"
+          type="button"
+          onClick={() => navigate(ACTION_PATH)}
+        >
+          {t.next} »
         </button>
       </div>
     </div>

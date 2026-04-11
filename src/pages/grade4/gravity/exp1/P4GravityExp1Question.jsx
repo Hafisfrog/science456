@@ -12,7 +12,7 @@ export default function P4GravityExp1Question() {
     return {
       th: {
         title: "คำถามชวนคิด",
-        q: "2. เมื่อปล่อยวัตถุ วัตถุจะเคลื่อนที่ไปทางใด?\nและอะไรเป็นแรงที่ทำให้วัตถุตกลงสู่พื้น?",
+        q: "2. เมื่อปล่อยวัตถุ วัตถุจะเคลื่อนที่ไปทางใด ?\nและอะไรเป็นแรงที่ทำให้วัตถุตกลงสู่พื้น ?",
         hintBtn: "มาหาคำตอบกัน",
         startBtn: "เริ่มการทดลอง",
         backBtn: "« ย้อนกลับ",
@@ -24,7 +24,7 @@ export default function P4GravityExp1Question() {
       },
       en: {
         title: "Think & Ask",
-        q: "2. When you release an object, which direction will it move?\nAnd what force makes it fall to the ground?",
+        q: "2. When you release an object, which direction will it move ?\nAnd what force makes it fall to the ground ?",
         hintBtn: "Let's find the answer",
         startBtn: "Start Experiment",
         backBtn: "« Back",
@@ -36,7 +36,7 @@ export default function P4GravityExp1Question() {
       },
       ms: {
         title: "Soalan Pemikiran",
-        q: "2. Apabila objek dilepaskan, ke arah manakah ia bergerak?\nDan apakah daya yang menyebabkan objek jatuh ke tanah?",
+        q: "2. Apabila objek dilepaskan, ke arah manakah ia bergerak ?\nDan apakah daya yang menyebabkan objek jatuh ke tanah ?",
         hintBtn: "Mari cari jawapan",
         startBtn: "Mula Eksperimen",
         backBtn: "« Kembali",
@@ -86,9 +86,9 @@ export default function P4GravityExp1Question() {
       />
 
       <div className="relative h-full w-full p-6">
-        <div className="absolute bottom-[22px] left-11 z-20 flex gap-[10px] rounded-[18px] bg-white/92 px-3 py-[10px] shadow-[0_14px_28px_rgba(0,0,0,.22)] max-[700px]:bottom-[16px] max-[700px]:left-[10px]">
+        <div className="absolute bottom-[18px] left-[18px] z-[7] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:left-[12px] max-[720px]:bottom-[72px] max-[720px]:right-[12px] max-[720px]:justify-center">
           <button
-            className={`rounded-[14px] px-[14px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_10px_18px_rgba(0,0,0,.14)] ${
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[720px]:flex-1 max-[720px]:px-[12px] max-[720px]:text-[14px] ${
               lang === "th" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
             }`}
             onClick={() => setLang("th")}
@@ -97,7 +97,7 @@ export default function P4GravityExp1Question() {
             {t.chipTh}
           </button>
           <button
-            className={`rounded-[14px] px-[14px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_10px_18px_rgba(0,0,0,.14)] ${
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[720px]:flex-1 max-[720px]:px-[12px] max-[720px]:text-[14px] ${
               lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
             }`}
             onClick={() => setLang("en")}
@@ -106,7 +106,7 @@ export default function P4GravityExp1Question() {
             {t.chipEn}
           </button>
           <button
-            className={`rounded-[14px] px-[14px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_10px_18px_rgba(0,0,0,.14)] ${
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[720px]:flex-1 max-[720px]:px-[12px] max-[720px]:text-[14px] ${
               lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
             }`}
             onClick={() => setLang("ms")}
@@ -143,48 +143,47 @@ export default function P4GravityExp1Question() {
               <div key={idx}>{line}</div>
             ))}
           </div>
+
+          {/* <div className="mt-4 flex justify-end">
+            <button
+              className="rounded-[14px] bg-white/92 px-4 py-3 text-[18px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.18)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.22)] max-[720px]:w-full max-[720px]:text-[16px]"
+              onClick={handleHint}
+              type="button"
+            >
+              {t.hintBtn}
+            </button>
+          </div> */}
         </div>
 
-        <div className="absolute bottom-[26px] right-[26px] z-20 flex flex-col gap-[12px] max-[700px]:bottom-[16px] max-[700px]:right-[10px]">
+        <button
+          className="absolute left-1/2 top-[54%] z-[12] flex w-[min(380px,24vw)] -translate-x-1/2 flex-col items-center gap-4 rounded-[28px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,.98),rgba(241,247,255,.96))] px-6 py-5 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,.22)] transition hover:-translate-x-1/2 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(15,23,42,.28)] active:translate-y-[1px] max-[1100px]:w-[min(350px,28vw)] max-[900px]:top-[62%] max-[900px]:w-[min(320px,32vw)] max-[700px]:top-[55%] max-[700px]:w-[min(280px,calc(100%-40px))] max-[700px]:gap-3 max-[700px]:rounded-[24px] max-[700px]:px-5 max-[700px]:py-4"
+          onClick={handleStart}
+          type="button"
+        >
+          <div className="flex h-[74px] w-[74px] items-center justify-center rounded-full bg-[linear-gradient(180deg,#dbeafe,#c7dbff)] text-[36px] font-black text-slate-900 shadow-[inset_0_-6px_0_rgba(148,163,184,.35),0_8px_16px_rgba(148,163,184,.20)] max-[700px]:h-[62px] max-[700px]:w-[62px] max-[700px]:text-[30px]">
+            {"\u25B6"}
+          </div>
+          <div className="text-center text-[26px] font-black leading-none tracking-[-0.02em] text-slate-900 max-[900px]:text-[22px] max-[700px]:text-[18px]">
+            {t.startBtn}
+          </div>
+        </button>
+
+        <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:left-[12px] max-[720px]:right-[12px] max-[720px]:bottom-[12px] max-[720px]:gap-2">
           <button
-            className="mx-auto flex w-[240px] items-center gap-3 rounded-[14px] border-4 border-black/70 bg-white/92 px-4 py-4 shadow-[0_14px_28px_rgba(0,0,0,.22)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.26)] active:translate-y-px max-[700px]:w-[210px]"
-            onClick={handleHint}
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:flex-1 max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+            onClick={goBack}
             type="button"
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#f6b73c] text-xl font-black text-slate-900 shadow-[inset_0_-4px_0_rgba(0,0,0,.12)]">
-              ?
-            </span>
-            <span className="text-[22px] font-black leading-[1.1] text-slate-900 max-[700px]:text-xl">{t.hintBtn}</span>
+            {t.backBtn}
           </button>
 
           <button
-            className="flex w-[280px] flex-col items-center gap-[8px] rounded-[18px] border-4 border-black/70 bg-white/95 px-5 py-[14px] shadow-[0_18px_34px_rgba(0,0,0,.24)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_22px_40px_rgba(0,0,0,.28)] active:translate-y-px max-[700px]:w-[236px] max-[700px]:py-[12px]"
+            className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:flex-1 max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={handleStart}
             type="button"
           >
-            <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-[#dbeafe] text-[26px] font-black shadow-[inset_0_-4px_0_rgba(0,0,0,.12)]">
-              {"\u25B6"}
-            </div>
-            <div className="text-[20px] font-black text-slate-900 max-[700px]:text-[18px]">{t.startBtn}</div>
+            {t.nextBtn}
           </button>
-
-          <div className="flex w-[280px] gap-[10px] max-[700px]:w-[236px] max-[700px]:gap-[8px]">
-            <button
-              className="flex-1 rounded-[16px] bg-white/95 px-[14px] py-[11px] text-[17px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[700px]:px-[10px] max-[700px]:py-[10px] max-[700px]:text-[15px]"
-              onClick={goBack}
-              type="button"
-            >
-              {t.backBtn}
-            </button>
-
-            <button
-              className="flex-1 rounded-[16px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[14px] py-[11px] text-[17px] font-black text-white shadow-[0_14px_28px_rgba(0,0,0,.20)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.24)] active:translate-y-px max-[700px]:px-[10px] max-[700px]:py-[10px] max-[700px]:text-[15px]"
-              onClick={handleStart}
-              type="button"
-            >
-              {t.nextBtn}
-            </button>
-          </div>
         </div>
       </div>
     </div>
