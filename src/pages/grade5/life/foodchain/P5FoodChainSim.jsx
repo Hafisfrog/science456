@@ -2,6 +2,23 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
+const SCORE_PER_ROW = 2;
+const getSlotKey = (row, col) => `${row}-${col}`;
+
+const getRowScore = (answer, studentAnswer, rowIndex, lockedSlotSet, hasLockedSlots) => {
+  if (!hasLockedSlots) {
+    return JSON.stringify(answer) === JSON.stringify(studentAnswer) ? SCORE_PER_ROW : 0;
+  }
+
+  return answer.reduce((score, answerName, colIndex) => {
+    if (lockedSlotSet.has(getSlotKey(rowIndex, colIndex))) {
+      return score;
+    }
+
+    return score + (studentAnswer[colIndex] === answerName ? 1 : 0);
+  }, 0);
+};
+
 const ANSWERS = [
   ["ต้นข้าว", "ตั๊กแตน", "กบ", "งู"],
   ["ต้นข้าว", "หนูนา", "งู", "เหยี่ยว"],
@@ -106,11 +123,22 @@ export default function P5FoodChainSim() {
   const [language, setLanguage] = useState("th");
   const ui = UI[language] ?? UI.th;
   const studentChains = location.state?.chains || [];
-
-  let score = 0;
-  ANSWERS.forEach((answer, index) => {
-    if (JSON.stringify(answer) === JSON.stringify(studentChains[index])) score++;
-  });
+  const lockedSlotSet = new Set(location.state?.lockedSlots || []);
+  const hasLockedSlots = lockedSlotSet.size > 0;
+  const averageScoreLabel =
+    language === "en"
+      ? "Average per Chain"
+      : language === "ms"
+        ? "Purata Setiap Rantai"
+        : "\u0e04\u0e30\u0e41\u0e19\u0e19\u0e40\u0e09\u0e25\u0e35\u0e48\u0e22\u0e23\u0e27\u0e21";
+  const rowScoreLabel =
+    language === "en" ? "Score" : language === "ms" ? "Markah" : "คะแนน";
+  const totalPossibleScore = ANSWERS.length * SCORE_PER_ROW;
+  const rowScores = ANSWERS.map((answer, index) =>
+    getRowScore(answer, studentChains[index] || [], index, lockedSlotSet, hasLockedSlots)
+  );
+  const score = rowScores.reduce((total, rowScore) => total + rowScore, 0);
+  const averageScore = ANSWERS.length > 0 ? score / ANSWERS.length : 0;
 
   const speakChainSummary = (index, studentAnswer, correctAnswer, correct) => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
@@ -153,18 +181,27 @@ export default function P5FoodChainSim() {
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
               <div>
-                <div className="inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm">
-                  {ui.badge}
-                </div>
-                <div className="mt-4 inline-flex items-center rounded-[28px] bg-gradient-to-r from-emerald-500 to-green-600 px-8 py-4 text-2xl font-extrabold text-white shadow-xl sm:text-3xl">
+                <div className="inline-flex items-center rounded-[28px] bg-gradient-to-r from-emerald-500 to-green-600 px-8 py-4 text-2xl font-extrabold text-white shadow-xl sm:text-3xl">
                   🌟 {ui.title} 🌟
                 </div>
               </div>
 
               <div className="rounded-[28px] border border-emerald-200/80 bg-gradient-to-br from-white/75 to-emerald-100/70 px-8 py-5 text-center shadow-sm backdrop-blur-sm">
+                <div className="text-sm font-semibold text-sky-700">{averageScoreLabel}</div>
+                <div className="hidden text-sm font-semibold text-sky-700">
+                  {language === "en"
+                    ? "Average Score"
+                    : language === "ms"
+                      ? "Purata Markah"
+                      : "เธเธฐเนเธเธเน€เธเธฅเธตเนเธข"}
+                </div>
+                <span className="mt-1 block text-2xl font-black text-sky-800 sm:text-3xl">
+                  {averageScore.toFixed(1)}
+                </span>
+                <div className="mx-auto my-3 h-px w-full max-w-[8rem] bg-emerald-200/80" />
                 <div className="text-sm font-semibold text-emerald-700">{ui.score}</div>
                 <span className="mt-1 block text-3xl font-black text-emerald-800 sm:text-4xl">
-                  {score} / 5
+                  {score} / {totalPossibleScore}
                 </span>
               </div>
             </div>
@@ -174,7 +211,8 @@ export default function P5FoodChainSim() {
         <div className="mt-8 space-y-6">
           {ANSWERS.map((answer, index) => {
             const studentAnswer = studentChains[index] || [];
-            const correct = JSON.stringify(answer) === JSON.stringify(studentAnswer);
+            const rowScore = rowScores[index];
+            const correct = rowScore === SCORE_PER_ROW;
 
             return (
               <div
@@ -186,6 +224,9 @@ export default function P5FoodChainSim() {
                     {ui.chain} {index + 1}
                   </div>
                   <div className="flex items-center gap-2">
+                    <div className="rounded-full bg-sky-100 px-4 py-2 text-sm font-bold text-sky-700">
+                      {rowScoreLabel} {rowScore}/{SCORE_PER_ROW}
+                    </div>
                     <div className="text-xl font-bold">
                       {correct ? (
                         <span className="text-green-600">✅ {ui.correct}</span>

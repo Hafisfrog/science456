@@ -1,0 +1,55 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 220 120"
+  role="img"
+  aria-label="Cartoon flashlight"
+>
+  <defs>
+    <linearGradient id="bodyBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a8bdca" />
+      <stop offset="44%" stop-color="#8fa7b7" />
+      <stop offset="100%" stop-color="#7a93a5" />
+    </linearGradient>
+    <linearGradient id="headGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f7dc8a" />
+      <stop offset="45%" stop-color="#e8c567" />
+      <stop offset="100%" stop-color="#d3a94b" />
+    </linearGradient>
+    <linearGradient id="rimGold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#edd07c" />
+      <stop offset="55%" stop-color="#d5ab4f" />
+      <stop offset="100%" stop-color="#b98f3e" />
+    </linearGradient>
+    <radialGradient id="lensGlow" cx="38%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#fffbea" />
+      <stop offset="50%" stop-color="#ffe7a6" />
+      <stop offset="100%" stop-color="#f4c863" />
+    </radialGradient>
+  </defs>
+
+  <ellipse cx="98" cy="88" rx="78" ry="8" fill="#21374a" fill-opacity="0.2" />
+
+  <g>
+    <rect x="14" y="44" width="12" height="32" rx="6" fill="#7b92a4" stroke="#5d7486" stroke-width="2" />
+    <rect x="22" y="43" width="98" height="34" rx="17" fill="url(#bodyBlue)" stroke="#607b8f" stroke-width="2.5" />
+
+    <rect x="40" y="47" width="3" height="26" rx="1.5" fill="#6b8296" opacity="0.65" />
+    <rect x="52" y="47" width="3" height="26" rx="1.5" fill="#6b8296" opacity="0.65" />
+    <rect x="64" y="47" width="3" height="26" rx="1.5" fill="#6b8296" opacity="0.65" />
+
+    <rect x="67" y="33" width="24" height="11" rx="5.5" fill="#cc9654" stroke="#9b6e39" stroke-width="2" />
+    <rect x="73" y="36" width="12" height="5" rx="2.5" fill="#e1b370" opacity="0.9" />
+
+    <rect x="110" y="34" width="36" height="52" rx="18" fill="url(#headGold)" stroke="#b58c3c" stroke-width="3" />
+
+    <rect x="120" y="35" width="2.5" height="50" rx="1.25" fill="#c49843" />
+    <rect x="127" y="35" width="2.5" height="50" rx="1.25" fill="#c49843" />
+    <rect x="134" y="35" width="2.5" height="50" rx="1.25" fill="#c49843" />
+
+    <rect x="144" y="31" width="20" height="58" rx="10" fill="url(#rimGold)" stroke="#a57d35" stroke-width="2.5" />
+    <circle cx="154" cy="60" r="11.6" fill="url(#lensGlow)" stroke="#f7df9b" stroke-width="2" />
+    <circle cx="151.5" cy="56.5" r="3.2" fill="#fffdf3" opacity="0.85" />
+
+    <rect x="28" y="46" width="84" height="5" rx="2.5" fill="#d2dde5" opacity="0.5" />
+  </g>
+</svg>

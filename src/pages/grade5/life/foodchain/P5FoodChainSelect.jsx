@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const getSlotKey = (row, col) => `${row}-${col}`;
+const SCORE_PER_ROW = 2;
 
 const ANSWER_CHAINS = [
   ["ต้นข้าว", "ตั๊กแตน", "กบ", "งู"],
@@ -20,7 +21,6 @@ const DEFAULT_LOCKED_SLOT_KEYS = [
   getSlotKey(2, 1),
   getSlotKey(2, 2),
   getSlotKey(3, 0),
-  getSlotKey(3, 1),
   getSlotKey(3, 3),
   getSlotKey(4, 1),
   getSlotKey(4, 2),
@@ -44,7 +44,7 @@ const getRandomLockedSlots = () => {
       [columns[index], columns[swapIndex]] = [columns[swapIndex], columns[index]];
     }
 
-    const clueCount = 2 + Math.floor(Math.random() * 2);
+    const clueCount = 2;
 
     for (let index = 0; index < clueCount; index += 1) {
       nextLockedSlots.add(getSlotKey(rowIndex, columns[index]));
@@ -55,14 +55,23 @@ const getRandomLockedSlots = () => {
 };
 
 const CHAIN_ACCENTS = [
-  "from-emerald-500 via-green-500 to-lime-400",
-  "from-sky-500 via-cyan-500 to-blue-500",
-  "from-amber-500 via-orange-500 to-yellow-400",
-  "from-fuchsia-500 via-pink-500 to-rose-500",
-  "from-teal-500 via-emerald-500 to-cyan-500",
+  "border-emerald-200 bg-emerald-50 text-emerald-700",
+  "border-sky-200 bg-sky-50 text-sky-700",
+  "border-amber-200 bg-amber-50 text-amber-700",
+  "border-rose-200 bg-rose-50 text-rose-700",
+  "border-teal-200 bg-teal-50 text-teal-700",
 ];
 
 const createEmptyRevealResults = () => ANSWER_CHAINS.map(() => null);
+
+const getRowScore = (rowIndex, row, lockedSet) =>
+  row.reduce((score, item, colIndex) => {
+    if (lockedSet.has(getSlotKey(rowIndex, colIndex))) {
+      return score;
+    }
+
+    return score + (item === ANSWER_CHAINS[rowIndex][colIndex] ? 1 : 0);
+  }, 0);
 
 const VOICE_LANG = {
   th: "th-TH",
@@ -238,6 +247,16 @@ export default function P5FoodChainSelect() {
   const [activeSlot, setActiveSlot] = useState({ row: null, col: null });
 
   const ui = UI_COPY[activeLang] ?? UI_COPY.th;
+  const totalScoreTitle =
+    activeLang === "en" ? "Total score" : activeLang === "ms" ? "Jumlah markah" : "คะแนนรวม";
+  const totalScoreDesc =
+    activeLang === "en"
+      ? "Each food chain is worth 2 points"
+      : activeLang === "ms"
+        ? "Setiap rantai makanan bernilai 2 markah"
+        : "แต่ละโซ่อาหารมีคะแนนเต็ม 2 คะแนน";
+  const rowScoreLabel =
+    activeLang === "en" ? "Score" : activeLang === "ms" ? "Markah" : "คะแนน";
   const isLocked = (row, col) => lockedSlots.has(getSlotKey(row, col));
   const getAnimalMeta = (name) => animals.find((animal) => animal.name === name);
 
@@ -253,13 +272,6 @@ export default function P5FoodChainSelect() {
       : ANIMAL_TRANSLATIONS[animal.img]?.[activeLang] ?? animal.name;
   };
 
-  const totalEditableSlots =
-    ANSWER_CHAINS.reduce((count, row) => count + row.length, 0) - lockedSlots.size;
-  const filledEditableSlots = chains.reduce(
-    (count, row, rowIndex) =>
-      count + row.filter((item, colIndex) => !isLocked(rowIndex, colIndex) && item).length,
-    0
-  );
   const isComplete = chains.every((row) => row.every(Boolean));
   const translatedActiveSlotSummary =
     activeSlot.row !== null && activeSlot.col !== null
@@ -272,6 +284,17 @@ export default function P5FoodChainSelect() {
           `${ui.slotLabel} ${activeSlot.col + 1}`
         )
       : "";
+  const activeRowChoices =
+    activeSlot.row !== null
+      ? ANSWER_CHAINS[activeSlot.row]
+          .map((name) => getAnimalMeta(name))
+          .filter(Boolean)
+      : [];
+  const totalScore = chains.reduce(
+    (score, row, rowIndex) => score + getRowScore(rowIndex, row, lockedSlots),
+    0
+  );
+  const totalPossibleScore = ANSWER_CHAINS.length * SCORE_PER_ROW;
 
   const speakText = (text) => {
     try {
@@ -305,16 +328,7 @@ export default function P5FoodChainSelect() {
   };
 
   const handleSpeakIntro = () => {
-    speakText(
-      [
-        ui.activityBadge,
-        ui.pageTitle,
-        ui.pageDescription,
-        ui.legendPrompt,
-        ui.legendFill,
-        ui.legendReveal,
-      ].join(". ")
-    );
+    speakText([ui.activityBadge, ui.pageTitle, ui.pageDescription].join(". "));
   };
 
   const clearRevealForRow = (rowIndexToClear) => {
@@ -370,6 +384,7 @@ export default function P5FoodChainSelect() {
     setChains(createQuestionChains(nextLockedSlots));
     setRowRevealResults(createEmptyRevealResults());
     setShowPanel(false);
+    setActiveSlot({ row: null, col: null });
   };
 
   const handleRevealRowAnswer = (rowIndex) => {
@@ -402,7 +417,9 @@ export default function P5FoodChainSelect() {
       return;
     }
 
-    navigate("/p5/life/foodchain/sim", { state: { chains } });
+    navigate("/p5/life/foodchain/sim", {
+      state: { chains, lockedSlots: Array.from(lockedSlots) },
+    });
   };
 
   const getImage = (name) => {
@@ -412,119 +429,109 @@ export default function P5FoodChainSelect() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-sans">
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-emerald-950/25 via-emerald-700/10 to-slate-950/15" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/65 via-white/45 to-emerald-50/50" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-12 top-10 h-56 w-56 rounded-full bg-lime-200/45 blur-3xl" />
-        <div className="absolute right-0 top-0 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
-        <div className="absolute bottom-10 left-1/3 h-64 w-64 rounded-full bg-cyan-200/30 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-200/35 blur-3xl" />
+        <div className="absolute -left-8 top-6 h-40 w-40 rounded-full bg-lime-100/30 blur-3xl" />
+        <div className="absolute right-0 top-0 h-56 w-56 rounded-full bg-amber-100/28 blur-3xl" />
+        <div className="absolute bottom-8 left-1/3 h-56 w-56 rounded-full bg-cyan-100/25 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-emerald-100/26 blur-3xl" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 pb-10 pt-6 sm:px-6 lg:px-8">
-        <div className="rounded-[32px] border border-emerald-50/80 bg-gradient-to-br from-white/62 via-emerald-50/52 to-lime-50/58 p-5 shadow-[0_22px_60px_rgba(15,23,42,0.14)] backdrop-blur-md sm:p-7">
-          <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
-            <div className="max-w-3xl">
-              <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-                <div className="inline-flex items-center rounded-full bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm">
-                  {ui.activityBadge}
-                </div>
-                <button
-                  type="button"
-                  onClick={handleSpeakIntro}
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-200/85 bg-white/82 text-lg text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-400 hover:bg-sky-50"
-                  aria-label={ui.listenIntro}
-                  title={ui.listenIntro}
-                >
-                  {"\uD83D\uDD0A"}
-                </button>
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-3.5 pb-7 pt-3.5 sm:px-5 lg:px-7">
+        <div className="rounded-[22px] border border-emerald-100/80 bg-white/86 p-4 shadow-[0_6px_16px_rgba(148,163,184,0.11)] backdrop-blur-sm sm:p-5 lg:p-5">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center xl:gap-5">
+            <div className="space-y-3.5">
+              <div className="inline-flex items-center rounded-full border border-emerald-100/80 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 shadow-[0_4px_12px_rgba(148,163,184,0.1)]">
+                {ui.activityBadge}
               </div>
-              <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
-                {ui.pageTitle}
-              </h1>
-              <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
-                {ui.pageDescription}
-              </p>
 
-              <div className="mt-4 flex flex-wrap gap-2 text-sm font-medium">
-                <div className="rounded-full border border-slate-200/70 bg-white/55 px-3 py-1.5 text-slate-700 backdrop-blur-sm">
-                  {ui.legendPrompt}
-                </div>
-                <div className="rounded-full border border-amber-200/80 bg-amber-50/70 px-3 py-1.5 text-amber-700 backdrop-blur-sm">
-                  {ui.legendFill}
-                </div>
-                <div className="rounded-full border border-sky-200/80 bg-sky-50/70 px-3 py-1.5 text-sky-700 backdrop-blur-sm">
-                  {ui.legendReveal}
-                </div>
+              <div>
+                <h1 className="max-w-3xl text-[1.5rem] font-semibold leading-[1.22] tracking-[-0.01em] text-slate-600 sm:text-[1.75rem] lg:text-[1.95rem]">
+                  {ui.pageTitle}
+                </h1>
+                <p className="mt-2.5 max-w-3xl text-sm leading-6 text-slate-600 sm:text-[0.95rem]">
+                  {ui.pageDescription}
+                </p>
+                <div className="mt-3 h-px w-full max-w-lg bg-gradient-to-r from-emerald-200/70 via-slate-200/60 to-transparent" />
               </div>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 xl:w-[23rem]">
-              <div className="rounded-[28px] border border-emerald-200/80 bg-gradient-to-br from-white/70 to-emerald-100/72 p-4 shadow-sm backdrop-blur-sm">
-                <div className="text-sm font-semibold text-emerald-700">{ui.progressTitle}</div>
-                <div className="mt-1 text-3xl font-black text-emerald-900">
-                  {filledEditableSlots}/{totalEditableSlots}
-                </div>
-                <p className="mt-1 text-sm text-emerald-800/80">{ui.progressDesc}</p>
-              </div>
+            <div className="rounded-[18px] border border-emerald-100/75 bg-[#f8fffb]/92 p-3 shadow-[0_6px_14px_rgba(148,163,184,0.1)] sm:p-3.5">
+              <div className="flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={handleSpeakIntro}
+                  className="inline-flex w-full items-center gap-2 rounded-[12px] border border-slate-200/85 bg-white px-3 py-2 text-left text-slate-700 shadow-sm transition duration-200 hover:border-slate-300 hover:bg-slate-50"
+                  aria-label={ui.listenIntro}
+                  title={ui.listenIntro}
+                >
+                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-base text-slate-600 shadow-inner">
+                    {"\uD83D\uDD0A"}
+                  </span>
+                  <span className="text-xs font-semibold sm:text-sm">{ui.listenIntro}</span>
+                </button>
 
-              <div className="rounded-[28px] border border-sky-200/80 bg-gradient-to-br from-white/70 to-cyan-100/75 p-4 shadow-sm backdrop-blur-sm">
-                <div className="text-sm font-semibold text-sky-700">{ui.clueTitle}</div>
-                <div className="mt-1 text-3xl font-black text-sky-900">{lockedSlots.size}</div>
-                <p className="mt-1 text-sm text-sky-800/80">{ui.clueDesc}</p>
+                <button
+                  type="button"
+                  onClick={handleRandomQuestion}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-[12px] border border-emerald-200/85 bg-emerald-50/85 px-3.5 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition duration-200 hover:border-emerald-300 hover:bg-emerald-100/90 sm:text-sm"
+                >
+                  <span className="text-base">{"\uD83C\uDFB2"}</span>
+                  {ui.randomQuestion}
+                </button>
               </div>
-
-              <button
-                type="button"
-                onClick={handleRandomQuestion}
-                className="inline-flex items-center justify-center gap-2 rounded-[24px] bg-gradient-to-r from-fuchsia-500 via-pink-500 to-rose-500 px-5 py-4 text-base font-bold text-white shadow-[0_14px_28px_rgba(219,39,119,0.28)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(219,39,119,0.35)] sm:col-span-2"
-              >
-                <span className="text-xl">🎲</span>
-                {ui.randomQuestion}
-              </button>
             </div>
           </div>
         </div>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-5 space-y-3.5">
           {chains.map((row, rowIndex) => {
             const editableCount = row.filter((_, colIndex) => !isLocked(rowIndex, colIndex)).length;
             const filledCount = row.filter(
               (item, colIndex) => !isLocked(rowIndex, colIndex) && item
             ).length;
             const isRowComplete = row.every(Boolean);
+            const rowScore = getRowScore(rowIndex, row, lockedSlots);
             const accent = CHAIN_ACCENTS[rowIndex % CHAIN_ACCENTS.length];
             const rowRevealResult = rowRevealResults[rowIndex];
 
             return (
               <div
                 key={rowIndex}
-                className="rounded-[30px] border border-emerald-50/85 bg-gradient-to-r from-white/62 via-white/54 to-emerald-50/58 p-4 shadow-[0_18px_40px_rgba(15,23,42,0.12)] backdrop-blur-sm sm:p-5"
+                className="rounded-[22px] border border-emerald-100/80 bg-white/88 p-3.5 shadow-[0_8px_20px_rgba(148,163,184,0.1)] backdrop-blur-sm sm:p-4"
               >
-                <div className="flex flex-col gap-4 2xl:flex-row 2xl:flex-wrap 2xl:items-center">
-                  <div
-                    className={`inline-flex w-fit items-center rounded-[22px] bg-gradient-to-r ${accent} px-5 py-3 text-lg font-extrabold text-white shadow-lg`}
-                  >
-                    {ui.chainLabel} {rowIndex + 1}
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-wrap items-start justify-between gap-2.5">
+                    <div
+                      className={`inline-flex w-fit items-center rounded-full border px-4 py-1.5 text-sm font-semibold shadow-sm ${accent}`}
+                    >
+                      {ui.chainLabel} {rowIndex + 1}
+                    </div>
+
+                    <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700">
+                      {rowScoreLabel} {rowScore}/{SCORE_PER_ROW}
+                    </div>
                   </div>
 
-                  <div className="flex flex-1 flex-wrap items-center gap-3">
+                  <div className="flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
+                    <div className="flex flex-1 flex-wrap items-center gap-2.5">
                     {row.map((item, colIndex) => {
                       const locked = isLocked(rowIndex, colIndex);
                       const slotRevealResult = rowRevealResult?.slots?.[colIndex] ?? null;
                       const slotCardClass = locked
-                        ? "cursor-default border-slate-200/90 bg-gradient-to-br from-white/96 via-slate-50/92 to-white/96 shadow-[0_12px_26px_rgba(148,163,184,0.16)]"
+                        ? "cursor-default border-slate-200/90 bg-white shadow-sm"
                         : slotRevealResult?.status === "incorrect"
-                          ? "border-rose-300/90 bg-gradient-to-br from-white/92 to-rose-50/85 hover:-translate-y-1 hover:border-rose-400 hover:shadow-[0_16px_30px_rgba(244,63,94,0.16)]"
+                          ? "border-rose-200/90 bg-rose-50/75 hover:-translate-y-0.5 hover:border-rose-300 hover:shadow-[0_10px_20px_rgba(244,63,94,0.12)]"
                           : item
-                            ? "border-emerald-300/90 bg-gradient-to-br from-white/92 to-emerald-50/85 hover:-translate-y-1 hover:border-emerald-500 hover:shadow-[0_16px_30px_rgba(16,185,129,0.18)]"
-                            : "border-amber-300/90 bg-gradient-to-br from-white/88 to-amber-50/80 hover:-translate-y-1 hover:border-amber-500 hover:shadow-[0_16px_30px_rgba(245,158,11,0.18)]";
+                            ? "border-emerald-200/90 bg-emerald-50/70 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[0_10px_20px_rgba(16,185,129,0.12)]"
+                            : "border-amber-200/90 bg-amber-50/70 hover:-translate-y-0.5 hover:border-amber-300 hover:shadow-[0_10px_20px_rgba(245,158,11,0.12)]";
                       const slotBadgeClass = locked
-                        ? "bg-slate-700 text-white"
+                        ? "bg-slate-100 text-slate-600"
                         : slotRevealResult?.status === "incorrect"
-                          ? "bg-rose-100 text-rose-700"
+                          ? "bg-rose-100 text-rose-600"
                           : item
-                            ? "bg-emerald-100 text-emerald-700"
-                            : "bg-amber-100 text-amber-700";
+                            ? "bg-emerald-100 text-emerald-600"
+                            : "bg-amber-100 text-amber-600";
                       const slotBadgeText = locked
                         ? ui.slotPrompt
                         : slotRevealResult?.status === "incorrect"
@@ -540,31 +547,35 @@ export default function P5FoodChainSelect() {
                             onClick={() => handleSlotClick(rowIndex, colIndex)}
                             aria-disabled={locked}
                             title={slotBadgeText}
-                            className={`group relative flex h-32 w-[10.75rem] flex-col items-center justify-center overflow-hidden rounded-[26px] border text-center shadow-[0_10px_24px_rgba(15,23,42,0.1)] transition duration-200 sm:h-36 sm:w-[11.5rem] ${slotCardClass}`}
+                            className={`group relative flex h-28 w-[9rem] flex-col items-center justify-center overflow-hidden rounded-[20px] border text-center transition duration-200 sm:h-32 sm:w-[10rem] ${slotCardClass}`}
                           >
                             <div
-                              className={`absolute left-3 top-3 rounded-full px-2.5 py-1 text-xs font-bold ${slotBadgeClass}`}
+                              className={`absolute left-2.5 top-2.5 rounded-full px-2 py-0.5 text-[0.68rem] font-semibold ${slotBadgeClass}`}
                             >
                               {slotBadgeText}
                             </div>
 
                             {item ? (
-                              <div className="px-3">
-                                <img
-                                  src={getImage(item)}
-                                  className="mx-auto h-20 w-20 object-contain drop-shadow-[0_10px_20px_rgba(15,23,42,0.14)] sm:h-24 sm:w-24"
-                                  alt={getDisplayName(item)}
-                                />
-                                <div className="mt-2 text-sm font-bold text-slate-700">
+                              <div className="flex h-full w-full flex-col justify-between px-2.5 pb-2.5 pt-8">
+                                <div className="flex flex-1 items-center justify-center">
+                                  <img
+                                    src={getImage(item)}
+                                    className="mx-auto h-[4.8rem] w-[4.8rem] object-contain drop-shadow-[0_8px_14px_rgba(15,23,42,0.12)] sm:h-[5.9rem] sm:w-[5.9rem]"
+                                    alt={getDisplayName(item)}
+                                  />
+                                </div>
+                                <div className="mt-1 text-xs font-semibold leading-tight text-slate-700 sm:text-sm">
                                   {getDisplayName(item)}
                                 </div>
                               </div>
                             ) : (
-                              <div className="px-3 text-center">
-                                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/80 text-4xl text-amber-500 shadow-inner">
-                                  +
+                              <div className="flex h-full w-full flex-col justify-between px-3 pb-2.5 pt-8 text-center">
+                                <div className="flex flex-1 items-center justify-center">
+                                  <div className="mx-auto flex h-[4.2rem] w-[4.2rem] items-center justify-center rounded-full bg-white text-[2.35rem] text-amber-500 shadow-inner sm:h-[4.8rem] sm:w-[4.8rem] sm:text-[2.55rem]">
+                                    +
+                                  </div>
                                 </div>
-                                <div className="mt-3 text-sm font-semibold text-amber-700">
+                                <div className="mt-1 text-xs font-semibold leading-tight text-amber-700 sm:text-sm">
                                   {ui.clickToChoose}
                                 </div>
                               </div>
@@ -572,80 +583,81 @@ export default function P5FoodChainSelect() {
                           </button>
 
                           {colIndex < row.length - 1 && (
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-emerald-200/85 bg-emerald-50/75 text-xl font-black text-emerald-700 shadow-sm backdrop-blur-sm">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-200/85 bg-white text-base font-black text-emerald-600 shadow-sm">
                               {"\u2192"}
                             </div>
                           )}
                         </div>
                       );
                     })}
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 2xl:justify-end">
-                    <div
-                      className={`rounded-full px-4 py-2 text-sm font-bold ${
-                        isRowComplete
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-amber-100 text-amber-700"
-                      }`}
-                    >
-                      {isRowComplete ? ui.rowComplete : ui.rowFilled(filledCount, editableCount)}
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => handleSpeakRow(rowIndex)}
-                      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-200/85 bg-white/82 text-lg text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-400 hover:bg-sky-50"
-                      aria-label={ui.listenRow}
-                      title={ui.listenRow}
-                    >
-                      {"\uD83D\uDD0A"}
-                    </button>
+                    <div className="flex flex-wrap items-center gap-3 2xl:justify-end">
+                      <div
+                        className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${
+                          isRowComplete
+                            ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                            : "border-amber-200 bg-amber-50 text-amber-700"
+                        }`}
+                      >
+                        {isRowComplete ? ui.rowComplete : ui.rowFilled(filledCount, editableCount)}
+                      </div>
 
-                    <button
-                      type="button"
-                      onClick={() => handleRevealRowAnswer(rowIndex)}
-                      className="inline-flex items-center justify-center rounded-full border border-sky-200/85 bg-white/82 px-5 py-2.5 text-sm font-bold text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-400 hover:bg-sky-50"
-                    >
-                      {ui.revealRow}
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => handleSpeakRow(rowIndex)}
+                        className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-sky-200/85 bg-white text-base text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50"
+                        aria-label={ui.listenRow}
+                        title={ui.listenRow}
+                      >
+                        {"\uD83D\uDD0A"}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleRevealRowAnswer(rowIndex)}
+                        className="inline-flex items-center justify-center rounded-full border border-sky-200/85 bg-white px-4 py-2 text-xs font-semibold text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50 sm:text-sm"
+                      >
+                        {ui.revealRow}
+                      </button>
+                    </div>
                   </div>
 
                   {rowRevealResult && (
                     <div
-                      className={`rounded-[22px] border px-4 py-3 text-sm font-semibold 2xl:basis-full ${
+                      className={`rounded-[16px] border px-3.5 py-3 text-sm font-medium 2xl:basis-full ${
                         rowRevealResult.alreadyCorrect
                           ? "border-emerald-200 bg-emerald-50/80 text-emerald-700"
-                          : "border-sky-200 bg-sky-50/80 text-sky-700"
+                          : "border-sky-200 bg-sky-50/70 text-sky-700"
                       }`}
                     >
                       {rowRevealResult.alreadyCorrect ? (
                         ui.answerCorrectAlready
                       ) : (
                         <div className="space-y-3">
-                          <div className="inline-flex w-fit rounded-full bg-white/80 px-3 py-1 text-xs font-bold uppercase tracking-[0.08em] text-sky-700">
+                          <div className="inline-flex w-fit rounded-full border border-sky-200 bg-white px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-sky-700">
                             {ui.correctAnswerLabel}
                           </div>
 
-                          <div className="flex flex-wrap items-center gap-3">
+                          <div className="flex flex-wrap items-center gap-2.5">
                             {rowRevealResult.answerChain.map((answerName, answerIndex) => (
                               <div
                                 key={`${rowIndex}-answer-${answerIndex}`}
-                                className="flex items-center gap-3"
+                                className="flex items-center gap-2.5"
                               >
-                                <div className="flex h-28 w-[9rem] flex-col items-center justify-center rounded-[22px] border border-sky-200/90 bg-white/90 px-3 text-center shadow-sm sm:h-32 sm:w-[10rem]">
+                                <div className="flex h-24 w-[7.75rem] flex-col items-center justify-center rounded-[16px] border border-sky-200/90 bg-white px-2 text-center shadow-sm sm:h-28 sm:w-[9rem]">
                                   <img
                                     src={getImage(answerName)}
                                     alt={getDisplayName(answerName)}
-                                    className="mx-auto h-14 w-14 object-contain drop-shadow-[0_8px_16px_rgba(15,23,42,0.12)] sm:h-16 sm:w-16"
+                                    className="mx-auto h-12 w-12 object-contain drop-shadow-[0_6px_12px_rgba(15,23,42,0.1)] sm:h-14 sm:w-14"
                                   />
-                                  <div className="mt-2 text-sm font-bold text-slate-700">
+                                  <div className="mt-1.5 text-xs font-semibold text-slate-700 sm:text-sm">
                                     {getDisplayName(answerName)}
                                   </div>
                                 </div>
 
                                 {answerIndex < rowRevealResult.answerChain.length - 1 && (
-                                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-sky-200/85 bg-sky-50/80 text-xl font-black text-sky-700 shadow-sm">
+                                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-sky-200/85 bg-white text-base font-black text-sky-700 shadow-sm">
                                     {"\u2192"}
                                   </div>
                                 )}
@@ -662,7 +674,7 @@ export default function P5FoodChainSelect() {
           })}
         </div>
 
-        <div className="mt-6 flex flex-col gap-3 pb-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-4 flex flex-col gap-2.5 pb-2 sm:flex-row sm:items-center sm:justify-between">
           <FoodChainLanguageSwitcher
             value={activeLang}
             onChange={setActiveLang}
@@ -670,6 +682,7 @@ export default function P5FoodChainSelect() {
           />
 
           <FoodChainNavButtons
+            className="sm:ml-auto sm:translate-x-2 lg:translate-x-4"
             backLabel={ui.back}
             nextLabel={ui.viewAllAnswers}
             onBack={() => navigate("/p5/life/foodchain/steps")}
@@ -680,7 +693,7 @@ export default function P5FoodChainSelect() {
 
       {showPanel && (
         <div
-          className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/45 p-4 backdrop-blur-sm sm:p-6"
+          className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/20 p-4 backdrop-blur-[2px] sm:p-6"
           onClick={() => setShowPanel(false)}
         >
           <div
@@ -689,17 +702,17 @@ export default function P5FoodChainSelect() {
           >
             <div
               data-slot-summary={translatedActiveSlotSummary}
-              className="w-full max-w-6xl rounded-[32px] border border-white/75 bg-gradient-to-br from-white/95 via-lime-50/92 to-emerald-100/88 p-5 shadow-[0_30px_80px_rgba(15,23,42,0.3)] backdrop-blur-md sm:p-7"
+              className="w-full max-w-4xl rounded-[22px] border border-emerald-100/80 bg-white/95 p-3.5 shadow-[0_10px_24px_rgba(15,23,42,0.15)] backdrop-blur-sm sm:p-5"
             >
-              <div className="flex flex-col gap-4 border-b border-slate-200/80 pb-5 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex flex-col gap-2.5 border-b border-slate-200/80 pb-3.5 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <div className="inline-flex rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-700">
+                  <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700">
                     {ui.chooseLivingThing}
                   </div>
-                  <h2 className="mt-3 text-2xl font-extrabold text-slate-900 sm:text-3xl">
+                  <h2 className="mt-2 text-lg font-semibold text-slate-800 sm:text-xl">
                     {activeSlotHeading}
                   </h2>
-                  <p className="mt-2 text-sm text-slate-600 sm:text-base">
+                  <p className="mt-1 text-xs text-slate-600 sm:text-sm">
                     {ui.chooseDescription}
                   </p>
                 </div>
@@ -707,40 +720,40 @@ export default function P5FoodChainSelect() {
                 <button
                   type="button"
                   onClick={() => setShowPanel(false)}
-                  className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white/85 px-5 py-2.5 font-bold text-slate-700 shadow-sm transition hover:bg-white"
+                  className="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 sm:text-sm"
                 >
                   {ui.close}
                 </button>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 <button
                   type="button"
                   onClick={handleClearActiveSlot}
-                  className="flex aspect-square flex-col items-center justify-center rounded-[24px] border border-red-200 bg-gradient-to-br from-red-50 to-rose-100 p-4 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover:border-red-400 hover:shadow-[0_14px_28px_rgba(244,63,94,0.18)]"
+                  className="flex aspect-square flex-col items-center justify-center rounded-[16px] border border-red-200 bg-red-50/90 p-2.5 text-center shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-red-300 hover:shadow-[0_8px_16px_rgba(244,63,94,0.14)]"
                 >
-                  <span className="mb-3 text-5xl">🗑</span>
-                  <span className="text-lg font-bold text-red-600">{ui.clearAnswer}</span>
-                  <span className="mt-1 text-sm text-red-500">{ui.clearSlot}</span>
+                  <span className="mb-1.5 text-2xl">{"\uD83D\uDDD1"}</span>
+                  <span className="text-xs font-semibold text-red-600 sm:text-sm">{ui.clearAnswer}</span>
+                  <span className="mt-0.5 text-[0.68rem] text-red-500 sm:text-xs">{ui.clearSlot}</span>
                 </button>
 
-                {animals.map((animal) => (
+                {activeRowChoices.map((animal) => (
                   <button
                     key={animal.name}
                     type="button"
                     onClick={() => handleSelectAnimal(animal)}
-                    className="group relative aspect-square overflow-hidden rounded-[24px] border border-emerald-200/90 bg-white/82 p-4 text-center shadow-sm transition duration-200 hover:-translate-y-1 hover:border-emerald-400 hover:shadow-[0_16px_32px_rgba(16,185,129,0.18)]"
+                    className="group relative aspect-square overflow-hidden rounded-[16px] border border-emerald-200/90 bg-white p-2.5 text-center shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[0_8px_18px_rgba(16,185,129,0.14)]"
                   >
-                    <div className={`absolute inset-0 bg-gradient-to-br opacity-20 ${animal.color}`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br opacity-[0.12] ${animal.color}`} />
                     <div className="relative flex h-full w-full flex-col items-center justify-center">
-                      <div className="flex h-[68%] w-full items-center justify-center rounded-[18px] bg-white/55 p-2">
+                      <div className="flex h-[64%] w-full items-center justify-center rounded-[12px] bg-white/70 p-1">
                         <img
                           src={animal.img}
-                          className="mx-auto h-24 w-24 object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.18)] transition duration-200 group-hover:scale-105"
+                          className="mx-auto h-16 w-16 object-contain drop-shadow-[0_7px_12px_rgba(15,23,42,0.12)] transition duration-200 group-hover:scale-105 sm:h-20 sm:w-20"
                           alt={getDisplayName(animal.name)}
                         />
                       </div>
-                      <span className="mt-3 text-base font-bold text-slate-700">
+                      <span className="mt-1.5 text-[0.68rem] font-semibold text-slate-700 sm:text-xs">
                         {getDisplayName(animal.name)}
                       </span>
                     </div>
