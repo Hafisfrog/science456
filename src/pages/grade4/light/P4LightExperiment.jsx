@@ -49,9 +49,11 @@ const TYPE_META = {
 };
 
 const clamp01 = (value) => Math.max(0, Math.min(value, 1));
+const TORCH_PERSON_IMAGE_SRC = "/images/materials/opp.png";
+const TORCH_IMAGE_SRC = "/images/materials/oo.png";
 
 // ─── Beam Canvas ──────────────────────────────────────────────────────────────
-function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, objectSize = 190 }) {
+function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, objectSize = 190, sourceX = 280 }) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -62,7 +64,7 @@ function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, object
     ctx.clearRect(0, 0, W, H);
     if (!shine || beamProgress <= 0) return;
 
-    const src   = { x: 280,     y: H / 2 };
+    const src   = { x: sourceX, y: H / 2 };
     const mid   = { x: W * 0.5, y: H / 2 };
     const tgt   = { x: W - 90,  y: H / 2 };
     const objectHalfW = objectSize / 2;
@@ -282,7 +284,7 @@ function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, object
         ctx.restore();
       }
     }
-  }, [shine, beamProgress, reflectProgress, materialType, objectSize]);
+  }, [shine, beamProgress, reflectProgress, materialType, objectSize, sourceX]);
 
   return (
     <canvas
@@ -572,22 +574,149 @@ export default function P4LightExperiment() {
         pointerEvents: "none",
       }
     : { position: "absolute", inset: 0, pointerEvents: "none" };
+  const torchCharacterWidth = isMobile ? (isTight ? 98 : 114) : 156;
+  const torchLeft = isMobile ? (isTight ? 108 : 130) : 286;
+  const torchTopPercent = isMobile ? (isTight ? 56 : 55) : 54;
+  const torchToolWidth = isMobile ? (isTight ? 82 : 88) : 98;
+  const torchToolHeight = isMobile ? (isTight ? 42 : 45) : 52;
+  const torchToolRight = isMobile ? (isTight ? -18 : -20) : -22;
+  const beamSourceX = torchLeft + torchCharacterWidth + torchToolRight + torchToolWidth - 11;
+  const torchShiftX = shine ? Math.min(14, torchRotation * 0.08) : 0;
+  const torchShiftY = shine ? Math.min(10, torchRotation * 0.06) : 0;
   const torchStyle = isMobile
-    ? { ...S.torch, left: isTight ? 62 : 94 }
-    : { ...S.torch, left: 300 };
+    ? {
+        ...S.torch,
+        left: torchLeft,
+        top: `${torchTopPercent}%`,
+        width: torchCharacterWidth,
+        transform: `translateY(-50%) translate(${torchShiftX.toFixed(1)}px, ${torchShiftY.toFixed(1)}px)`,
+      }
+    : {
+        ...S.torch,
+        left: torchLeft,
+        top: `${torchTopPercent}%`,
+        width: torchCharacterWidth,
+        transform: `translateY(-50%) translate(${torchShiftX.toFixed(1)}px, ${torchShiftY.toFixed(1)}px)`,
+      };
+  const torchToolStyle = isMobile
+    ? isTight
+      ? {
+          ...S.torchTool,
+          width: torchToolWidth,
+          height: torchToolHeight,
+          right: -18,
+          top: 34,
+          transform: `rotate(${(-12 + torchRotation * 0.06).toFixed(1)}deg)`,
+        }
+      : {
+          ...S.torchTool,
+          width: torchToolWidth,
+          height: torchToolHeight,
+          right: -20,
+          top: 40,
+          transform: `rotate(${(-10 + torchRotation * 0.06).toFixed(1)}deg)`,
+        }
+    : {
+        ...S.torchTool,
+        width: torchToolWidth,
+        height: torchToolHeight,
+        right: -22,
+        top: 52,
+        transform: `rotate(${(-10 + torchRotation * 0.06).toFixed(1)}deg)`,
+      };
   const torchGlowStyle = isMobile
     ? isTight
-      ? { ...S.torchGlow, width: 200, height: 80 }
-      : { ...S.torchGlow, width: 240, height: 96 }
-    : { ...S.torchGlow, width: 300, height: 120 };
+      ? { ...S.torchGlow, width: 92, height: 72 }
+      : { ...S.torchGlow, width: 118, height: 90 }
+    : { ...S.torchGlow, width: 148, height: 108 };
   const torchWideGlow = isMobile
     ? isTight
-      ? { width: 240, height: 100 }
-      : { width: 300, height: 120 }
-    : { width: 400, height: 160 };
-  const torchEmojiSize = isMobile ? (isTight ? 64 : 72) : 96;
+      ? { width: 140, height: 88 }
+      : { width: 170, height: 104 }
+    : { width: 210, height: 128 };
+  const torchOpenButtonTopOffset = isMobile ? (isTight ? 86 : 98) : 132;
+  const torchButtonCenterX = torchLeft + torchCharacterWidth * 0.52;
+  const torchButtonSideOffset = isTight ? 42 : isMobile ? 48 : 54;
+  const torchOpenBtnStyle = {
+    position: "absolute",
+    left: torchButtonCenterX - torchButtonSideOffset,
+    top: `calc(${torchTopPercent}% + ${torchOpenButtonTopOffset}px)`,
+    transform: "translate(-50%, -50%)",
+    zIndex: 28,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+    border: "1px solid #93c5fd",
+    boxShadow: "0 10px 24px rgba(37,99,235,0.26)",
+    backdropFilter: "blur(8px)",
+    padding: isTight ? "8px 14px" : "9px 16px",
+    borderRadius: 999,
+    fontSize: isTight ? 12 : 13,
+    fontWeight: 800,
+    fontFamily: "inherit",
+    color: "#fff",
+    background: shine ? "#cbd5e1" : "linear-gradient(135deg,#38bdf8,#2563eb)",
+    opacity: shine ? 0.45 : 1,
+    cursor: shine ? "not-allowed" : "pointer",
+    pointerEvents: "auto",
+  };
+  const torchResetBtnStyle = {
+    ...torchOpenBtnStyle,
+    left: torchButtonCenterX + torchButtonSideOffset,
+    background: "linear-gradient(180deg,#f8fafc,#e2e8f0)",
+    color: "#334155",
+    border: "1px solid #cbd5e1",
+    boxShadow: "0 8px 20px rgba(100,116,139,0.22)",
+    opacity: 1,
+    cursor: "pointer",
+  };
   const targetStyle = isMobile ? { ...S.target, right: isTight ? 8 : 16, gap: isTight ? 6 : 8 } : S.target;
   const targetGlowSize = isMobile ? (isTight ? 120 : 150) : 200;
+  const targetFrameSize = isMobile ? (isTight ? 128 : 154) : 190;
+  const bearSize = isMobile ? (isTight ? 68 : 78) : 92;
+  const lightReachedTarget = shine && beamProgress >= 0.95;
+  const targetRevealBase = lightReachedTarget ? clamp01(reflectProgress) : 0;
+  const bearSightLevel =
+    selectedMaterial.type === "transparent"
+      ? clamp01((targetRevealBase - 0.08) / 0.92)
+      : selectedMaterial.type === "translucent"
+        ? clamp01((targetRevealBase - 0.15) / 0.9) * 0.62
+        : 0;
+  const bearOpacity =
+    selectedMaterial.type === "opaque"
+      ? 0
+      : lightReachedTarget
+        ? selectedMaterial.type === "transparent"
+          ? Math.min(1, 0.08 + bearSightLevel * 1.05)
+          : Math.min(0.62, 0.1 + bearSightLevel * 0.85)
+        : 0.04;
+  const bearBlurPx =
+    selectedMaterial.type === "transparent"
+      ? Math.max(0, 7 - bearSightLevel * 7)
+      : selectedMaterial.type === "translucent"
+        ? Math.max(3, 11 - bearSightLevel * 8)
+        : 14;
+  const targetVeilOpacity =
+    !lightReachedTarget
+      ? 0.9
+      : selectedMaterial.type === "transparent"
+        ? Math.max(0.12, 0.72 - bearSightLevel * 0.75)
+        : selectedMaterial.type === "translucent"
+          ? Math.max(0.5, 0.86 - bearSightLevel * 0.35)
+          : 0.92;
+  const targetVeilBackground =
+    selectedMaterial.type === "transparent"
+      ? "linear-gradient(135deg, rgba(225,239,255,0.85), rgba(204,229,255,0.7))"
+      : selectedMaterial.type === "translucent"
+        ? "linear-gradient(135deg, rgba(232,241,250,0.95), rgba(206,225,243,0.88))"
+        : "linear-gradient(135deg, rgba(120,133,150,0.95), rgba(70,85,102,0.9))";
+  const targetFrameBorder =
+    selectedMaterial.type === "transparent"
+      ? "#93c5fd"
+      : selectedMaterial.type === "translucent"
+        ? "#94a3b8"
+        : "#64748b";
   const statusDotStyle = isMobile
     ? {
         ...S.statusDot,
@@ -597,9 +726,6 @@ export default function P4LightExperiment() {
         padding: isTight ? "4px 8px" : "5px 10px",
       }
     : S.statusDot;
-  const shineBtnExtra = isMobile
-    ? { bottom: isTight ? 10 : 12, padding: isTight ? "9px 14px" : "10px 16px" }
-    : {};
   const pageNavFloatingStyle = isMobile
     ? { ...S.pageNavFloating, right: isTight ? 8 : 12, bottom: isTight ? 8 : 12, gap: isTight ? 6 : 8 }
     : S.pageNavFloating;
@@ -696,32 +822,21 @@ export default function P4LightExperiment() {
         </div>
 
         <div style={canvasStyle}>
-          {/* ambient flash */}
           <button
-            style={{
-              ...S.bigBtn,
-              position: "absolute",
-              left: "50%",
-              bottom: 20,
-              transform: "translateX(-50%)",
-              zIndex: 1,
-              border: "1px solid #93c5fd",
-              boxShadow: "0 12px 30px rgba(59,130,246,0.25)",
-              backdropFilter: "blur(8px)",
-              padding: "12px 20px",
-              fontSize: isTight ? 13 : 14,
-              opacity: shine ? 0.45 : 1,
-              cursor: shine ? "not-allowed" : "pointer",
-              background: shine
-                ? "#cbd5e1"
-                : "linear-gradient(135deg,#38bdf8,#2563eb)",
-              ...shineBtnExtra,
-            }}
+            style={torchOpenBtnStyle}
             onClick={doShine}
             disabled={shine}
           >
-            <span style={{ fontSize: isMobile ? 22 : 26 }}>🔦</span>
-            <span>ส่องแสง</span>
+            <span style={{ fontSize: isTight ? 13 : 14 }}>⏻</span>
+            <span>เปิด</span>
+          </button>
+          <button
+            style={torchResetBtnStyle}
+            onClick={reset}
+            type="button"
+          >
+            <span style={{ fontSize: isTight ? 13 : 14 }}>↺</span>
+            <span>รีเซ็ต</span>
           </button>
 
           <div style={stageStyle}>
@@ -731,6 +846,7 @@ export default function P4LightExperiment() {
               reflectProgress={reflectProgress}
               materialType={selectedMaterial.type}
               objectSize={materialSize}
+              sourceX={beamSourceX}
             />
 
           {/* Grid lines (decorative) */}
@@ -745,27 +861,35 @@ export default function P4LightExperiment() {
             ))}
           </svg>
 
-          {/* Torch - ทำให้ใหญ่ขึ้นและเห็นชัด */}
-          <div style={{
-            ...torchStyle,
-            transform: `translateY(-50%) rotate(${torchRotation}deg)`,
-            transformOrigin: "82px 70px",
-          }}>
-            {shine && (
-              <>
-                <div style={torchGlowStyle} className="glow-pulse" />
-                <div style={{
-                  position: "absolute", top: "50%", left: "50%",
-                  transform: "translate(-50%,-50%)",
-                  ...torchWideGlow,
-                  background: "radial-gradient(ellipse, rgba(255,215,0,0.3) 0%, transparent 70%)",
-                  borderRadius: "50%",
-                  pointerEvents: "none",
-                  filter: "blur(30px)",
-                }} />
-              </>
-            )}
-            <span style={{ fontSize: torchEmojiSize, position: "relative", zIndex: 2, filter: "drop-shadow(0 0 20px gold)" }}>🔦</span>
+          {/* Character with flashlight */}
+          <div style={torchStyle}>
+            <img
+              src={TORCH_PERSON_IMAGE_SRC}
+              alt="นักเรียนถือไฟฉาย"
+              style={S.torchCharacterImg}
+            />
+            <div style={torchToolStyle}>
+              {shine && (
+                <>
+                  <div style={torchGlowStyle} className="glow-pulse" />
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "74%",
+                      transform: "translate(-50%,-50%)",
+                      ...torchWideGlow,
+                      background:
+                        "radial-gradient(ellipse, rgba(255,215,0,0.36) 0%, rgba(255,190,80,0.2) 38%, transparent 72%)",
+                      borderRadius: "50%",
+                      pointerEvents: "none",
+                      filter: "blur(18px)",
+                    }}
+                  />
+                </>
+              )}
+              <img src={TORCH_IMAGE_SRC} alt="" aria-hidden="true" style={S.torchToolImg} />
+            </div>
           </div>
 
           {/* Material Object - แสดงรูปภาพเปล่า ไม่มีกล่อง */}
@@ -835,7 +959,57 @@ export default function P4LightExperiment() {
                 height: targetGlowSize,
               }} className="glow-pulse" />
             )}
-            <span style={{ fontSize: 80, filter: shine && reflectProgress > 0.8 && selectedMaterial.type === "transparent" ? "drop-shadow(0 0 20px gold)" : "none" }}>🧸</span>
+            <div
+              style={{
+                ...S.targetFrame,
+                width: targetFrameSize,
+                height: targetFrameSize,
+                borderColor: targetFrameBorder,
+                boxShadow:
+                  selectedMaterial.type === "transparent"
+                    ? "0 12px 26px rgba(59,130,246,0.22), inset 0 1px 0 rgba(255,255,255,0.88)"
+                    : selectedMaterial.type === "translucent"
+                      ? "0 10px 22px rgba(100,116,139,0.18), inset 0 1px 0 rgba(255,255,255,0.8)"
+                      : "0 10px 22px rgba(30,41,59,0.28), inset 0 1px 0 rgba(255,255,255,0.5)",
+              }}
+            >
+              <div style={S.targetGridLayer} />
+              <div
+                style={{
+                  ...S.targetBearWrap,
+                  opacity: bearOpacity,
+                  filter: `blur(${bearBlurPx.toFixed(2)}px) saturate(${(
+                    selectedMaterial.type === "transparent"
+                      ? 1.1
+                      : selectedMaterial.type === "translucent"
+                        ? 0.9
+                        : 0.7
+                  ).toFixed(2)})`,
+                }}
+              >
+                <span
+                  className="target-bear"
+                  style={{
+                    fontSize: bearSize,
+                    filter:
+                      lightReachedTarget &&
+                      selectedMaterial.type === "transparent" &&
+                      bearSightLevel > 0.72
+                        ? "drop-shadow(0 0 14px rgba(255,210,90,0.9))"
+                        : "none",
+                  }}
+                >
+                  {"\uD83E\uDDF8"}
+                </span>
+              </div>
+              <div
+                style={{
+                  ...S.targetVeil,
+                  opacity: targetVeilOpacity,
+                  background: targetVeilBackground,
+                }}
+              />
+            </div>
             
             {/* แสดงผลลัพธ์ที่ชัดเจน */}
             {shine && reflectProgress >= 1 && (
@@ -971,7 +1145,8 @@ const S = {
     position: "absolute",
     left: 188,
     top: "50%",
-    zIndex: 25,
+    zIndex: 16,
+    pointerEvents: "none",
   },
   torchGlow: {
     position: "absolute", top: "50%", left: "50%",
@@ -980,6 +1155,154 @@ const S = {
     background: "radial-gradient(ellipse, rgba(255,215,0,0.5) 0%, transparent 70%)",
     borderRadius: "50%",
     pointerEvents: "none",
+  },
+  torchCharacterImg: {
+    width: "100%",
+    height: "auto",
+    objectFit: "contain",
+    display: "block",
+    filter: "drop-shadow(0 8px 16px rgba(30,58,138,0.2))",
+    userSelect: "none",
+  },
+  torchTool: {
+    position: "absolute",
+    width: 72,
+    height: 40,
+    pointerEvents: "none",
+    zIndex: 4,
+  },
+  torchToolImg: {
+    position: "absolute",
+    inset: 0,
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    objectPosition: "50% 50%",
+    display: "block",
+    transform: "scale(1.05)",
+    filter: "drop-shadow(0 4px 9px rgba(2,6,23,0.35))",
+  },
+  torchToolShadow: {
+    position: "absolute",
+    left: 10,
+    right: 8,
+    bottom: 1,
+    height: 10,
+    borderRadius: 999,
+    background: "rgba(2,6,23,0.42)",
+    filter: "blur(4px)",
+  },
+  torchToolBody: {
+    position: "absolute",
+    inset: "8px 22px 8px 12px",
+    borderRadius: 999,
+    background:
+      "linear-gradient(90deg, #0f172a 0%, #303f55 14%, #8fa2b8 33%, #f1f5f9 49%, #8ea1b7 66%, #273549 100%)",
+    border: "1px solid rgba(148,163,184,0.8)",
+    boxShadow:
+      "inset 0 1px 1px rgba(255,255,255,0.5), inset 0 -1px 2px rgba(2,6,23,0.45), 0 4px 10px rgba(2,6,23,0.28)",
+  },
+  torchToolGripTexture: {
+    position: "absolute",
+    left: 24,
+    right: 32,
+    top: 11,
+    bottom: 11,
+    borderRadius: 999,
+    background:
+      "repeating-linear-gradient(90deg, rgba(15,23,42,0.45) 0px, rgba(15,23,42,0.45) 1px, rgba(255,255,255,0.06) 1px, rgba(255,255,255,0.06) 3px)",
+    opacity: 0.8,
+    mixBlendMode: "multiply",
+  },
+  torchToolSwitch: {
+    position: "absolute",
+    left: "50%",
+    top: "50%",
+    transform: "translate(-44%, -50%)",
+    width: 10,
+    height: 14,
+    borderRadius: 4,
+    background: "linear-gradient(180deg, #1e293b 0%, #475569 100%)",
+    border: "1px solid rgba(15,23,42,0.65)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.32)",
+  },
+  torchToolBackCap: {
+    position: "absolute",
+    left: 2,
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: 14,
+    height: 14,
+    borderRadius: "50%",
+    background: "radial-gradient(circle at 34% 30%, #e2e8f0 0%, #8a9cb2 45%, #475569 100%)",
+    boxShadow: "0 0 0 1px rgba(15,23,42,0.35), inset 0 1px 1px rgba(255,255,255,0.45)",
+  },
+  torchToolTailRing: {
+    position: "absolute",
+    left: 11,
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: 6,
+    height: 16,
+    borderRadius: 999,
+    background: "linear-gradient(180deg, #1e293b 0%, #475569 100%)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.25)",
+  },
+  torchToolHead: {
+    position: "absolute",
+    right: 12,
+    top: 6,
+    width: 16,
+    height: 28,
+    borderRadius: 9,
+    background: "linear-gradient(90deg, #111827 0%, #4b5563 42%, #9ca3af 100%)",
+    border: "1px solid rgba(51,65,85,0.75)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.26)",
+  },
+  torchToolHeadRing: {
+    position: "absolute",
+    right: 6,
+    top: 5,
+    width: 8,
+    height: 30,
+    borderRadius: 999,
+    background: "linear-gradient(180deg, #374151 0%, #9ca3af 48%, #374151 100%)",
+    border: "1px solid rgba(71,85,105,0.5)",
+  },
+  torchToolLens: {
+    position: "absolute",
+    right: -1,
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: 22,
+    height: 22,
+    borderRadius: "50%",
+    background:
+      "radial-gradient(circle at 34% 32%, rgba(255,255,255,0.99) 0%, rgba(255,250,228,0.98) 20%, rgba(255,228,160,0.9) 45%, rgba(245,158,11,0.95) 100%)",
+    border: "2px solid rgba(148,163,184,0.9)",
+    boxShadow: "0 0 20px rgba(250,204,21,0.78), 0 0 0 1px rgba(30,41,59,0.48)",
+  },
+  torchToolLensCore: {
+    position: "absolute",
+    right: 5,
+    top: "50%",
+    transform: "translateY(-50%)",
+    width: 9,
+    height: 9,
+    borderRadius: "50%",
+    background: "radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,248,210,0.9) 60%, rgba(255,248,210,0) 100%)",
+    filter: "blur(0.3px)",
+  },
+  torchToolSpecular: {
+    position: "absolute",
+    left: 16,
+    right: 24,
+    top: 10,
+    height: 4,
+    borderRadius: 999,
+    background:
+      "linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.72) 46%, rgba(255,255,255,0.08) 100%)",
+    filter: "blur(0.2px)",
   },
 
   matObj: {
@@ -1054,6 +1377,42 @@ const S = {
     display: "flex", flexDirection: "column", alignItems: "center",
     zIndex: 5,
     gap: 12,
+  },
+  targetFrame: {
+    position: "relative",
+    width: 190,
+    height: 190,
+    borderRadius: 22,
+    border: "3px solid #93c5fd",
+    background: "linear-gradient(180deg, #dbeafe 0%, #c7dcf5 100%)",
+    overflow: "hidden",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  targetGridLayer: {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none",
+    zIndex: 1,
+    background:
+      "linear-gradient(rgba(148,163,184,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,0.22) 1px, transparent 1px)",
+    backgroundSize: "25% 25%, 25% 25%",
+  },
+  targetBearWrap: {
+    position: "relative",
+    zIndex: 2,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "opacity 0.28s ease, filter 0.28s ease",
+  },
+  targetVeil: {
+    position: "absolute",
+    inset: 0,
+    pointerEvents: "none",
+    zIndex: 3,
+    transition: "opacity 0.28s ease",
   },
   targetGlow: {
     position: "absolute", top: "50%", left: "50%",
@@ -1378,7 +1737,7 @@ const CSS = `
   }
 
   @media (max-width: 768px) {
-    .target-block > span {
+    .target-bear {
       font-size: 60px !important;
     }
     .target-block .pop-in {
@@ -1411,7 +1770,7 @@ const CSS = `
   }
 
   @media (max-width: 420px) {
-    .target-block > span {
+    .target-bear {
       font-size: 52px !important;
     }
     .target-block .pop-in {
