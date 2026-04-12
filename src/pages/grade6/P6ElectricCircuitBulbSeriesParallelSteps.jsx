@@ -132,28 +132,13 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_auto_auto] gap-2">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-            {t.badge}
-          </div>
-        </div>
-
-        <h1 className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">
-          {t.title}
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_auto] gap-2">
+        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08]">
+          {t.stepsHeading}
         </h1>
 
         <div className="relative min-h-0 overflow-hidden rounded-[30px] bg-[#e5f3ff] px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_22px_40px_rgba(17,24,39,0.18)]">
           <div className="flex flex-col gap-4">
-            <header className="flex flex-col gap-1">
-              <p className="text-[clamp(32px,2.4vw,48px)] font-black leading-tight text-slate-900">
-                {t.stepsHeading}
-              </p>
-              <p className="text-[clamp(14px,1vw,18px)] font-bold text-slate-700">
-                {t.stepsSub}
-              </p>
-            </header>
-
             <div className="flex flex-col gap-3">
               {t.steps.map((step, index) => (
                 <div
@@ -196,9 +181,6 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
               ))}
             </div>
 
-            <div className="rounded-[24px] border border-dashed border-slate-900/20 bg-white/80 px-4 py-3 text-sm font-bold text-slate-900 shadow-[0_12px_20px_rgba(15,23,42,0.12)]">
-              {t.summary}
-            </div>
           </div>
         </div>
 

@@ -207,6 +207,33 @@ function getEquipmentLabel(equipment, language) {
   return EQUIPMENT_LABEL[equipment]?.[language] || EQUIPMENT_LABEL[equipment]?.th || "";
 }
 
+function getTrialCompactLabel(trial, language) {
+  const compact = {
+    "balloon-both": {
+      th: "ลูกโป่ง 2 ใบ",
+      en: "2 balloons",
+      ms: "2 belon",
+    },
+    "balloon-one": {
+      th: "ลูกโป่ง 1 ใบ",
+      en: "1 balloon",
+      ms: "1 belon",
+    },
+    "marker-both": {
+      th: "เมจิก 2 ด้าม",
+      en: "2 markers",
+      ms: "2 pen marker",
+    },
+    "marker-one": {
+      th: "เมจิก 1 ด้าม",
+      en: "1 marker",
+      ms: "1 pen marker",
+    },
+  };
+
+  return compact[trial?.id]?.[language] || compact[trial?.id]?.th || getTrialLabel(trial, language);
+}
+
 export default function P6ElectricForceEffectSim() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -447,24 +474,18 @@ export default function P6ElectricForceEffectSim() {
                     }
                     onClick={() => handleSelectTrial(opt.id)}
                     aria-disabled={locked}
+                    aria-label={getTrialLabel(opt, language)}
                   >
                     <span className="p6-force-sim-menu-item-main">
                       <span className="p6-force-sim-menu-item-icon" aria-hidden="true">
                         <img src={iconSrc} alt="" />
                       </span>
-                      <span className="p6-force-sim-menu-item-text">
-                        <span className="p6-force-sim-menu-item-title">{getTrialLabel(opt, language)}</span>
-                        {(done || locked) && (
-                          <span className="p6-force-sim-menu-item-meta">{done ? t.done : t.waiting}</span>
-                        )}
-                      </span>
+                      <span className="p6-force-sim-menu-item-caption">{getTrialCompactLabel(opt, language)}</span>
                     </span>
                     <span
                       className={"p6-force-sim-menu-check" + (done ? " active" : "")}
                       aria-hidden="true"
-                    >
-                      {done ? "OK" : ""}
-                    </span>
+                    />
                   </button>
                 );
               })}
@@ -599,7 +620,8 @@ export default function P6ElectricForceEffectSim() {
               )}
             </div>
             <div className="p6-force-sim-current-trial">
-              {t.currentTrial}: {selectedTrialLabel || notSelectedLabel}
+              <span className="p6-force-sim-current-trial-label">{t.currentTrial}:</span>{" "}
+              <span className="p6-force-sim-current-trial-value">{selectedTrialLabel || notSelectedLabel}</span>
             </div>
 
             {currentResult && !isRunning && (

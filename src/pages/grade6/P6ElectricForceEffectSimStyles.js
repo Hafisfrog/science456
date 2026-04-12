@@ -326,17 +326,25 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-current-trial {
-  margin: 4px auto 0;
+  margin: 10px auto 8px;
   width: fit-content;
-  max-width: min(90%, 560px);
-  padding: 8px 14px;
+  max-width: min(92%, 700px);
+  padding: 10px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 2px solid rgba(15, 23, 42, 0.16);
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid rgba(15, 23, 42, 0.2);
   font-weight: 1000;
-  font-size: clamp(14px, 1.2vw, 18px);
+  font-size: clamp(16px, 1.25vw, 22px);
   text-align: center;
-  box-shadow: 0 12px 20px rgba(17, 24, 39, 0.12);
+  box-shadow: 0 14px 24px rgba(17, 24, 39, 0.14);
+}
+
+.p6-force-sim-current-trial-label {
+  opacity: 0.9;
+}
+
+.p6-force-sim-current-trial-value {
+  color: #0b3ea8;
 }
 
 .p6-force-sim-marker-image {
@@ -917,15 +925,17 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-menu-item-main {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 8px;
   min-width: 0;
   flex: 1;
 }
 
 .p6-force-sim-menu-item-icon {
-  width: 46px;
-  height: 46px;
+  width: 64px;
+  height: 64px;
   border-radius: 14px;
   background: #ffffff;
   border: 2px solid rgba(148, 163, 184, 0.35);
@@ -936,28 +946,18 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-menu-item-icon img {
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
-.p6-force-sim-menu-item-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-
-.p6-force-sim-menu-item-title {
-  font-size: 17px;
+.p6-force-sim-menu-item-caption {
+  font-size: 15px;
   font-weight: 1000;
-  color: #0f172a;
-}
-
-.p6-force-sim-menu-item-meta {
-  font-size: 12px;
-  font-weight: 900;
-  color: #64748b;
+  color: #1e293b;
+  line-height: 1.1;
+  text-align: center;
+  letter-spacing: 0.1px;
 }
 
 .p6-force-sim-menu-check {
@@ -976,7 +976,8 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-menu-check.active {
   border-color: rgba(37, 99, 235, 0.7);
-  background: #ffffff;
+  background: radial-gradient(circle at 35% 35%, #93c5fd, #2563eb);
+  box-shadow: 0 6px 12px rgba(37, 99, 235, 0.32);
 }
 
 .p6-force-sim-timer {
@@ -1100,6 +1101,20 @@ const forceEffectSimStyles = `.p6-force-sim-page {
     min-width: 74px;
     min-height: 36px;
     padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .p6-force-sim-menu-item-icon {
+    width: 58px;
+    height: 58px;
+  }
+
+  .p6-force-sim-menu-item-icon img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .p6-force-sim-menu-item-caption {
     font-size: 14px;
   }
 }

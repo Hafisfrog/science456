@@ -49,11 +49,12 @@ const UI_TEXT = {
     outcomeHigh: "เศษกระดาษถูกดูดมากขึ้น",
     closeResult: "ปิด",
     continueExperiment: "ทดลองต่อ",
-    summaryReady: "สรุปผลทั้งหมด",
+    summaryReady: "ดูผลการทดลอง",
     summaryProgress: "กรุณาทำการทดลองให้ครบทั้ง 3 ครั้งก่อนสรุปผล",
     summaryDone: "ทดลองครบทั้ง 3 ครั้งแล้ว ไปดูสรุปผลทั้งหมดได้เลย",
     stageTitle: "พื้นที่ทดลองไฟฟ้าสถิต",
     stageHint: "เลือกรอบการทดลอง แล้วสังเกตว่าลูกโป่งดูดเศษกระดาษได้มากขึ้นเมื่อขัดถูนานขึ้น",
+    currentTrial: "ตอนนี้ทดลอง",
   },
   en: {
     back: "Back",
@@ -93,11 +94,12 @@ const UI_TEXT = {
     outcomeHigh: "Paper bits are strongly attracted",
     closeResult: "Close",
     continueExperiment: "Continue",
-    summaryReady: "View Full Summary",
+    summaryReady: "View Results",
     summaryProgress: "Complete all 3 trials before viewing the full summary",
     summaryDone: "All 3 trials are complete. Open the full summary.",
     stageTitle: "Static Electricity Zone",
     stageHint: "Choose a trial and observe how the balloon attracts more paper bits when it is rubbed longer.",
+    currentTrial: "Current trial",
   },
   ms: {
     back: "Kembali",
@@ -137,11 +139,12 @@ const UI_TEXT = {
     outcomeHigh: "Cebisan kertas tertarik dengan lebih kuat",
     closeResult: "Tutup",
     continueExperiment: "Teruskan",
-    summaryReady: "Lihat Ringkasan Penuh",
+    summaryReady: "Lihat Hasil",
     summaryProgress: "Lengkapkan 3 ujian dahulu sebelum melihat ringkasan penuh",
     summaryDone: "Semua 3 ujian telah lengkap. Buka ringkasan penuh.",
     stageTitle: "Ruang Eksperimen Elektrik Statik",
     stageHint: "Pilih ujian dan perhatikan bagaimana belon menarik lebih banyak cebisan kertas apabila digosok lebih lama.",
+    currentTrial: "Ujian semasa",
   },
 };
 
@@ -417,7 +420,6 @@ export default function P6ElectricGenerationSim() {
   const [completedTrials, setCompletedTrials] = useState(() =>
     isFreshStart ? [] : readCompletedTrials(),
   );
-  const [resultTrialId, setResultTrialId] = useState(null);
 
   const totalTrials = trialOptions.length;
   const completedCount = completedTrials.length;
@@ -435,9 +437,6 @@ export default function P6ElectricGenerationSim() {
     selectedTrial === "trial-2" ? "mid" : selectedTrial === "trial-3" ? "high" : "none";
   const trialIndex = selectedTrial?.split("-")[1] || "";
   const isRubbing = isRunning && selectedTrial !== "trial-1";
-  const canShowResult = Boolean(
-    selectedTrial && (isTesting || completedTrials.includes(selectedTrial)),
-  );
   const canSkip = Boolean(selectedTrial && durationSeconds > 0 && !isTesting);
   const rubbingSpeedClass =
     selectedTrial === "trial-3"
@@ -459,13 +458,13 @@ export default function P6ElectricGenerationSim() {
     setStarted(false);
     setIsTesting(false);
     setIsRunning(false);
-    setResultTrialId(null);
     const nextDuration = id === "trial-2" ? 120 : id === "trial-3" ? 300 : 0;
     setRemaining(nextDuration);
   };
 
   const startPaperTesting = () => {
     setIsTesting(true);
+    markTrialCompleted();
   };
 
   const handleStart = () => {
@@ -517,18 +516,6 @@ export default function P6ElectricGenerationSim() {
     startPaperTesting();
   };
 
-  const handleShowResult = () => {
-    if (!selectedTrial || !trialIndex) return;
-    if (isTesting) {
-      markTrialCompleted();
-      setResultTrialId(selectedTrial);
-      return;
-    }
-    if (completedTrials.includes(selectedTrial)) {
-      setResultTrialId(selectedTrial);
-    }
-  };
-
   const handleResetProgress = () => {
     persistCompletedTrials([]);
     setCompletedTrials([]);
@@ -537,7 +524,6 @@ export default function P6ElectricGenerationSim() {
     setIsTesting(false);
     setRemaining(0);
     setIsRunning(false);
-    setResultTrialId(null);
   };
 
   const formatTime = (value) => {
@@ -547,13 +533,7 @@ export default function P6ElectricGenerationSim() {
   };
 
   const papersStyle = getPapersContainerStyle({ trialLevel, started, isTesting });
-  const resultData = resultTrialId ? TRIAL_RESULTS[resultTrialId] : null;
-  const resultPaperCount =
-    resultData?.intensity === "high" ? 12 : resultData?.intensity === "mid" ? 4 : 0;
-  const resultCompletedCount = resultTrialId
-    ? Array.from(new Set([...completedTrials, resultTrialId])).length
-    : completedCount;
-  const resultAllTrialsCompleted = resultCompletedCount === totalTrials;
+  const currentResult = selectedTrial && completedTrials.includes(selectedTrial) ? TRIAL_RESULTS[selectedTrial] : null;
   const statusText = isRunning
     ? t.timerRunning
     : isTesting
@@ -592,33 +572,27 @@ export default function P6ElectricGenerationSim() {
         }}
       >
         <div className="flex h-full flex-col items-start gap-3 rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
-          <div className="w-full rounded-[24px] border border-slate-300/50 bg-white/95 p-5 shadow-[0_12px_22px_rgba(15,23,42,0.12)]">
-            <div className="mb-4 rounded-[14px] bg-sky-100 px-4 py-3 text-[17px] font-black text-slate-900">
-              {t.selectTrial}
-            </div>
-            <div className="grid gap-4">
+          <div className="w-full min-h-0 flex-1">
+            <div className="p6-force-sim-menu is-static" role="region" aria-label={t.selectTrial}>
+              <div className="p6-force-sim-menu-title">{t.selectTrial}</div>
               {trialOptions.map((item) => {
                 const done = completedTrials.includes(item.id);
                 const active = selectedTrial === item.id;
                 return (
                   <button
                     key={item.id}
-                    className={`flex w-full items-center justify-between gap-3 rounded-[18px] border-2 px-5 py-5 text-left text-[16px] font-bold transition hover:-translate-y-0.5 ${
-                      active
-                        ? "border-blue-500 bg-blue-100 text-blue-900"
-                        : "border-slate-200 bg-slate-50 text-slate-800"
-                    }`}
+                    className={`p6-force-sim-menu-item${active ? " active" : ""}`}
                     type="button"
                     onClick={() => handleSelectTrial(item.id)}
+                    aria-label={item.label[lang]}
                   >
-                    <span>{item.label[lang]}</span>
-                    <span
-                      className={`grid h-9 w-9 place-items-center rounded-full border text-[13px] font-black ${
-                        done ? "border-blue-500 bg-white text-blue-600" : "border-slate-300 text-slate-300"
-                      }`}
-                    >
-                      {done ? "OK" : ""}
+                    <span className="p6-force-sim-menu-item-main">
+                      <span className="p6-force-sim-menu-item-icon" aria-hidden="true">
+                        <img src="/images/p6/equipment/balloons-real.svg" alt="" />
+                      </span>
+                      <span className="p6-force-sim-menu-item-caption">{item.short[lang]}</span>
                     </span>
+                    <span className={"p6-force-sim-menu-check" + (done ? " active" : "")} aria-hidden="true" />
                   </button>
                 );
               })}
@@ -756,7 +730,7 @@ export default function P6ElectricGenerationSim() {
             {t.timer}: {formatTime(remaining)}
           </div>
 
-          <div className="absolute bottom-6 left-[44%] z-[8] flex -translate-x-1/2 flex-wrap items-center justify-center gap-3">
+          <div className="absolute bottom-[86px] right-4 z-[9] flex flex-wrap items-center justify-center gap-3">
             <button
               className={`grid place-items-center gap-1 ${
                 started && durationSeconds > 0 && !isTesting
@@ -805,11 +779,11 @@ export default function P6ElectricGenerationSim() {
               </span>
               <span className="text-[16px] font-black">{t.reset}</span>
             </button>
-            {canShowResult && (
+            {allTrialsCompleted && (
               <button
                 className="grid place-items-center gap-1 cursor-pointer"
                 type="button"
-                onClick={handleShowResult}
+                onClick={() => navigate("/p6/experiment/electric-generation/summary")}
               >
                 <span className="grid h-16 w-16 place-items-center rounded-full border-2 border-white/60 bg-[radial-gradient(circle_at_30%_30%,#dbeafe,#60a5fa)] text-slate-900 shadow-[0_16px_24px_rgba(15,23,42,0.18)]">
                   <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6">
@@ -823,10 +797,24 @@ export default function P6ElectricGenerationSim() {
                     />
                   </svg>
                 </span>
-                <span className="text-[16px] font-black">{t.result}</span>
+                <span className="text-[16px] font-black">{t.summaryReady}</span>
               </button>
             )}
           </div>
+
+          {currentResult && !isRunning && (
+            <div className="absolute bottom-[28px] left-1/2 z-[8] w-[min(90%,360px)] -translate-x-1/2 rounded-[20px] border-2 border-slate-200/90 bg-white/95 px-4 py-3 text-slate-900 shadow-[0_12px_22px_rgba(15,23,42,0.14)]">
+              <div className="text-center text-[18px] font-black">{t.resultTitle}</div>
+              <div className="mt-2 flex items-center justify-center gap-3">
+                <span className="rounded-full border-2 border-blue-200 bg-blue-50 px-4 py-1 text-[18px] font-black text-slate-900">
+                  {t[currentResult.outcomeKey]}
+                </span>
+                <span className="text-[16px] font-black text-slate-700">
+                  {t.time}: {formatTime(Number(currentResult.time) * 60)}
+                </span>
+              </div>
+            </div>
+          )}
 
           <button
             className="absolute bottom-4 right-4 z-[9] inline-flex items-center gap-2 rounded-[22px] bg-white px-5 py-3 text-[14px] font-black text-slate-700 shadow-[0_12px_22px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5"
@@ -840,120 +828,6 @@ export default function P6ElectricGenerationSim() {
           </button>
 
         </div>
-
-        {resultData && (
-          <div className="absolute inset-0 z-[50] flex items-center justify-center bg-slate-950/35 p-4 backdrop-blur-[2px]">
-            <div
-              className="w-[min(980px,92vw)] overflow-hidden rounded-[28px] border border-white/80 bg-[linear-gradient(180deg,#eef8ff_0%,#dff1ff_55%,#cfe7f9_100%)] shadow-[0_26px_60px_rgba(15,23,42,0.28)]"
-              role="dialog"
-              aria-modal="true"
-              aria-label={t.resultTitle}
-            >
-              <div className="border-b border-slate-300/60 px-6 py-5 text-center">
-                <h2 className="m-0 text-[clamp(24px,2.4vw,34px)] font-black text-slate-900">
-                  {t.resultTitle}
-                </h2>
-                <p className="mt-2 text-sm font-bold text-slate-600">
-                  {trialOptions.find((item) => item.id === resultTrialId)?.label?.[lang]}
-                </p>
-              </div>
-
-              <div className="p-5 md:p-7">
-                <div className="overflow-hidden rounded-[22px] border border-slate-300/70 bg-white shadow-[0_16px_28px_rgba(15,23,42,0.12)]">
-                  <div className="grid grid-cols-1 bg-[#fdeaa1] px-4 py-4 text-center text-sm font-black text-slate-900 md:grid-cols-[1.1fr_1.25fr_0.8fr_1.5fr] md:text-base">
-                    <div>{t.objectColumn}</div>
-                    <div>{t.outcomeColumn}</div>
-                    <div>{t.timeColumn}</div>
-                    <div>{t.visualColumn}</div>
-                  </div>
-
-                  <div className="grid grid-cols-1 items-center gap-4 px-4 py-5 text-center text-sm font-bold text-slate-900 md:grid-cols-[1.1fr_1.25fr_0.8fr_1.5fr] md:text-base">
-                    <div className="flex items-center justify-center gap-3 md:justify-start">
-                      <div
-                        className="relative h-[42px] w-[42px] rounded-full"
-                        style={{
-                          background:
-                            "radial-gradient(circle at 30% 30%, #ffd7b0 0%, #f3a86e 45%, #e18a54 100%)",
-                          boxShadow: "inset -5px -8px 12px rgba(102, 52, 25, 0.35)",
-                        }}
-                      >
-                        <span className="absolute bottom-1 right-1 h-2 w-2 rounded-full bg-[#e18a54]" />
-                      </div>
-                      <div>{t.objectValue}</div>
-                    </div>
-
-                    <div>{t[resultData.outcomeKey]}</div>
-                    <div>{resultData.time}</div>
-
-                    <div className="relative grid h-[96px] place-items-center">
-                      <div
-                        className="relative h-[68px] w-[64px] rounded-[48%]"
-                        style={{
-                          background:
-                            "radial-gradient(120% 120% at 30% 22%, #ffe3e3 0%, #ffabb0 28%, #f43f4a 52%, #c5162a 78%, #7f1020 100%)",
-                          boxShadow:
-                            "inset 0 10px 16px rgba(255,255,255,0.22), inset 0 -14px 20px rgba(25, 7, 14, 0.34), 0 12px 20px rgba(15,23,42,0.2)",
-                          border: "1px solid rgba(255,255,255,0.36)",
-                        }}
-                      >
-                        <span className="absolute inset-[10%] rounded-[48%] bg-[radial-gradient(circle_at_28%_26%,rgba(255,255,255,0.62),transparent_62%)]" />
-                        <span className="absolute left-[22%] top-[24%] h-[18px] w-[16px] rounded-full bg-white/35 blur-[0.5px]" />
-                        <span className="absolute inset-x-[16%] bottom-[8%] h-[14px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(106,18,33,0.42),transparent_70%)]" />
-                        <span className="absolute -top-[7px] left-1/2 h-[11px] w-[11px] -translate-x-1/2 rounded-[5px] bg-[#9a1a2a] shadow-[0_4px_8px_rgba(15,23,42,0.22)]" />
-                      </div>
-
-                      {resultPaperCount > 0 && (
-                        <div className="absolute bottom-[18px] left-1/2 h-[84px] w-[120px] -translate-x-1/2">
-                          {PAPER_BASE.slice(0, resultPaperCount).map((_, idx) => (
-                            <img
-                              key={`result-paper-${idx}`}
-                              src="/images/p6/equipment/tissue-real.svg"
-                              alt="paper"
-                              className="absolute h-[14px] w-[20px]"
-                              style={getPaperStyle({
-                                index: idx,
-                                trialLevel: resultData.intensity,
-                                isTesting: true,
-                              })}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-5 flex flex-wrap justify-center gap-3">
-                  <button
-                    className="rounded-[18px] border border-slate-300/80 bg-white px-6 py-3 text-sm font-black text-slate-800 shadow-[0_12px_24px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 md:text-base"
-                    type="button"
-                    onClick={() => setResultTrialId(null)}
-                  >
-                    {t.closeResult}
-                  </button>
-                  <button
-                    className="rounded-[18px] bg-blue-600 px-6 py-3 text-sm font-black text-white shadow-[0_12px_24px_rgba(37,99,235,0.24)] transition hover:-translate-y-0.5 md:text-base"
-                    type="button"
-                    onClick={() => {
-                      setResultTrialId(null);
-                      if (resultAllTrialsCompleted) {
-                        navigate("/p6/experiment/electric-generation/summary");
-                      }
-                    }}
-                  >
-                    {resultAllTrialsCompleted ? t.summaryReady : t.continueExperiment}
-                  </button>
-                </div>
-
-                <p className="mt-4 text-center text-sm font-bold text-blue-900">
-                  {resultAllTrialsCompleted
-                    ? t.summaryDone
-                    : `${t.summaryProgress} (${resultCompletedCount}/${totalTrials})`}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
         <style>{`
           @keyframes p6-balloon-mid {

@@ -132,18 +132,11 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
       />
 
       <div className="relative z-[1] mx-auto flex max-w-[1380px] flex-col gap-3">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {t.badge}
-        </div>
-        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">
-          {t.title}
-        </div>
+        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08]">
+          {t.equipmentHeading}
+        </h1>
 
         <div className="rounded-[34px] bg-sky-200 p-6 shadow-[0_18px_32px_rgba(15,23,42,0.08)]">
-          <div className="mb-4 inline-flex items-center gap-2.5 rounded-full bg-blue-600/15 px-4 py-1.5 font-black text-slate-900">
-            {t.equipmentHeading}
-          </div>
-
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {EQUIPMENT.map((id) => (
               <div

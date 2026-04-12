@@ -100,7 +100,6 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
-  const summarySpeech = [t.intro, t.series.heading, t.series.body, t.parallel.heading, t.parallel.body].join(" ");
 
   useEffect(() => {
     return () => {
@@ -129,39 +128,49 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {t.badge}
-        </div>
-        <h1 className="m-0 text-[clamp(32px,2.4vw,50px)] font-black leading-[1.05]">{t.title}</h1>
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_1fr_auto] gap-2">
+        <h1 className="m-0 text-center text-[clamp(32px,2.4vw,50px)] font-black leading-[1.05]">{t.title}</h1>
 
         <div className="relative grid gap-4 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(16px,2vw,24px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
           <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
 
-          <div className="relative z-[1] flex flex-wrap items-center justify-between gap-3">
+          <div className="relative z-[1] flex flex-wrap items-center justify-start gap-3">
             <div className="inline-flex w-fit items-center gap-2.5 rounded-full bg-blue-600/20 px-4 py-1.5 text-[clamp(22px,1.6vw,30px)] font-black text-slate-900">
               {t.section}
             </div>
-            <button
-              type="button"
-              onClick={() => speakText(summarySpeech, lang)}
-              aria-label={t.listen}
-              title={t.listen}
-              className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-[26px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
-            >
-              {"\uD83D\uDD0A"}
-            </button>
           </div>
 
           <p className="relative z-[1] m-0 text-[clamp(18px,1.6vw,26px)] font-bold leading-[1.4] text-slate-900">{t.intro}</p>
 
           <div className="relative z-[1] space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
-            <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.series.heading}</div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.series.heading}</div>
+              <button
+                type="button"
+                onClick={() => speakText(`${t.series.heading} ${t.series.body}`, lang)}
+                aria-label={t.listen}
+                title={t.listen}
+                className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[22px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
+              >
+                {"\uD83D\uDD0A"}
+              </button>
+            </div>
             <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.series.body}</div>
           </div>
 
           <div className="relative z-[1] space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
-            <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.parallel.heading}</div>
+            <div className="flex items-center justify-between gap-3">
+              <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.parallel.heading}</div>
+              <button
+                type="button"
+                onClick={() => speakText(`${t.parallel.heading} ${t.parallel.body}`, lang)}
+                aria-label={t.listen}
+                title={t.listen}
+                className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[22px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
+              >
+                {"\uD83D\uDD0A"}
+              </button>
+            </div>
             <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.parallel.body}</div>
           </div>
         </div>

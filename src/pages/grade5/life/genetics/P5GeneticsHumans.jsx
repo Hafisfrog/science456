@@ -20,7 +20,10 @@ const TEXT = {
     correct: "\u0e16\u0e39\u0e01",
     incorrect: "\u0e1c\u0e34\u0e14",
     score: "\u0e15\u0e2d\u0e1a\u0e16\u0e39\u0e01",
+    scoreLabel: "\u0e04\u0e30\u0e41\u0e19\u0e19",
+    selectedLabel: "\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e41\u0e25\u0e49\u0e27",
     wrongItems: "\u0e02\u0e49\u0e2d\u0e17\u0e35\u0e48\u0e22\u0e31\u0e07\u0e1c\u0e34\u0e14",
+    unansweredItems: "\u0e02\u0e49\u0e2d\u0e17\u0e35\u0e48\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e40\u0e25\u0e37\u0e2d\u0e01",
     allCorrect: "\u0e40\u0e22\u0e35\u0e48\u0e22\u0e21 \u0e15\u0e2d\u0e1a\u0e16\u0e39\u0e01\u0e04\u0e23\u0e1a",
     close: "\u0e1b\u0e34\u0e14",
     traits: {
@@ -48,7 +51,10 @@ const TEXT = {
     correct: "Correct",
     incorrect: "Incorrect",
     score: "Score",
+    scoreLabel: "Score",
+    selectedLabel: "Selected",
     wrongItems: "Incorrect Items",
+    unansweredItems: "Unanswered Items",
     allCorrect: "Great, all answers are correct",
     close: "Close",
     traits: {
@@ -76,7 +82,10 @@ const TEXT = {
     correct: "Betul",
     incorrect: "Salah",
     score: "Skor",
+    scoreLabel: "Skor",
+    selectedLabel: "Dipilih",
     wrongItems: "Item yang Salah",
+    unansweredItems: "Item Belum Dipilih",
     allCorrect: "Bagus, semua jawapan betul",
     close: "Tutup",
     traits: {
@@ -100,9 +109,8 @@ const TRAITS = [
   {
     id: "straight-hair",
     inherited: true,
-    localImg: "/images/p5/humans/straight-hair.jpg",
-    remoteImg:
-      "https://images.pexels.com/photos/15603371/pexels-photo-15603371.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
+    localImg: "/images/p6/pomtrong.jpg",
+    remoteImg: "/images/p6/pomtrong.jpg",
     imagePosition: "50% 18%",
   },
   {
@@ -124,9 +132,8 @@ const TRAITS = [
   {
     id: "dimple",
     inherited: true,
-    localImg: "/images/p5/humans/dimple.jpg",
-    remoteImg:
-      "https://images.pexels.com/photos/11495977/pexels-photo-11495977.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
+    localImg: "/images/p6/lakyim.jpg",
+    remoteImg: "/images/p6/lakyim.jpg",
     imagePosition: "50% 28%",
   },
   {
@@ -148,17 +155,16 @@ const TRAITS = [
   {
     id: "curly-hair",
     inherited: true,
-    localImg: "/images/p5/humans/curly-hair.jpg",
-    remoteImg:
-      "https://images.pexels.com/photos/1897534/pexels-photo-1897534.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
+    localImg: "/images/p6/pomyik.jpg",
+    remoteImg: "/images/p6/pomyik.jpg",
     imagePosition: "50% 18%",
+    useBgFill: true,
   },
   {
     id: "green",
     inherited: false,
-    localImg: "/images/p5/humans/green.jpg",
-    remoteImg:
-      "https://images.pexels.com/photos/15602819/pexels-photo-15602819.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop",
+    localImg: "/images/p6/green.jpg",
+    remoteImg: "/images/p6/green.jpg",
     imagePosition: "50% 42%",
   },
   {
@@ -199,14 +205,17 @@ export default function P5GeneticsHumans() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
   const [selectedTraits, setSelectedTraits] = useState({});
+  const [touchedTraits, setTouchedTraits] = useState({});
   const [showResults, setShowResults] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
   const labels = LANG_BUTTON_TEXT[lang];
   const hasAnswers = Object.keys(selectedTraits).length > 0;
+  const selectedCount = Object.keys(selectedTraits).length;
   const withVersion = (url) => `${url}${url.includes("?") ? "&" : "?"}v=${IMAGE_VERSION}`;
 
   const toggleTrait = (traitId) => {
+    setTouchedTraits((prev) => ({ ...prev, [traitId]: true }));
     setSelectedTraits((prev) => {
       const next = { ...prev };
       if (next[traitId]) {
@@ -224,6 +233,7 @@ export default function P5GeneticsHumans() {
 
   const resetAnswers = () => {
     setSelectedTraits({});
+    setTouchedTraits({});
     setShowResults(false);
     setShowSummaryModal(false);
   };
@@ -233,14 +243,22 @@ export default function P5GeneticsHumans() {
     setShowSummaryModal(true);
   };
 
+  const unansweredItems = showResults
+    ? TRAITS.filter((trait) => !touchedTraits[trait.id])
+    : [];
+
   const wrongItems = showResults
     ? TRAITS.filter((trait) => {
+        if (!touchedTraits[trait.id]) {
+          return false;
+        }
         const selected = Boolean(selectedTraits[trait.id]);
         return selected !== trait.inherited;
       })
     : [];
 
-  const correctCount = showResults ? TRAITS.length - wrongItems.length : 0;
+  const correctCount = showResults ? TRAITS.length - wrongItems.length - unansweredItems.length : 0;
+  const scoreDisplay = showResults ? `${correctCount}/${TRAITS.length}` : `-/${TRAITS.length}`;
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -249,6 +267,10 @@ export default function P5GeneticsHumans() {
           <h1 translate="no">{t.title}</h1>
 
           <div className="p5gh-topic" translate="no">{t.topic}</div>
+          <div className="p5gh-score-box" aria-live="polite">
+            <p className="p5gh-score-main">{t.scoreLabel}: {scoreDisplay}</p>
+            <p className="p5gh-score-sub">{t.selectedLabel}: {selectedCount}/{TRAITS.length}</p>
+          </div>
 
           <div className="p5gh-content">
             <p className="p5gh-select-hint" translate="no">
@@ -381,13 +403,19 @@ export default function P5GeneticsHumans() {
               <p className="p5gh-summary-score">
                 {t.score}: {correctCount}/{TRAITS.length}
               </p>
+              {unansweredItems.length ? (
+                <p className="p5gh-summary-wrong">
+                  {t.unansweredItems}: {unansweredItems.length}
+                </p>
+              ) : null}
               {wrongItems.length ? (
                 <p className="p5gh-summary-wrong">
                   {t.wrongItems}: {wrongItems.map((trait) => t.traits[trait.id]).join(", ")}
                 </p>
-              ) : (
+              ) : null}
+              {!wrongItems.length && !unansweredItems.length ? (
                 <p className="p5gh-summary-correct">{t.allCorrect}</p>
-              )}
+              ) : null}
               <button type="button" className="p5gh-modal-close" onClick={() => setShowSummaryModal(false)}>
                 {t.close}
               </button>

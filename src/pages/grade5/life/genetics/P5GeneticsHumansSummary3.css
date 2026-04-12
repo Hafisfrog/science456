@@ -106,12 +106,8 @@
   box-sizing: border-box;
   padding-right: 180px;
   border-radius: 32px;
-  background:
-    radial-gradient(34% 28% at 18% 18%, rgba(221, 248, 213, 0.44) 0 58%, transparent 59%),
-    radial-gradient(36% 28% at 72% 18%, rgba(226, 246, 216, 0.38) 0 58%, transparent 59%),
-    radial-gradient(58% 40% at 48% 72%, rgba(206, 238, 190, 0.46) 0 58%, transparent 59%),
-    linear-gradient(180deg, rgba(254, 255, 252, 0.36), rgba(240, 252, 228, 0.24));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  background: none;
+  box-shadow: none;
   overflow: hidden;
 }
 
@@ -184,10 +180,10 @@
 
 .p5ghs3-bubble {
   position: absolute;
-  right: 10px;
-  top: 152px;
-  width: 158px;
-  min-height: 158px;
+  right: 8px;
+  top: 142px;
+  width: 196px;
+  min-height: 196px;
   border-radius: 999px;
   border: 2px solid #d97706;
   background: rgba(255, 251, 235, 0.92);
@@ -201,7 +197,7 @@
 
 .p5ghs3-bubble strong {
   white-space: nowrap;
-  font-size: 16px;
+  font-size: 22px;
   line-height: 1.15;
   text-align: center;
   display: block;
@@ -211,7 +207,7 @@
 .p5ghs3-bubble span {
   margin-top: 8px;
   white-space: pre-line;
-  font-size: 11px;
+  font-size: 18px;
   line-height: 1.35;
   text-align: center;
   display: block;

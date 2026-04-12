@@ -102,7 +102,7 @@ export default function P6ElectricCircuitVocab() {
                           onClick={() => onSpeak(row.en, "en-GB")}
                           type="button"
                         >
-                          GB
+                          EN
                         </button>
                       </div>
                     </td>

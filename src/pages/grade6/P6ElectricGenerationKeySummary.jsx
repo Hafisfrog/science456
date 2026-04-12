@@ -90,29 +90,45 @@ export default function P6ElectricGenerationKeySummary() {
             <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
               <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level0Label}</p>
               <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
-                <span className="absolute left-1/2 top-1/2 h-[68px] w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_30%_25%,#ffd3d3,#ea3b3b_45%,#b91c1c_74%,#7f1d1d)] shadow-[inset_0_8px_14px_rgba(255,255,255,0.22),inset_0_-10px_14px_rgba(0,0,0,0.24)]" />
+                <img
+                  src="/images/p6/equipment/lukpong-cut.png"
+                  alt="balloon"
+                  className="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[76px] w-[76px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.22)]"
+                />
               </div>
             </article>
 
             <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
               <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level2Label}</p>
               <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
-                <span className="absolute left-1/2 top-1/2 h-[68px] w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_30%_25%,#ffd3d3,#ea3b3b_45%,#b91c1c_74%,#7f1d1d)] shadow-[inset_0_8px_14px_rgba(255,255,255,0.22),inset_0_-10px_14px_rgba(0,0,0,0.24)]" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[43%] top-[54px] h-[13px] w-auto rotate-[8deg] opacity-86" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[45%] top-[62px] h-[13px] w-auto rotate-[-14deg] opacity-82" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[49%] top-[68px] h-[13px] w-auto rotate-[16deg] opacity-80" />
+                <img
+                  src="/images/p6/equipment/lukpong-cut.png"
+                  alt="balloon"
+                  className="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[76px] w-[76px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.22)]"
+                />
+                <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[26px] w-[24px] -translate-x-1/2 -translate-y-1/2">
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[4px] top-[2px] h-[11px] w-auto rotate-[8deg] opacity-86" />
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[8px] top-[9px] h-[11px] w-auto rotate-[-14deg] opacity-82" />
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[12px] top-[13px] h-[11px] w-auto rotate-[16deg] opacity-80" />
+                </div>
               </div>
             </article>
 
             <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
               <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level5Label}</p>
               <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
-                <span className="absolute left-1/2 top-1/2 h-[68px] w-[68px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_30%_25%,#ffd3d3,#ea3b3b_45%,#b91c1c_74%,#7f1d1d)] shadow-[inset_0_8px_14px_rgba(255,255,255,0.22),inset_0_-10px_14px_rgba(0,0,0,0.24)]" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[43%] top-[50px] h-[13px] w-auto rotate-[8deg] opacity-90" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[45%] top-[54px] h-[13px] w-auto rotate-[-14deg] opacity-88" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[48%] top-[62px] h-[13px] w-auto rotate-[18deg] opacity-86" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[43%] top-[66px] h-[13px] w-auto rotate-[-10deg] opacity-84" />
-                <img src="/images/p6/equipment/tissue-real.svg" alt="" className="pointer-events-none absolute left-[49%] top-[72px] h-[13px] w-auto rotate-[6deg] opacity-82" />
+                <img
+                  src="/images/p6/equipment/lukpong-cut.png"
+                  alt="balloon"
+                  className="pointer-events-none absolute left-1/2 top-1/2 z-[1] h-[76px] w-[76px] -translate-x-1/2 -translate-y-1/2 object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.22)]"
+                />
+                <div className="pointer-events-none absolute left-1/2 top-1/2 z-[2] h-[30px] w-[28px] -translate-x-1/2 -translate-y-1/2">
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[3px] top-[1px] h-[11px] w-auto rotate-[8deg] opacity-90" />
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[8px] top-[4px] h-[11px] w-auto rotate-[-14deg] opacity-88" />
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[13px] top-[10px] h-[11px] w-auto rotate-[18deg] opacity-86" />
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[5px] top-[14px] h-[11px] w-auto rotate-[-10deg] opacity-84" />
+                  <img src="/images/p6/equipment/tissue-real.svg" alt="" className="absolute left-[12px] top-[18px] h-[11px] w-auto rotate-[6deg] opacity-82" />
+                </div>
               </div>
             </article>
           </div>

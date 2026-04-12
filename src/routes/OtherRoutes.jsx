@@ -81,7 +81,6 @@ import P6ElectricForceEffect from "../pages/grade6/P6ElectricForceEffect";
 import P6ElectricForceEffectSteps from "../pages/grade6/P6ElectricForceEffectSteps";
 import P6ElectricForceEffectSim from "../pages/grade6/P6ElectricForceEffectSim";
 import P6ElectricForceEffectResult from "../pages/grade6/P6ElectricForceEffectResult";
-import P6ElectricForceEffectSummary from "../pages/grade6/P6ElectricForceEffectSummary";
 import P6ElectricForceEffectKeySummary from "../pages/grade6/P6ElectricForceEffectKeySummary";
 import P6ElectricForceRecap from "../pages/grade6/P6ElectricForceRecap";
 import P6ElectricCircuitObjectives from "../pages/grade6/P6ElectricCircuitObjectives";
@@ -225,7 +224,7 @@ export default function OtherRoutes() {
       <Route path="/p6/experiment/electric-force-effect/steps" element={<P6ElectricForceEffectSteps />} />
       <Route path="/p6/experiment/electric-force-effect/sim" element={<P6ElectricForceEffectSim />} />
       <Route path="/p6/experiment/electric-force-effect/result" element={<P6ElectricForceEffectResult />} />
-      <Route path="/p6/experiment/electric-force-effect/summary" element={<P6ElectricForceEffectSummary />} />
+      <Route path="/p6/experiment/electric-force-effect/summary" element={<P6ElectricForceEffectResult />} />
       <Route path="/p6/experiment/electric-force-effect/key-summary" element={<P6ElectricForceEffectKeySummary />} />
 
       <Route path="*" element={<Navigate to="/" replace />} />

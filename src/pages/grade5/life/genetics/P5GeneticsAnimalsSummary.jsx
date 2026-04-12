@@ -66,17 +66,11 @@ export default function P5GeneticsAnimalsSummary() {
         </div>
 
         <section className="relative z-10 mx-auto max-w-5xl">
-          <h1 className="mb-5 text-4xl font-extrabold text-slate-900">{t.title}</h1>
+          <h1 className="mb-5 text-4xl font-extrabold tracking-tight text-slate-900">{t.title}</h1>
 
-          <div className="rounded-[28px] border-4 border-black bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(252,252,248,0.92))] p-6 shadow-[0_18px_34px_rgba(73,88,46,0.18)] backdrop-blur-sm">
-            <div className="mb-4 flex justify-center gap-8" aria-hidden="true">
-              <span className="h-3 w-24 rounded border-4 border-black bg-white" />
-              <span className="h-3 w-24 rounded border-4 border-black bg-white" />
-              <span className="h-3 w-24 rounded border-4 border-black bg-white" />
-            </div>
-
-            <p className="text-3xl leading-relaxed">{t.p1}</p>
-            <ul className="my-3 list-disc pl-8 text-3xl leading-relaxed">
+          <div className="relative rounded-[30px] border border-emerald-400/90 bg-[linear-gradient(180deg,rgba(187,247,208,0.98)_0%,rgba(220,252,231,0.97)_34%,rgba(255,255,255,0.98)_70%,rgba(255,255,255,0.98)_100%)] px-7 pb-7 pt-6 shadow-[0_22px_40px_rgba(21,128,61,0.22)] backdrop-blur-sm max-[1180px]:px-5 max-[1180px]:pb-5 max-[1180px]:pt-5">
+            <p className="text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">{t.p1}</p>
+            <ul className="my-3 list-disc pl-8 text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">
               <li>
                 <strong>{t.father}</strong> {t.fatherDesc}
               </li>
@@ -84,10 +78,8 @@ export default function P5GeneticsAnimalsSummary() {
                 <strong>{t.mother}</strong> {t.motherDesc}
               </li>
             </ul>
-            <p className="text-3xl leading-relaxed">{t.p2}</p>
-            <p className="mt-3 text-3xl font-bold text-slate-900">
-              {"\uD83D\uDC49"} {t.result}
-            </p>
+            <p className="text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">{t.p2}</p>
+            <p className="mt-3 text-3xl font-extrabold text-slate-900 max-[1180px]:text-2xl">{t.result}</p>
           </div>
         </section>
 

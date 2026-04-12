@@ -73,12 +73,12 @@ const RESULTS = {
 };
 
 const PAPER_POSITIONS = [
-  { left: 0, top: 18, rotate: -12 },
+  { left: 6, top: 16, rotate: -12 },
   { left: 14, top: 8, rotate: 10 },
-  { left: 28, top: 20, rotate: -6 },
-  { left: 42, top: 6, rotate: 16 },
-  { left: 56, top: 18, rotate: -18 },
-  { left: 70, top: 10, rotate: 8 },
+  { left: 20, top: 18, rotate: -6 },
+  { left: 24, top: 10, rotate: 16 },
+  { left: 10, top: 22, rotate: -18 },
+  { left: 18, top: 24, rotate: 8 },
 ];
 
 const readCompletedTrials = () => {
@@ -171,39 +171,22 @@ export default function P6ElectricGenerationSummary() {
                   key={`row-${index + 1}`}
                 >
                   <div className="flex items-center gap-4 pl-[10px] md:justify-start">
-                    <div
-                      className="relative h-[52px] w-[52px] rounded-full"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 30% 30%, #ffd7b0 0%, #f3a86e 45%, #e18a54 100%)",
-                        boxShadow: "inset -5px -8px 12px rgba(102, 52, 25, 0.35)",
-                      }}
-                    >
-                      <span className="absolute bottom-[5px] right-[5px] h-[10px] w-[10px] rounded-full bg-[#e18a54]" />
-                    </div>
                     <div>{t.balloonPaper}</div>
                   </div>
 
                   <div className="text-center">{row.outcome[lang] || row.outcome.th}</div>
                   <div className="text-center">{row.time}</div>
 
-                  <div className="relative grid h-[92px] place-items-center">
-                    <div
-                      className="relative h-[66px] w-[66px] rounded-full"
-                      style={{
-                        background:
-                          "radial-gradient(circle at 30% 25%, #ffd3d3, #ea3b3b 45%, #b91c1c 74%, #7f1d1d)",
-                        boxShadow:
-                          "inset 0 8px 14px rgba(255, 255, 255, 0.22), inset 0 -12px 18px rgba(0, 0, 0, 0.28), 0 10px 18px rgba(15, 23, 42, 0.18)",
-                      }}
-                    >
-                      <span className="absolute inset-[10%] rounded-full bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.6),transparent_60%)]" />
-                      <span className="absolute -top-[7px] left-1/2 h-[11px] w-[11px] -translate-x-1/2 rounded-[4px] bg-[#991b1b] shadow-[0_4px_8px_rgba(15,23,42,0.2)]" />
-                    </div>
+                  <div className="relative grid h-[110px] place-items-center">
+                    <img
+                      src="/images/p6/equipment/lukpong-cut.png"
+                      alt="balloon"
+                      className="h-[84px] w-[84px] object-contain drop-shadow-[0_10px_18px_rgba(15,23,42,0.22)]"
+                    />
 
                     {paperCount > 0 && (
                       <div
-                        className="absolute top-[20px] left-1/2 z-[2] h-[40px] w-[64px]"
+                        className="absolute top-[32px] left-1/2 z-[3] h-[36px] w-[42px]"
                         style={getPaperContainerStyle(row.intensity)}
                       >
                         {PAPER_POSITIONS.slice(0, paperCount).map((paper, paperIdx) => (

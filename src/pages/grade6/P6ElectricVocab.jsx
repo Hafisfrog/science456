@@ -129,7 +129,7 @@ export default function P6ElectricVocab() {
                           onClick={() => onSpeak(row.en, "en-GB")}
                           type="button"
                         >
-                          GB
+                          EN
                         </button>
                       </div>
                     </td>

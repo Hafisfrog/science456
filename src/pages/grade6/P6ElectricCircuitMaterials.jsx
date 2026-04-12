@@ -232,17 +232,11 @@ export default function P6ElectricCircuitMaterials() {
     >
 
       <div className="mx-auto flex max-w-[1380px] flex-col gap-3">
-
-        <div className="text-[32px] font-black">
-          {t.title}
-        </div>
+        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08]">
+          {t.equipmentHeading}
+        </h1>
 
         <div className="rounded-[34px] bg-sky-200 p-6">
-
-          <div className="mb-4 text-xl font-black">
-            {t.equipmentHeading}
-          </div>
-
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
 
             {equipmentData.map((item) => (

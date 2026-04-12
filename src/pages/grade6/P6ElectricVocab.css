@@ -129,38 +129,38 @@
 
 .p6-vocab-table .col-th {
   width: 22%;
-  background: #d6e2f0;
+  background: #eaf4ff;
 }
 
 .p6-vocab-table .col-ms {
   width: 26%;
-  background: #f3e7be;
+  background: #fff3d6;
 }
 
 .p6-vocab-table .col-en {
   width: 28%;
-  background: #ebd4e5;
+  background: #f9d9ec;
 }
 
 .p6-vocab-table .col-voice {
   width: 24%;
-  background: #e2f1e7;
+  background: #ecfdf5;
 }
 
 .p6-vocab-table thead .col-th {
-  background: #aac2e0;
+  background: #a7c7e7;
 }
 
 .p6-vocab-table thead .col-ms {
-  background: #eed47f;
+  background: #f6cc6b;
 }
 
 .p6-vocab-table thead .col-en {
-  background: #b992bc;
+  background: #c084b3;
 }
 
 .p6-vocab-table thead .col-voice {
-  background: #c9e6d3;
+  background: #d1fae5;
 }
 
 .p6-vocab-voice-group {
@@ -189,15 +189,15 @@
 }
 
 .p6-vocab-voice-chip.th {
-  background: #dce6f8;
+  background: #dbeafe;
 }
 
 .p6-vocab-voice-chip.ms {
-  background: #faebaa;
+  background: #fde68a;
 }
 
 .p6-vocab-voice-chip.en {
-  background: #e7cde3;
+  background: #fbcfe8;
 }
 
 .p6-vocab-actions {

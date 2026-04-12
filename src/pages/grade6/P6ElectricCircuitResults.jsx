@@ -83,7 +83,7 @@ function CircuitSummaryVisual({ cells }) {
     <div className="relative mx-auto mt-5 h-[150px] w-full max-w-[560px]">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 560 150" aria-hidden="true">
         <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
-        <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#2563eb" strokeWidth="5" fill="none" strokeLinecap="round" />
+        <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#0b1020" strokeWidth="5" fill="none" strokeLinecap="round" />
         <path d="M210 90 C 258 122, 302 134, 322 130" stroke="#111827" strokeOpacity="0.2" strokeWidth="8" fill="none" strokeLinecap="round" />
         <path d="M210 90 C 258 122, 302 134, 322 130" stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
         <path d="M356 130 C 404 142, 444 134, 436 92" stroke="#111827" strokeOpacity="0.2" strokeWidth="8" fill="none" strokeLinecap="round" />

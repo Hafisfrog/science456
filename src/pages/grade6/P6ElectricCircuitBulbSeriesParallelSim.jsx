@@ -156,9 +156,9 @@ function WirePath({ d }) {
 function BlueWirePath({ d }) {
   return (
     <>
-      <path d={d} fill="none" stroke="rgba(30, 64, 175, 0.25)" strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke="#1d4ed8" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke="rgba(191, 219, 254, 0.8)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="rgba(2, 6, 23, 0.26)" strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="#020617" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="rgba(148, 163, 184, 0.55)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
     </>
   );
 }
@@ -321,21 +321,6 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
     >
       <div className="p6-circuit-bsp-sim-stage relative z-[1] mx-auto">
         <div className="p6-circuit-bsp-sim-side p6-circuit-bsp-sim-side-left">
-          <button
-            className="p6-circuit-bsp-sim-back"
-            onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/steps")}
-            type="button"
-            aria-label={t.back}
-            title={t.back}
-          >
-            ← {t.back}
-          </button>
-
-          <div className="p6-circuit-bsp-sim-titlecard">
-            <div className="p6-circuit-bsp-sim-badge">{t.badge}</div>
-            <h1 className="p6-circuit-bsp-sim-title">{t.title}</h1>
-          </div>
-
           <div className="p6-circuit-bsp-sim-selector">
             <div className="p6-circuit-bsp-sim-mode-tabs is-side">
               <button

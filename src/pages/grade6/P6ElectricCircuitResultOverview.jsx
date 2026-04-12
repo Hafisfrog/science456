@@ -99,7 +99,7 @@ function CircuitThumb({ cells }) {
     <div className="relative h-[118px] w-[360px]">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 360 118" aria-hidden="true">
         <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#111827" strokeOpacity="0.25" strokeWidth="6" fill="none" strokeLinecap="round" />
-        <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#2563eb" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+        <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#0b1020" strokeWidth="3.5" fill="none" strokeLinecap="round" />
 
         <path d="M138 72 C 164 90, 190 98, 203 96" stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="round" />
         <path d="M138 72 C 164 90, 190 98, 203 96" stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="round" />

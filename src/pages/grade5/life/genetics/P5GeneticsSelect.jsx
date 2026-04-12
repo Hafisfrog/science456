@@ -13,7 +13,7 @@ const PAGE_TEXT = {
   th: {
     chip: "\u0e0a\u0e31\u0e49\u0e19\u0e1b\u0e23\u0e30\u0e16\u0e21\u0e28\u0e36\u0e01\u0e29\u0e32\u0e1b\u0e35\u0e17\u0e35\u0e48 5",
     title: "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21",
-    back: "\u2190 \u0e40\u0e25\u0e37\u0e2d\u0e01\u0e0a\u0e31\u0e49\u0e19",
+    back: "<< \u0e40\u0e25\u0e37\u0e2d\u0e01\u0e0a\u0e31\u0e49\u0e19",
     experiments: [
       {
         id: 6,
@@ -50,7 +50,7 @@ const PAGE_TEXT = {
   en: {
     chip: "Grade 5",
     title: "Genetic Traits",
-    back: "<- Back to Grades",
+    back: "<< Back to Grades",
     experiments: [
       {
         id: 6,
@@ -84,7 +84,7 @@ const PAGE_TEXT = {
   ms: {
     chip: "Tahun 5",
     title: "Ciri Genetik",
-    back: "<- Kembali ke Pilih Tahun",
+    back: "<< Kembali ke Pilih Tahun",
     experiments: [
       {
         id: 6,
@@ -152,11 +152,18 @@ export default function P5GeneticsSelect() {
 
         <section className="p5gen-card-grid">
           {t.experiments.map((exp) => (
-            <button
+            <div
               key={exp.id}
-              type="button"
               className={`p5gen-card ${exp.tone}`}
+              role="button"
+              tabIndex={0}
               onClick={() => navigate(exp.path)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  navigate(exp.path);
+                }
+              }}
             >
               <div className="p5gen-card-media">
                 <img
@@ -181,7 +188,7 @@ export default function P5GeneticsSelect() {
                 <span className="p5gen-card-kicker notranslate" translate="no">{exp.title}</span>
                 <span className="p5gen-card-title notranslate" translate="no">{exp.label}</span>
               </div>
-            </button>
+            </div>
           ))}
         </section>
       </main>
