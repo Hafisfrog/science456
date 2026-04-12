@@ -294,13 +294,14 @@ export default function P5FoodChainMaterials() {
         <FoodChainLanguageSwitcher
           value={activeLang}
           onChange={setActiveLang}
-          labels={LANGUAGE_LABELS[activeLang] ?? LANGUAGE_LABELS.th}
+          labels={LANGUAGE_LABELS.th}
         />
       </div>
       <div className="absolute bottom-8 right-10">
         <FoodChainNavButtons
           backLabel={t.back}
           nextLabel={t.next}
+          nextArrow={"\u00BB"}
           onBack={() => navigate("/p5/life/foodchain/scene")}
           onNext={() => navigate("/p5/life/foodchain/steps")}
         />

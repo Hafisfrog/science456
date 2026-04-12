@@ -127,7 +127,7 @@ export default function P4LightIntro() {
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
-          labels={LANGUAGE_LABELS[language]}
+          labels={LANGUAGE_LABELS.th}
         />
       </div>
 

@@ -151,6 +151,7 @@ export default function P5FoodChainIntro() {
           <FoodChainNavButtons
             backLabel={content.back}
             nextLabel={content.next}
+            nextArrow={"\u00BB"}
             onBack={() => navigate("/p5/life")}
             onNext={() => navigate(nextPath)}
           />

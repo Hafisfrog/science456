@@ -182,12 +182,12 @@ const CONSUMER_VISUALS = {
     { type: "img", value: "/images/p5/tag.png" },
   ],
   omnivore: [
-    { type: "emoji", value: "🐔" },
-    { type: "emoji", value: "🦆" },
-    { type: "emoji", value: "🐷" },
+    { type: "img", value: "/images/p5/ayam.png" },
+    { type: "img", value: "/images/p5/pep.png" },
+    { type: "img", value: "/images/p5/mu.png" },
   ],
   carnivore: [
-    { type: "emoji", value: "🦁" },
+    { type: "img", value: "/images/p5/sing.png" },
     { type: "img", value: "/images/p5/snack.png" },
     { type: "img", value: "/images/p5/y.png" },
   ],
@@ -512,11 +512,16 @@ export default function P5FoodChainsss() {
         </div>
 
         <div className="mt-4 flex flex-col gap-3 pb-2 lg:mt-5 lg:flex-row lg:items-end lg:justify-between">
-          <FoodChainLanguageSwitcher value={activeLang} onChange={setActiveLang} />
+          <FoodChainLanguageSwitcher
+            value={activeLang}
+            onChange={setActiveLang}
+            labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+          />
 
           <FoodChainNavButtons
             backLabel={content.back}
             nextLabel={content.next}
+            nextArrow={"\u00BB"}
             onBack={() => navigate(-1)}
             onNext={() => navigate("/p5/life")}
           />

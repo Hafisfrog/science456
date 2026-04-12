@@ -574,11 +574,11 @@ export default function P4LightExperiment() {
         pointerEvents: "none",
       }
     : { position: "absolute", inset: 0, pointerEvents: "none" };
-  const torchCharacterWidth = isMobile ? (isTight ? 98 : 114) : 156;
+  const torchCharacterWidth = isMobile ? (isTight ? 112 : 130) : 182;
   const torchLeft = isMobile ? (isTight ? 108 : 130) : 286;
   const torchTopPercent = isMobile ? (isTight ? 56 : 55) : 54;
-  const torchToolWidth = isMobile ? (isTight ? 82 : 88) : 98;
-  const torchToolHeight = isMobile ? (isTight ? 42 : 45) : 52;
+  const torchToolWidth = isMobile ? (isTight ? 92 : 98) : 112;
+  const torchToolHeight = isMobile ? (isTight ? 48 : 52) : 60;
   const torchToolRight = isMobile ? (isTight ? -18 : -20) : -22;
   const beamSourceX = torchLeft + torchCharacterWidth + torchToolRight + torchToolWidth - 11;
   const torchShiftX = shine ? Math.min(14, torchRotation * 0.08) : 0;
@@ -605,7 +605,7 @@ export default function P4LightExperiment() {
           width: torchToolWidth,
           height: torchToolHeight,
           right: -18,
-          top: 34,
+          top: 38,
           transform: `rotate(${(-12 + torchRotation * 0.06).toFixed(1)}deg)`,
         }
       : {
@@ -613,7 +613,7 @@ export default function P4LightExperiment() {
           width: torchToolWidth,
           height: torchToolHeight,
           right: -20,
-          top: 40,
+          top: 45,
           transform: `rotate(${(-10 + torchRotation * 0.06).toFixed(1)}deg)`,
         }
     : {
@@ -621,7 +621,7 @@ export default function P4LightExperiment() {
         width: torchToolWidth,
         height: torchToolHeight,
         right: -22,
-        top: 52,
+        top: 58,
         transform: `rotate(${(-10 + torchRotation * 0.06).toFixed(1)}deg)`,
       };
   const torchGlowStyle = isMobile
@@ -634,7 +634,7 @@ export default function P4LightExperiment() {
       ? { width: 140, height: 88 }
       : { width: 170, height: 104 }
     : { width: 210, height: 128 };
-  const torchOpenButtonTopOffset = isMobile ? (isTight ? 86 : 98) : 132;
+  const torchOpenButtonTopOffset = isMobile ? (isTight ? 100 : 114) : 150;
   const torchButtonCenterX = torchLeft + torchCharacterWidth * 0.52;
   const torchButtonSideOffset = isTight ? 42 : isMobile ? 48 : 54;
   const torchOpenBtnStyle = {

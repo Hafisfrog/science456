@@ -61,7 +61,7 @@ export default function P4LightObjective() {
   const [lang, setLang] = useState("th");
   const audioRef = useRef(null);
   const t = CONTENT[lang] ?? CONTENT.th;
-  const labels = LANG_LABELS[lang] ?? LANG_LABELS.th;
+  const labels = LANG_LABELS.th;
   const speakLabel = SPEAK_LABELS[lang] ?? SPEAK_LABELS.th;
   const [obj1, obj2] = t.objectives;
 

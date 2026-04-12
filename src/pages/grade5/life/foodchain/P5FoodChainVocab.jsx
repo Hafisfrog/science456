@@ -333,6 +333,7 @@ export default function P5FoodChainVocab() {
           <FoodChainNavButtons
             backLabel="ย้อนกลับ"
             nextLabel="ไปต่อ"
+            nextArrow={"\u00BB"}
             onBack={() => navigate("/p5/life/foodchain")}
             onNext={() => navigate("/p5/life/foodchain/scene")}
           />

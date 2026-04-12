@@ -121,7 +121,7 @@ export default function P5FoodChainSteps() {
         <FoodChainLanguageSwitcher
           value={activeLang}
           onChange={setActiveLang}
-          labels={t.langLabels}
+          labels={PAGE_COPY.th.langLabels}
         />
       </div>
 
@@ -143,7 +143,7 @@ export default function P5FoodChainSteps() {
             onClick={() => navigate("/p5/life/foodchain/materials")}
             className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-white/95 px-8 py-3 text-[18px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.22)] active:translate-y-px"
           >
-            <span aria-hidden="true">←</span>
+            <span aria-hidden="true">{"\u00AB"}</span>
             <span>{t.back}</span>
           </button>
 
@@ -153,7 +153,7 @@ export default function P5FoodChainSteps() {
             className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#08c95a] px-8 py-3 text-[18px] font-black text-white shadow-[0_14px_28px_rgba(8,201,90,.24)] transition duration-150 hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_18px_34px_rgba(8,201,90,.3)] active:translate-y-px"
           >
             <span>{t.nextButton}</span>
-            <span aria-hidden="true">→</span>
+            <span aria-hidden="true">{"\u00BB"}</span>
           </button>
         </div>
       </div>
