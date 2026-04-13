@@ -38,8 +38,8 @@ export default function P4GravitySim1() {
   const t = copy[lang];
   const langLabels = {
     th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
-    en: { th: "Thai", en: "English", ms: "Malay" },
-    ms: { th: "Thai", en: "English", ms: "Malay" },
+    en: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    ms: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   };
 
   const stopAudio = () => {

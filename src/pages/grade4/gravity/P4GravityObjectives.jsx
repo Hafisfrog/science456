@@ -30,9 +30,9 @@ export default function P4GravityObjectives() {
         back: "Back",
         next: "Next",
         speak: "Listen",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Malay",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
       ms: {
         grade: "Tahun 4",
@@ -43,9 +43,9 @@ export default function P4GravityObjectives() {
         back: "Kembali",
         next: "Seterusnya",
         speak: "Dengar",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Melayu",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
     };
   }, []);

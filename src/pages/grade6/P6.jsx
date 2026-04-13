@@ -92,19 +92,19 @@ export default function P6() {
 
       {/* Lesson Cards */}
       <section className="mx-auto mt-3 flex w-full flex-1 items-start justify-center">
-        <div className="grid w-full max-w-[1160px] grid-cols-1 justify-items-center gap-6 lg:grid-cols-2 lg:gap-7">
+        <div className="grid w-full max-w-[1280px] grid-cols-1 justify-items-center gap-6 lg:grid-cols-2 lg:gap-7">
 
           {LESSONS.map((lesson) => (
 
             <div
               key={lesson.id}
-              className="group flex h-[clamp(360px,45vh,430px)] w-[min(540px,40vw)] max-w-[94vw] flex-col overflow-hidden rounded-[32px] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
+              className="group flex h-[clamp(400px,52vh,480px)] w-[min(600px,94vw)] max-w-[94vw] flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_16px_34px_rgba(33,53,95,0.15)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)] lg:w-[min(600px,43vw)]"
             >
 
               {/* Image */}
               <div
                 onClick={() => navigate(lesson.to)}
-                className="flex h-[clamp(220px,28vh,270px)] items-center justify-center overflow-hidden bg-slate-200 px-2 pt-2 pb-1 cursor-pointer"
+                className="flex h-[clamp(255px,34vh,315px)] cursor-pointer items-center justify-center overflow-hidden bg-slate-200"
               >
                 <img
                   src={lesson.image}
@@ -114,18 +114,21 @@ export default function P6() {
               </div>
 
               {/* Title */}
-              <div className="flex min-h-[92px] items-center justify-center gap-3 px-5 py-3 text-center">
+              <div className="flex min-h-[92px] flex-1 items-center justify-center gap-3 px-5 py-3 text-center">
 
-                <h2 className="text-[clamp(28px,2.4vw,56px)] font-extrabold leading-[1.15] text-slate-900">
+                <h2 className="text-[clamp(28px,2.4vw,44px)] font-extrabold leading-[1.15] text-slate-900">
                   {lesson.title[lang]}
                 </h2>
 
-                {/* <button
+                <button
+                  type="button"
                   onClick={() => speakText(lesson.title[lang], voiceMap[lang])}
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-xl shadow hover:bg-blue-200"
+                  className="inline-grid h-14 w-14 shrink-0 place-items-center rounded-full bg-sky-100 text-[26px] text-sky-700 shadow-[0_10px_22px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-200"
+                  aria-label={lesson.title[lang]}
+                  title={lesson.title[lang]}
                 >
-                  🔊
-                </button> */}
+                  {"\u{1F50A}"}
+                </button>
 
               </div>
 

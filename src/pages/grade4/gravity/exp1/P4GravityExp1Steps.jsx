@@ -36,9 +36,9 @@ export default function P4GravityExp1Steps() {
         back: "Back",
         next: "Next",
         speak: "Listen",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       ms: {
         topic: "Eksperimen 1: Kesan Graviti",
@@ -50,9 +50,9 @@ export default function P4GravityExp1Steps() {
         back: "Kembali",
         next: "Seterusnya",
         speak: "Dengar",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
     };
   }, []);
