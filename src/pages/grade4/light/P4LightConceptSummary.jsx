@@ -419,7 +419,7 @@ export default function P4LightConceptSummary() {
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
-          labels={ui.lang}
+          labels={UI.th.lang}
         />
 
         {/* <button

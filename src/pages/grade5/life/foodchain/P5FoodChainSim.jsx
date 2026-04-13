@@ -178,27 +178,24 @@ export default function P5FoodChainSim() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:px-8">
         <div className="rounded-[32px] border border-emerald-50/80 bg-gradient-to-br from-white/62 via-emerald-50/52 to-lime-50/58 p-5 shadow-[0_22px_60px_rgba(15,23,42,0.14)] backdrop-blur-md sm:p-7">
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <div>
-                <div className="inline-flex items-center rounded-[28px] bg-gradient-to-r from-emerald-500 to-green-600 px-8 py-4 text-2xl font-extrabold text-white shadow-xl sm:text-3xl">
-                  🌟 {ui.title} 🌟
-                </div>
+          <div className="grid gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center md:gap-6">
+            <div className="md:justify-self-start">
+              <div className="inline-flex items-center rounded-[28px] bg-gradient-to-r from-emerald-500 to-green-600 px-8 py-4 text-2xl font-extrabold text-white shadow-xl sm:text-3xl">
+                {"\uD83C\uDF1F"} {ui.title} {"\uD83C\uDF1F"}
               </div>
+            </div>
 
-              <div className="rounded-[28px] border border-emerald-200/80 bg-gradient-to-br from-white/75 to-emerald-100/70 px-8 py-5 text-center shadow-sm backdrop-blur-sm">
+            <div className="md:justify-self-center">
+              <div className="rounded-[24px] border border-sky-200/80 bg-gradient-to-br from-white/80 to-sky-50/70 px-7 py-4 text-center shadow-sm backdrop-blur-sm">
                 <div className="text-sm font-semibold text-sky-700">{averageScoreLabel}</div>
-                <div className="hidden text-sm font-semibold text-sky-700">
-                  {language === "en"
-                    ? "Average Score"
-                    : language === "ms"
-                      ? "Purata Markah"
-                      : "เธเธฐเนเธเธเน€เธเธฅเธตเนเธข"}
-                </div>
                 <span className="mt-1 block text-2xl font-black text-sky-800 sm:text-3xl">
                   {averageScore.toFixed(1)}
                 </span>
-                <div className="mx-auto my-3 h-px w-full max-w-[8rem] bg-emerald-200/80" />
+              </div>
+            </div>
+
+            <div className="md:justify-self-end">
+              <div className="rounded-[28px] border border-emerald-200/80 bg-gradient-to-br from-white/75 to-emerald-100/70 px-8 py-5 text-center shadow-sm backdrop-blur-sm">
                 <div className="text-sm font-semibold text-emerald-700">{ui.score}</div>
                 <span className="mt-1 block text-3xl font-black text-emerald-800 sm:text-4xl">
                   {score} / {totalPossibleScore}
@@ -207,7 +204,6 @@ export default function P5FoodChainSim() {
             </div>
           </div>
         </div>
-
         <div className="mt-8 space-y-6">
           {ANSWERS.map((answer, index) => {
             const studentAnswer = studentChains[index] || [];
@@ -311,6 +307,7 @@ export default function P5FoodChainSim() {
         <FoodChainNavButtons
           backLabel={ui.back}
           nextLabel={ui.next}
+          nextArrow={"\u00BB"}
           onBack={() => navigate(-1)}
           onNext={() => navigate("/p5/life/foodchain/summary")}
         />

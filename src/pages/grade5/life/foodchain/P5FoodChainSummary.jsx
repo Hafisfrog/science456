@@ -84,7 +84,7 @@ export default function P5FoodChainSummary() {
 
   const content = CONTENT[activeLang] ?? CONTENT.th;
   const voiceLabel = VOICE_LABEL[activeLang] ?? VOICE_LABEL.th;
-  const languageLabels = LANGUAGE_LABELS[activeLang] ?? LANGUAGE_LABELS.th;
+  const languageLabels = LANGUAGE_LABELS.th;
 
   const speakText = (text) => {
     if (typeof window === "undefined" || !window.speechSynthesis || !text) {
@@ -148,6 +148,7 @@ export default function P5FoodChainSummary() {
         <FoodChainNavButtons
           backLabel={content.back}
           nextLabel={content.next}
+          nextArrow={"\u00BB"}
           onBack={() => navigate(-1)}
           onNext={() => navigate("/p5/life/foodchain/summary2")}
         />

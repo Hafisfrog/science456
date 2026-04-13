@@ -46,6 +46,7 @@ export function FoodChainNavButtons({
   nextLabel,
   onBack,
   onNext,
+  nextArrow = "\u2192",
   className = "",
 }) {
   return (
@@ -55,7 +56,7 @@ export function FoodChainNavButtons({
         onClick={onBack}
         className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-white px-4 py-2 text-xs font-black text-[#30445c] shadow-[0_8px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 hover:bg-[#fbfcf8] sm:px-6 sm:py-2.5 sm:text-[1.15rem]"
       >
-        <span aria-hidden="true">←</span>
+        <span aria-hidden="true">{"\u00AB"}</span>
         <span>{backLabel}</span>
       </button>
 
@@ -65,7 +66,7 @@ export function FoodChainNavButtons({
         className="inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#08c95a] px-4 py-2 text-xs font-black text-white shadow-[0_10px_24px_rgba(8,201,90,0.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] sm:px-6 sm:py-2.5 sm:text-[1.15rem]"
       >
         <span>{nextLabel}</span>
-        <span aria-hidden="true">→</span>
+        <span aria-hidden="true">{nextArrow}</span>
       </button>
     </div>
   );

@@ -199,7 +199,7 @@ export default function P4LightThinking() {
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
-          labels={content.langLabel}
+          labels={UI.th.langLabel}
         />
       </div>
 

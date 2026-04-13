@@ -436,7 +436,7 @@ export default function P5FoodChainScene() {
         <FoodChainLanguageSwitcher
           value={activeLang}
           onChange={setActiveLang}
-          labels={ui.languages}
+          labels={UI_COPY.th.languages}
         />
       </div>
 
@@ -464,6 +464,7 @@ export default function P5FoodChainScene() {
         <FoodChainNavButtons
           backLabel={ui.back}
           nextLabel={ui.next}
+          nextArrow={"\u00BB"}
           onBack={() => navigate("/p5/life/foodchain/vocab")}
           onNext={() => navigate("/p5/life/foodchain/materials")}
         />

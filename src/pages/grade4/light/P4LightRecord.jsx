@@ -328,7 +328,11 @@ export default function P4LightRecord() {
       </div>
 
       <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
-        <LightLanguageSwitcher value={language} onChange={setLanguage} />
+        <LightLanguageSwitcher
+          value={language}
+          onChange={setLanguage}
+          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+        />
       </div>
 
       <div className="fixed bottom-4 left-1/2 z-30 -translate-x-1/2 sm:bottom-6">

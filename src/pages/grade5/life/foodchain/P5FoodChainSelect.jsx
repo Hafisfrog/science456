@@ -441,8 +441,20 @@ export default function P5FoodChainSelect() {
         <div className="rounded-[22px] border border-emerald-100/80 bg-white/86 p-4 shadow-[0_6px_16px_rgba(148,163,184,0.11)] backdrop-blur-sm sm:p-5 lg:p-5">
           <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-center xl:gap-5">
             <div className="space-y-3.5">
-              <div className="inline-flex items-center rounded-full border border-emerald-100/80 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 shadow-[0_4px_12px_rgba(148,163,184,0.1)]">
-                {ui.activityBadge}
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
+                <div className="inline-flex items-center rounded-full border border-emerald-100/80 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-600 shadow-[0_4px_12px_rgba(148,163,184,0.1)]">
+                  {ui.activityBadge}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleSpeakIntro}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-sky-200/85 bg-[#dcecff] text-lg text-blue-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:bg-[#cfe4ff] sm:h-12 sm:w-12"
+                  aria-label={ui.listenIntro}
+                  title={ui.listenIntro}
+                >
+                  {"\uD83D\uDD0A"}
+                </button>
               </div>
 
               <div>
@@ -456,28 +468,19 @@ export default function P5FoodChainSelect() {
               </div>
             </div>
 
-            <div className="rounded-[18px] border border-emerald-100/75 bg-[#f8fffb]/92 p-3 shadow-[0_6px_14px_rgba(148,163,184,0.1)] sm:p-3.5">
-              <div className="flex flex-col gap-2">
-                <button
-                  type="button"
-                  onClick={handleSpeakIntro}
-                  className="inline-flex w-full items-center gap-2 rounded-[12px] border border-slate-200/85 bg-white px-3 py-2 text-left text-slate-700 shadow-sm transition duration-200 hover:border-slate-300 hover:bg-slate-50"
-                  aria-label={ui.listenIntro}
-                  title={ui.listenIntro}
-                >
-                  <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-base text-slate-600 shadow-inner">
-                    {"\uD83D\uDD0A"}
-                  </span>
-                  <span className="text-xs font-semibold sm:text-sm">{ui.listenIntro}</span>
-                </button>
-
+            <div className="bg-transparent p-0">
+              <div className="flex justify-center">
                 <button
                   type="button"
                   onClick={handleRandomQuestion}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-[12px] border border-emerald-200/85 bg-emerald-50/85 px-3.5 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition duration-200 hover:border-emerald-300 hover:bg-emerald-100/90 sm:text-sm"
+                  className="relative inline-flex aspect-square w-full max-w-[8.6rem] flex-col items-center justify-center gap-1.5 overflow-hidden rounded-[28px] border-2 border-emerald-200 bg-gradient-to-br from-[#ebf8f2] via-[#dff3e8] to-[#cfeadf] px-2 text-center text-[0.78rem] font-bold text-emerald-900 shadow-[0_9px_16px_rgba(52,123,98,0.18)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_11px_18px_rgba(52,123,98,0.24)] sm:max-w-[9.3rem] sm:text-sm"
                 >
-                  <span className="text-base">{"\uD83C\uDFB2"}</span>
-                  {ui.randomQuestion}
+                  <span className="pointer-events-none absolute left-2 top-2 h-4 w-9 rotate-[-22deg] rounded-full bg-white/65 blur-[0.2px]" />
+                  <span className="pointer-events-none absolute bottom-2 right-2 h-3.5 w-8 rotate-[-22deg] rounded-full bg-white/45 blur-[0.2px]" />
+                  <span className="pointer-events-none absolute inset-[17%] rounded-[20px] border-[3px] border-emerald-300/90 bg-gradient-to-b from-[#bfe3d1] to-[#a8d6c0] shadow-inner" />
+
+                  <span className="relative z-10 text-xl sm:text-2xl">{"\uD83C\uDFB2"}</span>
+                  <span className="relative z-10 leading-tight">{ui.randomQuestion}</span>
                 </button>
               </div>
             </div>
@@ -569,13 +572,13 @@ export default function P5FoodChainSelect() {
                                 </div>
                               </div>
                             ) : (
-                              <div className="flex h-full w-full flex-col justify-between px-3 pb-2.5 pt-8 text-center">
+                              <div className="flex h-full w-full flex-col justify-between px-3 pb-5 pt-8 text-center">
                                 <div className="flex flex-1 items-center justify-center">
                                   <div className="mx-auto flex h-[4.2rem] w-[4.2rem] items-center justify-center rounded-full bg-white text-[2.35rem] text-amber-500 shadow-inner sm:h-[4.8rem] sm:w-[4.8rem] sm:text-[2.55rem]">
                                     +
                                   </div>
                                 </div>
-                                <div className="mt-1 text-xs font-semibold leading-tight text-amber-700 sm:text-sm">
+                                <div className="mt-0 text-xs font-semibold leading-normal text-amber-500 sm:text-sm">
                                   {ui.clickToChoose}
                                 </div>
                               </div>
@@ -674,21 +677,27 @@ export default function P5FoodChainSelect() {
           })}
         </div>
 
-        <div className="mt-4 flex flex-col gap-2.5 pb-2 sm:flex-row sm:items-center sm:justify-between">
-          <FoodChainLanguageSwitcher
-            value={activeLang}
-            onChange={setActiveLang}
-            labels={ui.languages}
-          />
+        <div className="mt-4 pb-40 sm:pb-24" />
+      </div>
 
-          <FoodChainNavButtons
-            className="sm:ml-auto sm:translate-x-2 lg:translate-x-4"
-            backLabel={ui.back}
-            nextLabel={ui.viewAllAnswers}
-            onBack={() => navigate("/p5/life/foodchain/steps")}
-            onNext={handleGoToAnswers}
-          />
-        </div>
+      <div className="fixed inset-x-0 bottom-[5.25rem] z-40 flex justify-center px-2 sm:inset-x-auto sm:bottom-3 sm:left-5 sm:justify-start sm:px-0 lg:left-8">
+        <FoodChainLanguageSwitcher
+          className="w-fit rounded-full border border-emerald-100/80 bg-white/82 p-1.5 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm"
+          value={activeLang}
+          onChange={setActiveLang}
+          labels={UI_COPY.th.languages}
+        />
+      </div>
+
+      <div className="fixed inset-x-0 bottom-3 z-40 flex justify-center px-2 sm:inset-x-auto sm:right-5 sm:justify-end sm:px-0 lg:right-8">
+        <FoodChainNavButtons
+          className="w-fit"
+          backLabel={ui.back}
+          nextLabel={ui.viewAllAnswers}
+          nextArrow={"\u00BB"}
+          onBack={() => navigate("/p5/life/foodchain/steps")}
+          onNext={handleGoToAnswers}
+        />
       </div>
 
       {showPanel && (
