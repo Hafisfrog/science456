@@ -1,6 +1,6 @@
 ﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
+import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const IMAGE_CARD = {
   src: "/images/p5-life.png",
@@ -148,15 +148,22 @@ export default function P5FoodChainIntro() {
           />
         </div>
 
-        <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
-          <FoodChainNavButtons
-            size="materials"
-            backLabel={content.back}
-            nextLabel={content.next}
-            nextArrow={"\u00BB"}
-            onBack={() => navigate("/p5/life")}
-            onNext={() => navigate(nextPath)}
-          />
+        <div className="fixed bottom-[18px] right-[18px] z-40 flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+          <button
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+            onClick={() => navigate("/p5/life")}
+            type="button"
+          >
+            {"\u00AB"} {content.back}
+          </button>
+
+          <button
+            className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+            onClick={() => navigate(nextPath)}
+            type="button"
+          >
+            {content.next} {"\u00BB"}
+          </button>
         </div>
       </div>
     </div>

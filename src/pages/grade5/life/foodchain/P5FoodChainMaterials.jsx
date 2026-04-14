@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
@@ -291,7 +291,7 @@ export default function P5FoodChainMaterials() {
 
       <div className="absolute bottom-[18px] left-[18px] z-[7] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)]">
         <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-['Prompt',sans-serif] font-black transition ${
             activeLang === "th"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -302,7 +302,7 @@ export default function P5FoodChainMaterials() {
           {LANGUAGE_LABELS[activeLang].th}
         </button>
         <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-['Prompt',sans-serif] font-black transition ${
             activeLang === "ms"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -313,7 +313,7 @@ export default function P5FoodChainMaterials() {
           {LANGUAGE_LABELS[activeLang].ms}
         </button>
         <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-['Prompt',sans-serif] font-black transition ${
             activeLang === "en"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -326,7 +326,7 @@ export default function P5FoodChainMaterials() {
       </div>
       <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
         <button
-          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p5/life/foodchain/scene")}
           type="button"
         >
@@ -334,7 +334,7 @@ export default function P5FoodChainMaterials() {
         </button>
 
         <button
-          className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p5/life/foodchain/steps")}
           type="button"
         >
@@ -344,4 +344,5 @@ export default function P5FoodChainMaterials() {
     </div>
   );
 }
+
 

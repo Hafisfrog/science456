@@ -1,6 +1,5 @@
-﻿import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const VOCAB = [
   {
@@ -106,23 +105,6 @@ const VOCAB = [
 ];
 
 
-const UI_COPY = {
-  th: {
-    back: "ย้อนกลับ",
-    next: "ไปต่อ",
-    languages: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
-  },
-  en: {
-    back: "Back",
-    next: "Next",
-    languages: { th: "Thai", ms: "Malay", en: "English" },
-  },
-  ms: {
-    back: "Kembali",
-    next: "Seterusnya",
-    languages: { th: "Thai", ms: "Melayu", en: "English" },
-  },
-};
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
 
 const isSpeechSupported = () =>
@@ -208,10 +190,7 @@ function speakWithBestVoice(text, locale, langKey) {
 
 export default function P5FoodChainVocab() {
   const navigate = useNavigate();
-  const currentAudioRef = useRef(null);
-  const [activeLang, setActiveLang] = useState("th");
-  const ui = UI_COPY[activeLang] ?? UI_COPY.th;
-  useEffect(() => {
+  const currentAudioRef = useRef(null);  useEffect(() => {
     return () => {
       if (currentAudioRef.current) {
         currentAudioRef.current.pause();
@@ -347,28 +326,30 @@ export default function P5FoodChainVocab() {
             </table>
           </div>
         </div>
-        <div className="fixed bottom-[18px] left-[18px] z-40">
-          <FoodChainLanguageSwitcher
-            size="materials"
-            value={activeLang}
-            onChange={setActiveLang}
-            labels={UI_COPY.th.languages}
-          />
-        </div>
-        <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
-          <FoodChainNavButtons
-            size="materials"
-            backLabel={ui.back}
-            nextLabel={ui.next}
-            nextArrow={"\u00BB"}
-            onBack={() => navigate("/p5/life/foodchain")}
-            onNext={() => navigate("/p5/life/foodchain/scene")}
-          />
+        <div className="fixed bottom-[18px] right-[18px] z-40 flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+          <button
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+            onClick={() => navigate("/p5/life/foodchain")}
+            type="button"
+          >
+            {"\u00AB"} ย้อนกลับ
+          </button>
+
+          <button
+            className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+            onClick={() => navigate("/p5/life/foodchain/scene")}
+            type="button"
+          >
+            ต่อไป {"\u00BB"}
+          </button>
         </div>
       </div>
     </div>
   );
 }
+
+
+
 
 
 

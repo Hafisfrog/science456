@@ -126,28 +126,25 @@ export default function P5FoodChainSteps() {
         />
       </div>
 
-      <div className="absolute bottom-3 right-3 z-20 flex flex-col items-end gap-3 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5 lg:right-10">
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            onClick={() => navigate("/p5/life/foodchain/materials")}
-            className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-white/95 px-8 py-3 text-[18px] font-black text-slate-900 shadow-[0_14px_28px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.22)] active:translate-y-px"
-          >
-            <span aria-hidden="true">{"\u00AB"}</span>
-            <span>{t.back}</span>
-          </button>
+      <div className="fixed bottom-[18px] right-[18px] z-40 flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p5/life/foodchain/materials")}
+          type="button"
+        >
+          {"\u00AB"} {t.back}
+        </button>
 
-          <button
-            type="button"
-            onClick={() => navigate("/p5/life/foodchain/select")}
-            className="inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#08c95a] px-8 py-3 text-[18px] font-black text-white shadow-[0_14px_28px_rgba(8,201,90,.24)] transition duration-150 hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_18px_34px_rgba(8,201,90,.3)] active:translate-y-px"
-          >
-            <span>{t.nextButton}</span>
-            <span aria-hidden="true">{"\u00BB"}</span>
-          </button>
-        </div>
+        <button
+          className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p5/life/foodchain/select")}
+          type="button"
+        >
+          {t.nextButton} {"\u00BB"}
+        </button>
       </div>
     </div>
   );
 }
+
 
