@@ -511,21 +511,26 @@ export default function P5FoodChainsss() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-col gap-3 pb-2 lg:mt-5 lg:flex-row lg:items-end lg:justify-between">
-          <FoodChainLanguageSwitcher
-            value={activeLang}
-            onChange={setActiveLang}
-            labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
-          />
+      </div>
 
-          <FoodChainNavButtons
-            backLabel={content.back}
-            nextLabel={content.next}
-            nextArrow={"\u00BB"}
-            onBack={() => navigate(-1)}
-            onNext={() => navigate("/p5/life")}
-          />
-        </div>
+      <div className="fixed bottom-[30px] left-[18px] z-40 max-[720px]:bottom-[20px]">
+        <FoodChainLanguageSwitcher
+          size="materials"
+          value={activeLang}
+          onChange={setActiveLang}
+          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+        />
+      </div>
+
+      <div className="fixed bottom-[30px] right-[18px] z-40 max-[720px]:bottom-[20px] max-[720px]:right-[12px]">
+        <FoodChainNavButtons
+          size="materials"
+          backLabel={content.back}
+          nextLabel={content.next}
+          nextArrow={"\u00BB"}
+          onBack={() => navigate(-1)}
+          onNext={() => navigate("/p5/life")}
+        />
       </div>
     </div>
   );

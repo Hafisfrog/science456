@@ -4,6 +4,7 @@ import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainContr
 
 const getSlotKey = (row, col) => `${row}-${col}`;
 const SCORE_PER_ROW = 2;
+const PANEL_CHOICE_COUNT = 4;
 
 const ANSWER_CHAINS = [
   ["ต้นข้าว", "ตั๊กแตน", "กบ", "งู"],
@@ -33,16 +34,22 @@ const createQuestionChains = (lockedSet) =>
     )
   );
 
+const shuffleArray = (items) => {
+  const nextItems = [...items];
+
+  for (let index = nextItems.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [nextItems[index], nextItems[swapIndex]] = [nextItems[swapIndex], nextItems[index]];
+  }
+
+  return nextItems;
+};
+
 const getRandomLockedSlots = () => {
   const nextLockedSlots = new Set();
 
   for (let rowIndex = 0; rowIndex < ANSWER_CHAINS.length; rowIndex += 1) {
-    const columns = [0, 1, 2, 3];
-
-    for (let index = columns.length - 1; index > 0; index -= 1) {
-      const swapIndex = Math.floor(Math.random() * (index + 1));
-      [columns[index], columns[swapIndex]] = [columns[swapIndex], columns[index]];
-    }
+    const columns = shuffleArray([0, 1, 2, 3]);
 
     const clueCount = 2;
 
@@ -111,7 +118,7 @@ const UI_COPY = {
     answerCorrectAlready: "คำตอบถูกแล้ว",
     correctAnswerLabel: "เฉลยที่ถูกต้อง",
     back: "ย้อนกลับ",
-    viewAllAnswers: "ไปดูเฉลยทั้งหมด",
+    viewAllAnswers: "เฉลยทั้งหมด",
     chooseLivingThing: "เลือกสิ่งมีชีวิต",
     fillAnswerFor: (chain, slot) => `เติมคำตอบลงใน ${chain} ${slot}`,
     chooseDescription:
@@ -245,6 +252,9 @@ export default function P5FoodChainSelect() {
   const [rowRevealResults, setRowRevealResults] = useState(createEmptyRevealResults);
   const [showPanel, setShowPanel] = useState(false);
   const [activeSlot, setActiveSlot] = useState({ row: null, col: null });
+  const [rowChoiceOrders, setRowChoiceOrders] = useState(() =>
+    ANSWER_CHAINS.map(() => [])
+  );
 
   const ui = UI_COPY[activeLang] ?? UI_COPY.th;
   const totalScoreTitle =
@@ -259,6 +269,27 @@ export default function P5FoodChainSelect() {
     activeLang === "en" ? "Score" : activeLang === "ms" ? "Markah" : "คะแนน";
   const isLocked = (row, col) => lockedSlots.has(getSlotKey(row, col));
   const getAnimalMeta = (name) => animals.find((animal) => animal.name === name);
+  const allAnimalNames = animals.map((animal) => animal.name);
+
+  const buildChoicesForRow = (rowIndex, currentLockedSlots = lockedSlots) => {
+    const rowAnswers = ANSWER_CHAINS[rowIndex] ?? [];
+    const clueNames = rowAnswers.filter((_, colIndex) =>
+      currentLockedSlots.has(getSlotKey(rowIndex, colIndex))
+    );
+    const answerNamesToFill = rowAnswers.filter(
+      (_, colIndex) => !currentLockedSlots.has(getSlotKey(rowIndex, colIndex))
+    );
+    const excludedNames = new Set(clueNames);
+    const distractorCandidates = allAnimalNames.filter(
+      (name) => !excludedNames.has(name) && !answerNamesToFill.includes(name)
+    );
+    const distractors = shuffleArray(distractorCandidates).slice(
+      0,
+      Math.max(0, PANEL_CHOICE_COUNT - answerNamesToFill.length)
+    );
+
+    return shuffleArray([...answerNamesToFill, ...distractors]);
+  };
 
   const getDisplayName = (name) => {
     const animal = getAnimalMeta(name);
@@ -286,7 +317,7 @@ export default function P5FoodChainSelect() {
       : "";
   const activeRowChoices =
     activeSlot.row !== null
-      ? ANSWER_CHAINS[activeSlot.row]
+      ? (rowChoiceOrders[activeSlot.row] ?? [])
           .map((name) => getAnimalMeta(name))
           .filter(Boolean)
       : [];
@@ -342,6 +373,11 @@ export default function P5FoodChainSelect() {
       return;
     }
 
+    setRowChoiceOrders((prev) =>
+      prev.map((choiceRow, rowIndex) =>
+        rowIndex === row ? buildChoicesForRow(row) : choiceRow
+      )
+    );
     setActiveSlot({ row, col });
     setShowPanel(true);
   };
@@ -383,11 +419,18 @@ export default function P5FoodChainSelect() {
     setLockedSlots(nextLockedSlots);
     setChains(createQuestionChains(nextLockedSlots));
     setRowRevealResults(createEmptyRevealResults());
+    setRowChoiceOrders(
+      ANSWER_CHAINS.map((_, rowIndex) => buildChoicesForRow(rowIndex, nextLockedSlots))
+    );
     setShowPanel(false);
     setActiveSlot({ row: null, col: null });
   };
 
   const handleRevealRowAnswer = (rowIndex) => {
+    if (!chains[rowIndex] || chains[rowIndex].some((item) => !item)) {
+      return;
+    }
+
     const alreadyCorrect = chains[rowIndex].every(
       (item, colIndex) => item === ANSWER_CHAINS[rowIndex][colIndex]
     );
@@ -497,6 +540,7 @@ export default function P5FoodChainSelect() {
             const rowScore = getRowScore(rowIndex, row, lockedSlots);
             const accent = CHAIN_ACCENTS[rowIndex % CHAIN_ACCENTS.length];
             const rowRevealResult = rowRevealResults[rowIndex];
+            const hasRowReveal = Boolean(rowRevealResult);
 
             return (
               <div
@@ -511,9 +555,11 @@ export default function P5FoodChainSelect() {
                       {ui.chainLabel} {rowIndex + 1}
                     </div>
 
-                    <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700">
-                      {rowScoreLabel} {rowScore}/{SCORE_PER_ROW}
-                    </div>
+                    {hasRowReveal && (
+                      <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1.5 text-xs font-semibold text-sky-700">
+                        {rowScoreLabel} {rowScore}/{SCORE_PER_ROW}
+                      </div>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-3 2xl:flex-row 2xl:items-center 2xl:justify-between">
@@ -544,13 +590,13 @@ export default function P5FoodChainSelect() {
                             : ui.slotFill;
 
                       return (
-                        <div key={colIndex} className="flex items-center gap-3">
+                        <div key={colIndex} className="flex items-center gap-2">
                           <button
                             type="button"
                             onClick={() => handleSlotClick(rowIndex, colIndex)}
                             aria-disabled={locked}
                             title={slotBadgeText}
-                            className={`group relative flex h-28 w-[9rem] flex-col items-center justify-center overflow-hidden rounded-[20px] border text-center transition duration-200 sm:h-32 sm:w-[10rem] ${slotCardClass}`}
+                            className={`group relative flex h-32 w-[10.5rem] flex-col items-center justify-center overflow-hidden rounded-[20px] border text-center transition duration-200 sm:h-36 sm:w-[12rem] ${slotCardClass}`}
                           >
                             <div
                               className={`absolute left-2.5 top-2.5 rounded-full px-2 py-0.5 text-[0.68rem] font-semibold ${slotBadgeClass}`}
@@ -559,26 +605,26 @@ export default function P5FoodChainSelect() {
                             </div>
 
                             {item ? (
-                              <div className="flex h-full w-full flex-col justify-between px-2.5 pb-2.5 pt-8">
+                              <div className="flex h-full w-full flex-col justify-between px-3 pb-3 pt-8">
                                 <div className="flex flex-1 items-center justify-center">
                                   <img
                                     src={getImage(item)}
-                                    className="mx-auto h-[4.8rem] w-[4.8rem] object-contain drop-shadow-[0_8px_14px_rgba(15,23,42,0.12)] sm:h-[5.9rem] sm:w-[5.9rem]"
+                                    className="mx-auto h-[6rem] w-[6rem] object-contain drop-shadow-[0_8px_14px_rgba(15,23,42,0.12)] sm:h-[7rem] sm:w-[7rem]"
                                     alt={getDisplayName(item)}
                                   />
                                 </div>
-                                <div className="mt-1 text-xs font-semibold leading-tight text-slate-700 sm:text-sm">
+                                <div className="mt-1.5 text-sm font-semibold leading-tight text-slate-700 sm:text-[0.95rem]">
                                   {getDisplayName(item)}
                                 </div>
                               </div>
                             ) : (
-                              <div className="flex h-full w-full flex-col justify-between px-3 pb-5 pt-8 text-center">
-                                <div className="flex flex-1 items-center justify-center">
-                                  <div className="mx-auto flex h-[4.2rem] w-[4.2rem] items-center justify-center rounded-full bg-white text-[2.35rem] text-amber-500 shadow-inner sm:h-[4.8rem] sm:w-[4.8rem] sm:text-[2.55rem]">
+                              <div className="flex h-full w-full flex-col items-center justify-center gap-2.5 px-2 pt-6 text-center">
+                                <div className="flex items-center justify-center">
+                                  <div className="mx-auto flex h-[5.3rem] w-[5.3rem] items-center justify-center rounded-full bg-white text-[2.8rem] text-amber-500 shadow-inner sm:h-[6rem] sm:w-[6rem] sm:text-[3rem]">
                                     +
                                   </div>
                                 </div>
-                                <div className="mt-0 text-xs font-semibold leading-normal text-amber-500 sm:text-sm">
+                                <div className="max-w-[92%] text-sm font-semibold leading-tight text-amber-500">
                                   {ui.clickToChoose}
                                 </div>
                               </div>
@@ -586,7 +632,7 @@ export default function P5FoodChainSelect() {
                           </button>
 
                           {colIndex < row.length - 1 && (
-                            <div className="flex h-8 w-8 items-center justify-center rounded-full border border-emerald-200/85 bg-white text-base font-black text-emerald-600 shadow-sm">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-200/85 bg-white text-lg font-black text-emerald-600 shadow-sm">
                               {"\u2192"}
                             </div>
                           )}
@@ -619,7 +665,12 @@ export default function P5FoodChainSelect() {
                       <button
                         type="button"
                         onClick={() => handleRevealRowAnswer(rowIndex)}
-                        className="inline-flex items-center justify-center rounded-full border border-sky-200/85 bg-white px-4 py-2 text-xs font-semibold text-sky-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50 sm:text-sm"
+                        disabled={!isRowComplete}
+                        className={`inline-flex items-center justify-center rounded-full border px-4 py-2 text-xs font-semibold shadow-sm transition duration-200 sm:text-sm ${
+                          isRowComplete
+                            ? "border-sky-200/85 bg-white text-sky-700 hover:-translate-y-0.5 hover:border-sky-300 hover:bg-sky-50"
+                            : "cursor-not-allowed border-slate-200 bg-slate-100 text-slate-400 opacity-80"
+                        }`}
                       >
                         {ui.revealRow}
                       </button>
@@ -680,18 +731,18 @@ export default function P5FoodChainSelect() {
         <div className="mt-4 pb-40 sm:pb-24" />
       </div>
 
-      <div className="fixed inset-x-0 bottom-[5.25rem] z-40 flex justify-center px-2 sm:inset-x-auto sm:bottom-3 sm:left-5 sm:justify-start sm:px-0 lg:left-8">
+      <div className="fixed bottom-[18px] left-[18px] z-40">
         <FoodChainLanguageSwitcher
-          className="w-fit rounded-full border border-emerald-100/80 bg-white/82 p-1.5 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm"
+          size="materials"
           value={activeLang}
           onChange={setActiveLang}
           labels={UI_COPY.th.languages}
         />
       </div>
 
-      <div className="fixed inset-x-0 bottom-3 z-40 flex justify-center px-2 sm:inset-x-auto sm:right-5 sm:justify-end sm:px-0 lg:right-8">
+      <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
         <FoodChainNavButtons
-          className="w-fit"
+          size="materials"
           backLabel={ui.back}
           nextLabel={ui.viewAllAnswers}
           nextArrow={"\u00BB"}

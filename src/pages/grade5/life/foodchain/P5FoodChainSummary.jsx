@@ -136,16 +136,18 @@ export default function P5FoodChainSummary() {
 
       </div>
 
-      <div className="absolute bottom-3 left-3 z-20 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5">
+      <div className="fixed bottom-[18px] left-[18px] z-40">
         <FoodChainLanguageSwitcher
+          size="materials"
           value={activeLang}
           onChange={setActiveLang}
           labels={languageLabels}
         />
       </div>
 
-      <div className="absolute bottom-3 right-3 z-20 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5">
+      <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
         <FoodChainNavButtons
+          size="materials"
           backLabel={content.back}
           nextLabel={content.next}
           nextArrow={"\u00BB"}
