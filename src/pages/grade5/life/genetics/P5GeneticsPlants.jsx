@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
-import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsPlants.css";
 import "./p5GeneticsLangShared.css";
 
@@ -245,9 +245,12 @@ export default function P5GeneticsPlants() {
     : [];
 
   const t = TEXT[lang];
-  const labels = LANG_BUTTON_TEXT[lang];
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
   const [lineA, lineB] = t.sideText.split("\n");
   const hasSelections = selectedGenotypes.some(Boolean);
+  const hasAllSelections = selectedGenotypes.every(Boolean);
   const getGenotypeImage = (genotype) => (genotype === "aa" ? plantImages.short : plantImages.tall);
   const selectGenotype = (id, genotype) => {
     setSelectedGenotypes((prev) => {
@@ -264,6 +267,7 @@ export default function P5GeneticsPlants() {
     setActiveSeedlingId(null);
   };
   const revealAnswers = () => {
+    if (!hasAllSelections) return;
     setShowAnswers(true);
     setActiveSeedlingId(null);
   };
@@ -408,7 +412,7 @@ export default function P5GeneticsPlants() {
               type="button"
               className="p5gp-reveal"
               onClick={revealAnswers}
-              disabled={showAnswers}
+              disabled={showAnswers || !hasAllSelections}
               aria-label={t.revealAria}
             >
               {t.reveal}
@@ -448,14 +452,14 @@ export default function P5GeneticsPlants() {
               className="p5gp-back"
               onClick={() => navigate("/p5/life/genetics")}
             >
-              {t.back}
+              {backLabel}
             </button>
             <button
               type="button"
               className="p5gp-next"
               onClick={() => navigate("/p5/life/genetics/plants/summary")}
             >
-              {NEXT_LABEL[lang]}
+              {nextLabel}
             </button>
           </div>
         </footer>

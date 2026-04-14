@@ -1,6 +1,12 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
+
 const TEXT = {
   th: {
     title: "การแสดงผลการทดลอง",
@@ -10,8 +16,7 @@ const TEXT = {
       { label: "ปากกาเมจิก", both: "ผลักกัน", one: "ดึงดูดกัน" },
     ],
     back: "ย้อนกลับ",
-    next: "สรุปผลการทดลอง",
-    lang: { th: "ไทย", en: "English", ms: "Melayu" },
+    next: "ไปต่อ",
   },
   en: {
     title: "Experiment Results",
@@ -21,8 +26,7 @@ const TEXT = {
       { label: "Marker pen", both: "Repel", one: "Attract" },
     ],
     back: "Back",
-    next: "Experiment Summary",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    next: "Next",
   },
   ms: {
     title: "Hasil Eksperimen",
@@ -32,8 +36,7 @@ const TEXT = {
       { label: "Pen marker", both: "Tolak-menolak", one: "Tarik-menarik" },
     ],
     back: "Kembali",
-    next: "Ringkasan Eksperimen",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    next: "Seterusnya",
   },
 };
 
@@ -93,11 +96,7 @@ export default function P6ElectricForceEffectResult() {
       "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
   };
 
-  const pills = [
-    { id: "th", label: t.lang.th },
-    { id: "en", label: t.lang.en },
-    { id: "ms", label: t.lang.ms },
-  ];
+  const pills = LANGUAGE_OPTIONS;
 
   return (
     <div
@@ -147,13 +146,13 @@ export default function P6ElectricForceEffectResult() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-6 left-6 z-20 flex gap-3 rounded-[24px] bg-white/95 p-2 shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
         {pills.map((item) => (
           <button
             key={item.id}
             onClick={() => setLanguage(item.id)}
-            className={`rounded-[12px] px-4 py-2 text-[16px] font-bold leading-none transition duration-150 hover:-translate-y-[1px] ${
-              language === item.id ? "bg-sky-200 text-slate-900" : "bg-sky-100 text-slate-800 hover:bg-sky-100"
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              language === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
             }`}
             type="button"
           >
@@ -162,26 +161,26 @@ export default function P6ElectricForceEffectResult() {
         ))}
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex gap-3">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           type="button"
           onClick={() => navigate("/p6/experiment/electric-force-effect/sim")}
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">&lt;&lt;</span>
-          <span className="text-sm font-black leading-none">{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           type="button"
           onClick={() => navigate("/p6/experiment/electric-force-effect/key-summary")}
-          aria-label={mergedSummary.next}
-          title={mergedSummary.next}
+          aria-label={t.next}
+          title={t.next}
         >
-          <span className="text-sm font-black leading-none">{mergedSummary.next}</span>
-          <span className="text-[22px] leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

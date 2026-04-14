@@ -397,13 +397,14 @@
   display: block;
   border: 0;
   border-radius: 999px;
-  padding: 7px 18px 9px;
-  background: linear-gradient(180deg, #ff8a66, #ef5a3b);
+  padding: 8px 22px 10px;
+  background: linear-gradient(180deg, #ea6c4a, #c84524);
   box-shadow:
-    inset 0 0 0 3px rgba(161, 64, 27, 0.24),
-    0 8px 16px rgba(194, 84, 47, 0.28);
+    inset 0 0 0 3px rgba(118, 39, 17, 0.32),
+    inset 0 8px 10px rgba(255, 255, 255, 0.2),
+    0 6px 14px rgba(140, 49, 23, 0.32);
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1;
   font-weight: 800;
   cursor: pointer;
@@ -504,70 +505,87 @@
 .p5gp-back,
 .p5gp-next {
   border: 0;
-  border-radius: 999px;
+  border-radius: 18px;
+  width: 176px;
+  height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 20px;
   line-height: 1;
-  font-weight: 800;
+  font-weight: 900;
   cursor: pointer;
   transition:
-    transform 0.16s ease,
-    box-shadow 0.16s ease,
-    filter 0.16s ease;
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .p5gp-back {
-  padding: 10px 24px 12px;
-  background: linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.92),
-    inset 0 0 0 2px rgba(203, 213, 225, 0.88),
-    0 4px 0 rgba(148, 163, 184, 0.55),
-    0 12px 18px rgba(15, 23, 42, 0.12);
-  color: #0f172a;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #213a8f;
+  font-family: "Prompt", sans-serif;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
 }
 
 .p5gp-next {
-  background: linear-gradient(180deg, #ff766d 0%, #f34f44 55%, #e94239 100%);
-  padding: 10px 26px 12px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    inset 0 0 0 2px rgba(205, 65, 56, 0.95),
-    0 4px 0 rgba(182, 53, 46, 0.95),
-    0 12px 18px rgba(172, 46, 46, 0.28);
+  padding: 14px 18px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
   color: #fff;
 }
 
 .p5gp-back:hover,
 .p5gp-next:hover {
   transform: translateY(-2px);
-  filter: brightness(1.02);
-}
-
-.p5gp-back:hover {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 0 0 2px rgba(203, 213, 225, 0.9),
-    0 6px 0 rgba(148, 163, 184, 0.58),
-    0 16px 24px rgba(15, 23, 42, 0.14);
-}
-
-.p5gp-next:hover {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.32),
-    inset 0 0 0 2px rgba(205, 65, 56, 0.98),
-    0 6px 0 rgba(182, 53, 46, 1),
-    0 16px 24px rgba(172, 46, 46, 0.32);
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26);
 }
 
 .p5gp-back:active,
 .p5gp-next:active {
-  transform: translateY(2px);
+  transform: translateY(1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
 }
 
 .p5gp-back:focus-visible,
 .p5gp-next:focus-visible {
   outline: 3px solid rgba(59, 130, 246, 0.35);
   outline-offset: 2px;
+}
+
+.p5gp-ground .p5gp-lang {
+  gap: 8px !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 18px 40px rgba(111, 144, 186, 0.2) !important;
+}
+
+.p5gp-ground .p5gp-lang button {
+  min-width: 88px !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 11px 14px !important;
+  background: #eaf3ff !important;
+  color: #172033 !important;
+  font-family: "Prompt", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, color 0.18s ease !important;
+}
+
+.p5gp-ground .p5gp-lang button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 20px rgba(111, 144, 186, 0.14) !important;
+  background: #eaf3ff !important;
+}
+
+.p5gp-ground .p5gp-lang button.is-active {
+  background: #bdd9f8 !important;
+  color: #172033 !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 1440px) {
@@ -600,6 +618,8 @@
 
   .p5gp-back,
   .p5gp-next {
+    width: 148px;
+    height: 50px;
     font-size: 18px;
   }
 }
@@ -760,6 +780,26 @@
 
   .p5gp-back,
   .p5gp-next {
-    font-size: 30px;
+    font-size: 18px;
+  }
+
+  .p5gp-back,
+  .p5gp-next {
+    width: 148px;
+    height: 50px;
+    padding: 13px 16px;
+  }
+
+  .p5gp-ground .p5gp-lang {
+    gap: 8px !important;
+    padding: 9px 11px !important;
+    border-radius: 18px !important;
+  }
+
+  .p5gp-ground .p5gp-lang button {
+    min-width: 80px !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    border-radius: 15px !important;
   }
 }

@@ -81,41 +81,41 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   z-index: 65;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 8px;
-  border-radius: 24px;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 20px;
   background: rgba(255, 255, 255, 0.95);
   border: 0;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 18px 40px rgba(111, 144, 186, 0.2);
   pointer-events: auto;
 }
 
 .p6-force-sim-langchip {
-  border: none;
+  border: 0;
   cursor: pointer;
-  border-radius: 12px;
-  min-width: 0;
+  border-radius: 16px;
+  min-width: 88px;
   min-height: 0;
-  padding: 8px 16px;
-  background: #e0f2fe;
-  color: #1e293b;
+  padding: 11px 14px;
+  background: #eaf3ff;
+  color: #172033;
   font-family: inherit;
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   line-height: 1;
   box-shadow: none;
-  transition: transform 0.12s ease, filter 0.12s ease, background-color 0.12s ease;
+  opacity: 1;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.12s ease;
 }
 
 .p6-force-sim-langchip:hover {
   transform: translateY(-1px);
-  filter: none;
-  background: #cfeafe;
+  box-shadow: 0 10px 20px rgba(111, 144, 186, 0.14);
 }
 
 .p6-force-sim-langchip.active {
-  background: #0ea5e9;
-  color: #ffffff;
+  background: #bdd9f8 !important;
+  color: #172033 !important;
   box-shadow: none;
 }
 

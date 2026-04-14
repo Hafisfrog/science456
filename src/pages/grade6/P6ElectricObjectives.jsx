@@ -9,7 +9,7 @@ const CONTENT = {
     obj1: "อธิบายการเกิดแรงไฟฟ้าได้",
     obj2: "สังเกตและอธิบายผลของแรงไฟฟ้าได้",
     back: "ย้อนกลับ",
-    next: "หน้าคำศัพท์",
+    next: "ต่อไป",
   },
   en: {
     grade: "Grade 6",
@@ -18,7 +18,7 @@ const CONTENT = {
     obj1: "Explain how electric force is generated.",
     obj2: "Observe and explain the effects of electric force.",
     back: "Back",
-    next: "Vocabulary",
+    next: "Next",
   },
   ms: {
     grade: "Tahun 6",
@@ -27,7 +27,7 @@ const CONTENT = {
     obj1: "Menerangkan bagaimana daya elektrik terhasil.",
     obj2: "Memerhati dan menerangkan kesan daya elektrik.",
     back: "Kembali",
-    next: "Kosa Kata",
+    next: "Seterusnya",
   },
 };
 
@@ -60,11 +60,7 @@ export default function P6ElectricObjectives() {
   const isUnitFlow = pathname === "/p6/electric-force" || pathname.startsWith("/p6/electric-force/");
   const backPath = isUnitFlow ? "/p6" : "/p6/electric-force/experiments";
   const nextPath = isUnitFlow ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
+  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
 
   const speechLang = lang === "th" ? "th-TH" : lang === "en" ? "en-US" : "ms-MY";
 
@@ -86,10 +82,6 @@ export default function P6ElectricObjectives() {
     >
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-4 text-center">
-          <div className="mb-3 inline-flex rounded-2xl bg-white/80 px-6 py-2 text-3xl font-extrabold text-blue-800 shadow">
-            {t.grade}
-          </div>
-
           <h1 className="text-[clamp(44px,5vw,76px)] font-black leading-none">{t.title}</h1>
         </div>
 
@@ -137,34 +129,34 @@ export default function P6ElectricObjectives() {
           </div>
         </div>
 
-        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-6 md:right-6">
+        <div className="fixed bottom-6 right-6 z-20 flex gap-3">
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate(backPath)}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-2xl leading-none">&lt;&lt;</span>
-            <span className="text-sm font-bold leading-none">{t.back}</span>
+            <span className="text-[20px] leading-none">&laquo;</span>
+            <span className="text-[20px] leading-none">{t.back}</span>
           </button>
 
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-white shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate(nextPath)}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            <span className="text-2xl leading-none">&gt;&gt;</span>
-            <span className="text-sm font-bold leading-none">{t.next}</span>
+            <span className="text-[20px] leading-none">{t.next}</span>
+            <span className="text-[20px] leading-none">&raquo;</span>
           </button>
         </div>
 
-        <div className="fixed bottom-3 left-3 z-50 flex max-w-[calc(100vw-24px)] flex-wrap items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+        <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
           <button
-            className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-              lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === "th" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
             }`}
             onClick={() => setLang("th")}
           >
@@ -172,8 +164,8 @@ export default function P6ElectricObjectives() {
           </button>
 
           <button
-            className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-              lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === "en" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
             }`}
             onClick={() => setLang("en")}
           >
@@ -181,8 +173,8 @@ export default function P6ElectricObjectives() {
           </button>
 
           <button
-            className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-              lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === "ms" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
             }`}
             onClick={() => setLang("ms")}
           >

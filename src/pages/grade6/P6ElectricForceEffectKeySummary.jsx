@@ -1,6 +1,12 @@
 ﻿import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
+
 const TEXT = {
   th: {
     title: "สรุปสาระสำคัญ : แรงไฟฟ้าน่ารู้",
@@ -18,8 +24,7 @@ const TEXT = {
       "ประจุเหมือนกัน “ผลักกัน” วัตถุที่มีประจุชนิดเดียวกันจะออกแรงผลักกัน",
     example: "การใช้หวีพลาสติกบนผ้าแล้วทำให้เส้นผมติดหวีขึ้นมาได้",
     back: "ย้อนกลับ",
-    next: "กลับเลือกการทดลอง",
-    lang: { th: "ไทย", en: "English", ms: "Melayu" },
+    next: "ไปต่อ",
   },
   en: {
     title: "Key Takeaways: Electric Force",
@@ -35,8 +40,7 @@ const TEXT = {
     effectRepel: "Like charges repel each other.",
     example: "Rubbing a plastic comb on cloth can make hair stick to the comb.",
     back: "Back",
-    next: "Back to Experiment Selection",
-    lang: { th: "Thai", en: "English", ms: "Malay" },
+    next: "Next",
   },
   ms: {
     title: "Ringkasan Penting: Daya Elektrik",
@@ -52,27 +56,20 @@ const TEXT = {
     effectRepel: "Cas sejenis saling menolak.",
     example: "Menggosok sikat plastik pada kain boleh membuat rambut melekat.",
     back: "Kembali",
-    next: "Kembali ke Pilihan Eksperimen",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    next: "Seterusnya",
   },
 };
 
-function LanguagePills({ lang, setLang, labels }) {
-  const pills = [
-    { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
-    { code: "ms", label: labels.ms },
-  ];
-
+function LanguagePills({ lang, setLang }) {
   return (
-    <div className="flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-      {pills.map((p) => (
+    <div className="inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+      {LANGUAGE_OPTIONS.map((p) => (
         <button
-          key={p.code}
+          key={p.id}
           type="button"
-          onClick={() => setLang(p.code)}
-          className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === p.code ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          onClick={() => setLang(p.id)}
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === p.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {p.label}
@@ -156,34 +153,35 @@ export default function P6ElectricForceEffectKeySummary() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-50">
-        <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
+      <div className="fixed bottom-6 left-6 z-20">
+        <LanguagePills lang={lang} setLang={setLang} />
       </div>
 
-      <div className="pointer-events-auto fixed bottom-6 right-6 z-20 flex gap-3">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/experiment/electric-force-effect/summary")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">&lt;&lt;</span>
-          <span className="text-sm font-black leading-none">{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-force/experiments")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span className="text-sm font-black leading-none">{t.next}</span>
-          <span className="text-[22px] leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>
   );
 }
+
 
 

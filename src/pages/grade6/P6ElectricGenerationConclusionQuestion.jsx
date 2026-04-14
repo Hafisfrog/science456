@@ -8,11 +8,11 @@ const TEXT = {
     answer: [
       "แรงไฟฟ้าเกิดจากการมีประจุไฟฟ้าของวัตถุ",
       "ซึ่งทำให้วัตถุดูดหรือผลักกันได้",
-      "เช่น ลูกโป่งกับผม แล้วนำไปใกล้เศษกระดาษ → กระดาษจะลอยเข้าหาลูกโป่ง",
+      "เช่น ลูกโป่งกับผม แล้วนำไปใกล้เศษกระดาษ -> กระดาษจะลอยเข้าหาลูกโป่ง",
     ],
     back: "ย้อนกลับ",
-    next: "กลับเลือกการทดลอง",
-    lang: { th: "ไทย", en: "English", ms: "Melayu" },
+    next: "ต่อไป",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     title: "Question & Answer",
@@ -20,10 +20,10 @@ const TEXT = {
     answer: [
       "Electric force comes from electric charges on objects.",
       "That makes objects attract or repel each other.",
-      "Example: rub a balloon, then bring it near paper bits → the paper moves toward the balloon.",
+      "Example: rub a balloon, then bring it near paper bits -> the paper moves toward the balloon.",
     ],
     back: "Back",
-    next: "Back to Experiment Selection",
+    next: "Next",
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
@@ -32,10 +32,10 @@ const TEXT = {
     answer: [
       "Daya elektrik berlaku kerana cas elektrik pada objek.",
       "Ini menyebabkan objek saling menarik atau menolak.",
-      "Contoh: gosok belon, kemudian dekatkan dengan cebisan kertas → kertas akan bergerak ke arah belon.",
+      "Contoh: gosok belon, kemudian dekatkan dengan cebisan kertas -> kertas akan bergerak ke arah belon.",
     ],
     back: "Kembali",
-    next: "Kembali ke Pilihan Eksperimen",
+    next: "Seterusnya",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -48,14 +48,14 @@ function LanguagePills({ lang, setLang, labels }) {
   ];
 
   return (
-    <div className="flex max-w-[calc(100vw-24px)] flex-wrap items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+    <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
       {pills.map((p) => (
         <button
           key={p.code}
           type="button"
           onClick={() => setLang(p.code)}
-          className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === p.code ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === p.code ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {p.label}
@@ -105,30 +105,28 @@ export default function P6ElectricGenerationConclusionQuestion() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-50">
-        <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
-      </div>
+      <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
 
       <div className="pointer-events-auto fixed bottom-6 right-6 z-20 flex gap-3">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-700 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/experiment/electric-generation/summary-2")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">&lt;&lt;</span>
-          <span className="text-sm font-black leading-none">{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-force/experiments")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span className="text-sm font-black leading-none">{t.next}</span>
-          <span className="text-[22px] leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

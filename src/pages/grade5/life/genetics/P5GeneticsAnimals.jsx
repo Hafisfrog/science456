@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
-import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsAnimals.css";
 import "./p5GeneticsLangShared.css";
 
@@ -162,6 +162,7 @@ export default function P5GeneticsAnimals() {
 
   const shift = (point, dx = 0, dy = 0) => ({ x: point.x + dx, y: point.y + dy });
   const hasSelections = selectedGenotypes.some(Boolean);
+  const hasAllSelections = selectedGenotypes.every(Boolean);
   const getGenotypeImage = (genotype) => (genotype === "aa" ? WHITE_CAT_IMG : BLACK_CAT_IMG);
   const selectGenotype = (id, genotype) => {
     setSelectedGenotypes((prev) => {
@@ -178,6 +179,7 @@ export default function P5GeneticsAnimals() {
     setActiveKittenId(null);
   };
   const revealAnswers = () => {
+    if (!hasAllSelections) return;
     setShowAnswers(true);
     setActiveKittenId(null);
   };
@@ -200,7 +202,9 @@ export default function P5GeneticsAnimals() {
     : [];
 
   const t = TEXT[lang];
-  const labels = LANG_BUTTON_TEXT[lang];
+  const labels = { th: "\u0e44\u0e17\u0e22", en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29", ms: "\u0e21\u0e25\u0e32\u0e22\u0e39" };
+  const backLabel = "\u00ab \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a";
+  const nextLabel = "\u0e15\u0e48\u0e2d\u0e44\u0e1b \u00bb";
   const [lineA, lineB] = t.geneText.split("\n");
 
   return (
@@ -341,7 +345,7 @@ export default function P5GeneticsAnimals() {
               type="button"
               className="p5ga-reveal"
               onClick={revealAnswers}
-              disabled={showAnswers}
+              disabled={showAnswers || !hasAllSelections}
               aria-label={t.revealAria}
             >
               {t.reveal}
@@ -381,14 +385,14 @@ export default function P5GeneticsAnimals() {
               className="p5ga-back"
               onClick={() => navigate("/p5/life/genetics")}
             >
-              {t.back}
+              {backLabel}
             </button>
             <button
               type="button"
               className="p5ga-next"
               onClick={() => navigate("/p5/life/genetics/animals/summary")}
             >
-              {NEXT_LABEL[lang]}
+              {nextLabel}
             </button>
           </div>
         </footer>

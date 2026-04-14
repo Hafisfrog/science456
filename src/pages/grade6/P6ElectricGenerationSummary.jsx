@@ -5,8 +5,8 @@ const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-  { id: "en", label: "English" },
-  { id: "ms", label: "Melayu" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
 ];
 
 const UI_TEXT = {
@@ -18,7 +18,7 @@ const UI_TEXT = {
     visual: "ภาพแสดงการดูดของเศษกระดาษ",
     balloonPaper: "ลูกโป่ง + เศษกระดาษ",
     back: "ย้อนกลับ",
-    retry: "ถัดไป",
+    next: "ต่อไป",
   },
   en: {
     title: "Experiment Results",
@@ -28,7 +28,7 @@ const UI_TEXT = {
     visual: "Paper attraction view",
     balloonPaper: "Balloon + Paper Bits",
     back: "Back",
-    retry: "Next",
+    next: "Next",
   },
   ms: {
     title: "Hasil Eksperimen",
@@ -38,7 +38,7 @@ const UI_TEXT = {
     visual: "Paparan tarikan cebisan kertas",
     balloonPaper: "Belon + Cebisan Kertas",
     back: "Kembali",
-    retry: "Seterusnya",
+    next: "Seterusnya",
   },
 };
 
@@ -83,14 +83,11 @@ const PAPER_POSITIONS = [
 
 const readCompletedTrials = () => {
   if (typeof window === "undefined") return [];
-
   try {
     const raw = window.sessionStorage.getItem(COMPLETED_TRIALS_KEY);
     if (!raw) return [];
-
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-
     const allowed = new Set(["trial-1", "trial-2", "trial-3"]);
     return Array.from(new Set(parsed.filter((id) => allowed.has(id))));
   } catch {
@@ -99,35 +96,15 @@ const readCompletedTrials = () => {
 };
 
 const getPaperContainerStyle = (intensity) => {
-  if (intensity === "high") {
-    return {
-      opacity: 1,
-      transform: "translateX(-50%) translateY(0px)",
-    };
-  }
-
-  if (intensity === "mid") {
-    return {
-      opacity: 1,
-      transform: "translateX(-50%) translateY(2px)",
-    };
-  }
-
-  return {
-    opacity: 0,
-    transform: "translateX(-50%) translateY(6px)",
-  };
+  if (intensity === "high") return { opacity: 1, transform: "translateX(-50%) translateY(0px)" };
+  if (intensity === "mid") return { opacity: 1, transform: "translateX(-50%) translateY(2px)" };
+  return { opacity: 0, transform: "translateX(-50%) translateY(6px)" };
 };
 
 export default function P6ElectricGenerationSummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = UI_TEXT[lang] || UI_TEXT.th;
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
   const completedCount = readCompletedTrials().length;
   const allTrialsCompleted = completedCount === 3;
   const summaryRows = [RESULTS[1], RESULTS[2], RESULTS[3]];
@@ -212,36 +189,36 @@ export default function P6ElectricGenerationSummary() {
 
           <div className="fixed bottom-6 right-6 z-20 flex gap-3">
             <button
-              className="cursor-pointer rounded-[18px] border-2 border-slate-400/50 bg-white px-4 py-3 text-sm font-black text-slate-800 shadow-[0_12px_24px_rgba(17,24,39,0.12)]"
+              className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
               type="button"
               onClick={() => navigate("/p6/experiment/electric-generation/sim")}
             >
-              <span className="text-[20px] leading-none">&lt;&lt;</span> {t.back}
+              <span className="text-[20px] leading-none">&laquo;</span>
+              <span className="text-[20px] leading-none">{t.back}</span>
             </button>
             <button
-              className="cursor-pointer rounded-[18px] bg-[#4b8bd1] px-5 py-3 text-sm font-black text-white shadow-[0_12px_24px_rgba(17,24,39,0.18)]"
+              className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
               type="button"
               onClick={() => navigate("/p6/experiment/electric-generation/key-summary")}
             >
-              {t.retry} <span className="text-[18px] leading-none">&gt;&gt;</span>
+              <span className="text-[20px] leading-none">{t.next}</span>
+              <span className="text-[20px] leading-none">&raquo;</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-6 left-6 z-20 flex items-center gap-[10px] rounded-[18px] bg-white/90 p-[10px_12px] shadow-[0_10px_22px_rgba(0,0,0,.12)] max-[640px]:gap-2 max-[640px]:p-[10px]">
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
         {LANGUAGE_OPTIONS.map((option) => (
           <button
             key={option.id}
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === option.id
-                ? "bg-sky-200"
-                : "bg-[#e6f2ff]"
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === option.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
             }`}
             type="button"
             onClick={() => setLang(option.id)}
           >
-            {option.id === "th" ? langLabels.th : option.id === "en" ? langLabels.en : langLabels.ms}
+            {option.label}
           </button>
         ))}
       </div>

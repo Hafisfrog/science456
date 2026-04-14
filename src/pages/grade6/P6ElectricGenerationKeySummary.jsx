@@ -5,29 +5,41 @@ const TEXT = {
   th: {
     title: "สรุปผลการทดลอง",
     summaryLines: [
-      "เมื่อลูกโป่งทั้ง 2 ใบถูกขัดด้วยกระดาษเช็ด ลูกโป่งทั้งสองจะมีประจุชนิดเดียวกัน เมื่อนำมาเข้าใกล้กันจึงเกิดแรงผลักกัน",
-      "เมื่อขัดลูกโป่งเพียง 1 ใบ อีกใบไม่ได้ถู จะเกิดการเหนี่ยวนำประจุ เมื่อนำมาเข้าใกล้กันจึงเกิดแรงดึงดูดกัน",
+      "เมื่อลูกโป่งทั้ง 2 ใบถูกขัดด้วยผ้าแห้ง ลูกโป่งทั้งสองจะมีประจุชนิดเดียวกัน เมื่อนำมาเข้าใกล้กันจึงเกิดแรงผลักกัน",
+      "เมื่อขัดลูกโป่งเพียง 1 ใบ อีกใบไม่ถูกขัด จะเกิดการเหนี่ยวนำประจุ เมื่อนำมาเข้าใกล้กันจึงเกิดแรงดึงดูดกัน",
     ],
     back: "ย้อนกลับ",
-    next: "สรุป",
+    next: "ต่อไป",
+    visualTitle: "ภาพประกอบการทดลอง",
+    level0Label: "ไม่ถู (0 นาที): ยังไม่ดูดเศษกระดาษ",
+    level2Label: "ถู 2 นาที: ดูดเศษกระดาษเล็กน้อย",
+    level5Label: "ถู 5 นาที: ดูดเศษกระดาษมากขึ้น",
   },
   en: {
     title: "Experiment Summary",
     summaryLines: [
-      "When both balloons are rubbed with tissue, they carry the same type of charge, so they repel each other when brought close.",
-      "When only one balloon is rubbed, induction occurs and the balloons attract each other when brought close.",
+      "When both balloons are rubbed with dry cloth, they get the same type of charge, so they repel each other when brought close.",
+      "When only one balloon is rubbed, charge induction occurs and the balloons attract each other when brought close.",
     ],
     back: "Back",
-    next: "Summary",
+    next: "Next",
+    visualTitle: "Experiment Illustration",
+    level0Label: "No rub (0 min): no visible paper attraction",
+    level2Label: "Rub 2 min: slight attraction",
+    level5Label: "Rub 5 min: stronger attraction",
   },
   ms: {
     title: "Ringkasan Eksperimen",
     summaryLines: [
-      "Apabila kedua-dua belon digosok dengan tisu, kedua-duanya bercas sama lalu menolak apabila didekatkan.",
+      "Apabila kedua-dua belon digosok dengan kain kering, kedua-duanya bercas sama lalu menolak apabila didekatkan.",
       "Apabila hanya satu belon digosok, aruhan cas berlaku dan kedua-duanya akan menarik apabila didekatkan.",
     ],
     back: "Kembali",
-    next: "Ringkasan",
+    next: "Seterusnya",
+    visualTitle: "Ilustrasi Eksperimen",
+    level0Label: "Tidak digosok (0 min): belum menarik kertas",
+    level2Label: "Gosok 2 minit: menarik sedikit",
+    level5Label: "Gosok 5 minit: menarik lebih banyak",
   },
 };
 
@@ -35,32 +47,7 @@ export default function P6ElectricGenerationKeySummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
-
-  const visualTitle =
-    lang === "th" ? "ภาพประกอบการทดลอง" : lang === "ms" ? "Ilustrasi Eksperimen" : "Experiment Illustration";
-  const level0Label =
-    lang === "th"
-      ? "ไม่ถู (0 นาที): ยังไม่ดูดเศษกระดาษ"
-      : lang === "ms"
-        ? "Tidak digosok (0 min): belum menarik kertas"
-        : "No rub (0 min): no visible paper attraction";
-  const level2Label =
-    lang === "th"
-      ? "ถู 2 นาที: ดูดเศษกระดาษเล็กน้อย"
-      : lang === "ms"
-        ? "Gosok 2 minit: menarik sedikit"
-        : "Rub 2 min: slight attraction";
-  const level5Label =
-    lang === "th"
-      ? "ถู 5 นาที: ดูดเศษกระดาษมากขึ้น"
-      : lang === "ms"
-        ? "Gosok 5 minit: menarik lebih banyak"
-        : "Rub 5 min: stronger attraction";
+  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
 
   return (
     <div
@@ -76,7 +63,7 @@ export default function P6ElectricGenerationKeySummary() {
           <h1 className="m-0 text-[clamp(28px,3.2vw,40px)] font-black text-slate-900">{t.title}</h1>
 
           <div className="mt-4 grid gap-4 text-[clamp(16px,1.6vw,18px)] font-semibold leading-[1.7] text-slate-900">
-            {(t.summaryLines || []).map((line, idx) => (
+            {t.summaryLines.map((line, idx) => (
               <p key={idx} className="m-0">
                 {line}
               </p>
@@ -85,10 +72,10 @@ export default function P6ElectricGenerationKeySummary() {
         </div>
 
         <div className="mt-2 rounded-[22px] border border-white/90 bg-white/85 p-4 shadow-[0_14px_24px_rgba(17,24,39,0.12)]">
-          <p className="m-0 text-[clamp(16px,1.3vw,20px)] font-black text-slate-900">{visualTitle}</p>
+          <p className="m-0 text-[clamp(16px,1.3vw,20px)] font-black text-slate-900">{t.visualTitle}</p>
           <div className="mt-3 grid gap-4 md:grid-cols-3">
             <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
-              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level0Label}</p>
+              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{t.level0Label}</p>
               <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
                 <img
                   src="/images/p6/equipment/lukpong-cut.png"
@@ -99,7 +86,7 @@ export default function P6ElectricGenerationKeySummary() {
             </article>
 
             <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
-              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level2Label}</p>
+              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{t.level2Label}</p>
               <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
                 <img
                   src="/images/p6/equipment/lukpong-cut.png"
@@ -115,7 +102,7 @@ export default function P6ElectricGenerationKeySummary() {
             </article>
 
             <article className="rounded-[16px] bg-[linear-gradient(180deg,#f4f8ff_0%,#e8f1ff_100%)] p-3">
-              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{level5Label}</p>
+              <p className="mb-2 mt-0 text-[clamp(13px,1vw,16px)] font-bold text-slate-700">{t.level5Label}</p>
               <div className="relative h-[142px] overflow-hidden rounded-[12px] bg-[#dbe8f7]">
                 <img
                   src="/images/p6/equipment/lukpong-cut.png"
@@ -135,11 +122,11 @@ export default function P6ElectricGenerationKeySummary() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
         <button
           onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === "th" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {langLabels.th}
@@ -147,8 +134,8 @@ export default function P6ElectricGenerationKeySummary() {
 
         <button
           onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === "en" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {langLabels.en}
@@ -156,8 +143,8 @@ export default function P6ElectricGenerationKeySummary() {
 
         <button
           onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === "ms" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {langLabels.ms}
@@ -166,24 +153,24 @@ export default function P6ElectricGenerationKeySummary() {
 
       <div className="pointer-events-auto fixed bottom-6 right-6 z-20 flex gap-3">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-700 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/experiment/electric-generation/summary")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[22px] leading-none">&lt;&lt;</span>
-          <span className="text-sm font-black leading-none">{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/experiment/electric-generation/summary-2")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span className="text-sm font-black leading-none">{t.next}</span>
-          <span className="text-[22px] leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

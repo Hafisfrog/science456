@@ -3,25 +3,31 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const LANG = {
   th: {
-    title: "การทดลองที่ 9 เรื่อง การเกิดแรงไฟฟ้า",
-    equipment: "อุปกรณ์",
+    title: "การทดลองที่ 1 เรื่อง การเกิดแรงไฟฟ้า",
+    equipment: "วัสดุอุปกรณ์",
     balloon: "ลูกโป่ง",
     cloth: "ผ้าแห้ง",
     paper: "เศษกระดาษ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
-    title: "Experiment 9: Electric Force Generation",
-    equipment: "Equipment",
+    title: "Experiment 1: Electric Force Generation",
+    equipment: "Materials and Equipment",
     balloon: "Balloon",
     cloth: "Dry Cloth",
     paper: "Paper Bits",
+    back: "Back",
+    next: "Next",
   },
   ms: {
-    title: "Eksperimen 9: Penghasilan Daya Elektrik",
-    equipment: "Peralatan",
+    title: "Eksperimen 1: Penghasilan Daya Elektrik",
+    equipment: "Bahan dan Peralatan",
     balloon: "Belon",
     cloth: "Kain Kering",
     paper: "Kertas Kecil",
+    back: "Kembali",
+    next: "Seterusnya",
   },
 };
 
@@ -101,13 +107,7 @@ export default function P6ElectricGenerationMaterials() {
   const [broken, setBroken] = useState({});
 
   const t = LANG[lang];
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
-  const backLabel = "ย้อนกลับ";
-  const nextLabel = "ขั้นตอน";
+  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
 
   const from = searchParams.get("from");
   const backPath = from === "unit" ? "/p6/electric-force/experiments" : "/p6/experiment/electric-generation/vocab";
@@ -139,25 +139,25 @@ export default function P6ElectricGenerationMaterials() {
 
         <div className="mt-8">
           <div className="flex flex-wrap justify-center gap-x-16 gap-y-8">
-          {EQUIPMENT_ITEMS.map((item) => (
-            <EquipmentCard
-              key={item.id}
-              item={item}
-              label={t[item.id]}
-              lang={lang}
-              failed={Boolean(broken[item.id])}
-              onError={() => setBroken((prev) => ({ ...prev, [item.id]: true }))}
-            />
-          ))}
+            {EQUIPMENT_ITEMS.map((item) => (
+              <EquipmentCard
+                key={item.id}
+                item={item}
+                label={t[item.id]}
+                lang={lang}
+                failed={Boolean(broken[item.id])}
+                onError={() => setBroken((prev) => ({ ...prev, [item.id]: true }))}
+              />
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
         <button
           onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === "th" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {langLabels.th}
@@ -165,8 +165,8 @@ export default function P6ElectricGenerationMaterials() {
 
         <button
           onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === "en" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {langLabels.en}
@@ -174,33 +174,35 @@ export default function P6ElectricGenerationMaterials() {
 
         <button
           onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === "ms" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
         >
           {langLabels.ms}
         </button>
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-white px-4 py-3 text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate(backPath)}
           type="button"
-          aria-label={backLabel}
+          aria-label={t.back}
+          title={t.back}
         >
-          <span className="text-[28px] leading-none">&lt;&lt;</span>
-          <span className="text-sm font-black leading-none">{backLabel}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
 
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[20px] bg-blue-600 px-4 py-3 text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate(nextPath)}
           type="button"
-          aria-label={nextLabel}
+          aria-label={t.next}
+          title={t.next}
         >
-          <span className="text-sm font-black leading-none">{nextLabel}</span>
-          <span className="text-[28px] leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

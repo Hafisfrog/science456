@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
 import "./p5GeneticsLangShared.css";
 
@@ -121,7 +121,8 @@ export default function P5GeneticsSelect() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
   const t = PAGE_TEXT[lang];
-  const labels = LANG_BUTTON_TEXT[lang];
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const backLabel = "<< เลือกชั้น";
 
   const speakCard = (event, exp) => {
     event.stopPropagation();
@@ -140,7 +141,7 @@ export default function P5GeneticsSelect() {
   return (
     <div className="p5gen-page notranslate" translate="no">
       <button type="button" className="p5gen-back" onClick={() => navigate("/p5/life")}>
-        {t.back}
+        {backLabel}
       </button>
 
       <main className="p5gen-main">

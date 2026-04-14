@@ -1,9 +1,10 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
-import { LANG_BUTTON_TEXT, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumansSummary3.css";
 import "./p5GeneticsLangShared.css";
+import "./P5GeneticsHumansSummaryOverrides.css";
 
 const FAMILY_TREE_SPRITE = "/images/p6/famtree.jpg";
 
@@ -149,14 +150,15 @@ const TEXT = {
 export default function P5GeneticsHumansSummary3() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = LANG_BUTTON_TEXT[lang];
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
   const familyRef = useRef(null);
   const topRefs = useRef([]);
   const middleRefs = useRef([]);
   const bottomRefs = useRef([]);
   const [treeLines, setTreeLines] = useState([]);
-  const nextLabel = lang === "th" ? "ต่อไป" : lang === "ms" ? "Seterusnya" : "Next";
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
 
   useEffect(() => {
     const familyNode = familyRef.current;
@@ -372,7 +374,7 @@ export default function P5GeneticsHumansSummary3() {
           <div className="p5ghs3-fence left" aria-hidden="true" />
           <div className="p5ghs3-fence right" aria-hidden="true" />
 
-          <div className="p5ghs3-lang">
+          <div className="p5ghs3-lang p5ghs3-lang-p4">
             <button type="button" className={lang === "th" ? "is-active" : ""} onClick={() => setLang("th")}>
               {labels.th}
             </button>
@@ -385,11 +387,11 @@ export default function P5GeneticsHumansSummary3() {
           </div>
 
           <div className="p5ghs3-actions">
-            <button type="button" className="p5ghs3-back" onClick={() => navigate("/p5/life/genetics/humans/summary-2")}>
-              {t.back}
+            <button type="button" className="p5ghs3-back p5ghs3-back-btn" onClick={() => navigate("/p5/life/genetics/humans/summary-2")}>
+              {backLabel}
             </button>
-            <button type="button" className="p5ghs3-next" onClick={() => navigate("/p5/life/genetics")}>
-              {nextLabel} <span>&gt;&gt;</span>
+            <button type="button" className="p5ghs3-next p5ghs3-next-btn" onClick={() => navigate("/p5/life/genetics")}>
+              {nextLabel}
             </button>
           </div>
         </footer>

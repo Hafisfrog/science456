@@ -1,13 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
-
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-  { id: "en", label: "English" },
-  { id: "ms", label: "Melayu" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
 ];
-
 const TRIAL_OPTIONS = [
   {
     id: "balloon-both",
@@ -50,7 +48,6 @@ const TRIAL_OPTIONS = [
     },
   },
 ];
-
 const RESULT_BY_MODE = {
   both: {
     th: "ผลักกัน",
@@ -63,7 +60,6 @@ const RESULT_BY_MODE = {
     ms: "Tarik-menarik",
   },
 };
-
 const EQUIPMENT_LABEL = {
   balloon: {
     th: "ลูกโป่ง",
@@ -76,7 +72,6 @@ const EQUIPMENT_LABEL = {
     ms: "pen marker",
   },
 };
-
 const UI_TEXT = {
   th: {
     backTop: "<< ย้อนกลับ",
@@ -171,7 +166,6 @@ const UI_TEXT = {
     completeHint: 'Semua ujian selesai. Tekan "Ringkasan Eksperimen".',
   },
 };
-
 const CHARGES = {
   left: [
     { kind: "plus", top: "26%", left: "22%" },
@@ -192,21 +186,17 @@ const CHARGES = {
     { kind: "minus", top: "58%", left: "40%" },
   ],
 };
-
 const formatTime = (totalSeconds) => {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 };
-
 function getTrialLabel(trial, language) {
   return trial?.label?.[language] || trial?.label?.th || "";
 }
-
 function getEquipmentLabel(equipment, language) {
   return EQUIPMENT_LABEL[equipment]?.[language] || EQUIPMENT_LABEL[equipment]?.th || "";
 }
-
 function getTrialCompactLabel(trial, language) {
   const compact = {
     "balloon-both": {
@@ -230,10 +220,8 @@ function getTrialCompactLabel(trial, language) {
       ms: "1 pen marker",
     },
   };
-
   return compact[trial?.id]?.[language] || compact[trial?.id]?.th || getTrialLabel(trial, language);
 }
-
 export default function P6ElectricForceEffectSim() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -246,12 +234,7 @@ export default function P6ElectricForceEffectSim() {
   const [sequenceNotice, setSequenceNotice] = useState("");
   const [trialResults, setTrialResults] = useState({});
   const t = UI_TEXT[language];
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[language];
-
+  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const activeTrials = useMemo(() => TRIAL_OPTIONS, []);
   const totalTrials = TRIAL_OPTIONS.length;
   const completedCount = useMemo(
@@ -265,29 +248,30 @@ export default function P6ElectricForceEffectSim() {
   );
   const selectedTrialMeta = TRIAL_OPTIONS.find((t) => t.id === selectedTrial) || null;
   const selectedTrialLabel = selectedTrialMeta ? getTrialLabel(selectedTrialMeta, language) : "";
-  const notSelectedLabel = language === "th" ? "ยังไม่ได้เลือก" : language === "en" ? "Not selected" : "Belum dipilih";
+  const notSelectedLabel =
+    language === "th" ? "ยังไม่ได้เลือก" : language === "en" ? "Not selected" : "Belum dipilih";
   const currentResult = selectedTrial ? trialResults[selectedTrial] : null;
+  const currentResultMode = currentResult?.mode || selectedTrialMeta?.mode || "one";
+  const currentResultLabel = currentResult
+    ? RESULT_BY_MODE[currentResultMode]?.[language] || RESULT_BY_MODE[currentResultMode]?.th || ""
+    : "";
   const totalExperimentTime = useMemo(
     () => activeTrials.reduce((sum, trial) => sum + (trialResults[trial.id]?.time || 0), 0),
     [activeTrials, trialResults]
   );
-
   const selectedMode = selectedTrialMeta?.mode || null;
   const usingMarker = (selectedTrialMeta?.equipment || selectedEquipment) === "marker";
   const leftCharged = charged && started && Boolean(selectedTrial);
   const rightCharged = charged && started && selectedMode === "both";
   const isRubbing = started && isRunning && Boolean(selectedTrial);
   const mode = !charged || !started ? "idle" : selectedMode === "both" ? "repel" : "attract";
-
   const hint = useMemo(() => {
     if (!selectedTrial) return t.tapTrialFirst;
-    if (!started)
-      return `${language === "th" ? "พร้อมทดลอง" : language === "en" ? "Ready" : "Sedia"}: ${selectedTrialLabel}`;
+    if (!started) return t.pressStart;
     if (isRunning) return t.rubbing;
     if (currentResult) return t.recorded;
     return t.pressStart;
-  }, [currentResult, isRunning, language, selectedTrial, selectedTrialLabel, started, t.pressStart, t.recorded, t.rubbing, t.tapTrialFirst]);
-
+  }, [currentResult, isRunning, selectedTrial, started, t.pressStart, t.recorded, t.rubbing, t.tapTrialFirst]);
   const summaryText = useMemo(() => {
     if (!selectedTrial) return t.chooseTrialFirst;
     if (isRunning) return "";
@@ -307,7 +291,6 @@ export default function P6ElectricForceEffectSim() {
     }
     return "";
   }, [allTrialsCompleted, completedCount, isRunning, language, nextPendingTrial, t.chooseTrialFirst, t.summary, totalTrials]);
-
   const bubbleText = useMemo(() => {
     if (!selectedTrial && nextPendingTrial) {
       const nextLabel = getTrialLabel(nextPendingTrial, language);
@@ -334,19 +317,15 @@ export default function P6ElectricForceEffectSim() {
         ? `What will happen in "${selectedTrialLabel}"?`
         : `Apa akan terjadi untuk "${selectedTrialLabel}"?`;
   }, [allTrialsCompleted, language, nextPendingTrial, selectedTrial, selectedTrialLabel, selectedTrialMeta?.id, t.chooseTrialFirst, t.oneBalloonHint, t.oneMarkerHint, trialResults]);
-
   useEffect(() => {
     if (!isRunning) return undefined;
     const timerId = setInterval(() => setSeconds((prev) => prev + 1), 1000);
     return () => clearInterval(timerId);
   }, [isRunning]);
-
   useEffect(() => {
     setSequenceNotice("");
   }, [language]);
-
   const canPickTrial = () => true;
-
   const handleSelectTrial = (id) => {
     const trial = TRIAL_OPTIONS.find((item) => item.id === id);
     if (!trial) return;
@@ -358,7 +337,6 @@ export default function P6ElectricForceEffectSim() {
     setIsRunning(false);
     setSeconds(0);
   };
-
   const handleStart = () => {
     if (!selectedTrial) {
       setSequenceNotice(t.chooseTrialFirst);
@@ -370,7 +348,6 @@ export default function P6ElectricForceEffectSim() {
     setSeconds(0);
     setIsRunning(true);
   };
-
   const handleStop = () => {
     if (!isRunning || !selectedTrial) return;
     const currentTrial = TRIAL_OPTIONS.find((trial) => trial.id === selectedTrial);
@@ -380,13 +357,12 @@ export default function P6ElectricForceEffectSim() {
     );
     const willCompleteAll = !nextAfterCurrent;
     const totalTimeAfterFinish = totalExperimentTime + seconds;
-
     setIsRunning(false);
     setCharged(true);
     setTrialResults((prev) => ({
       ...prev,
       [selectedTrial]: {
-        result: RESULT_BY_MODE[currentTrial?.mode || "one"][language] || RESULT_BY_MODE[currentTrial?.mode || "one"].th,
+        mode: currentTrial?.mode || "one",
         time: seconds,
       },
     }));
@@ -406,7 +382,6 @@ export default function P6ElectricForceEffectSim() {
       setSequenceNotice(t.completeHint);
     }
   };
-
   const handleGoSummary = () => {
     if (!allTrialsCompleted || isRunning) {
       setSequenceNotice(
@@ -420,7 +395,6 @@ export default function P6ElectricForceEffectSim() {
     }
     navigate(`/p6/experiment/electric-force-effect/result?time=${totalExperimentTime}`);
   };
-
   const handleReset = () => {
     setSelectedEquipment(null);
     setSelectedTrial(null);
@@ -431,7 +405,6 @@ export default function P6ElectricForceEffectSim() {
     setSeconds(0);
     setSequenceNotice("");
   };
-
   return (
     <div className="p6-force-sim-page">
       <style>{forceEffectSimStyles}</style>
@@ -449,7 +422,6 @@ export default function P6ElectricForceEffectSim() {
             </button>
           ))}
         </div>
-
         <div className="p6-force-sim-sidebar">
           <div className="p6-force-sim-sidewrap">
             <div className="p6-force-sim-menu is-static" role="region" aria-label={t.selectTrial}>
@@ -495,7 +467,7 @@ export default function P6ElectricForceEffectSim() {
             <div className="p6-force-sim-progress-head">
               <div className="p6-force-sim-progress-title">{t.progress}</div>
               <div className="p6-force-sim-progress-pill">
-                {language === "th" ? `ทำแล้ว ${completedCount}/${totalTrials}` : `${completedCount}/${totalTrials}`}
+                {language === "th" ? `ทำแล้ว ${completedCount}/${totalTrials}` : `${t.done} ${completedCount}/${totalTrials}`}
               </div>
             </div>
             <div className="p6-force-sim-progress-bar">
@@ -507,7 +479,6 @@ export default function P6ElectricForceEffectSim() {
             <div className="p6-force-sim-progress-text">{summaryText || sequenceNotice || t.hiddenSummary}</div>
           </div>
         </div>
-
         <div className="p6-force-sim-center">
           <div className="p6-force-sim-board">
             <div className="p6-force-sim-balloons">
@@ -623,25 +594,21 @@ export default function P6ElectricForceEffectSim() {
               <span className="p6-force-sim-current-trial-label">{t.currentTrial}:</span>{" "}
               <span className="p6-force-sim-current-trial-value">{selectedTrialLabel || notSelectedLabel}</span>
             </div>
-
             {currentResult && !isRunning && (
               <div className="p6-force-sim-result-card is-center">
                 <div className="p6-force-sim-result-title">{t.result}</div>
                 <div className="p6-force-sim-result-body">
-                  <span className="p6-force-sim-result-chip">{currentResult.result}</span>
+                  <span className="p6-force-sim-result-chip">{currentResultLabel}</span>
                   <span className="p6-force-sim-result-time">
                     {t.time}: {formatTime(currentResult.time)}
                   </span>
                 </div>
               </div>
             )}
-
             {/* removed per request */}
           </div>
         </div>
-
         <div className="p6-force-sim-right">
-
           <div className="p6-force-sim-actions">
             <button
               className="p6-force-sim-start"
@@ -677,11 +644,10 @@ export default function P6ElectricForceEffectSim() {
             type="button"
             onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
           >
-            {language === "th" ? "<< ย้อนกลับ" : language === "en" ? "<< Back" : "<< Kembali"}
+            {language === "th" ? "« ย้อนกลับ" : language === "en" ? "« Back" : "« Kembali"}
           </button>
         </div>
       </div>
     </div>
   );
 }
-

@@ -4,17 +4,17 @@ import { GRADE6_LANG_BAR_CLASS, grade6LangButtonClass } from "./grade6LangStyles
 
 const LANGUAGES = [
   { key: "th", label: "ไทย" },
-  { key: "en", label: "English" },
-  { key: "ms", label: "Melayu" },
+  { key: "en", label: "อังกฤษ" },
+  { key: "ms", label: "มลายู" },
 ];
 
 const EXPERIMENTS = [
   {
     id: "exp-1",
     title: {
-      th: "การทดลองที่ 7",
-      en: "Experiment 7",
-      ms: "Eksperimen 7",
+      th: "การทดลองที่ 1",
+      en: "Experiment 1",
+      ms: "Eksperimen 1",
     },
     subtitle: {
       th: "การเกิดแรงไฟฟ้า",
@@ -27,9 +27,9 @@ const EXPERIMENTS = [
   {
     id: "exp-2",
     title: {
-      th: "การทดลองที่ 8",
-      en: "Experiment 8",
-      ms: "Eksperimen 8",
+      th: "การทดลองที่ 2",
+      en: "Experiment 2",
+      ms: "Eksperimen 2",
     },
     subtitle: {
       th: "ผลของแรงไฟฟ้า",
@@ -67,11 +67,6 @@ export default function Grade6() {
   const [language, setLanguage] = useState("th");
   const backPath = "/p6/electric-force/vocab";
   const copy = PAGE_COPY[language];
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[language];
 
   const pageBg = {
     background:
@@ -137,7 +132,6 @@ export default function Grade6() {
         <div className="flex items-center gap-2" role="group" aria-label={copy.languageLabel}>
           {LANGUAGES.map((option) => {
             const isActive = option.key === language;
-
             return (
               <button
                 key={option.key}
@@ -145,25 +139,25 @@ export default function Grade6() {
                 onClick={() => setLanguage(option.key)}
                 className={grade6LangButtonClass(isActive)}
                 aria-pressed={isActive}
-                title={option.key === "th" ? langLabels.th : option.key === "en" ? langLabels.en : langLabels.ms}
+                title={option.label}
               >
-                {option.key === "th" ? langLabels.th : option.key === "en" ? langLabels.en : langLabels.ms}
+                {option.label}
               </button>
             );
           })}
         </div>
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-6 md:right-6">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white px-4 py-3 text-slate-700 shadow-[0_12px_26px_rgba(23,34,49,0.2)] transition hover:-translate-y-0.5"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           type="button"
           onClick={() => navigate(backPath)}
           aria-label={copy.backLabel}
           title={copy.backLabel}
         >
-          <span className="text-2xl leading-none">&lt;&lt;</span>
-          <span className="text-sm font-bold leading-none">{copy.backLabel}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{copy.backLabel}</span>
         </button>
       </div>
     </div>

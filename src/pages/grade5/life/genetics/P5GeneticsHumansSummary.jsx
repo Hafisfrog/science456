@@ -1,7 +1,8 @@
 ﻿import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
-import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./p5GeneticsLangShared.css";
+import "./P5GeneticsHumansSummaryOverrides.css";
 
 const TEXT = {
   th: {
@@ -27,8 +28,10 @@ const TEXT = {
 export default function P5GeneticsHumansSummary() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = LANG_BUTTON_TEXT[lang];
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -59,7 +62,7 @@ export default function P5GeneticsHumansSummary() {
         </section>
 
         <footer className="fixed bottom-3 left-3 right-3 z-20 flex items-center justify-between gap-3 max-[1180px]:flex-col max-[1180px]:items-stretch">
-          <div className="p5ghs-lang max-[1180px]:justify-center">
+          <div className="p5ghs-lang p5ghs-lang-p4 max-[1180px]:justify-center">
             <button
               type="button"
               className={lang === "th" ? "is-active notranslate" : "notranslate"}
@@ -87,24 +90,16 @@ export default function P5GeneticsHumansSummary() {
           </div>
 
           <div className="flex items-center gap-2 max-[1180px]:flex-wrap max-[1180px]:justify-end">
-            <button
-              type="button"
-              className="rounded-full px-6 py-[10px] text-lg font-extrabold text-slate-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.92),inset_0_0_0_2px_rgba(203,213,225,0.88),0_4px_0_rgba(148,163,184,0.55),0_12px_18px_rgba(15,23,42,0.12)] transition duration-150 hover:-translate-y-0.5 hover:brightness-[1.02] max-[1180px]:text-base notranslate"
-              style={{ background: "linear-gradient(180deg, #ffffff 0%, #f4f7fb 100%)" }}
-              translate="no"
-              onClick={() => navigate("/p5/life/genetics/humans")}
-            >
-              <span>{t.back}</span>
+            <button type="button" className="p5ghs-back-btn notranslate" translate="no" onClick={() => navigate("/p5/life/genetics/humans")}>
+              <span>{backLabel}</span>
             </button>
             <button
               type="button"
-              className="rounded-full px-6 py-[10px] text-lg font-extrabold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3),inset_0_0_0_2px_rgba(205,65,56,0.95),0_4px_0_rgba(182,53,46,0.95),0_12px_18px_rgba(172,46,46,0.28)] transition duration-150 hover:-translate-y-0.5 hover:brightness-[1.02] max-[1180px]:text-base notranslate"
-              style={{ background: "linear-gradient(180deg, #ff766d 0%, #f34f44 55%, #e94239 100%)" }}
+              className="p5ghs-next-btn notranslate"
               translate="no"
               onClick={() => navigate("/p5/life/genetics/humans/summary-2")}
             >
-              <span>{NEXT_LABEL[lang]}</span>
-              <span className="ml-1 text-[20px] leading-none">&gt;&gt;</span>
+              <span>{nextLabel}</span>
             </button>
           </div>
         </footer>

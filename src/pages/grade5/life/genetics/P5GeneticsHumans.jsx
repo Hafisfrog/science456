@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LabLayout from "../../../../components/LabLayout";
-import { LANG_BUTTON_TEXT, NEXT_LABEL, useP5GeneticsLang } from "./p5GeneticsI18n";
+import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumans.css";
 import "./p5GeneticsLangShared.css";
+import "./P5GeneticsHumansSummaryOverrides.css";
 
 const IMAGE_VERSION = "20260327-human-v3";
 
@@ -13,7 +14,8 @@ const TEXT = {
       "\u0e01\u0e32\u0e23\u0e16\u0e48\u0e32\u0e22\u0e17\u0e2d\u0e14\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
     topic:
       "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e15\u0e48\u0e32\u0e07 \u0e46 \u0e02\u0e2d\u0e07\u0e04\u0e19",
-    tapImage: "\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e23\u0e39\u0e1b",
+    tapImage:
+      "\u0e04\u0e33\u0e0a\u0e35\u0e49\u0e41\u0e08\u0e07 : \u0e43\u0e2b\u0e49\u0e19\u0e31\u0e01\u0e40\u0e23\u0e35\u0e22\u0e19\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e23\u0e39\u0e1b\u0e17\u0e35\u0e48\u0e40\u0e1b\u0e47\u0e19\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
     reset: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15",
     reveal: "\u0e40\u0e09\u0e25\u0e22",
     back: "<< \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
@@ -209,7 +211,9 @@ export default function P5GeneticsHumans() {
   const [showResults, setShowResults] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
-  const labels = LANG_BUTTON_TEXT[lang];
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
   const hasAnswers = Object.keys(selectedTraits).length > 0;
   const selectedCount = Object.keys(selectedTraits).length;
   const withVersion = (url) => `${url}${url.includes("?") ? "&" : "?"}v=${IMAGE_VERSION}`;
@@ -264,8 +268,6 @@ export default function P5GeneticsHumans() {
     <LabLayout title={t.title} showTeacher={false}>
       <div className="p5gh-page notranslate" translate="no">
         <section className="p5gh-board">
-          <h1 translate="no">{t.title}</h1>
-
           <div className="p5gh-topic" translate="no">{t.topic}</div>
           <div className="p5gh-score-box" aria-live="polite">
             <p className="p5gh-score-main">{t.scoreLabel}: {scoreDisplay}</p>
@@ -355,7 +357,7 @@ export default function P5GeneticsHumans() {
         </section>
 
         <footer className="p5gh-ground">
-          <div className="p5gh-lang">
+          <div className="p5gh-lang p5gh-lang-p4">
             <button
               type="button"
               className={lang === "th" ? "is-active" : ""}
@@ -382,17 +384,17 @@ export default function P5GeneticsHumans() {
           <div className="p5gh-actions">
             <button
               type="button"
-              className="p5gh-back"
+              className="p5gh-back p5gh-back-btn"
               onClick={() => navigate("/p5/life/genetics")}
             >
-              {t.back}
+              {backLabel}
             </button>
             <button
               type="button"
-              className="p5gh-next"
+              className="p5gh-next p5gh-next-btn"
               onClick={() => navigate("/p5/life/genetics/humans/summary")}
             >
-              {NEXT_LABEL[lang]}
+              {nextLabel}
             </button>
           </div>
         </footer>

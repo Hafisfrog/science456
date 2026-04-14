@@ -3,38 +3,35 @@ import { useNavigate } from "react-router-dom";
 
 const CONTENT = {
   th: {
-    grade: "ชั้นประถมศึกษาปีที่ 6",
     title: "วงจรไฟฟ้าใกล้ตัว",
     section: "จุดประสงค์การเรียนรู้",
     obj1: "อธิบายส่วนประกอบของวงจรไฟฟ้าอย่างง่ายได้",
     obj2: "ต่อวงจรไฟฟ้าอย่างง่าย และตรวจสอบวงจรเปิด-ปิดได้",
-    back: "<< กลับหน้าเลือกบทเรียน",
-    next: "ไปคำศัพท์ >>",
+    back: "ย้อนกลับ",
+    next: "ไปต่อ",
   },
   en: {
-    grade: "Grade 6",
     title: "Everyday Electric Circuits",
     section: "Learning Objectives",
     obj1: "Describe the components of a simple electric circuit. (K)",
     obj2: "Build a simple circuit and identify open/closed circuits. (K, P)",
-    back: "<< Back to Unit Select",
-    next: "Go to Vocabulary >>",
+    back: "Back",
+    next: "Next",
   },
   ms: {
-    grade: "Tahun 6",
     title: "Litar Elektrik Sekeliling Kita",
     section: "Objektif Pembelajaran",
     obj1: "Menerangkan komponen litar elektrik yang ringkas. (K)",
     obj2: "Membina litar ringkas dan mengenal pasti litar terbuka/tertutup. (K, P)",
-    back: "<< Kembali Pilih Unit",
-    next: "Pergi ke Kosa Kata >>",
+    back: "Kembali",
+    next: "Seterusnya",
   },
 };
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย", speechLang: "th-TH" },
-  { id: "en", label: "English", speechLang: "en-US" },
-  { id: "ms", label: "Melayu", speechLang: "ms-MY" },
+  { id: "en", label: "อังกฤษ", speechLang: "en-US" },
+  { id: "ms", label: "มลายู", speechLang: "ms-MY" },
 ];
 
 function speakText(text, lang) {
@@ -56,11 +53,6 @@ export default function P6ElectricCircuitObjectives() {
   const t = CONTENT[lang];
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || "th-TH";
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
 
   const pageBg = {
     background:
@@ -83,10 +75,6 @@ export default function P6ElectricCircuitObjectives() {
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] flex-col">
         <div className="mb-4 text-center">
-          <div className="mb-3 inline-flex rounded-2xl bg-white/80 px-6 py-2 text-3xl font-extrabold text-blue-800 shadow">
-            {t.grade}
-          </div>
-
           <h1 className="text-4xl font-extrabold text-blue-600 md:text-[72px]">
             {t.title}
           </h1>
@@ -139,39 +127,41 @@ export default function P6ElectricCircuitObjectives() {
         </section>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
         {LANGUAGE_OPTIONS.map((item) => (
           <button
             key={item.id}
             onClick={() => setLang(item.id)}
-            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
               lang === item.id
-                ? "bg-[#bae6fd] text-slate-900"
-                : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+                ? "bg-[#bdd9f8]"
+                : "bg-[#eaf3ff]"
             }`}
-            title={langLabels[item.id]}
+            title={item.label}
             type="button"
           >
-            {langLabels[item.id]}
+            {item.label}
           </button>
         ))}
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex gap-3 pointer-events-auto md:bottom-6 md:right-6">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center justify-center rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6")}
           type="button"
         >
-          {t.back}
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
 
         <button
-          className="inline-flex items-center justify-center rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/vocab")}
           type="button"
         >
-          {t.next}
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

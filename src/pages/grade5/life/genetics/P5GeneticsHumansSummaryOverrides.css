@@ -1,0 +1,147 @@
+.p5gh-lang-p4,
+.p5ghs-lang-p4,
+.p5ghs2-lang-p4,
+.p5ghs3-lang-p4 {
+  gap: 8px !important;
+  padding: 10px 12px !important;
+  border: 0 !important;
+  border-radius: 20px !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: 0 18px 40px rgba(111, 144, 186, 0.2) !important;
+}
+
+.p5gh-lang-p4 button,
+.p5ghs-lang-p4 button,
+.p5ghs2-lang-p4 button,
+.p5ghs3-lang-p4 button {
+  min-width: 88px !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 11px 14px !important;
+  background: #eaf3ff !important;
+  color: #172033 !important;
+  font-family: "Prompt", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  box-shadow: none !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, color 0.18s ease !important;
+}
+
+.p5gh-lang-p4 button:hover,
+.p5ghs-lang-p4 button:hover,
+.p5ghs2-lang-p4 button:hover,
+.p5ghs3-lang-p4 button:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: 0 10px 20px rgba(111, 144, 186, 0.14) !important;
+  background: #eaf3ff !important;
+}
+
+.p5gh-lang-p4 button.is-active,
+.p5ghs-lang-p4 button.is-active,
+.p5ghs2-lang-p4 button.is-active,
+.p5ghs3-lang-p4 button.is-active {
+  background: #bdd9f8 !important;
+  color: #172033 !important;
+  box-shadow: none !important;
+}
+
+.p5gh-back-btn,
+.p5gh-next-btn,
+.p5ghs-back-btn,
+.p5ghs-next-btn,
+.p5ghs2-back-btn,
+.p5ghs2-next-btn,
+.p5ghs3-back-btn,
+.p5ghs3-next-btn {
+  border: none !important;
+  border-radius: 18px !important;
+  width: 176px !important;
+  height: 56px !important;
+  padding: 14px 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-family: "Prompt", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.p5gh-back-btn,
+.p5gh-next-btn,
+.p5ghs-back-btn,
+.p5ghs2-back-btn,
+.p5ghs3-back-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #213a8f !important;
+}
+
+.p5gh-next-btn,
+.p5ghs-next-btn,
+.p5ghs2-next-btn,
+.p5ghs3-next-btn {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+  color: #fff !important;
+}
+
+.p5gh-back-btn:hover,
+.p5gh-next-btn:hover,
+.p5ghs-back-btn:hover,
+.p5ghs-next-btn:hover,
+.p5ghs2-back-btn:hover,
+.p5ghs2-next-btn:hover,
+.p5ghs3-back-btn:hover,
+.p5ghs3-next-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5gh-back-btn:active,
+.p5gh-next-btn:active,
+.p5ghs-back-btn:active,
+.p5ghs-next-btn:active,
+.p5ghs2-back-btn:active,
+.p5ghs2-next-btn:active,
+.p5ghs3-back-btn:active,
+.p5ghs3-next-btn:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18) !important;
+}
+
+@media (max-width: 1180px) {
+  .p5gh-lang-p4,
+  .p5ghs-lang-p4,
+  .p5ghs2-lang-p4,
+  .p5ghs3-lang-p4 {
+    gap: 8px !important;
+    padding: 9px 11px !important;
+    border-radius: 18px !important;
+  }
+
+  .p5gh-lang-p4 button,
+  .p5ghs-lang-p4 button,
+  .p5ghs2-lang-p4 button,
+  .p5ghs3-lang-p4 button {
+    min-width: 80px !important;
+    padding: 10px 12px !important;
+    font-size: 14px !important;
+    border-radius: 15px !important;
+  }
+
+  .p5gh-back-btn,
+  .p5gh-next-btn,
+  .p5ghs-back-btn,
+  .p5ghs-next-btn,
+  .p5ghs2-back-btn,
+  .p5ghs2-next-btn,
+  .p5ghs3-back-btn,
+  .p5ghs3-next-btn {
+    width: 148px !important;
+    height: 50px !important;
+    padding: 13px 16px !important;
+    font-size: 18px !important;
+  }
+}

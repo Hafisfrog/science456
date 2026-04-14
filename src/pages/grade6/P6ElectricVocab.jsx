@@ -46,7 +46,7 @@ export default function P6ElectricVocab() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!("speechSynthesis" in window)) return;
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
     const loadVoices = () => {
       window.speechSynthesis.getVoices();
@@ -69,7 +69,7 @@ export default function P6ElectricVocab() {
     : "/p6/experiment/electric-generation/materials";
 
   const backLabel = "ย้อนกลับ";
-  const nextLabel = "เลือกการทดลอง";
+  const nextLabel = "ต่อไป";
 
   const subtitle = isUnitFlow
     ? "เรื่อง แรงไฟฟ้าน่ารู้"
@@ -147,7 +147,7 @@ export default function P6ElectricVocab() {
             type="button"
             aria-label={backLabel}
           >
-            <span className="p6-vocab-btn-icon">&lt;&lt;</span>
+            <span className="p6-vocab-btn-icon">&laquo;</span>
             {backLabel}
           </button>
           <button
@@ -157,7 +157,7 @@ export default function P6ElectricVocab() {
             aria-label={nextLabel}
           >
             {nextLabel}
-            <span className="p6-vocab-btn-icon">&gt;&gt;</span>
+            <span className="p6-vocab-btn-icon">&raquo;</span>
           </button>
         </div>
       </div>
