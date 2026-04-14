@@ -21,6 +21,7 @@ import P4GravityExp2Action from "../pages/grade4/gravity/exp2/P4GravityExp2Actio
 import P4GravityExp2Result from "../pages/grade4/gravity/exp2/P4GravityExp2Result";
 import P4GravityExp2Answer from "../pages/grade4/gravity/exp2/P4GravityExp2Answer";
 import P4GravityExp3Vocab from "../pages/grade4/gravity/exp3/P4GravityExp3Vocab";
+import P4GravityExp3Materials from "../pages/grade4/gravity/exp3/P4GravityExp3Materials";
 import P4GravityExp3Steps from "../pages/grade4/gravity/exp3/P4GravityExp3Steps";
 import P4GravityExp3Action from "../pages/grade4/gravity/exp3/P4GravityExp3Action";
 import P4GravityExp3Result from "../pages/grade4/gravity/exp3/P4GravityExp3Result";
@@ -126,6 +127,7 @@ export default function OtherRoutes() {
       <Route path="/p4/gravity/exp2/answer" element={<P4GravityExp2Answer />} />
 
       <Route path="/p4/gravity/exp3/vocab" element={<P4GravityExp3Vocab />} />
+      <Route path="/p4/gravity/exp3/materials" element={<P4GravityExp3Materials />} />
       <Route path="/p4/gravity/exp3/steps" element={<P4GravityExp3Steps />} />
       <Route path="/p4/gravity/exp3/action" element={<P4GravityExp3Action />} />
       <Route path="/p4/gravity/exp3/result" element={<P4GravityExp3Result />} />

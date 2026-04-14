@@ -261,17 +261,6 @@ export default function P4GravityExp2Result() {
         </button>
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
-            lang === "en"
-              ? "bg-[#bfe0ff] text-slate-900"
-              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
-          onClick={() => setLang("en")}
-          type="button"
-        >
-          {t.chipEn}
-        </button>
-        <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
             lang === "ms"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -280,6 +269,17 @@ export default function P4GravityExp2Result() {
           type="button"
         >
           {t.chipMs}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
         </button>
       </div>
 

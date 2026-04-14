@@ -130,17 +130,17 @@
 
 .p4-back-btn {
   position: fixed;
-  right: 24px;
-  bottom: 24px;
-  z-index: 12;
+  right: 18px;
+  bottom: 18px;
+  z-index: 7;
   border: none;
   border-radius: 18px;
   padding: 14px 18px;
   background: rgba(255, 255, 255, 0.92);
-  color: #213a8f;
+  color: #0f172a;
   font-family: 'Prompt', sans-serif;
   font-size: 20px;
-  font-weight: 900;
+  font-weight: 1000;
   cursor: pointer;
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
   transition: transform .18s ease, box-shadow .18s ease;
@@ -158,40 +158,39 @@
 
 .p4-langbar {
   position: fixed;
-  left: 24px;
-  bottom: 24px;
-  z-index: 12;
+  left: 18px;
+  bottom: 18px;
+  z-index: 7;
   display: inline-flex;
-  gap: 8px;
+  gap: 10px;
   padding: 10px 12px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18px 40px rgba(111, 144, 186, 0.2);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
 }
 
 .p4-langbtn {
-  min-width: 88px;
   border: 0;
-  border-radius: 16px;
-  padding: 11px 14px;
-  background: #eaf3ff;
-  color: #172033;
+  border-radius: 14px;
+  padding: 10px 18px;
+  background: #e6f2ff;
+  color: #0f172a;
   font-family: 'Prompt', sans-serif;
-  font-size: 15px;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 1000;
   cursor: pointer;
   box-shadow: none;
   transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease;
 }
 
 .p4-langbtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(111, 144, 186, 0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 22px rgba(0, 0, 0, 0.14);
 }
 
 .p4-langbtn.is-active {
-  background: #bdd9f8;
-  color: #172033;
+  background: #bfe0ff;
+  color: #0f172a;
   box-shadow: none;
 }
 
@@ -201,23 +200,25 @@
   }
 
   .p4-langbar {
-    gap: 8px;
-    padding: 9px 11px;
-    border-radius: 18px;
+    bottom: 12px;
+    left: 12px;
+    gap: 6px;
+    padding: 7px;
+    border-radius: 12px;
   }
 
   .p4-langbtn {
-    min-width: 80px;
-    padding: 10px 12px;
-    font-size: 14px;
-    border-radius: 15px;
+    padding: 8px 10px;
+    font-size: 13px;
+    border-radius: 10px;
   }
 
   .p4-back-btn {
-    right: 20px;
-    bottom: 20px;
-    padding: 13px 16px;
-    font-size: 18px;
+    right: 12px;
+    bottom: 12px;
+    padding: 10px 10px;
+    border-radius: 12px;
+    font-size: 13px;
   }
 }
 
@@ -244,24 +245,19 @@
   }
 
   .p4-langbar {
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
-    justify-content: space-between;
+    right: auto;
+    justify-content: flex-start;
   }
 
   .p4-langbtn {
     min-width: 0;
-    flex: 1 1 0;
-    padding: 10px 7px;
-    font-size: 14px;
+    flex: 0 0 auto;
   }
 
   .p4-back-btn {
-    left: 16px;
-    right: 16px;
-    bottom: 100px;
+    left: auto;
+    right: 12px;
+    bottom: 12px;
     text-align: center;
-    font-size: 18px;
   }
 }

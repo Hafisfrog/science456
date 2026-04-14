@@ -231,18 +231,6 @@ export default function P4GravityExp1Materials() {
 
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
-            lang === "en"
-              ? "bg-[#bfe0ff] text-slate-900"
-              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-          }`}
-          onClick={() => setLang("en")}
-          type="button"
-        >
-          {t.chipEn}
-        </button>
-
-        <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
             lang === "ms"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -251,6 +239,18 @@ export default function P4GravityExp1Materials() {
           type="button"
         >
           {t.chipMs}
+        </button>
+
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          }`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
         </button>
 
         {/* <button

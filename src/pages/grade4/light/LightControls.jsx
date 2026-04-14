@@ -8,7 +8,7 @@ const DEFAULT_LANGUAGE_LABELS = {
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
 
-const LANGUAGE_ORDER = ["th", "en", "ms"];
+const LANGUAGE_ORDER = ["th", "ms", "en"];
 
 function sanitizeNavLabel(label = "") {
   return label
@@ -27,7 +27,7 @@ export function LightLanguageSwitcher({
 
   return (
     <div
-      className={`inline-flex w-fit flex-wrap items-center gap-2 rounded-[26px] bg-white/92 p-2 shadow-[0_8px_18px_rgba(59,130,246,0.14)] backdrop-blur-sm ${className}`}
+      className={`inline-flex w-fit flex-wrap items-center gap-2.5 rounded-[22px] bg-white/95 px-3 py-2.5 shadow-[0_14px_28px_rgba(15,23,42,.14)] backdrop-blur-sm max-[720px]:gap-1.5 max-[720px]:rounded-[16px] max-[720px]:px-2 max-[720px]:py-2 ${className}`}
     >
       {LANGUAGE_ORDER.map((lang) => {
         const isActive = value === lang;
@@ -38,8 +38,10 @@ export function LightLanguageSwitcher({
             type="button"
             onClick={() => onChange?.(lang)}
             aria-pressed={isActive}
-            className={`min-w-[4rem] rounded-[18px] px-3.5 py-2 text-[0.85rem] font-black text-slate-950 transition sm:min-w-[5rem] sm:px-4 sm:py-2.5 sm:text-[1.05rem] ${
-              isActive ? "bg-[#bfe3ff]" : "bg-[#ebf4ff] hover:bg-[#deeeff]"
+            className={`inline-flex h-[48px] min-w-[76px] items-center justify-center rounded-[16px] px-4 text-[18px] font-black text-slate-950 transition max-[720px]:h-[36px] max-[720px]:min-w-[54px] max-[720px]:rounded-[12px] max-[720px]:px-2.5 max-[720px]:text-[14px] ${
+              isActive
+                ? "bg-[#c7dff8]"
+                : "bg-[#eef6ff] hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(15,23,42,.12)]"
             }`}
           >
             {resolvedLabels[lang] ?? lang.toUpperCase()}
@@ -67,13 +69,13 @@ export function LightNavButtons({
   const displayNextLabel = isLarge
     ? (resolvedNextLabel || "\u0e44\u0e1b\u0e15\u0e48\u0e2d")
     : resolvedNextLabel;
-  const wrapperClassName = isLarge ? "flex-nowrap gap-1.5 sm:gap-2" : "gap-2.5";
+  const wrapperClassName = isLarge ? "flex-nowrap gap-2 sm:gap-3" : "gap-3";
   const backButtonClassName = isLarge
-    ? "inline-flex min-w-[98px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-[#505b73] px-3 py-1.5 text-[0.76rem] font-['Prompt',sans-serif] font-black tracking-normal text-white shadow-[0_8px_16px_rgba(51,65,85,0.17)] transition hover:-translate-y-0.5 hover:bg-[#475167] sm:min-h-[44px] sm:min-w-[166px] sm:px-5 sm:text-[0.84rem]"
-    : "inline-flex items-center justify-center gap-1.5 rounded-full bg-[#4d5c75] px-5 py-2 text-[0.85rem] font-black text-white shadow-[0_8px_18px_rgba(71,85,105,0.2)] transition hover:-translate-y-0.5 hover:bg-[#43516a] sm:px-6 sm:py-2.5 sm:text-[1.05rem]";
+    ? "inline-flex min-w-[98px] items-center justify-center gap-1.5 whitespace-nowrap rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black tracking-normal text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+    : "inline-flex h-[62px] min-w-[128px] shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-[18px] bg-white/96 px-5 text-[20px] font-['Prompt',sans-serif] font-black tracking-normal text-slate-950 shadow-[0_12px_24px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(15,23,42,0.22)] active:translate-y-[1px] max-[720px]:h-[44px] max-[720px]:min-w-[104px] max-[720px]:gap-1 max-[720px]:rounded-[14px] max-[720px]:px-3 max-[720px]:text-[16px]";
   const nextButtonClassName = isLarge
-    ? "inline-flex min-w-[98px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#2d79ff] via-[#2f94f1] to-[#27bde9] px-3 py-1.5 text-[0.76rem] font-['Prompt',sans-serif] font-black tracking-normal text-white shadow-[0_8px_16px_rgba(37,99,235,0.18)] transition hover:-translate-y-0.5 hover:brightness-105 sm:min-h-[44px] sm:min-w-[166px] sm:px-5 sm:text-[0.84rem]"
-    : "inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#2f7bff] to-[#15b8e8] px-5 py-2 text-[0.85rem] font-black text-white shadow-[0_8px_18px_rgba(37,99,235,0.2)] transition hover:-translate-y-0.5 hover:brightness-105 sm:px-6 sm:py-2.5 sm:text-[1.05rem]";
+    ? "inline-flex min-w-[98px] items-center justify-center gap-1.5 whitespace-nowrap rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black tracking-normal text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+    : "inline-flex h-[62px] min-w-[128px] shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-[18px] bg-[#c83d3a] px-5 text-[20px] font-['Prompt',sans-serif] font-black tracking-normal text-white shadow-[0_12px_24px_rgba(127,29,29,0.24)] transition hover:-translate-y-0.5 hover:bg-[#b93633] hover:shadow-[0_16px_32px_rgba(127,29,29,0.28)] active:translate-y-[1px] max-[720px]:h-[44px] max-[720px]:min-w-[104px] max-[720px]:gap-1 max-[720px]:rounded-[14px] max-[720px]:px-3 max-[720px]:text-[16px]";
   const arrowClassName = isLarge ? "text-[0.88em] leading-none" : "";
   const backArrow = isLarge ? "\u25C0" : "\u00AB";
   const nextArrow = isLarge ? "\u25B6" : "\u00BB";

@@ -151,17 +151,17 @@ export default function P4() {
         </button>
         <button
           type="button"
-          className={`p4-langbtn ${lang === "en" ? "is-active" : ""}`}
-          onClick={() => setLang("en")}
-        >
-          {t.chipEn}
-        </button>
-        <button
-          type="button"
           className={`p4-langbtn ${lang === "ms" ? "is-active" : ""}`}
           onClick={() => setLang("ms")}
         >
           {t.chipMs}
+        </button>
+        <button
+          type="button"
+          className={`p4-langbtn ${lang === "en" ? "is-active" : ""}`}
+          onClick={() => setLang("en")}
+        >
+          {t.chipEn}
         </button>
       </div>
     </div>

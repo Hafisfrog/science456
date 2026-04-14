@@ -139,11 +139,11 @@ export default function P4GravityExp1Answer() {
           <button className={`ans2-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
             {t.chipTh}
           </button>
-          <button className={`ans2-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
-            {t.chipEn}
-          </button>
           <button className={`ans2-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
             {t.chipMs}
+          </button>
+          <button className={`ans2-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+            {t.chipEn}
           </button>
         </div>
       </div>

@@ -134,7 +134,7 @@ function SectionBadge({ children }) {
 export default function P4LightConceptSummary() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
-  const ui = UI[language] ?? UI.th;
+  const ui = useMemo(() => UI[language] ?? UI.th, [language]);
   const backLabel = language === "en" ? "Back" : language === "ms" ? "Kembali" : "ย้อนกลับ";
   const transparentExamples = [
     { src: "/images/materials/l10.png", label: ui.sections.transparent.tags[0] },
@@ -167,14 +167,6 @@ export default function P4LightConceptSummary() {
       imgClassName: "h-12 w-12 object-cover",
     },
   ];
-
-  const summarySpeechText = useMemo(() => {
-    const transparent = ui.sections.transparent;
-    const translucent = ui.sections.translucent;
-    const opaque = ui.sections.opaque;
-
-    return `${ui.pageTitle}. ${transparent.title}. ${transparent.description}. ${transparent.tags.join(", ")}. ${translucent.title}. ${translucent.description}. ${translucent.tags.join(", ")}. ${opaque.title}. ${opaque.description}. ${opaque.tags.join(", ")}.`;
-  }, [ui]);
 
   const buildSectionSpeechText = (section) => {
     if (!section) return "";
@@ -232,10 +224,6 @@ export default function P4LightConceptSummary() {
     }, 500);
   };
 
-  const speakSummary = () => {
-    speakContent(summarySpeechText);
-  };
-
   const speakSection = (section) => {
     speakContent(buildSectionSpeechText(section));
   };
@@ -249,7 +237,7 @@ export default function P4LightConceptSummary() {
       <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_18%_15%,rgba(255,255,255,0.9),transparent_40%),radial-gradient(circle_at_82%_8%,rgba(223,245,255,0.92),transparent_40%)]" />
 
       <div className="relative z-10 min-h-screen overflow-y-auto px-3 pb-28 pt-3 sm:px-5 sm:pb-32 sm:pt-4">
-        <div className="mx-auto flex w-full max-w-[1260px] flex-col gap-3">
+        <div className="mx-auto flex w-full max-w-[1380px] flex-col gap-3">
           <div className="flex items-center justify-center gap-3">
             <h1 className="m-0 text-center text-3xl font-extrabold text-black drop-shadow-[0_2px_0_rgba(255,255,255,0.55)] sm:text-5xl">
               {ui.pageTitle}
@@ -268,8 +256,8 @@ export default function P4LightConceptSummary() {
           <div className="relative">
             <div className="pointer-events-none absolute left-[5%] right-[5%] top-[58%] hidden h-16 -translate-y-1/2 rounded-full bg-gradient-to-r from-white/20 via-white/85 to-white/20 blur-[1px] lg:block" />
 
-            <div className="grid gap-4 lg:grid-cols-3">
-              <section className="relative flex min-h-[455px] flex-col overflow-hidden rounded-[52px] bg-[#8fd3e8]/58 p-4 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.45)]">
+            <div className="grid gap-3 lg:grid-cols-3">
+              <section className="relative flex min-h-[525px] flex-col overflow-hidden rounded-[56px] bg-[#8fd3e8]/58 p-5 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.45)]">
                 <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_18%_75%,#6ee7f9_0,transparent_35%),radial-gradient(circle_at_70%_25%,#d9f8ff_0,transparent_40%)]" />
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-3">
@@ -317,7 +305,7 @@ export default function P4LightConceptSummary() {
                 </div>
               </section>
 
-              <section className="relative flex min-h-[455px] flex-col overflow-hidden rounded-[52px] bg-[#d7d9dc]/64 p-4 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.5)]">
+              <section className="relative flex min-h-[525px] flex-col overflow-hidden rounded-[56px] bg-[#d7d9dc]/64 p-5 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.5)]">
                 <div className="pointer-events-none absolute inset-0 opacity-45 [background:radial-gradient(circle_at_20%_80%,#cfd8dc_0,transparent_40%),radial-gradient(circle_at_80%_24%,#eff2f7_0,transparent_44%)]" />
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-3">
@@ -364,7 +352,7 @@ export default function P4LightConceptSummary() {
                 </div>
               </section>
 
-              <section className="relative flex min-h-[455px] flex-col overflow-hidden rounded-[52px] bg-[#b4c1cc]/66 p-4 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.4)]">
+              <section className="relative flex min-h-[525px] flex-col overflow-hidden rounded-[56px] bg-[#b4c1cc]/66 p-5 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.4)]">
                 <div className="pointer-events-none absolute inset-0 opacity-55 [background:radial-gradient(circle_at_25%_82%,#3b4754_0,transparent_48%),radial-gradient(circle_at_75%_38%,#94a3b8_0,transparent_40%)]" />
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-3">
@@ -415,7 +403,7 @@ export default function P4LightConceptSummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 flex items-center gap-3 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30 flex items-center gap-3">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -433,7 +421,7 @@ export default function P4LightConceptSummary() {
         </button> */}
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-[18px] right-[18px] z-30">
         <LightNavButtons
           backLabel={backLabel}
           nextLabel={ui.next}

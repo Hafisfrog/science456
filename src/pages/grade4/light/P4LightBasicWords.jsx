@@ -267,7 +267,7 @@ export default function P4LightBasicWords() {
           </div>
         </div>
 
-        <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <div className="fixed bottom-[18px] right-[18px] z-30">
           <LightNavButtons
             backLabel="ย้อนกลับ"
             nextLabel="ต่อไป"

@@ -70,7 +70,7 @@ export default function P4LightCheck() {
         </div>
 
         {/* ปุ่มนำทาง */}
-        <div className="flex justify-end pt-4">
+        <div className="fixed bottom-[18px] right-[18px] z-30">
           <LightNavButtons
             backLabel="กลับไปแก้ไข"
             nextLabel="สรุปผล"

@@ -1,6 +1,6 @@
 ﻿import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
-import { LightLanguageSwitcher } from "./LightControls";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const SPEECH_LOCALES = {
   th: "th-TH",
@@ -43,6 +43,7 @@ const UI = {
     speakLabel: "🔊 ฟังสรุปผล (ไทย / English / Malay)",
     rowSpeak: "ฟังผล",
     addMore: "ทดลองอีกครั้ง",
+    back: "ย้อนกลับ",
     next: "ต่อไป",
   },
   en: {
@@ -67,6 +68,7 @@ const UI = {
     speakLabel: "🔊 Listen to summary (Thai / English / Malay)",
     rowSpeak: "Listen",
     addMore: "Try Again",
+    back: "Back",
     next: "Next",
   },
   ms: {
@@ -91,6 +93,7 @@ const UI = {
     speakLabel: "🔊 Dengar ringkasan (Thai / English / Malay)",
     rowSpeak: "Dengar",
     addMore: "Cuba Semula",
+    back: "Kembali",
     next: "Seterusnya",
   },
 };
@@ -113,15 +116,6 @@ export default function P4LightRecord() {
     });
   }, [pendingResults]);
   const ui = UI[language] ?? UI.th;
-
-  const counts = useMemo(
-    () => ({
-      transparent: uniqueResults.filter((item) => item.material.type === "transparent").length,
-      translucent: uniqueResults.filter((item) => item.material.type === "translucent").length,
-      opaque: uniqueResults.filter((item) => item.material.type === "opaque").length,
-    }),
-    [uniqueResults]
-  );
 
   useEffect(() => {
     if (!uniqueResults.length) {
@@ -244,33 +238,33 @@ export default function P4LightRecord() {
       <div className="pointer-events-none absolute inset-0 opacity-45 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.84),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(220,235,246,0.88),transparent_40%),linear-gradient(180deg,rgba(238,246,252,0.4),rgba(201,219,235,0.32))]" />
 
       <div className="relative z-10 min-h-screen overflow-y-auto p-4 pb-28 sm:pb-32">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-5xl">
           <div className="mb-6 overflow-hidden rounded-[28px] border border-[#bfd3e3] bg-[linear-gradient(180deg,rgba(244,248,251,0.88),rgba(228,237,245,0.82))] shadow-[0_16px_38px_rgba(106,138,165,0.16)] backdrop-blur-md">
           <div className="border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-4 text-[#133149]">
-            <h2 className="text-xl font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.35)]">{ui.tableTitle}</h2>
+            <h2 className="text-4xl font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.35)]">{ui.tableTitle}</h2>
           </div>
 
           <div className="overflow-x-auto p-4">
             <table className="w-full border-collapse">
               <thead>
                 <tr className="bg-transparent">
-                  <th className={`${tableHeaderTopClass} p-3 text-left`} rowSpan="2">
+                  <th className={`${tableHeaderTopClass} p-3 text-center text-xl font-black`} rowSpan="2">
                     {ui.objectName}
                   </th>
-                  <th className={`${tableHeaderTopClass} p-3 text-center`} colSpan="3">
+                  <th className={`${tableHeaderTopClass} p-3 text-center text-xl font-black`} colSpan="3">
                     {ui.lightPass}
                   </th>
-                  <th className={`${tableHeaderTopClass} p-3 text-center`} colSpan="3">
+                  <th className={`${tableHeaderTopClass} p-3 text-center text-xl font-black`} colSpan="3">
                     {ui.classifyAs}
                   </th>
                 </tr>
                 <tr className="bg-transparent">
-                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.passGood}</th>
-                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.passSome}</th>
-                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.passNone}</th>
-                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.transparent}</th>
-                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.translucent}</th>
-                  <th className={`${tableHeaderSubClass} p-2 text-center`}>{ui.opaque}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center text-lg font-black`}>{ui.passGood}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center text-lg font-black`}>{ui.passSome}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center text-lg font-black`}>{ui.passNone}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center text-lg font-black`}>{ui.transparent}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center text-lg font-black`}>{ui.translucent}</th>
+                  <th className={`${tableHeaderSubClass} p-2 text-center text-lg font-black`}>{ui.opaque}</th>
                 </tr>
               </thead>
               <tbody>
@@ -283,9 +277,9 @@ export default function P4LightRecord() {
                     <tr key={index} className="transition hover:bg-[#edf4fa]/85">
                       <td className={`${tableCellClass} p-3 font-medium text-[#17344d]`}>
                         <div className="flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-4">
                             <div
-                              className={`h-10 w-10 rounded-xl border border-white/60 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] ${
+                              className={`h-20 w-20 rounded-2xl border border-white/70 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] ${
                                 isTransparent
                                   ? "bg-[#d8e9f5]"
                                   : isTranslucent
@@ -327,7 +321,7 @@ export default function P4LightRecord() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -335,25 +329,23 @@ export default function P4LightRecord() {
         />
       </div>
 
-      <div className="fixed bottom-4 left-1/2 z-30 -translate-x-1/2 sm:bottom-6">
+      <div className="fixed bottom-[18px] left-1/2 z-30 -translate-x-1/2 font-['Prompt',sans-serif]">
         <button
           type="button"
           onClick={() => navigate("/p4/light/experiment")}
-          className="inline-flex items-center justify-center rounded-full bg-[#4d5c75] px-5 py-2 text-[0.85rem] font-black text-white shadow-[0_8px_18px_rgba(71,85,105,0.2)] transition hover:-translate-y-0.5 hover:bg-[#43516a] sm:px-6 sm:py-2.5 sm:text-[1.05rem]"
+          className="inline-flex h-[62px] min-w-[190px] items-center justify-center whitespace-nowrap rounded-[18px] bg-white/96 px-6 text-[20px] font-black text-slate-950 shadow-[0_12px_24px_rgba(15,23,42,0.18)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(15,23,42,0.22)] active:translate-y-[1px] max-[720px]:h-[44px] max-[720px]:min-w-[128px] max-[720px]:px-4 max-[720px]:text-[16px]"
         >
-          <span>{ui.addMore}</span>
+          ↺ {ui.addMore}
         </button>
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
-        <button
-          type="button"
-          onClick={goToSummary}
-          className="inline-flex items-center justify-center gap-1.5 rounded-full bg-gradient-to-r from-[#2f7bff] to-[#15b8e8] px-5 py-2 text-[0.85rem] font-black text-white shadow-[0_8px_18px_rgba(37,99,235,0.2)] transition hover:-translate-y-0.5 hover:brightness-105 sm:px-6 sm:py-2.5 sm:text-[1.05rem]"
-        >
-          <span>{ui.next}</span>
-          <span aria-hidden="true">»</span>
-        </button>
+      <div className="fixed bottom-[18px] right-[18px] z-30">
+        <LightNavButtons
+          backLabel={ui.back}
+          nextLabel={ui.next}
+          onBack={() => navigate("/p4/light/experiment")}
+          onNext={goToSummary}
+        />
       </div>
     </div>
   );

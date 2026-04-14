@@ -110,21 +110,21 @@ export default function P4GravityExp3Question() {
           </button>
           <button
             className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
-              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-            } max-[700px]:rounded-[10px] max-[700px]:px-[10px] max-[700px]:py-[8px] max-[700px]:text-[13px]`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {t.enChip}
-          </button>
-          <button
-            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
               lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
             } max-[700px]:rounded-[10px] max-[700px]:px-[10px] max-[700px]:py-[8px] max-[700px]:text-[13px]`}
             onClick={() => setLang("ms")}
             type="button"
           >
             {t.msChip}
+          </button>
+          <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] ${
+              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+            } max-[700px]:rounded-[10px] max-[700px]:px-[10px] max-[700px]:py-[8px] max-[700px]:text-[13px]`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
+            {t.enChip}
           </button>
         </div>
 

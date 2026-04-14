@@ -1,23 +1,22 @@
-﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../exp1/P4GravityExp1Materials.css";
-import "./P4GravityExp2Materials.css";
+import "../exp2/P4GravityExp2Materials.css";
 
-export default function P4GravityExp2Materials() {
+export default function P4GravityExp3Materials() {
   const navigate = useNavigate();
 
-  const BACK_PATH = "/p4/gravity/exp2/vocab";
-  const NEXT_PATH = "/p4/gravity/exp2/steps";
+  const BACK_PATH = "/p4/gravity/exp3/vocab";
+  const NEXT_PATH = "/p4/gravity/exp3/steps";
 
   const [lang, setLang] = useState("th");
   const speakingKeyRef = useRef(null);
 
   const assets = useMemo(() => {
     return {
-      bg: "/images/p4/exp1/bg-lab.jpg",
-      ball: "/images/p4/exp1/soccer-ball.png",
-      bocce: "/images/p4/exp1/bocce.png",
-      feather: "/images/p4/exp1/feather.png",
+      book: "/images/p4/exp3/book.png",
+      rock: "/images/p4/exp3/rock.png",
+      mango: "/images/p4/exp3/mango.png",
       springScale: "/images/p4/exp3/spring-scale.png",
     };
   }, []);
@@ -25,7 +24,7 @@ export default function P4GravityExp2Materials() {
   const text = useMemo(() => {
     return {
       th: {
-        title: "การทดลองที่ 2 เรื่อง แรงดึงดูดของโลกกับน้ำหนักของวัตถุ",
+        title: "การทดลองที่ 3 เรื่อง แรงดึงดูดของโลกกับแรงดึงดูดของดวงจันทร์",
         badge: "วัสดุอุปกรณ์",
         back: "ย้อนกลับ",
         next: "ต่อไป",
@@ -33,14 +32,14 @@ export default function P4GravityExp2Materials() {
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         items: [
-          { key: "ball", name: "ลูกบอล" },
-          { key: "bocce", name: "ลูกเปตอง" },
-          { key: "feather", name: "ขนนก" },
+          { key: "book", name: "หนังสือ" },
+          { key: "rock", name: "ก้อนหิน" },
+          { key: "mango", name: "มะม่วง" },
           { key: "springScale", name: "เครื่องชั่งสปริง" },
         ],
       },
       en: {
-        title: "Experiment 2: Earth's Gravity and Object Weight",
+        title: "Experiment 3: Earth's Gravity and the Moon's Gravity",
         badge: "Materials",
         back: "Back",
         next: "Next",
@@ -48,14 +47,14 @@ export default function P4GravityExp2Materials() {
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         items: [
-          { key: "ball", name: "Ball" },
-          { key: "bocce", name: "Bocce Ball" },
-          { key: "feather", name: "Feather" },
+          { key: "book", name: "Book" },
+          { key: "rock", name: "Rock" },
+          { key: "mango", name: "Mango" },
           { key: "springScale", name: "Spring Scale" },
         ],
       },
       ms: {
-        title: "Eksperimen 2: Graviti Bumi dan Berat Objek",
+        title: "Eksperimen 3: Graviti Bumi dan Graviti Bulan",
         badge: "Bahan & Peralatan",
         back: "Kembali",
         next: "Seterusnya",
@@ -63,9 +62,9 @@ export default function P4GravityExp2Materials() {
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         items: [
-          { key: "ball", name: "Bola" },
-          { key: "bocce", name: "Bola Bocce" },
-          { key: "feather", name: "Bulu" },
+          { key: "book", name: "Buku" },
+          { key: "rock", name: "Batu" },
+          { key: "mango", name: "Mangga" },
           { key: "springScale", name: "Penimbang Spring" },
         ],
       },
@@ -112,13 +111,7 @@ export default function P4GravityExp2Materials() {
 
   const isSpeaking = (key) => speakingKeyRef.current === key;
 
-  const imgOf = (key) => {
-    if (key === "ball") return assets.ball;
-    if (key === "bocce") return assets.bocce;
-    if (key === "feather") return assets.feather;
-    if (key === "springScale") return assets.springScale;
-    return "";
-  };
+  const imgOf = (key) => assets[key] || "";
 
   return (
     <div className="exp1m-page exp2m-page">

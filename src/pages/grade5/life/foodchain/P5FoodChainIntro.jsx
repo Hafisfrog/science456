@@ -9,30 +9,27 @@ const IMAGE_CARD = {
 const UI = {
   th: {
     grade: "ชั้นประถมศึกษาปีที่ 5",
-    topic: "ชีวิตสัมพันธ์",
     experiment: "วิทยาศาสตร์ ป.5",
     lesson: "ห่วงโซ่อาหาร",
-    subtitle: "เลือกหน่วยการเรียนรู้",
+    subtitle: "เลือกเรื่อง",
     back: "ย้อนกลับ",
     next: "ไปต่อ",
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     grade: "Grade 5",
-    topic: "Interdependence",
     experiment: "Science Grade 5",
     lesson: "Food Chain",
-    subtitle: "Choose a learning unit",
+    subtitle: "Select a topic",
     back: "Back",
     next: "Next",
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     grade: "Tahun 5",
-    topic: "Hidupan Saling Bergantung",
     experiment: "Sains Tahun 5",
     lesson: "Rantaian Makanan",
-    subtitle: "Pilih unit pembelajaran",
+    subtitle: "Pilih topik",
     back: "Kembali",
     next: "Seterusnya",
     langLabel: { th: "Thai", en: "English", ms: "Melayu" },
@@ -88,7 +85,7 @@ export default function P5FoodChainIntro() {
           </button>
         </div> */}
 
-        <div className="flex flex-1 flex-col items-center justify-center pb-24 pt-24 sm:pb-28 sm:pt-20">
+        <div className="flex flex-1 flex-col items-center justify-center pb-24 pt-20 sm:pb-28 sm:pt-16">
           <div className="text-center text-white">
             <div className="relative inline-flex items-center justify-center">
               <h1 className="text-4xl font-black tracking-tight drop-shadow-[0_5px_20px_rgba(0,0,0,0.45)] sm:text-6xl">
@@ -106,13 +103,13 @@ export default function P5FoodChainIntro() {
             <p className="mt-3 text-xl font-bold text-white/90 sm:text-3xl">{content.subtitle}</p>
           </div>
 
-          <div className="mt-8 w-full max-w-[620px]">
+          <div className="mt-7 w-full max-w-[min(680px,92vw)] sm:mt-8">
             <button
               type="button"
               onClick={() => navigate(nextPath)}
-              className="group relative w-full overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_50px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.42)]"
+              className="group relative w-full overflow-hidden rounded-[26px] bg-white shadow-[0_18px_50px_rgba(0,0,0,0.34)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(0,0,0,0.42)]"
             >
-              <div className="aspect-[16/9] w-full overflow-hidden bg-[#d7ebff]">
+              <div className="h-[clamp(230px,44vh,380px)] w-full overflow-hidden bg-[#d7ebff]">
                 <img
                   src={IMAGE_CARD.src}
                   alt={content.lesson}
@@ -120,20 +117,19 @@ export default function P5FoodChainIntro() {
                 />
               </div>
 
-              <div className="relative bg-white px-5 py-4 text-center sm:px-7 sm:py-5">
-                <p className="text-2xl font-black text-[#17223e] sm:text-[2rem]">{content.lesson}</p>
-                <p className="mt-1 text-sm font-semibold text-slate-500 sm:text-base">{content.topic}</p>
-                {/* <button
+              <div className="relative flex min-h-[86px] items-center justify-center bg-white px-16 py-4 text-center sm:min-h-[96px] sm:px-20 sm:py-5">
+                <p className="text-[clamp(28px,3vw,38px)] font-black leading-tight text-[#17223e]">{content.lesson}</p>
+                <button
                   type="button"
                   onClick={(event) => {
                     event.stopPropagation();
-                    speak(`${content.topic} ${content.lesson}`);
+                    speak(`${content.lesson}`);
                   }}
-                  className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#eef7ff] text-base text-[#2163a5] shadow-[0_4px_10px_rgba(0,0,0,0.12)] transition hover:bg-white"
-                  aria-label="Speak topic and lesson"
+                  className="absolute right-5 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-[#eef7ff] text-lg text-[#2163a5] shadow-[0_4px_10px_rgba(0,0,0,0.12)] transition hover:bg-white"
+                  aria-label="Speak lesson"
                 >
                   {"\uD83D\uDD0A"}
-                </button> */}
+                </button>
               </div>
             </button>
           </div>

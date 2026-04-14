@@ -12,8 +12,9 @@ export default function P4GravityObjectives() {
         grade: "ชั้นประถมศึกษาปีที่ 4",
         title: "แรงโน้มถ่วงของโลก",
         section: "จุดประสงค์การเรียนรู้",
-        obj1: "สังเกตและระบุผลของแรงโน้มถ่วงที่มีต่อวัตถุได้",
-        obj2: "ปฏิบัติการทดลองเกี่ยวกับผลของแรงโน้มถ่วงที่มีต่อวัตถุได้ครบทุกขั้นตอน",
+        obj1: "ระบุผลของแรงโน้มถ่วงที่มีต่อวัตถุได้",
+        obj2: "สังเกตผลของแรงโน้มถ่วงที่มีต่อวัตถุได้",
+        obj3: "ปฏิบัติการทดลองเกี่ยวกับผลของแรงโน้มถ่วงที่มีต่อวัตถุได้ครบทุกขั้นตอน",
         back: "ย้อนกลับ",
         next: "ต่อไป",
         speak: "ฟัง",
@@ -25,8 +26,9 @@ export default function P4GravityObjectives() {
         grade: "Grade 4",
         title: "Earth's Gravity",
         section: "Learning Objectives",
-        obj1: "Observe and describe the effect of gravity on objects.",
-        obj2: "Carry out a gravity experiment by following all steps.",
+        obj1: "Identify the effect of gravity on objects.",
+        obj2: "Observe the effect of gravity on objects.",
+        obj3: "Carry out an experiment about the effect of gravity on objects by following all steps.",
         back: "Back",
         next: "Next",
         speak: "Listen",
@@ -38,8 +40,9 @@ export default function P4GravityObjectives() {
         grade: "Tahun 4",
         title: "Graviti Bumi",
         section: "Objektif Pembelajaran",
-        obj1: "Memerhati dan menerangkan kesan graviti terhadap objek.",
-        obj2: "Menjalankan eksperimen graviti dengan mengikuti semua langkah.",
+        obj1: "Mengenal pasti kesan graviti terhadap objek.",
+        obj2: "Memerhati kesan graviti terhadap objek.",
+        obj3: "Menjalankan eksperimen tentang kesan graviti terhadap objek dengan mengikuti semua langkah.",
         back: "Kembali",
         next: "Seterusnya",
         speak: "Dengar",
@@ -51,6 +54,7 @@ export default function P4GravityObjectives() {
   }, []);
 
   const t = content[lang];
+  const objectives = [t.obj1, t.obj2, t.obj3];
 
   const stopAudio = () => {
     if (audioRef.current) {
@@ -115,11 +119,11 @@ export default function P4GravityObjectives() {
               1
             </div>
             <div className="flex-1 text-2xl font-black leading-[1.25] text-gray-900 max-[900px]:text-xl max-[640px]:text-lg">
-              {t.obj1}
+              {objectives[0]}
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(t.obj1)}
+              onClick={() => speakText(objectives[0])}
               type="button"
               title={t.speak}
             >
@@ -132,11 +136,28 @@ export default function P4GravityObjectives() {
               2
             </div>
             <div className="flex-1 text-2xl font-black leading-[1.25] text-gray-900 max-[900px]:text-xl max-[640px]:text-lg">
-              {t.obj2}
+              {objectives[1]}
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(t.obj2)}
+              onClick={() => speakText(objectives[1])}
+              type="button"
+              title={t.speak}
+            >
+              {"\uD83D\uDD0A"}
+            </button>
+          </div>
+
+          <div className="mb-[14px] flex items-center gap-[14px] rounded-[22px] border-4 border-sky-200 bg-sky-50 p-4">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-orange-400 text-[22px] font-black text-white shadow-[0_10px_18px_rgba(0,0,0,.16)]">
+              3
+            </div>
+            <div className="flex-1 text-2xl font-black leading-[1.25] text-gray-900 max-[900px]:text-xl max-[640px]:text-lg">
+              {objectives[2]}
+            </div>
+            <button
+              className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
+              onClick={() => speakText(objectives[2])}
               type="button"
               title={t.speak}
             >
@@ -151,10 +172,12 @@ export default function P4GravityObjectives() {
           alt="character"
         />
 
-        <div className="absolute bottom-6 left-6 z-20 flex items-center gap-[10px] rounded-[18px] bg-white/90 p-[10px_12px] shadow-[0_10px_22px_rgba(0,0,0,.12)] max-[640px]:bottom-3 max-[640px]:left-3 max-[640px]:gap-2 max-[640px]:p-[10px]">
+        <div className="absolute bottom-[18px] left-[18px] z-[7] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
           <button
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === "th" ? "bg-sky-200" : "bg-[#e6f2ff]"
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+              lang === "th"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
             onClick={() => setLang("th")}
             type="button"
@@ -162,35 +185,39 @@ export default function P4GravityObjectives() {
             {t.langTh}
           </button>
           <button
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === "en" ? "bg-sky-200" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {t.langEn}
-          </button>
-          <button
-            className={`rounded-[14px] border-none px-[14px] py-[10px] text-base font-black transition duration-150 hover:-translate-y-0.5 max-[640px]:px-3 max-[640px]:text-[15px] ${
-              lang === "ms" ? "bg-sky-200" : "bg-[#e6f2ff]"
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+              lang === "ms"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
             onClick={() => setLang("ms")}
             type="button"
           >
             {t.langMs}
           </button>
+          <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+              lang === "en"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
+            {t.langEn}
+          </button>
         </div>
 
-        <div className="absolute bottom-6 right-6 z-20 flex gap-3 max-[640px]:bottom-3 max-[640px]:right-3 max-[640px]:gap-2">
+        <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
           <button
-            className="cursor-pointer rounded-[20px] border-none bg-white/90 px-[22px] py-[14px] text-lg font-black text-gray-900 shadow-[0_12px_24px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[14px] max-[640px]:py-3 max-[640px]:text-base"
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p4")}
             type="button"
           >
             « {t.back}
           </button>
           <button
-            className="cursor-pointer rounded-[20px] border-none bg-gradient-to-br from-blue-600 to-blue-700 px-[22px] py-[14px] text-lg font-black text-white shadow-[0_12px_24px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 max-[640px]:px-[14px] max-[640px]:py-3 max-[640px]:text-base"
+            className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p4/gravity")}
             type="button"
           >

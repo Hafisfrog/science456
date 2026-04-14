@@ -158,7 +158,7 @@ export default function P4GravityExp3Vocab() {
 
         <button
           className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
-          onClick={() => navigate("/p4/gravity/exp3/steps")}
+          onClick={() => navigate("/p4/gravity/exp3/materials")}
           type="button"
         >
           {t.next} »

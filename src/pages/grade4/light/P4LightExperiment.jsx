@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { LightNavButtons } from "./LightControls";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const MATERIALS = [
@@ -51,9 +51,112 @@ const TYPE_META = {
 const clamp01 = (value) => Math.max(0, Math.min(value, 1));
 const TORCH_PERSON_IMAGE_SRC = "/images/materials/opp.png";
 const TORCH_IMAGE_SRC = "/images/materials/oo.png";
+const EXPERIMENT_LANG_LABELS = {
+  th: "\u0e44\u0e17\u0e22",
+  en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
+  ms: "\u0e21\u0e25\u0e32\u0e22\u0e39",
+};
+
+const EXPERIMENT_UI = {
+  th: {
+    menuInstruction: "เลือกวัตถุข้างบน",
+    countUnit: "ครั้ง",
+    tested: "ทดลองแล้ว",
+    open: "เปิด",
+    reset: "รีเซ็ต",
+    viewResult: "ดูผลการทดลอง",
+    running: "กำลังทดลอง...",
+    ready: "พร้อมทดลอง",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
+    torchAlt: "นักเรียนถือไฟฉาย",
+    materialNames: {
+      1: "กระจกใส",
+      2: "แก้วใส",
+      3: "พลาสติกใส",
+      4: "หมอก",
+      5: "กระดาษไข",
+      6: "กระจกฝ้า",
+      7: "แผ่นไม้",
+      8: "ผนังปูน",
+      9: "เหล็ก",
+    },
+    typeResults: {
+      transparent: "เห็นชัดเจน",
+      translucent: "เห็นไม่ชัด",
+      opaque: "มองไม่เห็น",
+    },
+  },
+  en: {
+    menuInstruction: "Choose a material above",
+    countUnit: "times",
+    tested: "Tested",
+    open: "Turn on",
+    reset: "Reset",
+    viewResult: "View results",
+    running: "Testing...",
+    ready: "Ready to test",
+    back: "Back",
+    next: "Next",
+    torchAlt: "Student holding a flashlight",
+    materialNames: {
+      1: "Clear glass pane",
+      2: "Clear glass",
+      3: "Clear plastic",
+      4: "Fog",
+      5: "Wax paper",
+      6: "Frosted glass",
+      7: "Wooden board",
+      8: "Concrete wall",
+      9: "Metal",
+    },
+    typeResults: {
+      transparent: "Clearly visible",
+      translucent: "Not clearly visible",
+      opaque: "Not visible",
+    },
+  },
+  ms: {
+    menuInstruction: "Pilih bahan di atas",
+    countUnit: "kali",
+    tested: "Sudah diuji",
+    open: "Hidupkan",
+    reset: "Tetap semula",
+    viewResult: "Lihat keputusan",
+    running: "Sedang menguji...",
+    ready: "Sedia untuk uji",
+    back: "Kembali",
+    next: "Seterusnya",
+    torchAlt: "Murid memegang lampu suluh",
+    materialNames: {
+      1: "Kepingan kaca jernih",
+      2: "Gelas jernih",
+      3: "Plastik jernih",
+      4: "Kabus",
+      5: "Kertas lilin",
+      6: "Kaca kabur",
+      7: "Papan kayu",
+      8: "Dinding konkrit",
+      9: "Logam",
+    },
+    typeResults: {
+      transparent: "Kelihatan jelas",
+      translucent: "Tidak begitu jelas",
+      opaque: "Tidak kelihatan",
+    },
+  },
+};
 
 // ─── Beam Canvas ──────────────────────────────────────────────────────────────
-function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, objectSize = 190, sourceX = 280 }) {
+function BeamCanvas({
+  shine,
+  beamProgress,
+  reflectProgress,
+  materialType,
+  objectSize = 190,
+  sourceX = 280,
+  objectXRatio = 0.56,
+}) {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -65,7 +168,7 @@ function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, object
     if (!shine || beamProgress <= 0) return;
 
     const src   = { x: sourceX, y: H / 2 };
-    const mid   = { x: W * 0.5, y: H / 2 };
+    const mid   = { x: W * objectXRatio, y: H / 2 };
     const tgt   = { x: W - 90,  y: H / 2 };
     const objectHalfW = objectSize / 2;
     const objectHalfH = objectSize / 2;
@@ -284,7 +387,7 @@ function BeamCanvas({ shine, beamProgress, reflectProgress, materialType, object
         ctx.restore();
       }
     }
-  }, [shine, beamProgress, reflectProgress, materialType, objectSize, sourceX]);
+  }, [shine, beamProgress, reflectProgress, materialType, objectSize, sourceX, objectXRatio]);
 
   return (
     <canvas
@@ -302,6 +405,7 @@ export default function P4LightExperiment() {
   const { state } = useLocation();
   
   // States
+  const [language, setLanguage] = useState("th");
   const [selectedMaterial, setSelectedMaterial] = useState(() => state?.material || MATERIALS[0]);
   const [shine, setShine] = useState(false);
   const [beamProgress, setBeamProgress] = useState(0);
@@ -322,13 +426,19 @@ export default function P4LightExperiment() {
   const rotationRef = useRef(null);
 
   const meta = TYPE_META[selectedMaterial.type];
+  const ui = EXPERIMENT_UI[language] ?? EXPERIMENT_UI.th;
+  const getMaterialName = (material) =>
+    ui.materialNames[material.id] ?? material.name;
+  const selectedMaterialName = getMaterialName(selectedMaterial);
+  const selectedResultText =
+    ui.typeResults[selectedMaterial.type] ?? meta.result;
   const experimentCount = experimentResults.length;
   const testedMaterialIds = new Set(
     experimentResults.map((result) => result.material?.id).filter(Boolean)
   );
   const isTight = viewportWidth > 0 && viewportWidth <= 420;
-  const baseMaterialSize = isTight ? 130 : isMobile ? 150 : 190;
-  const baseEmojiSize = isTight ? 78 : isMobile ? 90 : 112;
+  const baseMaterialSize = isTight ? 145 : isMobile ? 168 : 230;
+  const baseEmojiSize = isTight ? 88 : isMobile ? 102 : 136;
   const materialSize = Math.round((baseMaterialSize * materialSizePercent) / 100);
   const fallbackEmojiSize = Math.round((baseEmojiSize * materialSizePercent) / 100);
   const isFogMaterial = selectedMaterial.id === 4;
@@ -493,7 +603,7 @@ export default function P4LightExperiment() {
               const newResult = {
                 id: Date.now(),
                 material: selectedMaterial,
-                result: meta.result,
+                result: selectedResultText,
                 type: selectedMaterial.type,
                 timestamp: new Date().toISOString()
               };
@@ -525,13 +635,13 @@ export default function P4LightExperiment() {
   const menuListStyle = isMobile
     ? {
         ...S.menuList,
-        gap: isTight ? 10 : 12,
-        gridAutoRows: `minmax(${isTight ? 132 : 144}px, auto)`,
+        gap: isTight ? 8 : 10,
+        gridAutoRows: `minmax(${isTight ? 116 : 124}px, auto)`,
       }
     : {
         ...S.menuList,
-        gap: 10,
-        gridAutoRows: "minmax(124px, auto)",
+        gap: 8,
+        gridAutoRows: "minmax(108px, auto)",
       };
   const mainStyle = isMobile
     ? { ...S.main, flexDirection: "column", gap: 10, padding: "0 10px 12px", overflow: "visible" }
@@ -574,12 +684,12 @@ export default function P4LightExperiment() {
         pointerEvents: "none",
       }
     : { position: "absolute", inset: 0, pointerEvents: "none" };
-  const torchCharacterWidth = isMobile ? (isTight ? 112 : 130) : 182;
-  const torchLeft = isMobile ? (isTight ? 108 : 130) : 286;
-  const torchTopPercent = isMobile ? (isTight ? 56 : 55) : 54;
-  const torchToolWidth = isMobile ? (isTight ? 92 : 98) : 112;
-  const torchToolHeight = isMobile ? (isTight ? 48 : 52) : 60;
-  const torchToolRight = isMobile ? (isTight ? -18 : -20) : -22;
+  const torchCharacterWidth = isMobile ? (isTight ? 150 : 176) : 315;
+  const torchLeft = isMobile ? (isTight ? 112 : 138) : 390;
+  const torchTopPercent = isMobile ? (isTight ? 60 : 59) : 62;
+  const torchToolWidth = isMobile ? (isTight ? 124 : 136) : 186;
+  const torchToolHeight = isMobile ? (isTight ? 66 : 72) : 100;
+  const torchToolRight = isMobile ? (isTight ? -30 : -34) : -50;
   const beamSourceX = torchLeft + torchCharacterWidth + torchToolRight + torchToolWidth - 11;
   const torchShiftX = shine ? Math.min(14, torchRotation * 0.08) : 0;
   const torchShiftY = shine ? Math.min(10, torchRotation * 0.06) : 0;
@@ -604,55 +714,74 @@ export default function P4LightExperiment() {
           ...S.torchTool,
           width: torchToolWidth,
           height: torchToolHeight,
-          right: -18,
-          top: 38,
+          right: -30,
+          top: 54,
           transform: `rotate(${(-12 + torchRotation * 0.06).toFixed(1)}deg)`,
         }
       : {
           ...S.torchTool,
           width: torchToolWidth,
           height: torchToolHeight,
-          right: -20,
-          top: 45,
+          right: -34,
+          top: 62,
           transform: `rotate(${(-10 + torchRotation * 0.06).toFixed(1)}deg)`,
         }
     : {
         ...S.torchTool,
         width: torchToolWidth,
         height: torchToolHeight,
-        right: -22,
-        top: 58,
+        right: -50,
+        top: 100,
         transform: `rotate(${(-10 + torchRotation * 0.06).toFixed(1)}deg)`,
       };
   const torchGlowStyle = isMobile
     ? isTight
-      ? { ...S.torchGlow, width: 92, height: 72 }
-      : { ...S.torchGlow, width: 118, height: 90 }
-    : { ...S.torchGlow, width: 148, height: 108 };
+      ? { ...S.torchGlow, width: 124, height: 96 }
+      : { ...S.torchGlow, width: 162, height: 124 }
+    : { ...S.torchGlow, width: 228, height: 166 };
   const torchWideGlow = isMobile
     ? isTight
-      ? { width: 140, height: 88 }
-      : { width: 170, height: 104 }
-    : { width: 210, height: 128 };
-  const torchOpenButtonTopOffset = isMobile ? (isTight ? 100 : 114) : 150;
+      ? { width: 190, height: 118 }
+      : { width: 232, height: 144 }
+    : { width: 330, height: 204 };
+  const torchHeadCenterX = torchLeft + torchCharacterWidth * 0.42;
+  const torchStatusTopOffset = isMobile ? (isTight ? -120 : -138) : -232;
+  const torchOpenButtonTopOffset = isMobile ? (isTight ? 4 : 0) : -8;
   const torchButtonCenterX = torchLeft + torchCharacterWidth * 0.52;
-  const torchButtonSideOffset = isTight ? 42 : isMobile ? 48 : 54;
+  const torchActionButtonShiftX = isTight ? 18 : isMobile ? 24 : 36;
+  const torchResultButtonOffset = isTight ? 112 : isMobile ? 136 : 170;
+  const torchActionButtonTopOffset = isMobile ? (isTight ? 138 : 158) : 256;
+  const torchToolButtonX =
+    torchLeft + torchCharacterWidth + torchToolRight + torchToolWidth * 0.0;
+  const torchStatusStyle = {
+    ...S.statusDot,
+    bottom: "auto",
+    left: torchHeadCenterX,
+    top: `calc(${torchTopPercent}% + ${torchStatusTopOffset}px)`,
+    transform: "translate(-50%, -50%)",
+    zIndex: 28,
+    gap: isTight ? 8 : 10,
+    padding: isTight ? "8px 14px" : "10px 18px",
+    fontSize: isTight ? 14 : 16,
+    fontWeight: 800,
+  };
   const torchOpenBtnStyle = {
     position: "absolute",
-    left: torchButtonCenterX - torchButtonSideOffset,
+    left: torchToolButtonX,
     top: `calc(${torchTopPercent}% + ${torchOpenButtonTopOffset}px)`,
     transform: "translate(-50%, -50%)",
     zIndex: 28,
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: 6,
+    minWidth: isTight ? 84 : isMobile ? 92 : 102,
+    gap: isTight ? 6 : 8,
     border: "1px solid #93c5fd",
-    boxShadow: "0 10px 24px rgba(37,99,235,0.26)",
+    boxShadow: "0 12px 26px rgba(37,99,235,0.28)",
     backdropFilter: "blur(8px)",
-    padding: isTight ? "8px 14px" : "9px 16px",
+    padding: isTight ? "10px 18px" : isMobile ? "11px 20px" : "12px 22px",
     borderRadius: 999,
-    fontSize: isTight ? 12 : 13,
+    fontSize: isTight ? 14 : isMobile ? 15 : 16,
     fontWeight: 800,
     fontFamily: "inherit",
     color: "#fff",
@@ -663,13 +792,29 @@ export default function P4LightExperiment() {
   };
   const torchResetBtnStyle = {
     ...torchOpenBtnStyle,
-    left: torchButtonCenterX + torchButtonSideOffset,
+    left: torchButtonCenterX + torchActionButtonShiftX,
+    top: `calc(${torchTopPercent}% + ${torchActionButtonTopOffset}px)`,
+    minWidth: isTight ? 92 : isMobile ? 108 : 116,
+    gap: isTight ? 6 : 8,
+    padding: isTight ? "10px 18px" : isMobile ? "11px 20px" : "12px 22px",
+    borderRadius: 999,
+    fontSize: isTight ? 14 : isMobile ? 15 : 16,
     background: "linear-gradient(180deg,#f8fafc,#e2e8f0)",
     color: "#334155",
     border: "1px solid #cbd5e1",
     boxShadow: "0 8px 20px rgba(100,116,139,0.22)",
     opacity: 1,
     cursor: "pointer",
+  };
+  const experimentResultBtnStyle = {
+    ...torchResetBtnStyle,
+    left: torchButtonCenterX + torchActionButtonShiftX + torchResultButtonOffset,
+    minWidth: isTight ? 138 : isMobile ? 156 : 172,
+    padding: isTight ? "10px 18px" : isMobile ? "11px 22px" : "12px 24px",
+    background: "linear-gradient(135deg,#38bdf8,#2563eb)",
+    color: "#ffffff",
+    border: "1px solid #93c5fd",
+    boxShadow: "0 10px 24px rgba(37,99,235,0.26)",
   };
   const targetStyle = isMobile ? { ...S.target, right: isTight ? 8 : 16, gap: isTight ? 6 : 8 } : S.target;
   const targetGlowSize = isMobile ? (isTight ? 120 : 150) : 200;
@@ -719,19 +864,11 @@ export default function P4LightExperiment() {
         : "#64748b";
   const statusDotStyle = isMobile
     ? {
-        ...S.statusDot,
-        bottom: "auto",
-        top: isTight ? 8 : 10,
-        left: isTight ? 8 : 10,
-        padding: isTight ? "4px 8px" : "5px 10px",
+        ...torchStatusStyle,
       }
-    : S.statusDot;
-  const pageNavFloatingStyle = isMobile
-    ? { ...S.pageNavFloating, right: isTight ? 8 : 12, bottom: isTight ? 8 : 12, gap: isTight ? 6 : 8 }
-    : S.pageNavFloating;
-  const getMenuImageBtnStyle = (isSelected, isLast) => ({
+    : torchStatusStyle;
+  const getMenuImageBtnStyle = (isSelected) => ({
     ...S.menuImageBtn,
-    ...(isLast ? S.menuImageBtnLast : {}),
     position: "relative",
     opacity: 1,
     transform: isSelected ? "translateY(-2px)" : "translateY(0)",
@@ -765,19 +902,16 @@ export default function P4LightExperiment() {
                 {/* Floating Control Panel */}
         <div style={controlPanelStyle} className="glass-panel">
           <div style={S.menuHeaderRow}>
-            <div style={S.menuInstruction}>เลือกวัตถุข้างบน</div>
-            <div style={S.menuCountInline}>({experimentCount}ครั้ง)</div>
+            <div style={S.menuInstruction}>{ui.menuInstruction}</div>
+            <div style={S.menuCountInline}>({experimentCount} {ui.countUnit})</div>
           </div>
           <div style={menuListStyle}>
-            {MATERIALS.map((m, index) => (
+            {MATERIALS.map((m) => (
               <button
                 key={m.id}
-                title={m.name}
-                aria-label={m.name}
-                style={getMenuImageBtnStyle(
-                  selectedMaterial.id === m.id,
-                  index === MATERIALS.length - 1
-                )}
+                title={getMaterialName(m)}
+                aria-label={getMaterialName(m)}
+                style={getMenuImageBtnStyle(selectedMaterial.id === m.id)}
                 onClick={() => selectMaterial(m)}
               >
                 {testedMaterialIds.has(m.id) && (
@@ -797,13 +931,13 @@ export default function P4LightExperiment() {
                       fontWeight: 800,
                       boxShadow: "0 8px 16px rgba(34,197,94,0.28)",
                     }}
-                  >
+                    >
                     <span aria-hidden="true">✓</span>
-                    <span>ทดลองแล้ว</span>
+                    <span>{ui.tested}</span>
                   </span>
                 )}
                 <div style={getMenuImageFrameStyle(selectedMaterial.id === m.id)}>
-                  <img src={m.img} alt={m.name} style={S.menuImageThumb} />
+                  <img src={m.img} alt={getMaterialName(m)} style={S.menuImageThumb} />
                 </div>
                 <span
                   style={{
@@ -814,7 +948,7 @@ export default function P4LightExperiment() {
                       : "rgba(232,239,246,0.86)",
                   }}
                 >
-                  {m.id === 9 ? "เหล็ก" : m.name}
+                  {getMaterialName(m)}
                 </span>
               </button>
             ))}
@@ -827,8 +961,8 @@ export default function P4LightExperiment() {
             onClick={doShine}
             disabled={shine}
           >
-            <span style={{ fontSize: isTight ? 13 : 14 }}>⏻</span>
-            <span>เปิด</span>
+            <span style={{ fontSize: isTight ? 15 : isMobile ? 16 : 17 }}>⏻</span>
+            <span>{ui.open}</span>
           </button>
           <button
             style={torchResetBtnStyle}
@@ -836,18 +970,27 @@ export default function P4LightExperiment() {
             type="button"
           >
             <span style={{ fontSize: isTight ? 13 : 14 }}>↺</span>
-            <span>รีเซ็ต</span>
+            <span>{ui.reset}</span>
+          </button>
+
+          <button
+            style={experimentResultBtnStyle}
+            onClick={goToRecordSummary}
+            type="button"
+          >
+            <span>{ui.viewResult}</span>
           </button>
 
           <div style={stageStyle}>
-            <BeamCanvas
-              shine={shine}
-              beamProgress={beamProgress}
-              reflectProgress={reflectProgress}
-              materialType={selectedMaterial.type}
-              objectSize={materialSize}
-              sourceX={beamSourceX}
-            />
+              <BeamCanvas
+                shine={shine}
+                beamProgress={beamProgress}
+                reflectProgress={reflectProgress}
+                materialType={selectedMaterial.type}
+                objectSize={materialSize}
+                sourceX={beamSourceX}
+                objectXRatio={0.56}
+              />
 
           {/* Grid lines (decorative) */}
           <svg style={S.grid} width="100%" height="100%">
@@ -865,7 +1008,7 @@ export default function P4LightExperiment() {
           <div style={torchStyle}>
             <img
               src={TORCH_PERSON_IMAGE_SRC}
-              alt="นักเรียนถือไฟฉาย"
+              alt={ui.torchAlt}
               style={S.torchCharacterImg}
             />
             <div style={torchToolStyle}>
@@ -903,7 +1046,7 @@ export default function P4LightExperiment() {
             >
               <img 
                 src={selectedMaterial.img}
-                alt={selectedMaterial.name}
+                alt={selectedMaterialName}
                 style={{
                   ...S.matImg,
                   filter: materialImageFilter,
@@ -1021,7 +1164,7 @@ export default function P4LightExperiment() {
                 padding: "8px 16px",
                 boxShadow: `0 0 20px ${meta.color}`,
               }} className="pop-in">
-                {meta.result}
+                {selectedResultText}
               </div>
             )}
           </div>
@@ -1029,18 +1172,25 @@ export default function P4LightExperiment() {
           {/* Status dot */}
           <div style={statusDotStyle} className="status-dot">
             <div style={{ ...S.dot, background: shine ? "#4ade80" : "#475569", boxShadow: shine ? "0 0 8px #4ade80" : "none" }} className={shine ? "glow-pulse" : ""} />
-            <span style={{ color: "#475569", fontSize: 13 }}>{shine ? "กำลังทดลอง..." : "พร้อมทดลอง"}</span>
+            <span style={{ color: "#475569", fontSize: 13 }}>{shine ? ui.running : ui.ready}</span>
           </div>
         </div>
         </div>
       </main>
 
-        <div style={pageNavFloatingStyle}>
+        <div className="fixed bottom-[18px] left-[24px] z-30 font-['Prompt',sans-serif]">
+          <LightLanguageSwitcher
+            value={language}
+            onChange={setLanguage}
+            labels={EXPERIMENT_LANG_LABELS}
+            className="border-[12px] border-white bg-white shadow-[0_20px_45px_rgba(15,23,42,.18)]"
+          />
+        </div>
+
+        <div className="fixed bottom-[18px] right-[18px] z-30 font-['Prompt',sans-serif]">
           <LightNavButtons
-            className="justify-end"
-            size="large"
-            backLabel="ย้อนกลับ"
-            nextLabel="ดูผลลัพธ์ทั้งหมด"
+            backLabel={ui.back}
+            nextLabel={ui.next}
             onBack={() => navigate("/p4/light/thinking")}
             onNext={goToRecordSummary}
           />
@@ -1307,7 +1457,7 @@ const S = {
 
   matObj: {
     position: "absolute",
-    left: "50%", top: "50%",
+    left: "56%", top: "50%",
     transform: "translate(-50%,-50%)",
     display: "flex", flexDirection: "column", alignItems: "center",
     zIndex: 5,
@@ -1443,12 +1593,14 @@ const S = {
   // Control Panel
   controlPanel: {
     position: "absolute",
-    left: 0, top: 0, bottom: 0,
-    transform: "none",
+    left: 0,
+    top: "50%",
+    bottom: "auto",
+    transform: "translateY(-50%)",
     zIndex: 20,
-    width: 270,
-    maxHeight: "100%",
-    overflow: "hidden",
+    width: 390,
+    maxHeight: "calc(100vh - 160px)",
+    overflow: "visible",
     background: "linear-gradient(180deg, rgba(225,233,244,0.96) 0%, rgba(212,223,237,0.96) 100%)",
     border: "1px solid #b5cadf",
     borderRadius: "0 20px 20px 0",
@@ -1490,11 +1642,11 @@ const S = {
     background: "#f8fbff",
   },
   menuList: {
-    flex: 1,
+    flex: "none",
     display: "grid",
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: 10,
-    gridAutoRows: "minmax(112px, auto)",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gap: 8,
+    gridAutoRows: "minmax(108px, auto)",
     alignContent: "start",
     justifyItems: "stretch",
     paddingTop: 4,
@@ -1505,27 +1657,21 @@ const S = {
   },
   menuImageBtn: {
     border: "1px solid transparent",
-    borderRadius: 22,
-    padding: "10px 8px 8px",
+    borderRadius: 18,
+    padding: "8px 6px 7px",
     width: "100%",
-    minHeight: 112,
+    minHeight: 108,
     cursor: "pointer",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 6,
     transition: "all 0.2s",
     background: "transparent",
     backdropFilter: "blur(6px)",
   },
-  menuImageBtnLast: {
-    gridColumn: "1 / -1",
-    justifySelf: "center",
-    width: "58%",
-    minHeight: 124,
-    paddingBottom: 12,
-  },
+  menuImageBtnLast: {},
   menuImageFrame: {
     width: "100%",
     borderRadius: 18,
@@ -1693,15 +1839,6 @@ const S = {
     alignItems: "center",
     gap: 8,
     marginLeft: "auto",
-  },
-  pageNavFloating: {
-    position: "absolute",
-    right: 18,
-    bottom: 16,
-    zIndex: 70,
-    display: "flex",
-    alignItems: "center",
-    gap: 8,
   },
 };
 
