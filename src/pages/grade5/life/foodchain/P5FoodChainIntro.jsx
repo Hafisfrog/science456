@@ -14,7 +14,7 @@ const UI = {
     lesson: "ห่วงโซ่อาหาร",
     subtitle: "เลือกหน่วยการเรียนรู้",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
@@ -139,16 +139,18 @@ export default function P5FoodChainIntro() {
           </div>
         </div>
 
-        <div className="absolute bottom-4 left-4 z-30">
+        <div className="fixed bottom-[18px] left-[18px] z-40">
           <FoodChainLanguageSwitcher
+            size="materials"
             value={language}
             onChange={setLanguage}
             labels={content.langLabel}
           />
         </div>
 
-        <div className="absolute bottom-4 right-4 z-30 max-sm:bottom-20">
+        <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
           <FoodChainNavButtons
+            size="materials"
             backLabel={content.back}
             nextLabel={content.next}
             nextArrow={"\u00BB"}

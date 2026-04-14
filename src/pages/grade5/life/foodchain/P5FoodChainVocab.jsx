@@ -1,6 +1,6 @@
-﻿import { useEffect, useRef } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FoodChainNavButtons } from "./FoodChainControls";
+import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const VOCAB = [
   {
@@ -105,6 +105,24 @@ const VOCAB = [
   },
 ];
 
+
+const UI_COPY = {
+  th: {
+    back: "ย้อนกลับ",
+    next: "ไปต่อ",
+    languages: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+  },
+  en: {
+    back: "Back",
+    next: "Next",
+    languages: { th: "Thai", ms: "Malay", en: "English" },
+  },
+  ms: {
+    back: "Kembali",
+    next: "Seterusnya",
+    languages: { th: "Thai", ms: "Melayu", en: "English" },
+  },
+};
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
 
 const isSpeechSupported = () =>
@@ -191,7 +209,8 @@ function speakWithBestVoice(text, locale, langKey) {
 export default function P5FoodChainVocab() {
   const navigate = useNavigate();
   const currentAudioRef = useRef(null);
-
+  const [activeLang, setActiveLang] = useState("th");
+  const ui = UI_COPY[activeLang] ?? UI_COPY.th;
   useEffect(() => {
     return () => {
       if (currentAudioRef.current) {
@@ -318,7 +337,7 @@ export default function P5FoodChainVocab() {
                             })
                           }
                         >
-                          GB
+                          EN
                         </button>
                       </div>
                     </td>
@@ -328,11 +347,19 @@ export default function P5FoodChainVocab() {
             </table>
           </div>
         </div>
-
-        <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+        <div className="fixed bottom-[18px] left-[18px] z-40">
+          <FoodChainLanguageSwitcher
+            size="materials"
+            value={activeLang}
+            onChange={setActiveLang}
+            labels={UI_COPY.th.languages}
+          />
+        </div>
+        <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
           <FoodChainNavButtons
-            backLabel="ย้อนกลับ"
-            nextLabel="ไปต่อ"
+            size="materials"
+            backLabel={ui.back}
+            nextLabel={ui.next}
             nextArrow={"\u00BB"}
             onBack={() => navigate("/p5/life/foodchain")}
             onNext={() => navigate("/p5/life/foodchain/scene")}
@@ -342,3 +369,12 @@ export default function P5FoodChainVocab() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+

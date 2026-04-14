@@ -69,7 +69,7 @@ const UI = {
     correctAnswer: "เฉลยที่ถูกต้อง",
     noAnswer: "ยังไม่มีคำตอบ",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
     listen: "ฟังเสียง",
     studentAnswerSpeech: "คำตอบของเรา",
     correctAnswerSpeech: "เฉลยที่ถูกต้อง",
@@ -107,6 +107,8 @@ const UI = {
     correctAnswerSpeech: "Jawapan betul",
   }
 };
+
+const LANGUAGE_LABELS = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
 
 const getAnimalLabel = (name, language) =>
   ANIMAL_LABELS[name]?.[language] ?? ANIMAL_LABELS[name]?.th ?? name;
@@ -299,19 +301,24 @@ export default function P5FoodChainSim() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20">
-        <FoodChainLanguageSwitcher value={language} onChange={setLanguage} />
+      <div className="fixed bottom-[30px] left-[18px] z-40 max-[720px]:bottom-[20px]">
+        <FoodChainLanguageSwitcher
+          size="materials"
+          value={language}
+          onChange={setLanguage}
+          labels={LANGUAGE_LABELS}
+        />
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20">
+      <div className="fixed bottom-[30px] right-[18px] z-40 max-[720px]:bottom-[20px] max-[720px]:right-[12px]">
         <FoodChainNavButtons
+          size="materials"
           backLabel={ui.back}
           nextLabel={ui.next}
           nextArrow={"\u00BB"}
           onBack={() => navigate(-1)}
           onNext={() => navigate("/p5/life/foodchain/summary")}
         />
-
       </div>
     </div>
   );

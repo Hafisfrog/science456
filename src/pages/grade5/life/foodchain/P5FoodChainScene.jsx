@@ -113,7 +113,7 @@ const UI_COPY = {
     listenAll: "ฟังทั้งหมด",
     listenOne: "เล่นเสียง",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
     languages: {
       th: "ไทย",
       en: "อังกฤษ",
@@ -432,8 +432,9 @@ export default function P5FoodChainScene() {
         {sceneHintText}
       </div>
 
-      <div className="absolute bottom-3 left-3 z-50 sm:bottom-4 sm:left-4">
+      <div className="fixed bottom-[18px] left-[18px] z-[7]">
         <FoodChainLanguageSwitcher
+          size="materials"
           value={activeLang}
           onChange={setActiveLang}
           labels={UI_COPY.th.languages}
@@ -460,8 +461,9 @@ export default function P5FoodChainScene() {
         />
       ))}
 
-      <div className="absolute bottom-3 right-3 z-50 sm:bottom-4 sm:right-4">
+      <div className="fixed bottom-[18px] right-[18px] z-[7] max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
         <FoodChainNavButtons
+          size="materials"
           backLabel={ui.back}
           nextLabel={ui.next}
           nextArrow={"\u00BB"}

@@ -104,11 +104,7 @@ export default function P6() {
               {/* Image */}
               <div
                 onClick={() => navigate(lesson.to)}
-<<<<<<< HEAD
-                className="h-[clamp(220px,28vh,270px)] w-full cursor-pointer overflow-hidden bg-slate-200"
-=======
-                className="flex h-[clamp(255px,34vh,315px)] cursor-pointer items-center justify-center overflow-hidden bg-slate-200"
->>>>>>> d66394e07c311126b748434114b790e2f23c4454
+                className="flex h-[clamp(255px,34vh,315px)] w-full cursor-pointer items-center justify-center overflow-hidden bg-slate-200"
               >
                 <img
                   src={lesson.image}

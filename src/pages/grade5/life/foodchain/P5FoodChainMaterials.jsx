@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
 const LANG_TO_LOCALE = {
@@ -103,7 +102,7 @@ const PAGE_COPY = {
     title: "การทดลองที่ 5 เรื่อง ห่วงโซ่อาหาร",
     materials: "วัสดุอุปกรณ์",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
   },
   en: {
     title: "Experiment 5: Food Chain",
@@ -290,21 +289,57 @@ export default function P5FoodChainMaterials() {
         ))}
       </div>
 
-      <div className="absolute bottom-8 left-8 z-20">
-        <FoodChainLanguageSwitcher
-          value={activeLang}
-          onChange={setActiveLang}
-          labels={LANGUAGE_LABELS.th}
-        />
+      <div className="absolute bottom-[18px] left-[18px] z-[7] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            activeLang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          }`}
+          onClick={() => setActiveLang("th")}
+          type="button"
+        >
+          {LANGUAGE_LABELS[activeLang].th}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            activeLang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          }`}
+          onClick={() => setActiveLang("ms")}
+          type="button"
+        >
+          {LANGUAGE_LABELS[activeLang].ms}
+        </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            activeLang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          }`}
+          onClick={() => setActiveLang("en")}
+          type="button"
+        >
+          {LANGUAGE_LABELS[activeLang].en}
+        </button>
       </div>
-      <div className="absolute bottom-8 right-10">
-        <FoodChainNavButtons
-          backLabel={t.back}
-          nextLabel={t.next}
-          nextArrow={"\u00BB"}
-          onBack={() => navigate("/p5/life/foodchain/scene")}
-          onNext={() => navigate("/p5/life/foodchain/steps")}
-        />
+      <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p5/life/foodchain/scene")}
+          type="button"
+        >
+          {"\u00AB"} {t.back}
+        </button>
+
+        <button
+          className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p5/life/foodchain/steps")}
+          type="button"
+        >
+          {t.next} {"\u00BB"}
+        </button>
       </div>
     </div>
   );
