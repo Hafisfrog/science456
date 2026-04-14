@@ -10,7 +10,6 @@ export default function P4Gravity() {
       th: {
         title: "แรงโน้มถ่วงของโลก",
         sub: "เลือกการทดลอง",
-        back: "ย้อนกลับ",
         exp1Title: "การทดลองที่ 1",
         exp1Desc: "ผลของแรงโน้มถ่วง",
         exp2Title: "การทดลองที่ 2",
@@ -24,30 +23,28 @@ export default function P4Gravity() {
       en: {
         title: "Earth's Gravity",
         sub: "Choose an experiment",
-        back: "Back",
         exp1Title: "Experiment 1",
         exp1Desc: "Effects of Gravity",
         exp2Title: "Experiment 2",
         exp2Desc: "Earth's Gravity and Object Weight",
         exp3Title: "Experiment 3",
         exp3Desc: "Earth's Gravity vs Moon's Gravity",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       ms: {
         title: "Graviti Bumi",
         sub: "Pilih eksperimen",
-        back: "Kembali",
         exp1Title: "Eksperimen 1",
         exp1Desc: "Kesan Graviti",
         exp2Title: "Eksperimen 2",
         exp2Desc: "Graviti Bumi dan Berat Objek",
         exp3Title: "Eksperimen 3",
         exp3Desc: "Graviti Bumi dan Graviti Bulan",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
     };
   }, []);
@@ -67,6 +64,25 @@ export default function P4Gravity() {
         alt="Laboratory background"
         className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.9]"
       />
+
+      <button
+        className="fixed left-[18px] top-[18px] z-20 flex h-[64px] items-center gap-3 rounded-[18px] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,.96),rgba(191,224,255,.9))] px-5 text-[#1e3a8a] shadow-[0_14px_30px_rgba(8,15,35,.28)] backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#ffffff,#dbeafe)] hover:text-[#0f2f75] hover:shadow-[0_18px_38px_rgba(8,15,35,.34)] active:translate-y-px max-[640px]:left-[12px] max-[640px]:top-[12px] max-[640px]:h-[52px] max-[640px]:gap-2 max-[640px]:rounded-[14px] max-[640px]:px-3"
+        type="button"
+        onClick={() => navigate("/grades")}
+        aria-label="Go to SelectGrade"
+        title="SelectGrade"
+      >
+        <svg
+          aria-hidden="true"
+          className="h-[34px] w-[34px] shrink-0 max-[640px]:h-[28px] max-[640px]:w-[28px]"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+        >
+          <path d="M3 10.6 12 3l9 7.6v8.8a1.6 1.6 0 0 1-1.6 1.6H15v-6.2a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1V21H4.6A1.6 1.6 0 0 1 3 19.4v-8.8Z" />
+          <path d="M1.8 10.6a1 1 0 0 1 .1-1.4l9.5-8a1 1 0 0 1 1.3 0l9.5 8a1 1 0 1 1-1.3 1.5L12 3.2l-8.8 7.5a1 1 0 0 1-1.4-.1Z" />
+        </svg>
+        <span className="whitespace-nowrap text-[20px] font-extrabold max-[640px]:text-[16px]">หน้าหลัก</span>
+      </button>
 
       <div className="relative z-10">
         <h1 className="text-[48px] font-extrabold text-[#edf4ff] drop-shadow-[0_10px_24px_rgba(8,15,35,0.55)] max-[900px]:text-[40px] max-[640px]:text-[32px]">
@@ -130,16 +146,6 @@ export default function P4Gravity() {
             {t.chipMs}
           </button>
         </div>
-      </div>
-
-      <div className="fixed bottom-[18px] right-[18px] z-20 max-[640px]:bottom-[10px] max-[640px]:right-[10px]">
-        <button
-          className="rounded-[18px] bg-[linear-gradient(135deg,#ffffff,#f0f9ff)] px-[22px] py-[14px] text-[20px] font-extrabold text-[#1e3a8a] shadow-[0_8px_18px_rgba(0,0,0,.15)] transition duration-150 hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#e0f2fe,#ffffff)] hover:shadow-[0_12px_24px_rgba(0,0,0,.2)] active:translate-y-px active:shadow-[0_6px_14px_rgba(0,0,0,.18)] max-[640px]:px-[14px] max-[640px]:py-[10px] max-[640px]:text-[14px]"
-          onClick={() => navigate("/p4/gravity/objectives")}
-          type="button"
-        >
-          « {t.back}
-        </button>
       </div>
     </div>
   );

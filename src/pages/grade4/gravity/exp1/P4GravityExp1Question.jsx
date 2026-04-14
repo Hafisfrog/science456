@@ -30,9 +30,9 @@ export default function P4GravityExp1Question() {
         backBtn: "« Back",
         nextBtn: "Next »",
         soundTitle: "Sound",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       ms: {
         title: "Soalan Pemikiran",
@@ -42,9 +42,9 @@ export default function P4GravityExp1Question() {
         backBtn: "« Kembali",
         nextBtn: "Seterusnya »",
         soundTitle: "Bunyi",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
     };
   }, []);

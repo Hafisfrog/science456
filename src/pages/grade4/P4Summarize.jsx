@@ -48,7 +48,7 @@ export default function P4Summarize() {
         massRightTop: "มวลน้อย",
         massRightBottom: "แรงโน้มถ่วงน้อย",
         distanceTitle: "ระยะห่างจากจุดศูนย์กลางของโลก",
-        distanceBody: "เมื่อวัตถุอยู่ห่างจากจุดศูนย์กลางโลกมากขึ้น แรงโน้มถ่วงจะยิ่งลดลง",
+        distanceBody: "เมื่อวัตถุอยู่ห่างจากจุดศูนย์กลางโลกมากขึ้น\n แรงโน้มถ่วงจะยิ่งลดลง",
         distanceNear: "ระยะใกล้\nแรงโน้มถ่วงมาก",
         distanceFar: "ระยะไกล\nแรงโน้มถ่วงน้อย",
         chipTh: "ไทย",
@@ -251,14 +251,38 @@ export default function P4Summarize() {
         </div>
       </div>
 
-      <div className="p4sum-langDock">
-        <button className={`p4sum-chip ${lang === "th" ? "active" : ""}`} type="button" onClick={() => setLang("th")}>
+      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          type="button"
+          onClick={() => setLang("th")}
+        >
           {t.chipTh}
         </button>
-        <button className={`p4sum-chip ${lang === "en" ? "active" : ""}`} type="button" onClick={() => setLang("en")}>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          type="button"
+          onClick={() => setLang("en")}
+        >
           {t.chipEn}
         </button>
-        <button className={`p4sum-chip ${lang === "ms" ? "active" : ""}`} type="button" onClick={() => setLang("ms")}>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          type="button"
+          onClick={() => setLang("ms")}
+        >
           {t.chipMs}
         </button>
         {/* <button className="p4sum-chipAudio" type="button" onClick={speakAll} title={t.listenAll}>
@@ -266,9 +290,9 @@ export default function P4Summarize() {
         </button> */}
       </div>
 
-      <div className="p4sum-actions">
+      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
         <button
-          className="p4sum-btn p4sum-btn-back"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"
           onClick={() => {
             window.speechSynthesis?.cancel();
@@ -278,7 +302,7 @@ export default function P4Summarize() {
           « {t.back}
         </button>
         <button
-          className="p4sum-btn p4sum-btn-next"
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"
           onClick={() => {
             window.speechSynthesis?.cancel();

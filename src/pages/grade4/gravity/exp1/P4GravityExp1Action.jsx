@@ -105,9 +105,9 @@ export default function P4GravityExp1Action() {
         mUnit: "m",
         langTitle: "Language",
         langSub: "Choose a language",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
       ms: {
         topTitle: "Eksperimen Sebenar: Pilih • Tinggi • Lepas • Masa",
@@ -136,9 +136,9 @@ export default function P4GravityExp1Action() {
         mUnit: "m",
         langTitle: "Bahasa",
         langSub: "Pilih bahasa",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
       },
     };
   }, []);

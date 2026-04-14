@@ -2,6 +2,24 @@
 import { useNavigate } from "react-router-dom";
 import "./P4.css";
 
+const VOICE_MAP = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+
+  window.speechSynthesis.speak(utterance);
+}
+
 export default function P4() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -34,9 +52,9 @@ export default function P4() {
         title: "Science Grade 4",
         subtitle: "Choose a learning unit",
         back: "Back",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         cards: [
           {
             title: "Earth's Gravity",
@@ -56,9 +74,9 @@ export default function P4() {
         title: "Sains Tahun 4",
         subtitle: "Pilih unit pembelajaran",
         back: "Kembali",
-        chipTh: "Thai",
-        chipEn: "English",
-        chipMs: "Malay",
+        chipTh: "ไทย",
+        chipEn: "อังกฤษ",
+        chipMs: "มลายู",
         cards: [
           {
             title: "Graviti Bumi",
@@ -105,6 +123,18 @@ export default function P4() {
 
               <div className="p4-card-body">
                 <h2>{card.title}</h2>
+                <button
+                  type="button"
+                  className="p4-sound-btn"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    speakText(card.title, VOICE_MAP[lang]);
+                  }}
+                  aria-label={card.title}
+                  title={card.title}
+                >
+                  {"\u{1F50A}"}
+                </button>
               </div>
             </div>
           ))}

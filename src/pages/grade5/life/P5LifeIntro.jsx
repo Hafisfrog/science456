@@ -26,7 +26,6 @@ const TOPIC_MEDIA = {
 
 const TEXT = {
   th: {
-    grade: "ชั้นประถมศึกษาปีที่ 5",
     heading: "วิทยาศาสตร์ ป.5",
     sub: "เลือกหน่วยการเรียนรู้",
     back: "ย้อนกลับ",
@@ -35,19 +34,16 @@ const TEXT = {
       {
         id: "foodchain",
         title: "ชีวิตสัมพันธ์",
-        description: "เรียนรู้ความสัมพันธ์ของสิ่งมีชีวิต ผู้ผลิต ผู้บริโภค และผู้ย่อยสลายในธรรมชาติ",
         to: "/p5/life/foodchain",
       },
       {
         id: "genetics",
         title: "ลักษณะทางพันธุกรรม",
-        description: "สำรวจลักษณะที่ถ่ายทอดจากพ่อแม่สู่ลูกในสัตว์ พืช และมนุษย์",
         to: "/p5/life/genetics",
       },
     ],
   },
   en: {
-    grade: "Grade 5",
     heading: "Science P.5",
     subheading: "Choose a Lesson",
     sub: "Pick a topic to enter its activities and learning media.",
@@ -57,19 +53,16 @@ const TEXT = {
       {
         id: "foodchain",
         title: "Food Chain",
-        description: "Explore producers, consumers, decomposers, and how living things depend on one another.",
         to: "/p5/life/foodchain",
       },
       {
         id: "genetics",
         title: "Genetic Traits",
-        description: "Investigate traits passed from parents to offspring in animals, plants, and humans.",
         to: "/p5/life/genetics",
       },
     ],
   },
   ms: {
-    grade: "Tahun 5",
     heading: "Sains Tahun 5",
     subheading: "Pilih Pelajaran",
     sub: "Pilih topik untuk masuk aktiviti dan bahan pembelajaran.",
@@ -79,13 +72,11 @@ const TEXT = {
       {
         id: "foodchain",
         title: "Rantaian Makanan",
-        description: "Terokai pengeluar, pengguna, pengurai, dan hubungan hidupan dalam alam semula jadi.",
         to: "/p5/life/foodchain",
       },
       {
         id: "genetics",
         title: "Genetik",
-        description: "Kaji ciri yang diwarisi daripada ibu bapa kepada anak dalam haiwan, tumbuhan, dan manusia.",
         to: "/p5/life/genetics",
       },
     ],
@@ -112,7 +103,7 @@ function TopicCard({ topic, voice, openLabel, onOpen }) {
 
   return (
     <article
-      className="cursor-pointer overflow-hidden rounded-[34px] bg-[#f7fbff]/92 shadow-[0_22px_40px_rgba(15,23,42,0.16)] backdrop-blur-[2px] transition hover:-translate-y-1"
+      className="flex h-[clamp(400px,52vh,480px)] w-[min(600px,94vw)] max-w-[94vw] cursor-pointer flex-col overflow-hidden rounded-[26px] bg-[#f7fbff]/92 shadow-[0_16px_34px_rgba(33,53,95,0.15)] backdrop-blur-[2px] transition hover:-translate-y-1 lg:w-[min(600px,43vw)]"
       onClick={onOpen}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
@@ -123,7 +114,7 @@ function TopicCard({ topic, voice, openLabel, onOpen }) {
       role="button"
       tabIndex={0}
     >
-      <div className="relative h-[250px] overflow-hidden bg-[#dbe4f1]">
+      <div className="relative h-[clamp(255px,34vh,315px)] overflow-hidden bg-[#dbe4f1]">
         <img
           src={media.image}
           alt={topic.title}
@@ -136,15 +127,12 @@ function TopicCard({ topic, voice, openLabel, onOpen }) {
         />
       </div>
 
-      <div className="px-8 pb-7 pt-7">
+      <div className="flex min-h-[92px] flex-1 items-center justify-center px-5 py-3">
         <div className="flex items-center justify-center gap-4">
           <div className="text-center">
-            <h2 className="text-[clamp(28px,2.4vw,44px)] font-black leading-[1.05] text-slate-900">
+            <h2 className="text-[clamp(28px,2.4vw,44px)] font-black leading-[1.15] text-slate-900">
               {topic.title}
             </h2>
-            <p className="mt-4 max-w-[28rem] text-[clamp(15px,1vw,18px)] font-semibold leading-6 text-slate-600">
-              {topic.description}
-            </p>
           </div>
           <button
             type="button"
@@ -156,7 +144,7 @@ function TopicCard({ topic, voice, openLabel, onOpen }) {
             aria-label={topic.title}
             title={topic.title}
           >
-            🔊
+            {"\u{1F50A}"}
           </button>
         </div>
 
@@ -209,20 +197,17 @@ export default function P5LifeIntro() {
           >
             {content.back}
           </button>
-          <div className="rounded-full bg-white/88 px-6 py-3 text-[clamp(18px,1.1vw,24px)] font-extrabold text-emerald-700 shadow-[0_10px_20px_rgba(15,23,42,0.12)]">
-            {content.grade}
-          </div>
         </div>
 
-        <div className="mb-10 pt-2 text-center">
-          <h1 className="text-[clamp(42px,4.2vw,72px)] font-black leading-none text-[#2563eb]">
+        <div className="mb-6 pt-2 text-center">
+          <h1 className="text-4xl font-black leading-none text-[#2563eb] md:text-[46px]">
             {content.heading}
           </h1>
-          <p className="mt-3 text-[clamp(18px,1.8vw,34px)] font-semibold text-slate-800">{content.subheading}</p>
-          <p className="mt-2 text-[clamp(15px,1vw,20px)] font-semibold text-slate-600">{content.sub}</p>
+          <p className="mt-2 text-lg font-semibold text-slate-800 md:text-xl">{content.subheading}</p>
+          <p className="mt-2 text-[16px] font-semibold text-slate-600">{content.sub}</p>
         </div>
 
-        <div className="mx-auto grid w-full max-w-[1240px] gap-8 pb-24 lg:grid-cols-2">
+        <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 justify-items-center gap-7 pb-24 lg:grid-cols-2">
           {content.topics.map((topic) => (
             <TopicCard
               key={topic.id}
