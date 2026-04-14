@@ -230,11 +230,11 @@ export default function P4GravityExp3Result() {
         <button className={`exp1m-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
           {t.chipTh}
         </button>
-        <button className={`exp1m-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
-          {t.chipEn}
-        </button>
         <button className={`exp1m-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
           {t.chipMs}
+        </button>
+        <button className={`exp1m-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+          {t.chipEn}
         </button>
       </div>
 

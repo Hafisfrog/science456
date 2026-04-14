@@ -189,16 +189,6 @@ export default function P5LifeIntro() {
       </div>
 
       <div className="relative mx-auto flex min-h-[calc(100vh-40px)] max-w-[1460px] flex-col">
-        <div className="mb-6 flex items-center justify-between">
-          <button
-            type="button"
-            onClick={() => navigate("/grades")}
-            className="rounded-full bg-white/90 px-6 py-3 text-[clamp(18px,1.2vw,24px)] font-extrabold shadow-[0_10px_20px_rgba(15,23,42,0.12)] transition hover:-translate-y-0.5 hover:bg-white"
-          >
-            {content.back}
-          </button>
-        </div>
-
         <div className="mb-6 pt-2 text-center">
           <h1 className="text-4xl font-black leading-none text-[#2563eb] md:text-[46px]">
             {content.heading}
@@ -233,6 +223,14 @@ export default function P5LifeIntro() {
             </button>
           ))}
         </div>
+
+        <button
+          type="button"
+          onClick={() => navigate("/grades")}
+          className="fixed bottom-4 right-4 z-20 rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+        >
+          « {content.back}
+        </button>
       </div>
     </div>
   );

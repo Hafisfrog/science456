@@ -463,38 +463,6 @@ export default function P4GravityExp1Action() {
               {/* <div className="height-hint">{t.heightHint}</div> */}
             </div>
           </div>
-
-          {/* กล่องที่ 2: ภาษา */}
-          {/* <div className="pane lang-pane">
-            <div className="pane-head">
-              <div className="pane-title">{t.langTitle}</div>
-              <div className="pane-sub">{t.langSub}</div>
-            </div>
-
-            <div className="lang-grid">
-              <button
-                className={`lang-btn ${lang === "th" ? "active" : ""}`}
-                onClick={() => setLang("th")}
-                type="button"
-              >
-                {langLabels[lang].th}
-              </button>
-              <button
-                className={`lang-btn ${lang === "en" ? "active" : ""}`}
-                onClick={() => setLang("en")}
-                type="button"
-              >
-                {langLabels[lang].en}
-              </button>
-              <button
-                className={`lang-btn ${lang === "ms" ? "active" : ""}`}
-                onClick={() => setLang("ms")}
-                type="button"
-              >
-                {langLabels[lang].ms}
-              </button>
-            </div>
-          </div> */}
         </div>
 
         {/* RIGHT: ปล่อย + เวลา + ผล */}
@@ -633,19 +601,19 @@ export default function P4GravityExp1Action() {
         </button>
 
         <button
-          className={`lab2-chip ${lang === "en" ? "active" : ""}`}
-          onClick={() => setLang("en")}
-          type="button"
-        >
-          {t.chipEn}
-        </button>
-
-        <button
           className={`lab2-chip ${lang === "ms" ? "active" : ""}`}
           onClick={() => setLang("ms")}
           type="button"
         >
           {t.chipMs}
+        </button>
+
+        <button
+          className={`lab2-chip ${lang === "en" ? "active" : ""}`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
         </button>
       </div>
 

@@ -55,7 +55,7 @@ export default function P4Summarize() {
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         back: "ย้อนกลับ",
-        next: "ต่อไป",
+        next: "จบบทเรียน",
         // listenAll: "ฟังทั้งหมด",
       },
       en: {
@@ -140,12 +140,6 @@ export default function P4Summarize() {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
     window.speechSynthesis.speak(utterance);
-  };
-
-  const speakAll = () => {
-    const left = t.leftBlocks.map((item) => `${item.title}. ${item.body}`).join(" ");
-    const right = `${t.massTitle}. ${t.massBody}. ${t.distanceTitle}. ${t.distanceBody}`;
-    speak(`${t.title}. ${t.leftTitle}. ${left}. ${t.rightTitle}. ${right}`);
   };
 
   const renderSpeakButton = (text) => (
@@ -251,7 +245,7 @@ export default function P4Summarize() {
         </div>
       </div>
 
-      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+      <div className="fixed bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] backdrop-blur-sm max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
             lang === "th"
@@ -265,17 +259,6 @@ export default function P4Summarize() {
         </button>
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
-            lang === "en"
-              ? "bg-[#bfe0ff] text-slate-900"
-              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
-          type="button"
-          onClick={() => setLang("en")}
-        >
-          {t.chipEn}
-        </button>
-        <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
             lang === "ms"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -285,12 +268,20 @@ export default function P4Summarize() {
         >
           {t.chipMs}
         </button>
-        {/* <button className="p4sum-chipAudio" type="button" onClick={speakAll} title={t.listenAll}>
-          {SPEAKER_ICON}
-        </button> */}
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          type="button"
+          onClick={() => setLang("en")}
+        >
+          {t.chipEn}
+        </button>
       </div>
 
-      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+      <div className="fixed bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
         <button
           className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"

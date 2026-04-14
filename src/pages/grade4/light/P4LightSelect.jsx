@@ -109,45 +109,47 @@ export default function P4LightSelect() {
       <div className="pointer-events-none absolute left-1/2 top-[-13rem] h-[28rem] w-[140%] -translate-x-1/2 rounded-b-[100%] bg-sky-100/70" />
       <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(90deg,rgba(15,23,42,0.35)_0px,rgba(15,23,42,0.35)_10px,transparent_10px,transparent_190px)]" />
 
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <h1 className="mx-auto mb-3 w-fit rounded-xl border-4 border-sky-700 bg-white/95 px-5 py-2 text-center text-lg font-extrabold text-sky-900 shadow-[0_8px_22px_rgba(14,116,144,0.28)] sm:text-xl">
+      <div className="relative z-10 mx-auto max-w-[1500px]">
+        <h1 className="mx-auto mb-5 w-fit rounded-xl border-4 border-sky-700 bg-white/95 px-11 py-3.5 text-center text-[1.75rem] font-extrabold text-sky-900 shadow-[0_8px_22px_rgba(14,116,144,0.28)] sm:text-[2.25rem]">
           {ui.title}
         </h1>
 
-        <div className="mb-3 w-fit rounded-lg border-2 border-sky-700 bg-white/95 px-3 py-1.5 text-base font-bold text-sky-900 shadow-[0_6px_14px_rgba(14,116,144,0.24)]">
+        <div className="mb-5 w-fit rounded-lg border-2 border-sky-700 bg-white/95 px-6 py-3 text-2xl font-bold text-sky-900 shadow-[0_6px_14px_rgba(14,116,144,0.24)]">
           {ui.label}
         </div>
 
-        <div className="mx-auto grid w-full max-w-4xl grid-cols-3 justify-items-center gap-4">
+        <div className="mx-auto grid w-full max-w-[920px] grid-cols-3 justify-items-center gap-5">
           {MATERIALS.map((material) => (
             <div
               key={material.id}
-              className="w-full max-w-[250px] rounded-lg border border-sky-200 bg-sky-50/95 p-1.5 text-center shadow-[0_6px_14px_rgba(14,116,144,0.22)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(14,116,144,0.32)]"
+              className="w-full max-w-[270px] rounded-xl border border-sky-200 bg-sky-50/95 p-2.5 text-center shadow-[0_6px_14px_rgba(14,116,144,0.22)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(14,116,144,0.32)]"
             >
-              <div className="flex h-20 items-center justify-center sm:h-24">
+              <div className="flex h-24 items-center justify-center sm:h-28">
                 <img
                   src={material.img}
                   alt={material.name[language] ?? material.name.th}
                   className="max-h-full max-w-full object-contain"
                 />
               </div>
-              <p className="mt-1 text-xs font-bold text-slate-800 sm:text-sm">
-                {material.name[language] ?? material.name.th}
-              </p>
-              <button
-                type="button"
-                className="mt-1.5 inline-flex h-8 w-8 items-center justify-center rounded-lg bg-sky-100 text-sm text-sky-700 shadow-[0_4px_8px_rgba(14,116,144,0.2)] transition hover:-translate-y-0.5 hover:bg-sky-200 sm:h-9 sm:w-9 sm:text-base"
-                onClick={() => speakMaterial(material.name[language] ?? material.name.th)}
-                aria-label={`Speak ${material.name[language] ?? material.name.th}`}
-              >
-                {"\uD83D\uDD0A"}
-              </button>
+              <div className="mt-2 flex items-center justify-center gap-2">
+                <p className="text-base font-bold text-slate-800 sm:text-lg">
+                  {material.name[language] ?? material.name.th}
+                </p>
+                <button
+                  type="button"
+                  className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-sm text-sky-700 shadow-[0_4px_8px_rgba(14,116,144,0.2)] transition hover:-translate-y-0.5 hover:bg-sky-200 sm:h-9 sm:w-9 sm:text-base"
+                  onClick={() => speakMaterial(material.name[language] ?? material.name.th)}
+                  aria-label={`Speak ${material.name[language] ?? material.name.th}`}
+                >
+                  {"\uD83D\uDD0A"}
+                </button>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -155,7 +157,7 @@ export default function P4LightSelect() {
         />
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-[18px] right-[18px] z-30">
         <LightNavButtons
           backLabel={ui.back}
           nextLabel={ui.next}

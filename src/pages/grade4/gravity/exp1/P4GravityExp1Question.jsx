@@ -12,7 +12,7 @@ export default function P4GravityExp1Question() {
     return {
       th: {
         title: "คำถามชวนคิด",
-        q: "2. เมื่อปล่อยวัตถุ วัตถุจะเคลื่อนที่ไปทางใด ?\nและอะไรเป็นแรงที่ทำให้วัตถุตกลงสู่พื้น ?",
+        q: "เมื่อปล่อยวัตถุ วัตถุจะเคลื่อนที่ไปทางใด ?\nและอะไรเป็นแรงที่ทำให้วัตถุตกลงสู่พื้น ?",
         hintBtn: "มาหาคำตอบกัน",
         startBtn: "เริ่มการทดลอง",
         backBtn: "« ย้อนกลับ",
@@ -24,7 +24,7 @@ export default function P4GravityExp1Question() {
       },
       en: {
         title: "Think & Ask",
-        q: "2. When you release an object, which direction will it move ?\nAnd what force makes it fall to the ground ?",
+        q: "When you release an object, which direction will it move ?\nAnd what force makes it fall to the ground ?",
         hintBtn: "Let's find the answer",
         startBtn: "Start Experiment",
         backBtn: "« Back",
@@ -36,7 +36,7 @@ export default function P4GravityExp1Question() {
       },
       ms: {
         title: "Soalan Pemikiran",
-        q: "2. Apabila objek dilepaskan, ke arah manakah ia bergerak ?\nDan apakah daya yang menyebabkan objek jatuh ke tanah ?",
+        q: "Apabila objek dilepaskan, ke arah manakah ia bergerak ?\nDan apakah daya yang menyebabkan objek jatuh ke tanah ?",
         hintBtn: "Mari cari jawapan",
         startBtn: "Mula Eksperimen",
         backBtn: "« Kembali",
@@ -98,21 +98,21 @@ export default function P4GravityExp1Question() {
           </button>
           <button
             className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[720px]:flex-1 max-[720px]:px-[12px] max-[720px]:text-[14px] ${
-              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {t.chipEn}
-          </button>
-          <button
-            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[720px]:flex-1 max-[720px]:px-[12px] max-[720px]:text-[14px] ${
               lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
             }`}
             onClick={() => setLang("ms")}
             type="button"
           >
             {t.chipMs}
+          </button>
+          <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[720px]:flex-1 max-[720px]:px-[12px] max-[720px]:text-[14px] ${
+              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+            }`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
+            {t.chipEn}
           </button>
         </div>
 

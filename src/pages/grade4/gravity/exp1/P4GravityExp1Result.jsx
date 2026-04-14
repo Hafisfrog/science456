@@ -237,11 +237,11 @@ export default function P4GravityExp1Result() {
         <button className={`res-chip ${lang === "th" ? "active" : ""}`} onClick={() => setLang("th")} type="button">
           {t.th}
         </button>
-        <button className={`res-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
-          {t.en}
-        </button>
         <button className={`res-chip ${lang === "ms" ? "active" : ""}`} onClick={() => setLang("ms")} type="button">
           {t.ms}
+        </button>
+        <button className={`res-chip ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")} type="button">
+          {t.en}
         </button>
       </div>
 

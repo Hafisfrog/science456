@@ -9,7 +9,7 @@ export default function P4GravitySim1() {
   const copy = useMemo(() => {
     return {
       th: {
-        bubble: '1. "เคยสงสัยไหมว่า...ทำไมลูกบอลถึงตกลงพื้น ไม่ลอยขึ้นฟ้า ? "',
+        bubble: 'เคยสงสัยไหมว่า...ทำไมลูกบอลถึงตกลงพื้น ไม่ลอยขึ้นฟ้า ?',
         caption: "เริ่มการทดลอง",
         back: "ย้อนกลับ",
         next: "ต่อไป",
@@ -17,7 +17,7 @@ export default function P4GravitySim1() {
         speakTitle: "ฟังเสียง",
       },
       en: {
-        bubble: '1. "Have you ever wondered... why does a ball fall to the ground instead of floating up ? "',
+        bubble: 'Have you ever wondered... why does a ball fall to the ground instead of floating up ? ',
         caption: "Start Experiment",
         back: "Back",
         next: "Next",
@@ -25,7 +25,7 @@ export default function P4GravitySim1() {
         speakTitle: "Listen",
       },
       ms: {
-        bubble: '1. "Pernah terfikir... kenapa bola jatuh ke tanah, bukan terapung ke langit ? "',
+        bubble: 'Pernah terfikir... kenapa bola jatuh ke tanah, bukan terapung ke langit ?',
         caption: "Mula Eksperimen",
         back: "Kembali",
         next: "Seterusnya",
@@ -165,17 +165,6 @@ export default function P4GravitySim1() {
             </button>
             <button
               className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
-                lang === "en"
-                  ? "bg-[#bfe0ff] text-slate-900"
-                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-              }`}
-              onClick={() => setLang("en")}
-              type="button"
-            >
-              {langLabels[lang].en}
-            </button>
-            <button
-              className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
                 lang === "ms"
                   ? "bg-[#bfe0ff] text-slate-900"
                   : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -184,6 +173,17 @@ export default function P4GravitySim1() {
               type="button"
             >
               {langLabels[lang].ms}
+            </button>
+            <button
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+                lang === "en"
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              onClick={() => setLang("en")}
+              type="button"
+            >
+              {langLabels[lang].en}
             </button>
         </div>
 

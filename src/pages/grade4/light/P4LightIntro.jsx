@@ -87,18 +87,18 @@ export default function P4LightIntro() {
       <div className="pointer-events-none absolute inset-0 opacity-25 [background:repeating-linear-gradient(90deg,rgba(15,23,42,0.35)_0px,rgba(15,23,42,0.35)_10px,transparent_10px,transparent_190px)]" />
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <h1 className="mx-auto mb-4 w-fit rounded-md border-4 border-slate-900 bg-white px-6 py-3 text-center text-xl font-extrabold text-slate-900 shadow-[0_6px_18px_rgba(0,0,0,0.25)] sm:text-3xl">
+        <h1 className="mx-auto mb-4 w-fit rounded-md border-4 border-slate-900 bg-white px-10 py-3.5 text-center text-[1.75rem] font-extrabold text-slate-900 shadow-[0_6px_18px_rgba(0,0,0,0.25)] sm:text-[2.25rem]">
           {content.title}
         </h1>
 
         <div className="relative">
           <img
-            className="pointer-events-none absolute bottom-0 left-[-10px] h-auto w-[min(26%,260px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:w-[min(30%,230px)] max-[640px]:hidden"
+            className="pointer-events-none absolute bottom-[-45px] left-[-130px] h-auto w-[min(31%,310px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:bottom-[-86px] max-[900px]:w-[min(30%,230px)] max-[640px]:hidden"
             src="/images/p4/exp3/teacher.png"
             alt="teacher"
           />
 
-          <div className="ml-[220px] mb-3 w-fit rounded-md border-2 border-slate-900 bg-white px-4 py-2 text-lg font-bold text-slate-800 shadow-[0_4px_12px_rgba(0,0,0,0.2)] max-[900px]:ml-[180px] max-[640px]:ml-0">
+          <div className="ml-[220px] mb-3 w-fit rounded-md border-2 border-slate-900 bg-white px-6 py-3 text-2xl font-bold text-slate-800 shadow-[0_4px_12px_rgba(0,0,0,0.2)] max-[900px]:ml-[180px] max-[640px]:ml-0">
             {content.stepLabel}
           </div>
 
@@ -123,7 +123,7 @@ export default function P4LightIntro() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -131,7 +131,7 @@ export default function P4LightIntro() {
         />
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-[18px] right-[18px] z-30">
         <LightNavButtons
           backLabel={content.back}
           nextLabel={content.start}

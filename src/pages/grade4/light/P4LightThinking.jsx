@@ -1,48 +1,42 @@
 ﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LightLanguageSwitcher } from "./LightControls";
+import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const PERSON_IMAGE_SRC = "/images/p4/ko.png";
 const BOX_IMAGE_SRC = "/images/p4/op.png";
 
 const UI = {
   th: {
-    classLabel: "ห้องเรียนวิทยาศาสตร์",
     title: "คำถามชวนคิด",
     question:
-      "1. ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน ?",
-    answer: "มาหาคำตอบกัน",
+      "ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน ?",
     start: "เริ่มการทดลอง",
-    next: "ไปต่อ",
+    next: "ต่อไป",
     back: "ย้อนกลับ",
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
     speakText:
-      "คำถามชวนคิด ข้อที่ 1 ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน มาหาคำตอบกัน",
+      "คำถามชวนคิด ข้อที่ 1 ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน",
   },
   en: {
-    classLabel: "Science Classroom",
     title: "Thinking Question",
-    question: "1. Why do different materials let us see inside objects with different clarity?",
-    answer: "Let's find the answer",
+    question: "Why do different materials let us see inside objects with different clarity?",
     start: "Start Experiment",
     next: "Next",
     back: "Back",
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
     speakText:
-      "Thinking question number one. Why do different materials allow us to see objects inside with different clarity? Let's find the answer.",
+      "Thinking question number one. Why do different materials allow us to see objects inside with different clarity?",
   },
   ms: {
-    classLabel: "Bilik Sains",
     title: "Soalan Pemikiran",
     question:
-      "1. Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",
-    answer: "Mari cari jawapannya",
+      "Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",
     start: "Mula Eksperimen",
     next: "Seterusnya",
     back: "Kembali",
     langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     speakText:
-      "Soalan pemikiran nombor satu. Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza? Mari cari jawapannya.",
+      "Soalan pemikiran nombor satu. Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",
   },
 };
 
@@ -71,16 +65,16 @@ function ImageSlot({ src, alt, className }) {
 
 function BoxOnly({ toneClass, showPerson }) {
   return (
-    <div className="w-full max-w-[390px]">
-      <div className="mx-auto flex items-end justify-center gap-2 sm:gap-3">
+    <div className="w-full max-w-[520px]">
+      <div className="mx-auto flex items-end justify-center gap-3 sm:gap-4">
         {showPerson && (
           <ImageSlot
             src={PERSON_IMAGE_SRC}
             alt="Pointing student"
-            className="h-[185px] w-[120px] object-contain sm:h-[250px] sm:w-[160px]"
+            className="h-[250px] w-[162px] object-contain sm:h-[350px] sm:w-[224px]"
           />
         )}
-        <div className="h-52 w-44 sm:h-72 sm:w-60">
+        <div className="h-[280px] w-[240px] sm:h-[390px] sm:w-[326px]">
           <ImageSlot
             src={BOX_IMAGE_SRC}
             alt="Mystery box"
@@ -104,21 +98,6 @@ function StartExperimentButton({ label, onClick, className = "" }) {
       </span>
       <span className="mt-2.5 text-center text-[0.9rem] font-black leading-tight text-[#0b2246] sm:text-[1.35rem]">
         {label}
-      </span>
-    </button>
-  );
-}
-
-function AnswerPromptButton({ label, onClick, className = "" }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`relative w-fit rounded-[20px] border-2 border-black bg-white px-3.5 py-2.5 text-sm font-bold text-slate-800 shadow-[0_10px_20px_rgba(0,0,0,0.18)] sm:px-4 sm:py-3 sm:text-[1rem] ${className}`}
-    >
-      {label}
-      <span className="absolute -top-3 left-1/2 flex h-6 w-6 -translate-x-1/2 items-center justify-center rounded-full border-2 border-black bg-yellow-400 text-sm font-extrabold text-black sm:h-7 sm:w-7 sm:text-base">
-        ?
       </span>
     </button>
   );
@@ -155,26 +134,21 @@ export default function P4LightThinking() {
       <div className="pointer-events-none absolute inset-0 opacity-30 [background:radial-gradient(circle_at_15%_15%,rgba(255,255,255,0.7),transparent_45%),radial-gradient(circle_at_80%_0%,rgba(186,230,253,0.8),transparent_40%)]" />
 
       <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1360px] flex-col px-3 pb-32 pt-4 sm:px-6 sm:pb-36">
-        <div className="mb-3 ml-auto text-right text-lg font-semibold text-sky-700 sm:text-xl">
-          {content.classLabel}
-        </div>
 
         <div className="relative mx-auto w-full">
-          <div className="relative ml-0 w-full max-w-[620px] rounded-[28px] border-[4px] border-slate-900 bg-white px-4 py-3 shadow-[0_8px_18px_rgba(0,0,0,0.12)] sm:ml-10 sm:rounded-[34px] sm:border-[6px] sm:px-6 sm:py-4">
-            <p className="text-xl font-bold text-slate-700 sm:text-2xl">{content.title}</p>
-            <p className="mt-1 text-[clamp(1.3rem,2.2vw,2.1rem)] font-medium leading-snug text-slate-700">
+          <div className="relative ml-0 w-full max-w-[620px] rounded-[28px] border-[4px] border-slate-900 bg-white px-4 py-3 pr-14 shadow-[0_8px_18px_rgba(0,0,0,0.12)] sm:ml-10 sm:rounded-[34px] sm:border-[6px] sm:px-6 sm:py-4 sm:pr-16">
+            <p className="text-3xl font-black text-slate-700 sm:text-4xl">{content.title}</p>
+            <p className="mt-1 text-[clamp(1.05rem,1.75vw,1.6rem)] font-medium leading-snug text-slate-700">
               {content.question}
             </p>
-            <div className="mt-2 flex justify-end">
-              <button
-                type="button"
-                onClick={speak}
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-sm font-bold text-blue-600 transition hover:bg-blue-200 sm:h-9 sm:w-9 sm:text-base"
-                aria-label="Speak prompt"
-              >
-                {"\uD83D\uDD0A"}
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={speak}
+              className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-base font-bold text-blue-600 transition hover:bg-blue-200 sm:right-5 sm:top-5 sm:h-10 sm:w-10 sm:text-xl"
+              aria-label="Speak prompt"
+            >
+              {"\uD83D\uDD0A"}
+            </button>
 
             <div className="absolute -bottom-5 left-6 h-8 w-8 rotate-45 rounded-[8px] border-b-[4px] border-r-[4px] border-slate-900 bg-white sm:-bottom-6 sm:left-9 sm:h-10 sm:w-10 sm:border-b-[6px] sm:border-r-[6px]" />
           </div>
@@ -187,15 +161,16 @@ export default function P4LightThinking() {
             ))}
           </div>
 
-          <AnswerPromptButton
-            label={content.answer}
-            onClick={speak}
-            className="z-20 ml-auto mt-2 lg:absolute lg:bottom-4 lg:right-4 xl:right-8"
-          />
+          <div className="absolute bottom-[-64px] left-1/2 z-20 w-[min(360px,calc(100vw-36px))] -translate-x-1/2 max-[720px]:bottom-12 max-[720px]:w-[min(300px,calc(100vw-36px))]">
+            <StartExperimentButton
+              label={content.start}
+              onClick={() => navigate("/p4/light/experiment")}
+            />
+          </div>
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -203,41 +178,13 @@ export default function P4LightThinking() {
         />
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 flex w-full max-w-[350px] flex-col gap-2.5 sm:bottom-6 sm:right-6">
-        <div className="flex justify-center">
-          <StartExperimentButton
-            label={content.start}
-            onClick={() => navigate("/p4/light/experiment")}
-          />
-        </div>
-
-        <div className="grid w-full gap-3 sm:grid-cols-2 sm:gap-4">
-          <div className="flex sm:justify-start">
-            <button
-              type="button"
-              onClick={() => navigate("/p4/light/intro")}
-              className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-white px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-[#0b2246] shadow-[0_10px_18px_rgba(15,23,42,0.14)] transition hover:-translate-y-0.5 hover:brightness-[1.01] sm:min-h-[52px] sm:text-[0.98rem]"
-            >
-              <span aria-hidden="true" className="text-[1em] leading-none">
-                {"\u00AB"}
-              </span>
-              <span>{content.back}</span>
-            </button>
-          </div>
-
-          <div className="flex sm:justify-end">
-            <button
-              type="button"
-              onClick={() => navigate("/p4/light/experiment")}
-              className="inline-flex w-full items-center justify-center gap-1.5 rounded-[22px] bg-gradient-to-r from-[#2d79ff] via-[#2f94f1] to-[#27bde9] px-3.5 py-2 text-[0.84rem] font-black tracking-tight text-white shadow-[0_10px_18px_rgba(37,99,235,0.2)] transition hover:-translate-y-0.5 hover:brightness-105 sm:min-h-[52px] sm:text-[0.98rem]"
-            >
-              <span>{content.next}</span>
-              <span aria-hidden="true" className="text-[1em] leading-none">
-                {"\u00BB"}
-              </span>
-            </button>
-          </div>
-        </div>
+      <div className="fixed bottom-[18px] right-[18px] z-30">
+        <LightNavButtons
+          backLabel={content.back}
+          nextLabel={content.next}
+          onBack={() => navigate("/p4/light/intro")}
+          onNext={() => navigate("/p4/light/experiment")}
+        />
       </div>
     </div>
   );

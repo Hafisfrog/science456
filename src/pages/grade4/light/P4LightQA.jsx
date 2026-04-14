@@ -10,13 +10,9 @@ const SPEECH_LOCALES = {
 
 const UI = {
   th: {
-    header: "📣 คำถามมีคำตอบ : ตัวกลางของแสง",
-    subHeader: "ทำไมเรามองเห็นวัตถุด้านหลังไม่เหมือนกัน ?",
+    header: "คำถามนี้มีคำตอบ",
     headerSpeakLabel: "ฟังหัวข้อด้านบน",
-    questionTitle: "❓ คำถามชวนคิด",
-    questionText: "ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของด้านในได้ไม่เท่ากัน ?",
     answerTitle: "👉 เพราะวัสดุแต่ละชนิดยอมให้แสงผ่านได้ไม่เท่ากัน",
-    revealHint: "กดปุ่มเพื่อดูคำอธิบายของแต่ละข้อ",
     hiddenPlaceholder: "กดปุ่มเฉลยคำตอบเพื่อดูคำอธิบาย",
     reveal: "เฉลยคำตอบ",
     hide: "ซ่อนคำตอบ",
@@ -53,13 +49,9 @@ const UI = {
     finish: "ต่อไป",
   },
   en: {
-    header: "📣 Question and Answer: Medium of Light",
-    subHeader: "Why do we see objects behind materials differently?",
+    header: "Answers",
     headerSpeakLabel: "Listen to the top heading",
-    questionTitle: "❓ Guiding Question",
-    questionText: "Why do different materials make us see objects behind them differently?",
     answerTitle: "👉 Because each material allows light to pass through differently",
-    revealHint: "Press the button to reveal each explanation.",
     hiddenPlaceholder: "Press show answer to reveal the explanation.",
     reveal: "Show Answer",
     hide: "Hide Answer",
@@ -96,13 +88,9 @@ const UI = {
     finish: "Next",
   },
   ms: {
-    header: "📣 Soalan dan Jawapan: Medium Cahaya",
-    subHeader: "Mengapa kita melihat objek di belakang bahan secara berbeza?",
+    header: "Jawapan",
     headerSpeakLabel: "Dengar tajuk di atas",
-    questionTitle: "❓ Soalan Pemikiran",
-    questionText: "Mengapa bahan yang berbeza menyebabkan objek di belakang kelihatan tidak sama?",
     answerTitle: "👉 Kerana setiap bahan membenarkan cahaya melalui pada tahap berbeza",
-    revealHint: "Tekan butang untuk melihat penerangan bagi setiap jawapan.",
     hiddenPlaceholder: "Tekan tunjuk jawapan untuk melihat penerangan.",
     reveal: "Tunjuk Jawapan",
     hide: "Sembunyikan Jawapan",
@@ -177,18 +165,11 @@ export default function P4LightQA() {
     }));
   };
 
-  const buildTopSpeechText = () => {
-    if (language === "th") {
-      return `${content.questionTitle} ${content.questionText}`;
-    }
-    return `${content.questionTitle}. ${content.questionText}.`;
-  };
-
   const buildHeaderSpeechText = () => {
     if (language === "th") {
-      return `${content.header} ${content.subHeader}`;
+      return `${content.header}`;
     }
-    return `${content.header}. ${content.subHeader}.`;
+    return `${content.header}.`;
   };
 
   const buildCardSpeechText = (card) => {
@@ -288,57 +269,33 @@ export default function P4LightQA() {
 
       <div className="relative z-10 min-h-screen overflow-y-auto p-4 pb-28 sm:p-6 sm:pb-32">
         <div className="mx-auto max-w-6xl">
-          <div className="mb-3 flex items-center justify-center gap-3">
-            <h1 className="m-0 w-fit rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
-              {content.header}
+          <div className="mb-3 flex items-center justify-start pl-[240px] max-[900px]:pl-[190px] max-[640px]:justify-center max-[640px]:pl-0">
+            <h1 className="m-0 inline-flex w-fit items-center gap-4 rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
+              <span>{content.header}</span>
+              <button
+                type="button"
+                onClick={() => speakText(buildHeaderSpeechText())}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-200 bg-white/95 text-lg text-sky-800 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-sky-100 sm:h-12 sm:w-12"
+                aria-label={content.headerSpeakLabel}
+                title={content.headerSpeakLabel}
+              >
+                🔊
+              </button>
             </h1>
-            <button
-              type="button"
-              onClick={() => speakText(buildHeaderSpeechText())}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-200 bg-white/95 text-lg text-sky-800 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-sky-100 sm:h-12 sm:w-12"
-              aria-label={content.headerSpeakLabel}
-              title={content.headerSpeakLabel}
-            >
-              🔊
-            </button>
           </div>
-          <p className="mb-6 text-center text-sm font-semibold text-sky-900/85 sm:text-lg">
-            {content.subHeader}
-          </p>
 
           <div className="relative">
             <img
-              className="pointer-events-none absolute bottom-0 left-[-36px] h-auto w-[min(28%,280px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:w-[min(32%,240px)] max-[640px]:hidden"
+              className="pointer-events-none absolute bottom-[-6px] left-[-96px] h-auto w-[min(32%,320px)] select-none drop-shadow-[0_10px_14px_rgba(0,0,0,0.25)] max-[900px]:bottom-[-34px] max-[900px]:w-[min(32%,240px)] max-[640px]:hidden"
               src="/images/p4/exp3/teacher.png"
               alt="teacher"
             />
 
             <div className="ml-[230px] max-[900px]:ml-[190px] max-[640px]:ml-0">
-              <div className="mb-3 flex items-center gap-2">
-                <div className="inline-flex items-center gap-2 rounded-xl border-2 border-sky-300 bg-sky-50 px-3 py-1.5 text-base font-bold text-sky-800 shadow-[0_6px_14px_rgba(14,116,144,0.16)]">
-                  {content.questionTitle}
-                </div>
-                <button
-                  type="button"
-                  onClick={() => speakText(buildTopSpeechText())}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-sky-300 bg-white/95 text-lg text-sky-800 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-sky-100"
-                  aria-label={content.topSpeakLabel}
-                  title={content.topSpeakLabel}
-                >
-                  🔊
-                </button>
-              </div>
-
-              <div className="mb-4 text-base font-semibold text-sky-950 sm:text-lg">
-                {content.questionText}
-              </div>
 
               <div className="relative">
                 <div className="pointer-events-none absolute inset-0 -z-10 translate-x-3 translate-y-3 rounded-[28px] bg-cyan-300/70" />
                 <div className="rounded-[28px] border-[4px] border-sky-300 bg-white/95 p-5 shadow-[0_12px_26px_rgba(14,116,144,0.22)] backdrop-blur-sm sm:p-6">
-                  <div className="mb-5 rounded-[22px] border border-sky-100 bg-sky-50/90 px-4 py-3 text-sm font-semibold text-sky-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:text-base">
-                    {content.revealHint}
-                  </div>
 
                   <div className="grid gap-4">
                     {content.cards.map((card) => {
@@ -430,7 +387,7 @@ export default function P4LightQA() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -438,7 +395,7 @@ export default function P4LightQA() {
         />
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-[18px] right-[18px] z-30">
         <LightNavButtons
           className="ml-auto"
           backLabel={content.back}

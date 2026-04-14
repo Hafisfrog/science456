@@ -28,7 +28,7 @@ export default function P4LightIntroLearning() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#eef7f6] via-[#e7f2f3] to-[#dcecff] px-4 py-8 sm:px-6">
+    <div className="relative min-h-screen bg-gradient-to-b from-[#eef7f6] via-[#e7f2f3] to-[#dcecff] px-4 py-8 pb-28 sm:px-6">
       <div className="mx-auto max-w-5xl">
         <header className="mb-6 text-center">
           <h1 className="text-3xl font-extrabold text-slate-700 sm:text-4xl">
@@ -70,7 +70,7 @@ export default function P4LightIntroLearning() {
           </div>
         </div>
 
-        <div className="mt-7 flex justify-end">
+        <div className="fixed bottom-[18px] right-[18px] z-30">
           <LightNavButtons
             backLabel="ย้อนกลับ"
             nextLabel="ไปต่อ"

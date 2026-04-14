@@ -138,9 +138,9 @@ export default function P4GravityExp2Steps() {
               ))}
             </div>
 
-            <div className="flex min-w-0 flex-[0.75] items-end justify-center p-px max-[980px]:hidden">
+            <div className="flex min-w-0 flex-[0.55] items-end justify-center p-px max-[980px]:hidden">
               <img
-                className="h-auto w-[min(430px,100%)] translate-y-48 select-none [filter:drop-shadow(0_18px_28px_rgba(0,0,0,.22))]"
+                className="h-auto w-[min(330px,100%)] translate-y-24 select-none [filter:drop-shadow(0_18px_28px_rgba(0,0,0,.22))]"
                 src={assets.character}
                 alt="character"
                 draggable="false"
@@ -149,7 +149,7 @@ export default function P4GravityExp2Steps() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
+      <div className="fixed bottom-[18px] left-[18px] z-[30] flex items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_18px_40px_rgba(0,0,0,.22)] backdrop-blur-sm max-[720px]:bottom-[12px] max-[720px]:left-[12px] max-[720px]:gap-[6px] max-[720px]:rounded-[12px] max-[720px]:p-[7px]">
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
             lang === "th"
@@ -163,17 +163,6 @@ export default function P4GravityExp2Steps() {
         </button>
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
-            lang === "en"
-              ? "bg-[#bfe0ff] text-slate-900"
-              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
-          onClick={() => setLang("en")}
-          type="button"
-        >
-          {t.chipEn}
-        </button>
-        <button
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
             lang === "ms"
               ? "bg-[#bfe0ff] text-slate-900"
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
@@ -183,9 +172,20 @@ export default function P4GravityExp2Steps() {
         >
           {t.chipMs}
         </button>
+        <button
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-black transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          } max-[720px]:rounded-[10px] max-[720px]:px-[10px] max-[720px]:py-[8px] max-[720px]:text-[13px]`}
+          onClick={() => setLang("en")}
+          type="button"
+        >
+          {t.chipEn}
+        </button>
       </div>
 
-      <div className="absolute bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+      <div className="fixed bottom-[18px] right-[18px] z-[30] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
         <button
           className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"

@@ -165,11 +165,11 @@ export default function P4LightObjective() {
           alt="character"
         />
 
-        <div className="absolute bottom-6 left-6 z-20 max-[640px]:bottom-3 max-[640px]:left-3">
+        <div className="absolute bottom-[18px] left-[18px] z-20">
           <LightLanguageSwitcher value={lang} onChange={setLang} labels={labels} />
         </div>
 
-        <div className="absolute bottom-6 right-6 z-20 max-[640px]:bottom-3 max-[640px]:right-3">
+        <div className="absolute bottom-[18px] right-[18px] z-20">
           <LightNavButtons
             backLabel={t.back}
             nextLabel={t.next}

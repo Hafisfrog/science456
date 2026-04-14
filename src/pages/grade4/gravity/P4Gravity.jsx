@@ -10,6 +10,7 @@ export default function P4Gravity() {
       th: {
         title: "แรงโน้มถ่วงของโลก",
         sub: "เลือกการทดลอง",
+        back: "ย้อนกลับ",
         exp1Title: "การทดลองที่ 1",
         exp1Desc: "ผลของแรงโน้มถ่วง",
         exp2Title: "การทดลองที่ 2",
@@ -23,6 +24,7 @@ export default function P4Gravity() {
       en: {
         title: "Earth's Gravity",
         sub: "Choose an experiment",
+        back: "Back",
         exp1Title: "Experiment 1",
         exp1Desc: "Effects of Gravity",
         exp2Title: "Experiment 2",
@@ -36,6 +38,7 @@ export default function P4Gravity() {
       ms: {
         title: "Graviti Bumi",
         sub: "Pilih eksperimen",
+        back: "Kembali",
         exp1Title: "Eksperimen 1",
         exp1Desc: "Kesan Graviti",
         exp2Title: "Eksperimen 2",
@@ -132,20 +135,30 @@ export default function P4Gravity() {
             {t.chipTh}
           </button>
           <button
-            className={`${chipClass} ${lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"}`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {t.chipEn}
-          </button>
-          <button
             className={`${chipClass} ${lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"}`}
             onClick={() => setLang("ms")}
             type="button"
           >
             {t.chipMs}
           </button>
+          <button
+            className={`${chipClass} ${lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"}`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
+            {t.chipEn}
+          </button>
         </div>
+      </div>
+
+      <div className="fixed bottom-[18px] right-[18px] z-20 max-[640px]:bottom-[10px] max-[640px]:right-[10px]">
+        <button
+          className="rounded-[18px] bg-[linear-gradient(135deg,#ffffff,#f0f9ff)] px-[22px] py-[14px] text-[20px] font-extrabold text-[#1e3a8a] shadow-[0_8px_18px_rgba(0,0,0,.15)] transition duration-150 hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#e0f2fe,#ffffff)] hover:shadow-[0_12px_24px_rgba(0,0,0,.2)] active:translate-y-px active:shadow-[0_6px_14px_rgba(0,0,0,.18)] max-[640px]:px-[14px] max-[640px]:py-[10px] max-[640px]:text-[14px]"
+          onClick={() => navigate("/p4/gravity/objectives")}
+          type="button"
+        >
+          « {t.back}
+        </button>
       </div>
     </div>
   );

@@ -130,10 +130,10 @@ export default function P4GravityExp1Steps() {
               ))}
             </div>
 
-            <div className="flex min-w-0 flex-[0.75] items-end justify-center p-px max-[980px]:hidden">
+            <div className="flex min-w-0 flex-[0.55] items-end justify-center p-px max-[980px]:hidden">
               <img
-                className="h-auto w-[min(430px,100%)] translate-y-48 select-none [filter:drop-shadow(0_18px_28px_rgba(0,0,0,.22))]"
-                src="/images/p4/exp1/character-boy.png"
+                className="h-auto w-[min(330px,100%)] translate-y-24 select-none [filter:drop-shadow(0_18px_28px_rgba(0,0,0,.22))]"
+                src="/images/p4/exp2/nr-man.png"
                 alt="character"
                 draggable="false"
               />
@@ -155,21 +155,21 @@ export default function P4GravityExp1Steps() {
           </button>
           <button
             className={`cursor-pointer rounded-[14px] px-[18px] py-[10px] text-[16px] font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[640px]:flex-1 max-[640px]:min-w-0 max-[640px]:px-[12px] max-[640px]:text-[14px] ${
-              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
-            }`}
-            onClick={() => setLang("en")}
-            type="button"
-          >
-            {t.chipEn}
-          </button>
-          <button
-            className={`cursor-pointer rounded-[14px] px-[18px] py-[10px] text-[16px] font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[640px]:flex-1 max-[640px]:min-w-0 max-[640px]:px-[12px] max-[640px]:text-[14px] ${
               lang === "ms" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
             }`}
             onClick={() => setLang("ms")}
             type="button"
           >
             {t.chipMs}
+          </button>
+          <button
+            className={`cursor-pointer rounded-[14px] px-[18px] py-[10px] text-[16px] font-black text-slate-900 transition hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)] max-[640px]:flex-1 max-[640px]:min-w-0 max-[640px]:px-[12px] max-[640px]:text-[14px] ${
+              lang === "en" ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
+            }`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
+            {t.chipEn}
           </button>
         </div>
 

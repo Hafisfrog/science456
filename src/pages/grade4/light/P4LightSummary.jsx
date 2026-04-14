@@ -249,7 +249,7 @@ export default function P4LightSummary() {
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 sm:h-full sm:gap-4">
           <div className="overflow-hidden rounded-[28px] border border-[#bfd3e3] bg-[linear-gradient(180deg,rgba(244,248,251,0.88),rgba(228,237,245,0.82))] shadow-[0_16px_38px_rgba(106,138,165,0.16)] backdrop-blur-md sm:flex sm:min-h-0 sm:flex-1 sm:flex-col">
             <div className="flex items-center justify-between gap-3 border-b border-[#bed3e3] bg-gradient-to-r from-[#91bad6] via-[#89b4d1] to-[#7ca7c6] p-3 text-[#133149] sm:p-4">
-              <h2 className="text-lg font-bold drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] sm:text-xl">{ui.title}</h2>
+              <h2 className="text-2xl font-black drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] sm:text-3xl">{ui.title}</h2>
               <button
                 type="button"
                 onClick={speakSummary}
@@ -261,7 +261,7 @@ export default function P4LightSummary() {
               </button>
             </div>
 
-            <div className="p-4 text-[14px] leading-7 text-[#1f3d58] sm:flex-1 sm:overflow-y-auto sm:p-6 sm:text-base sm:leading-8">
+            <div className="p-4 text-[18px] leading-9 text-[#1f3d58] sm:flex-1 sm:overflow-y-auto sm:p-6 sm:text-2xl sm:leading-[2.4]">
               <p>{ui.intro1}</p>
               <p>{ui.intro2}</p>
 
@@ -309,7 +309,7 @@ export default function P4LightSummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-30 sm:bottom-6 sm:left-6">
+      <div className="fixed bottom-[18px] left-[18px] z-30">
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
@@ -317,7 +317,7 @@ export default function P4LightSummary() {
         />
       </div>
 
-      <div className="fixed bottom-4 right-4 z-30 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-[18px] right-[18px] z-30">
         <LightNavButtons
           className="sm:shrink-0"
           backLabel={ui.back}
