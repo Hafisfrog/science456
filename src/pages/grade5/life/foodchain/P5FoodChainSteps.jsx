@@ -117,8 +117,9 @@ export default function P5FoodChainSteps() {
         </div>
       </div>
 
-      <div className="absolute bottom-3 left-3 z-20 sm:bottom-4 sm:left-4 md:bottom-5 md:left-5">
+      <div className="fixed bottom-[18px] left-[18px] z-40">
         <FoodChainLanguageSwitcher
+          size="materials"
           value={activeLang}
           onChange={setActiveLang}
           labels={PAGE_COPY.th.langLabels}
@@ -126,17 +127,6 @@ export default function P5FoodChainSteps() {
       </div>
 
       <div className="absolute bottom-3 right-3 z-20 flex flex-col items-end gap-3 sm:bottom-4 sm:right-4 md:bottom-5 md:right-5 lg:right-10">
-        <button
-          type="button"
-          onClick={() => navigate("/p5/life/foodchain/select")}
-          className="mr-5 flex w-[260px] flex-col items-center justify-center gap-3 rounded-[20px] bg-white/92 px-5 py-4 text-slate-900 shadow-[0_18px_36px_rgba(0,0,0,.18)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_24px_46px_rgba(0,0,0,.24)] active:translate-y-px"
-        >
-          <span className="flex h-[56px] w-[56px] items-center justify-center rounded-full bg-blue-100 text-[28px] font-black text-slate-900 shadow-[inset_0_-5px_0_rgba(0,0,0,.10)]">
-            {"\u25B6"}
-          </span>
-          <span className="text-center text-[20px] font-black leading-[1.05]">{t.next}</span>
-        </button>
-
         <div className="flex items-center gap-3">
           <button
             type="button"
