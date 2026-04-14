@@ -104,12 +104,12 @@ export default function P6() {
               {/* Image */}
               <div
                 onClick={() => navigate(lesson.to)}
-                className="flex h-[clamp(220px,28vh,270px)] items-center justify-center overflow-hidden bg-slate-200 px-2 pt-2 pb-1 cursor-pointer"
+                className="h-[clamp(220px,28vh,270px)] w-full cursor-pointer overflow-hidden bg-slate-200"
               >
                 <img
                   src={lesson.image}
                   alt={lesson.title[lang]}
-                  className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
+                  className="block h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
                 />
               </div>
 
