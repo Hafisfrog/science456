@@ -554,7 +554,7 @@ export default function P6ElectricGenerationSim() {
 
   return (
     <div
-      className="relative min-h-screen w-full overflow-hidden"
+      className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto"
       style={{
         background:
           "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
@@ -564,7 +564,7 @@ export default function P6ElectricGenerationSim() {
       <style>{forceEffectSimStyles}</style>
 
       <div
-        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)] gap-[clamp(10px,1.6vw,18px)] p-[clamp(10px,1.5vw,16px)]"
+        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)] gap-[clamp(10px,1.6vw,18px)] overflow-y-auto p-[clamp(10px,1.5vw,16px)]"
         style={{
           background:
             "linear-gradient(180deg, rgba(251, 252, 254, 0.8), rgba(244, 246, 249, 0.8))",
@@ -618,7 +618,7 @@ export default function P6ElectricGenerationSim() {
             </div>
           </div>
 
-          <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+          <div className="z-20 inline-flex w-full flex-wrap gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
 
         <button
           onClick={() => setLang("th")}

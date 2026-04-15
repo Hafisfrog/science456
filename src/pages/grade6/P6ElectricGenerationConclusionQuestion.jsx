@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../grade4/gravity/exp1/P4GravityExp1Answer.css";
 
 const TEXT = {
   th: {
@@ -12,6 +13,9 @@ const TEXT = {
     ],
     back: "ย้อนกลับ",
     next: "ต่อไป",
+    reveal: "เฉลยคำตอบ",
+    hide: "ซ่อนคำตอบ",
+    speak: "ฟัง",
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
@@ -24,6 +28,9 @@ const TEXT = {
     ],
     back: "Back",
     next: "Next",
+    reveal: "Show answer",
+    hide: "Hide answer",
+    speak: "Listen",
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
@@ -36,10 +43,23 @@ const TEXT = {
     ],
     back: "Kembali",
     next: "Seterusnya",
+    reveal: "Tunjuk jawapan",
+    hide: "Sembunyi jawapan",
+    speak: "Dengar",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
+const SPEECH_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+  window.speechSynthesis.speak(utterance);
+}
 function LanguagePills({ lang, setLang, labels }) {
   const pills = [
     { code: "th", label: labels.th },
@@ -76,7 +96,17 @@ function QuestionBadge({ text }) {
 export default function P6ElectricGenerationConclusionQuestion() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const [showAnswer, setShowAnswer] = useState(false);
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const speechLang = SPEECH_LANG[lang] ?? "th-TH";
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   return (
     <div
@@ -89,18 +119,52 @@ export default function P6ElectricGenerationConclusionQuestion() {
     >
       <div className="relative z-[1] mx-auto w-full max-w-[1280px]">
         <div className="rounded-[24px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(20px,3vw,32px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
-          <QuestionBadge text={t.title} />
-
-          <div className="mt-5 text-[clamp(22px,2.6vw,26px)] font-black text-slate-900">
-            {t.question}
+          <div className="ans2-header !mb-3 !pb-3">
+            <div className="ans2-titleWrap">
+              <QuestionBadge text={t.title} />
+            </div>
           </div>
 
-          <div className="relative mt-6 max-w-[720px] rounded-[18px] border-2 border-slate-800/80 bg-white px-7 py-6 text-[clamp(18px,1.9vw,20px)] font-semibold leading-[1.75] text-slate-900 shadow-[0_14px_24px_rgba(15,23,42,0.12)]">
-            {t.answer.map((line, idx) => (
-              <p key={idx} className="m-0">
-                {line}
-              </p>
-            ))}
+          <div className="ans2-card yellow !mt-2 !max-w-[900px]">
+            <div className="ans2-cardTop">
+              <div className="ans2-q">{t.question}</div>
+              <button
+                className="ans2-miniSpeak"
+                type="button"
+                onClick={() => speakText(t.question, speechLang)}
+                title={t.speak}
+              >
+                🔊
+              </button>
+            </div>
+
+            <div className="ans2-answerActions">
+              <button className="ans2-revealBtn" type="button" onClick={() => setShowAnswer((prev) => !prev)}>
+                {showAnswer ? t.hide : t.reveal}
+              </button>
+            </div>
+
+            {showAnswer ? (
+              <div className="ans2-a !bg-[linear-gradient(180deg,#fff7ed,#ffffff)] !text-slate-900">
+                <button
+                  className="ans2-answerSpeak"
+                  type="button"
+                  onClick={() => speakText(t.answer.join(" "), speechLang)}
+                  title={t.speak}
+                >
+                  🔊
+                </button>
+                {t.answer.map((line, idx) => (
+                  <p key={idx} className="m-0">
+                    {line}
+                  </p>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-4 rounded-[14px] border border-dashed border-slate-300 bg-white/75 px-4 py-4 text-[15px] font-bold text-slate-500">
+                {t.reveal}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -132,3 +196,6 @@ export default function P6ElectricGenerationConclusionQuestion() {
     </div>
   );
 }
+
+
+

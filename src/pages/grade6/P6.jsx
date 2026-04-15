@@ -19,7 +19,7 @@ const LESSONS = [
       en: "Electric Circuit",
       ms: "Litar Elektrik",
     },
-    image: "/images/p6/fifawjp6.png",
+    image: "/images/p6/wongjon.png",
     to: "/p6/electric-circuit",
   },
 ];

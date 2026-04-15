@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const TEXT = {
@@ -22,6 +22,7 @@ const TEXT = {
     ],
     back: "Back",
     next: "Next",
+    listen: "Read screen",
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
@@ -33,9 +34,21 @@ const TEXT = {
     ],
     back: "Kembali",
     next: "Seterusnya",
+    listen: "Baca skrin",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
+
+const SPEECH_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+  window.speechSynthesis.speak(utterance);
+}
 
 function LanguagePills({ lang, setLang, labels }) {
   const pills = [
@@ -66,22 +79,44 @@ export default function P6ElectricGenerationConclusion() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const speechLang = SPEECH_LANG[lang] ?? "th-TH";
+  const listenLabel = lang === "th" ? "ฟังข้อความ" : t.listen ?? "Listen";
+  const readAllText = useMemo(() => [t.title, ...t.body].join(". "), [t]);
+
+  useEffect(() => {
+    return () => {
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-4 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-6 text-slate-900 md:px-8 md:pb-32"
       style={{
         fontFamily: "Prompt, sans-serif",
         background:
           "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
       }}
     >
-      <div className="relative z-[1] mx-auto w-full max-w-[1200px]">
-        <div className="relative overflow-hidden rounded-[28px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(20px,3vw,36px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
-          <h1 className="m-0 text-[clamp(26px,3.1vw,36px)] font-black text-slate-900">
-            {t.title}
-          </h1>
-          <div className="mt-6 grid gap-4 text-[clamp(16px,1.6vw,18px)] font-semibold leading-[1.8] text-slate-900">
+      <div className="relative z-[1] mx-auto flex min-h-[calc(100vh-180px)] w-full max-w-[1240px] items-center">
+        <div className="relative w-full overflow-hidden rounded-[28px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(22px,2.8vw,36px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="m-0 text-[clamp(28px,3.1vw,40px)] font-black text-slate-900">
+              {t.title}
+            </h1>
+            <button
+              type="button"
+              onClick={() => speakText(readAllText, speechLang)}
+              aria-label={listenLabel}
+              title={listenLabel}
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+            >
+              🔊
+            </button>
+          </div>
+          <div className="mt-6 grid gap-4 text-[clamp(18px,1.5vw,24px)] font-semibold leading-[1.7] text-slate-900">
             {t.body.map((line, idx) => (
               <p key={idx} className="m-0">
                 {line}
@@ -118,3 +153,4 @@ export default function P6ElectricGenerationConclusion() {
     </div>
   );
 }
+
