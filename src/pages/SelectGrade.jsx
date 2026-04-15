@@ -10,7 +10,7 @@ export default function SelectGrade() {
       th: {
         // lab: "Science Lab",
         title: "เลือกชั้นเรียน",
-        subtitle: "เลือกชั้นเพื่อเริ่มการทดลองวิทยาศาสตร์",
+        subtitle: "เพื่อเริ่มการทดลองวิทยาศาสตร์",
         back: "ย้อนกลับ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
@@ -24,7 +24,7 @@ export default function SelectGrade() {
       en: {
         // lab: "Science Lab",
         title: "Choose a Grade",
-        subtitle: "Choose a grade level to start the science activities",
+        subtitle: "To start a science experiment",
         back: "Back",
         chipTh: "Thai",
         chipEn: "English",
@@ -38,7 +38,7 @@ export default function SelectGrade() {
       ms: {
         // lab: "Science Lab",
         title: "Pilih Tahun",
-        subtitle: "Pilih tahap untuk memulakan aktiviti sains",
+        subtitle: "Untuk memulakan eksperimen sains",
         back: "Kembali",
         chipTh: "Thai",
         chipEn: "English",

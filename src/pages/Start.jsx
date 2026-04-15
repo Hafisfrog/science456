@@ -32,13 +32,13 @@ export default function Start() {
           <h1 className="mb-3 whitespace-nowrap text-[2.8rem] font-extrabold leading-none tracking-[0.5px] text-[#2c70c9] sm:text-[3.4rem]">
             Virtual Science Lab
           </h1>
-          <p className="mb-8 text-lg leading-relaxed text-slate-600 sm:text-2xl">ผจญภัยในห้องแล็บเสมือนจริง</p>
+          <p className="mb-8 text-lg leading-relaxed text-slate-600 sm:text-2xl">ห้องปฏิบัติการทางวิทยาศาสตร์เสมือนจริง</p>
 
           <button
             className="inline-flex rounded-full bg-gradient-to-br from-[#ff6b4a] to-[#ff8b5b] px-14 py-4 text-2xl font-bold text-white shadow-[0_14px_30px_rgba(255,107,74,0.35)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(255,107,74,0.45)] active:translate-y-[2px] active:shadow-[0_10px_24px_rgba(255,107,74,0.35)]"
             onClick={() => navigate("/grades")}
           >
-            START
+            กดเพื่อเริ่ม
           </button>
         </div>
       </div>
