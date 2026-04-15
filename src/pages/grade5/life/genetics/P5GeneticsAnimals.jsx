@@ -365,17 +365,17 @@ export default function P5GeneticsAnimals() {
             </button>
             <button
               type="button"
-              className={lang === "en" ? "is-active" : ""}
-              onClick={() => setLang("en")}
-            >
-              {labels.en}
-            </button>
-            <button
-              type="button"
               className={lang === "ms" ? "is-active" : ""}
               onClick={() => setLang("ms")}
             >
               {labels.ms}
+            </button>
+            <button
+              type="button"
+              className={lang === "en" ? "is-active" : ""}
+              onClick={() => setLang("en")}
+            >
+              {labels.en}
             </button>
           </div>
 

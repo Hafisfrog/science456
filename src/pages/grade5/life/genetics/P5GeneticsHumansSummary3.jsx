@@ -378,11 +378,11 @@ export default function P5GeneticsHumansSummary3() {
             <button type="button" className={lang === "th" ? "is-active" : ""} onClick={() => setLang("th")}>
               {labels.th}
             </button>
-            <button type="button" className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")}>
-              {labels.en}
-            </button>
             <button type="button" className={lang === "ms" ? "is-active" : ""} onClick={() => setLang("ms")}>
               {labels.ms}
+            </button>
+            <button type="button" className={lang === "en" ? "is-active" : ""} onClick={() => setLang("en")}>
+              {labels.en}
             </button>
           </div>
 

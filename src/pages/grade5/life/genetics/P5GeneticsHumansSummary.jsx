@@ -73,23 +73,23 @@ export default function P5GeneticsHumansSummary() {
             </button>
             <button
               type="button"
-              className={lang === "en" ? "is-active notranslate" : "notranslate"}
-              translate="no"
-              onClick={() => setLang("en")}
-            >
-              {labels.en}
-            </button>
-            <button
-              type="button"
               className={lang === "ms" ? "is-active notranslate" : "notranslate"}
               translate="no"
               onClick={() => setLang("ms")}
             >
               {labels.ms}
             </button>
+            <button
+              type="button"
+              className={lang === "en" ? "is-active notranslate" : "notranslate"}
+              translate="no"
+              onClick={() => setLang("en")}
+            >
+              {labels.en}
+            </button>
           </div>
 
-          <div className="flex items-center gap-2 max-[1180px]:flex-wrap max-[1180px]:justify-end">
+          <div className="p5ghs-actions flex items-center gap-2 max-[1180px]:flex-wrap max-[1180px]:justify-end">
             <button type="button" className="p5ghs-back-btn notranslate" translate="no" onClick={() => navigate("/p5/life/genetics/humans")}>
               <span>{backLabel}</span>
             </button>

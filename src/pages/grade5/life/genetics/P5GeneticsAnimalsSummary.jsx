@@ -96,21 +96,21 @@ export default function P5GeneticsAnimalsSummary() {
             </button>
             <button
               type="button"
-              className={lang === "en" ? "is-active" : ""}
-              onClick={() => setLang("en")}
-            >
-              {labels.en}
-            </button>
-            <button
-              type="button"
               className={lang === "ms" ? "is-active" : ""}
               onClick={() => setLang("ms")}
             >
               {labels.ms}
             </button>
+            <button
+              type="button"
+              className={lang === "en" ? "is-active" : ""}
+              onClick={() => setLang("en")}
+            >
+              {labels.en}
+            </button>
           </div>
 
-          <div className="flex items-center gap-2 max-[1180px]:flex-wrap max-[1180px]:justify-end">
+          <div className="p5gas-actions flex items-center gap-2 max-[1180px]:flex-wrap max-[1180px]:justify-end">
             <button
               type="button"
               className="p5gas-back-btn"

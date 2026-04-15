@@ -3,6 +3,9 @@ import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
 import "./p5GeneticsLangShared.css";
 
+const BACK_PATH = "/p5/life";
+const NEXT_PATH = "/p5/life/genetics/animals";
+
 const LANG_TO_VOICE = {
   th: "th-TH",
   en: "en-US",
@@ -13,7 +16,11 @@ const PAGE_TEXT = {
   th: {
     chip: "\u0e0a\u0e31\u0e49\u0e19\u0e1b\u0e23\u0e30\u0e16\u0e21\u0e28\u0e36\u0e01\u0e29\u0e32\u0e1b\u0e35\u0e17\u0e35\u0e48 5",
     title: "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21",
-    back: "<< \u0e40\u0e25\u0e37\u0e2d\u0e01\u0e0a\u0e31\u0e49\u0e19",
+    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
+    next: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
+    chipTh: "\u0e44\u0e17\u0e22",
+    chipEn: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
+    chipMs: "\u0e21\u0e25\u0e32\u0e22\u0e39",
     experiments: [
       {
         id: 6,
@@ -50,7 +57,11 @@ const PAGE_TEXT = {
   en: {
     chip: "Grade 5",
     title: "Genetic Traits",
-    back: "<< Back to Grades",
+    back: "Back",
+    next: "Next",
+    chipTh: "\u0e44\u0e17\u0e22",
+    chipEn: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
+    chipMs: "\u0e21\u0e25\u0e32\u0e22\u0e39",
     experiments: [
       {
         id: 6,
@@ -84,7 +95,11 @@ const PAGE_TEXT = {
   ms: {
     chip: "Tahun 5",
     title: "Ciri Genetik",
-    back: "<< Kembali ke Pilih Tahun",
+    back: "Kembali",
+    next: "Seterusnya",
+    chipTh: "\u0e44\u0e17\u0e22",
+    chipEn: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
+    chipMs: "\u0e21\u0e25\u0e32\u0e22\u0e39",
     experiments: [
       {
         id: 6,
@@ -121,8 +136,6 @@ export default function P5GeneticsSelect() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
   const t = PAGE_TEXT[lang];
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
-  const backLabel = "<< เลือกชั้น";
 
   const speakCard = (event, exp) => {
     event.stopPropagation();
@@ -140,10 +153,6 @@ export default function P5GeneticsSelect() {
 
   return (
     <div className="p5gen-page notranslate" translate="no">
-      <button type="button" className="p5gen-back" onClick={() => navigate("/p5/life")}>
-        {backLabel}
-      </button>
-
       <main className="p5gen-main">
         <div className="p5gen-heading">
           <div className="p5gen-chip notranslate" translate="no">Science Lab</div>
@@ -200,22 +209,32 @@ export default function P5GeneticsSelect() {
           className={lang === "th" ? "is-active" : ""}
           onClick={() => setLang("th")}
         >
-          {labels.th}
-        </button>
-        <button
-          type="button"
-          className={lang === "en" ? "is-active" : ""}
-          onClick={() => setLang("en")}
-        >
-          {labels.en}
+          {t.chipTh}
         </button>
         <button
           type="button"
           className={lang === "ms" ? "is-active" : ""}
           onClick={() => setLang("ms")}
         >
-          {labels.ms}
+          {t.chipMs}
         </button>
+        <button
+          type="button"
+          className={lang === "en" ? "is-active" : ""}
+          onClick={() => setLang("en")}
+        >
+          {t.chipEn}
+        </button>
+      </div>
+
+      <div className="p5gen-action-row">
+        <button type="button" className="p5gen-nav-back" onClick={() => navigate(BACK_PATH)}>
+          {"\u00AB"} {t.back}
+        </button>
+
+        {/* <button type="button" className="p5gen-nav-next" onClick={() => navigate(NEXT_PATH)}>
+          {t.next} {"\u00BB"}
+        </button> */}
       </div>
     </div>
   );
