@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const TEXT = {
   th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "ทดลองใส่ถ่านในกระบะ",
     chooseTitle: "เลือก 4 ก้อน",
     chooseHint:
       "เริ่มจากถ่าน 4 ก้อน ลากใส่กระบะ 1-4 ก้อน แล้วเปิดสวิตช์ดูความสว่าง",
@@ -39,12 +37,9 @@ const TEXT = {
     noCellsInserted: "ยังไม่ได้ใส่ถ่าน",
     bulbOff: "หลอดไฟไม่สว่าง",
     back: "ย้อนกลับ",
-    next: "ผลการทดลอง",
-    langLabel: { th: "ไทย", en: "English", ms: "Melayu" },
+    next: "ไปต่อ",
   },
   en: {
-    badge: "Everyday Circuits",
-    title: "Simple Electric Circuit",
     chooseTitle: "Insert cells into holder",
     chooseHint: "Start with 4 loose cells, insert 1-4 cells, then turn on the switch to observe brightness",
     sectionTitle: "Circuit Connection Example",
@@ -78,13 +73,10 @@ const TEXT = {
     noCellsInserted: "No cells inserted yet",
     bulbOff: "Bulb off",
     back: "Back",
-    next: "Experiment Results",
-    langLabel: { th: "Thai", en: "English", ms: "Malay" },
+    next: "Next",
   },
 
   ms: {
-    badge: "Litar Harian",
-    title: "Litar Elektrik Mudah",
     chooseTitle: "Masukkan sel ke dalam bekas bateri",
     chooseHint: "Mula dengan 4 sel terasing, masukkan 1-4 sel, kemudian hidupkan suis untuk lihat kecerahan",
     sectionTitle: "Contoh sambungan litar",
@@ -118,15 +110,14 @@ const TEXT = {
     noCellsInserted: "Belum masukkan sel",
     bulbOff: "Mentol tidak menyala",
     back: "Kembali",
-    next: "Hasil Eksperimen",
-    langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+    next: "Seterusnya",
   },
 };
 
 const LANGS = [
-  { id: "th", label: TEXT.th.langLabel.th },
-  { id: "en", label: TEXT.en.langLabel.en },
-  { id: "ms", label: TEXT.ms.langLabel.ms },
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
 ];
 
 const BASE_OPTIONS = [
@@ -355,7 +346,6 @@ export default function P6ElectricCircuitSim() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const content = TEXT[lang] || TEXT.th;
-  const langLabels = content.langLabel;
   const options = useMemo(() => getOptions(content), [content]);
 
   const [selected, setSelected] = useState(1);
@@ -672,11 +662,7 @@ export default function P6ElectricCircuitSim() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_1fr_auto] gap-2">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {content.badge}
-        </div>
-        <div className="m-0 text-[clamp(32px,2.5vw,54px)] font-black leading-[1.08]">{content.title}</div>
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr_auto] gap-2">
 
         <div className="relative min-h-[620px] rounded-[30px] border-2 border-white bg-white p-[clamp(14px,1.6vw,20px)] pb-20 shadow-[0_20px_36px_rgba(17,24,39,0.12)]">
           <div className="mb-4">
@@ -825,51 +811,37 @@ export default function P6ElectricCircuitSim() {
           </div>
         </div>
 
-        <div className="pointer-events-auto fixed bottom-3 left-3 z-40 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
-        <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.th}
-        </button>
-
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.en}
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.ms}
-        </button>
-
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+        {LANGS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
 
-        <div className="fixed bottom-3 right-3 z-40 flex gap-3">
+        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
           <button
-            className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate("/p6/electric-circuit/steps")}
             type="button"
             aria-label={content.back}
             title={content.back}
           >
-            <span className="text-xl leading-none">&lt;&lt;</span>
-            <span>{content.back}</span>
+            <span className="text-[20px] leading-none">&laquo;</span>
+            <span className="text-[20px] leading-none">{content.back}</span>
           </button>
           <button
-            className={`inline-flex items-center gap-2 rounded-2xl px-4 py-3 text-base font-bold text-white shadow ${
-              isCircuitReady ? "bg-blue-600" : "cursor-not-allowed bg-slate-300 text-slate-500"
+            className={`inline-flex items-center justify-center gap-2 rounded-[18px] border-0 px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 ${
+              isCircuitReady
+                ? "bg-[#2563eb] hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+                : "cursor-not-allowed bg-slate-300 text-slate-500"
             }`}
             onClick={() => navigate("/p6/electric-circuit/result")}
             type="button"
@@ -877,8 +849,8 @@ export default function P6ElectricCircuitSim() {
             aria-label={content.next}
             title={content.next}
           >
-            <span>{content.next}</span>
-            <span className="text-xl leading-none">&gt;&gt;</span>
+            <span className="text-[20px] leading-none">{content.next}</span>
+            <span className="text-[20px] leading-none">&raquo;</span>
           </button>
         </div>
       </div>

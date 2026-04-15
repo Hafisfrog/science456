@@ -15,11 +15,10 @@ function speakText(text, lang) {
 
 const TRANSLATIONS = {
   th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
-    equipmentHeading: "อุปกรณ์",
+    title: "การทดลองที่ 2 เรื่อง การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
+    equipmentHeading: "วัสดุอุปกรณ์",
     back: "ย้อนกลับ",
-    next: "ขั้นตอน",
+    next: "ไปต่อ",
     sound: "เปิดเสียง",
     speech: "th-TH",
     equipment: {
@@ -30,11 +29,10 @@ const TRANSLATIONS = {
     },
   },
   en: {
-    badge: "Electricity Around You",
-    title: "Connecting Bulbs in Series and Parallel",
-    equipmentHeading: "Equipment to Prepare",
+    title: "Experiment 2: Connecting Bulbs in Series and Parallel",
+    equipmentHeading: "Materials and Equipment",
     back: "Back",
-    next: "Steps",
+    next: "Next",
     sound: "Sound",
     speech: "en-US",
     equipment: {
@@ -45,11 +43,10 @@ const TRANSLATIONS = {
     },
   },
   ms: {
-    badge: "Litar elektrik dekat kita",
-    title: "Sambungan mentol siri dan selari",
-    equipmentHeading: "Peralatan yang perlu disedia",
+    title: "Eksperimen 2: Sambungan Mentol Secara Siri dan Selari",
+    equipmentHeading: "Bahan dan Peralatan",
     back: "Kembali",
-    next: "Langkah",
+    next: "Seterusnya",
     sound: "Bunyi",
     speech: "ms-MY",
     equipment: {
@@ -60,6 +57,12 @@ const TRANSLATIONS = {
     },
   },
 };
+
+const LANGS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
 
 const EQUIPMENT = ["cell", "wire", "holder", "bulb"];
 
@@ -101,11 +104,6 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
   const [lang, setLang] = useState("th");
   const [brokenImages, setBrokenImages] = useState({});
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
   const markImageBroken = useCallback((id) => {
     setBrokenImages((current) =>
       current[id] ? current : { ...current, [id]: true }
@@ -132,11 +130,14 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
       />
 
       <div className="relative z-[1] mx-auto flex max-w-[1380px] flex-col gap-3">
-        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08]">
-          {t.equipmentHeading}
+        <h1 className="m-0 pb-2 pt-1 text-center text-[clamp(28px,2.2vw,46px)] font-black leading-[1.1] text-slate-900">
+          {t.title}
         </h1>
 
         <div className="rounded-[34px] bg-sky-200 p-6 shadow-[0_18px_32px_rgba(15,23,42,0.08)]">
+          <div className="mb-4 mt-1 text-left text-[clamp(24px,1.8vw,34px)] font-black text-slate-900">
+            {t.equipmentHeading}
+          </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {EQUIPMENT.map((id) => (
               <div
@@ -194,57 +195,41 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
           </div>
         </div>
 
-        <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
+        <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+          {LANGS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+                lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+              }`}
+              type="button"
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
 
-        <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.th}
-        </button>
-
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.en}
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.ms}
-        </button>
-
-      </div>
-
-        <div className="fixed bottom-3 right-3 z-20 flex gap-3">
+        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
           <button
-            className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate("/p6/electric-circuit/experiments")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-              <span className="text-xl leading-none">&lt;&lt;</span>
-            <span>{t.back}</span>
+              <span className="text-[20px] leading-none">&laquo;</span>
+            <span className="text-[20px] leading-none">{t.back}</span>
           </button>
           <button
-            className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/steps")}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            <span>{t.next}</span>
-              <span className="text-xl leading-none">&gt;&gt;</span>
+            <span className="text-[20px] leading-none">{t.next}</span>
+              <span className="text-[20px] leading-none">&raquo;</span>
           </button>
         </div>
       </div>

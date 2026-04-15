@@ -3,25 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 const TEXT = {
   th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
-    section: "สรุปผลการทดลอง",
-    intro: "จากการทำกิจกรรม พบว่า เมื่อต่อวงจรไฟฟ้าแบบอนุกรมและแบบขนาน หลอดไฟมีการทำงานแตกต่างกัน",
+    section: "\u0e2a\u0e23\u0e38\u0e1b\u0e1c\u0e25\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07",
+    intro:
+      "\u0e08\u0e32\u0e01\u0e01\u0e32\u0e23\u0e17\u0e33\u0e01\u0e34\u0e08\u0e01\u0e23\u0e23\u0e21 \u0e1e\u0e1a\u0e27\u0e48\u0e32 \u0e40\u0e21\u0e37\u0e48\u0e2d\u0e15\u0e48\u0e2d\u0e27\u0e07\u0e08\u0e23\u0e44\u0e1f\u0e1f\u0e49\u0e32\u0e41\u0e1a\u0e1a\u0e2d\u0e19\u0e38\u0e01\u0e23\u0e21\u0e41\u0e25\u0e30\u0e41\u0e1a\u0e1a\u0e02\u0e19\u0e32\u0e19 \u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f\u0e21\u0e35\u0e01\u0e32\u0e23\u0e17\u0e33\u0e07\u0e32\u0e19\u0e41\u0e15\u0e01\u0e15\u0e48\u0e32\u0e07\u0e01\u0e31\u0e19",
     series: {
-      heading: "การต่อแบบอนุกรม",
-      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงจะดับตามไปด้วย เพราะวงจรถูกตัดขาด กระแสไฟฟ้าไม่สามารถไหลผ่านได้ครบวงจร",
+      heading: "\u0e01\u0e32\u0e23\u0e15\u0e48\u0e2d\u0e41\u0e1a\u0e1a\u0e2d\u0e19\u0e38\u0e01\u0e23\u0e21",
+      body:
+        "\u0e40\u0e21\u0e37\u0e48\u0e2d\u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f\u0e14\u0e27\u0e07\u0e2b\u0e19\u0e36\u0e48\u0e07\u0e14\u0e31\u0e1a \u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f\u0e2d\u0e35\u0e01\u0e14\u0e27\u0e07\u0e08\u0e30\u0e14\u0e31\u0e1a\u0e15\u0e32\u0e21\u0e44\u0e1b\u0e14\u0e49\u0e27\u0e22 \u0e40\u0e1e\u0e23\u0e32\u0e30\u0e27\u0e07\u0e08\u0e23\u0e16\u0e39\u0e01\u0e15\u0e31\u0e14\u0e02\u0e32\u0e14 \u0e01\u0e23\u0e30\u0e41\u0e2a\u0e44\u0e1f\u0e1f\u0e49\u0e32\u0e44\u0e21\u0e48\u0e2a\u0e32\u0e21\u0e32\u0e23\u0e16\u0e44\u0e2b\u0e25\u0e1c\u0e48\u0e32\u0e19\u0e44\u0e14\u0e49\u0e04\u0e23\u0e1a\u0e27\u0e07\u0e08\u0e23",
     },
     parallel: {
-      heading: "การต่อแบบขนาน",
-      body: "เมื่อหลอดไฟดวงหนึ่งดับ หลอดไฟอีกดวงยังคงสว่างอยู่ เพราะยังมีอีกเส้นทางหนึ่งให้กระแสไฟฟ้าไหลผ่านได้",
+      heading: "\u0e01\u0e32\u0e23\u0e15\u0e48\u0e2d\u0e41\u0e1a\u0e1a\u0e02\u0e19\u0e32\u0e19",
+      body:
+        "\u0e40\u0e21\u0e37\u0e48\u0e2d\u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f\u0e14\u0e27\u0e07\u0e2b\u0e19\u0e36\u0e48\u0e07\u0e14\u0e31\u0e1a \u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f\u0e2d\u0e35\u0e01\u0e14\u0e27\u0e07\u0e22\u0e31\u0e07\u0e04\u0e07\u0e2a\u0e27\u0e48\u0e32\u0e07\u0e2d\u0e22\u0e39\u0e48 \u0e40\u0e1e\u0e23\u0e32\u0e30\u0e22\u0e31\u0e07\u0e21\u0e35\u0e2d\u0e35\u0e01\u0e40\u0e2a\u0e49\u0e19\u0e17\u0e32\u0e07\u0e2b\u0e19\u0e36\u0e48\u0e07\u0e43\u0e2b\u0e49\u0e01\u0e23\u0e30\u0e41\u0e2a\u0e44\u0e1f\u0e1f\u0e49\u0e32\u0e44\u0e2b\u0e25\u0e1c\u0e48\u0e32\u0e19\u0e44\u0e14\u0e49",
     },
-    listen: "ฟังสรุป",
-    back: "ย้อนกลับ",
-    next: "กลับเลือกการทดลอง",
+    listen: "\u0e1f\u0e31\u0e07\u0e2a\u0e23\u0e38\u0e1b",
+    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
+    next: "\u0e44\u0e1b\u0e15\u0e48\u0e2d",
   },
   en: {
-    badge: "Electricity Around You",
-    title: "Simple Electric Circuits",
     section: "Experiment Summary",
     intro: "From the activity, we found that bulbs work differently in series and parallel circuits.",
     series: {
@@ -30,15 +29,13 @@ const TEXT = {
     },
     parallel: {
       heading: "Parallel connection",
-      body: "When one bulb goes out, the other bulb stays lit because there is still another path for the electric current to flow.",
+      body: "When one bulb goes out, the other bulb stays lit because there is still another path for electric current to flow.",
     },
     listen: "Listen",
     back: "Back",
-    next: "Back to experiments",
+    next: "Next",
   },
   ms: {
-    badge: "Litar elektrik dekat kita",
-    title: "Litar elektrik mudah",
     section: "Rumusan eksperimen",
     intro: "Daripada aktiviti ini, didapati bahawa mentol berfungsi secara berbeza dalam litar siri dan selari.",
     series: {
@@ -51,9 +48,15 @@ const TEXT = {
     },
     listen: "Dengar rumusan",
     back: "Kembali",
-    next: "Kembali ke eksperimen",
+    next: "Seterusnya",
   },
 };
+
+const LANGS = [
+  { id: "th", label: "\u0e44\u0e17\u0e22" },
+  { id: "en", label: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29" },
+  { id: "ms", label: "\u0e21\u0e25\u0e32\u0e22\u0e39" },
+];
 
 function speakText(text, lang) {
   if (typeof window === "undefined" || !window.speechSynthesis || !text) return;
@@ -63,37 +66,6 @@ function speakText(text, lang) {
   utterance.rate = 0.95;
   utterance.pitch = 1;
   window.speechSynthesis.speak(utterance);
-}
-
-function LanguagePills({ lang, setLang }) {
-  const labels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
-
-  const pills = [
-    { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
-    { code: "ms", label: labels.ms },
-  ];
-
-  return (
-    <div className="inline-flex items-center gap-1 rounded-2xl bg-white p-2 shadow">
-      {pills.map((p) => (
-        <button
-          key={p.code}
-          type="button"
-          onClick={() => setLang(p.code)}
-          className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
-            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100 text-slate-800"
-          }`}
-        >
-          {p.label}
-        </button>
-      ))}
-    </div>
-  );
 }
 
 export default function P6ElectricCircuitBulbSeriesParallelResult() {
@@ -128,9 +100,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_1fr_auto] gap-2">
-        <h1 className="m-0 text-center text-[clamp(32px,2.4vw,50px)] font-black leading-[1.05]">{t.title}</h1>
-
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr_auto] gap-2">
         <div className="relative grid gap-4 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(16px,2vw,24px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
           <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
 
@@ -176,32 +146,44 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
         </div>
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex flex-nowrap gap-2">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/summary")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-xl leading-none">&lt;&lt;</span>
-          <span>{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/key-summary")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span>{t.next}</span>
-          <span className="text-xl leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-20">
-        <LanguagePills lang={lang} setLang={setLang} />
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+        {LANGS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
     </div>
   );
 }
+

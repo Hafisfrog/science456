@@ -18,8 +18,6 @@ const DEVICE_MEDIA = {
 
 const TEXT = {
   th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
     section: "ผลการทดลอง",
     colCircuit: "รูปภาพการต่อวงจรไฟฟ้า",
     colObserve: "ผลการสังเกตความสว่างของหลอดไฟฟ้า",
@@ -37,12 +35,9 @@ const TEXT = {
     ],
     listen: "ฟังคำอธิบายแถวนี้",
     back: "ย้อนกลับ",
-    next: "สรุปผลการทดลอง",
-    langLabel: { th: "ไทย", en: "English", ms: "Melayu" },
+    next: "ไปต่อ",
   },
   en: {
-    badge: "Everyday Circuits",
-    title: "Simple Electric Circuit",
     section: "Experiment Results",
     colCircuit: "Circuit Setup",
     colObserve: "Observed Bulb Brightness",
@@ -55,12 +50,9 @@ const TEXT = {
     ],
     listen: "Listen to this row",
     back: "Back",
-    next: "Experiment Summary",
-    langLabel: { th: "Thai", en: "English", ms: "Malay" },
+    next: "Next",
   },
   ms: {
-    badge: "Litar Harian",
-    title: "Litar Elektrik Mudah",
     section: "Hasil Eksperimen",
     colCircuit: "Susunan Litar",
     colObserve: "Pemerhatian Kecerahan Mentol",
@@ -73,10 +65,15 @@ const TEXT = {
     ],
     listen: "Dengar baris ini",
     back: "Kembali",
-    next: "Rumusan Eksperimen",
-    langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+    next: "Seterusnya",
   },
 };
+
+const LANGS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
 function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   return (
     <img
@@ -178,7 +175,6 @@ export default function P6ElectricCircuitResultOverview() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] || TEXT.th, [lang]);
-  const langLabels = t.langLabel;
 
   useEffect(() => () => window.speechSynthesis?.cancel(), []);
 
@@ -204,14 +200,9 @@ export default function P6ElectricCircuitResultOverview() {
       />
 
       <div className="relative z-[1] mx-auto w-full max-w-[1380px]">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {t.badge}
-        </div>
-        <h1 className="mt-2 text-[clamp(32px,2.5vw,52px)] font-black leading-[1.08] text-slate-900">{t.title}</h1>
-
         <div className="relative mt-3 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
           <div className="rounded-[26px] bg-[#efe8dd] p-[clamp(16px,2vw,26px)] shadow-[0_14px_26px_rgba(0,0,0,0.14)]">
-              <div className="text-[clamp(24px,1.8vw,34px)] font-black text-slate-900">{t.section}</div>
+              <div className="text-[clamp(34px,2.6vw,52px)] font-black text-slate-900">{t.section}</div>
 
               <div className="mt-4 overflow-x-auto rounded-[10px] border-2 border-slate-900 bg-[#f6f1e8]">
                 <table className="w-full min-w-[860px] border-collapse text-slate-900">
@@ -268,58 +259,42 @@ export default function P6ElectricCircuitResultOverview() {
       </div>
 
      
- <div className="fixed bottom-3 right-3 z-50 flex gap-3">
+ <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/sim")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-xl leading-none">&lt;&lt;</span>
-          <span>{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/result-summary")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span>{t.next}</span>
-          <span className="text-xl leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
 
-      <div className="fixed bottom-3 left-3 z-50 flex max-w-[calc(100vw-24px)] flex-wrap items-center gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
-        <button
-          onClick={() => setLang("th")}
-          className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.th}
-        </button>
-
-        <button
-          onClick={() => setLang("en")}
-          className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.en}
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`whitespace-nowrap rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.ms}
-        </button>
-
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+        {LANGS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
     </div>
   );

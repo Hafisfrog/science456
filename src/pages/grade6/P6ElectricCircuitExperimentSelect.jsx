@@ -9,6 +9,7 @@ const LANG = {
     exp1sub: "การต่อวงจรไฟฟ้าแบบอนุกรม",
     exp2: "การทดลองที่ 2",
     exp2sub: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
+    back: "ย้อนกลับ",
   },
   en: {
     title: "Electric Circuits Around Us",
@@ -17,6 +18,7 @@ const LANG = {
     exp1sub: "Series Electric Circuit",
     exp2: "Experiment 2",
     exp2sub: "Series and Parallel Bulb Circuits",
+    back: "Back",
   },
   ms: {
     title: "Litar Elektrik Sekeliling Kita",
@@ -25,13 +27,14 @@ const LANG = {
     exp1sub: "Litar Elektrik Bersiri",
     exp2: "Eksperimen 2",
     exp2sub: "Litar Mentol Bersiri dan Selari",
+    back: "Kembali",
   },
 };
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย", voice: "th-TH" },
-  { id: "en", label: "English", voice: "en-US" },
-  { id: "ms", label: "Melayu", voice: "ms-MY" },
+  { id: "en", label: "อังกฤษ", voice: "en-US" },
+  { id: "ms", label: "มลายู", voice: "ms-MY" },
 ];
 
 function speakText(text, lang) {
@@ -53,12 +56,6 @@ export default function P6ElectricCircuitExperimentSelect() {
   const t = LANG[lang];
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.voice || "th-TH";
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
-
   const experiments = [
     {
       id: "exp-1",
@@ -159,47 +156,31 @@ export default function P6ElectricCircuitExperimentSelect() {
       </div>
 
       {/* Language */}
-    <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
+    <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+      {LANGUAGE_OPTIONS.map((item) => (
         <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
+          key={item.id}
+          onClick={() => setLang(item.id)}
+          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+            lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
           }`}
+          type="button"
         >
-          {langLabels.th}
+          {item.label}
         </button>
-
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.en}
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.ms}
-        </button>
-
+      ))}
       </div>
 
       {/* Navigation */}
-      <div className="fixed bottom-3 right-3 z-20 flex gap-3 pointer-events-auto">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate(backPath)}
           type="button"
-          aria-label="กลับหน้าคำศัพท์"
+          aria-label={t.back}
         >
-            <span className="text-xl leading-none">&lt;&lt;</span>
-          <span>กลับหน้าคำศัพท์</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
       </div>
     </div>

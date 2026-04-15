@@ -32,7 +32,7 @@ const TEXT = {
     },
     nav: {
       back: "ย้อนกลับ",
-      next: "สรุปผลการทดลอง",
+      next: "ไปต่อ",
     },
   },
   en: {
@@ -51,7 +51,7 @@ const TEXT = {
     },
     nav: {
       back: "Back",
-      next: "Experiment Summary",
+      next: "Next",
     },
   },
   ms: {
@@ -70,10 +70,16 @@ const TEXT = {
     },
     nav: {
       back: "Kembali",
-      next: "Rumusan Eksperimen",
+      next: "Seterusnya",
     },
   },
 };
+
+const LANGS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
 
 function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   return (
@@ -223,37 +229,6 @@ function ParallelCircuit({ removed }) {
   );
 }
 
-function LanguagePills({ lang, setLang }) {
-  const labels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
-
-  const pills = [
-    { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
-    { code: "ms", label: labels.ms },
-  ];
-
-  return (
-    <div className="inline-flex items-center gap-1">
-      {pills.map((p) => (
-        <button
-          key={p.code}
-          type="button"
-          onClick={() => setLang(p.code)}
-          className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
-            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100 text-slate-800"
-          }`}
-        >
-          {p.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
 export default function P6ElectricCircuitBulbSeriesParallelSummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -269,9 +244,9 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
       className="p6-circuit-bsp-summary-page relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_1fr] gap-2">
-        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05]">{t.heading}</h1>
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr] gap-2">
         <div className="p6-circuit-bsp-summary-card relative rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+          <h1 className="mb-3 ml-1 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">{t.heading}</h1>
           <div className="p6-circuit-bsp-summary-inner">
             <div className="p6-circuit-bsp-summary-table">
               <div className="p6-circuit-bsp-summary-row p6-circuit-bsp-summary-head">
@@ -307,30 +282,41 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-20">
-        <LanguagePills lang={lang} setLang={setLang} />
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+        {LANGS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex gap-3">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
           type="button"
           aria-label={t.nav.back}
           title={t.nav.back}
         >
-          <span className="text-xl leading-none">&lt;&lt;</span>
-          <span>{t.nav.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.nav.back}</span>
         </button>
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
           type="button"
           aria-label={t.nav.next}
           title={t.nav.next}
         >
-          <span>{t.nav.next}</span>
-          <span className="text-xl leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.nav.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

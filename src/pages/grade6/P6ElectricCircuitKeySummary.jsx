@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const TEXT = {
   th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "สรุปสาระสำคัญ : วงจรไฟฟ้าใกล้ตัว",
     sectionParts: "องค์ประกอบของวงจรไฟฟ้า",
     parts: [
       { heading: "แหล่งกำเนิดไฟฟ้า", body: "ให้พลังงานไฟฟ้า เช่น ถ่านไฟฉาย แบตเตอรี่" },
@@ -22,11 +20,9 @@ const TEXT = {
       ],
     },
     back: "ย้อนกลับ",
-    next: "กลับเลือกการทดลอง",
+    next: "ไปต่อ",
   },
   en: {
-    badge: "Electricity Around You",
-    title: "Key Takeaways: Everyday Circuits",
     sectionParts: "Parts of an Electric Circuit",
     parts: [
       { heading: "Power source", body: "Provides energy, e.g. batteries" },
@@ -44,11 +40,9 @@ const TEXT = {
       ],
     },
     back: "Back",
-    next: "Back to Experiments",
+    next: "Next",
   },
   ms: {
-    badge: "Litar elektrik dekat kita",
-    title: "Ringkasan utama: litar elektrik",
     sectionParts: "Komponen litar elektrik",
     parts: [
       { heading: "Sumber kuasa", body: "Membekalkan tenaga, contohnya bateri" },
@@ -66,54 +60,66 @@ const TEXT = {
       ],
     },
     back: "Kembali",
-    next: "Kembali Pilih Eksperimen",
+    next: "Seterusnya",
   },
 };
 
-const PART_ICONS = {
-  battery: "/images/p6/electric-circuit/batteries.svg",
-  wire: "/images/p6/electric-circuit/wire-clips.svg",
-  bulb: "/images/p6/electric-circuit/bulb-base.svg",
+const LANGS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
+
+const PART_MEDIA = {
+  battery: {
+    image: "/images/p6/tanfaichai.jpg",
+    fallbackImage: "/images/p6/electric-circuit/batteries.svg",
+  },
+  wire: {
+    image: "/images/p6/electric-circuit/wire-clips-photo.png",
+    fallbackImage: "/images/p6/electric-circuit/wire-clips.svg",
+  },
+  bulb: {
+    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
+  },
 };
 
 const PART_ICON_KEYS = ["battery", "wire", "bulb"];
 
-function LanguagePills({ lang, setLang }) {
-  const labels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
-
-  const pills = [
-    { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
-    { code: "ms", label: labels.ms },
-  ];
-
+function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   return (
-    <div className="inline-flex items-center gap-1 rounded-2xl bg-white p-2 shadow">
-      {pills.map((p) => (
-        <button
-          key={p.code}
-          type="button"
-          onClick={() => setLang(p.code)}
-          className={`rounded-xl px-4 py-2 text-[15px] font-black transition ${
-            lang === p.code ? "bg-sky-500 text-white" : "bg-sky-100 text-slate-800"
-          }`}
-        >
-          {p.label}
-        </button>
-      ))}
-    </div>
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      onError={(event) => {
+        if (event.currentTarget.dataset.fallbackApplied === "true") return;
+        event.currentTarget.dataset.fallbackApplied = "true";
+        event.currentTarget.src = fallbackSrc;
+      }}
+    />
   );
 }
 
 function PartCard({ iconKey, heading, body }) {
+  const media = PART_MEDIA[iconKey] ?? PART_MEDIA.battery;
+  const plainIcon = iconKey === "battery" || iconKey === "wire";
   return (
     <div className="flex min-w-[220px] flex-1 items-center gap-3 rounded-[18px] border-2 border-white/70 bg-white/85 px-4 py-3 shadow-[0_12px_22px_rgba(0,0,0,0.12)]">
-      <div className="grid h-[64px] w-[64px] place-items-center rounded-full bg-gradient-to-br from-amber-200 to-yellow-300 shadow-[inset_0_4px_8px_rgba(255,255,255,0.8),0_8px_14px_rgba(0,0,0,0.12)]">
-        <img src={PART_ICONS[iconKey]} alt="" className="h-[44px] w-[44px] object-contain" />
+      <div
+        className={`grid h-[64px] w-[64px] place-items-center ${
+          plainIcon
+            ? ""
+            : "rounded-full bg-gradient-to-br from-amber-200 to-yellow-300 shadow-[inset_0_4px_8px_rgba(255,255,255,0.8),0_8px_14px_rgba(0,0,0,0.12)]"
+        }`}
+      >
+        <EquipmentImage
+          src={media.image}
+          fallbackSrc={media.fallbackImage}
+          alt={heading}
+          className="h-[44px] w-[44px] object-contain"
+        />
       </div>
       <div className="flex flex-col gap-1">
         <div className="text-[18px] font-black text-slate-900">{heading}</div>
@@ -148,11 +154,6 @@ export default function P6ElectricCircuitKeySummary() {
       />
 
       <div className="relative z-[1] mx-auto flex w-full max-w-[1380px] flex-col gap-3">
-        <div className="inline-flex w-fit items-center rounded-full bg-gradient-to-br from-[#6bc3f0] to-[#4c9ee1] px-[18px] py-2 text-base font-black text-white shadow-[0_12px_22px_rgba(16,24,39,0.14)]">
-          {t.badge}
-        </div>
-        <h1 className="m-0 text-[clamp(32px,2.4vw,50px)] font-black leading-[1.05]">{t.title}</h1>
-
         <div className="rounded-[28px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(16px,2vw,26px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
           <div className="grid gap-4 rounded-3xl border-2 border-white/75 bg-white/75 p-[clamp(14px,1.6vw,20px)]">
             <div className="text-[clamp(22px,1.8vw,30px)] font-black text-slate-900">{t.sectionParts}</div>
@@ -194,30 +195,41 @@ export default function P6ElectricCircuitKeySummary() {
         </div>
       </div>
 
-      <div className="pointer-events-auto fixed bottom-3 left-3 z-20">
-        <LanguagePills lang={lang} setLang={setLang} />
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+        {LANGS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
 
-      <div className="fixed bottom-3 right-3 z-20 flex flex-nowrap gap-2">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-xl leading-none">&lt;&lt;</span>
-          <span>{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span>{t.next}</span>
-          <span className="text-xl leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
     </div>

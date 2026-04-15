@@ -3,11 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 const TRANSLATIONS = {
   th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
     stepsHeading: "ขั้นตอนการทดลอง",
     back: "ย้อนกลับ",
-    next: "ทดลอง",
+    next: "ไปต่อ",
     sound: "เปิดเสียง",
     steps: [
       {
@@ -29,13 +27,11 @@ const TRANSLATIONS = {
     ],
   },
   en: {
-    badge: "Electricity Around You",
-    title: "Connecting Bulbs in Series and Parallel",
     stepsHeading: "Experiment Steps",
     stepsSub: "Tap a step to hear it",
     summary: "Compare the series and parallel results, then summarize the differences.",
     back: "Back",
-    next: "Experiment",
+    next: "Next",
     sound: "Sound",
     steps: [
       {
@@ -57,13 +53,11 @@ const TRANSLATIONS = {
     ],
   },
   ms: {
-    badge: "Litar elektrik dekat kita",
-    title: "Sambungan mentol siri dan selari",
     stepsHeading: "Langkah eksperimen",
     stepsSub: "Tekan setiap langkah untuk mendengar",
     summary: "Bandingkan keputusan siri dan selari kemudian rumuskan perbezaannya.",
     back: "Kembali",
-    next: "Eksperimen",
+    next: "Seterusnya",
     sound: "Bunyi",
     steps: [
       {
@@ -86,6 +80,12 @@ const TRANSLATIONS = {
   },
 };
 
+const LANGS = [
+  { id: "th", label: "ไทย" },
+  { id: "en", label: "อังกฤษ" },
+  { id: "ms", label: "มลายู" },
+];
+
 const SPEECH_LANGUAGES = {
   th: "th-TH",
   en: "en-US",
@@ -105,11 +105,6 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
   const speechLang = useMemo(() => SPEECH_LANGUAGES[lang] ?? "th-TH", [lang]);
   const handleSpeak = useCallback((text) => speak(text, speechLang), [speechLang]);
 
@@ -132,12 +127,11 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto_auto] gap-2">
-        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08]">
-          {t.stepsHeading}
-        </h1>
-
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto] gap-2">
         <div className="relative min-h-0 overflow-hidden rounded-[30px] bg-[#e5f3ff] px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_22px_40px_rgba(17,24,39,0.18)]">
+          <h1 className="m-0 pb-3 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08] text-slate-900">
+            {t.stepsHeading}
+          </h1>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-3">
               {t.steps.map((step, index) => (
@@ -161,11 +155,11 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
                   <button
                     type="button"
                     onClick={() => handleSpeak(`${index + 1}. ${step.title}. ${step.detail}`)}
-                    className="grid h-[54px] w-[54px] place-items-center rounded-[16px] border border-slate-900/30 bg-[#fff7e3] text-slate-900 shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:-translate-y-0.5 hover:bg-white"
+                    className="grid h-[52px] w-[52px] place-items-center rounded-full border border-slate-300 bg-[#fff2dc] text-slate-800 shadow-[0_8px_16px_rgba(17,24,39,0.16)] transition hover:-translate-y-0.5 hover:bg-white"
                     aria-label={`${t.sound} ${index + 1}`}
                     title={t.sound}
                   >
-                    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" className="h-8 w-8">
+                    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" className="h-6 w-6">
                       <path
                         d="M12 26h12l14-10v32l-14-10H12z"
                         fill="none"
@@ -184,55 +178,41 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
           </div>
         </div>
 
-        <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-          <button
-            onClick={() => setLang("th")}
-            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-              lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-            }`}
-          >
-            {langLabels.th}
-          </button>
-
-          <button
-            onClick={() => setLang("en")}
-            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-              lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-            }`}
-          >
-            {langLabels.en}
-          </button>
-
-          <button
-            onClick={() => setLang("ms")}
-            className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-              lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-            }`}
-          >
-            {langLabels.ms}
-          </button>
+        <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+          {LANGS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+                lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+              }`}
+              type="button"
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        <div className="fixed bottom-3 right-3 z-20 flex gap-3">
+        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
           <button
-            className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-xl leading-none">&lt;&lt;</span>
-            <span>{t.back}</span>
+            <span className="text-[20px] leading-none">&laquo;</span>
+            <span className="text-[20px] leading-none">{t.back}</span>
           </button>
           <button
-            className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
             onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            <span>{t.next}</span>
-            <span className="text-xl leading-none">&gt;&gt;</span>
+            <span className="text-[20px] leading-none">{t.next}</span>
+            <span className="text-[20px] leading-none">&raquo;</span>
           </button>
         </div>
       </div>

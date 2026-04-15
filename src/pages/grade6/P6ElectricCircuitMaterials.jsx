@@ -30,12 +30,11 @@ const EQUIPMENT_MEDIA = {
 };
 
 const TRANSLATIONS = {
-    th: {
-    badge: "วงจรไฟฟ้าใกล้ตัว",
-    title: "เรื่อง วงจรไฟฟ้าอย่างง่าย",
-    equipmentHeading: "อุปกรณ์",
+  th: {
+    title: "การทดลองที่ 1 เรื่อง การต่อวงจรไฟฟ้าแบบอนุกรม",
+    equipmentHeading: "วัสดุอุปกรณ์",
     back: "ย้อนกลับ",
-    next: "ขั้นตอน",
+    next: "ไปต่อ",
     equipment: {
       cell: { title: "ถ่านไฟฉาย", subtitle: "4 ก้อน" },
       wire: { title: "สายไฟพร้อมหัวหนีบ", subtitle: "4 เส้น" },
@@ -45,11 +44,10 @@ const TRANSLATIONS = {
     },
   },
   en: {
-    badge: "Electricity Around You",
-    title: "Simple Electric Circuit",
-    equipmentHeading: "Equipment",
+    title: "Experiment 1: Series Electric Circuit",
+    equipmentHeading: "Materials and Equipment",
     back: "Back",
-    next: "Go to steps",
+    next: "Next",
     equipment: {
       cell: { title: "Battery", subtitle: "4 cells" },
       wire: { title: "Wires with clips", subtitle: "4 wires" },
@@ -59,11 +57,10 @@ const TRANSLATIONS = {
     },
   },
   ms: {
-    badge: "Litar elektrik dekat kita",
-    title: "Litar elektrik mudah",
-    equipmentHeading: "Peralatan",
+    title: "Eksperimen 1: Litar Elektrik Bersiri",
+    equipmentHeading: "Bahan dan Peralatan",
     back: "Kembali",
-    next: "Pergi ke langkah",
+    next: "Seterusnya",
     equipment: {
       cell: { title: "Bateri", subtitle: "4 biji" },
       wire: { title: "Wayar dengan klip", subtitle: "4 utas" },
@@ -78,8 +75,8 @@ const EQUIPMENT_ORDER = ["cell", "wire", "holder", "bulb", "switch"];
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย", speechLang: "th-TH" },
-  { id: "en", label: "English", speechLang: "en-US" },
-  { id: "ms", label: "Melayu", speechLang: "ms-MY" },
+  { id: "en", label: "อังกฤษ", speechLang: "en-US" },
+  { id: "ms", label: "มลายู", speechLang: "ms-MY" },
 ];
 
 function speakText(text, lang) {
@@ -193,11 +190,6 @@ export default function P6ElectricCircuitMaterials() {
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang ||
     "th-TH";
-  const langLabels = {
-    th: { th: "ไทย", en: "English", ms: "Melayu" },
-    en: { th: "Thai", en: "English", ms: "Melayu" },
-    ms: { th: "Thai", en: "English", ms: "Melayu" },
-  }[lang];
 
   const onSpeak = useCallback(
     (text) => speakText(text, speechLang),
@@ -232,11 +224,16 @@ export default function P6ElectricCircuitMaterials() {
     >
 
       <div className="mx-auto flex max-w-[1380px] flex-col gap-3">
-        <h1 className="m-0 py-1 text-center text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08]">
-          {t.equipmentHeading}
+        <h1 className="m-0 py-1 text-center text-[clamp(30px,2.2vw,48px)] font-black leading-[1.08] text-slate-900">
+          {t.title}
         </h1>
 
         <div className="rounded-[34px] bg-sky-200 p-6">
+          <div className="mb-4">
+            <div className="inline-flex px-2 py-1 text-[clamp(28px,2vw,40px)] font-black text-slate-900">
+              {t.equipmentHeading}
+            </div>
+          </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
 
             {equipmentData.map((item) => (
@@ -254,55 +251,39 @@ export default function P6ElectricCircuitMaterials() {
           </div>
         </div>
 
-              <div className="fixed bottom-3 right-3 z-20 flex gap-3">
+      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-white px-4 py-3 text-base font-bold text-slate-900 shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
         >
-          <span className="text-xl leading-none">&lt;&lt;</span>
-          <span>{t.back}</span>
+          <span className="text-[20px] leading-none">&laquo;</span>
+          <span className="text-[20px] leading-none">{t.back}</span>
         </button>
         <button
-          className="inline-flex items-center gap-2 rounded-2xl bg-blue-600 px-4 py-3 text-base font-bold text-white shadow"
+          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
           onClick={() => navigate("/p6/electric-circuit/steps")}
           type="button"
         >
-          <span>{t.next}</span>
-          <span className="text-xl leading-none">&gt;&gt;</span>
+          <span className="text-[20px] leading-none">{t.next}</span>
+          <span className="text-[20px] leading-none">&raquo;</span>
         </button>
       </div>
       </div>
 
-        <div className="pointer-events-auto fixed bottom-3 left-3 z-20 flex gap-[10px] rounded-[18px] bg-white/90 px-3 py-[10px] shadow-[0_10px_22px_rgba(0,0,0,0.12)]">
-
-        <button
-          onClick={() => setLang("th")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "th" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.th}
-        </button>
-
-        <button
-          onClick={() => setLang("en")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "en" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.en}
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[14px] py-[10px] text-[16px] font-black leading-none transition-transform duration-150 hover:-translate-y-[1px] ${
-            lang === "ms" ? "bg-[#bae6fd] text-slate-900" : "bg-[#e6f2ff] text-slate-900 hover:bg-[#d9edff]"
-          }`}
-        >
-          {langLabels.ms}
-        </button>
-
+      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+        {LANGUAGE_OPTIONS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
+              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+            }`}
+            type="button"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
     </div>
   );
