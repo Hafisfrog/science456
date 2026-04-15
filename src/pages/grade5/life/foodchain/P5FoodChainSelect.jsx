@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
+import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const getSlotKey = (row, col) => `${row}-${col}`;
 const SCORE_PER_ROW = 2;
@@ -210,6 +210,12 @@ const UI_COPY = {
     clearSlot: "Kosongkan slot dipilih",
     fillAllAlert: "Sila isi semua slot dahulu",
   },
+};
+
+const LANGUAGE_BUTTON_LABELS = {
+  th: "ไทย",
+  en: "อังกฤษ",
+  ms: "มลายู",
 };
 
 const ANIMAL_TRANSLATIONS = {
@@ -471,7 +477,7 @@ export default function P5FoodChainSelect() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-sans">
+    <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/65 via-white/45 to-emerald-50/50" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-8 top-6 h-40 w-40 rounded-full bg-lime-100/30 blur-3xl" />
@@ -736,19 +742,26 @@ export default function P5FoodChainSelect() {
           size="materials"
           value={activeLang}
           onChange={setActiveLang}
-          labels={UI_COPY.th.languages}
+          labels={LANGUAGE_BUTTON_LABELS}
         />
       </div>
 
-      <div className="fixed bottom-[18px] right-[18px] z-40 max-[720px]:bottom-[12px] max-[720px]:right-[12px]">
-        <FoodChainNavButtons
-          size="materials"
-          backLabel={ui.back}
-          nextLabel={ui.viewAllAnswers}
-          nextArrow={"\u00BB"}
-          onBack={() => navigate("/p5/life/foodchain/steps")}
-          onNext={handleGoToAnswers}
-        />
+      <div className="fixed bottom-[18px] right-[18px] z-40 flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p5/life/foodchain/steps")}
+          type="button"
+        >
+          {"\u00AB"} {ui.back}
+        </button>
+
+        <button
+          className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={handleGoToAnswers}
+          type="button"
+        >
+          {ui.viewAllAnswers} {"\u00BB"}
+        </button>
       </div>
 
       {showPanel && (
