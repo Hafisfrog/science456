@@ -110,7 +110,7 @@ const UI_COPY = {
     clickToChoose: "คลิกเพื่อเลือก",
     rowComplete: "เติมครบแล้ว",
     rowFilled: (filled, total) => `เติมแล้ว ${filled}/${total} ช่อง`,
-    revealRow: "เฉลยทั้งแถว",
+    revealRow: "เฉลย",
     listenIntro: "ฟังส่วนบน",
     listenRow: "ฟังแถวนี้",
     rowSpeechLabel: "แถว",
@@ -151,7 +151,7 @@ const UI_COPY = {
     clickToChoose: "Click to choose",
     rowComplete: "All filled",
     rowFilled: (filled, total) => `Filled ${filled}/${total} slots`,
-    revealRow: "Reveal row",
+    revealRow: "answer",
     listenIntro: "Listen to this section",
     listenRow: "Listen to this row",
     rowSpeechLabel: "Row",
@@ -192,7 +192,7 @@ const UI_COPY = {
     clickToChoose: "Klik untuk pilih",
     rowComplete: "Sudah lengkap",
     rowFilled: (filled, total) => `Diisi ${filled}/${total} slot`,
-    revealRow: "Tunjuk jawapan baris",
+    revealRow: "Tunjuk jawapan ",
     listenIntro: "Dengar bahagian ini",
     listenRow: "Dengar baris ini",
     rowSpeechLabel: "Baris",
@@ -310,14 +310,16 @@ export default function P5FoodChainSelect() {
   };
 
   const isComplete = chains.every((row) => row.every(Boolean));
+  const getChainTitle = (rowIndex) =>
+    activeLang === "th" ? `ข้อที่ ${rowIndex + 1}` : `${ui.chainLabel} ${rowIndex + 1}`;
   const translatedActiveSlotSummary =
     activeSlot.row !== null && activeSlot.col !== null
-      ? `${ui.chainLabel} ${activeSlot.row + 1} ${ui.slotLabel} ${activeSlot.col + 1}`
+      ? `${getChainTitle(activeSlot.row)} ${ui.slotLabel} ${activeSlot.col + 1}`
       : "";
   const activeSlotHeading =
     activeSlot.row !== null && activeSlot.col !== null
       ? ui.fillAnswerFor(
-          `${ui.chainLabel} ${activeSlot.row + 1}`,
+          getChainTitle(activeSlot.row),
           `${ui.slotLabel} ${activeSlot.col + 1}`
         )
       : "";
@@ -558,7 +560,7 @@ export default function P5FoodChainSelect() {
                     <div
                       className={`inline-flex w-fit items-center rounded-full border px-4 py-1.5 text-sm font-semibold shadow-sm ${accent}`}
                     >
-                      {ui.chainLabel} {rowIndex + 1}
+                      {getChainTitle(rowIndex)}
                     </div>
 
                     {hasRowReveal && (

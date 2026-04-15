@@ -81,7 +81,7 @@ const UI = {
     chain: "Chain",
     correct: "Correct",
     wrong: "Incorrect",
-    studentAnswer: "Our Answer",
+    studentAnswer: "answer",
     correctAnswer: "Correct Answer",
     noAnswer: "No answer yet",
     back: "Back",
@@ -97,7 +97,7 @@ const UI = {
     chain: "Rantaian",
     correct: "Betul",
     wrong: "Salah",
-    studentAnswer: "Jawapan Kami",
+    studentAnswer: "Jawapan ",
     correctAnswer: "Jawapan Betul",
     noAnswer: "Belum ada jawapan",
     back: "Kembali",
@@ -141,6 +141,10 @@ export default function P5FoodChainSim() {
   );
   const score = rowScores.reduce((total, rowScore) => total + rowScore, 0);
   const averageScore = ANSWERS.length > 0 ? score / ANSWERS.length : 0;
+  const getQuestionLabel = (index) =>
+    language === "th" ? `ข้อที่ ${index + 1}` : `${ui.chain} ${index + 1}`;
+  const getStudentAnswerLabel = (index) =>
+    language === "th" ? `คำตอบข้อที่ ${index + 1}` : ui.studentAnswer;
 
   const speakChainSummary = (index, studentAnswer, correctAnswer, correct) => {
     if (typeof window === "undefined" || !window.speechSynthesis) return;
@@ -156,7 +160,7 @@ export default function P5FoodChainSim() {
         ? `Chain ${index + 1}. ${correct ? "Correct." : "Incorrect."} ${ui.studentAnswerSpeech}: ${studentText}. ${ui.correctAnswerSpeech}: ${correctText}.`
         : language === "ms"
           ? `Rantaian ${index + 1}. ${correct ? "Betul." : "Salah."} ${ui.studentAnswerSpeech}: ${studentText}. ${ui.correctAnswerSpeech}: ${correctText}.`
-          : `ห่วงโซ่ที่ ${index + 1} ${correct ? "ถูกต้อง" : "ผิด"} ${ui.studentAnswerSpeech} ${studentText} ${ui.correctAnswerSpeech} ${correctText}`;
+          : `ข้อที่ ${index + 1} ${correct ? "ถูกต้อง" : "ผิด"} ${ui.studentAnswerSpeech} ${studentText} ${ui.correctAnswerSpeech} ${correctText}`;
 
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(speechText);
@@ -219,7 +223,7 @@ export default function P5FoodChainSim() {
               >
                 <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                   <div className="inline-flex w-fit items-center rounded-[22px] bg-gradient-to-r from-emerald-500 to-green-600 px-5 py-3 text-lg font-extrabold text-white shadow-lg">
-                    {ui.chain} {index + 1}
+                    {getQuestionLabel(index)}
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="rounded-full bg-sky-100 px-4 py-2 text-sm font-bold text-sky-700">
@@ -236,8 +240,8 @@ export default function P5FoodChainSim() {
                       type="button"
                       onClick={() => speakChainSummary(index, studentAnswer, answer, correct)}
                       className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-emerald-200 bg-white/85 text-lg text-emerald-700 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-emerald-400 hover:bg-white"
-                      aria-label={`${ui.listen} ${ui.chain} ${index + 1}`}
-                      title={`${ui.listen} ${ui.chain} ${index + 1}`}
+                      aria-label={`${ui.listen} ${getQuestionLabel(index)}`}
+                      title={`${ui.listen} ${getQuestionLabel(index)}`}
                     >
                       🔊
                     </button>
@@ -246,11 +250,11 @@ export default function P5FoodChainSim() {
 
                 <div className="grid gap-4 xl:grid-cols-2">
                   <div className="rounded-[24px] border border-emerald-200/80 bg-gradient-to-br from-white/80 to-emerald-50/78 p-4 shadow-sm">
-                    <div className="mb-3 text-sm font-semibold text-emerald-700">🧑‍🎓 {ui.studentAnswer}</div>
-                    <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-white/60 p-4">
+                    <div className="mb-3 text-sm font-semibold text-emerald-700">🧑‍🎓 {getStudentAnswerLabel(index)}</div>
+                    <div className="flex flex-nowrap items-center gap-3 overflow-x-auto overflow-y-hidden rounded-2xl bg-white/60 p-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                       {studentAnswer.length > 0 ? (
                         studentAnswer.map((name, itemIndex) => (
-                          <div key={`${name}-${itemIndex}`} className="flex items-center gap-3">
+                          <div key={`${name}-${itemIndex}`} className="flex shrink-0 items-center gap-3">
                             <div className="text-center">
                               <img
                                 src={ANIMAL_IMAGES[name]}
@@ -274,9 +278,9 @@ export default function P5FoodChainSim() {
 
                   <div className="rounded-[24px] border border-amber-200/80 bg-gradient-to-br from-white/80 to-amber-50/78 p-4 shadow-sm">
                     <div className="mb-3 text-sm font-semibold text-amber-700">📚 {ui.correctAnswer}</div>
-                    <div className="flex flex-wrap items-center gap-3 rounded-2xl bg-white/60 p-4">
+                    <div className="flex flex-nowrap items-center gap-3 overflow-x-auto overflow-y-hidden rounded-2xl bg-white/60 p-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                       {answer.map((name, itemIndex) => (
-                        <div key={`${name}-${itemIndex}`} className="flex items-center gap-3">
+                        <div key={`${name}-${itemIndex}`} className="flex shrink-0 items-center gap-3">
                           <div className="text-center">
                             <img
                               src={ANIMAL_IMAGES[name]}
