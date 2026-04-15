@@ -68,7 +68,7 @@ export default function P6ElectricCircuitExperimentSelect() {
       id: "exp-2",
       title: t.exp2,
       subtitle: t.exp2sub,
-      image: "/images/p6/jromknanp6.png",
+      image: "/images/p6/faifa2.2.png",
       path: "/p6/electric-circuit/bulb-series-parallel",
     },
   ];
