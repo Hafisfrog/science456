@@ -118,11 +118,7 @@ const PAGE_COPY = {
   },
 };
 
-const LANGUAGE_LABELS = {
-  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
-  en: { th: "Thai", en: "English", ms: "Malay" },
-  ms: { th: "Thai", en: "English", ms: "Melayu" },
-};
+const LANGUAGE_LABELS = { th: "ไทย", ms: "มลายู", en: "อังกฤษ" };
 
 const topMaterials = [
   {
@@ -299,7 +295,7 @@ export default function P5FoodChainMaterials() {
           onClick={() => setActiveLang("th")}
           type="button"
         >
-          {LANGUAGE_LABELS[activeLang].th}
+          {LANGUAGE_LABELS.th}
         </button>
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-['Prompt',sans-serif] font-black transition ${
@@ -310,7 +306,7 @@ export default function P5FoodChainMaterials() {
           onClick={() => setActiveLang("ms")}
           type="button"
         >
-          {LANGUAGE_LABELS[activeLang].ms}
+          {LANGUAGE_LABELS.ms}
         </button>
         <button
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-['Prompt',sans-serif] font-black transition ${
@@ -321,7 +317,7 @@ export default function P5FoodChainMaterials() {
           onClick={() => setActiveLang("en")}
           type="button"
         >
-          {LANGUAGE_LABELS[activeLang].en}
+          {LANGUAGE_LABELS.en}
         </button>
       </div>
       <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">

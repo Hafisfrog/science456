@@ -40,6 +40,7 @@ const UI = {
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const LANGUAGE_BUTTON_LABELS = { th: "ไทย", ms: "มลายู", en: "อังกฤษ" };
 
 export default function P5FoodChainIntro() {
   const navigate = useNavigate();
@@ -144,7 +145,7 @@ export default function P5FoodChainIntro() {
             size="materials"
             value={language}
             onChange={setLanguage}
-            labels={content.langLabel}
+            labels={LANGUAGE_BUTTON_LABELS}
           />
         </div>
 
