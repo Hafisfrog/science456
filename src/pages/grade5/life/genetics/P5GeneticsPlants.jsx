@@ -4,6 +4,7 @@ import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsPlants.css";
 import "./p5GeneticsLangShared.css";
+import "./P5GeneticsPlantsSummaryOverrides.css";
 
 const TALL_PLANT_IMG = "/images/p5/tall.png";
 const SHORT_PLANT_IMG = "/images/p5/short.png";
@@ -422,7 +423,7 @@ export default function P5GeneticsPlants() {
         </section>
 
         <footer className="p5gp-ground">
-          <div className="p5gp-lang">
+          <div className="p5gps-lang p5gps-lang-p4">
             <button
               type="button"
               className={lang === "th" ? "is-active" : ""}
@@ -446,17 +447,17 @@ export default function P5GeneticsPlants() {
             </button>
           </div>
 
-          <div className="p5gp-actions">
+          <div className="p5gps-actions p5gp-actions">
             <button
               type="button"
-              className="p5gp-back"
+              className="p5gps-back-btn"
               onClick={() => navigate("/p5/life/genetics")}
             >
               {backLabel}
             </button>
             <button
               type="button"
-              className="p5gp-next"
+              className="p5gps-next-btn"
               onClick={() => navigate("/p5/life/genetics/plants/summary")}
             >
               {nextLabel}

@@ -156,6 +156,70 @@
   }
 }
 
+/* Final nav lock for Plants page: match Humans page exactly. */
+.p5gp-back,
+.p5gp-next {
+  box-sizing: border-box !important;
+  border: none !important;
+  border-radius: 18px !important;
+  width: 148px !important;
+  min-width: 148px !important;
+  max-width: 148px !important;
+  height: 56px !important;
+  min-height: 56px !important;
+  max-height: 56px !important;
+  padding: 14px 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0 !important;
+  font-family: "Prompt", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 900 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.p5gp-back {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #213a8f !important;
+}
+
+.p5gp-next {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+}
+
+.p5gp-back:hover,
+.p5gp-next:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5gp-back:active,
+.p5gp-next:active {
+  transform: translateY(1px) !important;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18) !important;
+}
+
+@media (max-width: 1180px) {
+  .p5gp-back,
+  .p5gp-next {
+    width: 128px !important;
+    min-width: 128px !important;
+    max-width: 128px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    padding: 13px 16px !important;
+    border-radius: 16px !important;
+    font-size: 18px !important;
+  }
+}
+
 .p5gps-lang-p4 button:not(.p5gps-audio) {
   min-width: 88px !important;
   border: 0 !important;

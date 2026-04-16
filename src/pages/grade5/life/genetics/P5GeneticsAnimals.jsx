@@ -4,6 +4,7 @@ import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsAnimals.css";
 import "./p5GeneticsLangShared.css";
+import "./P5GeneticsAnimalsSummaryOverrides.css";
 
 const kittens = Array.from({ length: 4 }, (_, index) => ({
   id: index,
@@ -355,7 +356,7 @@ export default function P5GeneticsAnimals() {
         </section>
 
         <footer className="p5ga-ground">
-          <div className="p5ga-lang">
+          <div className="p5gas-lang p5gas-lang-p4">
             <button
               type="button"
               className={lang === "th" ? "is-active" : ""}

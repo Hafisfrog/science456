@@ -830,3 +830,193 @@
     line-height: 19.5px !important;
   }
 }
+/* Final nav button lock: match /p5/life/genetics/plants/summary */
+.p5gh-back-btn,
+.p5gh-next-btn {
+  width: auto !important;
+  height: auto !important;
+  padding: 14px 18px !important;
+  border-radius: 18px !important;
+  font-size: 20px !important;
+  font-weight: 1000 !important;
+  line-height: 28px !important;
+  border: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.p5gh-back-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #0f172a !important;
+}
+
+.p5gh-next-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+}
+
+.p5gh-back-btn:hover,
+.p5gh-next-btn:hover {
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5gh-back-btn:active,
+.p5gh-next-btn:active {
+  transform: translateY(1px) !important;
+}
+
+@media (max-width: 1180px) {
+  .p5gh-back-btn,
+  .p5gh-next-btn {
+    width: auto !important;
+    height: auto !important;
+    padding: 13px 16px !important;
+    border-radius: 16px !important;
+    font-size: 18px !important;
+    line-height: 27px !important;
+  }
+}
+
+/* Final lock for /p5/life/genetics/humans/summary: match plants/summary buttons exactly. */
+.p5ghs-back-btn,
+.p5ghs-next-btn {
+  width: auto !important;
+  height: auto !important;
+  padding: 14px 18px !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  font-size: 20px !important;
+  font-weight: 1000 !important;
+  line-height: 28px !important;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.p5ghs-back-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #0f172a !important;
+}
+
+.p5ghs-next-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+}
+
+.p5ghs-back-btn:hover,
+.p5ghs-next-btn:hover {
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5ghs-back-btn:active,
+.p5ghs-next-btn:active {
+  transform: translateY(1px) !important;
+}
+
+@media (max-width: 1180px) {
+  .p5ghs-back-btn,
+  .p5ghs-next-btn {
+    width: auto !important;
+    height: auto !important;
+    padding: 13px 16px !important;
+    border-radius: 16px !important;
+    font-size: 18px !important;
+    line-height: 27px !important;
+  }
+}
+
+/* Final lock for /p5/life/genetics/humans/summary-2: match plants/summary buttons exactly. */
+.p5ghs2-back-btn,
+.p5ghs2-next-btn {
+  width: auto !important;
+  height: auto !important;
+  padding: 14px 18px !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  font-size: 20px !important;
+  font-weight: 1000 !important;
+  line-height: 28px !important;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.p5ghs2-back-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #0f172a !important;
+}
+
+.p5ghs2-next-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+}
+
+.p5ghs2-back-btn:hover,
+.p5ghs2-next-btn:hover {
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5ghs2-back-btn:active,
+.p5ghs2-next-btn:active {
+  transform: translateY(1px) !important;
+}
+
+@media (max-width: 1180px) {
+  .p5ghs2-back-btn,
+  .p5ghs2-next-btn {
+    width: auto !important;
+    height: auto !important;
+    padding: 13px 16px !important;
+    border-radius: 16px !important;
+    font-size: 18px !important;
+    line-height: 27px !important;
+  }
+}
+
+/* Final lock for /p5/life/genetics/humans/summary-3: match plants/summary buttons exactly. */
+.p5ghs3-back-btn,
+.p5ghs3-next-btn {
+  width: auto !important;
+  height: auto !important;
+  padding: 14px 18px !important;
+  border: 0 !important;
+  border-radius: 18px !important;
+  font-size: 20px !important;
+  font-weight: 1000 !important;
+  line-height: 28px !important;
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22) !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+}
+
+.p5ghs3-back-btn {
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: #0f172a !important;
+}
+
+.p5ghs3-next-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+  color: #ffffff !important;
+}
+
+.p5ghs3-back-btn:hover,
+.p5ghs3-next-btn:hover {
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5ghs3-back-btn:active,
+.p5ghs3-next-btn:active {
+  transform: translateY(1px) !important;
+}
+
+@media (max-width: 1180px) {
+  .p5ghs3-back-btn,
+  .p5ghs3-next-btn {
+    width: auto !important;
+    height: auto !important;
+    padding: 13px 16px !important;
+    border-radius: 16px !important;
+    font-size: 18px !important;
+    line-height: 27px !important;
+  }
+}
