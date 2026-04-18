@@ -93,9 +93,7 @@ export default function Grade6() {
       />
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] flex-col">
-        <h1 className="m-0 text-4xl font-extrabold text-blue-600 md:text-[72px]">
-          {copy.title}
-        </h1>
+        <h1 className="m-0 text-4xl font-extrabold text-blue-600 md:text-[72px]">{copy.title}</h1>
         <p className="mt-2 text-lg text-slate-700 md:text-[45px]">{copy.subtitle}</p>
 
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
@@ -118,9 +116,7 @@ export default function Grade6() {
                   <div className="text-[clamp(18px,1.8vw,30px)] font-extrabold leading-[1.12] text-slate-900">
                     {item.title[language]}
                   </div>
-                  <div className="mt-2 text-sm text-slate-700 md:text-base">
-                    {item.subtitle[language]}
-                  </div>
+                  <div className="mt-2 text-sm text-slate-700 md:text-base">{item.subtitle[language]}</div>
                 </div>
               </button>
             ))}
@@ -128,7 +124,7 @@ export default function Grade6() {
         </section>
       </div>
 
-      <div className={`fixed bottom-3 left-3 z-20 md:bottom-6 md:left-6 ${GRADE6_LANG_BAR_CLASS}`}>
+      <div className={`fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7 ${GRADE6_LANG_BAR_CLASS}`}>
         <div className="flex items-center gap-2" role="group" aria-label={copy.languageLabel}>
           {LANGUAGES.map((option) => {
             const isActive = option.key === language;
@@ -148,16 +144,15 @@ export default function Grade6() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex items-center">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           type="button"
           onClick={() => navigate(backPath)}
           aria-label={copy.backLabel}
           title={copy.backLabel}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{copy.backLabel}</span>
+          « {copy.backLabel}
         </button>
       </div>
     </div>

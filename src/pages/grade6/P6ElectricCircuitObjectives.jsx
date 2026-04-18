@@ -8,7 +8,8 @@ const CONTENT = {
     obj1: "อธิบายส่วนประกอบของวงจรไฟฟ้าอย่างง่ายได้",
     obj2: "ต่อวงจรไฟฟ้าอย่างง่าย และตรวจสอบวงจรเปิด-ปิดได้",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     title: "Everyday Electric Circuits",
@@ -17,6 +18,7 @@ const CONTENT = {
     obj2: "Build a simple circuit and identify open/closed circuits. (K, P)",
     back: "Back",
     next: "Next",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     title: "Litar Elektrik Sekeliling Kita",
@@ -25,24 +27,22 @@ const CONTENT = {
     obj2: "Membina litar ringkas dan mengenal pasti litar terbuka/tertutup. (K, P)",
     back: "Kembali",
     next: "Seterusnya",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย", speechLang: "th-TH" },
-  { id: "en", label: "อังกฤษ", speechLang: "en-US" },
-  { id: "ms", label: "มลายู", speechLang: "ms-MY" },
+  { id: "th", speechLang: "th-TH" },
+  { id: "en", speechLang: "en-US" },
+  { id: "ms", speechLang: "ms-MY" },
 ];
 
 function speakText(text, lang) {
   if (!text || !("speechSynthesis" in window)) return;
-
   window.speechSynthesis.cancel();
-
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = lang;
   utter.rate = 0.95;
-
   window.speechSynthesis.speak(utter);
 }
 
@@ -50,9 +50,8 @@ export default function P6ElectricCircuitObjectives() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
 
-  const t = CONTENT[lang];
-  const speechLang =
-    LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || "th-TH";
+  const t = CONTENT[lang] ?? CONTENT.th;
+  const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang ?? "th-TH";
 
   const pageBg = {
     background:
@@ -68,16 +67,13 @@ export default function P6ElectricCircuitObjectives() {
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(120px,11vw,190px)] top-3 h-[clamp(108px,11vw,150px)] w-[clamp(70px,7vw,102px)] bg-[#f7bd2b]"
         style={{
-          clipPath:
-            "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+          clipPath: "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
         }}
       />
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] flex-col">
         <div className="mb-4 text-center">
-          <h1 className="text-4xl font-extrabold text-blue-600 md:text-[72px]">
-            {t.title}
-          </h1>
+          <h1 className="text-4xl font-extrabold text-blue-600 md:text-[72px]">{t.title}</h1>
         </div>
 
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
@@ -127,41 +123,41 @@ export default function P6ElectricCircuitObjectives() {
         </section>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        {LANGUAGE_OPTIONS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLang(item.id)}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === item.id
-                ? "bg-[#bdd9f8]"
-                : "bg-[#eaf3ff]"
-            }`}
-            title={item.label}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          {LANGUAGE_OPTIONS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                lang === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              title={t.lang[item.id]}
+              type="button"
+            >
+              {t.lang[item.id]}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6")}
           type="button"
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{t.back}</span>
+          &laquo; {t.back}
         </button>
 
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/vocab")}
           type="button"
         >
-          <span className="text-[20px] leading-none">{t.next}</span>
-          <span className="text-[20px] leading-none">&raquo;</span>
+          {t.next} &raquo;
         </button>
       </div>
     </div>

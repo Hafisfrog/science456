@@ -1,11 +1,8 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
-const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
+const LANGUAGE_OPTIONS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
+const MIN_RUB_SECONDS = 10;
 const TRIAL_OPTIONS = [
   {
     id: "balloon-both",
@@ -102,6 +99,9 @@ const UI_TEXT = {
     oneBalloonHint: "ขัดลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ",
     oneMarkerHint: "ขัดปากกาเมจิก 1 ด้าม (ด้ามซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ",
     completeHint: 'ทำครบทุกการทดลองแล้ว กดปุ่ม "สรุปผลการทดลอง" ได้เลย',
+    rubTooShort: `เวลาถูยังน้อยเกินไป ต้องถูมากกว่า ${MIN_RUB_SECONDS} วินาที จึงจะเห็นผล`,
+    timerTitle: "เวลาทดลอง",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     backTop: "<< Back",
@@ -133,6 +133,9 @@ const UI_TEXT = {
     oneBalloonHint: "What happens if only one balloon (left) is rubbed?",
     oneMarkerHint: "What happens if only one marker pen (left) is rubbed?",
     completeHint: 'All trials are done. Press "Experiment Summary".',
+    rubTooShort: `Rubbing is too short. Rub for more than ${MIN_RUB_SECONDS} seconds to see a result.`,
+    timerTitle: "Experiment time",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     backTop: "<< Kembali",
@@ -164,6 +167,9 @@ const UI_TEXT = {
     oneBalloonHint: "Apa jadi jika hanya satu belon (kiri) digosok?",
     oneMarkerHint: "Apa jadi jika hanya satu pen marker (kiri) digosok?",
     completeHint: 'Semua ujian selesai. Tekan "Ringkasan Eksperimen".',
+    rubTooShort: `Masa gosokan terlalu singkat. Gosok lebih daripada ${MIN_RUB_SECONDS} saat untuk melihat hasil.`,
+    timerTitle: "Masa eksperimen",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 const CHARGES = {
@@ -233,8 +239,7 @@ export default function P6ElectricForceEffectSim() {
   const [charged, setCharged] = useState(false);
   const [sequenceNotice, setSequenceNotice] = useState("");
   const [trialResults, setTrialResults] = useState({});
-  const t = UI_TEXT[language];
-  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const t = UI_TEXT[language] ?? UI_TEXT.th;
   const activeTrials = useMemo(() => TRIAL_OPTIONS, []);
   const totalTrials = TRIAL_OPTIONS.length;
   const completedCount = useMemo(
@@ -350,6 +355,13 @@ export default function P6ElectricForceEffectSim() {
   };
   const handleStop = () => {
     if (!isRunning || !selectedTrial) return;
+    if (seconds <= MIN_RUB_SECONDS) {
+      setIsRunning(false);
+      setCharged(false);
+      setStarted(false);
+      setSequenceNotice(t.rubTooShort);
+      return;
+    }
     const currentTrial = TRIAL_OPTIONS.find((trial) => trial.id === selectedTrial);
     const currentLabel = getTrialLabel(currentTrial, language);
     const nextAfterCurrent = activeTrials.find(
@@ -409,6 +421,10 @@ export default function P6ElectricForceEffectSim() {
     <div className="p6-force-sim-page">
       <style>{forceEffectSimStyles}</style>
       <div className="p6-force-sim-stage">
+        <div className="p6-force-sim-live-timer" role="status" aria-live="polite">
+          <div className="p6-force-sim-live-timer-title">{t.timerTitle}</div>
+          <div className="p6-force-sim-live-timer-time">{formatTime(seconds)}</div>
+        </div>
         {/* ภาษา */}
         <div className="p6-force-sim-langbar">  
           {LANGUAGE_OPTIONS.map((item) => (
@@ -418,7 +434,7 @@ export default function P6ElectricForceEffectSim() {
               className={`p6-force-sim-langchip ${language === item.id ? "active" : ""}`}
               onClick={() => setLanguage(item.id)}
             >
-              {langLabels[item.id]}
+              {t.lang[item.id]}
             </button>
           ))}
         </div>
@@ -594,6 +610,11 @@ export default function P6ElectricForceEffectSim() {
               <span className="p6-force-sim-current-trial-label">{t.currentTrial}:</span>{" "}
               <span className="p6-force-sim-current-trial-value">{selectedTrialLabel || notSelectedLabel}</span>
             </div>
+            {!isRunning && sequenceNotice === t.rubTooShort && (
+              <div className="p6-force-sim-short-warning" role="alert">
+                {t.rubTooShort}
+              </div>
+            )}
             {currentResult && !isRunning && (
               <div className="p6-force-sim-result-card is-center">
                 <div className="p6-force-sim-result-title">{t.result}</div>

@@ -22,32 +22,34 @@ const TEXT = {
     summary:
       "จากการทำกิจกรรม พบว่า เมื่อนำเซลล์ไฟฟ้าหลายเซลล์มาเรียงต่อกันแบบอนุกรม กระแสไฟฟ้าในวงจรจะมากขึ้น ส่งผลให้หลอดไฟสว่างมากขึ้นตามจำนวนเซลล์ไฟฟ้าที่เพิ่มขึ้น",
     listen: "ฟังสรุป",
+    cellCount: (n) => `${n} ก้อน`,
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     section: "Experiment Summary",
     summary:
       "From the activity, we found that connecting more cells in series increases the current in the circuit, making the bulb brighter as the number of cells increases.",
     listen: "Listen",
+    cellCount: (n) => `${n} cells`,
     back: "Back",
     next: "Next",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     section: "Rumusan Eksperimen",
     summary:
       "Daripada aktiviti ini, didapati bahawa apabila lebih banyak sel disusun secara siri, arus dalam litar bertambah dan mentol menjadi lebih terang apabila bilangan sel meningkat.",
     listen: "Dengar rumusan",
+    cellCount: (n) => `${n} sel`,
     back: "Kembali",
     next: "Seterusnya",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
-const LANGS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
+const LANGS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
 
 function speakText(text, lang) {
   if (typeof window === "undefined" || !window.speechSynthesis || !text) return;
@@ -79,11 +81,32 @@ function CircuitSummaryVisual({ cells }) {
   return (
     <div className="relative mx-auto mt-5 h-[150px] w-full max-w-[560px]">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 560 150" aria-hidden="true">
-        <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
+        <path
+          d="M210 62 C 282 48, 340 48, 398 58"
+          stroke="#111827"
+          strokeOpacity="0.22"
+          strokeWidth="8"
+          fill="none"
+          strokeLinecap="round"
+        />
         <path d="M210 62 C 282 48, 340 48, 398 58" stroke="#0b1020" strokeWidth="5" fill="none" strokeLinecap="round" />
-        <path d="M210 90 C 258 122, 302 134, 322 130" stroke="#111827" strokeOpacity="0.2" strokeWidth="8" fill="none" strokeLinecap="round" />
+        <path
+          d="M210 90 C 258 122, 302 134, 322 130"
+          stroke="#111827"
+          strokeOpacity="0.2"
+          strokeWidth="8"
+          fill="none"
+          strokeLinecap="round"
+        />
         <path d="M210 90 C 258 122, 302 134, 322 130" stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
-        <path d="M356 130 C 404 142, 444 134, 436 92" stroke="#111827" strokeOpacity="0.2" strokeWidth="8" fill="none" strokeLinecap="round" />
+        <path
+          d="M356 130 C 404 142, 444 134, 436 92"
+          stroke="#111827"
+          strokeOpacity="0.2"
+          strokeWidth="8"
+          fill="none"
+          strokeLinecap="round"
+        />
         <path d="M356 130 C 404 142, 444 134, 436 92" stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
       </svg>
 
@@ -138,7 +161,8 @@ export default function P6ElectricCircuitResults() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const [summaryCells, setSummaryCells] = useState(4);
-  const t = useMemo(() => TEXT[lang] || TEXT.th, [lang]);
+  const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && window.speechSynthesis) {
@@ -153,15 +177,14 @@ export default function P6ElectricCircuitResults() {
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-3 text-slate-900 md:px-8 md:pb-32"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
         style={{
-          clipPath:
-            "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+          clipPath: "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
         }}
       />
 
@@ -185,7 +208,7 @@ export default function P6ElectricCircuitResults() {
                 title={t.listen}
                 className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[22px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
               >
-                {"\uD83D\uDD0A"}
+                🔊
               </button>
             </div>
             <CircuitSummaryVisual cells={summaryCells} />
@@ -199,9 +222,7 @@ export default function P6ElectricCircuitResults() {
               >
                 -
               </button>
-              <div className="min-w-[110px] text-center text-[20px] font-black text-slate-800">
-                {summaryCells} ก้อน
-              </div>
+              <div className="min-w-[110px] text-center text-[20px] font-black text-slate-800">{t.cellCount(summaryCells)}</div>
               <button
                 type="button"
                 onClick={() => setSummaryCells((prev) => Math.min(4, prev + 1))}
@@ -216,44 +237,45 @@ export default function P6ElectricCircuitResults() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        {LANGS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLang(item.id)}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          {LANGS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                lang === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              type="button"
+            >
+              {t.lang[item.id]}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/result")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{t.back}</span>
+          &laquo; {t.back}
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span className="text-[20px] leading-none">{t.next}</span>
-          <span className="text-[20px] leading-none">&raquo;</span>
+          {t.next} &raquo;
         </button>
       </div>
     </div>
   );
 }
-

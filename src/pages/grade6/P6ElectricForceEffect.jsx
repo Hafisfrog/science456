@@ -10,6 +10,7 @@ const LANG = {
     tissue: "กระดาษเยื่อ",
     back: "ย้อนกลับ",
     next: "ต่อไป",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     title: "Experiment 2: Effects of Electric Force",
@@ -19,6 +20,7 @@ const LANG = {
     tissue: "Tissue paper",
     back: "Back",
     next: "Next",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     title: "Eksperimen 2: Kesan Daya Elektrik",
@@ -28,6 +30,7 @@ const LANG = {
     tissue: "Kertas tisu",
     back: "Kembali",
     next: "Seterusnya",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
@@ -83,9 +86,7 @@ function EquipmentCard({ item, label, lang }) {
       </div>
 
       <div className="mt-3 flex items-center justify-center gap-2">
-        <p className="text-center text-[clamp(18px,2.2vw,30px)] font-bold text-slate-900">
-          {label}
-        </p>
+        <p className="text-center text-[clamp(18px,2.2vw,30px)] font-bold text-slate-900">{label}</p>
 
         <button
           onClick={() => speakText(label, lang)}
@@ -94,7 +95,7 @@ function EquipmentCard({ item, label, lang }) {
           aria-label={label}
           title={label}
         >
-          {"\uD83D\uDD0A"}
+          🔊
         </button>
       </div>
     </div>
@@ -105,9 +106,8 @@ export default function P6ElectricForceEffect() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
 
-  const t = LANG[lang];
-  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
-  const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || "th-TH";
+  const t = LANG[lang] ?? LANG.th;
+  const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang ?? "th-TH";
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -127,82 +127,58 @@ export default function P6ElectricForceEffect() {
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="mx-auto flex h-full w-full max-w-[1240px] flex-col">
-        <h1 className="text-center text-[clamp(34px,4vw,62px)] font-bold">
-          {t.title}
-        </h1>
+        <h1 className="text-center text-[clamp(34px,4vw,62px)] font-bold">{t.title}</h1>
 
         <div className="flex flex-1 flex-col pt-[20px]">
-          <h2 className="text-[clamp(40px,4.2vw,64px)] font-bold">
-            {t.equipment}
-          </h2>
+          <h2 className="text-[clamp(40px,4.2vw,64px)] font-bold">{t.equipment}</h2>
 
           <div className="flex flex-1 items-center justify-center">
             <div className="flex w-full max-w-[1020px] justify-center gap-[40px]">
               {EQUIPMENT_ITEMS.map((item) => (
-                <EquipmentCard
-                  key={item.id}
-                  item={item}
-                  label={t[item.id]}
-                  lang={speechLang}
-                />
+                <EquipmentCard key={item.id} item={item} label={t[item.id]} lang={speechLang} />
               ))}
             </div>
           </div>
         </div>
 
-        <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-          <button
-            onClick={() => setLang("th")}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === "th" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {langLabels.th}
-          </button>
-
-          <button
-            onClick={() => setLang("en")}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === "en" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {langLabels.en}
-          </button>
-
-          <button
-            onClick={() => setLang("ms")}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === "ms" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {langLabels.ms}
-          </button>
+        <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+          <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+            {LANGUAGE_OPTIONS.map((option) => (
+              <button
+                key={option.id}
+                onClick={() => setLang(option.id)}
+                className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                  lang === option.id
+                    ? "bg-[#bfe0ff] text-slate-900"
+                    : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+                }`}
+                type="button"
+              >
+                {t.lang[option.id]}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p6/electric-force/experiments")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-[20px] leading-none">&laquo;</span>
-            <span className="text-[20px] leading-none">{t.back}</span>
+            &laquo; {t.back}
           </button>
 
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            <span className="text-[20px] leading-none">{t.next}</span>
-            <span className="text-[20px] leading-none">&raquo;</span>
+            {t.next} &raquo;
           </button>
         </div>
       </div>

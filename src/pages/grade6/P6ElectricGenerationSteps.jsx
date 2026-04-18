@@ -159,54 +159,60 @@ export default function P6ElectricGenerationSteps() {
         </section>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        <button
-          onClick={() => setLang("th")}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === "th" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-          }`}
-        >
-          {langLabels.th}
-        </button>
-        <button
-          onClick={() => setLang("en")}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === "en" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-          }`}
-        >
-          {langLabels.en}
-        </button>
-        <button
-          onClick={() => setLang("ms")}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === "ms" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-          }`}
-        >
-          {langLabels.ms}
-        </button>
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          <button
+            onClick={() => setLang("th")}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "th"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+          >
+            {langLabels.th}
+          </button>
+          <button
+            onClick={() => setLang("en")}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "en"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+          >
+            {langLabels.en}
+          </button>
+          <button
+            onClick={() => setLang("ms")}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "ms"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+          >
+            {langLabels.ms}
+          </button>
+        </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-40 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
           type="button"
           onClick={() => navigate(materialsPath)}
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           aria-label={content.backToMaterials}
           title={content.backToMaterials}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{content.back}</span>
+          &laquo; {content.back}
         </button>
 
         <button
           type="button"
           onClick={() => navigate(simPath)}
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           aria-label={content.start}
           title={content.start}
         >
-          <span className="text-[20px] leading-none">{content.next}</span>
-          <span className="text-[20px] leading-none">&raquo;</span>
+          {content.next} &raquo;
         </button>
       </div>
     </div>

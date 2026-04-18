@@ -32,8 +32,9 @@ const TEXT = {
     },
     nav: {
       back: "ย้อนกลับ",
-      next: "ไปต่อ",
+      next: "ต่อไป",
     },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     badge: "Electricity Around You",
@@ -53,6 +54,7 @@ const TEXT = {
       back: "Back",
       next: "Next",
     },
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     badge: "Elektrik di sekeliling kita",
@@ -72,14 +74,11 @@ const TEXT = {
       back: "Kembali",
       next: "Seterusnya",
     },
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
-const LANGS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
+const LANGS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
 
 function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   return (
@@ -241,12 +240,14 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
 
   return (
     <div
-      className="p6-circuit-bsp-summary-page relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      className="p6-circuit-bsp-summary-page relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-3 text-slate-900 md:px-8 md:pb-32"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr] gap-2">
         <div className="p6-circuit-bsp-summary-card relative rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
-          <h1 className="mb-3 ml-1 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">{t.heading}</h1>
+          <h1 className="mb-3 ml-1 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">
+            {t.heading}
+          </h1>
           <div className="p6-circuit-bsp-summary-inner">
             <div className="p6-circuit-bsp-summary-table">
               <div className="p6-circuit-bsp-summary-row p6-circuit-bsp-summary-head">
@@ -282,41 +283,43 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        {LANGS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLang(item.id)}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          {LANGS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                lang === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              type="button"
+            >
+              {t.lang[item.id]}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
           type="button"
           aria-label={t.nav.back}
           title={t.nav.back}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{t.nav.back}</span>
+          &laquo; {t.nav.back}
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
           type="button"
           aria-label={t.nav.next}
           title={t.nav.next}
         >
-          <span className="text-[20px] leading-none">{t.nav.next}</span>
-          <span className="text-[20px] leading-none">&raquo;</span>
+          {t.nav.next} &raquo;
         </button>
       </div>
     </div>

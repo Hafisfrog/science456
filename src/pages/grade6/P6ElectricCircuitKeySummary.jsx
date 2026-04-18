@@ -3,24 +3,58 @@ import { useNavigate } from "react-router-dom";
 
 const TEXT = {
   th: {
-    sectionParts: "องค์ประกอบของวงจรไฟฟ้า",
+    sectionParts: "\u0e2d\u0e07\u0e04\u0e4c\u0e1b\u0e23\u0e30\u0e01\u0e2d\u0e1a\u0e02\u0e2d\u0e07\u0e27\u0e07\u0e08\u0e23\u0e44\u0e1f\u0e1f\u0e49\u0e32",
     parts: [
-      { heading: "แหล่งกำเนิดไฟฟ้า", body: "ให้พลังงานไฟฟ้า เช่น ถ่านไฟฉาย แบตเตอรี่" },
-      { heading: "สายไฟฟ้า", body: "เชื่อมต่อวงจรให้กระแสไฟไหลผ่าน เช่น สายทองแดง" },
-      { heading: "อุปกรณ์ไฟฟ้า", body: "เปลี่ยนพลังงานไฟฟ้าเป็นพลังงานอื่น เช่น หลอดไฟ มอเตอร์" },
+      {
+        heading: "\u0e41\u0e2b\u0e25\u0e48\u0e07\u0e01\u0e33\u0e40\u0e19\u0e34\u0e14\u0e44\u0e1f\u0e1f\u0e49\u0e32",
+        body: "\u0e43\u0e2b\u0e49\u0e1e\u0e25\u0e31\u0e07\u0e07\u0e32\u0e19\u0e44\u0e1f\u0e1f\u0e49\u0e32 \u0e40\u0e0a\u0e48\u0e19 \u0e16\u0e48\u0e32\u0e19\u0e44\u0e1f\u0e09\u0e32\u0e22 \u0e41\u0e1a\u0e15\u0e40\u0e15\u0e2d\u0e23\u0e35\u0e48",
+      },
+      {
+        heading: "\u0e2a\u0e32\u0e22\u0e44\u0e1f\u0e1f\u0e49\u0e32",
+        body: "\u0e40\u0e0a\u0e37\u0e48\u0e2d\u0e21\u0e15\u0e48\u0e2d\u0e27\u0e07\u0e08\u0e23\u0e43\u0e2b\u0e49\u0e01\u0e23\u0e30\u0e41\u0e2a\u0e44\u0e1f\u0e1f\u0e49\u0e32\u0e44\u0e2b\u0e25\u0e1c\u0e48\u0e32\u0e19 \u0e40\u0e0a\u0e48\u0e19 \u0e2a\u0e32\u0e22\u0e17\u0e2d\u0e07\u0e41\u0e14\u0e07",
+      },
+      {
+        heading: "\u0e2d\u0e38\u0e1b\u0e01\u0e23\u0e13\u0e4c\u0e44\u0e1f\u0e1f\u0e49\u0e32",
+        body: "\u0e40\u0e1b\u0e25\u0e35\u0e48\u0e22\u0e19\u0e1e\u0e25\u0e31\u0e07\u0e07\u0e32\u0e19\u0e44\u0e1f\u0e1f\u0e49\u0e32\u0e40\u0e1b\u0e47\u0e19\u0e1e\u0e25\u0e31\u0e07\u0e07\u0e32\u0e19\u0e2d\u0e37\u0e48\u0e19 \u0e40\u0e0a\u0e48\u0e19 \u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f \u0e21\u0e2d\u0e40\u0e15\u0e2d\u0e23\u0e4c",
+      },
     ],
-    compareTitle: "เปรียบเทียบการต่อวงจรไฟฟ้า",
+    compareTitle: "\u0e40\u0e1b\u0e23\u0e35\u0e22\u0e1a\u0e40\u0e17\u0e35\u0e22\u0e1a\u0e01\u0e32\u0e23\u0e15\u0e48\u0e2d\u0e27\u0e07\u0e08\u0e23\u0e44\u0e1f\u0e1f\u0e49\u0e32",
     table: {
-      head: ["หัวข้อ", "แบบอนุกรม", "แบบขนาน"],
+      head: [
+        "\u0e2b\u0e31\u0e27\u0e02\u0e49\u0e2d",
+        "\u0e41\u0e1a\u0e1a\u0e2d\u0e19\u0e38\u0e01\u0e23\u0e21",
+        "\u0e41\u0e1a\u0e1a\u0e02\u0e19\u0e32\u0e19",
+      ],
       rows: [
-        ["ลักษณะการต่อ", "ต่อเรียงกันทางเดียว", "ต่อแยกเป็นหลายทาง"],
-        ["ความสว่างของหลอดไฟ", "ยิ่งเพิ่มหลอด ยิ่งสว่างน้อยลง", "แต่ละหลอดสว่างเท่ากัน"],
-        ["ถ้าหลอดหนึ่งเสีย", "ดับทั้งวงจร", "ดวงอื่นยังติดได้"],
-        ["ตัวอย่างการใช้", "ไฟฉาย", "ไฟฟ้าในบ้าน"],
+        [
+          "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e01\u0e32\u0e23\u0e15\u0e48\u0e2d",
+          "\u0e15\u0e48\u0e2d\u0e40\u0e23\u0e35\u0e22\u0e07\u0e01\u0e31\u0e19\u0e17\u0e32\u0e07\u0e40\u0e14\u0e35\u0e22\u0e27",
+          "\u0e15\u0e48\u0e2d\u0e41\u0e22\u0e01\u0e40\u0e1b\u0e47\u0e19\u0e2b\u0e25\u0e32\u0e22\u0e17\u0e32\u0e07",
+        ],
+        [
+          "\u0e04\u0e27\u0e32\u0e21\u0e2a\u0e27\u0e48\u0e32\u0e07\u0e02\u0e2d\u0e07\u0e2b\u0e25\u0e2d\u0e14\u0e44\u0e1f",
+          "\u0e22\u0e34\u0e48\u0e07\u0e40\u0e1e\u0e34\u0e48\u0e21\u0e2b\u0e25\u0e2d\u0e14 \u0e22\u0e34\u0e48\u0e07\u0e2a\u0e27\u0e48\u0e32\u0e07\u0e19\u0e49\u0e2d\u0e22\u0e25\u0e07",
+          "\u0e41\u0e15\u0e48\u0e25\u0e30\u0e2b\u0e25\u0e2d\u0e14\u0e2a\u0e27\u0e48\u0e32\u0e07\u0e40\u0e17\u0e48\u0e32\u0e01\u0e31\u0e19",
+        ],
+        [
+          "\u0e16\u0e49\u0e32\u0e2b\u0e25\u0e2d\u0e14\u0e2b\u0e19\u0e36\u0e48\u0e07\u0e40\u0e2a\u0e35\u0e22",
+          "\u0e14\u0e31\u0e1a\u0e17\u0e31\u0e49\u0e07\u0e27\u0e07\u0e08\u0e23",
+          "\u0e14\u0e27\u0e07\u0e2d\u0e37\u0e48\u0e19\u0e22\u0e31\u0e07\u0e15\u0e34\u0e14\u0e44\u0e14\u0e49",
+        ],
+        [
+          "\u0e15\u0e31\u0e27\u0e2d\u0e22\u0e48\u0e32\u0e07\u0e01\u0e32\u0e23\u0e43\u0e0a\u0e49",
+          "\u0e44\u0e1f\u0e09\u0e32\u0e22",
+          "\u0e44\u0e1f\u0e1f\u0e49\u0e32\u0e43\u0e19\u0e1a\u0e49\u0e32\u0e19",
+        ],
       ],
     },
-    back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
+    next: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
+    lang: {
+      th: "\u0e44\u0e17\u0e22",
+      en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
+      ms: "\u0e21\u0e25\u0e32\u0e22\u0e39",
+    },
   },
   en: {
     sectionParts: "Parts of an Electric Circuit",
@@ -41,6 +75,11 @@ const TEXT = {
     },
     back: "Back",
     next: "Next",
+    lang: {
+      th: "Thai",
+      en: "English",
+      ms: "Malay",
+    },
   },
   ms: {
     sectionParts: "Komponen litar elektrik",
@@ -61,14 +100,15 @@ const TEXT = {
     },
     back: "Kembali",
     next: "Seterusnya",
+    lang: {
+      th: "Thai",
+      en: "Inggeris",
+      ms: "Melayu",
+    },
   },
 };
 
-const LANGS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
+const LANGS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
 
 const PART_MEDIA = {
   battery: {
@@ -195,41 +235,43 @@ export default function P6ElectricCircuitKeySummary() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        {LANGS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLang(item.id)}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          {LANGS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                lang === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              type="button"
+            >
+              {t.lang[item.id]}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/result")}
           type="button"
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{t.back}</span>
+          &laquo; {t.back}
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/electric-circuit/experiments")}
           type="button"
           aria-label={t.next}
           title={t.next}
         >
-          <span className="text-[20px] leading-none">{t.next}</span>
-          <span className="text-[20px] leading-none">&raquo;</span>
+          {t.next} &raquo;
         </button>
       </div>
     </div>

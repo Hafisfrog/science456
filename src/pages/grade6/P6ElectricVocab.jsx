@@ -140,24 +140,22 @@ export default function P6ElectricVocab() {
           </div>
         </section>
 
-        <div className="p6-vocab-actions">
+        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
           <button
-            className="p6-vocab-btn ghost"
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate(backPath)}
             type="button"
             aria-label={backLabel}
           >
-            <span className="p6-vocab-btn-icon">&laquo;</span>
-            {backLabel}
+            &laquo; {backLabel}
           </button>
           <button
-            className="p6-vocab-btn primary"
+            className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate(nextPath)}
             type="button"
             aria-label={nextLabel}
           >
-            {nextLabel}
-            <span className="p6-vocab-btn-icon">&raquo;</span>
+            {nextLabel} &raquo;
           </button>
         </div>
       </div>

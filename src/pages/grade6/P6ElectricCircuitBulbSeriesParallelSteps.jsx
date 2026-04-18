@@ -5,8 +5,9 @@ const TRANSLATIONS = {
   th: {
     stepsHeading: "ขั้นตอนการทดลอง",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
     sound: "เปิดเสียง",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
     steps: [
       {
         title: "ออกแบบและต่อวงจร",
@@ -28,11 +29,10 @@ const TRANSLATIONS = {
   },
   en: {
     stepsHeading: "Experiment Steps",
-    stepsSub: "Tap a step to hear it",
-    summary: "Compare the series and parallel results, then summarize the differences.",
     back: "Back",
     next: "Next",
     sound: "Sound",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
     steps: [
       {
         title: "Design and build the circuit",
@@ -54,11 +54,10 @@ const TRANSLATIONS = {
   },
   ms: {
     stepsHeading: "Langkah eksperimen",
-    stepsSub: "Tekan setiap langkah untuk mendengar",
-    summary: "Bandingkan keputusan siri dan selari kemudian rumuskan perbezaannya.",
     back: "Kembali",
     next: "Seterusnya",
     sound: "Bunyi",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
     steps: [
       {
         title: "Reka dan bina litar",
@@ -80,11 +79,7 @@ const TRANSLATIONS = {
   },
 };
 
-const LANGS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
+const LANGS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
 
 const SPEECH_LANGUAGES = {
   th: "th-TH",
@@ -127,8 +122,8 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[auto_auto] gap-2">
-        <div className="relative min-h-0 overflow-hidden rounded-[30px] bg-[#e5f3ff] px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_22px_40px_rgba(17,24,39,0.18)]">
+      <div className="relative z-[1] mx-auto flex min-h-[calc(100vh-170px)] w-full max-w-[1380px] items-center">
+        <div className="relative w-full min-h-0 overflow-hidden rounded-[30px] bg-[#e5f3ff] px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_22px_40px_rgba(17,24,39,0.18)]">
           <h1 className="m-0 pb-3 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08] text-slate-900">
             {t.stepsHeading}
           </h1>
@@ -144,12 +139,8 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
                       {index + 1}
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="text-[clamp(20px,1.6vw,26px)] font-black text-slate-900">
-                        {step.title}
-                      </p>
-                      <p className="text-[clamp(14px,1vw,18px)] font-semibold text-slate-700">
-                        {step.detail}
-                      </p>
+                      <p className="text-[clamp(20px,1.6vw,26px)] font-black text-slate-900">{step.title}</p>
+                      <p className="text-[clamp(14px,1vw,18px)] font-semibold text-slate-700">{step.detail}</p>
                     </div>
                   </div>
                   <button
@@ -174,47 +165,48 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
+      </div>
 
-        <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
           {LANGS.map((item) => (
             <button
               key={item.id}
               onClick={() => setLang(item.id)}
-              className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-                lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                lang === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
               }`}
               type="button"
             >
-              {item.label}
+              {t.lang[item.id]}
             </button>
           ))}
         </div>
+      </div>
 
-        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
-            onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel")}
-            type="button"
-            aria-label={t.back}
-            title={t.back}
-          >
-            <span className="text-[20px] leading-none">&laquo;</span>
-            <span className="text-[20px] leading-none">{t.back}</span>
-          </button>
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
-            onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
-            type="button"
-            aria-label={t.next}
-            title={t.next}
-          >
-            <span className="text-[20px] leading-none">{t.next}</span>
-            <span className="text-[20px] leading-none">&raquo;</span>
-          </button>
-        </div>
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel")}
+          type="button"
+          aria-label={t.back}
+          title={t.back}
+        >
+          &laquo; {t.back}
+        </button>
+        <button
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
+          onClick={() => navigate("/p6/electric-circuit/bulb-series-parallel/sim")}
+          type="button"
+          aria-label={t.next}
+          title={t.next}
+        >
+          {t.next} &raquo;
+        </button>
       </div>
     </div>
   );

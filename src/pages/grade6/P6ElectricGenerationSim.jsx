@@ -618,12 +618,14 @@ export default function P6ElectricGenerationSim() {
             </div>
           </div>
 
-          <div className="z-20 inline-flex w-full flex-wrap gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
+          <div className="z-20 inline-flex w-fit max-w-full flex-wrap items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
 
         <button
           onClick={() => setLang("th")}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === "th" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+            lang === "th"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
           }`}
         >
           {langLabels.th}
@@ -631,8 +633,10 @@ export default function P6ElectricGenerationSim() {
 
         <button
           onClick={() => setLang("en")}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === "en" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+            lang === "en"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
           }`}
         >
           {langLabels.en}
@@ -640,8 +644,10 @@ export default function P6ElectricGenerationSim() {
 
         <button
           onClick={() => setLang("ms")}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === "ms" ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
           }`}
         >
           {langLabels.ms}
@@ -818,14 +824,13 @@ export default function P6ElectricGenerationSim() {
           )}
 
           <button
-            className="absolute bottom-4 right-4 z-[9] inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="absolute bottom-4 right-4 z-[9] rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             type="button"
             onClick={() => navigate(stepsPath)}
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-[20px] leading-none">&laquo;</span>
-            <span className="text-[20px] leading-none">{t.back}</span>
+            &laquo; {t.back}
           </button>
 
         </div>

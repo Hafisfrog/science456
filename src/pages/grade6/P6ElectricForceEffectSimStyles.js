@@ -52,6 +52,35 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   overflow: hidden;
 }
 
+.p6-force-sim-live-timer {
+  position: absolute;
+  right: clamp(18px, 2vw, 28px);
+  top: clamp(14px, 2vh, 22px);
+  z-index: 72;
+  min-width: clamp(150px, 13vw, 190px);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.93);
+  border: 2px solid rgba(148, 163, 184, 0.34);
+  box-shadow: 0 16px 28px rgba(15, 23, 42, 0.16);
+  padding: 8px 10px;
+  text-align: right;
+}
+
+.p6-force-sim-live-timer-title {
+  font-size: 12px;
+  font-weight: 900;
+  color: #334155;
+  line-height: 1.1;
+}
+
+.p6-force-sim-live-timer-time {
+  margin-top: 2px;
+  font-size: 24px;
+  font-weight: 1000;
+  color: #0f172a;
+  line-height: 1;
+}
+
 .p6-force-sim-backTop {
   position: absolute;
   left: 16px;
@@ -76,31 +105,31 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-langbar {
   position: absolute;
-  left: 24px;
-  bottom: 24px;
+  left: 12px;
+  bottom: 12px;
   z-index: 65;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.95);
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
   border: 0;
-  box-shadow: 0 18px 40px rgba(111, 144, 186, 0.2);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
   pointer-events: auto;
 }
 
 .p6-force-sim-langchip {
   border: 0;
   cursor: pointer;
-  border-radius: 16px;
-  min-width: 88px;
+  border-radius: 14px;
+  min-width: 0;
   min-height: 0;
-  padding: 11px 14px;
-  background: #eaf3ff;
-  color: #172033;
+  padding: 10px 18px;
+  background: #e6f2ff;
+  color: #0f172a;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   line-height: 1;
   box-shadow: none;
@@ -109,13 +138,13 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 }
 
 .p6-force-sim-langchip:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(111, 144, 186, 0.14);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 22px rgba(0, 0, 0, 0.14);
 }
 
 .p6-force-sim-langchip.active {
-  background: #bdd9f8 !important;
-  color: #172033 !important;
+  background: #bfe0ff !important;
+  color: #0f172a !important;
   box-shadow: none;
 }
 
@@ -713,6 +742,21 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   margin: 10px auto 0;
 }
 
+.p6-force-sim-short-warning {
+  margin: 8px auto 0;
+  width: fit-content;
+  max-width: min(90%, 720px);
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: rgba(254, 226, 226, 0.9);
+  border: 2px solid rgba(239, 68, 68, 0.44);
+  color: #991b1b;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 900;
+  text-align: center;
+  box-shadow: 0 14px 24px rgba(127, 29, 29, 0.18);
+}
+
 .p6-force-sim-result-title {
   font-weight: 1000;
   font-size: 16px;
@@ -820,19 +864,19 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   border: none;
   cursor: pointer;
   border-radius: 18px;
-  padding: 12px 20px;
-  min-width: 150px;
-  background: linear-gradient(135deg, #ffffff, #f4f8ff);
-  color: #1e293b;
-  font-size: 15px;
+  padding: 14px 18px;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.92);
+  color: #0f172a;
+  font-size: 20px;
   font-weight: 900;
-  box-shadow: 0 12px 20px rgba(17, 24, 39, 0.14);
+  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
   transition: transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .p6-force-sim-backBottom:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 24px rgba(17, 24, 39, 0.18);
+  transform: translateY(-1px);
+  box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26);
 }
 
 .p6-force-sim-menu {
@@ -1039,6 +1083,18 @@ const forceEffectSimStyles = `.p6-force-sim-page {
     margin-top: 4px;
     width: fit-content;
   }
+
+  .p6-force-sim-backBottom {
+    border-radius: 16px;
+    padding: 12px 16px;
+    font-size: 18px;
+  }
+
+  .p6-force-sim-live-timer {
+    right: 12px;
+    top: 10px;
+    min-width: 142px;
+  }
 }
 
 @media (max-height: 820px) and (min-width: 981px) {
@@ -1098,10 +1154,16 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   }
 
   .p6-force-sim-langchip {
-    min-width: 74px;
+    min-width: 0;
     min-height: 36px;
     padding: 8px 12px;
     font-size: 14px;
+  }
+
+  .p6-force-sim-backBottom {
+    border-radius: 16px;
+    padding: 12px 16px;
+    font-size: 18px;
   }
 
   .p6-force-sim-menu-item-icon {
@@ -1116,6 +1178,14 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
   .p6-force-sim-menu-item-caption {
     font-size: 14px;
+  }
+
+  .p6-force-sim-live-timer {
+    position: static;
+    margin: 0 auto 8px;
+    text-align: center;
+    min-width: 0;
+    width: fit-content;
   }
 }
 `;

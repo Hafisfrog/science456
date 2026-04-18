@@ -6,8 +6,9 @@ const TEXT = {
     heading: "ขั้นตอนการทดลอง",
     hint: "กดที่ลำโพงเพื่อฟังเสียง",
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
     speech: "th-TH",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
     steps: [
       "ออกแบบและต่อวงจร: ต่อถ่านไฟฉาย 2 ก้อนแบบอนุกรม แล้วเชื่อมกับหลอดไฟและสวิตช์ให้ครบวงจร",
       "ทดลองและสังเกต: เปิดสวิตช์ สังเกตความสว่างของหลอดไฟ และเปรียบเทียบผล",
@@ -21,6 +22,7 @@ const TEXT = {
     back: "Back",
     next: "Next",
     speech: "en-US",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
     steps: [
       "Design and build the circuit: Connect 2 batteries in series, then connect them to the bulb and switch to complete the circuit.",
       "Test and observe: Turn on the switch, observe the bulb brightness, and compare the result.",
@@ -34,6 +36,7 @@ const TEXT = {
     back: "Kembali",
     next: "Seterusnya",
     speech: "ms-MY",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
     steps: [
       "Rancang dan bina litar: Sambungkan 2 bateri secara siri, kemudian sambungkan kepada mentol dan suis sehingga litar lengkap.",
       "Uji dan perhati: Hidupkan suis, perhatikan kecerahan mentol, dan bandingkan hasilnya.",
@@ -44,9 +47,9 @@ const TEXT = {
 };
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
+  { id: "th" },
+  { id: "en" },
+  { id: "ms" },
 ];
 
 function speakText(text, lang) {
@@ -85,9 +88,8 @@ export default function P6ElectricCircuitSteps() {
         }}
       />
 
-      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr_auto] gap-2">
-
-        <div className="rounded-[30px] bg-sky-200 p-[20px] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+      <div className="relative z-[1] mx-auto flex min-h-[calc(100vh-170px)] w-full max-w-[1380px] items-center">
+        <div className="w-full rounded-[30px] bg-sky-200 p-[20px] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
           <header className="mb-3">
             <h2 className="text-[clamp(38px,2.8vw,64px)] font-black">{t.heading}</h2>
           </header>
@@ -117,44 +119,46 @@ export default function P6ElectricCircuitSteps() {
           </ol>
         </div>
 
-        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p6/electric-circuit/materials")}
             type="button"
             aria-label={t.back}
             title={t.back}
           >
-            <span className="text-[20px] leading-none">&laquo;</span>
-            <span className="text-[20px] leading-none">{t.back}</span>
+            &laquo; {t.back}
           </button>
 
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p6/electric-circuit/sim")}
             type="button"
             aria-label={t.next}
             title={t.next}
           >
-            <span className="text-[20px] leading-none">{t.next}</span>
-            <span className="text-[20px] leading-none">&raquo;</span>
+            {t.next} &raquo;
           </button>
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        {LANGUAGE_OPTIONS.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLang(item.id)}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          {LANGUAGE_OPTIONS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLang(item.id)}
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                lang === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              type="button"
+            >
+              {t.lang[item.id]}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

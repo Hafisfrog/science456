@@ -1,11 +1,7 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
+const LANGUAGE_OPTIONS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
 
 const TEXT = {
   th: {
@@ -16,7 +12,8 @@ const TEXT = {
       { label: "ปากกาเมจิก", both: "ผลักกัน", one: "ดึงดูดกัน" },
     ],
     back: "ย้อนกลับ",
-    next: "ไปต่อ",
+    next: "ต่อไป",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     title: "Experiment Results",
@@ -27,6 +24,7 @@ const TEXT = {
     ],
     back: "Back",
     next: "Next",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     title: "Hasil Eksperimen",
@@ -37,6 +35,7 @@ const TEXT = {
     ],
     back: "Kembali",
     next: "Seterusnya",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
@@ -44,11 +43,10 @@ const MERGED_SUMMARY = {
   th: {
     title: "สรุปผลการทดลอง",
     items: [
-      "เมื่อขัดถูวัสดุทั้ง 2 ชิ้นด้วยกระดาษเยื่อ จะมีประจุชนิดเดียวกัน จึงเกิดแรงผลักกัน",
+      "เมื่อขัดถูวัตถุทั้ง 2 ชิ้นด้วยกระดาษเยื่อ จะมีประจุชนิดเดียวกัน จึงเกิดแรงผลักกัน",
       "เมื่อขัดถูเพียง 1 ชิ้น อีกชิ้นไม่ได้ขัดถู จะเกิดการเหนี่ยวนำประจุ จึงเกิดแรงดึงดูดกัน",
     ],
     time: "เวลาการถู",
-    next: "สรุปสาระสำคัญ",
   },
   en: {
     title: "Experiment Summary",
@@ -57,7 +55,6 @@ const MERGED_SUMMARY = {
       "When only one object is rubbed, charge induction occurs, so they attract each other.",
     ],
     time: "Rubbing time",
-    next: "Key Takeaways",
   },
   ms: {
     title: "Ringkasan Eksperimen",
@@ -66,7 +63,6 @@ const MERGED_SUMMARY = {
       "Apabila hanya satu objek digosok, aruhan cas berlaku lalu objek saling menarik.",
     ],
     time: "Masa menggosok",
-    next: "Ringkasan Utama",
   },
 };
 
@@ -84,28 +80,20 @@ export default function P6ElectricForceEffectResult() {
   const [language, setLanguage] = useState("th");
   const t = useMemo(() => TEXT[language] ?? TEXT.th, [language]);
   const mergedSummary = useMemo(() => MERGED_SUMMARY[language] ?? MERGED_SUMMARY.th, [language]);
-  const pageTitle =
-    language === "th"
-      ? "สรุปผลการทดลอง"
-      : language === "en"
-        ? "Experiment Summary"
-        : "Ringkasan Eksperimen";
 
   const pageBg = {
     background:
       "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
   };
 
-  const pills = LANGUAGE_OPTIONS;
-
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-3 text-slate-900 md:px-8 md:pb-32"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="relative z-[1] mx-auto w-full max-w-[1280px]">
         <div className="inline-flex items-center rounded-[12px] bg-blue-600 px-4 py-1.5 text-[clamp(22px,2.4vw,34px)] font-black text-white shadow-[0_10px_18px_rgba(37,99,235,0.35)]">
-          {pageTitle}
+          {mergedSummary.title}
         </div>
 
         <div className="mt-6 overflow-hidden rounded-[20px] border-2 border-white/80 bg-white/85 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
@@ -146,41 +134,43 @@ export default function P6ElectricForceEffectResult() {
         </div>
       </div>
 
-      <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-        {pills.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => setLanguage(item.id)}
-            className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-              language === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-            }`}
-            type="button"
-          >
-            {item.label}
-          </button>
-        ))}
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          {LANGUAGE_OPTIONS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => setLanguage(item.id)}
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+                language === item.id
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              type="button"
+            >
+              {t.lang[item.id]}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           type="button"
           onClick={() => navigate("/p6/experiment/electric-force-effect/sim")}
           aria-label={t.back}
           title={t.back}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{t.back}</span>
+          &laquo; {t.back}
         </button>
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           type="button"
           onClick={() => navigate("/p6/experiment/electric-force-effect/key-summary")}
           aria-label={t.next}
           title={t.next}
         >
-          <span className="text-[20px] leading-none">{t.next}</span>
-          <span className="text-[20px] leading-none">&raquo;</span>
+          {t.next} &raquo;
         </button>
       </div>
     </div>

@@ -10,6 +10,7 @@ const LANG = {
     exp2: "การทดลองที่ 2",
     exp2sub: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
     back: "ย้อนกลับ",
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
     title: "Electric Circuits Around Us",
@@ -19,6 +20,7 @@ const LANG = {
     exp2: "Experiment 2",
     exp2sub: "Series and Parallel Bulb Circuits",
     back: "Back",
+    lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
     title: "Litar Elektrik Sekeliling Kita",
@@ -28,13 +30,14 @@ const LANG = {
     exp2: "Eksperimen 2",
     exp2sub: "Litar Mentol Bersiri dan Selari",
     back: "Kembali",
+    lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย", voice: "th-TH" },
-  { id: "en", label: "อังกฤษ", voice: "en-US" },
-  { id: "ms", label: "มลายู", voice: "ms-MY" },
+  { id: "th", voice: "th-TH" },
+  { id: "en", voice: "en-US" },
+  { id: "ms", voice: "ms-MY" },
 ];
 
 function speakText(text, lang) {
@@ -53,9 +56,8 @@ export default function P6ElectricCircuitExperimentSelect() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
 
-  const t = LANG[lang];
-  const speechLang =
-    LANGUAGE_OPTIONS.find((item) => item.id === lang)?.voice || "th-TH";
+  const t = LANG[lang] ?? LANG.th;
+  const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === lang)?.voice ?? "th-TH";
   const experiments = [
     {
       id: "exp-1",
@@ -74,7 +76,6 @@ export default function P6ElectricCircuitExperimentSelect() {
   ];
 
   const backPath = "/p6/electric-circuit/vocab";
-  const nextPath = "/p6/electric-circuit/objectives";
 
   const pageBg = {
     background:
@@ -156,31 +157,34 @@ export default function P6ElectricCircuitExperimentSelect() {
       </div>
 
       {/* Language */}
-    <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-      {LANGUAGE_OPTIONS.map((item) => (
-        <button
-          key={item.id}
-          onClick={() => setLang(item.id)}
-          className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-            lang === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-          }`}
-          type="button"
-        >
-          {item.label}
-        </button>
-      ))}
+    <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+      <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+        {LANGUAGE_OPTIONS.map((item) => (
+          <button
+            key={item.id}
+            onClick={() => setLang(item.id)}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+              lang === item.id
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+            type="button"
+          >
+            {t.lang[item.id]}
+          </button>
+        ))}
       </div>
+    </div>
 
       {/* Navigation */}
-      <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate(backPath)}
           type="button"
           aria-label={t.back}
         >
-          <span className="text-[20px] leading-none">&laquo;</span>
-          <span className="text-[20px] leading-none">{t.back}</span>
+          &laquo; {t.back}
         </button>
       </div>
     </div>

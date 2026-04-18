@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P6ElectricVocab.css";
 
@@ -17,34 +17,12 @@ const VOCAB = [
   { th: "ตัวนำไฟฟ้า", ms: "konduktor elektrik", en: "Electrical Conductor" },
 ];
 
-const LANGUAGE_OPTIONS = [
-  { id: "th", label: "ไทย" },
-  { id: "en", label: "อังกฤษ" },
-  { id: "ms", label: "มลายู" },
-];
-
 const UI_TEXT = {
-  th: {
-    title: "คำศัพท์วิทยาศาสตร์น่ารู้",
-    subtitle: "เรื่อง วงจรไฟฟ้าใกล้ตัว",
-    headers: { th: "ภาษาไทย", ms: "ภาษามลายู", en: "ภาษาอังกฤษ", voice: "ฟังเสียง" },
-    back: "ย้อนกลับ",
-    next: "ไปต่อ",
-  },
-  en: {
-    title: "Science Vocabulary",
-    subtitle: "Topic: Everyday Electric Circuits",
-    headers: { th: "Thai", ms: "Malay", en: "English", voice: "Audio" },
-    back: "Back",
-    next: "Next",
-  },
-  ms: {
-    title: "Kosa Kata Sains",
-    subtitle: "Topik: Litar Elektrik Sekeliling Kita",
-    headers: { th: "Thai", ms: "Melayu", en: "Inggeris", voice: "Audio" },
-    back: "Kembali",
-    next: "Seterusnya",
-  },
+  title: "คำศัพท์วิทยาศาสตร์น่ารู้",
+  subtitle: "เรื่อง วงจรไฟฟ้าใกล้ตัว",
+  headers: { th: "ภาษาไทย", ms: "ภาษามลายู", en: "ภาษาอังกฤษ", voice: "ฟังเสียง" },
+  back: "ย้อนกลับ",
+  next: "ต่อไป",
 };
 
 function speakText(text, lang) {
@@ -70,8 +48,6 @@ function speakText(text, lang) {
 
 export default function P6ElectricCircuitVocab() {
   const navigate = useNavigate();
-  const [language, setLanguage] = useState("th");
-  const t = useMemo(() => UI_TEXT[language] ?? UI_TEXT.th, [language]);
 
   useEffect(() => {
     if (!("speechSynthesis" in window)) return;
@@ -92,8 +68,8 @@ export default function P6ElectricCircuitVocab() {
     <div className="p6-vocab-page">
       <div className="p6-vocab-shell p6-circuit-vocab-shell">
         <header className="p6-vocab-header">
-          <h1>{t.title}</h1>
-          <p className="p6-vocab-sub">{t.subtitle}</p>
+          <h1>{UI_TEXT.title}</h1>
+          <p className="p6-vocab-sub">{UI_TEXT.subtitle}</p>
         </header>
 
         <section className="p6-vocab-card">
@@ -101,11 +77,11 @@ export default function P6ElectricCircuitVocab() {
             <table className="p6-vocab-table">
               <thead>
                 <tr>
-                  <th className="col-th">{t.headers.th}</th>
-                  <th className="col-ms">{t.headers.ms}</th>
-                  <th className="col-en">{t.headers.en}</th>
+                  <th className="col-th">{UI_TEXT.headers.th}</th>
+                  <th className="col-ms">{UI_TEXT.headers.ms}</th>
+                  <th className="col-en">{UI_TEXT.headers.en}</th>
                   <th className="col-voice" style={{ textAlign: "center" }}>
-                    {t.headers.voice}
+                    {UI_TEXT.headers.voice}
                   </th>
                 </tr>
               </thead>
@@ -147,39 +123,22 @@ export default function P6ElectricCircuitVocab() {
           </div>
         </section>
 
-        <div className="fixed bottom-6 left-6 z-20 inline-flex gap-2 rounded-[20px] bg-white/95 px-3 py-[10px] shadow-[0_18px_40px_rgba(111,144,186,0.2)]">
-          {LANGUAGE_OPTIONS.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setLanguage(item.id)}
-              className={`min-w-[88px] rounded-[16px] px-[14px] py-[11px] text-[15px] font-extrabold leading-none text-[#172033] transition duration-150 hover:-translate-y-[1px] hover:shadow-[0_10px_20px_rgba(111,144,186,0.14)] ${
-                language === item.id ? "bg-[#bdd9f8]" : "bg-[#eaf3ff]"
-              }`}
-              type="button"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="fixed bottom-6 right-6 z-20 flex items-center gap-3">
+        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-white/90 px-[18px] py-[14px] font-black text-[#213a8f] shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p6/electric-circuit/objectives")}
             type="button"
-            aria-label={t.back}
+            aria-label={UI_TEXT.back}
           >
-            <span className="text-[20px] leading-none">&laquo;</span>
-            <span className="text-[20px] leading-none">{t.back}</span>
+            &laquo; {UI_TEXT.back}
           </button>
           <button
-            className="inline-flex items-center justify-center gap-2 rounded-[18px] border-0 bg-[#2563eb] px-[18px] py-[14px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,0.22)] transition duration-150 hover:-translate-y-[2px] hover:shadow-[0_28px_56px_rgba(0,0,0,0.26)] active:translate-y-[1px] active:shadow-[0_10px_22px_rgba(0,0,0,0.18)]"
+            className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate("/p6/electric-circuit/experiments")}
             type="button"
-            aria-label={t.next}
+            aria-label={UI_TEXT.next}
           >
-            <span className="text-[20px] leading-none">{t.next}</span>
-            <span className="text-[20px] leading-none">&raquo;</span>
+            {UI_TEXT.next} &raquo;
           </button>
         </div>
       </div>
