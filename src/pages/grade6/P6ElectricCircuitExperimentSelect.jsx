@@ -36,8 +36,8 @@ const LANG = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", voice: "th-TH", label: "ไทย" },
-  { id: "en", voice: "en-US", label: "อังกฤษ" },
   { id: "ms", voice: "ms-MY", label: "มลายู" },
+  { id: "en", voice: "en-US", label: "อังกฤษ" },
 ];
 
 function speakText(text, lang) {

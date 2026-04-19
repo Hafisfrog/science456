@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CONTENT = {
@@ -33,8 +33,8 @@ const CONTENT = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
-  { id: "en", speechLang: "en-US", label: "อังกฤษ" },
   { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 
 function speakText(text, lang) {
