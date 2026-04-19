@@ -13,8 +13,8 @@ export default function SelectGrade() {
         subtitle: "เพื่อเริ่มการทดลองวิทยาศาสตร์",
         back: "ย้อนกลับ",
         chipTh: "ไทย",
-        chipEn: "อังกฤษ",
         chipMs: "มลายู",
+        chipEn: "อังกฤษ",
         cards: [
           { id: "p4", label: "ประถมศึกษาปีที่ 4", subtitle: "แรงโน้มถ่วงและตัวกลางของแสง", image: "/images/pp4.jpg", to: "/p4" },
           { id: "p5", label: "ประถมศึกษาปีที่ 5", subtitle: "ชีวิตสัมพันธ์และพันธุกรรม", image: "/images/pp5.jpg", to: "/p5/life" },
@@ -27,8 +27,8 @@ export default function SelectGrade() {
         subtitle: "To start a science experiment",
         back: "Back",
         chipTh: "Thai",
-        chipEn: "English",
         chipMs: "Malay",
+        chipEn: "English",
         cards: [
           { id: "p4", label: "Grade 4", subtitle: "Gravity and the medium of light", image: "/images/pp4.jpg", to: "/p4" },
           { id: "p5", label: "Grade 5", subtitle: "Life and Genetics", image: "/images/pp5.jpg", to: "/p5/life" },
@@ -126,6 +126,17 @@ export default function SelectGrade() {
           >
             {t.chipTh}
           </button>
+           <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "ms"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+            onClick={() => setLang("ms")}
+            type="button"
+          >
+            {t.chipMs}
+          </button>
           <button
             className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
               lang === "en"
@@ -136,17 +147,6 @@ export default function SelectGrade() {
             type="button"
           >
             {t.chipEn}
-          </button>
-          <button
-            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
-              lang === "ms"
-                ? "bg-[#bfe0ff] text-slate-900"
-                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-            }`}
-            onClick={() => setLang("ms")}
-            type="button"
-          >
-            {t.chipMs}
           </button>
         </div>
       </div>

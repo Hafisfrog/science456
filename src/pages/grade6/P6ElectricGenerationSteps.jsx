@@ -3,8 +3,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 const LANGS = [
   { id: "th", voice: "th-TH" },
-  { id: "en", voice: "en-US" },
   { id: "ms", voice: "ms-MY" },
+  { id: "en", voice: "en-US" },
 ];
 
 const TEXT = {
@@ -115,7 +115,7 @@ export default function P6ElectricGenerationSteps() {
   const [lang, setLang] = useState("th");
 
   const content = TEXT[lang];
-  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const langLabels = { th: "ไทย", ms: "มลายู", en: "อังกฤษ" };
   const voice = LANGS.find((item) => item.id === lang)?.voice || "th-TH";
 
   const from = searchParams.get("from");
@@ -172,16 +172,6 @@ export default function P6ElectricGenerationSteps() {
             {langLabels.th}
           </button>
           <button
-            onClick={() => setLang("en")}
-            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
-              lang === "en"
-                ? "bg-[#bfe0ff] text-slate-900"
-                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-            }`}
-          >
-            {langLabels.en}
-          </button>
-          <button
             onClick={() => setLang("ms")}
             className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
               lang === "ms"
@@ -190,6 +180,16 @@ export default function P6ElectricGenerationSteps() {
             }`}
           >
             {langLabels.ms}
+          </button>
+          <button
+            onClick={() => setLang("en")}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "en"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+          >
+            {langLabels.en}
           </button>
         </div>
       </div>

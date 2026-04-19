@@ -2,9 +2,10 @@
 import { useNavigate } from "react-router-dom";
 
 const LANGUAGE_OPTIONS = [
-  { id: "th" },
-  { id: "en" },
-  { id: "ms" },
+  { id: "th", label: "ไทย" },
+    { id: "ms", label: "มลายู" },
+  { id: "en", label: "อังกฤษ" },
+
 ];
 
 const TEXT = {
@@ -63,7 +64,7 @@ const TEXT = {
   },
 };
 
-function LanguagePills({ lang, setLang, labels }) {
+function LanguagePills({ lang, setLang }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
       {LANGUAGE_OPTIONS.map((p) => (
@@ -77,7 +78,7 @@ function LanguagePills({ lang, setLang, labels }) {
               : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
           }`}
         >
-          {labels[p.id]}
+          <span className="notranslate" translate="no">{p.label}</span>
         </button>
       ))}
     </div>
@@ -159,7 +160,7 @@ export default function P6ElectricForceEffectKeySummary() {
       </div>
 
       <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
-        <LanguagePills lang={lang} setLang={setLang} labels={t.lang} />
+        <LanguagePills lang={lang} setLang={setLang} />
       </div>
 
       <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">

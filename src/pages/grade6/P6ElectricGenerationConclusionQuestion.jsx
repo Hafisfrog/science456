@@ -63,8 +63,8 @@ function speakText(text, lang) {
 function LanguagePills({ lang, setLang, labels }) {
   const pills = [
     { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
     { code: "ms", label: labels.ms },
+    { code: "en", label: labels.en },
   ];
 
   return (
@@ -149,7 +149,7 @@ export default function P6ElectricGenerationConclusionQuestion() {
             </div>
 
             {showAnswer ? (
-              <div className="ans2-a !bg-[linear-gradient(180deg,#fff7ed,#ffffff)] !text-slate-900">
+              <div className="ans2-a !bg-[linear-gradient(180deg,#fff7ed,#ffffff)] !text-[#dc2626]">
                 <button
                   className="ans2-answerSpeak"
                   type="button"

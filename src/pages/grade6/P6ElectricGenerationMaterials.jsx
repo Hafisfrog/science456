@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const LANG = {
@@ -100,8 +100,8 @@ export default function P6ElectricGenerationMaterials() {
   const t = LANG[lang];
   const langLabels = {
     th: "ไทย",
-    en: "อังกฤษ",
     ms: "มลายู",
+    en: "อังกฤษ",
   };
 
   const from = searchParams.get("from");
@@ -158,18 +158,7 @@ export default function P6ElectricGenerationMaterials() {
                 : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
           >
-            {langLabels.th}
-          </button>
-
-          <button
-            onClick={() => setLang("en")}
-            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
-              lang === "en"
-                ? "bg-[#bfe0ff] text-slate-900"
-                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-            }`}
-          >
-            {langLabels.en}
+            <span className="notranslate" translate="no">{langLabels.th}</span>
           </button>
 
           <button
@@ -180,7 +169,18 @@ export default function P6ElectricGenerationMaterials() {
                 : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
           >
-            {langLabels.ms}
+            <span className="notranslate" translate="no">{langLabels.ms}</span>
+          </button>
+
+          <button
+            onClick={() => setLang("en")}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "en"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+          >
+            <span className="notranslate" translate="no">{langLabels.en}</span>
           </button>
         </div>
       </div>
@@ -209,3 +209,4 @@ export default function P6ElectricGenerationMaterials() {
     </div>
   );
 }
+

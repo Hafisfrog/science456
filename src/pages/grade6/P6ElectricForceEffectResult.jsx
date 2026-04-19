@@ -1,7 +1,11 @@
 import { useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const LANGUAGE_OPTIONS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย" },
+   { id: "ms", label: "มลายู" },
+  { id: "en", label: "อังกฤษ" },
+];
 
 const TEXT = {
   th: {
@@ -147,7 +151,7 @@ export default function P6ElectricForceEffectResult() {
               }`}
               type="button"
             >
-              {t.lang[item.id]}
+              <span className="notranslate" translate="no">{item.label}</span>
             </button>
           ))}
         </div>

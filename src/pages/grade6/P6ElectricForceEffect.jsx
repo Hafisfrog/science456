@@ -35,9 +35,9 @@ const LANG = {
 };
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", speechLang: "th-TH" },
-  { id: "en", speechLang: "en-US" },
-  { id: "ms", speechLang: "ms-MY" },
+  { id: "th", speechLang: "th-TH", label: "ไทย" },
+  { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 
 const EQUIPMENT_ITEMS = [
@@ -154,7 +154,7 @@ export default function P6ElectricForceEffect() {
                 }`}
                 type="button"
               >
-                {t.lang[option.id]}
+                <span className="notranslate" translate="no">{option.label}</span>
               </button>
             ))}
           </div>

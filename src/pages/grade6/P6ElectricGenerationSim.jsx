@@ -359,7 +359,7 @@ export default function P6ElectricGenerationSim() {
   const isFreshStart = searchParams.get("fresh") === "1";
   const [lang, setLang] = useState("th");
   const t = UI_TEXT[lang] || UI_TEXT.th;
-  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const langLabels = { th: "ไทย",ms: "มลายู" , en: "อังกฤษ" };
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || LANGUAGE_OPTIONS[0].speechLang;
   const from = searchParams.get("from");
@@ -630,7 +630,17 @@ export default function P6ElectricGenerationSim() {
         >
           {langLabels.th}
         </button>
-
+      
+      <button
+          onClick={() => setLang("ms")}
+          className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+            lang === "ms"
+              ? "bg-[#bfe0ff] text-slate-900"
+              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+          }`}
+        >
+          {langLabels.ms}
+        </button>
         <button
           onClick={() => setLang("en")}
           className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
@@ -640,17 +650,6 @@ export default function P6ElectricGenerationSim() {
           }`}
         >
           {langLabels.en}
-        </button>
-
-        <button
-          onClick={() => setLang("ms")}
-          className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
-            lang === "ms"
-              ? "bg-[#bfe0ff] text-slate-900"
-              : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-          }`}
-        >
-          {langLabels.ms}
         </button>
 
       </div>

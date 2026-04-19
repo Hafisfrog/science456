@@ -154,17 +154,6 @@ export default function P6() {
           </button>
 
           <button
-            onClick={() => setLang("en")}
-            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
-              lang === "en"
-                ? "bg-[#bfe0ff] text-slate-900"
-                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-            }`}
-          >
-            {langLabels.en}
-          </button>
-
-          <button
             onClick={() => setLang("ms")}
             className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
               lang === "ms"
@@ -173,6 +162,17 @@ export default function P6() {
             }`}
           >
             {langLabels.ms}
+          </button>
+
+          <button
+            onClick={() => setLang("en")}
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+              lang === "en"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+          >
+            {langLabels.en}
           </button>
 
         </div>

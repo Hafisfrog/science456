@@ -35,7 +35,7 @@ const TRANSLATIONS = {
     equipmentHeading: "วัสดุอุปกรณ์",
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", ms: "มลายู",en: "อังกฤษ" },
     equipment: {
       cell: { title: "ถ่านไฟฉาย", subtitle: "4 ก้อน" },
       wire: { title: "สายไฟพร้อมหัวหนีบ", subtitle: "4 เส้น" },
@@ -77,9 +77,9 @@ const TRANSLATIONS = {
 const EQUIPMENT_ORDER = ["cell", "wire", "holder", "bulb", "switch"];
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", speechLang: "th-TH" },
-  { id: "en", speechLang: "en-US" },
-  { id: "ms", speechLang: "ms-MY" },
+  { id: "th", speechLang: "th-TH", label: "ไทย" },
+   { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 
 function speakText(text, lang) {
@@ -281,9 +281,10 @@ export default function P6ElectricCircuitMaterials() {
                   ? "bg-[#bfe0ff] text-slate-900"
                   : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
               }`}
+              title={item.label}
               type="button"
             >
-              {t.lang[item.id]}
+              <span className="notranslate" translate="no">{item.label}</span>
             </button>
           ))}
         </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const CONTENT = {
@@ -60,7 +60,7 @@ export default function P6ElectricObjectives() {
   const isUnitFlow = pathname === "/p6/electric-force" || pathname.startsWith("/p6/electric-force/");
   const backPath = isUnitFlow ? "/p6" : "/p6/electric-force/experiments";
   const nextPath = isUnitFlow ? "/p6/electric-force/vocab" : "/p6/experiment/electric-generation/vocab";
-  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const langLabels = { th: "ไทย", ms: "มลายู", en: "อังกฤษ" };
 
   const speechLang = lang === "th" ? "th-TH" : lang === "en" ? "en-US" : "ms-MY";
 
@@ -137,7 +137,7 @@ export default function P6ElectricObjectives() {
             aria-label={t.back}
             title={t.back}
           >
-            « {t.back}
+            &laquo; {t.back}
           </button>
 
           <button
@@ -147,7 +147,7 @@ export default function P6ElectricObjectives() {
             aria-label={t.next}
             title={t.next}
           >
-            {t.next} »
+            {t.next} &raquo;
           </button>
         </div>
 
@@ -161,18 +161,7 @@ export default function P6ElectricObjectives() {
               }`}
               onClick={() => setLang("th")}
             >
-              {langLabels.th}
-            </button>
-
-            <button
-              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
-                lang === "en"
-                  ? "bg-[#bfe0ff] text-slate-900"
-                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
-              }`}
-              onClick={() => setLang("en")}
-            >
-              {langLabels.en}
+              <span className="notranslate" translate="no">{langLabels.th}</span>
             </button>
 
             <button
@@ -183,7 +172,18 @@ export default function P6ElectricObjectives() {
               }`}
               onClick={() => setLang("ms")}
             >
-              {langLabels.ms}
+              <span className="notranslate" translate="no">{langLabels.ms}</span>
+            </button>
+
+            <button
+              className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold transition ${
+                lang === "en"
+                  ? "bg-[#bfe0ff] text-slate-900"
+                  : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+              }`}
+              onClick={() => setLang("en")}
+            >
+              <span className="notranslate" translate="no">{langLabels.en}</span>
             </button>
           </div>
         </div>
@@ -191,3 +191,4 @@ export default function P6ElectricObjectives() {
     </div>
   );
 }
+

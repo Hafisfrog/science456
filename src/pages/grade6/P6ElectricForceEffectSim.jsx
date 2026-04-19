@@ -1,7 +1,11 @@
 ﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
-const LANGUAGE_OPTIONS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
+const LANGUAGE_OPTIONS = [
+  { id: "th", label: "ไทย" },
+   { id: "ms", label: "มลายู" },
+  { id: "en", label: "อังกฤษ" },
+];
 const MIN_RUB_SECONDS = 10;
 const TRIAL_OPTIONS = [
   {
@@ -169,7 +173,7 @@ const UI_TEXT = {
     completeHint: 'Semua ujian selesai. Tekan "Ringkasan Eksperimen".',
     rubTooShort: `Masa gosokan terlalu singkat. Gosok lebih daripada ${MIN_RUB_SECONDS} saat untuk melihat hasil.`,
     timerTitle: "Masa eksperimen",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    lang: { th: "Thai", en: "Inggeris", ms: "Melayu" },
   },
 };
 const CHARGES = {
@@ -434,7 +438,7 @@ export default function P6ElectricForceEffectSim() {
               className={`p6-force-sim-langchip ${language === item.id ? "active" : ""}`}
               onClick={() => setLanguage(item.id)}
             >
-              {t.lang[item.id]}
+              <span className="notranslate" translate="no">{item.label}</span>
             </button>
           ))}
         </div>

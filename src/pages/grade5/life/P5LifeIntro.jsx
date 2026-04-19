@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const LANGS = [
   { id: "th", label: "ไทย", voice: "th-TH" },
-  { id: "en", label: "English", voice: "en-US" },
-  { id: "ms", label: "Melayu", voice: "ms-MY" },
+  { id: "ms", label: "มลายู", voice: "ms-MY" },
+  { id: "en", label: "อังกฤษ", voice: "en-US" },
 ];
 
 const TOPIC_MEDIA = {
@@ -209,12 +209,12 @@ export default function P5LifeIntro() {
           ))}
         </div>
 
-        <div className="fixed bottom-4 left-4 z-20 inline-flex items-center gap-2 rounded-[18px] border border-[#7ccf6d]/40 bg-white/92 p-2 shadow-[0_10px_16px_rgba(15,23,42,0.16)] backdrop-blur-[2px]">
+        <div className="fixed bottom-[18px] left-[18px] z-20 inline-flex items-center gap-[10px] rounded-[18px] border-0 bg-white/90 px-[12px] py-[10px] shadow-[0_18px_40px_rgba(0,0,0,0.22)]">
           {LANGS.map((item) => (
             <button
               key={item.id}
-              className={`rounded-full px-4 py-2 text-sm font-bold ${
-                lang === item.id ? "bg-emerald-500 text-white shadow" : "bg-emerald-50 text-emerald-800"
+              className={`rounded-[14px] px-[18px] py-[10px] text-[16px] font-extrabold leading-6 text-[#0f172a] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,0.14)] ${
+                lang === item.id ? "bg-[#bfe0ff]" : "bg-[#e6f2ff]"
               }`}
               type="button"
               onClick={() => setLang(item.id)}

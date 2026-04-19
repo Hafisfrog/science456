@@ -2,9 +2,9 @@ import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", speechLang: "th-TH" },
-  { id: "en", speechLang: "en-US" },
-  { id: "ms", speechLang: "ms-MY" },
+  { id: "th", speechLang: "th-TH", label: "ไทย" },
+    { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 
 const CONTENT = {
@@ -130,7 +130,7 @@ export default function P6ElectricForceEffectSteps() {
                 }`}
                 type="button"
               >
-                {t.lang[item.id]}
+                <span className="notranslate" translate="no">{item.label}</span>
               </button>
             ))}
           </div>

@@ -55,7 +55,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 .p6-force-sim-live-timer {
   position: absolute;
   right: clamp(18px, 2vw, 28px);
-  top: clamp(14px, 2vh, 22px);
+  top: clamp(34px, 4vh, 58px);
   z-index: 72;
   min-width: clamp(150px, 13vw, 190px);
   border-radius: 16px;
@@ -105,8 +105,8 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-langbar {
   position: absolute;
-  left: 12px;
-  bottom: 12px;
+  left: 22px;
+  bottom: 22px;
   z-index: 65;
   display: inline-flex;
   align-items: center;
@@ -131,7 +131,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   font-family: inherit;
   font-size: 16px;
   font-weight: 800;
-  line-height: 1;
+  line-height: 24px;
   box-shadow: none;
   opacity: 1;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.12s ease;
@@ -597,17 +597,17 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-right {
   position: absolute;
-  right: clamp(10px, 1.2vw, 18px);
+  right: clamp(9px, 2vw, 26px);
   top: clamp(10px, 1.2vw, 18px);
   bottom: clamp(10px, 1.2vw, 18px);
-  width: min(350px, 28vw);
+  width: min(320px, 24vw);
   z-index: 30;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
   gap: 10px;
-  padding: 8px 8px 10px;
+  padding: 8px 0 10px;
   border-radius: 0;
   background: transparent;
   border: 0;
@@ -652,7 +652,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   display: flex;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   margin-top: 0;
   padding: 6px 0 0;
   gap: 16px;
@@ -861,6 +861,8 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
 .p6-force-sim-backBottom {
   margin-top: 0;
+  align-self: flex-end;
+  margin-right: -6px;
   border: none;
   cursor: pointer;
   border-radius: 18px;
@@ -1092,7 +1094,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
 
   .p6-force-sim-live-timer {
     right: 12px;
-    top: 10px;
+    top: 22px;
     min-width: 142px;
   }
 }

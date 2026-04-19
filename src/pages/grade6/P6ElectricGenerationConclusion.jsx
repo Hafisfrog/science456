@@ -12,7 +12,7 @@ const TEXT = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     listen: "ฟังข้อความ",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย",  ms: "มลายู",en: "อังกฤษ", },
   },
   en: {
     title: "Experiment Summary",
@@ -54,8 +54,8 @@ function speakText(text, lang) {
 function LanguagePills({ lang, setLang, labels }) {
   const pills = [
     { code: "th", label: labels.th },
-    { code: "en", label: labels.en },
     { code: "ms", label: labels.ms },
+    { code: "en", label: labels.en },
   ];
 
   return (

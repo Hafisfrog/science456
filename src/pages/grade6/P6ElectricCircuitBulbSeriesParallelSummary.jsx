@@ -78,7 +78,11 @@ const TEXT = {
   },
 };
 
-const LANGS = [{ id: "th" }, { id: "en" }, { id: "ms" }];
+const LANGS = [
+  { id: "th", label: "ไทย" },
+   { id: "ms", label: "มลายู" },
+  { id: "en", label: "อังกฤษ" },
+];
 
 function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   return (
@@ -294,9 +298,10 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
                   ? "bg-[#bfe0ff] text-slate-900"
                   : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
               }`}
+              title={item.label}
               type="button"
             >
-              {t.lang[item.id]}
+              <span className="notranslate" translate="no">{item.label}</span>
             </button>
           ))}
         </div>

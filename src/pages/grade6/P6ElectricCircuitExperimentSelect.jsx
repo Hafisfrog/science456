@@ -35,9 +35,9 @@ const LANG = {
 };
 
 const LANGUAGE_OPTIONS = [
-  { id: "th", voice: "th-TH" },
-  { id: "en", voice: "en-US" },
-  { id: "ms", voice: "ms-MY" },
+  { id: "th", voice: "th-TH", label: "ไทย" },
+  { id: "en", voice: "en-US", label: "อังกฤษ" },
+  { id: "ms", voice: "ms-MY", label: "มลายู" },
 ];
 
 function speakText(text, lang) {
@@ -168,9 +168,10 @@ export default function P6ElectricCircuitExperimentSelect() {
                 ? "bg-[#bfe0ff] text-slate-900"
                 : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
+            title={item.label}
             type="button"
           >
-            {t.lang[item.id]}
+            <span className="notranslate" translate="no">{item.label}</span>
           </button>
         ))}
       </div>

@@ -4,8 +4,8 @@ import { GRADE6_LANG_BAR_CLASS, grade6LangButtonClass } from "./grade6LangStyles
 
 const LANGUAGES = [
   { key: "th", label: "ไทย" },
-  { key: "en", label: "อังกฤษ" },
   { key: "ms", label: "มลายู" },
+  { key: "en", label: "อังกฤษ" },
 ];
 
 const EXPERIMENTS = [
