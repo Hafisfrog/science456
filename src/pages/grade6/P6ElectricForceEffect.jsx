@@ -42,7 +42,7 @@ const LANGUAGE_OPTIONS = [
 
 const EQUIPMENT_ITEMS = [
   { id: "balloons", image: "/images/p6/equipment/lukpong-cut.png" },
-  { id: "markers", image: "/images/p6/equipment/markers-real.svg" },
+  { id: "markers", image: "/images/p6/kalae.png" },
   { id: "tissue", image: "/images/p6/equipment/tissue-real.svg" },
 ];
 
