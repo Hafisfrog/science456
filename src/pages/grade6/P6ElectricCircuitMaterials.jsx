@@ -13,17 +13,17 @@ const EQUIPMENT_MEDIA = {
     imageClassName: "max-w-[122px] min-[1400px]:max-w-[134px]",
   },
   holder: {
-    image: "/images/p6/electric-circuit/battery-holder-empty.svg",
+    image: "/images/p6/kraba.png",
     fallbackImage: "/images/p6/electric-circuit/battery-holder.svg",
     imageClassName: "max-w-[132px] min-[1400px]:max-w-[144px]",
   },
   bulb: {
-    image: "/images/p6/electric-circuit/bulb-base-photo.webp",
+    image: "/images/p6/lfai.png",
     fallbackImage: "/images/p6/electric-circuit/bulb-base.svg",
     imageClassName: "max-w-[98px] min-[1400px]:max-w-[108px]",
   },
   switch: {
-    image: "/images/p6/electric-circuit/switch-photo.webp",
+    image: "/images/p6/switch.png",
     fallbackImage: "/images/p6/electric-circuit/switch.svg",
     imageClassName: "max-w-[96px] min-[1400px]:max-w-[106px]",
   },

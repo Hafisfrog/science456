@@ -81,6 +81,14 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   line-height: 1;
 }
 
+.p6-force-sim-live-timer-note {
+  margin-top: 3px;
+  font-size: 12px;
+  font-weight: 900;
+  color: #475569;
+  line-height: 1.1;
+}
+
 .p6-force-sim-backTop {
   position: absolute;
   left: 16px;
@@ -1004,6 +1012,13 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   line-height: 1.1;
   text-align: center;
   letter-spacing: 0.1px;
+}
+
+.p6-force-sim-menu-item-time {
+  font-size: 13px;
+  font-weight: 900;
+  color: #334155;
+  line-height: 1;
 }
 
 .p6-force-sim-menu-check {

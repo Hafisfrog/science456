@@ -299,10 +299,12 @@
 }
 
 .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-battery-p {
-  --battery-w: 96px;
+  --battery-w: 86px;
+  --battery-touch-overlap: 26px;
+  --battery-crop-scale: 1.24;
   width: var(--battery-w);
-  height: 48px;
-  top: 24%;
+  height: 42px;
+  top: 35%;
 }
 
 .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-bulb-node {
@@ -335,9 +337,10 @@
 }
 
 .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-board.is-parallel-layout .p6-circuit-bsp-sim-battery-p {
-  --battery-w: 156px;
+  --battery-w: 146px;
+  --battery-touch-overlap: 32px;
   width: var(--battery-w);
-  height: 78px;
+  height: 72px;
   top: 24%;
 }
 
@@ -418,17 +421,18 @@
 .p6-circuit-bsp-sim-battery-p {
   left: 50%;
   top: 16%;
-  --battery-w: 112px;
+  --battery-w: 104px;
+  --battery-touch-overlap: 24px;
   width: var(--battery-w);
-  height: 56px;
+  height: 52px;
 }
 
 .p6-circuit-bsp-sim-battery-p-left {
-  left: 44%;
+  left: calc(50% - (var(--battery-w) / 2) + var(--battery-touch-overlap));
 }
 
 .p6-circuit-bsp-sim-battery-p-right {
-  left: 56%;
+  left: calc(50% + (var(--battery-w) / 2) - var(--battery-touch-overlap));
 }
 
 .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-battery {
@@ -439,9 +443,9 @@
 }
 
 .p6-circuit-bsp-sim-trial-only .p6-circuit-bsp-sim-battery-p {
-  --battery-w: 182px;
+  --battery-w: 170px;
   width: var(--battery-w);
-  height: 90px;
+  height: 84px;
 }
 
 .p6-circuit-bsp-sim-battery-photo {

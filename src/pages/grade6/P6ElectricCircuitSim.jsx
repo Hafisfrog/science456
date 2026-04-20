@@ -603,8 +603,8 @@ export default function P6ElectricCircuitSim() {
   };
   const equipmentShift = {
     holder: { x: 14, y: 25 },
-    switcher: { x: 0, y: 50 },
-    bulb: { x: -42, y: 24 },
+    switcher: { x: 0, y: 80 },
+    bulb: { x: -42, y: -13 },
   };
   const wireShiftY = -16;
   const topWireStart = {
@@ -616,34 +616,33 @@ export default function P6ElectricCircuitSim() {
     y: demoNodes.bulb.y + equipmentShift.bulb.y + 76,
   };
   const redWireLeftStart = {
-    x: demoNodes.holder.x + demoNodes.holder.w - 8,
-    y: demoNodes.holder.y + 106 + wireShiftY,
+    x: demoNodes.holder.x + equipmentShift.holder.x + demoNodes.holder.w - 40,
+    y: demoNodes.holder.y + equipmentShift.holder.y + 67,
   };
   const redWireLeftEnd = {
-    x: demoNodes.switcher.x + 4,
-    y: demoNodes.switcher.y + 66 + wireShiftY,
+    x: demoNodes.switcher.x + equipmentShift.switcher.x + 2,
+    y: demoNodes.switcher.y + equipmentShift.switcher.y + 26,
   };
   const redWireRightStart = {
-    x: demoNodes.switcher.x + demoNodes.switcher.w - 4,
-    y: demoNodes.switcher.y + 72 + wireShiftY,
+    x: demoNodes.switcher.x + equipmentShift.switcher.x + 46,
+    y: demoNodes.switcher.y + equipmentShift.switcher.y + 26,
   };
   const redWireRightEnd = {
-    x: demoNodes.bulb.x + equipmentShift.bulb.x + 62,
-    y: demoNodes.bulb.y + equipmentShift.bulb.y + 90,
+    x: topWireEnd.x + 10,
+    y: topWireEnd.y + 10,
   };
+  const redBusY = redWireLeftEnd.y;
 
   const topWirePath = `M ${topWireStart.x} ${topWireStart.y}
-    C ${demoNodes.holder.x + equipmentShift.holder.x + demoNodes.holder.w + 88} ${demoNodes.holder.y + equipmentShift.holder.y - 26},
-      ${demoNodes.bulb.x + equipmentShift.bulb.x - 20} ${demoNodes.bulb.y + equipmentShift.bulb.y + 30},
-      ${topWireEnd.x} ${topWireEnd.y}`;
+    L ${topWireEnd.x - 26} ${topWireStart.y}
+    L ${topWireEnd.x} ${topWireEnd.y}`;
   const redWireLeftPath = `M ${redWireLeftStart.x} ${redWireLeftStart.y}
-    C ${demoNodes.holder.x + demoNodes.holder.w + 12} ${demoNodes.holder.y + 162 + wireShiftY},
-      ${demoNodes.switcher.x - 18} ${demoNodes.switcher.y + 102 + wireShiftY},
-      ${redWireLeftEnd.x} ${redWireLeftEnd.y}`;
+    L ${redWireLeftStart.x} ${redBusY}
+    L ${redWireLeftEnd.x} ${redBusY}
+    L ${redWireLeftEnd.x} ${redWireLeftEnd.y}`;
   const redWireRightPath = `M ${redWireRightStart.x} ${redWireRightStart.y}
-    C ${demoNodes.switcher.x + 50} ${demoNodes.switcher.y + 88 + wireShiftY},
-      ${demoNodes.bulb.x + equipmentShift.bulb.x + 52} ${demoNodes.bulb.y + equipmentShift.bulb.y + 106},
-      ${redWireRightEnd.x} ${redWireRightEnd.y}`;
+    L ${redWireRightEnd.x} ${redWireRightStart.y}
+    L ${redWireRightEnd.x} ${redWireRightEnd.y}`;
 
   return (
     <div
@@ -727,21 +726,21 @@ export default function P6ElectricCircuitSim() {
                         viewBox="0 0 760 170"
                         aria-hidden="true"
                       >
-                        <path d={topWirePath} stroke="#111827" strokeOpacity="0.25" strokeWidth="8" fill="none" strokeLinecap="round" />
-                        <path d={topWirePath} stroke="#0b1020" strokeWidth="5" fill="none" strokeLinecap="round" />
+                        <path d={topWirePath} stroke="#111827" strokeOpacity="0.25" strokeWidth="8" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+                        <path d={topWirePath} stroke="#0b1020" strokeWidth="5" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
 
-                        <path d={redWireLeftPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
-                        <path d={redWireLeftPath} stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
+                        <path d={redWireLeftPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+                        <path d={redWireLeftPath} stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
 
-                        <path d={redWireRightPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="round" />
-                        <path d={redWireRightPath} stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="round" />
+                        <path d={redWireRightPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="8" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+                        <path d={redWireRightPath} stroke="#ef4444" strokeWidth="5" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
 
                         <ClipHead x={topWireStart.x} y={topWireStart.y} rotate={180} color="black" />
-                        <ClipHead x={topWireEnd.x} y={topWireEnd.y} rotate={10} color="black" />
-                        <ClipHead x={redWireLeftStart.x} y={redWireLeftStart.y} rotate={208} color="red" />
+                        <ClipHead x={topWireEnd.x} y={topWireEnd.y} rotate={0} color="black" />
+                        <ClipHead x={redWireLeftStart.x} y={redWireLeftStart.y} rotate={-90} color="red" />
                         <ClipHead x={redWireLeftEnd.x} y={redWireLeftEnd.y} rotate={0} color="red" />
                         <ClipHead x={redWireRightStart.x} y={redWireRightStart.y} rotate={180} color="red" />
-                        <ClipHead x={redWireRightEnd.x} y={redWireRightEnd.y} rotate={-68} color="red" />
+                        <ClipHead x={redWireRightEnd.x} y={redWireRightEnd.y} rotate={-90} color="red" />
                       </svg>
 
                       <div

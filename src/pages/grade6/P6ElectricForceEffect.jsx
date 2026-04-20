@@ -127,10 +127,10 @@ export default function P6ElectricForceEffect() {
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="mx-auto flex h-full w-full max-w-[1240px] flex-col">
-        <h1 className="text-center text-[clamp(34px,4vw,62px)] font-bold">{t.title}</h1>
+        <h1 className="text-center text-[clamp(40px,4.2vw,64px)] font-bold">{t.title}</h1>
 
         <div className="flex flex-1 flex-col pt-[20px]">
-          <h2 className="text-[clamp(40px,4.2vw,64px)] font-bold">{t.equipment}</h2>
+          <h2 className="text-[clamp(34px,4vw,55px)] font-bold">{t.equipment}</h2>
 
           <div className="flex flex-1 items-center justify-center">
             <div className="flex w-full max-w-[1020px] justify-center gap-[40px]">

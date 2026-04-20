@@ -6,7 +6,7 @@ const LANGUAGE_OPTIONS = [
    { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
 ];
-const MIN_RUB_SECONDS = 10;
+const MIN_RUB_SECONDS = 15;
 const TRIAL_OPTIONS = [
   {
     id: "balloon-both",
@@ -79,7 +79,7 @@ const UI_TEXT = {
     selectTrial: "เลือกการทดลอง",
     start: "เริ่ม",
     progress: "ความคืบหน้า",
-    menuTitle: "เลือกอุปกรณ์และการทดลอง (ทำทีละอย่าง)",
+    menuTitle: "เลือกการทดลอง",
     done: "เสร็จแล้ว",
     waiting: "รอคิว",
     selected: "ตัวเลือก",
@@ -88,6 +88,7 @@ const UI_TEXT = {
     summary: "สรุปผลการทดลอง",
     reset: "รีเซ็ต",
     stop: "หยุด",
+    skip: "ข้าม",
     time: "เวลาการถู",
     result: "ผลการทดลอง",
     chooseEquipAndTrial: "กรุณาเลือกอุปกรณ์และการทดลองก่อนเริ่ม",
@@ -103,8 +104,9 @@ const UI_TEXT = {
     oneBalloonHint: "ขัดลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ",
     oneMarkerHint: "ขัดปากกาเมจิก 1 ด้าม (ด้ามซ้าย) ด้วยกระดาษเยื่อ จะเกิดอะไรขึ้นนะ",
     completeHint: 'ทำครบทุกการทดลองแล้ว กดปุ่ม "สรุปผลการทดลอง" ได้เลย',
-    rubTooShort: `เวลาถูยังน้อยเกินไป ต้องถูมากกว่า ${MIN_RUB_SECONDS} วินาที จึงจะเห็นผล`,
+    rubTooShort: `เวลาถูยังน้อยเกินไป ต้องถูอย่างน้อย ${MIN_RUB_SECONDS} วินาที จึงจะเห็นผล`,
     timerTitle: "เวลาทดลอง",
+    timerHint: `จับเวลา ${MIN_RUB_SECONDS} วินาที`,
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
@@ -112,7 +114,7 @@ const UI_TEXT = {
     selectTrial: "Select Trial",
     start: "Start",
     progress: "Progress",
-    menuTitle: "Select equipment and trial (one by one)",
+    menuTitle: `Select equipment and trial (one by one) - ${MIN_RUB_SECONDS}s each`,
     done: "done",
     waiting: "queued",
     selected: "Selected",
@@ -122,6 +124,7 @@ const UI_TEXT = {
     summary: "Experiment Summary",
     reset: "Reset",
     stop: "Stop",
+    skip: "Skip",
     time: "Rubbing time",
     result: "Result",
     chooseEquipAndTrial: "Please choose equipment and trial before starting.",
@@ -137,8 +140,9 @@ const UI_TEXT = {
     oneBalloonHint: "What happens if only one balloon (left) is rubbed?",
     oneMarkerHint: "What happens if only one marker pen (left) is rubbed?",
     completeHint: 'All trials are done. Press "Experiment Summary".',
-    rubTooShort: `Rubbing is too short. Rub for more than ${MIN_RUB_SECONDS} seconds to see a result.`,
+    rubTooShort: `Rubbing is too short. Rub for at least ${MIN_RUB_SECONDS} seconds to see a result.`,
     timerTitle: "Experiment time",
+    timerHint: `${MIN_RUB_SECONDS}-second timer`,
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
@@ -146,7 +150,7 @@ const UI_TEXT = {
     selectTrial: "Pilih Ujian",
     start: "Mula",
     progress: "Kemajuan",
-    menuTitle: "Pilih peralatan dan ujian (satu demi satu)",
+    menuTitle: `Pilih peralatan dan ujian (satu demi satu) - ${MIN_RUB_SECONDS} saat setiap ujian`,
     done: "selesai",
     waiting: "menunggu",
     selected: "Pilihan",
@@ -156,6 +160,7 @@ const UI_TEXT = {
     summary: "Ringkasan Eksperimen",
     reset: "Mula semula",
     stop: "Berhenti",
+    skip: "Langkau",
     time: "Masa menggosok",
     result: "Hasil",
     chooseEquipAndTrial: "Sila pilih peralatan dan ujian sebelum mula.",
@@ -171,8 +176,9 @@ const UI_TEXT = {
     oneBalloonHint: "Apa jadi jika hanya satu belon (kiri) digosok?",
     oneMarkerHint: "Apa jadi jika hanya satu pen marker (kiri) digosok?",
     completeHint: 'Semua ujian selesai. Tekan "Ringkasan Eksperimen".',
-    rubTooShort: `Masa gosokan terlalu singkat. Gosok lebih daripada ${MIN_RUB_SECONDS} saat untuk melihat hasil.`,
+    rubTooShort: `Masa gosokan terlalu singkat. Gosok sekurang-kurangnya ${MIN_RUB_SECONDS} saat untuk melihat hasil.`,
     timerTitle: "Masa eksperimen",
+    timerHint: `Pemasa ${MIN_RUB_SECONDS} saat`,
     lang: { th: "Thai", en: "Inggeris", ms: "Melayu" },
   },
 };
@@ -232,6 +238,11 @@ function getTrialCompactLabel(trial, language) {
   };
   return compact[trial?.id]?.[language] || compact[trial?.id]?.th || getTrialLabel(trial, language);
 }
+function getTrialDurationLabel(language) {
+  if (language === "en") return `(${MIN_RUB_SECONDS} sec)`;
+  if (language === "ms") return `(${MIN_RUB_SECONDS} saat)`;
+  return `(${MIN_RUB_SECONDS} วินาที)`;
+}
 export default function P6ElectricForceEffectSim() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -281,6 +292,7 @@ export default function P6ElectricForceEffectSim() {
     if (currentResult) return t.recorded;
     return t.pressStart;
   }, [currentResult, isRunning, selectedTrial, started, t.pressStart, t.recorded, t.rubbing, t.tapTrialFirst]);
+  const timerDisplaySeconds = isRunning ? Math.max(MIN_RUB_SECONDS - seconds, 0) : MIN_RUB_SECONDS;
   const summaryText = useMemo(() => {
     if (!selectedTrial) return t.chooseTrialFirst;
     if (isRunning) return "";
@@ -332,6 +344,12 @@ export default function P6ElectricForceEffectSim() {
     return () => clearInterval(timerId);
   }, [isRunning]);
   useEffect(() => {
+    if (!isRunning) return;
+    if (seconds >= MIN_RUB_SECONDS) {
+      finishTrial(MIN_RUB_SECONDS);
+    }
+  }, [isRunning, seconds]);
+  useEffect(() => {
     setSequenceNotice("");
   }, [language]);
   const canPickTrial = () => true;
@@ -357,9 +375,10 @@ export default function P6ElectricForceEffectSim() {
     setSeconds(0);
     setIsRunning(true);
   };
-  const handleStop = () => {
-    if (!isRunning || !selectedTrial) return;
-    if (seconds <= MIN_RUB_SECONDS) {
+  const finishTrial = (elapsedSeconds) => {
+    if (!selectedTrial) return;
+    const safeElapsed = Math.max(0, Math.floor(elapsedSeconds));
+    if (safeElapsed < MIN_RUB_SECONDS) {
       setIsRunning(false);
       setCharged(false);
       setStarted(false);
@@ -372,14 +391,13 @@ export default function P6ElectricForceEffectSim() {
       (trial) => trial.id !== selectedTrial && !trialResults[trial.id]
     );
     const willCompleteAll = !nextAfterCurrent;
-    const totalTimeAfterFinish = totalExperimentTime + seconds;
     setIsRunning(false);
     setCharged(true);
     setTrialResults((prev) => ({
       ...prev,
       [selectedTrial]: {
         mode: currentTrial?.mode || "one",
-        time: seconds,
+        time: safeElapsed,
       },
     }));
     if (nextAfterCurrent) {
@@ -397,6 +415,14 @@ export default function P6ElectricForceEffectSim() {
     if (willCompleteAll) {
       setSequenceNotice(t.completeHint);
     }
+  };
+  const handleStop = () => {
+    if (!isRunning || !selectedTrial) return;
+    finishTrial(seconds);
+  };
+  const handleSkip = () => {
+    if (!isRunning || !selectedTrial) return;
+    finishTrial(Math.max(seconds, MIN_RUB_SECONDS));
   };
   const handleGoSummary = () => {
     if (!allTrialsCompleted || isRunning) {
@@ -427,7 +453,8 @@ export default function P6ElectricForceEffectSim() {
       <div className="p6-force-sim-stage">
         <div className="p6-force-sim-live-timer" role="status" aria-live="polite">
           <div className="p6-force-sim-live-timer-title">{t.timerTitle}</div>
-          <div className="p6-force-sim-live-timer-time">{formatTime(seconds)}</div>
+          <div className="p6-force-sim-live-timer-time">{formatTime(timerDisplaySeconds)}</div>
+          <div className="p6-force-sim-live-timer-note">{t.timerHint}</div>
         </div>
         {/* ภาษา */}
         <div className="p6-force-sim-langbar">  
@@ -468,12 +495,13 @@ export default function P6ElectricForceEffectSim() {
                     aria-disabled={locked}
                     aria-label={getTrialLabel(opt, language)}
                   >
-                    <span className="p6-force-sim-menu-item-main">
-                      <span className="p6-force-sim-menu-item-icon" aria-hidden="true">
-                        <img src={iconSrc} alt="" />
+                      <span className="p6-force-sim-menu-item-main">
+                        <span className="p6-force-sim-menu-item-icon" aria-hidden="true">
+                          <img src={iconSrc} alt="" />
+                        </span>
+                        <span className="p6-force-sim-menu-item-caption">{getTrialCompactLabel(opt, language)}</span>
+                        <span className="p6-force-sim-menu-item-time">{getTrialDurationLabel(language)}</span>
                       </span>
-                      <span className="p6-force-sim-menu-item-caption">{getTrialCompactLabel(opt, language)}</span>
-                    </span>
                     <span
                       className={"p6-force-sim-menu-check" + (done ? " active" : "")}
                       aria-hidden="true"
@@ -638,14 +666,14 @@ export default function P6ElectricForceEffectSim() {
             <button
               className="p6-force-sim-start"
               type="button"
-              onClick={isRunning ? handleStop : handleStart}
+              onClick={isRunning ? handleSkip : handleStart}
             >
               <span className="p6-force-sim-start-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                   <path d="M9 6l9 6-9 6V6z" fill="currentColor" />
                 </svg>
               </span>
-              <span className="p6-force-sim-start-label">{isRunning ? t.stop : t.start}</span>
+              <span className="p6-force-sim-start-label">{isRunning ? t.skip : t.start}</span>
             </button>
             <button className="p6-force-sim-reset" type="button" onClick={handleReset}>
               <span className="p6-force-sim-reset-icon" aria-hidden="true">

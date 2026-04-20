@@ -129,8 +129,8 @@ export default function P6ElectricGenerationMaterials() {
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="relative z-10 mx-auto w-full max-w-[1220px]">
-        <h1 className="text-center text-[52px] font-bold text-black">{t.title}</h1>
-        <h2 className="mt-8 text-[64px] font-bold">{t.equipment}</h2>
+        <h1 className="text-center text-[64px] font-bold text-black">{t.title}</h1>
+        <h2 className="mt-8 text-[52px] font-bold">{t.equipment}</h2>
 
         <div className="mt-8">
           <div className="flex flex-wrap justify-center gap-x-16 gap-y-8">
