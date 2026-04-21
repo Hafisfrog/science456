@@ -51,7 +51,7 @@ export default function P6ElectricGenerationKeySummary() {
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-8 text-slate-900 md:px-8 md:pt-20"
       style={{
         fontFamily: "Prompt, sans-serif",
         background:

@@ -646,7 +646,7 @@ export default function P6ElectricCircuitSim() {
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-16 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-16 pt-8 text-slate-900 md:px-8 md:pt-27"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="pointer-events-none absolute inset-0">

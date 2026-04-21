@@ -93,23 +93,91 @@ function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   );
 }
 
+function ClipHead({ x, y, rotate = 0, color = "black" }) {
+  const isRed = color === "red";
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${rotate})`} aria-hidden="true">
+      <rect x={-8} y={-2.8} width={7.8} height={5.6} rx={2.6} fill={isRed ? "#dc2626" : "#111827"} />
+      <rect x={-1.3} y={-1.7} width={4.8} height={3.4} rx={1.2} fill="#475569" />
+      <path d="M3.2 -2.4 L8.8 -1.4 L8.8 1.4 L3.2 2.4 Z" fill="#cbd5e1" />
+      <path d="M8.8 -1.4 L11.2 0 L8.8 1.4 Z" fill="#94a3b8" />
+      <path d="M3.2 -0.6 L8 -0.2 M3.2 0.6 L8 0.2" stroke="#e2e8f0" strokeWidth={0.45} strokeLinecap="round" />
+    </g>
+  );
+}
+
+function BatteryToken({ filled = true }) {
+  return (
+    <div
+      className={`relative overflow-hidden rounded-[5px] border h-[46px] w-[18px] ${
+        filled ? "border-slate-400 bg-white/80" : "border-slate-300 bg-slate-100/90"
+      }`}
+      aria-hidden="true"
+    >
+      {filled ? (
+        <EquipmentImage
+          src={DEVICE_MEDIA.cell.image}
+          fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
+          alt="battery"
+          className="h-full w-full object-cover object-center mix-blend-multiply"
+        />
+      ) : null}
+    </div>
+  );
+}
+
+function SlideSwitchStatic() {
+  return (
+    <div className="relative h-[64px] w-[38px] rounded-[13px] border-[2.5px] border-slate-600 bg-gradient-to-b from-slate-100 to-slate-200 p-[5px] shadow-[0_8px_14px_rgba(15,23,42,0.18)]">
+      <div className="relative h-full w-full overflow-hidden rounded-[9px] bg-gradient-to-b from-slate-300 to-slate-400">
+        <div className="absolute left-1/2 top-[3px] -translate-x-1/2 text-[8px] font-black text-slate-700">ON</div>
+        <div className="absolute left-1/2 top-[8px] h-[22px] w-[18px] -translate-x-1/2 rounded-[7px] border border-slate-500 bg-gradient-to-b from-slate-700 to-slate-800 shadow-[inset_0_2px_3px_rgba(255,255,255,0.2)]" />
+      </div>
+    </div>
+  );
+}
+
 function CircuitThumb({ cells }) {
   const glow = cells === 1 ? 0.22 : cells === 2 ? 0.48 : cells === 3 ? 0.74 : 1;
   const slots = Array.from({ length: 4 }, (_, idx) => idx < cells);
+  const holder = { x: 16, y: 18, w: 124, h: 74 };
+  const switcher = { x: 198, y: 70, w: 38, h: 64 };
+  const bulb = { x: 252, y: 2, w: 72, h: 72 };
+  const topWireStart = { x: holder.x + holder.w - 10, y: holder.y + 28 };
+  const topWireEnd = { x: bulb.x + 36, y: bulb.y + 48 };
+  const redWireLeftStart = { x: holder.x + holder.w - 28, y: holder.y + 56 };
+  const redWireLeftEnd = { x: switcher.x + 2, y: switcher.y + 20 };
+  const redWireRightStart = { x: switcher.x + switcher.w - 2, y: switcher.y + 20 };
+  const redWireRightEnd = { x: topWireEnd.x + 8, y: topWireEnd.y + 8 };
+  const redBusY = redWireLeftEnd.y;
+  const topWirePath = `M ${topWireStart.x} ${topWireStart.y}
+    L ${topWireEnd.x - 18} ${topWireStart.y}
+    L ${topWireEnd.x} ${topWireEnd.y}`;
+  const redWireLeftPath = `M ${redWireLeftStart.x} ${redWireLeftStart.y}
+    L ${redWireLeftStart.x} ${redBusY}
+    L ${redWireLeftEnd.x} ${redBusY}
+    L ${redWireLeftEnd.x} ${redWireLeftEnd.y}`;
+  const redWireRightPath = `M ${redWireRightStart.x} ${redWireRightStart.y}
+    L ${redWireRightEnd.x} ${redWireRightStart.y}
+    L ${redWireRightEnd.x} ${redWireRightEnd.y}`;
   return (
-    <div className="relative h-[118px] w-[360px]">
+    <div className="relative h-[150px] w-[360px]">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 360 118" aria-hidden="true">
-        <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#111827" strokeOpacity="0.25" strokeWidth="6" fill="none" strokeLinecap="round" />
-        <path d="M138 53 C 182 44, 220 44, 260 51" stroke="#0b1020" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-
-        <path d="M138 72 C 164 90, 190 98, 203 96" stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="round" />
-        <path d="M138 72 C 164 90, 190 98, 203 96" stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-
-        <path d="M224 96 C 252 104, 286 100, 284 69" stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="round" />
-        <path d="M224 96 C 252 104, 286 100, 284 69" stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="round" />
+        <path d={topWirePath} stroke="#111827" strokeOpacity="0.25" strokeWidth="6" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+        <path d={topWirePath} stroke="#0b1020" strokeWidth="3.5" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+        <path d={redWireLeftPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+        <path d={redWireLeftPath} stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+        <path d={redWireRightPath} stroke="#111827" strokeOpacity="0.22" strokeWidth="6" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+        <path d={redWireRightPath} stroke="#ef4444" strokeWidth="3.5" fill="none" strokeLinecap="square" strokeLinejoin="miter" />
+        <ClipHead x={topWireStart.x} y={topWireStart.y} rotate={180} color="black" />
+        <ClipHead x={topWireEnd.x} y={topWireEnd.y} rotate={0} color="black" />
+        <ClipHead x={redWireLeftStart.x} y={redWireLeftStart.y} rotate={-90} color="red" />
+        <ClipHead x={redWireLeftEnd.x} y={redWireLeftEnd.y} rotate={0} color="red" />
+        <ClipHead x={redWireRightStart.x} y={redWireRightStart.y} rotate={180} color="red" />
+        <ClipHead x={redWireRightEnd.x} y={redWireRightEnd.y} rotate={-90} color="red" />
       </svg>
 
-      <div className="absolute left-[16px] top-[26px] h-[74px] w-[124px]">
+      <div className="absolute left-[16px] top-[18px] h-[74px] w-[124px]">
         <div className="absolute inset-0 rounded-[14px] border-[2px] border-[#2f4561] bg-gradient-to-b from-[#5d7697] to-[#2f4561]" />
         <div className="absolute inset-x-[8px] top-[6px] h-[6px] rounded-full bg-[#23354b]/70" />
         <div className="absolute left-1/2 top-[14px] flex -translate-x-1/2 gap-[3px]">
@@ -120,31 +188,17 @@ function CircuitThumb({ cells }) {
                 filled ? "border-transparent bg-transparent" : "border-slate-300/80 bg-slate-100/90"
               }`}
             >
-              {filled ? (
-                <div className="h-[46px] w-[18px] overflow-hidden rounded-[4px] border border-slate-300 bg-white/80">
-                  <EquipmentImage
-                    src={DEVICE_MEDIA.cell.image}
-                    fallbackSrc={DEVICE_MEDIA.cell.fallbackImage}
-                    alt={`battery ${idx + 1}`}
-                    className="h-full w-full object-cover object-center mix-blend-multiply"
-                  />
-                </div>
-              ) : null}
+              <BatteryToken filled={filled} />
             </div>
           ))}
         </div>
       </div>
 
-      <div className="absolute left-[198px] top-[56px] h-[64px] w-[44px]">
-        <EquipmentImage
-          src={DEVICE_MEDIA.switch.image}
-          fallbackSrc={DEVICE_MEDIA.switch.fallbackImage}
-          alt="switch"
-          className="h-full w-full object-contain"
-        />
+      <div className="absolute left-[198px] top-[70px]">
+        <SlideSwitchStatic />
       </div>
 
-      <div className="absolute left-[252px] top-[18px] h-[72px] w-[72px]">
+      <div className="absolute left-[252px] top-[2px] h-[72px] w-[72px]">
         <div
           className="pointer-events-none absolute left-1/2 top-1/2 h-[86px] w-[86px] -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
@@ -188,7 +242,7 @@ export default function P6ElectricCircuitResultOverview() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-8 pt-3 text-slate-900 md:px-8" style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}>
+    <div className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-8 pt-8 text-slate-900 md:px-8 md:pt-20" style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}>
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-4 right-4 top-[18%] h-[42%] rounded-[48%] bg-white/38 blur-3xl" />
         <div className="absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-[#9fc5d8] via-[#b1d4e6] to-transparent" />

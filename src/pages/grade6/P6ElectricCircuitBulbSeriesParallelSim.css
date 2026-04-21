@@ -13,6 +13,7 @@
   width: 100%;
   min-height: 100dvh;
   padding: clamp(12px, 2.4vw, 24px);
+  padding-top: clamp(44px, 6vw, 76px);
 }
 
 .p6-circuit-bsp-sim-inner {

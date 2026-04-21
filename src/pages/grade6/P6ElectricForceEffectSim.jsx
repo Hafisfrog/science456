@@ -472,7 +472,12 @@ export default function P6ElectricForceEffectSim() {
         <div className="p6-force-sim-sidebar">
           <div className="p6-force-sim-sidewrap">
             <div className="p6-force-sim-menu is-static" role="region" aria-label={t.selectTrial}>
-              <div className="p6-force-sim-menu-title">{t.menuTitle}</div>
+              <div
+                className="p6-force-sim-menu-title"
+                style={{ textAlign: "right", display: "inline-block", width: "fit-content", marginLeft: "auto" }}
+              >
+                {t.selectTrial}
+              </div>
               {TRIAL_OPTIONS.map((opt) => {
                 const equipment = opt.equipment;
                 const locked = !canPickTrial(opt.id);
@@ -499,8 +504,9 @@ export default function P6ElectricForceEffectSim() {
                         <span className="p6-force-sim-menu-item-icon" aria-hidden="true">
                           <img src={iconSrc} alt="" />
                         </span>
-                        <span className="p6-force-sim-menu-item-caption">{getTrialCompactLabel(opt, language)}</span>
-                        <span className="p6-force-sim-menu-item-time">{getTrialDurationLabel(language)}</span>
+                        <span className="p6-force-sim-menu-item-caption">
+                          {`${getTrialCompactLabel(opt, language)} ${getTrialDurationLabel(language)}`}
+                        </span>
                       </span>
                     <span
                       className={"p6-force-sim-menu-check" + (done ? " active" : "")}

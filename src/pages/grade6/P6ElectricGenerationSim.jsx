@@ -575,7 +575,12 @@ export default function P6ElectricGenerationSim() {
         <div className="flex h-full flex-col items-start gap-3 rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
           <div className="w-full min-h-0 flex-1">
             <div className="p6-force-sim-menu is-static" role="region" aria-label={t.selectTrial}>
-              <div className="p6-force-sim-menu-title">{t.selectTrial}</div>
+              <div
+                className="p6-force-sim-menu-title"
+                style={{ textAlign: "right", display: "inline-block", width: "fit-content", marginLeft: "auto" }}
+              >
+                {t.selectTrial}
+              </div>
               {trialOptions.map((item) => {
                 const done = completedTrials.includes(item.id);
                 const active = selectedTrial === item.id;

@@ -138,8 +138,8 @@ export default function P6ElectricGenerationSteps() {
       className="min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(18px,2.5vw,30px)]"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
-      <div className="mx-auto max-w-[1260px] pb-24">
-        <section className="rounded-3xl bg-[#e6f3ff] p-6 shadow-lg">
+      <div className="mx-auto flex min-h-[calc(100vh-170px)] max-w-[1260px] items-center pb-24 pt-20">
+        <section className="w-full rounded-3xl bg-[#e6f3ff] p-6 shadow-lg">
           <div className="text-[clamp(34px,3.5vw,52px)] font-black">{content.heading}</div>
           {content.hint ? <div className="mb-4 text-lg font-bold text-slate-600">{content.hint}</div> : null}
 

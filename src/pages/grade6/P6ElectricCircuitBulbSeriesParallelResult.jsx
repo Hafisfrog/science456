@@ -103,7 +103,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-8 text-slate-900 md:px-8 md:pt-20"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div

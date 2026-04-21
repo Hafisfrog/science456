@@ -83,29 +83,29 @@ export default function P6ElectricForceEffectSteps() {
 
   return (
     <div
-      className="min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(18px,2.5vw,30px)]"
+      className="min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(35px,5.5vw,75px)]"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="mx-auto max-w-[1260px]">
-        <section className="rounded-3xl bg-[#e6f3ff] p-6 shadow-lg">
-          <div className="text-[clamp(34px,3.5vw,52px)] font-black">{t.heading}</div>
+        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg">
+          <div className="text-[clamp(30px,3vw,44px)] font-black">{t.heading}</div>
           {t.hint ? <div className="mb-4 text-lg font-bold text-slate-600">{t.hint}</div> : null}
 
-          <div className="grid gap-4">
+          <div className="grid gap-3">
             {steps.map((text, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-4 rounded-full border-2 border-black bg-white px-5 py-3 shadow"
+                className="flex items-center gap-3 rounded-full border-2 border-black bg-white px-4 py-2.5 shadow"
               >
-                <span className="grid h-12 w-12 place-items-center rounded-full bg-yellow-400 text-2xl font-black text-white">
+                <span className="grid h-11 w-11 place-items-center rounded-full bg-yellow-400 text-[34px] leading-none font-black text-white">
                   {idx + 1}
                 </span>
 
-                <span className="flex-1 text-[clamp(20px,2vw,32px)] font-bold">{text}</span>
+                <span className="flex-1 text-[clamp(16px,1.6vw,24px)] font-bold">{text}</span>
 
                 <button
                   onClick={() => speakStep(text)}
-                  className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-100 text-lg text-orange-700 shadow transition hover:scale-105"
                   type="button"
                   aria-label={text}
                   title={text}

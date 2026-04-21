@@ -243,7 +243,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
 
   return (
     <div
-      className="p6-circuit-bsp-summary-page relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-3 text-slate-900 md:px-8 md:pb-32"
+      className="p6-circuit-bsp-summary-page relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-8 text-slate-900 md:px-8 md:pb-32 md:pt-19"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr] gap-2">

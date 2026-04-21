@@ -185,7 +185,7 @@ export default function P6ElectricCircuitKeySummary() {
 
   return (
     <div
-      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-3 text-slate-900 md:px-8"
+      className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-3 text-slate-900 md:px-10 md:pb-32 md:pt-15"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <div
@@ -271,7 +271,7 @@ export default function P6ElectricCircuitKeySummary() {
         </button>
         <button
           className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
-          onClick={() => navigate("/p6/electric-circuit/experiments")}
+          onClick={() => navigate("/p6")}
           type="button"
           aria-label={t.next}
           title={t.next}

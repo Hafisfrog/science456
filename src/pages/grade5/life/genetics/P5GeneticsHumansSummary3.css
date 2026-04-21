@@ -82,6 +82,10 @@
   min-width: 0;
 }
 
+.p5ghs3-left {
+  margin-top: 44px;
+}
+
 .p5ghs3-left h2,
 .p5ghs3-right h2 {
   margin: 0;
@@ -515,6 +519,10 @@
     gap: 14px;
   }
 
+  .p5ghs3-left {
+    margin-top: 36px;
+  }
+
   .p5ghs3-left h2,
   .p5ghs3-right h2 {
     font-size: 21px;
@@ -616,6 +624,10 @@
 
   .p5ghs3-layout {
     grid-template-columns: 1fr;
+  }
+
+  .p5ghs3-left {
+    margin-top: 0;
   }
 
   .p5ghs3-family {
