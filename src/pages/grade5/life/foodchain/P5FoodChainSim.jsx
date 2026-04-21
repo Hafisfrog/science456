@@ -127,12 +127,6 @@ export default function P5FoodChainSim() {
   const studentChains = location.state?.chains || [];
   const lockedSlotSet = new Set(location.state?.lockedSlots || []);
   const hasLockedSlots = lockedSlotSet.size > 0;
-  const averageScoreLabel =
-    language === "en"
-      ? "Average per Chain"
-      : language === "ms"
-        ? "Purata Setiap Rantai"
-        : "\u0e04\u0e30\u0e41\u0e19\u0e19\u0e40\u0e09\u0e25\u0e35\u0e48\u0e22\u0e23\u0e27\u0e21";
   const rowScoreLabel =
     language === "en" ? "Score" : language === "ms" ? "Markah" : "คะแนน";
   const totalPossibleScore = ANSWERS.length * SCORE_PER_ROW;
@@ -140,7 +134,6 @@ export default function P5FoodChainSim() {
     getRowScore(answer, studentChains[index] || [], index, lockedSlotSet, hasLockedSlots)
   );
   const score = rowScores.reduce((total, rowScore) => total + rowScore, 0);
-  const averageScore = ANSWERS.length > 0 ? score / ANSWERS.length : 0;
   const getQuestionLabel = (index) =>
     language === "th" ? `ข้อที่ ${index + 1}` : `${ui.chain} ${index + 1}`;
   const getStudentAnswerLabel = (index) =>
@@ -184,19 +177,10 @@ export default function P5FoodChainSim() {
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 pb-28 pt-8 sm:px-6 sm:pt-10 lg:px-8">
         <div className="rounded-[32px] border border-emerald-50/80 bg-gradient-to-br from-white/62 via-emerald-50/52 to-lime-50/58 p-5 shadow-[0_22px_60px_rgba(15,23,42,0.14)] backdrop-blur-md sm:p-7">
-          <div className="grid gap-4 md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center md:gap-6">
+          <div className="grid gap-4 md:grid-cols-[auto_minmax(0,1fr)] md:items-center md:gap-6">
             <div className="md:justify-self-start">
               <div className="inline-flex items-center rounded-[28px] bg-gradient-to-r from-emerald-500 to-green-600 px-8 py-4 text-2xl font-extrabold text-white shadow-xl sm:text-3xl">
                 {"\uD83C\uDF1F"} {ui.title} {"\uD83C\uDF1F"}
-              </div>
-            </div>
-
-            <div className="md:justify-self-center">
-              <div className="rounded-[24px] border border-sky-200/80 bg-gradient-to-br from-white/80 to-sky-50/70 px-7 py-4 text-center shadow-sm backdrop-blur-sm">
-                <div className="text-sm font-semibold text-sky-700">{averageScoreLabel}</div>
-                <span className="mt-1 block text-2xl font-black text-sky-800 sm:text-3xl">
-                  {averageScore.toFixed(1)}
-                </span>
               </div>
             </div>
 
