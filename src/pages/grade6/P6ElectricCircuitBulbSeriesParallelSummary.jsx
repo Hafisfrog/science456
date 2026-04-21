@@ -17,8 +17,6 @@ const DEVICE_MEDIA = {
 
 const TEXT = {
   th: {
-    badge: "ไฟฟ้ารอบตัวคุณ",
-    title: "จำลองการต่อหลอดไฟแบบอนุกรมและขนาน",
     heading: "ผลการทดลอง",
     table: {
       circuit: "รูปแบบวงจร",
@@ -37,8 +35,6 @@ const TEXT = {
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
-    badge: "Electricity Around You",
-    title: "Series and Parallel Bulb Simulation",
     heading: "Experiment Results",
     table: {
       circuit: "Circuit Type",
@@ -57,8 +53,6 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    badge: "Elektrik di sekeliling kita",
-    title: "Simulasi Mentol Siri dan Selari",
     heading: "Hasil Eksperimen",
     table: {
       circuit: "Jenis Litar",
@@ -80,7 +74,7 @@ const TEXT = {
 
 const LANGS = [
   { id: "th", label: "ไทย" },
-   { id: "ms", label: "มลายู" },
+  { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
 ];
 
@@ -99,9 +93,13 @@ function EquipmentImage({ src, fallbackSrc, alt, className = "" }) {
   );
 }
 
-function BulbNode({ isOn }) {
+function BulbNode({ isOn, clickable = false }) {
   return (
-    <div className={`p6-circuit-bsp-sim-bulb-node ${!isOn ? "is-removed" : ""}`}>
+    <button
+      type="button"
+      className={`p6-circuit-bsp-sim-bulb-node ${clickable ? "is-clickable" : ""} ${!isOn ? "is-removed" : ""}`}
+      disabled={!clickable}
+    >
       {isOn && <span className="p6-circuit-bsp-sim-bulb-glow" />}
       <EquipmentImage
         src={DEVICE_MEDIA.bulb.image}
@@ -109,7 +107,7 @@ function BulbNode({ isOn }) {
         alt="bulb"
         className="p6-circuit-bsp-sim-bulb-img"
       />
-    </div>
+    </button>
   );
 }
 
@@ -117,16 +115,16 @@ function CablePath({ d, color = "black" }) {
   const isRed = color === "red";
   return (
     <>
-      <path d={d} fill="none" stroke="rgba(2,6,23,0.2)" strokeWidth={7.8} strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke="#020617" strokeWidth={5.8} strokeLinecap="round" strokeLinejoin="round" />
-      <path d={d} fill="none" stroke={isRed ? "#ff3b2a" : "#0b1020"} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={d} fill="none" stroke="rgba(2,6,23,0.2)" strokeWidth={7.8} strokeLinecap="square" strokeLinejoin="miter" />
+      <path d={d} fill="none" stroke="#020617" strokeWidth={5.8} strokeLinecap="square" strokeLinejoin="miter" />
+      <path d={d} fill="none" stroke={isRed ? "#ff3b2a" : "#0b1020"} strokeWidth={4} strokeLinecap="square" strokeLinejoin="miter" />
       <path
         d={d}
         fill="none"
         stroke={isRed ? "rgba(255, 208, 196, 0.78)" : "rgba(148, 163, 184, 0.62)"}
         strokeWidth={0.72}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
       />
     </>
   );
@@ -146,20 +144,19 @@ function ClipHead({ x, y, rotate = 0, color = "black" }) {
 }
 
 function SeriesCircuit({ removed }) {
-  const bulb1On = !removed;
-  const bulb2On = !removed;
+  const bulbOn = !removed;
   return (
     <div className="p6-circuit-bsp-sim-board p6-circuit-bsp-summary-board is-preview" aria-label="Series circuit">
       <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-hidden="true">
-        <CablePath d="M136 48 C78 58 42 108 52 142 C62 171 98 174 124 154" color="black" />
-        <CablePath d="M246 156 C282 184 322 181 334 144 C344 106 302 60 224 48" color="red" />
-        <CablePath d="M140 156 C166 182 194 182 220 159" color="black" />
-        <ClipHead x={136} y={49} rotate={20} color="black" />
-        <ClipHead x={123} y={154} rotate={-38} color="black" />
-        <ClipHead x={243} y={156} rotate={198} color="red" />
-        <ClipHead x={224} y={49} rotate={160} color="red" />
-        <ClipHead x={140} y={156} rotate={-132} color="black" />
-        <ClipHead x={220} y={159} rotate={-48} color="black" />
+        <CablePath d="M136 48 L52 48 L52 154 L123 154" color="black" />
+        <CablePath d="M224 48 L334 48 L334 156 L243 156" color="red" />
+        <CablePath d="M140 156 L220 156" color="black" />
+        <ClipHead x={136} y={48} rotate={8} color="black" />
+        <ClipHead x={123} y={154} rotate={-74} color="black" />
+        <ClipHead x={243} y={156} rotate={-112} color="red" />
+        <ClipHead x={224} y={48} rotate={172} color="red" />
+        <ClipHead x={140} y={156} rotate={-106} color="black" />
+        <ClipHead x={220} y={156} rotate={-68} color="black" />
       </svg>
 
       <div className="p6-circuit-bsp-sim-battery p6-circuit-bsp-sim-battery-left">
@@ -180,11 +177,13 @@ function SeriesCircuit({ removed }) {
       </div>
 
       <div className="p6-circuit-bsp-sim-bulb-a p6-circuit-bsp-sim-bulb-s1">
-        <BulbNode isOn={bulb1On} />
+        <BulbNode isOn={bulbOn} />
       </div>
       <div className="p6-circuit-bsp-sim-bulb-b p6-circuit-bsp-sim-bulb-s2">
-        <BulbNode isOn={bulb2On} />
+        <BulbNode isOn={bulbOn} />
       </div>
+      <div className="p6-circuit-bsp-sim-label p6-circuit-bsp-sim-label-a">A</div>
+      <div className="p6-circuit-bsp-sim-label p6-circuit-bsp-sim-label-b">B</div>
     </div>
   );
 }
@@ -195,16 +194,16 @@ function ParallelCircuit({ removed }) {
   return (
     <div className="p6-circuit-bsp-sim-board p6-circuit-bsp-summary-board is-parallel-layout is-preview" aria-label="Parallel circuit">
       <svg className="p6-circuit-bsp-sim-svg" viewBox="0 0 360 190" aria-hidden="true">
-        <CablePath d="M132 44 C102 60 98 92 126 110 C142 120 154 123 166 126" color="red" />
-        <CablePath d="M166 126 C140 136 130 158 146 172 C154 178 162 180 170 176" color="red" />
-        <CablePath d="M228 44 C258 60 262 92 234 110 C218 120 206 123 194 126" color="black" />
-        <CablePath d="M194 126 C220 136 230 158 214 172 C206 178 198 180 190 176" color="black" />
-        <ClipHead x={132} y={44} rotate={-2} color="red" />
-        <ClipHead x={228} y={44} rotate={182} color="black" />
-        <ClipHead x={166} y={126} rotate={-22} color="red" />
-        <ClipHead x={194} y={126} rotate={202} color="black" />
-        <ClipHead x={170} y={176} rotate={-14} color="red" />
-        <ClipHead x={190} y={176} rotate={194} color="black" />
+        <CablePath d="M132 44 L120 44 L120 126 L166 126" color="red" />
+        <CablePath d="M120 126 L120 176 L170 176" color="red" />
+        <CablePath d="M228 44 L240 44 L240 126 L194 126" color="black" />
+        <CablePath d="M240 126 L240 176 L190 176" color="black" />
+        <ClipHead x={132} y={44} rotate={12} color="red" />
+        <ClipHead x={228} y={44} rotate={168} color="black" />
+        <ClipHead x={166} y={126} rotate={0} color="red" />
+        <ClipHead x={194} y={126} rotate={180} color="black" />
+        <ClipHead x={170} y={176} rotate={0} color="red" />
+        <ClipHead x={190} y={176} rotate={180} color="black" />
       </svg>
       <div className="p6-circuit-bsp-sim-battery p6-circuit-bsp-sim-battery-p p6-circuit-bsp-sim-battery-p-left">
         <EquipmentImage

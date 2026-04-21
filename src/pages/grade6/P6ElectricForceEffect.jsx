@@ -6,7 +6,7 @@ const LANG = {
     title: "การทดลองที่ 2 เรื่อง ผลของแรงไฟฟ้า",
     equipment: "วัสดุอุปกรณ์",
     balloons: "ลูกโป่งที่เป่าให้พอง 2 ลูก",
-    markers: "ปากกาเมจิก 2 ด้าม",
+    markers: "ปากกาเมจิก\n2 ด้าม",
     tissue: "กระดาษเยื่อ",
     back: "ย้อนกลับ",
     next: "ต่อไป",
@@ -86,7 +86,7 @@ function EquipmentCard({ item, label, lang }) {
       </div>
 
       <div className="mt-3 flex items-center justify-center gap-2">
-        <p className="text-center text-[clamp(18px,2.2vw,30px)] font-bold text-slate-900">{label}</p>
+        <p className="whitespace-pre-line text-center text-[clamp(18px,2.2vw,30px)] font-bold text-slate-900">{label}</p>
 
         <button
           onClick={() => speakText(label, lang)}

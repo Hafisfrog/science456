@@ -155,7 +155,6 @@ export default function P5GeneticsSelect() {
     <div className="p5gen-page notranslate" translate="no">
       <main className="p5gen-main">
         <div className="p5gen-heading">
-          <div className="p5gen-chip notranslate" translate="no">Science Lab</div>
           <h1 className="notranslate" translate="no">{t.title}</h1>
           <p className="notranslate" translate="no">{t.chip}</p>
         </div>

@@ -156,6 +156,25 @@
   }
 }
 
+/* Final next-button lock: keep Plants pages aligned with Food Chain green. */
+.p5gp-next,
+.p5gps-next-btn {
+  background: #08c95a !important;
+  color: #ffffff !important;
+  box-shadow: 0 22px 46px rgba(8, 201, 90, 0.24) !important;
+}
+
+.p5gp-next:hover,
+.p5gps-next-btn:hover {
+  background: #07b351 !important;
+  box-shadow: 0 28px 56px rgba(8, 201, 90, 0.3) !important;
+}
+
+.p5gp-next:active,
+.p5gps-next-btn:active {
+  box-shadow: 0 10px 22px rgba(8, 201, 90, 0.22) !important;
+}
+
 /* Final nav lock for Plants page: match Humans page exactly. */
 .p5gp-back,
 .p5gp-next {

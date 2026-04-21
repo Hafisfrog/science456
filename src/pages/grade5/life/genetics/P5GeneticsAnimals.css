@@ -544,21 +544,36 @@
 
 .p5ga-next {
   padding: 14px 18px;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  box-shadow: 0 22px 46px rgba(0, 0, 0, 0.22);
+  background: #08c95a;
+  box-shadow: 0 22px 46px rgba(8, 201, 90, 0.24);
   color: #fff;
 }
 
 .p5ga-back:hover,
 .p5ga-next:hover {
   transform: translateY(-2px);
+}
+
+.p5ga-back:hover {
   box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26);
+}
+
+.p5ga-next:hover {
+  background: #07b351;
+  box-shadow: 0 28px 56px rgba(8, 201, 90, 0.3);
 }
 
 .p5ga-back:active,
 .p5ga-next:active {
   transform: translateY(1px);
+}
+
+.p5ga-back:active {
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+.p5ga-next:active {
+  box-shadow: 0 10px 22px rgba(8, 201, 90, 0.22);
 }
 
 .p5ga-back:focus-visible,

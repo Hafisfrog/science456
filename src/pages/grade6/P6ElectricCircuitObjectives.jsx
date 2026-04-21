@@ -76,7 +76,7 @@ export default function P6ElectricCircuitObjectives() {
           <h1 className="text-4xl font-extrabold text-blue-600 md:text-[72px]">{t.title}</h1>
         </div>
 
-        <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
+        <section className="mx-auto mt-0 flex w-full flex-1 items-start justify-center pt-1">
           <div className="w-full max-w-[1120px] rounded-[32px] bg-white/90 p-5 shadow-lg">
             <div className="mb-4 inline-flex rounded-2xl bg-blue-600 px-5 py-3 text-2xl font-extrabold text-white shadow">
               {t.section}

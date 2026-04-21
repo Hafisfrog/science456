@@ -33,8 +33,8 @@ const LANG = {
 
 const EQUIPMENT_ITEMS = [
   { id: "balloon", image: "/images/p6/equipment/lukpong-cut.png" },
-  { id: "cloth", image: "/images/p6/equipment/pahang-cut.png" },
-  { id: "paper", image: "/images/p6/equipment/paper-bits-real.svg" },
+  { id: "cloth", image: "/images/p6/pahang.png" },
+  { id: "paper", image: "/images/p6/sedkradad.png" },
 ];
 
 function speakText(text, lang) {

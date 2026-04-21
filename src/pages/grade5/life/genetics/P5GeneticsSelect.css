@@ -83,20 +83,6 @@
   text-align: center;
 }
 
-.p5gen-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 8px 24px;
-  border-radius: 999px;
-  background: #dbe9ff;
-  color: #2d69c7;
-  font-size: clamp(24px, 1.45vw, 34px);
-  font-weight: 800;
-  line-height: 1;
-}
-
 .p5gen-heading h1 {
   margin: 0;
   color: #2d69c7;

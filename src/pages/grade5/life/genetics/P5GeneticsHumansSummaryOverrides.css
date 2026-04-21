@@ -1020,3 +1020,31 @@
     line-height: 27px !important;
   }
 }
+
+/* Final green lock for the requested Humans pages. */
+.p5gh-next,
+.p5gh-next-btn,
+.p5ghs-next-btn,
+.p5ghs2-next-btn,
+.p5ghs3-next-btn {
+  background: #08c95a !important;
+  color: #ffffff !important;
+  box-shadow: 0 22px 46px rgba(8, 201, 90, 0.24) !important;
+}
+
+.p5gh-next:hover,
+.p5gh-next-btn:hover,
+.p5ghs-next-btn:hover,
+.p5ghs2-next-btn:hover,
+.p5ghs3-next-btn:hover {
+  background: #07b351 !important;
+  box-shadow: 0 28px 56px rgba(8, 201, 90, 0.3) !important;
+}
+
+.p5gh-next:active,
+.p5gh-next-btn:active,
+.p5ghs-next-btn:active,
+.p5ghs2-next-btn:active,
+.p5ghs3-next-btn:active {
+  box-shadow: 0 10px 22px rgba(8, 201, 90, 0.22) !important;
+}

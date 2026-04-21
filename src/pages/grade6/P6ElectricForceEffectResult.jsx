@@ -1,15 +1,15 @@
-import { useMemo, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+﻿import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-   { id: "ms", label: "มลายู" },
+  { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
 ];
 
 const TEXT = {
   th: {
-    title: "การแสดงผลการทดลอง",
+    title: "ผลการทดลอง",
     headers: ["วัสดุ", "ขัดถูด้วยกระดาษเยื่อทั้ง 2", "ขัดถูด้วยกระดาษเยื่อแค่ 1"],
     rows: [
       { label: "ลูกโป่ง", both: "ผลักกัน", one: "ดึงดูดกัน" },
@@ -43,47 +43,10 @@ const TEXT = {
   },
 };
 
-const MERGED_SUMMARY = {
-  th: {
-    title: "สรุปผลการทดลอง",
-    items: [
-      "เมื่อขัดถูวัตถุทั้ง 2 ชิ้นด้วยกระดาษเยื่อ จะมีประจุชนิดเดียวกัน จึงเกิดแรงผลักกัน",
-      "เมื่อขัดถูเพียง 1 ชิ้น อีกชิ้นไม่ได้ขัดถู จะเกิดการเหนี่ยวนำประจุ จึงเกิดแรงดึงดูดกัน",
-    ],
-    time: "เวลาการถู",
-  },
-  en: {
-    title: "Experiment Summary",
-    items: [
-      "When both objects are rubbed with tissue paper, they get the same type of charge, so they repel each other.",
-      "When only one object is rubbed, charge induction occurs, so they attract each other.",
-    ],
-    time: "Rubbing time",
-  },
-  ms: {
-    title: "Ringkasan Eksperimen",
-    items: [
-      "Apabila kedua-dua objek digosok dengan kertas tisu, kedua-duanya mendapat cas yang sama lalu saling menolak.",
-      "Apabila hanya satu objek digosok, aruhan cas berlaku lalu objek saling menarik.",
-    ],
-    time: "Masa menggosok",
-  },
-};
-
-const formatTime = (totalSeconds) => {
-  const safe = Number.isFinite(totalSeconds) && totalSeconds >= 0 ? totalSeconds : 0;
-  const minutes = Math.floor(safe / 60);
-  const seconds = Math.floor(safe % 60);
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
-};
-
 export default function P6ElectricForceEffectResult() {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const timeParam = Number(searchParams.get("time") || 0);
   const [language, setLanguage] = useState("th");
   const t = useMemo(() => TEXT[language] ?? TEXT.th, [language]);
-  const mergedSummary = useMemo(() => MERGED_SUMMARY[language] ?? MERGED_SUMMARY.th, [language]);
 
   const pageBg = {
     background:
@@ -95,46 +58,39 @@ export default function P6ElectricForceEffectResult() {
       className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-28 pt-3 text-slate-900 md:px-8 md:pb-32"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
-      <div className="relative z-[1] mx-auto w-full max-w-[1280px]">
-        <div className="inline-flex items-center rounded-[12px] bg-blue-600 px-4 py-1.5 text-[clamp(22px,2.4vw,34px)] font-black text-white shadow-[0_10px_18px_rgba(37,99,235,0.35)]">
-          {mergedSummary.title}
-        </div>
-
-        <div className="mt-6 overflow-hidden rounded-[20px] border-2 border-white/80 bg-white/85 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
-          <div className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-[#ffe7a3] text-center text-[clamp(15px,1.6vw,18px)] font-black">
-            {t.headers.map((head) => (
-              <div key={head} className="border-r-2 border-slate-900 px-3 py-4 last:border-r-0">
-                {head}
+      <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr] gap-2">
+        <div className="relative rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+          <h1 className="mb-3 ml-1 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">
+            {t.title}
+          </h1>
+          <div className="rounded-[24px] border-2 border-slate-700 bg-[#e5e7eb] p-[6px]">
+            <div className="overflow-hidden rounded-[16px] border-2 border-slate-600">
+              <div className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-[#d7dbe0] text-center text-[clamp(15px,1.6vw,18px)] font-black">
+                {t.headers.map((head) => (
+                  <div key={head} className="border-r-2 border-slate-600 px-3 py-5 last:border-r-0">
+                    {head}
+                  </div>
+                ))}
               </div>
-            ))}
+
+              {t.rows.map((row) => (
+                <div
+                  key={row.label}
+                  className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-[#d7dbe0] text-center text-[clamp(15px,1.6vw,18px)] font-bold"
+                >
+                  <div className="flex items-center justify-center border-r-2 border-t-2 border-slate-600 px-3 py-10">
+                    {row.label}
+                  </div>
+                  <div className="flex items-center justify-center border-r-2 border-t-2 border-slate-600 px-3 py-10">
+                    {row.both}
+                  </div>
+                  <div className="flex items-center justify-center border-t-2 border-slate-600 px-3 py-10">
+                    {row.one}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-
-          {t.rows.map((row) => (
-            <div
-              key={row.label}
-              className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-white/70 text-center text-[clamp(15px,1.6vw,18px)] font-bold"
-            >
-              <div className="border-r-2 border-t-2 border-slate-900 px-3 py-5">{row.label}</div>
-              <div className="border-r-2 border-t-2 border-slate-900 px-3 py-5">{row.both}</div>
-              <div className="border-t-2 border-slate-900 px-3 py-5">{row.one}</div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-5 w-full max-w-[980px] rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
-          <ol className="mb-0 mt-0 grid gap-[14px] pl-[22px]">
-            {mergedSummary.items.map((item, idx) => (
-              <li key={`${idx}-${item}`} className="text-[clamp(16px,1.8vw,18px)] font-bold leading-[1.6]">
-                {item}
-              </li>
-            ))}
-          </ol>
-
-          {timeParam > 0 && (
-            <div className="mt-[16px] inline-flex items-center gap-2.5 rounded-full border-2 border-slate-900/15 bg-white/70 px-[14px] py-2.5 text-base font-black shadow-[0_18px_26px_rgba(17,24,39,0.12)]">
-              {mergedSummary.time}: {formatTime(timeParam)}
-            </div>
-          )}
         </div>
       </div>
 
@@ -180,3 +136,4 @@ export default function P6ElectricForceEffectResult() {
     </div>
   );
 }
+

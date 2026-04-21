@@ -226,7 +226,7 @@ export default function P6ElectricCircuitKeySummary() {
                   {t.table.rows.map((row, idx) => (
                     <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-[#f8fbff]"}>
                       {row.map((cell, i) => (
-                        <td key={i} className="border border-slate-900 px-3 py-2 text-center align-top">
+                        <td key={i} className="border border-slate-900 px-3 py-2 text-left align-top">
                           {cell}
                         </td>
                       ))}

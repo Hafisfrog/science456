@@ -118,7 +118,6 @@
   color: #0f172a !important;
 }
 
-.p5ga-next,
 .p5gen-nav-next,
 .p5gp-next,
 .p5gh-next,
@@ -131,8 +130,20 @@
   color: #ffffff !important;
 }
 
+.p5ga-next {
+  background: #08c95a !important;
+  color: #ffffff !important;
+  box-shadow: 0 22px 46px rgba(8, 201, 90, 0.24) !important;
+}
+
+.p5gp-next,
+.p5gps-next-btn {
+  background: #08c95a !important;
+  color: #ffffff !important;
+  box-shadow: 0 22px 46px rgba(8, 201, 90, 0.24) !important;
+}
+
 .p5ga-back:hover,
-.p5ga-next:hover,
 .p5gen-nav-back:hover,
 .p5gen-nav-next:hover,
 .p5gp-back:hover,
@@ -151,6 +162,24 @@
 .p5gps-next-btn:hover {
   transform: translateY(-2px) !important;
   box-shadow: 0 28px 56px rgba(0, 0, 0, 0.26) !important;
+}
+
+.p5ga-next:hover {
+  transform: translateY(-2px) !important;
+  background: #07b351 !important;
+  box-shadow: 0 28px 56px rgba(8, 201, 90, 0.3) !important;
+}
+
+.p5gp-next:hover,
+.p5gps-next-btn:hover {
+  transform: translateY(-2px) !important;
+  background: #07b351 !important;
+  box-shadow: 0 28px 56px rgba(8, 201, 90, 0.3) !important;
+}
+
+.p5gp-next:active,
+.p5gps-next-btn:active {
+  box-shadow: 0 10px 22px rgba(8, 201, 90, 0.22) !important;
 }
 
 .p5ga-back:active,
