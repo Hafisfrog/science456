@@ -286,24 +286,11 @@ export default function P6ElectricCircuitResultOverview() {
                             <button
                               type="button"
                               onClick={() => speak(t.rowVoice[idx], lang)}
-                              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-slate-900/35 bg-white/90 text-[20px] leading-none text-slate-800 shadow-[0_6px_12px_rgba(17,24,39,0.12)] transition hover:-translate-y-0.5"
+                              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
                               aria-label={t.listen}
                               title={t.listen}
                             >
-                              <svg
-                                aria-hidden="true"
-                                viewBox="0 0 24 24"
-                                className="h-5 w-5"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2.2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              >
-                                <path d="M11 5L6 9H3v6h3l5 4V5z" />
-                                <path d="M15 9.5a4 4 0 010 5" />
-                                <path d="M17.8 7a7.5 7.5 0 010 10" />
-                              </svg>
+                              {"\uD83D\uDD0A"}
                             </button>
                           </div>
                         </td>

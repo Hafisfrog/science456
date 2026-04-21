@@ -251,7 +251,7 @@ export default function P6ElectricCircuitResults() {
                 onClick={() => speakText(t.summary, lang)}
                 aria-label={t.listen}
                 title={t.listen}
-                className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white text-[22px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
               >
                 🔊
               </button>

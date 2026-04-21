@@ -76,16 +76,6 @@ function speakText(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
-function SpeakerIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" className="h-5 w-5">
-      <path d="M4 9H8L13 5V19L8 15H4V9Z" fill="currentColor" />
-      <path d="M16 9C17.3 10.1 17.3 13.9 16 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      <path d="M18.5 7C20.8 9.2 20.8 14.8 18.5 17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 function StepPill({ no, text, onSpeak, children }) {
   return (
     <div className="group flex w-full items-center gap-4 rounded-full border-2 border-black bg-white px-5 py-3 shadow-[0_10px_18px_rgba(0,0,0,0.14)]">
@@ -99,11 +89,11 @@ function StepPill({ no, text, onSpeak, children }) {
       <button
         type="button"
         onClick={onSpeak}
-        className="ml-auto inline-grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-orange-100 text-orange-700 shadow-[0_8px_16px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5"
+        className="ml-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
         aria-label="ฟังขั้นตอน"
         title="ฟังขั้นตอน"
       >
-        <SpeakerIcon />
+        {"\uD83D\uDD0A"}
       </button>
     </div>
   );

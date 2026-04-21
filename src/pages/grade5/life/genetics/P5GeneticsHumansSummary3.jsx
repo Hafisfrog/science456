@@ -390,7 +390,7 @@ export default function P5GeneticsHumansSummary3() {
             <button type="button" className="p5ghs3-back p5ghs3-back-btn" onClick={() => navigate("/p5/life/genetics/humans/summary-2")}>
               {backLabel}
             </button>
-            <button type="button" className="p5ghs3-next p5ghs3-next-btn" onClick={() => navigate("/p5/life/genetics")}>
+            <button type="button" className="p5ghs3-next p5ghs3-next-btn" onClick={() => navigate("/p5/life")}>
               {nextLabel}
             </button>
           </div>

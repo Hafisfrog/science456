@@ -43,10 +43,37 @@ const TEXT = {
   },
 };
 
+const LISTEN_LABELS = {
+  th: "ฟังสรุป",
+  en: "Listen",
+  ms: "Dengar ringkasan",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang;
+  utter.rate = 0.92;
+  const voices = synth.getVoices();
+  const voice =
+    voices.find((v) => v.lang === lang) ||
+    voices.find((v) => v.lang.startsWith(lang.split("-")[0]));
+  if (voice) utter.voice = voice;
+  synth.speak(utter);
+}
+
 export default function P6ElectricGenerationKeySummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const listenLabel = LISTEN_LABELS[lang] ?? LISTEN_LABELS.th;
+  const langMap = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+  const speakSummary = () => {
+    const content = [t.title, ...t.summaryLines].join(". ");
+    speakText(content, langMap[lang] || "th-TH");
+  };
   const langLabels = { th: "ไทย", ms: "มลายู",en: "อังกฤษ" };
 
   return (
@@ -60,7 +87,18 @@ export default function P6ElectricGenerationKeySummary() {
     >
       <div className="relative z-[1] mx-auto flex w-full max-w-[1200px] flex-col gap-4">
         <div className="relative overflow-hidden rounded-[26px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(22px,3vw,34px)] shadow-[0_18px_30px_rgba(17,24,39,0.14)]">
-          <h1 className="m-0 text-[clamp(28px,3.2vw,40px)] font-black text-slate-900">{t.title}</h1>
+          <div className="flex items-start justify-between gap-3">
+            <h1 className="m-0 text-[clamp(28px,3.2vw,40px)] font-black text-slate-900">{t.title}</h1>
+            <button
+              type="button"
+              onClick={speakSummary}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+              aria-label={listenLabel}
+              title={listenLabel}
+            >
+              {"\uD83D\uDD0A"}
+            </button>
+          </div>
 
           <div className="mt-4 grid gap-4 text-[clamp(16px,1.6vw,18px)] font-semibold leading-[1.7] text-slate-900">
             {t.summaryLines.map((line, idx) => (

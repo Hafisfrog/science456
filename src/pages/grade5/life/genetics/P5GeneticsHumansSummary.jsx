@@ -9,21 +9,39 @@ const TEXT = {
     title: "สรุปผลการทดลอง",
     summary:
       "จากภาพการทดลอง พบว่า\nลักษณะของคนแบ่งออกได้เป็น 2 ประเภท คือ\n1. ลักษณะทางพันธุกรรม\n2. ลักษณะที่เกิดจากการเรียนรู้หรือความชอบส่วนตัว",
+    listen: "ฟังสรุป",
     back: "<< ย้อนกลับ",
   },
   en: {
     title: "Experiment Summary",
     summary:
       "From the experiment, human traits can be grouped into 2 types:\n1. Inherited traits\n2. Traits formed by learning or personal preference",
+    listen: "Listen",
     back: "<< Back",
   },
   ms: {
     title: "Rumusan Eksperimen",
     summary:
       "Daripada eksperimen, ciri manusia boleh dibahagikan kepada 2 jenis:\n1. Ciri warisan\n2. Ciri yang terbentuk melalui pembelajaran atau minat peribadi",
+    listen: "Dengar rumusan",
     back: "<< Kembali",
   },
 };
+
+const LANG_TO_VOICE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = LANG_TO_VOICE[lang] || "th-TH";
+  synth.speak(utterance);
+}
 
 export default function P5GeneticsHumansSummary() {
   const navigate = useNavigate();
@@ -32,6 +50,7 @@ export default function P5GeneticsHumansSummary() {
   const t = TEXT[lang];
   const backLabel = "« ย้อนกลับ";
   const nextLabel = "ต่อไป »";
+  const speakSummary = () => speakText(t.summary, lang);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -55,6 +74,15 @@ export default function P5GeneticsHumansSummary() {
           <h1 className="mb-5 text-4xl font-extrabold tracking-tight text-slate-900 notranslate" translate="no">{t.title}</h1>
 
           <div className="relative rounded-[30px] border border-emerald-400/90 bg-[linear-gradient(180deg,rgba(187,247,208,0.98)_0%,rgba(220,252,231,0.97)_34%,rgba(255,255,255,0.98)_70%,rgba(255,255,255,0.98)_100%)] px-7 pb-7 pt-6 shadow-[0_22px_40px_rgba(21,128,61,0.22)] backdrop-blur-sm max-[1180px]:px-5 max-[1180px]:pb-5 max-[1180px]:pt-5">
+            <button
+              type="button"
+              className="absolute right-4 top-4 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full border-none bg-[#eff6ff] text-[22px] leading-none text-[#1d4ed8] shadow-[0_8px_16px_rgba(37,99,235,0.18)] transition hover:-translate-y-[1px] hover:bg-[#dbeafe] hover:shadow-[0_10px_18px_rgba(37,99,235,0.22)]"
+              aria-label={t.listen}
+              title={t.listen}
+              onClick={speakSummary}
+            >
+              {"\uD83D\uDD0A"}
+            </button>
             <p className="whitespace-pre-line text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl notranslate" translate="no">
               {t.summary}
             </p>

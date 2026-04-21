@@ -133,12 +133,13 @@ export default function P6ElectricGenerationConclusionQuestion() {
             <div className="ans2-cardTop">
               <div className="ans2-q">{t.question}</div>
               <button
-                className="ans2-miniSpeak"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
                 type="button"
                 onClick={() => speakText(t.question, speechLang)}
+                aria-label={t.speak}
                 title={t.speak}
               >
-                🔊
+                {"\uD83D\uDD0A"}
               </button>
             </div>
 
@@ -151,12 +152,13 @@ export default function P6ElectricGenerationConclusionQuestion() {
             {showAnswer ? (
               <div className="ans2-a !bg-[linear-gradient(180deg,#fff7ed,#ffffff)] !text-[#dc2626]">
                 <button
-                  className="ans2-answerSpeak"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
                   type="button"
                   onClick={() => speakText(t.answer.join(" "), speechLang)}
+                  aria-label={t.speak}
                   title={t.speak}
                 >
-                  🔊
+                  {"\uD83D\uDD0A"}
                 </button>
                 {t.answer.map((line, idx) => (
                   <p key={idx} className="m-0">
@@ -198,5 +200,4 @@ export default function P6ElectricGenerationConclusionQuestion() {
     </div>
   );
 }
-
 

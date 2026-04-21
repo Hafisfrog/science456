@@ -14,6 +14,7 @@ const TEXT = {
     learnedTitle: "ลักษณะที่เกิดจากการเรียนรู้",
     learnedDesc: "เป็นลักษณะที่ไม่ได้ถ่ายทอดทางพันธุกรรม แต่เกิดจากการฝึกฝนหรือความชอบ เช่น",
     learnedItems: ["ชอบวาดรูป", "ชอบเล่นดนตรี", "ชอบเล่นกีฬา", "ชอบสีเขียว"],
+    listen: "ฟังสรุป",
   },
   en: {
     title: "Experiment Summary",
@@ -24,6 +25,7 @@ const TEXT = {
     learnedTitle: "Traits From Learning",
     learnedDesc: "These are traits not inherited genetically, but formed through practice or preference, such as:",
     learnedItems: ["Likes drawing", "Likes music", "Likes sports", "Likes green"],
+    listen: "Listen",
   },
   ms: {
     title: "Rumusan Eksperimen",
@@ -34,8 +36,24 @@ const TEXT = {
     learnedTitle: "Ciri Daripada Pembelajaran",
     learnedDesc: "Ciri ini tidak diwarisi secara genetik tetapi terbentuk melalui latihan atau minat, contohnya:",
     learnedItems: ["Suka melukis", "Suka muzik", "Suka bersukan", "Suka warna hijau"],
+    listen: "Dengar rumusan",
   },
 };
+
+const LANG_TO_VOICE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = LANG_TO_VOICE[lang] || "th-TH";
+  synth.speak(utterance);
+}
 
 export default function P5GeneticsHumansSummary2() {
   const navigate = useNavigate();
@@ -44,6 +62,10 @@ export default function P5GeneticsHumansSummary2() {
   const t = TEXT[lang];
   const backLabel = "« ย้อนกลับ";
   const nextLabel = "ต่อไป »";
+  const speakInherited = () =>
+    speakText([t.inheritedTitle, t.inheritedDesc, ...t.inheritedItems].join(". "), lang);
+  const speakLearned = () =>
+    speakText([t.learnedTitle, t.learnedDesc, ...t.learnedItems].join(". "), lang);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -68,6 +90,15 @@ export default function P5GeneticsHumansSummary2() {
 
           <section className="grid grid-cols-2 gap-6 max-[1180px]:grid-cols-1">
             <article className="relative rounded-[30px] border border-emerald-400/90 bg-[linear-gradient(180deg,rgba(187,247,208,0.98)_0%,rgba(220,252,231,0.97)_34%,rgba(255,255,255,0.98)_70%,rgba(255,255,255,0.98)_100%)] px-7 pb-6 pt-5 shadow-[0_22px_40px_rgba(21,128,61,0.22)] backdrop-blur-sm max-[1180px]:px-5 max-[1180px]:pb-5 max-[1180px]:pt-5">
+              <button
+                type="button"
+                className="absolute right-4 top-4 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full border-none bg-[#eff6ff] text-[22px] leading-none text-[#1d4ed8] shadow-[0_8px_16px_rgba(37,99,235,0.18)] transition hover:-translate-y-[1px] hover:bg-[#dbeafe] hover:shadow-[0_10px_18px_rgba(37,99,235,0.22)]"
+                aria-label={t.listen}
+                title={t.listen}
+                onClick={speakInherited}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
               <h2 className="mb-2 text-center text-[34px] font-extrabold leading-[1.2] text-slate-900 max-[1180px]:text-[28px] notranslate" translate="no">{t.inheritedTitle}</h2>
               <p className="text-[24px] leading-relaxed text-slate-900 max-[1180px]:text-[20px] notranslate" translate="no">{t.inheritedDesc}</p>
               <ul className="mt-1 pl-6 text-[24px] leading-relaxed text-slate-900 max-[1180px]:text-[20px] notranslate" translate="no">
@@ -78,6 +109,15 @@ export default function P5GeneticsHumansSummary2() {
             </article>
 
             <article className="relative rounded-[30px] border border-emerald-400/90 bg-[linear-gradient(180deg,rgba(187,247,208,0.98)_0%,rgba(220,252,231,0.97)_34%,rgba(255,255,255,0.98)_70%,rgba(255,255,255,0.98)_100%)] px-7 pb-6 pt-5 shadow-[0_22px_40px_rgba(21,128,61,0.22)] backdrop-blur-sm max-[1180px]:px-5 max-[1180px]:pb-5 max-[1180px]:pt-5">
+              <button
+                type="button"
+                className="absolute right-4 top-4 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full border-none bg-[#eff6ff] text-[22px] leading-none text-[#1d4ed8] shadow-[0_8px_16px_rgba(37,99,235,0.18)] transition hover:-translate-y-[1px] hover:bg-[#dbeafe] hover:shadow-[0_10px_18px_rgba(37,99,235,0.22)]"
+                aria-label={t.listen}
+                title={t.listen}
+                onClick={speakLearned}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
               <h2 className="mb-2 text-center text-[34px] font-extrabold leading-[1.2] text-slate-900 max-[1180px]:text-[28px] notranslate" translate="no">{t.learnedTitle}</h2>
               <p className="text-[24px] leading-relaxed text-slate-900 max-[1180px]:text-[20px] notranslate" translate="no">{t.learnedDesc}</p>
               <ul className="mt-1 pl-6 text-[24px] leading-relaxed text-slate-900 max-[1180px]:text-[20px] notranslate" translate="no">

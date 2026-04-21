@@ -64,6 +64,27 @@ const TEXT = {
   },
 };
 
+const LISTEN_LABELS = {
+  th: "ฟัง",
+  en: "Listen",
+  ms: "Dengar",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = lang;
+  utter.rate = 0.92;
+  const voices = synth.getVoices();
+  const voice =
+    voices.find((v) => v.lang === lang) ||
+    voices.find((v) => v.lang.startsWith(lang.split("-")[0]));
+  if (voice) utter.voice = voice;
+  synth.speak(utter);
+}
+
 function LanguagePills({ lang, setLang }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
@@ -89,6 +110,11 @@ export default function P6ElectricForceEffectKeySummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+  const listenLabel = LISTEN_LABELS[lang] ?? LISTEN_LABELS.th;
+  const speechLang = { th: "th-TH", en: "en-US", ms: "ms-MY" }[lang] || "th-TH";
+  const speakCause = () => speakText([t.sectionCause, t.causeIntro, t.chargeKinds, t.chargeInduction].join(". "), speechLang);
+  const speakEffect = () => speakText([t.sectionEffect, t.effectAttract, t.effectRepel].join(". "), speechLang);
+  const speakExample = () => speakText([t.sectionExamples, t.example].join(". "), speechLang);
 
   const pageBg = {
     background:
@@ -107,8 +133,19 @@ export default function P6ElectricForceEffectKeySummary() {
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
           <div className="rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
-            <div className="inline-flex items-center rounded-full bg-[#cfe9ff] px-4 py-1 text-[18px] font-black">
-              {t.sectionCause}
+            <div className="flex items-center justify-between gap-3">
+              <div className="inline-flex items-center rounded-full bg-[#cfe9ff] px-4 py-1 text-[18px] font-black">
+                {t.sectionCause}
+              </div>
+              <button
+                type="button"
+                onClick={speakCause}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                aria-label={listenLabel}
+                title={listenLabel}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
             </div>
             <p className="mt-4 text-[16px] font-semibold leading-[1.6]">{t.causeIntro}</p>
             <div className="mt-4 flex items-center gap-3">
@@ -123,8 +160,19 @@ export default function P6ElectricForceEffectKeySummary() {
           </div>
 
           <div className="rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
-            <div className="inline-flex items-center rounded-full bg-[#ffe7a3] px-4 py-1 text-[18px] font-black">
-              {t.sectionEffect}
+            <div className="flex items-center justify-between gap-3">
+              <div className="inline-flex items-center rounded-full bg-[#ffe7a3] px-4 py-1 text-[18px] font-black">
+                {t.sectionEffect}
+              </div>
+              <button
+                type="button"
+                onClick={speakEffect}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                aria-label={listenLabel}
+                title={listenLabel}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
             </div>
             <div className="mt-4 flex items-start gap-3">
               <img
@@ -147,10 +195,19 @@ export default function P6ElectricForceEffectKeySummary() {
 
         <div className="mt-6 flex justify-center">
           <div className="w-full max-w-[760px] rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
-            <div className="flex flex-wrap items-center justify-center gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="inline-flex items-center rounded-full bg-[#d2f7c1] px-4 py-1 text-[18px] font-black">
                 {t.sectionExamples}
               </div>
+              <button
+                type="button"
+                onClick={speakExample}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                aria-label={listenLabel}
+                title={listenLabel}
+              >
+                {"\uD83D\uDD0A"}
+              </button>
             </div>
             <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
               <p className="text-[16px] font-semibold leading-[1.6]">{t.example}</p>

@@ -14,6 +14,7 @@ const TEXT = {
     motherDesc: "\u0e02\u0e19\u0e2a\u0e35\u0e02\u0e32\u0e27",
     p2: "\u0e40\u0e21\u0e37\u0e48\u0e2d\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e40\u0e01\u0e34\u0e14\u0e02\u0e36\u0e49\u0e19 \u0e1e\u0e1a\u0e27\u0e48\u0e32",
     result: "\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e17\u0e38\u0e01\u0e15\u0e31\u0e27\u0e21\u0e35\u0e02\u0e19\u0e2a\u0e35\u0e14\u0e33",
+    listen: "\u0e1f\u0e31\u0e07\u0e2a\u0e23\u0e38\u0e1b",
     back: "<< \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
     select: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
   },
@@ -26,6 +27,7 @@ const TEXT = {
     motherDesc: "white fur",
     p2: "When kittens were born, we found that",
     result: "all kittens had black fur.",
+    listen: "Listen",
     back: "<< Back",
     select: "Next",
   },
@@ -38,10 +40,26 @@ const TEXT = {
     motherDesc: "bulu putih",
     p2: "Apabila anak kucing dilahirkan, didapati bahawa",
     result: "semua anak kucing berbulu hitam.",
+    listen: "Dengar rumusan",
     back: "<< Kembali",
     select: "Seterusnya",
   },
 };
+
+const LANG_TO_VOICE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = LANG_TO_VOICE[lang] || "th-TH";
+  synth.speak(utterance);
+}
 
 export default function P5GeneticsAnimalsSummary() {
   const navigate = useNavigate();
@@ -49,6 +67,12 @@ export default function P5GeneticsAnimalsSummary() {
   const labels = { th: "\u0e44\u0e17\u0e22", en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29", ms: "\u0e21\u0e25\u0e32\u0e22\u0e39" };
   const t = TEXT[lang];
   const backLabel = "\u00ab \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a";
+  const speakSummary = () => {
+    speakText(
+      [t.p1, `${t.father} ${t.fatherDesc}`, `${t.mother} ${t.motherDesc}`, t.p2, t.result].join(". "),
+      lang
+    );
+  };
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
@@ -71,6 +95,15 @@ export default function P5GeneticsAnimalsSummary() {
           <h1 className="mb-5 text-4xl font-extrabold tracking-tight text-slate-900">{t.title}</h1>
 
           <div className="relative rounded-[30px] border border-emerald-400/90 bg-[linear-gradient(180deg,rgba(187,247,208,0.98)_0%,rgba(220,252,231,0.97)_34%,rgba(255,255,255,0.98)_70%,rgba(255,255,255,0.98)_100%)] px-7 pb-7 pt-6 shadow-[0_22px_40px_rgba(21,128,61,0.22)] backdrop-blur-sm max-[1180px]:px-5 max-[1180px]:pb-5 max-[1180px]:pt-5">
+            <button
+              type="button"
+              className="absolute right-4 top-4 inline-flex h-[42px] w-[42px] items-center justify-center rounded-full border-none bg-[#eff6ff] text-[22px] leading-none text-[#1d4ed8] shadow-[0_8px_16px_rgba(37,99,235,0.18)] transition hover:-translate-y-[1px] hover:bg-[#dbeafe] hover:shadow-[0_10px_18px_rgba(37,99,235,0.22)]"
+              aria-label={t.listen}
+              title={t.listen}
+              onClick={speakSummary}
+            >
+              {"\uD83D\uDD0A"}
+            </button>
             <p className="text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">{t.p1}</p>
             <ul className="my-3 list-disc pl-8 text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">
               <li>
