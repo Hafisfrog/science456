@@ -51,6 +51,9 @@ const TYPE_META = {
 const clamp01 = (value) => Math.max(0, Math.min(value, 1));
 const TORCH_PERSON_IMAGE_SRC = "/images/materials/opp.png";
 const TORCH_IMAGE_SRC = "/images/materials/oo.png";
+const TORCH_PERSON_ASPECT_RATIO = 1536 / 1024;
+const BEAM_CANVAS_WIDTH = 1100;
+const BEAM_CANVAS_HEIGHT = 520;
 const EXPERIMENT_LANG_LABELS = {
   th: "\u0e44\u0e17\u0e22",
   en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
@@ -155,7 +158,12 @@ function BeamCanvas({
   materialType,
   objectSize = 190,
   sourceX = 280,
+  sourceY = 260,
+  targetX = 1010,
+  targetY = 260,
   objectXRatio = 0.56,
+  canvasWidth = BEAM_CANVAS_WIDTH,
+  canvasHeight = BEAM_CANVAS_HEIGHT,
 }) {
   const canvasRef = useRef(null);
 
@@ -167,15 +175,21 @@ function BeamCanvas({
     ctx.clearRect(0, 0, W, H);
     if (!shine || beamProgress <= 0) return;
 
-    const src   = { x: sourceX, y: H / 2 };
-    const mid   = { x: W * objectXRatio, y: H / 2 };
-    const tgt   = { x: W - 90,  y: H / 2 };
-    const objectHalfW = objectSize / 2;
-    const objectHalfH = objectSize / 2;
+    const src = { x: sourceX, y: sourceY };
+    const tgt = { x: targetX, y: targetY };
+    const midX = W * objectXRatio;
+    const pathSpanX = tgt.x - src.x;
+    const midProgress =
+      Math.abs(pathSpanX) < 0.0001 ? 0.5 : clamp01((midX - src.x) / pathSpanX);
+    const mid = {
+      x: midX,
+      y: src.y + (tgt.y - src.y) * midProgress,
+    };
+    const objectRadius = Math.max(96, objectSize * 0.52);
 
     // beam segment end (animated)
     const bx = src.x + (mid.x - src.x) * Math.min(beamProgress, 1);
-    const by = H / 2;
+    const by = src.y + (mid.y - src.y) * Math.min(beamProgress, 1);
 
     const drawRay = (x1, y1, x2, y2, opts = {}) => {
       const { 
@@ -235,140 +249,47 @@ function BeamCanvas({
       ctx.restore();
     }
 
-    // Transmitted / secondary ray - แยกตามประเภทวัสดุให้ชัดเจน
+    // Forward-only ray (no backward reflection)
     if (beamProgress >= 0.95 && reflectProgress > 0) {
       const rp = Math.min(reflectProgress, 1);
       const throughLevel = Math.max(0, Math.min((rp - 0.08) / 0.92, 1));
-      
-      if (materialType === "transparent") {
-        // แสงผ่านทะลุชัดเจน: คมและเป็นลำตรง
-        const tx = mid.x + (tgt.x - mid.x) * rp;
-        drawRay(mid.x - 9, mid.y - 4, tx, mid.y - 2, { 
-          wOuter: 118, 
-          wInner: 32, 
-          alpha: 0.95 * throughLevel,
-          blur: 20,
-          col1: "#FFF7C8",
-          col2: "#FFBC56",
-        });
-        drawRay(mid.x + 9, mid.y + 4, tx, mid.y + 2, { 
-          wOuter: 108, 
-          wInner: 28, 
-          alpha: 0.8 * throughLevel,
-          blur: 18,
-          col1: "#FFEAA6",
-          col2: "#FFA94D",
-        });
-        drawRay(mid.x, mid.y, tx, mid.y, { 
-          wOuter: 88, 
-          wInner: 22, 
-          alpha: 0.9 * throughLevel,
-          blur: 14,
-          col1: "#FFF9DB",
-          col2: "#FFD474",
-        });
+      const tx = mid.x + (tgt.x - mid.x) * rp;
+      const ty = mid.y + (tgt.y - mid.y) * rp;
+      const passAlpha =
+        materialType === "transparent"
+          ? 0.94
+          : materialType === "translucent"
+            ? 0.52
+            : 0;
 
-        const passGlow = ctx.createRadialGradient(mid.x, mid.y, 0, mid.x, mid.y, 120);
-        passGlow.addColorStop(0, `rgba(255,255,230,${0.58 * throughLevel})`);
-        passGlow.addColorStop(0.45, `rgba(190,235,255,${0.2 * throughLevel})`);
-        passGlow.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.save();
-        ctx.fillStyle = passGlow;
-        ctx.filter = "blur(8px)";
-        ctx.fillRect(mid.x - objectHalfW, mid.y - objectHalfH, objectHalfW * 2, objectHalfH * 2);
-        ctx.restore();
-        
-        // เพิ่มแสงสะท้อนที่เป้าหมาย
-        if (rp > 0.75) {
-          const targetGlow = ctx.createRadialGradient(tgt.x, tgt.y, 0, tgt.x, tgt.y, 150);
-          targetGlow.addColorStop(0, "rgba(255, 235, 160, 0.8)");
-          targetGlow.addColorStop(0.55, "rgba(255, 188, 80, 0.24)");
-          targetGlow.addColorStop(1, "rgba(0,0,0,0)");
-          ctx.save();
-          ctx.filter = "blur(18px)";
-          ctx.fillStyle = targetGlow;
-          ctx.beginPath();
-          ctx.arc(tgt.x, tgt.y, 120, 0, Math.PI * 2);
-          ctx.fill();
-
-          const core = ctx.createRadialGradient(tgt.x, tgt.y, 0, tgt.x, tgt.y, 48);
-          core.addColorStop(0, "rgba(255,255,235,0.9)");
-          core.addColorStop(1, "rgba(255,255,235,0)");
-          ctx.filter = "blur(6px)";
-          ctx.fillStyle = core;
-          ctx.beginPath();
-          ctx.arc(tgt.x, tgt.y, 44, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        }
-      } 
-      else if (materialType === "translucent") {
-        // แสงกระจาย ไม่ชัดเจน: ออกเป็นฝอยและเบลอ
-        for (let i = -4; i <= 4; i++) {
-          const tx = mid.x + (tgt.x - mid.x) * rp * 0.6;
-          const scatter = i * 12;
-          const edgeFactor = Math.abs(i) / 4;
-          drawRay(
-            mid.x + scatter * 0.45, 
-            mid.y + scatter * 0.65, 
-            tx + scatter * 1.3, 
-            mid.y - 16 + scatter * 0.9, 
-            { 
-              wOuter: 58 - edgeFactor * 14, 
-              wInner: 14, 
-              alpha: (0.22 - edgeFactor * 0.05) * throughLevel, 
-              blur: 34,
-              col1: "#FFC067",
-              col2: "#FF7F32",
-            }
-          );
-        }
-
-        const haze = ctx.createRadialGradient(mid.x, mid.y, 0, mid.x, mid.y, 135);
-        haze.addColorStop(0, `rgba(255, 190, 95, ${0.3 * throughLevel})`);
-        haze.addColorStop(0.65, `rgba(255, 140, 0, ${0.14 * throughLevel})`);
-        haze.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.save();
-        ctx.fillStyle = haze;
-        ctx.filter = "blur(14px)";
-        ctx.beginPath();
-        ctx.arc(mid.x, mid.y, 130, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-        
-        // แสงสะท้อนที่เป้าหมายเบลอๆ
-        if (rp > 0.8) {
-          const targetGlow = ctx.createRadialGradient(tgt.x, tgt.y - 10, 0, tgt.x, tgt.y - 10, 120);
-          targetGlow.addColorStop(0, "rgba(255, 175, 90, 0.34)");
-          targetGlow.addColorStop(0.7, "rgba(255, 110, 35, 0.12)");
-          targetGlow.addColorStop(1, "rgba(0,0,0,0)");
-          ctx.save();
-          ctx.filter = "blur(28px)";
-          ctx.fillStyle = targetGlow;
-          ctx.beginPath();
-          ctx.arc(tgt.x, tgt.y - 10, 100, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.restore();
-        }
+      if (passAlpha > 0) {
+        drawRay(mid.x, mid.y, tx, ty, {
+          wOuter: materialType === "transparent" ? 112 : 84,
+          wInner: materialType === "transparent" ? 28 : 18,
+          alpha: passAlpha * throughLevel,
+          blur: materialType === "transparent" ? 16 : 24,
+          col1: materialType === "transparent" ? "#FFF7C8" : "#FFC067",
+          col2: materialType === "transparent" ? "#FFBC56" : "#FF8A3D",
+        });
       }
-      else {
-        // opaque - ไม่มีแสงผ่าน: จุดกระทบสว่าง แต่ด้านหลังเกิดเงาเข้ม
-        const blockGlow = ctx.createRadialGradient(mid.x - 8, mid.y, 0, mid.x - 8, mid.y, 125);
-        blockGlow.addColorStop(0, "rgba(255, 190, 95, 0.4)");
-        blockGlow.addColorStop(0.6, "rgba(255, 140, 0, 0.18)");
-        blockGlow.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.save();
-        ctx.filter = "blur(12px)";
-        ctx.fillStyle = blockGlow;
-        ctx.beginPath();
-        ctx.arc(mid.x - 6, mid.y, 110, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
 
+      const blockGlow = ctx.createRadialGradient(mid.x - 8, mid.y, 0, mid.x - 8, mid.y, objectRadius);
+      blockGlow.addColorStop(0, "rgba(255, 190, 95, 0.4)");
+      blockGlow.addColorStop(0.6, "rgba(255, 140, 0, 0.18)");
+      blockGlow.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.save();
+      ctx.filter = "blur(12px)";
+      ctx.fillStyle = blockGlow;
+      ctx.beginPath();
+      ctx.arc(mid.x - 6, mid.y, objectRadius - 14, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      if (materialType === "opaque") {
         const shadowLen = 280 * throughLevel;
         ctx.save();
-        ctx.fillStyle = "rgba(2,6,23,0.55)";
-        ctx.filter = "blur(10px)";
+        ctx.fillStyle = "rgba(255,255,255,0.56)";
+        ctx.filter = "blur(12px)";
         ctx.beginPath();
         ctx.moveTo(mid.x + 14, mid.y - 18);
         ctx.lineTo(mid.x + 14 + shadowLen, mid.y - 75);
@@ -379,21 +300,56 @@ function BeamCanvas({
         ctx.restore();
 
         ctx.save();
-        ctx.fillStyle = "rgba(0,0,0,0.3)";
-        ctx.filter = "blur(15px)";
+        ctx.fillStyle = "rgba(255,255,255,0.34)";
+        ctx.filter = "blur(18px)";
         ctx.beginPath();
         ctx.arc(tgt.x, tgt.y, 80, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
+      } else if (rp > 0.75) {
+        const targetGlow = ctx.createRadialGradient(tgt.x, tgt.y, 0, tgt.x, tgt.y, 140);
+        targetGlow.addColorStop(
+          0,
+          materialType === "transparent"
+            ? "rgba(255, 235, 160, 0.8)"
+            : "rgba(255, 175, 90, 0.34)"
+        );
+        targetGlow.addColorStop(
+          0.65,
+          materialType === "transparent"
+            ? "rgba(255, 188, 80, 0.24)"
+            : "rgba(255, 110, 35, 0.12)"
+        );
+        targetGlow.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.save();
+        ctx.filter = materialType === "transparent" ? "blur(18px)" : "blur(24px)";
+        ctx.fillStyle = targetGlow;
+        ctx.beginPath();
+        ctx.arc(tgt.x, tgt.y, 110, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       }
     }
-  }, [shine, beamProgress, reflectProgress, materialType, objectSize, sourceX, objectXRatio]);
+  }, [
+    shine,
+    beamProgress,
+    reflectProgress,
+    materialType,
+    objectSize,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    objectXRatio,
+    canvasWidth,
+    canvasHeight,
+  ]);
 
   return (
     <canvas
       ref={canvasRef}
-      width={1100}
-      height={520}
+      width={canvasWidth}
+      height={canvasHeight}
       style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}
     />
   );
@@ -406,6 +362,7 @@ export default function P4LightExperiment() {
   
   // States
   const [language, setLanguage] = useState("th");
+  const [initialMaterial] = useState(() => state?.material || MATERIALS[0]);
   const [selectedMaterial, setSelectedMaterial] = useState(() => state?.material || MATERIALS[0]);
   const [shine, setShine] = useState(false);
   const [beamProgress, setBeamProgress] = useState(0);
@@ -415,7 +372,14 @@ export default function P4LightExperiment() {
   const [viewportWidth, setViewportWidth] = useState(
     typeof window !== "undefined" ? window.innerWidth : 0
   );
+  const [viewportHeight, setViewportHeight] = useState(
+    typeof window !== "undefined" ? window.innerHeight : 0
+  );
   const [isMobile, setIsMobile] = useState(false);
+  const [stageSize, setStageSize] = useState({
+    width: BEAM_CANVAS_WIDTH,
+    height: BEAM_CANVAS_HEIGHT,
+  });
   
   // นับเฉพาะรอบการทดลองปัจจุบัน และรีเซ็ตใหม่เมื่อเข้าเว็บ/เข้าหน้านี้อีกครั้ง
   const [experimentResults, setExperimentResults] = useState([]);
@@ -424,6 +388,8 @@ export default function P4LightExperiment() {
   const beamRef = useRef(null);
   const reflectRef = useRef(null);
   const rotationRef = useRef(null);
+  const beamStartTimeoutRef = useRef(null);
+  const stageRef = useRef(null);
 
   const meta = TYPE_META[selectedMaterial.type];
   const ui = EXPERIMENT_UI[language] ?? EXPERIMENT_UI.th;
@@ -536,12 +502,24 @@ export default function P4LightExperiment() {
     mixBlendMode: selectedMaterial.type === "opaque" ? "multiply" : "screen",
   };
 
+  const clearAnimationTimers = () => {
+    clearInterval(beamRef.current);
+    clearInterval(reflectRef.current);
+    clearInterval(rotationRef.current);
+    clearTimeout(beamStartTimeoutRef.current);
+    beamRef.current = null;
+    reflectRef.current = null;
+    rotationRef.current = null;
+    beamStartTimeoutRef.current = null;
+  };
+
   // Cleanup
   useEffect(() => {
     return () => {
       clearInterval(beamRef.current);
       clearInterval(reflectRef.current);
       clearInterval(rotationRef.current);
+      clearTimeout(beamStartTimeoutRef.current);
     };
   }, []);
 
@@ -549,22 +527,61 @@ export default function P4LightExperiment() {
     if (typeof window === "undefined") return;
     const update = () => {
       const w = window.innerWidth;
+      const h = Math.round(window.visualViewport?.height || window.innerHeight);
       setViewportWidth(w);
-      setIsMobile(w <= 768);
+      setViewportHeight(h);
+      setIsMobile(w <= 1024);
     };
+    const vv = window.visualViewport;
     update();
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    vv?.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("resize", update);
+      vv?.removeEventListener("resize", update);
+    };
   }, []);
 
-  const reset = () => {
-    clearInterval(beamRef.current);
-    clearInterval(reflectRef.current);
-    clearInterval(rotationRef.current);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const updateStageSize = () => {
+      const stage = stageRef.current;
+      if (!stage) return;
+      const nextWidth = Math.max(1, Math.round(stage.clientWidth || BEAM_CANVAS_WIDTH));
+      const nextHeight = Math.max(1, Math.round(stage.clientHeight || BEAM_CANVAS_HEIGHT));
+      setStageSize((prev) =>
+        prev.width === nextWidth && prev.height === nextHeight
+          ? prev
+          : { width: nextWidth, height: nextHeight }
+      );
+    };
+
+    updateStageSize();
+    const stage = stageRef.current;
+    const observer =
+      typeof ResizeObserver !== "undefined" && stage
+        ? new ResizeObserver(updateStageSize)
+        : null;
+    observer?.observe(stage);
+    window.addEventListener("resize", updateStageSize);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("resize", updateStageSize);
+    };
+  }, []);
+
+  const resetAnimation = () => {
+    clearAnimationTimers();
     setShine(false);
     setBeamProgress(0);
     setReflectProgress(0);
     setTorchRotation(0);
+  };
+
+  const resetAll = () => {
+    resetAnimation();
+    setSelectedMaterial(initialMaterial);
+    setExperimentResults([]);
   };
 
   const doShine = () => {
@@ -577,12 +594,14 @@ export default function P4LightExperiment() {
       if (rot >= 135) {
         setTorchRotation(135);
         clearInterval(rotationRef.current);
+        rotationRef.current = null;
       } else {
         setTorchRotation(rot);
       }
     }, 14);
 
-    setTimeout(() => {
+    beamStartTimeoutRef.current = setTimeout(() => {
+      beamStartTimeoutRef.current = null;
       let p = 0;
       beamRef.current = setInterval(() => {
         p = Math.min(p + 0.025, 1);
@@ -590,6 +609,7 @@ export default function P4LightExperiment() {
         
         if (p >= 1) {
           clearInterval(beamRef.current);
+          beamRef.current = null;
           
           let r = 0;
           reflectRef.current = setInterval(() => {
@@ -598,6 +618,7 @@ export default function P4LightExperiment() {
             
             if (r >= 1) {
               clearInterval(reflectRef.current);
+              reflectRef.current = null;
               
               // Add result
               const newResult = {
@@ -618,7 +639,7 @@ export default function P4LightExperiment() {
 
   const selectMaterial = (m) => {
     setSelectedMaterial(m);
-    reset();
+    resetAnimation();
   };
   const goToRecordSummary = () => {
     navigate("/p4/light/record", {
@@ -629,9 +650,16 @@ export default function P4LightExperiment() {
   };
 
   // ── Render ────────────────────────────────────────────────────────────────
-  const rootStyle = isMobile
-    ? { ...S.root, height: "auto", minHeight: "100vh", overflow: "auto", overflowX: "hidden" }
-    : S.root;
+  const safeViewportHeight = viewportHeight > 0 ? viewportHeight : 0;
+  const rootStyle = {
+    ...S.root,
+    height: "auto",
+    minHeight: safeViewportHeight > 0 ? `${safeViewportHeight}px` : "100vh",
+    overflowY: "auto",
+    overflowX: "hidden",
+    WebkitOverflowScrolling: "touch",
+    paddingBottom: isMobile ? 120 : 96,
+  };
   const menuListStyle = isMobile
     ? {
         ...S.menuList,
@@ -645,7 +673,7 @@ export default function P4LightExperiment() {
       };
   const mainStyle = isMobile
     ? { ...S.main, flexDirection: "column", gap: 10, padding: "0 10px 12px", overflow: "visible" }
-    : S.main;
+    : { ...S.main, overflow: "visible" };
   const controlPanelStyle = isMobile
     ? {
         ...S.controlPanel,
@@ -663,18 +691,31 @@ export default function P4LightExperiment() {
         maxHeight: "none",
         overflow: "visible",
       }
-    : S.controlPanel;
+    : {
+        ...S.controlPanel,
+        maxHeight: `${Math.max(360, (safeViewportHeight || 860) - 160)}px`,
+      };
+  const mobileCanvasHeight = Math.min(
+    420,
+    Math.max(
+      isTight ? 320 : 360,
+      Math.round((safeViewportHeight || 760) * (isTight ? 0.48 : 0.52))
+    )
+  );
   const canvasStyle = isMobile
     ? {
         ...S.canvas,
         order: 1,
-        minHeight: isTight ? 320 : 360,
-        height: isTight ? "48vh" : "52vh",
+        minHeight: mobileCanvasHeight,
+        height: mobileCanvasHeight,
         maxHeight: 420,
         borderRadius: 16,
         overflow: "hidden",
       }
-    : S.canvas;
+    : {
+        ...S.canvas,
+        minHeight: Math.max(520, (safeViewportHeight || 860) - 120),
+      };
   const stageStyle = isMobile
     ? {
         position: "absolute",
@@ -690,9 +731,24 @@ export default function P4LightExperiment() {
   const torchToolWidth = isMobile ? (isTight ? 124 : 136) : 186;
   const torchToolHeight = isMobile ? (isTight ? 66 : 72) : 100;
   const torchToolRight = isMobile ? (isTight ? -30 : -34) : -50;
-  const beamSourceX = torchLeft + torchCharacterWidth + torchToolRight + torchToolWidth - 11;
   const torchShiftX = shine ? Math.min(14, torchRotation * 0.08) : 0;
   const torchShiftY = shine ? Math.min(10, torchRotation * 0.06) : 0;
+  const stageWidth = stageSize.width || BEAM_CANVAS_WIDTH;
+  const stageHeight = stageSize.height || BEAM_CANVAS_HEIGHT;
+  const torchToolTop = isMobile ? (isTight ? 54 : 62) : 100;
+  const torchCharacterHeight = torchCharacterWidth * TORCH_PERSON_ASPECT_RATIO;
+  const beamSourceX =
+    torchLeft +
+    torchShiftX +
+    torchCharacterWidth +
+    torchToolRight +
+    torchToolWidth * 0.88;
+  const beamSourceY =
+    (stageHeight * torchTopPercent) / 100 -
+    torchCharacterHeight / 2 +
+    torchToolTop +
+    torchToolHeight * 0.52 +
+    torchShiftY;
   const torchStyle = isMobile
     ? {
         ...S.torch,
@@ -790,6 +846,15 @@ export default function P4LightExperiment() {
     cursor: shine ? "not-allowed" : "pointer",
     pointerEvents: "auto",
   };
+  const floatingBottom = isMobile
+    ? "calc(12px + env(safe-area-inset-bottom, 0px))"
+    : "18px";
+  const floatingLeft = isMobile
+    ? "max(12px, env(safe-area-inset-left, 0px))"
+    : "24px";
+  const floatingRight = isMobile
+    ? "max(12px, env(safe-area-inset-right, 0px))"
+    : "18px";
   const torchResetBtnStyle = {
     ...torchOpenBtnStyle,
     left: torchButtonCenterX + torchActionButtonShiftX,
@@ -817,51 +882,60 @@ export default function P4LightExperiment() {
     boxShadow: "0 10px 24px rgba(37,99,235,0.26)",
   };
   const targetStyle = isMobile ? { ...S.target, right: isTight ? 8 : 16, gap: isTight ? 6 : 8 } : S.target;
+  const targetRight = isMobile ? (isTight ? 8 : 16) : 40;
   const targetGlowSize = isMobile ? (isTight ? 120 : 150) : 200;
   const targetFrameSize = isMobile ? (isTight ? 128 : 154) : 190;
+  const beamTargetX = stageWidth - targetRight - targetFrameSize / 2;
+  const beamTargetY = stageHeight / 2;
   const bearSize = isMobile ? (isTight ? 68 : 78) : 92;
   const lightReachedTarget = shine && beamProgress >= 0.95;
-  const targetRevealBase = lightReachedTarget ? clamp01(reflectProgress) : 0;
-  const bearSightLevel =
-    selectedMaterial.type === "transparent"
-      ? clamp01((targetRevealBase - 0.08) / 0.92)
-      : selectedMaterial.type === "translucent"
-        ? clamp01((targetRevealBase - 0.15) / 0.9) * 0.62
-        : 0;
+  const targetEffectProgress = lightReachedTarget ? clamp01(reflectProgress) : 0;
+  const opaqueBlurPhase = clamp01(targetEffectProgress / 0.45);
+  const opaqueFadePhase = clamp01((targetEffectProgress - 0.45) / 0.55);
   const bearOpacity =
-    selectedMaterial.type === "opaque"
-      ? 0
-      : lightReachedTarget
-        ? selectedMaterial.type === "transparent"
-          ? Math.min(1, 0.08 + bearSightLevel * 1.05)
-          : Math.min(0.62, 0.1 + bearSightLevel * 0.85)
-        : 0.04;
+    !shine || !lightReachedTarget
+      ? 1
+      : selectedMaterial.type === "opaque"
+        ? Math.max(0, 1 - opaqueFadePhase)
+        : 1;
   const bearBlurPx =
-    selectedMaterial.type === "transparent"
-      ? Math.max(0, 7 - bearSightLevel * 7)
-      : selectedMaterial.type === "translucent"
-        ? Math.max(3, 11 - bearSightLevel * 8)
-        : 14;
-  const targetVeilOpacity =
-    !lightReachedTarget
-      ? 0.9
-      : selectedMaterial.type === "transparent"
-        ? Math.max(0.12, 0.72 - bearSightLevel * 0.75)
+    !shine || !lightReachedTarget
+      ? 0
+      : selectedMaterial.type === "opaque"
+        ? 3 + opaqueBlurPhase * 9
         : selectedMaterial.type === "translucent"
-          ? Math.max(0.5, 0.86 - bearSightLevel * 0.35)
-          : 0.92;
+          ? 4 + targetEffectProgress * 4
+        : 0;
+  const bearSaturate =
+    !shine || !lightReachedTarget
+      ? 1
+      : selectedMaterial.type === "transparent"
+        ? 1.05
+        : selectedMaterial.type === "translucent"
+          ? 0.85
+          : Math.max(0.45, 1 - opaqueFadePhase * 0.6);
+  const targetVeilOpacity =
+    !shine || !lightReachedTarget
+      ? 0.12
+      : selectedMaterial.type === "transparent"
+        ? 0.08
+        : selectedMaterial.type === "translucent"
+          ? 0.35
+          : Math.min(0.95, 0.52 + targetEffectProgress * 0.43);
   const targetVeilBackground =
-    selectedMaterial.type === "transparent"
+    !shine || !lightReachedTarget
       ? "linear-gradient(135deg, rgba(225,239,255,0.85), rgba(204,229,255,0.7))"
-      : selectedMaterial.type === "translucent"
+      : selectedMaterial.type === "transparent"
+        ? "linear-gradient(135deg, rgba(225,239,255,0.85), rgba(204,229,255,0.7))"
+        : selectedMaterial.type === "translucent"
         ? "linear-gradient(135deg, rgba(232,241,250,0.95), rgba(206,225,243,0.88))"
-        : "linear-gradient(135deg, rgba(120,133,150,0.95), rgba(70,85,102,0.9))";
+        : "linear-gradient(135deg, rgba(248,252,255,0.96), rgba(226,238,252,0.92))";
   const targetFrameBorder =
     selectedMaterial.type === "transparent"
       ? "#93c5fd"
       : selectedMaterial.type === "translucent"
         ? "#94a3b8"
-        : "#64748b";
+        : "#9fb9d6";
   const statusDotStyle = isMobile
     ? {
         ...torchStatusStyle,
@@ -916,20 +990,24 @@ export default function P4LightExperiment() {
               >
                 {testedMaterialIds.has(m.id) && (
                   <span
+                    className="tested-float"
                     style={{
                       position: "absolute",
-                      top: 8,
-                      right: 8,
+                      top: -10,
+                      right: 6,
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 4,
-                      padding: "4px 8px",
+                      padding: "4px 10px",
                       borderRadius: 999,
                       background: "rgba(34,197,94,0.96)",
                       color: "#ffffff",
                       fontSize: 11,
                       fontWeight: 800,
-                      boxShadow: "0 8px 16px rgba(34,197,94,0.28)",
+                      boxShadow: "0 10px 20px rgba(34,197,94,0.3)",
+                      zIndex: 8,
+                      whiteSpace: "nowrap",
+                      pointerEvents: "none",
                     }}
                     >
                     <span aria-hidden="true">✓</span>
@@ -966,7 +1044,7 @@ export default function P4LightExperiment() {
           </button>
           <button
             style={torchResetBtnStyle}
-            onClick={reset}
+            onClick={resetAll}
             type="button"
           >
             <span style={{ fontSize: isTight ? 13 : 14 }}>↺</span>
@@ -981,7 +1059,7 @@ export default function P4LightExperiment() {
             <span>{ui.viewResult}</span>
           </button>
 
-          <div style={stageStyle}>
+          <div style={stageStyle} ref={stageRef}>
               <BeamCanvas
                 shine={shine}
                 beamProgress={beamProgress}
@@ -989,7 +1067,12 @@ export default function P4LightExperiment() {
                 materialType={selectedMaterial.type}
                 objectSize={materialSize}
                 sourceX={beamSourceX}
+                sourceY={beamSourceY}
+                targetX={beamTargetX}
+                targetY={beamTargetY}
                 objectXRatio={0.56}
+                canvasWidth={stageWidth}
+                canvasHeight={stageHeight}
               />
 
           {/* Grid lines (decorative) */}
@@ -1097,7 +1180,7 @@ export default function P4LightExperiment() {
                   ? "radial-gradient(circle, rgba(255,215,0,0.7) 0%, rgba(255,140,0,0.3) 50%, transparent 80%)"
                   : selectedMaterial.type === "translucent"
                   ? "radial-gradient(circle, rgba(255,165,0,0.4) 0%, rgba(255,100,0,0.2) 50%, transparent 80%)"
-                  : "radial-gradient(circle, rgba(0,0,0,0.3) 0%, transparent 80%)",
+                  : "radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(220,236,255,0.25) 50%, transparent 80%)",
                 width: targetGlowSize,
                 height: targetGlowSize,
               }} className="glow-pulse" />
@@ -1113,7 +1196,7 @@ export default function P4LightExperiment() {
                     ? "0 12px 26px rgba(59,130,246,0.22), inset 0 1px 0 rgba(255,255,255,0.88)"
                     : selectedMaterial.type === "translucent"
                       ? "0 10px 22px rgba(100,116,139,0.18), inset 0 1px 0 rgba(255,255,255,0.8)"
-                      : "0 10px 22px rgba(30,41,59,0.28), inset 0 1px 0 rgba(255,255,255,0.5)",
+                      : "0 10px 22px rgba(148,163,184,0.2), inset 0 1px 0 rgba(255,255,255,0.9)",
               }}
             >
               <div style={S.targetGridLayer} />
@@ -1121,13 +1204,7 @@ export default function P4LightExperiment() {
                 style={{
                   ...S.targetBearWrap,
                   opacity: bearOpacity,
-                  filter: `blur(${bearBlurPx.toFixed(2)}px) saturate(${(
-                    selectedMaterial.type === "transparent"
-                      ? 1.1
-                      : selectedMaterial.type === "translucent"
-                        ? 0.9
-                        : 0.7
-                  ).toFixed(2)})`,
+                  filter: `blur(${bearBlurPx.toFixed(2)}px) saturate(${bearSaturate.toFixed(2)})`,
                 }}
               >
                 <span
@@ -1135,9 +1212,10 @@ export default function P4LightExperiment() {
                   style={{
                     fontSize: bearSize,
                     filter:
-                      lightReachedTarget &&
+                      shine &&
                       selectedMaterial.type === "transparent" &&
-                      bearSightLevel > 0.72
+                      lightReachedTarget &&
+                      reflectProgress > 0.72
                         ? "drop-shadow(0 0 14px rgba(255,210,90,0.9))"
                         : "none",
                   }}
@@ -1178,7 +1256,10 @@ export default function P4LightExperiment() {
         </div>
       </main>
 
-        <div className="fixed bottom-[18px] left-[24px] z-30 font-['Prompt',sans-serif]">
+        <div
+          className="z-30 font-['Prompt',sans-serif]"
+          style={{ position: "fixed", bottom: floatingBottom, left: floatingLeft }}
+        >
           <LightLanguageSwitcher
             value={language}
             onChange={setLanguage}
@@ -1187,7 +1268,10 @@ export default function P4LightExperiment() {
           />
         </div>
 
-        <div className="fixed bottom-[18px] right-[18px] z-30 font-['Prompt',sans-serif]">
+        <div
+          className="z-30 font-['Prompt',sans-serif]"
+          style={{ position: "fixed", bottom: floatingBottom, right: floatingRight }}
+        >
           <LightNavButtons
             backLabel={ui.back}
             nextLabel={ui.next}
@@ -1649,7 +1733,7 @@ const S = {
     gridAutoRows: "minmax(108px, auto)",
     alignContent: "start",
     justifyItems: "stretch",
-    paddingTop: 4,
+    paddingTop: 16,
     paddingBottom: 14,
     maxHeight: "none",
     overflowX: "hidden",
@@ -1670,6 +1754,7 @@ const S = {
     transition: "all 0.2s",
     background: "transparent",
     backdropFilter: "blur(6px)",
+    overflow: "visible",
   },
   menuImageBtnLast: {},
   menuImageFrame: {
@@ -1860,10 +1945,15 @@ const CSS = `
     0%, 100% { opacity: 0.7; }
     50%       { opacity: 1; }
   }
+  @keyframes testedFloat {
+    from { opacity: 0; transform: translateY(8px) scale(0.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
   .dropdown-anim { animation: dropIn 0.18s ease; }
   .pop-in        { animation: popIn 0.3s ease; }
   .glow-pulse    { animation: glowPulse 1.4s ease-in-out infinite; }
+  .tested-float  { animation: testedFloat 0.32s ease; }
 
   .btn-hover:hover:not(:disabled) {
     transform: translateY(-2px) scale(1.03);
