@@ -192,59 +192,72 @@ function BeamCanvas({
     const by = src.y + (mid.y - src.y) * Math.min(beamProgress, 1);
 
     const drawRay = (x1, y1, x2, y2, opts = {}) => {
-      const { 
-        wOuter = 120, 
-        wInner = 40, 
-        alpha = 1, 
-        blur = 25, 
-        col1 = "#FFD700", 
-        col2 = "#FF4500" 
+      const {
+        wOuter = 120,
+        wInner = 40,
+        alpha = 1,
+        blur = 25,
+        col1 = "#FFE95A",
+        col2 = "#FF5A00"
       } = opts;
       
       // เพิ่มความเข้มของแสงตามประเภทวัสดุ
-      const intensity = materialType === "transparent" ? 1 : 
-                       materialType === "translucent" ? 0.6 : 0.3;
+      const intensity = materialType === "transparent" ? 1.55 :
+                       materialType === "translucent" ? 1.08 : 0.62;
+      const toHexAlpha = (value) =>
+        Math.round(Math.max(0, Math.min(value, 1)) * 255)
+          .toString(16)
+          .padStart(2, "0");
       
       const g = ctx.createLinearGradient(x1, y1, x2, y2);
-      g.addColorStop(0,   `${col1}${Math.round(alpha * 0.8 * intensity * 255).toString(16).padStart(2,"0")}`);
-      g.addColorStop(0.4, `${col1}${Math.round(alpha * 0.9 * intensity * 255).toString(16).padStart(2,"0")}`);
+      g.addColorStop(0,   `${col1}${toHexAlpha(alpha * 0.9 * intensity)}`);
+      g.addColorStop(0.4, `${col1}${toHexAlpha(alpha * 1.0 * intensity)}`);
       g.addColorStop(1,   `${col2}00`);
       
       // Outer glow
       ctx.save();
+      ctx.globalCompositeOperation = "lighter";
       ctx.filter = `blur(${blur}px)`;
       ctx.strokeStyle = g;
-      ctx.lineWidth = wOuter;
+      ctx.lineWidth = wOuter * 1.05;
       ctx.lineCap = "round";
       ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
       
       // Inner core
       ctx.filter = `blur(8px)`;
-      ctx.strokeStyle = `rgba(255, 255, 220, ${alpha * 0.95 * intensity})`;
+      ctx.strokeStyle = `rgba(255, 255, 232, ${Math.min(1, alpha * 1.05 * intensity)})`;
       ctx.lineWidth = wInner;
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+
+      // Bright center core for stronger flashlight punch
+      ctx.filter = "blur(3px)";
+      ctx.strokeStyle = `rgba(255, 250, 215, ${Math.min(1, alpha * 1.35 * intensity)})`;
+      ctx.lineWidth = Math.max(10, wInner * 0.58);
       ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
       ctx.restore();
     };
 
     // Primary ray - ทำให้ใหญ่และสว่างขึ้น
-    drawRay(src.x, src.y, bx, by, { 
-      wOuter: 150, 
-      wInner: 50, 
+    drawRay(src.x, src.y, bx, by, {
+      wOuter: 198,
+      wInner: 72,
       alpha: 1,
-      blur: 30
+      blur: 38,
+      col1: "#FFF48F",
+      col2: "#FF5A00",
     });
 
     // Impact glow - ทำให้ใหญ่ขึ้น
     if (beamProgress >= 0.95) {
       const rg = ctx.createRadialGradient(mid.x, mid.y, 0, mid.x, mid.y, 200);
-      rg.addColorStop(0,   `rgba(255, 215, 0, ${materialType === "transparent" ? 0.6 : materialType === "translucent" ? 0.4 : 0.2})`);
-      rg.addColorStop(0.5, `rgba(255, 140, 0, ${materialType === "transparent" ? 0.3 : materialType === "translucent" ? 0.2 : 0.1})`);
+      rg.addColorStop(0,   `rgba(255, 228, 90, ${materialType === "transparent" ? 0.96 : materialType === "translucent" ? 0.68 : 0.38})`);
+      rg.addColorStop(0.5, `rgba(255, 130, 0, ${materialType === "transparent" ? 0.58 : materialType === "translucent" ? 0.36 : 0.2})`);
       rg.addColorStop(1,   "rgba(0,0,0,0)");
       ctx.save();
-      ctx.filter = "blur(20px)";
+      ctx.filter = "blur(24px)";
       ctx.fillStyle = rg;
       ctx.beginPath();
-      ctx.arc(mid.x, mid.y, 180, 0, Math.PI * 2);
+      ctx.arc(mid.x, mid.y, 200, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
@@ -257,19 +270,19 @@ function BeamCanvas({
       const ty = mid.y + (tgt.y - mid.y) * rp;
       const passAlpha =
         materialType === "transparent"
-          ? 0.94
+          ? 1.08
           : materialType === "translucent"
-            ? 0.52
+            ? 0.76
             : 0;
 
       if (passAlpha > 0) {
         drawRay(mid.x, mid.y, tx, ty, {
-          wOuter: materialType === "transparent" ? 112 : 84,
-          wInner: materialType === "transparent" ? 28 : 18,
+          wOuter: materialType === "transparent" ? 150 : 116,
+          wInner: materialType === "transparent" ? 40 : 28,
           alpha: passAlpha * throughLevel,
-          blur: materialType === "transparent" ? 16 : 24,
-          col1: materialType === "transparent" ? "#FFF7C8" : "#FFC067",
-          col2: materialType === "transparent" ? "#FFBC56" : "#FF8A3D",
+          blur: materialType === "transparent" ? 20 : 28,
+          col1: materialType === "transparent" ? "#FFF6BE" : "#FFD98F",
+          col2: materialType === "transparent" ? "#FFAA2A" : "#FF7615",
         });
       }
 
@@ -904,7 +917,7 @@ export default function P4LightExperiment() {
       : selectedMaterial.type === "opaque"
         ? 3 + opaqueBlurPhase * 9
         : selectedMaterial.type === "translucent"
-          ? 4 + targetEffectProgress * 4
+          ? 1.2 + targetEffectProgress * 1.8
         : 0;
   const bearSaturate =
     !shine || !lightReachedTarget
@@ -912,7 +925,7 @@ export default function P4LightExperiment() {
       : selectedMaterial.type === "transparent"
         ? 1.05
         : selectedMaterial.type === "translucent"
-          ? 0.85
+          ? 0.96
           : Math.max(0.45, 1 - opaqueFadePhase * 0.6);
   const targetVeilOpacity =
     !shine || !lightReachedTarget
@@ -920,7 +933,7 @@ export default function P4LightExperiment() {
       : selectedMaterial.type === "transparent"
         ? 0.08
         : selectedMaterial.type === "translucent"
-          ? 0.35
+          ? 0.24
           : Math.min(0.95, 0.52 + targetEffectProgress * 0.43);
   const targetVeilBackground =
     !shine || !lightReachedTarget
@@ -1106,10 +1119,10 @@ export default function P4LightExperiment() {
                       transform: "translate(-50%,-50%)",
                       ...torchWideGlow,
                       background:
-                        "radial-gradient(ellipse, rgba(255,215,0,0.36) 0%, rgba(255,190,80,0.2) 38%, transparent 72%)",
+                        "radial-gradient(ellipse, rgba(255,241,166,0.8) 0%, rgba(255,190,62,0.5) 44%, transparent 76%)",
                       borderRadius: "50%",
                       pointerEvents: "none",
-                      filter: "blur(18px)",
+                      filter: "blur(26px)",
                     }}
                   />
                 </>
@@ -1156,13 +1169,13 @@ export default function P4LightExperiment() {
                   ...S.beamPassOverlay,
                   opacity:
                     selectedMaterial.type === "transparent"
-                      ? Math.min(0.95, 0.2 + reflectProgress * 0.85)
-                      : Math.min(0.5, reflectProgress * 0.45),
+                      ? Math.min(1, 0.38 + reflectProgress * 0.95)
+                      : Math.min(0.72, 0.16 + reflectProgress * 0.58),
                   background:
                     selectedMaterial.type === "transparent"
-                      ? "linear-gradient(90deg, rgba(255,245,200,0) 0%, rgba(255,255,235,0.9) 46%, rgba(255,235,150,0.92) 54%, rgba(255,190,90,0) 100%)"
-                      : "linear-gradient(90deg, rgba(255,200,120,0) 0%, rgba(255,165,0,0.55) 50%, rgba(255,120,0,0) 100%)",
-                  filter: selectedMaterial.type === "transparent" ? "blur(1px)" : "blur(8px)",
+                      ? "linear-gradient(90deg, rgba(255,245,200,0) 0%, rgba(255,255,244,1) 46%, rgba(255,228,108,1) 54%, rgba(255,172,46,0) 100%)"
+                      : "linear-gradient(90deg, rgba(255,210,130,0) 0%, rgba(255,164,20,0.82) 50%, rgba(255,104,0,0) 100%)",
+                  filter: selectedMaterial.type === "transparent" ? "blur(0.6px)" : "blur(7px)",
                 }}
               />
             )}
@@ -1177,9 +1190,9 @@ export default function P4LightExperiment() {
               <div style={{
                 ...S.targetGlow,
                 background: selectedMaterial.type === "transparent"
-                  ? "radial-gradient(circle, rgba(255,215,0,0.7) 0%, rgba(255,140,0,0.3) 50%, transparent 80%)"
+                  ? "radial-gradient(circle, rgba(255,232,102,0.95) 0%, rgba(255,138,0,0.56) 50%, transparent 80%)"
                   : selectedMaterial.type === "translucent"
-                  ? "radial-gradient(circle, rgba(255,165,0,0.4) 0%, rgba(255,100,0,0.2) 50%, transparent 80%)"
+                  ? "radial-gradient(circle, rgba(255,182,44,0.65) 0%, rgba(255,100,0,0.36) 50%, transparent 80%)"
                   : "radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(220,236,255,0.25) 50%, transparent 80%)",
                 width: targetGlowSize,
                 height: targetGlowSize,
@@ -1386,7 +1399,8 @@ const S = {
     position: "absolute", top: "50%", left: "50%",
     transform: "translate(-50%,-50%)",
     width: 250, height: 100,
-    background: "radial-gradient(ellipse, rgba(255,215,0,0.5) 0%, transparent 70%)",
+    background:
+      "radial-gradient(ellipse, rgba(255,236,150,0.92) 0%, rgba(255,186,58,0.5) 46%, transparent 76%)",
     borderRadius: "50%",
     pointerEvents: "none",
   },
