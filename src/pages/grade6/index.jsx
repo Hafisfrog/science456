@@ -94,7 +94,7 @@ export default function Grade6() {
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1500px] flex-col">
         <h1 className="m-0 text-4xl font-extrabold text-blue-600 md:text-[72px]">{copy.title}</h1>
-        <p className="mt-2 text-lg text-slate-700 md:text-[45px]">{copy.subtitle}</p>
+        <p className="mt-2 text-base text-slate-700 md:text-[32px]">{copy.subtitle}</p>
 
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
           <div className="grid w-full max-w-[1020px] grid-cols-1 justify-items-center gap-6 lg:translate-x-4 lg:grid-cols-2 xl:translate-x-5">

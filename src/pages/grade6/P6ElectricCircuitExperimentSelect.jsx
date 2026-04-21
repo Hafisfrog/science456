@@ -102,11 +102,11 @@ export default function P6ElectricCircuitExperimentSelect() {
           {t.title}
         </h1>
 
-        <p className="mt-2 text-lg text-slate-700 md:text-[45px]">
+        <p className="mt-2 text-base text-slate-700 md:text-[30px]">
           {t.subtitle}
         </p>
 
-        <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
+        <section className="mx-auto -mt-30 flex w-full flex-1 items-center justify-center">
           <div className="grid w-full max-w-[940px] grid-cols-1 justify-items-center gap-5 lg:grid-cols-2">
 
             {experiments.map((item) => (

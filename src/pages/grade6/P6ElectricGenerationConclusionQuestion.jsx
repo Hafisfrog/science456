@@ -121,8 +121,8 @@ export default function P6ElectricGenerationConclusionQuestion() {
           "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
       }}
     >
-      <div className="relative z-[1] mx-auto w-full max-w-[1280px]">
-        <div className="rounded-[24px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(20px,3vw,32px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
+      <div className="relative z-[1] mx-auto w-full max-w-[900px]">
+        <div className="rounded-[22px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(16px,2.2vw,24px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
           <div className="ans2-header !mb-3 !pb-3">
             <div className="ans2-titleWrap">
               <QuestionBadge text={t.title} />
@@ -200,4 +200,3 @@ export default function P6ElectricGenerationConclusionQuestion() {
     </div>
   );
 }
-

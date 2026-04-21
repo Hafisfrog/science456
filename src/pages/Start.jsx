@@ -38,7 +38,7 @@ export default function Start() {
             className="inline-flex rounded-full bg-gradient-to-br from-[#ff6b4a] to-[#ff8b5b] px-14 py-4 text-2xl font-bold text-white shadow-[0_14px_30px_rgba(255,107,74,0.35)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(255,107,74,0.45)] active:translate-y-[2px] active:shadow-[0_10px_24px_rgba(255,107,74,0.35)]"
             onClick={() => navigate("/grades")}
           >
-            กดเพื่อเริ่ม
+            เริ่ม
           </button>
         </div>
       </div>

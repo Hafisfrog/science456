@@ -47,7 +47,7 @@
 
 .p6-vocab-sub {
   margin: 2px 0 0;
-  font-size: clamp(18px, 2.3vw, 45px);
+  font-size: clamp(16px, 1.6vw, 30px);
   color: #2f3f55;
   font-weight: 500;
 }
