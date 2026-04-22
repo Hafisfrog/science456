@@ -1,5 +1,6 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import "./P4GravityVocab.css";
 
 const VOCAB = [
@@ -91,6 +92,8 @@ export default function P4GravityVocab() {
 
   return (
     <div className="vocab-page">
+      <HomeButton />
+
       <header className="vocab-header">
         <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
         <p>เรื่อง ผลของแรงโน้มถ่วง</p>

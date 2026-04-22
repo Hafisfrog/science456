@@ -69,22 +69,32 @@ export default function P4Gravity() {
       />
 
       <button
-        className="fixed left-[18px] top-[18px] z-20 flex h-[64px] items-center gap-3 rounded-[18px] border border-white/80 bg-[linear-gradient(135deg,rgba(255,255,255,.96),rgba(191,224,255,.9))] px-5 text-[#1e3a8a] shadow-[0_14px_30px_rgba(8,15,35,.28)] backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:bg-[linear-gradient(135deg,#ffffff,#dbeafe)] hover:text-[#0f2f75] hover:shadow-[0_18px_38px_rgba(8,15,35,.34)] active:translate-y-px max-[640px]:left-[12px] max-[640px]:top-[12px] max-[640px]:h-[52px] max-[640px]:gap-2 max-[640px]:rounded-[14px] max-[640px]:px-3"
         type="button"
+        className="fixed left-[18px] top-[18px] z-20 grid h-16 w-16 place-items-center rounded-[14px] border border-white/80 bg-[linear-gradient(145deg,rgba(255,255,255,.96),rgba(226,242,255,.9))] text-[#202124] shadow-[0_18px_36px_rgba(8,15,35,.25),inset_0_1px_0_rgba(255,255,255,.9)] backdrop-blur-md transition duration-150 hover:-translate-y-0.5 hover:scale-[1.03] hover:bg-[linear-gradient(145deg,#ffffff,#dbeafe)] hover:text-gray-900 hover:shadow-[0_24px_44px_rgba(8,15,35,.3),inset_0_1px_0_rgba(255,255,255,.95)] active:translate-y-px active:scale-[.98] focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-sky-300/80 max-[900px]:left-3 max-[900px]:top-3 max-[900px]:h-[54px] max-[900px]:w-[54px] max-[900px]:rounded-xl"
         onClick={() => navigate("/grades")}
-        aria-label="Go to SelectGrade"
+        aria-label="SelectGrade"
         title="SelectGrade"
       >
         <svg
           aria-hidden="true"
-          className="h-[34px] w-[34px] shrink-0 max-[640px]:h-[28px] max-[640px]:w-[28px]"
-          viewBox="0 0 24 24"
-          fill="currentColor"
+          className="h-11 w-11 drop-shadow-[0_5px_7px_rgba(0,0,0,.22)] max-[900px]:h-[37px] max-[900px]:w-[37px]"
+          viewBox="0 0 128 128"
+          focusable="false"
         >
-          <path d="M3 10.6 12 3l9 7.6v8.8a1.6 1.6 0 0 1-1.6 1.6H15v-6.2a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1V21H4.6A1.6 1.6 0 0 1 3 19.4v-8.8Z" />
-          <path d="M1.8 10.6a1 1 0 0 1 .1-1.4l9.5-8a1 1 0 0 1 1.3 0l9.5 8a1 1 0 1 1-1.3 1.5L12 3.2l-8.8 7.5a1 1 0 0 1-1.4-.1Z" />
+          <path
+            d="M13 65.5 57.8 28.2c3.7-3.1 8.7-3.1 12.4 0L115 65.5"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="11"
+          />
+          <path
+            d="M27.5 69.4 58.3 43.8c3.4-2.8 8-2.8 11.4 0l30.8 25.6v34.8c0 6.5-5.3 11.8-11.8 11.8H76.8V88.4c0-4.7-3.8-8.4-8.4-8.4h-8.8c-4.7 0-8.4 3.8-8.4 8.4V116H39.3c-6.5 0-11.8-5.3-11.8-11.8V69.4Z"
+            fill="currentColor"
+          />
+          <path d="M88 33h17v29.5L88 48.4V33Z" fill="currentColor" />
         </svg>
-        <span className="whitespace-nowrap text-[20px] font-extrabold max-[640px]:text-[16px]">หน้าหลัก</span>
       </button>
 
       <div className="relative z-10">

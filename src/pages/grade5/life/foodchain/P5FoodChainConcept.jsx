@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 export default function P5FoodChainConcept() {
@@ -17,6 +18,8 @@ export default function P5FoodChainConcept() {
         fontFamily: "sans-serif",
       }}
     >
+      <HomeButton />
+
       <div
         style={{
           position: "absolute",

@@ -1,5 +1,6 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
@@ -449,6 +450,8 @@ export default function P6ElectricForceEffectSim() {
   };
   return (
     <div className="p6-force-sim-page">
+      <HomeButton />
+
       <style>{forceEffectSimStyles}</style>
       <div className="p6-force-sim-stage">
         <div className="p6-force-sim-live-timer" role="status" aria-live="polite">

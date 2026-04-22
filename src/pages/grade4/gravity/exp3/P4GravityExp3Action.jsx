@@ -1,5 +1,6 @@
-﻿import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import "./P4GravityExp3Action.css";
 
 export default function P4GravityExp3Action() {
@@ -212,6 +213,8 @@ export default function P4GravityExp3Action() {
 
   return (
     <div className="e3a-page">
+      <HomeButton />
+
       {/* 2 เธเนเธญเธเนเธซเธเน */}
       <div className="e3a-split">
         {/* LEFT: EARTH */}

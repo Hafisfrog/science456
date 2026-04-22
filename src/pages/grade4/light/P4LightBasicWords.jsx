@@ -1,5 +1,6 @@
-﻿import { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 import { LightNavButtons } from "./LightControls";
 
 const VOCAB = [
@@ -179,6 +180,8 @@ export default function P4LightBasicWords() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-[#eef6ff] via-[#e9f2fb] to-[#dbe9f7] px-4 py-8 pb-28 sm:px-6 sm:pb-32">
+      <HomeButton />
+
       <div className="mx-auto max-w-5xl">
         <header className="mb-6 text-center">
           <h1 className="text-2xl font-bold text-slate-600 sm:text-3xl">

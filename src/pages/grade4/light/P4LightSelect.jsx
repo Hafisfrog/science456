@@ -1,5 +1,6 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const MATERIALS = [
@@ -102,6 +103,8 @@ export default function P4LightSelect() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-3 pb-28 pt-4 sm:px-6 sm:pb-32 sm:pt-5">
+      <HomeButton />
+
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/materials/back.png')" }}

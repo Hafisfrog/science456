@@ -1,5 +1,6 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumansSummary3.css";
@@ -220,6 +221,8 @@ export default function P5GeneticsHumansSummary3() {
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
+      <HomeButton />
+
       <div className="p5ghs3-page">
         <div className="p5ghs3-sun" aria-hidden="true" />
 

@@ -1,4 +1,5 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
 const TOTAL_TRIALS = 3;
@@ -88,6 +89,8 @@ export default function P6ElectricGenerationResult() {
       className="flex min-h-screen items-center justify-center bg-[#e9f7ff] p-[clamp(16px,4vw,36px)]"
       style={{ fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div className="relative min-h-[min(680px,90vh)] w-[min(1200px,96vw)] overflow-hidden rounded-[26px] border border-white/90 p-[clamp(24px,4vw,40px)] shadow-[0_24px_40px_rgba(17,24,39,0.18)]" style={pageBg}>
         <h1 className="mb-[18px] mt-0 text-center text-[clamp(26px,3vw,34px)] font-black text-slate-900">ผลการทดลอง</h1>
 

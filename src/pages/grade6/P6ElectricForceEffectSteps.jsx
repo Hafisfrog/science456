@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
@@ -86,6 +87,8 @@ export default function P6ElectricForceEffectSteps() {
       className="min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(35px,5.5vw,75px)]"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div className="mx-auto max-w-[1260px]">
         <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg">
           <div className="text-[clamp(30px,3vw,44px)] font-black">{t.heading}</div>

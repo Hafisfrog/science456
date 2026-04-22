@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 import "./P6ElectricForceRecap.css";
 
 const EQUIPMENT_ITEMS = [
@@ -77,6 +78,8 @@ export default function P6ElectricForceRecap() {
 
   return (
     <div className="p6-force-recap-page" style={pageBg}>
+      <HomeButton />
+
       <div className="p6-force-recap-lightning" aria-hidden="true" />
 
       <div className="p6-force-recap-stage">

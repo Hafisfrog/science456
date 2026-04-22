@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const getSlotKey = (row, col) => `${row}-${col}`;
@@ -480,6 +481,8 @@ export default function P5FoodChainSelect() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/65 via-white/45 to-emerald-50/50" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-8 top-6 h-40 w-40 rounded-full bg-lime-100/30 blur-3xl" />

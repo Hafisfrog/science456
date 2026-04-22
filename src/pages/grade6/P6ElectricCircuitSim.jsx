@@ -1,5 +1,6 @@
-﻿import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const TEXT = {
   th: {
@@ -649,6 +650,8 @@ export default function P6ElectricCircuitSim() {
       className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-16 pt-8 text-slate-900 md:px-8 md:pt-27"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-4 right-4 top-[18%] h-[42%] rounded-[48%] bg-white/38 blur-3xl" />
         <div className="absolute inset-x-0 bottom-0 h-[160px] bg-gradient-to-t from-[#9fc5d8] via-[#b1d4e6] to-transparent" />

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 function FlowArrow({ vertical = false, color = "#ff4d43", compact = false }) {
@@ -362,6 +363,8 @@ export default function P5FoodChainsss() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif] text-slate-900">
+      <HomeButton />
+
       <div className="absolute inset-0 bg-white/10" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-[#8bc53f] xl:h-16" />
 

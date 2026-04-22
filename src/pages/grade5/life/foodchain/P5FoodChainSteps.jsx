@@ -1,5 +1,6 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const PAGE_COPY = {
@@ -71,6 +72,8 @@ export default function P5FoodChainSteps() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div className="absolute inset-0 bg-white/5" />
 
       <div className="relative z-10 mx-auto max-w-6xl px-4 pb-32 pt-8 sm:pb-36">

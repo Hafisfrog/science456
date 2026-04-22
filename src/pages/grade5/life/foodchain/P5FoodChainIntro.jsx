@@ -1,5 +1,6 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const IMAGE_CARD = {
@@ -68,6 +69,8 @@ export default function P5FoodChainIntro() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat">
+      <HomeButton />
+
       <div className="absolute inset-0 bg-[#09101d]/72" />
       <div className="pointer-events-none absolute inset-0 opacity-70 [background:radial-gradient(circle_at_left_10%,rgba(253,230,138,0.95)_0,rgba(253,230,138,0.12)_12%,transparent_26%),radial-gradient(circle_at_right_92%,rgba(251,191,36,0.9)_0,rgba(251,191,36,0.08)_10%,transparent_24%)]" />
       <div className="pointer-events-none absolute left-0 top-[12%] h-[6px] w-full bg-gradient-to-r from-transparent via-[#e9d27a] to-transparent shadow-[0_0_30px_rgba(233,210,122,0.95)]" />

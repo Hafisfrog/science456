@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
 
@@ -126,6 +127,8 @@ export default function P6ElectricGenerationSummary() {
           "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
       }}
     >
+      <HomeButton />
+
       <div className="relative isolate w-[min(1240px,97vw)] p-[clamp(16px,3vw,30px)]">
         <div className="relative z-10 pb-[112px]">
           <h1 className="mb-[14px] mt-0 text-center text-[clamp(30px,3.2vw,44px)] font-black text-slate-900">

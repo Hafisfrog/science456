@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
@@ -426,6 +427,8 @@ export default function P5FoodChainScene() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/fos.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif] text-slate-900">
+      <HomeButton />
+
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.08)_58%,rgba(255,255,255,0.03))]" />
 
       <div className="absolute left-1/2 top-3 z-50 max-w-[min(88vw,30rem)] -translate-x-1/2 rounded-full bg-white/78 px-6 py-3 text-center text-xs font-bold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm sm:px-8 sm:py-4 sm:text-lg">

@@ -1,5 +1,6 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 import "./P6ElectricCircuitBulbSeriesParallelSim.css";
 
@@ -325,6 +326,8 @@ export default function P6ElectricCircuitBulbSeriesParallelSim() {
       className="p6-circuit-bsp-sim-page relative min-h-screen overflow-x-hidden overflow-y-scroll text-slate-900"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div className="p6-circuit-bsp-sim-stage relative z-[1] mx-auto">
         <div className="p6-circuit-bsp-sim-side p6-circuit-bsp-sim-side-left">
           <div className="p6-circuit-bsp-sim-selector">

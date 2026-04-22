@@ -1,5 +1,6 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const SPEECH_LOCALES = {
@@ -230,6 +231,8 @@ export default function P4LightConceptSummary() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#dbedf7] via-[#d4ebf8] to-[#cae1f5] font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85"
         style={{ backgroundImage: "url('/images/materials/back.png')" }}

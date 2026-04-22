@@ -1,5 +1,6 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
 const LANG_TO_LOCALE = {
@@ -225,6 +226,8 @@ export default function P5FoodChainMaterials() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div className="absolute inset-0 bg-white/5" />
 
       <div className="absolute left-1/2 top-6 -translate-x-1/2">

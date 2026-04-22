@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 // ─── Constants ───────────────────────────────────────────────────────────────
@@ -969,6 +970,8 @@ export default function P4LightExperiment() {
   });
   return (
     <div style={rootStyle}>
+      <HomeButton />
+
       <style>{CSS}</style>
 
       <main style={mainStyle}>

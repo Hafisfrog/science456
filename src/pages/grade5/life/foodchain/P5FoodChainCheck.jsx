@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { FoodChainNavButtons } from "./FoodChainControls";
 
@@ -38,6 +39,8 @@ export default function P5FoodChainCheck() {
 
   return (
     <LabLayout title="ตรวจคำตอบ : ห่วงโซ่อาหาร">
+      <HomeButton />
+
       <div className="space-y-6">
         {/* คำอธิบาย */}
         <div className="bg-white border-4 border-black rounded-xl p-4 shadow">

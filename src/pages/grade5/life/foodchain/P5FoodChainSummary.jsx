@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
 
 const VOICE_LANG = {
@@ -102,6 +103,8 @@ export default function P5FoodChainSummary() {
 
   return (
     <div className="relative min-h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div className="absolute inset-0 bg-white/5" />
 
       <div className="relative z-10 flex min-h-screen flex-col items-center px-4 pb-32 pt-10 sm:px-6 sm:pb-36">

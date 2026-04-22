@@ -1,5 +1,6 @@
-﻿import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import "./P4GravityExp2Result.css";
 import "../exp1/P4GravityExp1Materials.css";
 
@@ -181,6 +182,8 @@ export default function P4GravityExp2Result() {
 
   return (
     <div className="exp2r2-page">
+      <HomeButton />
+
       <img
         src="/images/p4/backgrounds-p4.jpg"
         alt="Laboratory background"

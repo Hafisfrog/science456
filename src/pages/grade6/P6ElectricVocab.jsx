@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 import "./P6ElectricVocab.css";
 
 const FORCE_VOCAB = [
@@ -83,6 +84,8 @@ export default function P6ElectricVocab() {
 
   return (
     <div className="p6-vocab-page">
+      <HomeButton />
+
       <div className={`p6-vocab-shell ${!isUnitFlow ? "p6-circuit-vocab-shell" : ""}`}>
         <header className="p6-vocab-header">
           <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>

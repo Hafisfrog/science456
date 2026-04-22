@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const EQUIPMENT = [
   { title: "กระบะถ่านไฟฉาย", subtitle: "1 ชุด" },
@@ -112,6 +113,8 @@ export default function P6ElectricCircuitIntro() {
       className="relative min-h-screen px-[clamp(18px,4vw,48px)] pb-[70px] pt-[clamp(24px,4vw,56px)] text-slate-900"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{

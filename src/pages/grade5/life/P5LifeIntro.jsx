@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 
 const LANGS = [
   { id: "th", label: "ไทย", voice: "th-TH" },
@@ -174,6 +175,8 @@ export default function P5LifeIntro() {
       className="relative min-h-screen overflow-hidden px-4 py-5 text-slate-900 md:px-10"
       style={{ fontFamily: "Prompt, Noto Sans Thai, sans-serif", background: pageBg }}
     >
+      <HomeButton />
+
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-10 -top-16 h-40 w-40 rounded-full bg-yellow-300 shadow-[0_0_0_14px_#f59e0b] sm:h-48 sm:w-48" />
         <div className="absolute left-0 right-0 top-[10%] mx-auto h-[66%] w-[96%] rounded-[50%] bg-white/52 blur-[2px]" />

@@ -1,5 +1,6 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const CONTENT = {
   th: {
@@ -80,6 +81,8 @@ export default function P6ElectricObjectives() {
           "radial-gradient(80% 58% at 50% 34%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
       }}
     >
+      <HomeButton />
+
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-4 text-center">
           <h1 className="text-[clamp(44px,5vw,76px)] font-black leading-none">{t.title}</h1>

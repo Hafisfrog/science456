@@ -1,5 +1,6 @@
-﻿import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import "./P4GravityExp1Answer.css";
 
 export default function P4GravityExp1Answer() {
@@ -127,6 +128,8 @@ export default function P4GravityExp1Answer() {
 
   return (
     <div className="ans2-page">
+      <HomeButton />
+
       <img
         src="/images/p4/backgrounds-p4.jpg"
         alt="Laboratory background"

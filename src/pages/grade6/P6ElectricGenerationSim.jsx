@@ -1,5 +1,6 @@
-﻿import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import HomeButton from "../HomeButton";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
 
 const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
@@ -561,6 +562,8 @@ export default function P6ElectricGenerationSim() {
         fontFamily: "Prompt, sans-serif",
       }}
     >
+      <HomeButton />
+
       <style>{forceEffectSimStyles}</style>
 
       <div

@@ -1,5 +1,6 @@
-﻿import { useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import "./P4GravityExp3Vocab.css";
 
 const VOCAB = [
@@ -73,6 +74,8 @@ export default function P4GravityExp3Vocab() {
 
   return (
     <div className="exp3-vocab-page">
+      <HomeButton />
+
       <header className="exp3-vocab-header">
         <h1>{t.title}</h1>
         <p>{t.subtitle}</p>

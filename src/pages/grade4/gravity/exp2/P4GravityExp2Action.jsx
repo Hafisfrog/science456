@@ -1,5 +1,6 @@
-﻿import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import "./P4GravityExp2Action.css";
 import "../exp1/P4GravityExp1Materials.css";
 
@@ -334,6 +335,8 @@ export default function P4GravityExp2Action() {
 
   return (
     <div className="exp2a-page">
+      <HomeButton />
+
       <img className="exp2a-bg" src={assets.bg} alt="background" />
       <div className="exp2a-overlay" />
 
