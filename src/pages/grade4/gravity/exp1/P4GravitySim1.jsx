@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 
 export default function P4GravitySim1() {
   const navigate = useNavigate();
@@ -102,6 +103,8 @@ export default function P4GravitySim1() {
 
   return (
     <div className="m-0 h-screen min-h-screen w-screen overflow-hidden bg-[radial-gradient(circle_at_20%_10%,#ffffff_0%,#e8f6ff_35%,#d8efff_100%)] p-0 font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div className="relative h-full w-full overflow-hidden bg-[#cfe9f6]">
         <img
           className="absolute inset-0 h-full w-full object-cover saturate-105"

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 export default function P6ElectricCircuitProblem() {
 
@@ -14,6 +15,8 @@ export default function P6ElectricCircuitProblem() {
       className="relative min-h-screen overflow-hidden px-6 pt-6 pb-6"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
 
       {/* Lightning */}
       <div

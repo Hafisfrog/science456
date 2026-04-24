@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 import { GRADE6_LANG_BAR_CLASS, grade6LangButtonClass } from "./grade6LangStyles";
 
 const LANGUAGES = [
@@ -78,6 +79,8 @@ export default function Grade6() {
       className="relative h-[100svh] overflow-hidden px-4 pb-6 pt-7 text-center text-slate-900 md:px-6 md:pb-8 md:pt-8"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(120px,11vw,190px)] top-3 h-[clamp(108px,11vw,150px)] w-[clamp(70px,7vw,102px)] bg-[#f7bd2b]"

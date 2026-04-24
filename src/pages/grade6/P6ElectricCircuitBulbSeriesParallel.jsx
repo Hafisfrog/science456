@@ -1,5 +1,6 @@
-﻿import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 function speakText(text, lang) {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -123,6 +124,8 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
       className="relative min-h-screen overflow-hidden px-4 pb-6 pt-4 text-slate-900 md:px-8"
       style={pageBg}
     >
+      <HomeButton />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] z-0 h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"

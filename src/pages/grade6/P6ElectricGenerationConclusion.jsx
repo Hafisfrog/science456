@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const TEXT = {
   th: {
@@ -105,6 +106,8 @@ export default function P6ElectricGenerationConclusion() {
           "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
       }}
     >
+      <HomeButton />
+
       <div className="relative z-[1] mx-auto flex min-h-[calc(100vh-180px)] w-full max-w-[1240px] items-center">
         <div className="relative w-full overflow-hidden rounded-[28px] border border-white/90 bg-[#e8f5ff]/95 p-[clamp(22px,2.8vw,36px)] shadow-[0_18px_30px_rgba(17,24,39,0.16)]">
           <div className="flex flex-wrap items-center gap-3">

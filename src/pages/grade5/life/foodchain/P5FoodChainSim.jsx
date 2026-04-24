@@ -1,5 +1,6 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
 
 const SCORE_PER_ROW = 2;
@@ -163,6 +164,8 @@ export default function P5FoodChainSim() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-emerald-950/25 via-emerald-700/10 to-slate-950/15" />
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -left-10 top-8 h-56 w-56 rounded-full bg-lime-200/45 blur-3xl" />

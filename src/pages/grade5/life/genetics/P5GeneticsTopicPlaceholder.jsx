@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 
 const topicMap = {
@@ -14,6 +15,8 @@ export default function P5GeneticsTopicPlaceholder() {
 
   return (
     <LabLayout title="ชั้นประถมศึกษาปีที่ 5">
+      <HomeButton />
+
       <div className="flex h-full items-center justify-center bg-gradient-to-b from-[#f3f7ff] to-[#e5eefb] px-4">
         <div className="w-full max-w-2xl rounded-3xl border-4 border-black bg-white p-8 text-center shadow-[10px_12px_0_#9eb7e6]">
           <h1 className="text-4xl font-black">{title}</h1>

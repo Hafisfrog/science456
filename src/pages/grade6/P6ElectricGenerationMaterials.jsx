@@ -1,5 +1,6 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const LANG = {
   th: {
@@ -128,6 +129,8 @@ export default function P6ElectricGenerationMaterials() {
       className="relative min-h-screen overflow-hidden px-6 pb-24 pt-6"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div className="relative z-10 mx-auto w-full max-w-[1220px]">
         <h1 className="text-center text-[64px] font-bold text-black">{t.title}</h1>
         <h2 className="mt-8 text-[52px] font-bold">{t.equipment}</h2>

@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const TRANSLATIONS = {
   th: {
@@ -117,6 +118,8 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
       className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-5 pt-8 text-slate-900 md:px-8 md:pt-20"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"

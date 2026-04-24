@@ -1,4 +1,5 @@
-﻿import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 import { useState } from "react";
 
 const LESSONS = [
@@ -67,6 +68,8 @@ export default function P6() {
       className="relative h-[100svh] overflow-hidden px-4 pb-6 pt-7 text-center md:px-6 md:pt-8"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
 
       {/* Lightning */}
       <div

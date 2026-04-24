@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsHumans.css";
@@ -266,6 +267,8 @@ export default function P5GeneticsHumans() {
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
+      <HomeButton />
+
       <div className="p5gh-page notranslate" translate="no">
         <section className="p5gh-board">
           <div className="p5gh-topic" translate="no">{t.topic}</div>

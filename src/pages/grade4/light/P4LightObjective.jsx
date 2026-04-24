@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const CONTENT = {
@@ -89,6 +90,8 @@ export default function P4LightObjective() {
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 font-['Prompt',sans-serif]">
+      <HomeButton />
+
       <div
         className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/materials/back.png')" }}

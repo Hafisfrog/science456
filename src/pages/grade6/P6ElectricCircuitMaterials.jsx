@@ -1,5 +1,6 @@
-﻿import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const EQUIPMENT_MEDIA = {
   cell: {
@@ -223,6 +224,8 @@ export default function P6ElectricCircuitMaterials() {
       className="relative min-h-screen overflow-hidden px-4 pb-6 pt-4 text-slate-900 md:px-8"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
 
       <div className="mx-auto flex max-w-[1380px] flex-col gap-3">
         <h1 className="m-0 py-1 text-center text-[clamp(30px,2.2vw,48px)] font-black leading-[1.08] text-slate-900">

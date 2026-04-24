@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const LANG = {
   th: {
@@ -126,6 +127,8 @@ export default function P6ElectricForceEffect() {
       className="h-[100dvh] overflow-hidden px-[clamp(14px,1.6vw,24px)] py-[clamp(12px,1.6vw,20px)]"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div className="mx-auto flex h-full w-full max-w-[1240px] flex-col">
         <h1 className="text-center text-[clamp(40px,4.2vw,64px)] font-bold">{t.title}</h1>
 

@@ -1,5 +1,6 @@
-﻿import { useRef } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { useState } from "react";
 import "./P4GravityExp2Vocab.css";
 import "../exp1/P4GravityExp1Materials.css";
@@ -145,6 +146,8 @@ export default function P4GravityExp2Vocab() {
 
   return (
     <div className="vocab-page" style={{ position: "relative" }}>
+      <HomeButton />
+
       <header className="vocab-header">
         <h1>{t.title}</h1>
         <p>{t.subtitle}</p>

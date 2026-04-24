@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsAnimals.css";
@@ -210,6 +211,8 @@ export default function P5GeneticsAnimals() {
 
   return (
     <LabLayout title={t.title} showTeacher={false}>
+      <HomeButton />
+
       <div className="p5ga-page">
         <section className="p5ga-board">
           <h1>{t.title}</h1>

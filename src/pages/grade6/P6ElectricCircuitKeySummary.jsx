@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../HomeButton";
 
 const TEXT = {
   th: {
@@ -49,7 +50,7 @@ const TEXT = {
       ],
     },
     back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
-    next: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
+    next: "\u0e08\u0e1a\u0e1a\u0e17\u0e40\u0e23\u0e35\u0e22\u0e19",
     lang: {
       th: "\u0e44\u0e17\u0e22",
       en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
@@ -74,7 +75,7 @@ const TEXT = {
       ],
     },
     back: "Back",
-    next: "Next",
+    next: "Finish Lesson",
     lang: {
       th: "Thai",
       en: "English",
@@ -99,7 +100,7 @@ const TEXT = {
       ],
     },
     back: "Kembali",
-    next: "Seterusnya",
+    next: "Tamat Pelajaran",
     lang: {
       th: "Thai",
       en: "Inggeris",
@@ -188,6 +189,8 @@ export default function P6ElectricCircuitKeySummary() {
       className="relative min-h-screen overflow-x-hidden overflow-y-auto px-4 pb-6 pt-3 text-slate-900 md:px-10 md:pb-32 md:pt-15"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
+      <HomeButton />
+
       <div
         aria-hidden="true"
         className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"

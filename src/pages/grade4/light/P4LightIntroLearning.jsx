@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../HomeButton";
 import { LightNavButtons } from "./LightControls";
 
 const VOCAB = [
@@ -29,6 +30,8 @@ export default function P4LightIntroLearning() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-b from-[#eef7f6] via-[#e7f2f3] to-[#dcecff] px-4 py-8 pb-28 sm:px-6">
+      <HomeButton />
+
       <div className="mx-auto max-w-5xl">
         <header className="mb-6 text-center">
           <h1 className="text-3xl font-extrabold text-slate-700 sm:text-4xl">

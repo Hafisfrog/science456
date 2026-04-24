@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import HomeButton from "../../../HomeButton";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
 import "./p5GeneticsLangShared.css";
@@ -153,6 +154,8 @@ export default function P5GeneticsSelect() {
 
   return (
     <div className="p5gen-page notranslate" translate="no">
+      <HomeButton />
+
       <main className="p5gen-main">
         <div className="p5gen-heading">
           <h1 className="notranslate" translate="no">{t.title}</h1>
