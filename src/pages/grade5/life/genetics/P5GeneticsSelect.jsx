@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+﻿import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
@@ -15,19 +15,19 @@ const LANG_TO_VOICE = {
 
 const PAGE_TEXT = {
   th: {
-    chip: "\u0e0a\u0e31\u0e49\u0e19\u0e1b\u0e23\u0e30\u0e16\u0e21\u0e28\u0e36\u0e01\u0e29\u0e32\u0e1b\u0e35\u0e17\u0e35\u0e48 5",
-    title: "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21",
-    back: "\u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
-    next: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
-    chipTh: "\u0e44\u0e17\u0e22",
-    chipEn: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
-    chipMs: "\u0e21\u0e25\u0e32\u0e22\u0e39",
+    chip: "ชั้นประถมศึกษาปีที่ 5",
+    title: "ลักษณะทางพันธุกรรม",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
+    chipTh: "ไทย",
+    chipEn: "อังกฤษ",
+    chipMs: "มลายู",
     experiments: [
       {
         id: 6,
-        title: "\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07\u0e17\u0e35\u0e48 6",
+        title: "การทดลองที่ 6",
         label:
-          "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e2a\u0e31\u0e15\u0e27\u0e4c",
+          "ลักษณะทางพันธุกรรมของสัตว์",
         path: "/p5/life/genetics/animals",
         tone: "exp-red",
         image: "/images/p5/genetics/satp5.png",
@@ -35,9 +35,9 @@ const PAGE_TEXT = {
       },
       {
         id: 7,
-        title: "\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07\u0e17\u0e35\u0e48 7",
+        title: "การทดลองที่ 7",
         label:
-          "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e1e\u0e37\u0e0a",
+          "ลักษณะทางพันธุกรรมของพืช",
         path: "/p5/life/genetics/plants",
         tone: "exp-green",
         image: "/images/p5/genetics/peuchp5.png",
@@ -45,9 +45,9 @@ const PAGE_TEXT = {
       },
       {
         id: 8,
-        title: "\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07\u0e17\u0e35\u0e48 8",
+        title: "การทดลองที่ 8",
         label:
-          "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
+          "ลักษณะทางพันธุกรรมของคน",
         path: "/p5/life/genetics/humans",
         tone: "exp-blue",
         image: "/images/p5/genetics/konp5.png",
@@ -60,9 +60,9 @@ const PAGE_TEXT = {
     title: "Genetic Traits",
     back: "Back",
     next: "Next",
-    chipTh: "\u0e44\u0e17\u0e22",
-    chipEn: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
-    chipMs: "\u0e21\u0e25\u0e32\u0e22\u0e39",
+    chipTh: "ไทย",
+    chipEn: "อังกฤษ",
+    chipMs: "มลายู",
     experiments: [
       {
         id: 6,
@@ -98,9 +98,9 @@ const PAGE_TEXT = {
     title: "Ciri Genetik",
     back: "Kembali",
     next: "Seterusnya",
-    chipTh: "\u0e44\u0e17\u0e22",
-    chipEn: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
-    chipMs: "\u0e21\u0e25\u0e32\u0e22\u0e39",
+    chipTh: "ไทย",
+    chipEn: "อังกฤษ",
+    chipMs: "มลายู",
     experiments: [
       {
         id: 6,
@@ -195,7 +195,7 @@ export default function P5GeneticsSelect() {
                   aria-label={`play ${exp.title}`}
                   onClick={(event) => speakCard(event, exp)}
                 >
-                  {"\uD83D\uDD0A"}
+                  {"🔊"}
                 </button>
                 <span className="p5gen-card-kicker notranslate" translate="no">{exp.title}</span>
                 <span className="p5gen-card-title notranslate" translate="no">{exp.label}</span>
@@ -231,13 +231,14 @@ export default function P5GeneticsSelect() {
 
       <div className="p5gen-action-row">
         <button type="button" className="p5gen-nav-back" onClick={() => navigate(BACK_PATH)}>
-          {"\u00AB"} {t.back}
+          {"«"} {t.back}
         </button>
 
         {/* <button type="button" className="p5gen-nav-next" onClick={() => navigate(NEXT_PATH)}>
-          {t.next} {"\u00BB"}
+          {t.next} {"»"}
         </button> */}
       </div>
     </div>
   );
 }
+

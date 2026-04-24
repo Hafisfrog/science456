@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+﻿import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
@@ -7,17 +7,17 @@ import "./P5GeneticsAnimalsSummaryOverrides.css";
 
 const TEXT = {
   th: {
-    title: "\u0e2a\u0e23\u0e38\u0e1b\u0e1c\u0e25\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07",
-    p1: "\u0e08\u0e32\u0e01\u0e01\u0e32\u0e23\u0e17\u0e14\u0e25\u0e2d\u0e07 \u0e40\u0e23\u0e32\u0e19\u0e33\u0e41\u0e21\u0e27\u0e1e\u0e48\u0e2d\u0e41\u0e25\u0e30\u0e41\u0e21\u0e48\u0e17\u0e35\u0e48\u0e21\u0e35\u0e2a\u0e35\u0e02\u0e19\u0e15\u0e48\u0e32\u0e07\u0e01\u0e31\u0e19\u0e21\u0e32\u0e1c\u0e2a\u0e21\u0e01\u0e31\u0e19",
-    father: "\u0e41\u0e21\u0e27\u0e1e\u0e48\u0e2d",
-    fatherDesc: "\u0e02\u0e19\u0e2a\u0e35\u0e14\u0e33",
-    mother: "\u0e41\u0e21\u0e27\u0e41\u0e21\u0e48",
-    motherDesc: "\u0e02\u0e19\u0e2a\u0e35\u0e02\u0e32\u0e27",
-    p2: "\u0e40\u0e21\u0e37\u0e48\u0e2d\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e40\u0e01\u0e34\u0e14\u0e02\u0e36\u0e49\u0e19 \u0e1e\u0e1a\u0e27\u0e48\u0e32",
-    result: "\u0e25\u0e39\u0e01\u0e41\u0e21\u0e27\u0e17\u0e38\u0e01\u0e15\u0e31\u0e27\u0e21\u0e35\u0e02\u0e19\u0e2a\u0e35\u0e14\u0e33",
-    listen: "\u0e1f\u0e31\u0e07\u0e2a\u0e23\u0e38\u0e1b",
-    back: "<< \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
-    select: "\u0e15\u0e48\u0e2d\u0e44\u0e1b",
+    title: "สรุปผลการทดลอง",
+    p1: "จากการทดลอง เรานำแมวพ่อและแม่ที่มีสีขนต่างกันมาผสมกัน",
+    father: "แมวพ่อ",
+    fatherDesc: "ขนสีดำ",
+    mother: "แมวแม่",
+    motherDesc: "ขนสีขาว",
+    p2: "เมื่อลูกแมวเกิดขึ้น พบว่า",
+    result: "ลูกแมวทุกตัวมีขนสีดำ",
+    listen: "ฟังสรุป",
+    back: "<< ย้อนกลับ",
+    select: "ต่อไป",
   },
   en: {
     title: "Experiment Summary",
@@ -65,9 +65,9 @@ function speakText(text, lang) {
 export default function P5GeneticsAnimalsSummary() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "\u0e44\u0e17\u0e22", en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29", ms: "\u0e21\u0e25\u0e32\u0e22\u0e39" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
-  const backLabel = "\u00ab \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a";
+  const backLabel = "« ย้อนกลับ";
   const speakSummary = () => {
     speakText(
       [t.p1, `${t.father} ${t.fatherDesc}`, `${t.mother} ${t.motherDesc}`, t.p2, t.result].join(". "),
@@ -105,7 +105,7 @@ export default function P5GeneticsAnimalsSummary() {
               title={t.listen}
               onClick={speakSummary}
             >
-              {"\uD83D\uDD0A"}
+              {"🔊"}
             </button>
             <p className="text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">{t.p1}</p>
             <ul className="my-3 list-disc pl-8 text-3xl leading-relaxed text-slate-900 max-[1180px]:text-2xl">
@@ -167,3 +167,4 @@ export default function P5GeneticsAnimalsSummary() {
     </LabLayout>
   );
 }
+

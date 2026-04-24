@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
@@ -12,36 +12,36 @@ const IMAGE_VERSION = "20260327-human-v3";
 const TEXT = {
   th: {
     title:
-      "\u0e01\u0e32\u0e23\u0e16\u0e48\u0e32\u0e22\u0e17\u0e2d\u0e14\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
+      "การถ่ายทอดลักษณะทางพันธุกรรมของคน",
     topic:
-      "\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e15\u0e48\u0e32\u0e07 \u0e46 \u0e02\u0e2d\u0e07\u0e04\u0e19",
+      "ลักษณะทางพันธุกรรมต่าง ๆ ของคน",
     tapImage:
-      "\u0e04\u0e33\u0e0a\u0e35\u0e49\u0e41\u0e08\u0e07 : \u0e43\u0e2b\u0e49\u0e19\u0e31\u0e01\u0e40\u0e23\u0e35\u0e22\u0e19\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e23\u0e39\u0e1b\u0e17\u0e35\u0e48\u0e40\u0e1b\u0e47\u0e19\u0e25\u0e31\u0e01\u0e29\u0e13\u0e30\u0e17\u0e32\u0e07\u0e1e\u0e31\u0e19\u0e18\u0e38\u0e01\u0e23\u0e23\u0e21\u0e02\u0e2d\u0e07\u0e04\u0e19",
-    reset: "\u0e23\u0e35\u0e40\u0e0b\u0e47\u0e15",
-    reveal: "\u0e40\u0e09\u0e25\u0e22",
-    back: "<< \u0e22\u0e49\u0e2d\u0e19\u0e01\u0e25\u0e31\u0e1a",
-    correct: "\u0e16\u0e39\u0e01",
-    incorrect: "\u0e1c\u0e34\u0e14",
-    score: "\u0e15\u0e2d\u0e1a\u0e16\u0e39\u0e01",
-    scoreLabel: "\u0e04\u0e30\u0e41\u0e19\u0e19",
-    selectedLabel: "\u0e40\u0e25\u0e37\u0e2d\u0e01\u0e41\u0e25\u0e49\u0e27",
-    wrongItems: "\u0e02\u0e49\u0e2d\u0e17\u0e35\u0e48\u0e22\u0e31\u0e07\u0e1c\u0e34\u0e14",
-    unansweredItems: "\u0e02\u0e49\u0e2d\u0e17\u0e35\u0e48\u0e22\u0e31\u0e07\u0e44\u0e21\u0e48\u0e40\u0e25\u0e37\u0e2d\u0e01",
-    allCorrect: "\u0e40\u0e22\u0e35\u0e48\u0e22\u0e21 \u0e15\u0e2d\u0e1a\u0e16\u0e39\u0e01\u0e04\u0e23\u0e1a",
-    close: "\u0e1b\u0e34\u0e14",
+      "คำชี้แจง : ให้นักเรียนเลือกรูปที่เป็นลักษณะทางพันธุกรรมของคน",
+    reset: "รีเซ็ต",
+    reveal: "เฉลย",
+    back: "<< ย้อนกลับ",
+    correct: "ถูก",
+    incorrect: "ผิด",
+    score: "ตอบถูก",
+    scoreLabel: "คะแนน",
+    selectedLabel: "เลือกแล้ว",
+    wrongItems: "ข้อที่ยังผิด",
+    unansweredItems: "ข้อที่ยังไม่เลือก",
+    allCorrect: "เยี่ยม ตอบถูกครบ",
+    close: "ปิด",
     traits: {
-      "straight-hair": "\u0e1c\u0e21\u0e15\u0e23\u0e07",
-      "double-eyelid": "\u0e15\u0e32 2 \u0e0a\u0e31\u0e49\u0e19",
-      draw: "\u0e0a\u0e2d\u0e1a\u0e27\u0e32\u0e14\u0e23\u0e39\u0e1b",
-      dimple: "\u0e21\u0e35\u0e25\u0e31\u0e01\u0e22\u0e34\u0e49\u0e21",
-      "no-dimple": "\u0e44\u0e21\u0e48\u0e21\u0e35\u0e25\u0e31\u0e01\u0e22\u0e34\u0e49\u0e21",
-      music: "\u0e0a\u0e2d\u0e1a\u0e40\u0e25\u0e48\u0e19\u0e14\u0e19\u0e15\u0e23\u0e35",
-      "curly-hair": "\u0e1c\u0e21\u0e2b\u0e22\u0e34\u0e01",
-      green: "\u0e0a\u0e2d\u0e1a\u0e2a\u0e35\u0e40\u0e02\u0e35\u0e22\u0e27",
-      nose: "\u0e2a\u0e31\u0e19\u0e08\u0e21\u0e39\u0e01\u0e42\u0e14\u0e48\u0e07",
-      tongue: "\u0e21\u0e49\u0e27\u0e19\u0e25\u0e34\u0e49\u0e19\u0e44\u0e14\u0e49",
-      sports: "\u0e0a\u0e2d\u0e1a\u0e40\u0e25\u0e48\u0e19\u0e01\u0e35\u0e2c\u0e32",
-      "single-eyelid": "\u0e15\u0e32\u0e0a\u0e31\u0e49\u0e19\u0e40\u0e14\u0e35\u0e22\u0e27",
+      "straight-hair": "ผมตรง",
+      "double-eyelid": "ตา 2 ชั้น",
+      draw: "ชอบวาดรูป",
+      dimple: "มีลักยิ้ม",
+      "no-dimple": "ไม่มีลักยิ้ม",
+      music: "ชอบเล่นดนตรี",
+      "curly-hair": "ผมหยิก",
+      green: "ชอบสีเขียว",
+      nose: "สันจมูกโด่ง",
+      tongue: "ม้วนลิ้นได้",
+      sports: "ชอบเล่นกีฬา",
+      "single-eyelid": "ตาชั้นเดียว",
     },
   },
   en: {
@@ -212,9 +212,9 @@ export default function P5GeneticsHumans() {
   const [showResults, setShowResults] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
+  const labels = { th: "เนเธ—เธข", en: "เธญเธฑเธเธเธคเธฉ", ms: "เธกเธฅเธฒเธขเธน" };
+  const backLabel = "ยซ เธขเนเธญเธเธเธฅเธฑเธ";
+  const nextLabel = "เธ•เนเธญเนเธ ยป";
   const hasAnswers = Object.keys(selectedTraits).length > 0;
   const selectedCount = Object.keys(selectedTraits).length;
   const withVersion = (url) => `${url}${url.includes("?") ? "&" : "?"}v=${IMAGE_VERSION}`;
@@ -328,7 +328,7 @@ export default function P5GeneticsHumans() {
                           }`}
                           aria-hidden="true"
                         >
-                          {trait.inherited ? "\u2713" : "\u2717"}
+                          {trait.inherited ? "✓" : "✗"}
                         </div>
                       ) : null}
                     </div>
@@ -431,4 +431,5 @@ export default function P5GeneticsHumans() {
     </LabLayout>
   );
 }
+
 
