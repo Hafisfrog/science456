@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -15,8 +15,8 @@ const CONTENT = {
   en: {
     title: "Everyday Electric Circuits",
     section: "Learning Objectives",
-    obj1: "Describe the components of a simple electric circuit. (K)",
-    obj2: "Build a simple circuit and identify open/closed circuits. (K, P)",
+    obj1: "Describe the components of a simple electric circuit. ",
+    obj2: "Build a simple circuit and identify open/closed circuits. ",
     back: "Back",
     next: "Next",
     lang: { th: "Thai", en: "English", ms: "Malay" },
@@ -24,8 +24,8 @@ const CONTENT = {
   ms: {
     title: "Litar Elektrik Sekeliling Kita",
     section: "Objektif Pembelajaran",
-    obj1: "Menerangkan komponen litar elektrik yang ringkas. (K)",
-    obj2: "Membina litar ringkas dan mengenal pasti litar terbuka/tertutup. (K, P)",
+    obj1: "Menerangkan komponen litar elektrik yang ringkas.",
+    obj2: "Membina litar ringkas dan mengenal pasti litar terbuka/tertutup. ",
     back: "Kembali",
     next: "Seterusnya",
     lang: { th: "Thai", en: "English", ms: "Melayu" },

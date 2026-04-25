@@ -212,9 +212,9 @@ export default function P5GeneticsHumans() {
   const [showResults, setShowResults] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
-  const labels = { th: "เนเธ—เธข", en: "เธญเธฑเธเธเธคเธฉ", ms: "เธกเธฅเธฒเธขเธน" };
-  const backLabel = "ยซ เธขเนเธญเธเธเธฅเธฑเธ";
-  const nextLabel = "เธ•เนเธญเนเธ ยป";
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
   const hasAnswers = Object.keys(selectedTraits).length > 0;
   const selectedCount = Object.keys(selectedTraits).length;
   const withVersion = (url) => `${url}${url.includes("?") ? "&" : "?"}v=${IMAGE_VERSION}`;

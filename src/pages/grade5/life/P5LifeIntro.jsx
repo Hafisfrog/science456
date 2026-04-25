@@ -168,7 +168,7 @@ export default function P5LifeIntro() {
   }, []);
 
   const pageBg =
-    "linear-gradient(180deg, #eefdf4 0%, #d9f9e8 34%, #baf0cf 70%, #7acb67 100%), radial-gradient(120% 80% at 20% 20%, rgba(255,255,255,0.64), transparent 55%)";
+    "linear-gradient(180deg, #bfe1f4 0%, #d6eef9 26%, #d2efdc 52%, #95d27d 74%, #70bf62 100%)";
 
   return (
     <div
@@ -178,17 +178,26 @@ export default function P5LifeIntro() {
       <HomeButton />
 
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-10 -top-16 h-40 w-40 rounded-full bg-yellow-300 shadow-[0_0_0_14px_#f59e0b] sm:h-48 sm:w-48" />
-        <div className="absolute left-0 right-0 top-[10%] mx-auto h-[66%] w-[96%] rounded-[50%] bg-white/52 blur-[2px]" />
-        <div className="absolute left-0 right-0 top-[34%] h-[40%] bg-[radial-gradient(circle_at_center,_rgba(176,223,173,0.88)_0%,_rgba(176,223,173,0.78)_38%,_transparent_68%)]" />
-        <div className="absolute left-0 right-0 bottom-0 h-[240px] bg-gradient-to-t from-[#74c665] via-[#7ccf6d] to-transparent" />
-        <div className="absolute inset-x-0 bottom-[140px] h-12 rounded-full bg-[repeating-linear-gradient(90deg,#c0763c_0_24px,#a15d2d_24px_30px)] opacity-90 blur-[1px]" />
-        <div className="absolute inset-x-0 bottom-[110px] h-8 rounded-full bg-[repeating-linear-gradient(90deg,#f9b24e_0_22px,#d68632_22px_28px)] opacity-85" />
-        <div className="absolute bottom-[82px] left-0 right-0 flex justify-around px-8">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_8%,rgba(255,255,255,0.72)_0%,rgba(255,255,255,0.2)_35%,transparent_65%)]" />
+        <div className="absolute -right-8 -top-12 h-40 w-40 rounded-full bg-[#fde047] shadow-[0_0_0_16px_#f59e0b,0_0_110px_rgba(253,224,71,0.62)] sm:h-48 sm:w-48" />
+        <div className="absolute right-[9%] top-[12%] h-[170px] w-[420px] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(255,241,168,0.4)_0%,rgba(255,241,168,0.08)_58%,transparent_78%)] blur-[2px]" />
+        <div className="absolute left-[8%] top-[10%] h-16 w-40 rounded-full bg-white/72 blur-[2px]" />
+        <div className="absolute left-[22%] top-[14%] h-12 w-36 rounded-full bg-white/70 blur-[2px]" />
+        <div className="absolute right-[18%] top-[12%] h-14 w-44 rounded-full bg-white/72 blur-[2px]" />
+        <div className="absolute inset-x-[5%] top-[15%] h-[52%] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.7)_0%,rgba(255,255,255,0.18)_50%,transparent_74%)]" />
+        <div className="absolute inset-x-0 top-[36%] h-[18%] bg-[radial-gradient(ellipse_at_center,rgba(77,140,102,0.34)_0%,rgba(77,140,102,0.2)_46%,transparent_74%)]" />
+        <div className="absolute inset-x-0 top-[43%] h-[20%] bg-[radial-gradient(ellipse_at_center,rgba(66,124,88,0.4)_0%,rgba(66,124,88,0.16)_48%,transparent_76%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[320px] bg-[linear-gradient(180deg,rgba(147,213,123,0)_0%,rgba(131,200,105,0.5)_28%,rgba(118,190,94,0.84)_56%,rgba(103,177,82,1)_100%)]" />
+        <div className="absolute inset-x-0 bottom-[168px] h-[86px] bg-[repeating-linear-gradient(90deg,rgba(255,255,255,0.09)_0_5px,transparent_5px_18px)] opacity-30" />
+        <div className="absolute inset-x-0 bottom-[126px] h-[84px] bg-[linear-gradient(180deg,rgba(82,124,55,0.22)_0%,rgba(82,124,55,0.08)_58%,transparent_100%)]" />
+        <div className="absolute inset-x-0 bottom-[148px] h-14 rounded-[20px] bg-[repeating-linear-gradient(90deg,#c98847_0_25px,#ae6f36_25px_31px)] shadow-[inset_0_5px_0_rgba(255,219,157,0.3),0_8px_18px_rgba(85,48,18,0.25)]" />
+        <div className="absolute inset-x-0 bottom-[106px] h-10 rounded-[14px] bg-[repeating-linear-gradient(90deg,#f0c15a_0_23px,#d8993d_23px_30px)] shadow-[inset_0_2px_0_rgba(255,240,195,0.45)]" />
+        <div className="absolute bottom-[68px] left-0 right-0 flex justify-around px-8">
           {Array.from({ length: 14 }).map((_, idx) => (
-            <div key={idx} className="h-10 w-5 rounded-[4px] bg-[#8c5b2c] shadow-[inset_0_-2px_0_rgba(0,0,0,0.12)]" />
+            <div key={idx} className="h-12 w-6 rounded-[5px] bg-[#98612e] shadow-[inset_0_-3px_0_rgba(0,0,0,0.14),inset_0_2px_0_rgba(255,213,149,0.24)]" />
           ))}
         </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_56%,rgba(17,36,24,0.16)_100%)]" />
       </div>
 
       <div className="relative mx-auto flex min-h-[calc(100vh-40px)] max-w-[1460px] flex-col">

@@ -63,6 +63,27 @@ const PAGE_COPY = {
   },
 };
 
+const LANG_TO_VOICE = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = LANG_TO_VOICE[lang] || "th-TH";
+  utterance.rate = 0.95;
+  const voices = synth.getVoices();
+  const voice =
+    voices.find((item) => item.lang === utterance.lang) ||
+    voices.find((item) => item.lang?.startsWith(utterance.lang.split("-")[0]));
+  if (voice) utterance.voice = voice;
+  synth.speak(utterance);
+}
+
 export default function Grade6() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -102,11 +123,18 @@ export default function Grade6() {
         <section className="mx-auto mt-2 flex w-full flex-1 items-center justify-center">
           <div className="grid w-full max-w-[1020px] grid-cols-1 justify-items-center gap-6 lg:translate-x-4 lg:grid-cols-2 xl:translate-x-5">
             {EXPERIMENTS.map((item) => (
-              <button
+              <article
                 key={item.id}
-                type="button"
                 onClick={() => navigate(item.path)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    navigate(item.path);
+                  }
+                }}
                 className="group flex h-[360px] w-[470px] max-w-[92vw] flex-col overflow-hidden rounded-[28px] bg-white/95 text-left shadow-[0_14px_30px_rgba(0,0,0,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_rgba(0,0,0,0.2)]"
+                role="button"
+                tabIndex={0}
               >
                 <div className="flex h-[236px] items-center justify-center overflow-hidden bg-slate-200">
                   <img
@@ -119,9 +147,23 @@ export default function Grade6() {
                   <div className="text-[clamp(18px,1.8vw,30px)] font-extrabold leading-[1.12] text-slate-900">
                     {item.title[language]}
                   </div>
-                  <div className="mt-2 text-sm text-slate-700 md:text-base">{item.subtitle[language]}</div>
+                  <div className="mt-2 flex items-center justify-center gap-3 text-sm text-slate-700 md:text-base">
+                    <span>{item.subtitle[language]}</span>
+                    <button
+                      type="button"
+                      className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        speakText(`${item.title[language]}. ${item.subtitle[language]}`, language);
+                      }}
+                      aria-label={item.subtitle[language]}
+                      title={item.subtitle[language]}
+                    >
+                      {"\u{1F50A}"}
+                    </button>
+                  </div>
                 </div>
-              </button>
+              </article>
             ))}
           </div>
         </section>

@@ -247,9 +247,9 @@ export default function P5GeneticsPlants() {
     : [];
 
   const t = TEXT[lang];
-  const labels = { th: "เนเธ—เธข", en: "เธญเธฑเธเธเธคเธฉ", ms: "เธกเธฅเธฒเธขเธน" };
-  const backLabel = "ยซ เธขเนเธญเธเธเธฅเธฑเธ";
-  const nextLabel = "เธ•เนเธญเนเธ ยป";
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
   const [lineA, lineB] = t.sideText.split("\n");
   const hasSelections = selectedGenotypes.some(Boolean);
   const hasAllSelections = selectedGenotypes.every(Boolean);

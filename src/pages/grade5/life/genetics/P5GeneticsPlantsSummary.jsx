@@ -63,10 +63,10 @@ function speakText(text, lang) {
 export default function P5GeneticsPlantsSummary() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "เนเธ—เธข", en: "เธญเธฑเธเธเธคเธฉ", ms: "เธกเธฅเธฒเธขเธน" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
-  const backLabel = "ยซ เธขเนเธญเธเธเธฅเธฑเธ";
-  const nextLabel = "เธ•เนเธญเนเธ ยป";
+  const backLabel = "« ย้อนกลับ";
+  const nextLabel = "ต่อไป »";
   const speakSummary = () => {
     speakText([t.p1, ...t.items, t.a, t.b, t.result].join(". "), lang);
   };

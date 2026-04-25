@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
@@ -422,6 +422,15 @@ export default function P6ElectricGenerationSim() {
   const [completedTrials, setCompletedTrials] = useState(() =>
     isFreshStart ? [] : readCompletedTrials(),
   );
+  const leftPanelRef = useRef(null);
+  const dragScrollRef = useRef({
+    active: false,
+    pointerId: null,
+    startX: 0,
+    startLeft: 0,
+    moved: false,
+  });
+  const suppressClickRef = useRef(false);
 
   const totalTrials = trialOptions.length;
   const completedCount = completedTrials.length;
@@ -528,6 +537,60 @@ export default function P6ElectricGenerationSim() {
     setIsRunning(false);
   };
 
+  const handleLeftPanelPointerDown = (event) => {
+    if (event.button !== 0) return;
+    if (event.target.closest("button, a, input, textarea, select, label")) return;
+    const panel = leftPanelRef.current;
+    if (!panel) return;
+    dragScrollRef.current = {
+      active: true,
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startLeft: panel.scrollLeft,
+      moved: false,
+    };
+    panel.setPointerCapture?.(event.pointerId);
+  };
+
+  const handleLeftPanelPointerMove = (event) => {
+    const drag = dragScrollRef.current;
+    const panel = leftPanelRef.current;
+    if (!drag.active || !panel || drag.pointerId !== event.pointerId) return;
+    const deltaX = event.clientX - drag.startX;
+    if (Math.abs(deltaX) > 4) {
+      drag.moved = true;
+      event.preventDefault();
+    }
+    panel.scrollLeft = drag.startLeft - deltaX;
+  };
+
+  const handleLeftPanelPointerEnd = (event) => {
+    const panel = leftPanelRef.current;
+    const drag = dragScrollRef.current;
+    if (panel && drag.pointerId === event.pointerId) {
+      panel.releasePointerCapture?.(event.pointerId);
+    }
+    suppressClickRef.current = drag.moved;
+    if (drag.moved) {
+      setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 0);
+    }
+    dragScrollRef.current = {
+      active: false,
+      pointerId: null,
+      startX: 0,
+      startLeft: 0,
+      moved: false,
+    };
+  };
+
+  const handleLeftPanelClickCapture = (event) => {
+    if (!suppressClickRef.current) return;
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const formatTime = (value) => {
     const minutes = Math.floor(value / 60);
     const seconds = value % 60;
@@ -575,7 +638,16 @@ export default function P6ElectricGenerationSim() {
           boxShadow: "0 22px 42px rgba(17, 24, 39, 0.14)",
         }}
       >
-        <div className="flex h-full flex-col items-start gap-3 rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
+        <div
+          ref={leftPanelRef}
+          className="flex h-full min-h-0 touch-pan-x flex-col items-start gap-3 overflow-x-auto overflow-y-auto overscroll-contain rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]"
+          style={{ WebkitOverflowScrolling: "touch" }}
+          onPointerDown={handleLeftPanelPointerDown}
+          onPointerMove={handleLeftPanelPointerMove}
+          onPointerUp={handleLeftPanelPointerEnd}
+          onPointerCancel={handleLeftPanelPointerEnd}
+          onClickCapture={handleLeftPanelClickCapture}
+        >
           <div className="w-full min-h-0 flex-1">
             <div className="p6-force-sim-menu is-static" role="region" aria-label={t.selectTrial}>
               <div
