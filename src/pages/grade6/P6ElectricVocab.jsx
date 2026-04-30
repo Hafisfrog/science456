@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
-import "./P6ElectricVocab.css";
+import "../grade4/gravity/exp2/P4GravityExp2Vocab.css";
 
 const FORCE_VOCAB = [
   { th: "แรงโน้มถ่วงของโลก", ms: "graviti bumi", en: "Earth's Gravity" },
@@ -83,84 +83,64 @@ export default function P6ElectricVocab() {
   }, []);
 
   return (
-    <div className="p6-vocab-page">
+    <div className="vocab-page" style={{ position: "relative" }}>
       <HomeButton />
 
-      <div className={`p6-vocab-shell ${!isUnitFlow ? "p6-circuit-vocab-shell" : ""}`}>
-        <header className="p6-vocab-header">
-          <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
-          <p className="p6-vocab-sub">{subtitle}</p>
-        </header>
+      <header className="vocab-header">
+        <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
+        <p>{subtitle}</p>
+      </header>
 
-        <section className="p6-vocab-card">
-          <div className={`p6-vocab-table-wrap ${!isUnitFlow ? "p6-circuit-vocab-tableWrap" : ""}`}>
-            <table className="p6-vocab-table">
-              <thead>
-                <tr>
-                  <th className="col-th">ภาษาไทย</th>
-                  <th className="col-ms">ภาษามลายู</th>
-                  <th className="col-en">ภาษาอังกฤษ</th>
-                  <th className="col-voice" style={{ textAlign: "center" }}>
-                    ฟังเสียง
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map((row) => (
-                  <tr key={`${row.th}-${row.en}`}>
-                    <td className="col-th">{row.th}</td>
-                    <td className="col-ms">{row.ms}</td>
-                    <td className="col-en">{row.en}</td>
-                    <td className="col-voice">
-                      <div className="p6-vocab-voice-group" style={{ justifyContent: "center" }}>
-                        <button
-                          className="p6-vocab-voice-chip th"
-                          onClick={() => onSpeak(row.th, "th-TH")}
-                          type="button"
-                        >
-                          TH
-                        </button>
-                        <button
-                          className="p6-vocab-voice-chip ms"
-                          onClick={() => onSpeak(row.ms, "ms-MY")}
-                          type="button"
-                        >
-                          MY
-                        </button>
-                        <button
-                          className="p6-vocab-voice-chip en"
-                          onClick={() => onSpeak(row.en, "en-GB")}
-                          type="button"
-                        >
-                          EN
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+      <div className="vocab-card">
+        <table className="vocab-table">
+          <thead>
+            <tr>
+              <th className="col-th">ภาษาไทย</th>
+              <th className="col-ms">ภาษามลายู</th>
+              <th className="col-en">ภาษาอังกฤษ</th>
+              <th className="col-audio">ฟังเสียง</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((row) => (
+              <tr key={`${row.th}-${row.en}`}>
+                <td className="cell-th">{row.th}</td>
+                <td className="cell-ms">{row.ms}</td>
+                <td className="cell-en">{row.en}</td>
+                <td className="cell-audio">
+                  <button className="audio-btn th" onClick={() => onSpeak(row.th, "th-TH")} type="button">
+                    TH
+                  </button>
+                  <button className="audio-btn ms" onClick={() => onSpeak(row.ms, "ms-MY")} type="button">
+                    MY
+                  </button>
+                  <button className="audio-btn en" onClick={() => onSpeak(row.en, "en-GB")} type="button">
+                    EN
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-        <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
-          <button
-            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
-            onClick={() => navigate(backPath)}
-            type="button"
-            aria-label={backLabel}
-          >
-            &laquo; {backLabel}
-          </button>
-          <button
-            className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
-            onClick={() => navigate(nextPath)}
-            type="button"
-            aria-label={nextLabel}
-          >
-            {nextLabel} &raquo;
-          </button>
-        </div>
+      <div className="fixed bottom-[18px] right-[18px] z-[40] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          onClick={() => navigate(backPath)}
+          type="button"
+          aria-label={backLabel}
+        >
+          « {backLabel}
+        </button>
+        <button
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          onClick={() => navigate(nextPath)}
+          type="button"
+          aria-label={nextLabel}
+        >
+          {nextLabel} »
+        </button>
       </div>
     </div>
   );
