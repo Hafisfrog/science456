@@ -153,21 +153,11 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
                   <button
                     type="button"
                     onClick={() => handleSpeak(`${index + 1}. ${step.title}. ${step.detail}`)}
-                    className="grid h-[52px] w-[52px] place-items-center rounded-full border border-slate-300 bg-[#fff2dc] text-slate-800 shadow-[0_8px_16px_rgba(17,24,39,0.16)] transition hover:-translate-y-0.5 hover:bg-white"
+                    className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
                     aria-label={`${t.sound} ${index + 1}`}
                     title={t.sound}
                   >
-                    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" className="h-6 w-6">
-                      <path
-                        d="M12 26h12l14-10v32l-14-10H12z"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinejoin="round"
-                      />
-                      <path d="M44 22c4 4 4 16 0 20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                      <path d="M50 16c7 7 7 25 0 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                    </svg>
+                    {"🔊"}
                   </button>
                 </div>
               ))}

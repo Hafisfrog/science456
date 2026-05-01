@@ -178,21 +178,11 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
                     onClick={() =>
                       speakText(`${t.equipment[id].title} ${t.equipment[id].subtitle}`, t.speech)
                     }
-                    className="grid h-9 w-9 place-items-center rounded-xl border border-slate-200 bg-orange-50 text-slate-700 shadow-[0_8px_14px_rgba(17,24,39,0.08)] transition hover:-translate-y-0.5 hover:bg-white"
+                    className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
                     aria-label={`${t.sound} ${t.equipment[id].title}`}
                     title={t.sound}
                   >
-                    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false" className="h-5 w-5">
-                      <path
-                        d="M12 26h12l14-10v32l-14-10H12z"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="3"
-                        strokeLinejoin="round"
-                      />
-                      <path d="M44 22c4 4 4 16 0 20" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                      <path d="M50 16c7 7 7 25 0 32" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                    </svg>
+                    {"🔊"}
                   </button>
                 </div>
                 <div className="text-[16px] font-bold text-slate-700">{t.equipment[id].subtitle}</div>

@@ -138,9 +138,9 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
                 onClick={() => speakText(`${t.series.heading} ${t.series.body}`, lang)}
                 aria-label={t.listen}
                 title={t.listen}
-                className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[22px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
               >
-                {"\uD83D\uDD0A"}
+                {"🔊"}
               </button>
             </div>
             <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.series.body}</div>
@@ -154,9 +154,9 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
                 onClick={() => speakText(`${t.parallel.heading} ${t.parallel.body}`, lang)}
                 aria-label={t.listen}
                 title={t.listen}
-                className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[22px] shadow-[0_10px_18px_rgba(17,24,39,0.18)] transition hover:scale-105"
+                className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
               >
-                {"\uD83D\uDD0A"}
+                {"🔊"}
               </button>
             </div>
             <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.parallel.body}</div>
