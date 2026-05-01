@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
+import "../../../grade4/gravity/exp2/P4GravityExp2Vocab.css";
 
 const VOCAB = [
   {
@@ -54,7 +55,7 @@ const VOCAB = [
     },
   },
   {
-    th: "โซ่อาหาร",
+    th: "ห่วงโซ่อาหาร",
     ms: "Rantai Makanan",
     en: "Food Chain",
     audio: {
@@ -105,7 +106,6 @@ const VOCAB = [
   },
 ];
 
-
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;
 
 const isSpeechSupported = () =>
@@ -136,11 +136,7 @@ function pickVoice(voices, locale, langKey) {
     return null;
   }
 
-  return (
-    voices.find((voice) => voice.lang?.toLowerCase().startsWith(langPrefix)) ||
-    voices[0] ||
-    null
-  );
+  return voices.find((voice) => voice.lang?.toLowerCase().startsWith(langPrefix)) || voices[0] || null;
 }
 
 function speakWithBestVoice(text, locale, langKey) {
@@ -191,7 +187,9 @@ function speakWithBestVoice(text, locale, langKey) {
 
 export default function P5FoodChainVocab() {
   const navigate = useNavigate();
-  const currentAudioRef = useRef(null);  useEffect(() => {
+  const currentAudioRef = useRef(null);
+
+  useEffect(() => {
     return () => {
       if (currentAudioRef.current) {
         currentAudioRef.current.pause();
@@ -237,128 +235,76 @@ export default function P5FoodChainVocab() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#eef6ff] via-[#e9f2fb] to-[#dbe9f7] px-4 py-8 pb-28 sm:px-6 sm:pb-32">
+    <div className="vocab-page" style={{ position: "relative" }}>
       <HomeButton />
 
-      <div className="mx-auto max-w-5xl">
-        <header className="mb-6 text-center">
-          <h1 className="text-2xl font-bold text-slate-600 sm:text-3xl">
-            คำศัพท์วิทยาศาสตร์น่ารู้
-          </h1>
-          <p className="mt-2 text-sm text-slate-500 sm:text-base">
-            คำศัพท์พื้นฐานเรื่องห่วงโซ่อาหาร
-          </p>
-        </header>
+      <header className="vocab-header">
+        <h1>คำศัพท์วิทยาศาสตร์น่ารู้</h1>
+        <p>คำศัพท์พื้นฐานเรื่องห่วงโซ่อาหาร</p>
+      </header>
 
-        <div className="overflow-hidden rounded-[2rem] border border-[#c7d6e6] bg-[#e9f2fb]/80 shadow-lg backdrop-blur-sm">
-          <div className="overflow-x-auto">
-            <table className="min-w-full table-fixed border-separate border-spacing-0 [&_thead_th:nth-child(1)]:bg-[#b7cfea] [&_thead_th:nth-child(2)]:bg-[#f3cf73] [&_thead_th:nth-child(3)]:bg-[#c486b5] [&_thead_th:nth-child(4)]:bg-[#d6f8e4] [&_tbody_td:nth-child(1)]:bg-[#eaf3ff] [&_tbody_td:nth-child(2)]:bg-[#fdf2d6] [&_tbody_td:nth-child(3)]:bg-[#f5d7e8] [&_tbody_td:nth-child(4)]:bg-[#e8fbef]">
-              <thead>
-                <tr className="text-slate-800">
-                  <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ภาษาไทย</th>
-                  <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ภาษามลายู</th>
-                  <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ภาษาอังกฤษ</th>
-                  <th className="px-4 py-3 text-center text-base font-bold sm:text-xl">ฟังเสียง</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {VOCAB.map((row) => (
-                  <tr
-                    key={`${row.th}-${row.en}`}
-                    className="[&:not(:last-child)>td]:border-b [&:not(:last-child)>td]:border-[#d8e2ee]"
+      <div className="vocab-card">
+        <table className="vocab-table">
+          <thead>
+            <tr>
+              <th className="col-th">ภาษาไทย</th>
+              <th className="col-ms">ภาษามลายู</th>
+              <th className="col-en">ภาษาอังกฤษ</th>
+              <th className="col-audio">ฟังเสียง</th>
+            </tr>
+          </thead>
+          <tbody>
+            {VOCAB.map((row) => (
+              <tr key={`${row.th}-${row.en}`}>
+                <td className="cell-th">{row.th}</td>
+                <td className="cell-ms">{row.ms}</td>
+                <td className="cell-en">{row.en}</td>
+                <td className="cell-audio">
+                  <button
+                    className="audio-btn th"
+                    type="button"
+                    onClick={() => playSound({ src: row.audio.th, text: row.th, lang: "th-TH", langKey: "th" })}
                   >
-                    <td className="bg-[#edf4ff] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
-                      {row.th}
-                    </td>
-                    <td className="bg-[#edf4ff] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
-                      {row.ms}
-                    </td>
-                    <td className="bg-[#edf4ff] px-4 py-4 text-sm font-medium text-slate-700 sm:py-5 sm:text-lg">
-                      {row.en}
-                    </td>
-                    <td className="bg-[#edf4ff] px-4 py-5">
-                      <div className="flex items-center justify-center gap-3 sm:gap-4">
-                        <button
-                          type="button"
-                          className="h-11 w-11 rounded-2xl bg-[#dcecff] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-[#b7cfea] sm:h-12 sm:w-12 sm:text-lg"
-                          onClick={() =>
-                            playSound({
-                              src: row.audio.th,
-                              text: row.th,
-                              lang: "th-TH",
-                              langKey: "th",
-                            })
-                          }
-                        >
-                          TH
-                        </button>
-                        <button
-                          type="button"
-                          className="h-11 w-11 rounded-2xl bg-[#ffe08a] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-[#f3cf73] sm:h-12 sm:w-12 sm:text-lg"
-                          onClick={() =>
-                            playSound({
-                              src: row.audio.ms,
-                              text: row.ms,
-                              lang: "ms-MY",
-                              langKey: "ms",
-                            })
-                          }
-                        >
-                          MY
-                        </button>
-                        <button
-                          type="button"
-                          className="h-11 w-11 rounded-2xl bg-[#f7c6e5] text-base font-bold text-slate-800 shadow-[0_6px_12px_rgba(15,23,42,0.1)] transition hover:-translate-y-0.5 hover:brightness-105 focus:outline-none focus:ring-2 focus:ring-[#c486b5] sm:h-12 sm:w-12 sm:text-lg"
-                          onClick={() =>
-                            playSound({
-                              src: row.audio.en,
-                              text: row.en,
-                              lang: "en-US",
-                              langKey: "en",
-                            })
-                          }
-                        >
-                          EN
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div className="fixed bottom-[18px] right-[18px] z-40 flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
-          <button
-            className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
-            onClick={() => navigate("/p5/life/foodchain")}
-            type="button"
-          >
-            {"\u00AB"} ย้อนกลับ
-          </button>
+                    TH
+                  </button>
+                  <button
+                    className="audio-btn ms"
+                    type="button"
+                    onClick={() => playSound({ src: row.audio.ms, text: row.ms, lang: "ms-MY", langKey: "ms" })}
+                  >
+                    MY
+                  </button>
+                  <button
+                    className="audio-btn en"
+                    type="button"
+                    onClick={() => playSound({ src: row.audio.en, text: row.en, lang: "en-US", langKey: "en" })}
+                  >
+                    EN
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-          <button
-            className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
-            onClick={() => navigate("/p5/life/foodchain/scene")}
-            type="button"
-          >
-            ต่อไป {"\u00BB"}
-          </button>
-        </div>
+      <div className="fixed bottom-[18px] right-[18px] z-[40] flex items-center gap-3 max-[720px]:bottom-[12px] max-[720px]:right-[12px] max-[720px]:gap-2">
+        <button
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate("/p5/life/foodchain")}
+        >
+          « ย้อนกลับ
+        </button>
+
+        <button
+          className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
+          type="button"
+          onClick={() => navigate("/p5/life/foodchain/scene")}
+        >
+          ต่อไป »
+        </button>
       </div>
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-

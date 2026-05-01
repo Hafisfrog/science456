@@ -14,7 +14,7 @@ const UI = {
     lesson: "ห่วงโซ่อาหาร",
     subtitle: "เลือกเรื่อง",
     back: "ย้อนกลับ",
-    next: "ต่อไป",
+    // next: "ต่อไป",
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
@@ -23,7 +23,7 @@ const UI = {
     lesson: "Food Chain",
     subtitle: "Select a topic",
     back: "Back",
-    next: "Next",
+    // next: "Next",
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
@@ -32,7 +32,7 @@ const UI = {
     lesson: "Rantaian Makanan",
     subtitle: "Pilih topik",
     back: "Kembali",
-    next: "Seterusnya",
+    // next: "Seterusnya",
     langLabel: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -157,13 +157,13 @@ export default function P5FoodChainIntro() {
             {"\u00AB"} {content.back}
           </button>
 
-          <button
+          {/* <button
             className="rounded-[18px] bg-[#08c95a] px-[18px] py-[14px] text-[20px] font-['Prompt',sans-serif] font-black text-white shadow-[0_22px_46px_rgba(8,201,90,.24)] transition hover:-translate-y-0.5 hover:bg-[#07b351] hover:shadow-[0_28px_56px_rgba(8,201,90,.30)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
             onClick={() => navigate(nextPath)}
             type="button"
           >
             {content.next} {"\u00BB"}
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
