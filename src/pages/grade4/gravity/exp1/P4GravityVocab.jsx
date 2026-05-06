@@ -133,7 +133,7 @@ export default function P4GravityVocab() {
       </div>
 
       <div className="vocab-footer">
-        <button className="back-home-btn" type="button" onClick={() => navigate("/p4/gravity")}>
+        <button className="back-home-btn" type="button" onClick={() => navigate("/p4/gravity/exp1/skills")}>
           « ย้อนกลับ
         </button>
 

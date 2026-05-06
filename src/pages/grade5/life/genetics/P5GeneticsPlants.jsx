@@ -454,7 +454,7 @@ export default function P5GeneticsPlants() {
             <button
               type="button"
               className="p5gps-back-btn"
-              onClick={() => navigate("/p5/life/genetics")}
+              onClick={() => navigate("/p5/life/genetics/plants/skills")}
             >
               {backLabel}
             </button>

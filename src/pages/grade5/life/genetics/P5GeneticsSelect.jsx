@@ -4,8 +4,8 @@ import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
 import "./p5GeneticsLangShared.css";
 
-const BACK_PATH = "/p5/life";
-const NEXT_PATH = "/p5/life/genetics/animals";
+const BACK_PATH = "/p5/life/genetics/vocab-2";
+const NEXT_PATH = "/p5/life/genetics/animals/objectives";
 
 const LANG_TO_VOICE = {
   th: "th-TH",
@@ -28,7 +28,7 @@ const PAGE_TEXT = {
         title: "การทดลองที่ 6",
         label:
           "ลักษณะทางพันธุกรรมของสัตว์",
-        path: "/p5/life/genetics/animals",
+        path: "/p5/life/genetics/animals/objectives",
         tone: "exp-red",
         image: "/images/p5/genetics/satp5.png",
         fallbackImage: "/images/p5/genetics/satp5.png",
@@ -38,7 +38,7 @@ const PAGE_TEXT = {
         title: "การทดลองที่ 7",
         label:
           "ลักษณะทางพันธุกรรมของพืช",
-        path: "/p5/life/genetics/plants",
+        path: "/p5/life/genetics/plants/objectives",
         tone: "exp-green",
         image: "/images/p5/genetics/peuchp5.png",
         fallbackImage: "/images/p5/genetics/peuchp5.png",
@@ -48,7 +48,7 @@ const PAGE_TEXT = {
         title: "การทดลองที่ 8",
         label:
           "ลักษณะทางพันธุกรรมของคน",
-        path: "/p5/life/genetics/humans",
+        path: "/p5/life/genetics/humans/objectives",
         tone: "exp-blue",
         image: "/images/p5/genetics/konp5.png",
         fallbackImage: "/images/p5/genetics/konp5.png",
@@ -68,7 +68,7 @@ const PAGE_TEXT = {
         id: 6,
         title: "Experiment 6",
         label: "Genetic Traits of Animals",
-        path: "/p5/life/genetics/animals",
+        path: "/p5/life/genetics/animals/objectives",
         tone: "exp-red",
         image: "/images/p5/genetics/satp5.png",
         fallbackImage: "/images/p5/genetics/satp5.png",
@@ -77,7 +77,7 @@ const PAGE_TEXT = {
         id: 7,
         title: "Experiment 7",
         label: "Genetic Traits of Plants",
-        path: "/p5/life/genetics/plants",
+        path: "/p5/life/genetics/plants/objectives",
         tone: "exp-green",
         image: "/images/p5/genetics/peuchp5.png",
         fallbackImage: "/images/p5/genetics/peuchp5.png",
@@ -86,7 +86,7 @@ const PAGE_TEXT = {
         id: 8,
         title: "Experiment 8",
         label: "Genetic Traits of Humans",
-        path: "/p5/life/genetics/humans",
+        path: "/p5/life/genetics/humans/objectives",
         tone: "exp-blue",
         image: "/images/p5/genetics/konp5.png",
         fallbackImage: "/images/p5/genetics/konp5.png",
@@ -106,7 +106,7 @@ const PAGE_TEXT = {
         id: 6,
         title: "Eksperimen 6",
         label: "Ciri Genetik Haiwan",
-        path: "/p5/life/genetics/animals",
+        path: "/p5/life/genetics/animals/objectives",
         tone: "exp-red",
         image: "/images/p5/genetics/satp5.png",
         fallbackImage: "/images/p5/genetics/satp5.png",
@@ -115,7 +115,7 @@ const PAGE_TEXT = {
         id: 7,
         title: "Eksperimen 7",
         label: "Ciri Genetik Tumbuhan",
-        path: "/p5/life/genetics/plants",
+        path: "/p5/life/genetics/plants/objectives",
         tone: "exp-green",
         image: "/images/p5/genetics/peuchp5.png",
         fallbackImage: "/images/p5/genetics/peuchp5.png",
@@ -124,7 +124,7 @@ const PAGE_TEXT = {
         id: 8,
         title: "Eksperimen 8",
         label: "Ciri Genetik Manusia",
-        path: "/p5/life/genetics/humans",
+        path: "/p5/life/genetics/humans/objectives",
         tone: "exp-blue",
         image: "/images/p5/genetics/konp5.png",
         fallbackImage: "/images/p5/genetics/konp5.png",

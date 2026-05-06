@@ -284,7 +284,7 @@ export default function P4LightVocab() {
           <LightNavButtons
             backLabel="ย้อนกลับ"
             nextLabel="ต่อไป"
-            onBack={() => navigate("/p4/light/objective")}
+            onBack={() => navigate("/p4/light/skills")}
             onNext={() => navigate("/p4/light/basic")}
           />
         </div>

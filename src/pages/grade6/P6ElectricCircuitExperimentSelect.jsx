@@ -4,30 +4,30 @@ import HomeButton from "../HomeButton";
 
 const LANG = {
   th: {
-    title: "วงจรไฟฟ้าใกล้ตัว",
+    title: "วงจรไฟฟ้าอย่างง่าย",
     subtitle: "เลือกการทดลอง",
     exp1: "การทดลองที่ 1",
-    exp1sub: "การต่อวงจรไฟฟ้าแบบอนุกรม",
+    exp1sub: "การต่อวงจรไฟฟ้าอย่างง่าย",
     exp2: "การทดลองที่ 2",
     exp2sub: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
     back: "ย้อนกลับ",
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
-    title: "Electric Circuits Around Us",
+    title: "Simple electric circuit",
     subtitle: "Select Experiment",
     exp1: "Experiment 1",
-    exp1sub: "Series Electric Circuit",
+    exp1sub: "Connecting a simple electric circuit",
     exp2: "Experiment 2",
     exp2sub: "Series and Parallel Bulb Circuits",
     back: "Back",
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Litar Elektrik Sekeliling Kita",
+    title: "Litar elektrik mudah",
     subtitle: "Pilih Eksperimen",
     exp1: "Eksperimen 1",
-    exp1sub: "Litar Elektrik Bersiri",
+    exp1sub: "Menyambung litar elektrik mudah",
     exp2: "Eksperimen 2",
     exp2sub: "Litar Mentol Bersiri dan Selari",
     back: "Kembali",
@@ -65,14 +65,14 @@ export default function P6ElectricCircuitExperimentSelect() {
       title: t.exp1,
       subtitle: t.exp1sub,
       image: "/images/p6/anukromp6.png",
-      path: "/p6/electric-circuit/materials",
+      path: "/p6/electric-circuit/experiment-1/objectives",
     },
     {
       id: "exp-2",
       title: t.exp2,
       subtitle: t.exp2sub,
       image: "/images/p6/faifa2.2.png",
-      path: "/p6/electric-circuit/bulb-series-parallel",
+      path: "/p6/electric-circuit/experiment-2/objectives",
     },
   ];
 

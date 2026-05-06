@@ -7,7 +7,7 @@ import "../exp2/P4GravityExp2Materials.css";
 export default function P4GravityExp3Materials() {
   const navigate = useNavigate();
 
-  const BACK_PATH = "/p4/gravity/exp3/vocab";
+  const BACK_PATH = "/p4/gravity/exp3/skills";
   const NEXT_PATH = "/p4/gravity/exp3/steps";
 
   const [lang, setLang] = useState("th");

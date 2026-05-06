@@ -44,7 +44,7 @@ export default function P5FoodChainIntro() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const content = UI[language] ?? UI.th;
-  const nextPath = "/p5/life/foodchain/vocab";
+  const nextPath = "/p5/life/foodchain/objectives";
 
   const speak = (text) => {
     try {

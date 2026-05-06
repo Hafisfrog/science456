@@ -292,7 +292,7 @@ export default function P5FoodChainVocab() {
         <button
           className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"
-          onClick={() => navigate("/p5/life/foodchain")}
+          onClick={() => navigate("/p5/life/foodchain/skills")}
         >
           « ย้อนกลับ
         </button>

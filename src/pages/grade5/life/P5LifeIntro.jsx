@@ -40,7 +40,7 @@ const TEXT = {
       {
         id: "genetics",
         title: "ลักษณะทางพันธุกรรม",
-        to: "/p5/life/genetics",
+        to: "/p5/life/genetics/objectives",
       },
     ],
   },
@@ -59,7 +59,7 @@ const TEXT = {
       {
         id: "genetics",
         title: "Genetic Traits",
-        to: "/p5/life/genetics",
+        to: "/p5/life/genetics/objectives",
       },
     ],
   },
@@ -78,7 +78,7 @@ const TEXT = {
       {
         id: "genetics",
         title: "Genetik",
-        to: "/p5/life/genetics",
+        to: "/p5/life/genetics/objectives",
       },
     ],
   },

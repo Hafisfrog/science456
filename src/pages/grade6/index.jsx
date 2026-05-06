@@ -23,7 +23,8 @@ const EXPERIMENTS = [
       ms: "Penghasilan Daya Elektrik",
     },
     image: "/images/p6/todlong7p6.png",
-    path: "/p6/experiment/electric-generation/materials?from=unit",
+    // path: "/p6/experiment/electric-generation/materials?from=unit",
+    path: "/p6/experiment/electric-generation",
   },
   {
     id: "exp-2",
@@ -38,7 +39,7 @@ const EXPERIMENTS = [
       ms: "Kesan Daya Elektrik",
     },
     image: "/images/p6/todlonf8p6.png",
-    path: "/p6/experiment/electric-force-effect",
+    path: "/p6/experiment/electric-force-effect/objectives",
   },
 ];
 

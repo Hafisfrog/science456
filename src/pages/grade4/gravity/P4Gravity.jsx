@@ -109,7 +109,7 @@ export default function P4Gravity() {
           className="mx-auto mt-10 grid max-w-[1200px] gap-6"
           style={{ gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))" }}
         >
-          <div className={cardClass} onClick={() => navigate("/p4/gravity/vocab")}>
+          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp1/objectives")}>
             <img src="/images/pp4.jpg" alt="" className={imageClass} />
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp1Title}</div>
@@ -117,7 +117,7 @@ export default function P4Gravity() {
             </div>
           </div>
 
-          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp2/vocab")}>
+          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp2/objectives")}>
             <img src="/images/p4/action.jpg" alt="" className={imageClass} />
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp2Title}</div>
@@ -125,7 +125,7 @@ export default function P4Gravity() {
             </div>
           </div>
 
-          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp3/vocab")}>
+          <div className={cardClass} onClick={() => navigate("/p4/gravity/exp3/objectives")}>
             <img src="/images/p4/earth-moon.png" alt="" className={imageClass} />
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp3Title}</div>

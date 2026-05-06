@@ -16,9 +16,9 @@ const LESSONS = [
   {
     id: "circuit",
     title: {
-      th: "วงจรไฟฟ้าใกล้ตัว",
-      en: "Electric Circuit",
-      ms: "Litar Elektrik",
+      th: "วงจรไฟฟ้าอย่างง่าย",
+      en: "Simple electric circuit",
+      ms: "Litar elektrik mudah",
     },
     image: "/images/p6/wongjon.png",
     to: "/p6/electric-circuit",

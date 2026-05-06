@@ -106,7 +106,7 @@ export default function P6ElectricGenerationMaterials() {
   };
 
   const from = searchParams.get("from");
-  const backPath = from === "unit" ? "/p6/electric-force/experiments" : "/p6/experiment/electric-generation/vocab";
+  const backPath = from === "unit" ? "/p6/experiment/electric-generation/skills" : "/p6/experiment/electric-generation/vocab";
   const nextPath =
     from === "unit"
       ? "/p6/experiment/electric-generation/steps?from=unit"

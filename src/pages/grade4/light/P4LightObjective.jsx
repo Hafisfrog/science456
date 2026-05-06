@@ -177,7 +177,7 @@ export default function P4LightObjective() {
             backLabel={t.back}
             nextLabel={t.next}
             onBack={() => navigate("/p4")}
-            onNext={() => navigate("/p4/light/vocab")}
+            onNext={() => navigate("/p4/light/skills")}
           />
         </div>
       </div>
