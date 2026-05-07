@@ -109,40 +109,54 @@ export default function P6ElectricGenerationScienceSkills() {
         </section>
       </main>
 
-      <div className="p6gen-obj-lang">
-        <button
-          className={lang === "th" ? "active" : ""}
-          onClick={() => setLang("th")}
-          type="button"
-        >
-          {t.langLabel.th}
-        </button>
-        <button
-          className={lang === "ms" ? "active" : ""}
-          onClick={() => setLang("ms")}
-          type="button"
-        >
-          {t.langLabel.ms}
-        </button>
-        <button
-          className={lang === "en" ? "active" : ""}
-          onClick={() => setLang("en")}
-          type="button"
-        >
-          {t.langLabel.en}
-        </button>
+      <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
+        <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
+          <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+              lang === "th"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+            onClick={() => setLang("th")}
+            type="button"
+          >
+            {t.langLabel.th}
+          </button>
+          <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+              lang === "ms"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+            onClick={() => setLang("ms")}
+            type="button"
+          >
+            {t.langLabel.ms}
+          </button>
+          <button
+            className={`rounded-[14px] px-[18px] py-[10px] text-base font-extrabold text-slate-900 transition ${
+              lang === "en"
+                ? "bg-[#bfe0ff] text-slate-900"
+                : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
+            }`}
+            onClick={() => setLang("en")}
+            type="button"
+          >
+            {t.langLabel.en}
+          </button>
+        </div>
       </div>
 
-      <div className="p6gen-obj-nav">
+      <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
         <button
-          className="back"
+          className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/experiment/electric-generation")}
           type="button"
         >
           {"\u00AB"} {t.back}
         </button>
         <button
-          className="next"
+          className="rounded-[18px] bg-[#2563eb] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/p6/experiment/electric-generation/materials?from=unit")}
           type="button"
         >
