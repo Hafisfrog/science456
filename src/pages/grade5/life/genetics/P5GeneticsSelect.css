@@ -3,37 +3,19 @@
   height: 100vh;
   overflow: hidden;
   font-family: "Prompt", sans-serif;
-  background:
-    radial-gradient(140% 90% at 50% -10%, #d9efff 0%, rgba(217, 239, 255, 0) 60%),
-    linear-gradient(180deg, #d8eeff 0%, #eff8ff 46%, #9fca65 47%, #7eb34a 100%);
+  background: url("/images/p5/back.png") center / cover no-repeat;
 }
 
 .p5gen-page::before {
   content: "";
   position: absolute;
-  inset: 0 0 auto 0;
-  height: 56%;
-  background:
-    radial-gradient(120% 85% at 50% 0%, rgba(255, 255, 255, 0.58) 0%, rgba(255, 255, 255, 0) 58%),
-    linear-gradient(180deg, #76bde8 0%, #9ed3f1 42%, #cfe7f8 100%);
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
 }
 
 .p5gen-page::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 108px;
-  transform: translateX(-50%);
-  width: min(1460px, 96%);
-  height: clamp(400px, 52vh, 520px);
-  border-radius: 50%;
-  background: radial-gradient(
-    120% 90% at 52% 42%,
-    rgba(241, 247, 252, 0.94) 0%,
-    rgba(241, 247, 252, 0.84) 72%,
-    rgba(235, 242, 247, 0.72) 100%
-  );
-  pointer-events: none;
+  content: none;
 }
 
 .p5gen-back {

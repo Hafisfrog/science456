@@ -96,6 +96,19 @@ function speakText(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
+function Spark({ className }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc84b] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)",
+      }}
+    />
+  );
+}
+
 function handleEquipmentImageError(event, fallbackImage, onImageError) {
   if (fallbackImage && event.currentTarget.dataset.fallbackApplied !== "true") {
     event.currentTarget.dataset.fallbackApplied = "true";
@@ -110,7 +123,7 @@ function EquipmentCard({ item, imageBroken, onImageError, onSpeak }) {
   const isBatteryCellGroup = item.id === "cell";
 
   return (
-    <div className="group flex h-full w-full flex-col items-center gap-3 rounded-[28px] border-[3px] border-white/80 bg-white/95 px-4 py-5 text-center shadow-[0_16px_28px_rgba(15,23,42,0.14)] transition-transform duration-200 hover:-translate-y-1">
+    <div className="group flex h-full w-full flex-col items-center gap-3 rounded-[28px] border border-[#eadfce] bg-white/95 px-4 py-5 text-center shadow-[0_14px_28px_rgba(92,72,49,0.1)] transition-transform duration-200 hover:-translate-y-1">
 
       <div className="grid h-[134px] w-[134px] place-items-center rounded-[26px] border-[4px] border-[#ddecf7] bg-[linear-gradient(180deg,#ffffff_0%,#f6fbff_100%)] p-3 shadow-[inset_0_6px_12px_rgba(255,255,255,0.55),0_12px_18px_rgba(17,24,39,0.14)]">
         {imageBroken ? (
@@ -216,7 +229,7 @@ export default function P6ElectricCircuitMaterials() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
@@ -226,15 +239,35 @@ export default function P6ElectricCircuitMaterials() {
     >
       <HomeButton />
 
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] z-0 h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
 
-      <div className="mx-auto flex max-w-[1380px] flex-col gap-3">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] z-0 h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
+        style={{
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
+        }}
+      />
+      <Spark className="right-[10%] top-[16%] z-0 h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] z-0 h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] z-0 h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] z-0 text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-[1380px] flex-col gap-3">
         <h1 className="m-0 py-1 text-center text-[clamp(30px,2.2vw,48px)] font-black leading-[1.08] text-slate-900">
           {t.title}
         </h1>
 
-        <div className="rounded-[34px] bg-sky-200 p-6">
+        <div className="rounded-[34px] border border-[#eadfce] bg-[#fffaf3]/90 p-6 shadow-[0_18px_34px_rgba(92,72,49,0.12)] backdrop-blur-[1px]">
           <div className="mb-4">
-            <div className="inline-flex px-2 py-1 text-[clamp(28px,2vw,40px)] font-black text-slate-900">
+            <div className="inline-flex rounded-full border border-[#e5d4bd] bg-[#f6efe4] px-5 py-2 text-[clamp(28px,2vw,40px)] font-black text-[#1f2937]">
               {t.equipmentHeading}
             </div>
           </div>

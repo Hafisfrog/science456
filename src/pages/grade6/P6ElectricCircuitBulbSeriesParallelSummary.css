@@ -3,12 +3,13 @@
 }
 
 .p6-circuit-bsp-summary-inner {
-  background: rgba(243, 239, 239, 0.92);
-  border: 2px solid rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #eadfce;
   border-radius: 24px;
   padding: 16px;
   display: grid;
   gap: 12px;
+  box-shadow: 0 14px 26px rgba(92, 72, 49, 0.1);
 }
 
 .p6-circuit-bsp-summary-title {
@@ -23,12 +24,12 @@
 }
 
 .p6-circuit-bsp-summary-table {
-  border: 3px solid rgba(15, 23, 42, 0.85);
-  border-radius: 10px;
+  border: 3px solid #26324a;
+  border-radius: 14px;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr;
-  background: rgba(255, 255, 255, 0.35);
+  background: #fffdf8;
 }
 
 .p6-circuit-bsp-summary-row {
@@ -44,7 +45,7 @@
 
 .p6-circuit-bsp-summary-head {
   min-height: 64px;
-  background: rgba(255, 255, 255, 0.65);
+  background: #f6efe4;
   font-weight: 900;
   font-size: clamp(16px, 1.05vw, 20px);
   text-align: center;

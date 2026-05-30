@@ -101,6 +101,19 @@ function speak(text, lang = "th-TH") {
   window.speechSynthesis.speak(u);
 }
 
+function Spark({ className = "" }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc333] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%)",
+      }}
+    />
+  );
+}
+
 export default function P6ElectricCircuitBulbSeriesParallelSteps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -110,7 +123,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
@@ -120,17 +133,29 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
     >
       <HomeButton />
 
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] z-0 h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] z-0 h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
         style={{
-          clipPath: "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
           filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.15))",
         }}
       />
+      <Spark className="right-[10%] top-[16%] z-0 h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] z-0 h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] z-0 h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] z-0 text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
 
       <div className="relative z-[1] mx-auto flex min-h-[calc(100vh-170px)] w-full max-w-[1380px] items-center">
-        <div className="relative w-full min-h-0 overflow-hidden rounded-[30px] bg-[#e5f3ff] px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_22px_40px_rgba(17,24,39,0.18)]">
+        <div className="relative w-full min-h-0 overflow-hidden rounded-[30px] border border-[#eadfce] bg-[#fffaf3]/90 px-[clamp(16px,1.8vw,26px)] py-[clamp(18px,2vw,28px)] shadow-[0_18px_34px_rgba(92,72,49,0.12)] backdrop-blur-[1px]">
           <h1 className="m-0 pb-3 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.08] text-slate-900">
             {t.stepsHeading}
           </h1>
@@ -139,7 +164,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
               {t.steps.map((step, index) => (
                 <div
                   key={`${step.title}-${index}`}
-                  className="flex items-center gap-4 rounded-[999px] border-[3px] border-slate-900 bg-white px-5 py-3 shadow-[0_18px_28px_rgba(15,23,42,0.16)] transition hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+                  className="flex items-center gap-4 rounded-[999px] border-[3px] border-[#26324a] bg-white/95 px-5 py-3 shadow-[0_14px_28px_rgba(92,72,49,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_32px_rgba(92,72,49,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
                 >
                   <div className="flex flex-1 items-center gap-4">
                     <div className="grid h-[56px] w-[56px] place-items-center rounded-full bg-gradient-to-br from-[#f8d67b] to-[#e3a92a] text-[30px] font-black text-white shadow-[inset_0_-4px_0_rgba(0,0,0,0.16),0_10px_26px_rgba(12,13,71,0.2)]">
