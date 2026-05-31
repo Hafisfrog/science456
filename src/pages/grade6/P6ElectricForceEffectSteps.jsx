@@ -90,7 +90,7 @@ export default function P6ElectricForceEffectSteps() {
       <HomeButton />
 
       <div className="mx-auto max-w-[1260px]">
-        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg">
+        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg max-[1024px]:mt-10 max-[900px]:mt-8 max-[720px]:mt-4">
           <div className="text-[clamp(30px,3vw,44px)] font-black">{t.heading}</div>
           {t.hint ? <div className="mb-4 text-lg font-bold text-slate-600">{t.hint}</div> : null}
 

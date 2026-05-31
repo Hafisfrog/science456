@@ -599,13 +599,13 @@ export default function P6ElectricCircuitSim() {
 
   const demoNodes = {
     holder: { x: 154, y: 10, w: 232, h: 112 },
-    switcher: { x: 478, y: 76, w: 48, h: 84 },
-    bulb: { x: 522, y: 8, w: 112, h: 112 },
+    switcher: { x: 428, y: 84, w: 48, h: 84 },
+    bulb: { x: 468, y: 16, w: 112, h: 112 },
   };
   const equipmentShift = {
     holder: { x: 14, y: 25 },
-    switcher: { x: 0, y: 80 },
-    bulb: { x: -42, y: -13 },
+    switcher: { x: 0, y: 66 },
+    bulb: { x: -22, y: -8 },
   };
   const wireShiftY = -16;
   const topWireStart = {
@@ -721,8 +721,7 @@ export default function P6ElectricCircuitSim() {
                       </div>
                     </div>
                     <div
-                      className="relative mx-auto mt-[-240px] h-[250px] w-full max-w-[760px]"
-                      style={{ transform: "scale(1.52)", transformOrigin: "top left" }}
+                      className="relative mx-auto mt-[-170px] h-[260px] w-full max-w-[760px] origin-top-left scale-[1.18] max-[1200px]:scale-[1.04] max-[1024px]:max-w-[640px] max-[1024px]:scale-[0.9] max-[900px]:mt-[-130px] max-[900px]:max-w-[590px] max-[900px]:scale-[0.84] max-[820px]:max-w-[540px] max-[820px]:scale-[0.8]"
                     >
                       <svg
                         className="pointer-events-none absolute inset-0 h-full w-full"
@@ -768,8 +767,7 @@ export default function P6ElectricCircuitSim() {
                         style={{
                           left: demoNodes.switcher.x + equipmentShift.switcher.x,
                           top: demoNodes.switcher.y + equipmentShift.switcher.y,
-                          transform: "scale(0.84)",
-                          transformOrigin: "top left",
+                          transform: "none",
                         }}
                       >
                         <SlideSwitch isOn={isSwitchOn} onChange={setIsSwitchOn} />
@@ -780,8 +778,7 @@ export default function P6ElectricCircuitSim() {
                         style={{
                           left: demoNodes.bulb.x + equipmentShift.bulb.x,
                           top: demoNodes.bulb.y + equipmentShift.bulb.y,
-                          transform: "scale(1.18)",
-                          transformOrigin: "top left",
+                          transform: "none",
                         }}
                       >
                         <div

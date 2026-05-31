@@ -82,7 +82,7 @@ export default function P6ElectricObjectives() {
 
   return (
     <div
-      className="relative h-[100svh] overflow-hidden px-3 pb-[104px] pt-4 text-slate-900 sm:px-4 sm:pb-[96px] md:px-6 md:pb-[86px] md:pt-5"
+      className="relative min-h-[100svh] overflow-x-hidden overflow-y-auto px-3 pb-[104px] pt-4 text-slate-900 sm:px-4 sm:pb-[96px] md:px-6 md:pb-[86px] md:pt-5"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <HomeButton />

@@ -1072,22 +1072,45 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   }
 
   .p6-force-sim-stage {
-    height: auto;
-    grid-template-columns: 380px 1fr;
-    grid-template-rows: auto auto;
+    height: 100dvh;
+    min-height: 100svh;
+    grid-template-columns: minmax(280px, 330px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
     padding-top: 64px;
+    padding-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .p6-force-sim-sidebar {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    min-height: 0;
+    overflow: auto;
+    padding-bottom: 82px;
+  }
+
+  .p6-force-sim-center {
+    grid-column: 2;
+    grid-row: 1;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .p6-force-sim-board {
+    min-height: 0;
+    height: 100%;
   }
 
   .p6-force-sim-right {
     position: static;
-    right: auto;
-    top: auto;
-    bottom: auto;
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
     width: auto;
-    grid-column: 1 / -1;
-    max-width: 680px;
-    margin: 0 auto;
-    padding-top: 16px;
+    max-width: none;
+    margin: 0;
+    padding-top: 8px;
+    z-index: auto;
   }
 
   .p6-force-sim-menu {
@@ -1096,9 +1119,12 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   }
 
   .p6-force-sim-langbar {
-    position: static;
-    margin-top: 4px;
+    position: absolute;
+    left: 14px;
+    bottom: 12px;
+    margin-top: 0;
     width: fit-content;
+    z-index: 80;
   }
 
   .p6-force-sim-backBottom {
@@ -1108,9 +1134,14 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   }
 
   .p6-force-sim-live-timer {
-    right: 12px;
-    top: 22px;
-    min-width: 142px;
+    right: 10px;
+    top: 10px;
+    min-width: 118px;
+    padding: 6px 8px;
+  }
+
+  .p6-force-sim-live-timer-time {
+    font-size: 22px;
   }
 }
 
@@ -1142,6 +1173,7 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   .p6-force-sim-stage {
     grid-template-columns: 1fr;
     height: auto;
+    min-height: auto;
     padding: 58px 10px 10px;
   }
 
@@ -1149,6 +1181,16 @@ const forceEffectSimStyles = `.p6-force-sim-page {
     flex-direction: row;
     justify-content: center;
     padding: 10px;
+  }
+
+  .p6-force-sim-center {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 520px;
+  }
+
+  .p6-force-sim-board {
+    min-height: 520px;
   }
 
   .p6-force-sim-menu {
@@ -1165,9 +1207,17 @@ const forceEffectSimStyles = `.p6-force-sim-page {
   }
 
   .p6-force-sim-langbar {
+    position: static;
     align-self: center;
     gap: 8px;
     padding: 6px;
+  }
+
+  .p6-force-sim-right {
+    position: static;
+    right: auto;
+    bottom: auto;
+    z-index: auto;
   }
 
   .p6-force-sim-langchip {

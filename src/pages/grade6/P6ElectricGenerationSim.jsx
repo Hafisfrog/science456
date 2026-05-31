@@ -422,15 +422,6 @@ export default function P6ElectricGenerationSim() {
   const [completedTrials, setCompletedTrials] = useState(() =>
     isFreshStart ? [] : readCompletedTrials(),
   );
-  const leftPanelRef = useRef(null);
-  const dragScrollRef = useRef({
-    active: false,
-    pointerId: null,
-    startX: 0,
-    startLeft: 0,
-    moved: false,
-  });
-  const suppressClickRef = useRef(false);
 
   const totalTrials = trialOptions.length;
   const completedCount = completedTrials.length;
@@ -537,60 +528,6 @@ export default function P6ElectricGenerationSim() {
     setIsRunning(false);
   };
 
-  const handleLeftPanelPointerDown = (event) => {
-    if (event.button !== 0) return;
-    if (event.target.closest("button, a, input, textarea, select, label")) return;
-    const panel = leftPanelRef.current;
-    if (!panel) return;
-    dragScrollRef.current = {
-      active: true,
-      pointerId: event.pointerId,
-      startX: event.clientX,
-      startLeft: panel.scrollLeft,
-      moved: false,
-    };
-    panel.setPointerCapture?.(event.pointerId);
-  };
-
-  const handleLeftPanelPointerMove = (event) => {
-    const drag = dragScrollRef.current;
-    const panel = leftPanelRef.current;
-    if (!drag.active || !panel || drag.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - drag.startX;
-    if (Math.abs(deltaX) > 4) {
-      drag.moved = true;
-      event.preventDefault();
-    }
-    panel.scrollLeft = drag.startLeft - deltaX;
-  };
-
-  const handleLeftPanelPointerEnd = (event) => {
-    const panel = leftPanelRef.current;
-    const drag = dragScrollRef.current;
-    if (panel && drag.pointerId === event.pointerId) {
-      panel.releasePointerCapture?.(event.pointerId);
-    }
-    suppressClickRef.current = drag.moved;
-    if (drag.moved) {
-      setTimeout(() => {
-        suppressClickRef.current = false;
-      }, 0);
-    }
-    dragScrollRef.current = {
-      active: false,
-      pointerId: null,
-      startX: 0,
-      startLeft: 0,
-      moved: false,
-    };
-  };
-
-  const handleLeftPanelClickCapture = (event) => {
-    if (!suppressClickRef.current) return;
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
   const formatTime = (value) => {
     const minutes = Math.floor(value / 60);
     const seconds = value % 60;
@@ -630,7 +567,7 @@ export default function P6ElectricGenerationSim() {
       <style>{forceEffectSimStyles}</style>
 
       <div
-        className="p6-sim-mobile-stage relative isolate z-[1] grid h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)] gap-[clamp(10px,1.6vw,18px)] overflow-y-auto p-[clamp(10px,1.5vw,16px)]"
+        className="p6-sim-mobile-stage relative isolate z-[1] grid min-h-[100dvh] w-full grid-cols-[420px_minmax(0,1fr)] gap-[clamp(10px,1.6vw,18px)] overflow-y-auto p-[clamp(10px,1.5vw,16px)] max-[1024px]:h-auto max-[1024px]:min-h-[100svh] max-[1024px]:grid-cols-[360px_minmax(0,1fr)] max-[900px]:grid-cols-1"
         style={{
           background:
             "linear-gradient(180deg, rgba(251, 252, 254, 0.8), rgba(244, 246, 249, 0.8))",
@@ -639,14 +576,8 @@ export default function P6ElectricGenerationSim() {
         }}
       >
         <div
-          ref={leftPanelRef}
-          className="flex h-full min-h-0 touch-pan-x flex-col items-start gap-3 overflow-x-auto overflow-y-auto overscroll-contain rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]"
+          className="flex h-full min-h-0 touch-pan-y flex-col items-start gap-3 overflow-x-hidden overflow-y-auto overscroll-contain rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]"
           style={{ WebkitOverflowScrolling: "touch" }}
-          onPointerDown={handleLeftPanelPointerDown}
-          onPointerMove={handleLeftPanelPointerMove}
-          onPointerUp={handleLeftPanelPointerEnd}
-          onPointerCancel={handleLeftPanelPointerEnd}
-          onClickCapture={handleLeftPanelClickCapture}
         >
           <div className="w-full min-h-0 flex-1">
             <div className="p6-force-sim-menu is-static" role="region" aria-label={t.selectTrial}>
@@ -735,7 +666,7 @@ export default function P6ElectricGenerationSim() {
       </div>
         </div>
 
-        <div className="relative h-full overflow-hidden rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)]">
+          <div className="relative h-full min-h-[540px] overflow-hidden rounded-[24px] border border-slate-200/80 bg-white/92 p-4 shadow-[0_18px_30px_rgba(15,23,42,0.16)] max-[900px]:min-h-[620px]">
           <div className="p6-force-sim-balloons p6-gen-balloons absolute bottom-[-6%] left-[52%] z-[3] w-full -translate-x-1/2">
             <div
               className="p6-force-sim-balloon left p6-gen-balloon-tuned"
@@ -755,7 +686,7 @@ export default function P6ElectricGenerationSim() {
 
           {selectedTrial !== "trial-1" && (
             <img
-              className={`p6-gen-boy pointer-events-none absolute z-[5] h-[390px] w-auto transition-all duration-300 ${
+              className={`p6-gen-boy pointer-events-none absolute z-[5] h-[390px] w-auto transition-all duration-300 max-[1024px]:h-[330px] max-[900px]:h-[300px] ${
                 isRubbing
                   ? "bottom-[24%] left-[44%] opacity-100 p6-gen-boy-rubbing"
                   : "bottom-[20%] left-[50%] opacity-90"
