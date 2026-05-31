@@ -86,6 +86,19 @@ function speakText(text, lang) {
   synth.speak(utter);
 }
 
+function Spark({ className }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc84b] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)",
+      }}
+    />
+  );
+}
+
 function LanguagePills({ lang, setLang }) {
   return (
     <div className="inline-flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
@@ -119,7 +132,7 @@ export default function P6ElectricForceEffectKeySummary() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
@@ -129,21 +142,41 @@ export default function P6ElectricForceEffectKeySummary() {
     >
       <HomeButton />
 
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
+        style={{
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
+        }}
+      />
+      <Spark className="right-[10%] top-[16%] h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
+
       <div className="relative z-[1] mx-auto w-full max-w-[1280px]">
-        <div className="inline-flex items-center rounded-[12px] bg-blue-600 px-4 py-1.5 text-[clamp(22px,2.4vw,34px)] font-black text-white shadow-[0_10px_18px_rgba(37,99,235,0.35)]">
+        <div className="inline-flex items-center rounded-[16px] border border-[#eadfce] bg-[#fffaf3]/95 px-5 py-2 text-[clamp(22px,2.4vw,34px)] font-black text-[#1f2937] shadow-[0_12px_24px_rgba(92,72,49,0.12)]">
           {t.title}
         </div>
 
         <div className="mt-6 grid gap-6 md:grid-cols-2">
-          <div className="rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
+          <div className="rounded-[20px] border border-[#eadfce] bg-[#fffaf3]/92 p-5 shadow-[0_14px_28px_rgba(92,72,49,0.12)]">
             <div className="flex items-center justify-between gap-3">
-              <div className="inline-flex items-center rounded-full bg-[#cfe9ff] px-4 py-1 text-[18px] font-black">
+              <div className="inline-flex items-center rounded-full border border-[#e5d4bd] bg-[#f6efe4] px-4 py-1 text-[18px] font-black text-[#2f3a45]">
                 {t.sectionCause}
               </div>
               <button
                 type="button"
                 onClick={speakCause}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5eadc] text-xl text-[#a35c2a] shadow-[0_8px_16px_rgba(92,72,49,0.12)] transition hover:scale-105 hover:bg-[#efe0cc]"
                 aria-label={listenLabel}
                 title={listenLabel}
               >
@@ -162,15 +195,15 @@ export default function P6ElectricForceEffectKeySummary() {
             <p className="mt-3 text-[16px] font-semibold leading-[1.6]">{t.chargeInduction}</p>
           </div>
 
-          <div className="rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
+          <div className="rounded-[20px] border border-[#eadfce] bg-[#fffaf3]/92 p-5 shadow-[0_14px_28px_rgba(92,72,49,0.12)]">
             <div className="flex items-center justify-between gap-3">
-              <div className="inline-flex items-center rounded-full bg-[#ffe7a3] px-4 py-1 text-[18px] font-black">
+              <div className="inline-flex items-center rounded-full border border-[#e5d4bd] bg-[#f6efe4] px-4 py-1 text-[18px] font-black text-[#2f3a45]">
                 {t.sectionEffect}
               </div>
               <button
                 type="button"
                 onClick={speakEffect}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5eadc] text-xl text-[#a35c2a] shadow-[0_8px_16px_rgba(92,72,49,0.12)] transition hover:scale-105 hover:bg-[#efe0cc]"
                 aria-label={listenLabel}
                 title={listenLabel}
               >
@@ -197,15 +230,15 @@ export default function P6ElectricForceEffectKeySummary() {
         </div>
 
         <div className="mt-6 flex justify-center">
-          <div className="w-full max-w-[760px] rounded-[20px] border-2 border-white/80 bg-white/85 p-5 shadow-[0_16px_26px_rgba(17,24,39,0.12)]">
+          <div className="w-full max-w-[760px] rounded-[20px] border border-[#eadfce] bg-[#fffaf3]/92 p-5 shadow-[0_14px_28px_rgba(92,72,49,0.12)]">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <div className="inline-flex items-center rounded-full bg-[#d2f7c1] px-4 py-1 text-[18px] font-black">
+              <div className="inline-flex items-center rounded-full border border-[#e5d4bd] bg-[#f6efe4] px-4 py-1 text-[18px] font-black text-[#2f3a45]">
                 {t.sectionExamples}
               </div>
               <button
                 type="button"
                 onClick={speakExample}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f5eadc] text-xl text-[#a35c2a] shadow-[0_8px_16px_rgba(92,72,49,0.12)] transition hover:scale-105 hover:bg-[#efe0cc]"
                 aria-label={listenLabel}
                 title={listenLabel}
               >

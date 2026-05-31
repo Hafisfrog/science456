@@ -44,6 +44,19 @@ const TEXT = {
   },
 };
 
+function Spark({ className }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc84b] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)",
+      }}
+    />
+  );
+}
+
 export default function P6ElectricForceEffectResult() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -51,7 +64,7 @@ export default function P6ElectricForceEffectResult() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
@@ -61,14 +74,34 @@ export default function P6ElectricForceEffectResult() {
     >
       <HomeButton />
 
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
+        style={{
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
+        }}
+      />
+      <Spark className="right-[10%] top-[16%] h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
+
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr] gap-2">
-        <div className="relative rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+        <div className="relative rounded-[30px] border border-[#eadfce] bg-[#fffaf3]/90 px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_18px_34px_rgba(92,72,49,0.12)] backdrop-blur-[1px]">
           <h1 className="mb-3 ml-1 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">
             {t.title}
           </h1>
-          <div className="rounded-[24px] border-2 border-slate-700 bg-[#e5e7eb] p-[6px]">
-            <div className="overflow-hidden rounded-[16px] border-2 border-slate-600">
-              <div className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-[#d7dbe0] text-center text-[clamp(15px,1.6vw,18px)] font-black">
+          <div className="rounded-[24px] border border-[#eadfce] bg-white/92 p-[8px] shadow-[0_14px_26px_rgba(92,72,49,0.1)]">
+            <div className="overflow-hidden rounded-[16px] border-[3px] border-[#26324a] bg-[#fffdf8]">
+              <div className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-[#f6efe4] text-center text-[clamp(15px,1.6vw,18px)] font-black">
                 {t.headers.map((head) => (
                   <div key={head} className="border-r-2 border-slate-600 px-3 py-5 last:border-r-0">
                     {head}
@@ -79,7 +112,7 @@ export default function P6ElectricForceEffectResult() {
               {t.rows.map((row) => (
                 <div
                   key={row.label}
-                  className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-[#d7dbe0] text-center text-[clamp(15px,1.6vw,18px)] font-bold"
+                  className="grid grid-cols-[1fr_1.3fr_1.3fr] bg-white text-center text-[clamp(15px,1.6vw,18px)] font-bold"
                 >
                   <div className="flex items-center justify-center border-r-2 border-t-2 border-slate-600 px-3 py-10">
                     {row.label}

@@ -84,6 +84,19 @@ function speakText(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
+function Spark({ className = "" }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc333] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%)",
+      }}
+    />
+  );
+}
+
 export default function P6ElectricCircuitBulbSeriesParallelResult() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -99,7 +112,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
@@ -109,28 +122,40 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
     >
       <HomeButton />
 
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] z-0 h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] z-0 h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
         style={{
-          clipPath: "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
           filter: "drop-shadow(0 10px 18px rgba(0,0,0,0.15))",
         }}
       />
+      <Spark className="right-[10%] top-[16%] z-0 h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] z-0 h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] z-0 h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] z-0 text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
 
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr_auto] gap-2">
-        <div className="relative grid gap-4 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(16px,2vw,24px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+        <div className="relative grid gap-4 rounded-[30px] border border-[#eadfce] bg-[#fffaf3]/90 p-[clamp(16px,2vw,24px)] shadow-[0_18px_34px_rgba(92,72,49,0.12)] backdrop-blur-[1px]">
           <div className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[280px] w-[280px] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3),rgba(255,255,255,0))]" />
 
           <div className="relative z-[1] flex flex-wrap items-center justify-start gap-3">
-            <div className="inline-flex w-fit items-center gap-2.5 rounded-full bg-blue-600/20 px-4 py-1.5 text-[clamp(22px,1.6vw,30px)] font-black text-slate-900">
+            <div className="inline-flex w-fit items-center gap-2.5 rounded-full border border-[#e5d4bd] bg-[#f6efe4] px-5 py-2 text-[clamp(22px,1.6vw,30px)] font-black text-slate-900 shadow-[0_8px_18px_rgba(92,72,49,0.08)]">
               {t.section}
             </div>
           </div>
 
           <p className="relative z-[1] m-0 text-[clamp(18px,1.6vw,26px)] font-bold leading-[1.4] text-slate-900">{t.intro}</p>
 
-          <div className="relative z-[1] space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
+          <div className="relative z-[1] space-y-3 rounded-[18px] border-[3px] border-[#26324a] bg-white/95 p-4 shadow-[0_14px_28px_rgba(92,72,49,0.1)]">
             <div className="flex items-center justify-between gap-3">
               <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.series.heading}</div>
               <button
@@ -146,7 +171,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
             <div className="text-[clamp(16px,1.3vw,22px)] font-semibold text-slate-900">{t.series.body}</div>
           </div>
 
-          <div className="relative z-[1] space-y-3 rounded-[18px] border-4 border-slate-900 bg-[#fdfbf7] p-4 shadow-[0_12px_22px_rgba(0,0,0,0.16)]">
+          <div className="relative z-[1] space-y-3 rounded-[18px] border-[3px] border-[#26324a] bg-white/95 p-4 shadow-[0_14px_28px_rgba(92,72,49,0.1)]">
             <div className="flex items-center justify-between gap-3">
               <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.parallel.heading}</div>
               <button

@@ -95,6 +95,19 @@ function ClipHead({ x, y, rotate = 0, color = "black" }) {
   );
 }
 
+function Spark({ className = "" }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc333] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%)",
+      }}
+    />
+  );
+}
+
 function BatteryToken({ filled = true }) {
   return (
     <div
@@ -218,7 +231,8 @@ export default function P6ElectricCircuitResults() {
   }, []);
 
   const pageBg = {
-    background: "linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+    background:
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
@@ -228,23 +242,35 @@ export default function P6ElectricCircuitResults() {
     >
       <HomeButton />
 
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] z-0 h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-[clamp(110px,10vw,180px)] top-[10px] h-[clamp(96px,10vw,136px)] w-[clamp(60px,6vw,92px)] bg-[#f7bd2b]"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] z-0 h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
         style={{
-          clipPath: "polygon(42% 0, 100% 0, 66% 44%, 84% 44%, 20% 100%, 42% 57%, 21% 57%)",
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
         }}
       />
+      <Spark className="right-[10%] top-[16%] z-0 h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] z-0 h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] z-0 h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] z-0 text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
 
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr_auto] gap-2">
-        <div className="relative grid min-h-0 gap-3 rounded-[30px] border-2 border-white/80 bg-gradient-to-br from-[#74cdea] via-[#7fd7f3] to-[#6dc5e8] p-[clamp(14px,1.6vw,20px)] shadow-[0_20px_36px_rgba(17,24,39,0.18)]">
+        <div className="relative grid min-h-0 gap-3 rounded-[30px] border border-[#eadfce] bg-[#fffaf3]/90 p-[clamp(14px,1.6vw,20px)] shadow-[0_18px_34px_rgba(92,72,49,0.12)] backdrop-blur-[1px]">
           <div className="relative z-[1] flex flex-wrap items-center justify-start gap-3">
-            <div className="mb-0 inline-flex w-fit items-center gap-2.5 rounded-full bg-gradient-to-br from-blue-600/20 to-sky-400/25 px-4 py-1.5 text-[clamp(34px,2.6vw,52px)] font-black text-slate-900">
+            <div className="mb-0 inline-flex w-fit items-center gap-2.5 rounded-full border border-[#e5d4bd] bg-[#f6efe4] px-5 py-2 text-[clamp(34px,2.6vw,52px)] font-black text-slate-900 shadow-[0_8px_18px_rgba(92,72,49,0.08)]">
               {t.section}
             </div>
           </div>
 
-          <section className="relative z-[1] min-h-0 overflow-hidden rounded-[20px] border-4 border-slate-900 bg-[#f7f4f1] p-[clamp(18px,2.1vw,30px)]">
+          <section className="relative z-[1] min-h-0 overflow-hidden rounded-[22px] border-[3px] border-[#26324a] bg-white/92 p-[clamp(18px,2.1vw,30px)] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.7)]">
             <div className="flex items-end justify-between gap-4 max-[900px]:flex-col max-[900px]:items-start">
               <p className="m-0 flex-1 text-[clamp(20px,2.1vw,40px)] font-bold leading-[1.6] text-slate-900 max-[720px]:leading-[1.5]">
                 {t.summary}

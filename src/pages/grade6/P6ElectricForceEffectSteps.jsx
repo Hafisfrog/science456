@@ -62,6 +62,19 @@ function speakText(text, lang) {
   window.speechSynthesis.speak(utterance);
 }
 
+function Spark({ className }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`pointer-events-none absolute bg-[#ffc84b] ${className}`}
+      style={{
+        clipPath:
+          "polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)",
+      }}
+    />
+  );
+}
+
 export default function P6ElectricForceEffectSteps() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
@@ -79,18 +92,44 @@ export default function P6ElectricForceEffectSteps() {
 
   const pageBg = {
     background:
-      "radial-gradient(78% 58% at 50% 35%, #f6efef 0 62%, transparent 63%), radial-gradient(30% 22% at 10% 34%, #c9e9f4 0 58%, transparent 59%), radial-gradient(30% 22% at 90% 34%, #c9e9f4 0 58%, transparent 59%), linear-gradient(180deg, #c8deeb 0%, #d7e8f1 100%)",
+      "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
   return (
     <div
-      className="min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(35px,5.5vw,75px)]"
+      className="relative min-h-screen overflow-x-hidden px-[clamp(14px,2vw,24px)] pb-[clamp(16px,2.2vw,24px)] pt-[clamp(35px,5.5vw,75px)]"
       style={{ ...pageBg, fontFamily: "Prompt, sans-serif" }}
     >
       <HomeButton />
 
+<<<<<<< HEAD
       <div className="mx-auto max-w-[1260px]">
         <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg max-[1024px]:mt-10 max-[900px]:mt-8 max-[720px]:mt-4">
+=======
+      <div className="pointer-events-none absolute left-[-92px] top-[24%] h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
+        <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
+        <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
+        <div className="absolute left-[102px] top-[76px] h-[126px] w-[98px] rounded-[50%] border-[4px] border-slate-500/35" />
+      </div>
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[clamp(70px,14vw,290px)] top-[-20px] h-[clamp(150px,18vw,270px)] w-[clamp(82px,9vw,150px)] bg-[#ffc84b] max-[700px]:opacity-55"
+        style={{
+          clipPath:
+            "polygon(0 0,44% 0,68% 36%,93% 9%,100% 39%,78% 54%,100% 100%,57% 54%,38% 70%)",
+        }}
+      />
+      <Spark className="right-[10%] top-[16%] h-11 w-11 max-[760px]:hidden" />
+      <Spark className="right-[22%] top-[17%] h-12 w-12 max-[760px]:hidden" />
+      <Spark className="right-[18%] top-[25%] h-5 w-5 max-[760px]:hidden" />
+      <div className="pointer-events-none absolute left-[6%] bottom-[20%] text-[92px] leading-none opacity-75 max-[900px]:hidden">
+        🧲
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-[1260px]">
+        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg">
+>>>>>>> d1053ba71532fa7b0c8217ae079775b4aee52a84
           <div className="text-[clamp(30px,3vw,44px)] font-black">{t.heading}</div>
           {t.hint ? <div className="mb-4 text-lg font-bold text-slate-600">{t.hint}</div> : null}
 

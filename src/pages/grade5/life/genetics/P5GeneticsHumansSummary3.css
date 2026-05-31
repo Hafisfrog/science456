@@ -6,36 +6,19 @@
   overflow-x: hidden;
   overflow-y: auto;
   font-family: "Prompt", sans-serif;
-  background:
-    radial-gradient(64% 32% at 50% 16%, rgba(255, 248, 187, 0.4) 0 44%, transparent 72%),
-    radial-gradient(108% 44% at 48% 72%, rgba(172, 215, 124, 0.34) 0 40%, transparent 62%),
-    radial-gradient(92% 36% at 14% 78%, rgba(166, 219, 131, 0.32) 0 34%, transparent 58%),
-    radial-gradient(92% 36% at 86% 76%, rgba(157, 212, 124, 0.3) 0 36%, transparent 60%),
-    linear-gradient(180deg, #dff1ff 0%, #edf8ff 34%, #f7fbe9 50%, #c8e68a 62%, #b9de6f 80%, #acd25f 100%);
+  background: url("/images/p5/back.png") center / cover no-repeat;
 }
 
 .p5ghs3-page::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(22% 13% at 20% 22%, rgba(255, 255, 255, 0.54) 0 52%, transparent 54%),
-    radial-gradient(20% 12% at 82% 25%, rgba(255, 255, 255, 0.48) 0 52%, transparent 54%),
-    radial-gradient(24% 12% at 52% 40%, rgba(255, 255, 255, 0.2) 0 50%, transparent 52%);
+  background: rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
 
 .p5ghs3-page::after {
-  content: "";
-  position: absolute;
-  left: -8%;
-  right: -8%;
-  bottom: 82px;
-  height: 130px;
-  border-radius: 50%;
-  background: radial-gradient(68% 100% at 50% 50%, rgba(196, 229, 144, 0.42), rgba(196, 229, 144, 0.12) 64%, transparent 74%);
-  filter: blur(8px);
-  pointer-events: none;
+  content: none;
 }
 
 .p5ghs3-sun {
