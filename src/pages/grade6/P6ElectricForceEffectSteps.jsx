@@ -4,7 +4,7 @@ import HomeButton from "../HomeButton";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
-    { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "ms", speechLang: "ms-MY", label: "มลายู" },
   { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 
@@ -102,10 +102,7 @@ export default function P6ElectricForceEffectSteps() {
     >
       <HomeButton />
 
-<<<<<<< HEAD
-      <div className="mx-auto max-w-[1260px]">
-        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg max-[1024px]:mt-10 max-[900px]:mt-8 max-[720px]:mt-4">
-=======
+      {/* decorations */}
       <div className="pointer-events-none absolute left-[-92px] top-[24%] h-[310px] w-[255px] rotate-[-10deg] rounded-[52%_52%_46%_46%] border-[7px] border-black bg-[#fff773] shadow-[inset_24px_22px_0_rgba(255,255,255,.48)] max-[900px]:left-[-150px]">
         <div className="absolute bottom-[-38px] left-[40px] h-[70px] w-[82px] rotate-[12deg] rounded-[14px] border-[7px] border-black bg-[#111]" />
         <div className="absolute bottom-[-4px] left-[56px] h-[84px] w-[54px] rotate-[18deg] rounded-[10px] border-[5px] border-black bg-[#fff7a3]" />
@@ -127,9 +124,9 @@ export default function P6ElectricForceEffectSteps() {
         🧲
       </div>
 
+      {/* content */}
       <div className="relative z-10 mx-auto max-w-[1260px]">
-        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg">
->>>>>>> d1053ba71532fa7b0c8217ae079775b4aee52a84
+        <section className="rounded-3xl bg-[#e6f3ff] p-5 shadow-lg max-[1024px]:mt-10 max-[900px]:mt-8 max-[720px]:mt-4">
           <div className="text-[clamp(30px,3vw,44px)] font-black">{t.heading}</div>
           {t.hint ? <div className="mb-4 text-lg font-bold text-slate-600">{t.hint}</div> : null}
 
@@ -159,6 +156,7 @@ export default function P6ElectricForceEffectSteps() {
           </div>
         </section>
 
+        {/* language switcher */}
         <div className="fixed bottom-3 left-3 z-20 md:bottom-7 md:left-7">
           <div className="flex items-center gap-2 rounded-[18px] bg-white/90 p-2.5 shadow-[0_12px_24px_rgba(0,0,0,.14)]">
             {LANGUAGE_OPTIONS.map((item) => (
@@ -178,6 +176,7 @@ export default function P6ElectricForceEffectSteps() {
           </div>
         </div>
 
+        {/* nav buttons */}
         <div className="fixed bottom-3 right-3 z-20 flex items-center gap-3 md:bottom-7 md:right-7">
           <button
             className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
