@@ -16,7 +16,7 @@ const TEXT = {
     p2: "เมื่อลูกแมวเกิดขึ้น พบว่า",
     result: "ลูกแมวทุกตัวมีขนสีดำ",
     listen: "ฟังสรุป",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
     select: "ต่อไป",
   },
   en: {
@@ -29,21 +29,21 @@ const TEXT = {
     p2: "When kittens were born, we found that",
     result: "all kittens had black fur.",
     listen: "Listen",
-    back: "<< Back",
+    back: "Back",
     select: "Next",
   },
   ms: {
-    title: "Rumusan Eksperimen",
-    p1: "Dalam eksperimen ini, kami mengacukkan kucing jantan dan betina dengan warna bulu berbeza.",
-    father: "Kucing bapa",
-    fatherDesc: "bulu hitam",
-    mother: "Kucing ibu",
-    motherDesc: "bulu putih",
-    p2: "Apabila anak kucing dilahirkan, didapati bahawa",
-    result: "semua anak kucing berbulu hitam.",
+    title: "Kesimpule Hasil Kajiye",
+    p1: "Dari kajiye, kito amek bapak kucing dan ibu kucing hok warno bulu tak samo mari kawen.",
+    father: "Bapak Kucing ",
+    fatherDesc: "Bulu Warno Hite",
+    mother: "Ibu Kucing ",
+    motherDesc: "Bulu Warno Putih",
+    p2: "Bilo beranok tubek, terlihat bahawo",
+    result: "Anok kucing semuwo ado bulu warno hite.",
     listen: "Dengar rumusan",
-    back: "<< Kembali",
-    select: "Seterusnya",
+    back: "Pusing semula",
+    select: "Teruh",
   },
 };
 
@@ -67,7 +67,6 @@ export default function P5GeneticsAnimalsSummary() {
   const { lang, setLang } = useP5GeneticsLang();
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
-  const backLabel = "« ย้อนกลับ";
   const speakSummary = () => {
     speakText(
       [t.p1, `${t.father} ${t.fatherDesc}`, `${t.mother} ${t.motherDesc}`, t.p2, t.result].join(". "),
@@ -148,7 +147,7 @@ export default function P5GeneticsAnimalsSummary() {
               className="p5gas-back-btn"
               onClick={() => navigate("/p5/life/genetics/animals")}
             >
-              {backLabel}
+              &laquo; {t.back}
             </button>
             <button
               type="button"

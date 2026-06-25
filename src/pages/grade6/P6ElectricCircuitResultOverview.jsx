@@ -67,8 +67,8 @@ const TEXT = {
       "Dengan empat sel, mentol paling terang.",
     ],
     listen: "Dengar baris ini",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

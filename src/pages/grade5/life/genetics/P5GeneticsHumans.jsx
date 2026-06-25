@@ -19,7 +19,8 @@ const TEXT = {
       "คำชี้แจง : ให้นักเรียนเลือกรูปที่เป็นลักษณะทางพันธุกรรมของคน",
     reset: "รีเซ็ต",
     reveal: "เฉลย",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
     correct: "ถูก",
     incorrect: "ผิด",
     score: "ตอบถูก",
@@ -50,7 +51,8 @@ const TEXT = {
     tapImage: "Select Images",
     reset: "Reset",
     reveal: "Reveal",
-    back: "<< Back",
+    back: "Back",
+    next: "Next",
     correct: "Correct",
     incorrect: "Incorrect",
     score: "Score",
@@ -77,33 +79,34 @@ const TEXT = {
   },
   ms: {
     title: "Pewarisan Ciri Genetik Manusia",
-    topic: "Pelbagai Ciri Genetik Manusia",
-    tapImage: "Pilih Gambar",
+    topic: "Sifat-sifat Bako Hok Oghe",
+    tapImage: "Keterange : Pelajar keno pilih gama hok jadi sifat bako",
     reset: "Set semula",
     reveal: "Jawapan",
-    back: "<< Kembali",
+    back: "Pusing semula",
+    next: "Teruh",
     correct: "Betul",
     incorrect: "Salah",
-    score: "Skor",
-    scoreLabel: "Skor",
-    selectedLabel: "Dipilih",
+    score: "Markah",
+    scoreLabel: "Markah",
+    selectedLabel: "Pilih Dah",
     wrongItems: "Item yang Salah",
     unansweredItems: "Item Belum Dipilih",
     allCorrect: "Bagus, semua jawapan betul",
     close: "Tutup",
     traits: {
-      "straight-hair": "Rambut Lurus",
-      "double-eyelid": "Mata 2 Kelopak",
-      draw: "Suka Melukis",
-      dimple: "Ada Lesung Pipit",
-      "no-dimple": "Tiada Lesung Pipit",
-      music: "Suka Bermain Muzik",
-      "curly-hair": "Rambut Kerinting",
-      green: "Suka Warna Hijau",
-      nose: "Batang Hidung Tinggi",
-      tongue: "Boleh Gulung Lidah",
-      sports: "Suka Bersukan",
-      "single-eyelid": "Mata Satu Kelopak",
+      "straight-hair": "Ramuk Betu",
+      "double-eyelid": "Mato 2 Lapeh",
+      draw: "Suko Lukih Gama",
+      dimple: "Aado Lesung Pipi",
+      "no-dimple": "Tak Dok Lesung Pipi",
+      music: "Suko Main Gita",
+      "curly-hair": "Ramuk Pelok",
+      green: "Suko Warno Hija",
+      nose: "Hidung Macung",
+      tongue: "Buleh Gulung Lidoh",
+      sports: "Suko Main Suke",
+      "single-eyelid": "Mato Selapeh",
     },
   },
 };
@@ -213,8 +216,8 @@ export default function P5GeneticsHumans() {
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
+  const backLabel = `« ${t.back}`;
+  const nextLabel = `${t.next} »`;
   const hasAnswers = Object.keys(selectedTraits).length > 0;
   const selectedCount = Object.keys(selectedTraits).length;
   const withVersion = (url) => `${url}${url.includes("?") ? "&" : "?"}v=${IMAGE_VERSION}`;

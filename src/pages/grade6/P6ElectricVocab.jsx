@@ -4,19 +4,19 @@ import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp2/P4GravityExp2Vocab.css";
 
 const FORCE_VOCAB = [
-  { th: "แรงโน้มถ่วงของโลก", ms: "graviti bumi", en: "Earth's Gravity" },
-  { th: "สู่ศูนย์กลางของโลก", ms: "ke pusat bumi", en: "To the Center of the Earth" },
-  { th: "น้ำหนัก", ms: "berat", en: "Weight" },
-  { th: "มวล", ms: "jisim", en: "Mass" },
+  { th: "แรงโน้มถ่วงของโลก", ms: "Graviti bumi", en: "Earth's Gravity" },
+  { th: "สู่ศูนย์กลางของโลก", ms: "Ke pusat bumi", en: "To the Center of the Earth" },
+  { th: "น้ำหนัก", ms: "Berat", en: "Weight" },
+  { th: "มวล", ms: "Jisim", en: "Mass" },
 ];
 
 const ELECTRIC_VOCAB = [
-  { th: "แรงดึงดูด", ms: "gaya tarikan", en: "Gravitational Force" },
-  { th: "แรงผลัก", ms: "gaya tolakan", en: "Push Force" },
-  { th: "แรงไม่มีสัมผัส", ms: "daya tanpa sentuhan", en: "Non-contact Force" },
-  { th: "ประจุไฟฟ้า", ms: "cas elektrik", en: "Electric Charge" },
-  { th: "แรงไฟฟ้า", ms: "daya elektrik", en: "Electric Force" },
-  { th: "ความชื้น", ms: "kelembapan", en: "Humidity" },
+  { th: "แรงดึงดูด", ms: "Dayo tarekke", en: "Gravitational Force" },
+  { th: "แรงผลัก", ms: "Dayo tolok", en: "Push Force" },
+  { th: "แรงไม่มีสัมผัส", ms: "Dayo tak tekuh", en: "Non-contact Force" },
+  { th: "ประจุไฟฟ้า", ms: "Cah letrik", en: "Electric Charge" },
+  { th: "แรงไฟฟ้า", ms: "Dayo letrik", en: "Electric Force" },
+  { th: "ความชื้น", ms: "Lemak", en: "Humidity" },
 ];
 
 function speakText(text, lang) {

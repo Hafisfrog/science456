@@ -11,21 +11,24 @@ const TEXT = {
     summary:
       "จากภาพการทดลอง พบว่า\nลักษณะของคนแบ่งออกได้เป็น 2 ประเภท คือ\n1. ลักษณะทางพันธุกรรม\n2. ลักษณะที่เกิดจากการเรียนรู้หรือความชอบส่วนตัว",
     listen: "ฟังสรุป",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
     title: "Experiment Summary",
     summary:
       "From the experiment, human traits can be grouped into 2 types:\n1. Inherited traits\n2. Traits formed by learning or personal preference",
     listen: "Listen",
-    back: "<< Back",
+    back: "Back",
+    next: "Next",
   },
   ms: {
-    title: "Rumusan Eksperimen",
+    title: "Kesimpulae Hasil Kajiye",
     summary:
-      "Daripada eksperimen, ciri manusia boleh dibahagikan kepada 2 jenis:\n1. Ciri warisan\n2. Ciri yang terbentuk melalui pembelajaran atau minat peribadi",
+      "Dari hasil kajiye, terdapat bahawo\nSifat hok ore bagi 2 jenih, yaitu:\n1.	Sifat bako\n2.	Sifat dari hasil belajar atau hok suka peribadi",
     listen: "Dengar rumusan",
-    back: "<< Kembali",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -49,8 +52,8 @@ export default function P5GeneticsHumansSummary() {
   const { lang, setLang } = useP5GeneticsLang();
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
+  const backLabel = `« ${t.back}`;
+  const nextLabel = `${t.next} »`;
   const speakSummary = () => speakText(t.summary, lang);
 
   return (

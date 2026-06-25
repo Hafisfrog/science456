@@ -28,16 +28,16 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    experiment: "Eksperimen 1",
-    title: "Litar Elektrik Mudah",
-    section: "Objektif Pembelajaran",
+    experiment: "Kajiye 1",
+    title: "Tajuk Litar Letrik Hok Mudah",
+    section: "Tujuwe Pembelajare",
     objectives: [
-      "Mengkaji cara menyambung litar elektrik yang mudah.",
-      "Mengkaji hubungan antara bilangan bateri dengan kecerahan mentol.",
-      "Memerhatikan kesan sumber kuasa terhadap operasi mentol.",
+      "Pelajari caro hubung litar letrik ngan mudah.",
+      "Pelajari hubunge di antaro jumloh bateri pelito pecek ngan cerah hok bo pelito.",
+      "Perati hasil hok tepak kejadiye letrik bagi kerjae hok bo pelito.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

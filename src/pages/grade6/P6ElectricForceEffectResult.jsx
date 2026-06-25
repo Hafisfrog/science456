@@ -32,14 +32,14 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Hasil Eksperimen",
-    headers: ["Bahan", "Kedua-duanya digosok dengan tisu", "Hanya 1 digosok dengan tisu"],
+    title: "Hasil Kajiye",
+    headers: ["Beno", "Gesek ngan kertah tisu keduwo-duwonyo", "Gesek dengan kertah tisu hanyo satu"],
     rows: [
-      { label: "Belon", both: "Tolak-menolak", one: "Tarik-menarik" },
-      { label: "Pen marker", both: "Tolak-menolak", one: "Tarik-menarik" },
+      { label: "Buwoh gelemong", both: "Tolok tubek", one: "Tarek masuk" },
+      { label: "Kale mecik", both: "Tolok tubek", one: "Tarek masuk" },
     ],
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

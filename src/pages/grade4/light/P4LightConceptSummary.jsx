@@ -61,27 +61,27 @@ const UI = {
     },
   },
   ms: {
-    pageTitle: "Rumusan Penting: Medium Cahaya",
-    next: "Seterusnya",
+    pageTitle: "Kesimpule isi peting: Perantaro Cahayo",
+    next: "Teruh",
     listenTitle: "Dengar tajuk di atas",
     listen: "Dengar",
     listenSection: "Dengar blok ini",
     lang: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     sections: {
       transparent: {
-        title: "Objek Lutsinar",
+        title: "Perantaro jenih",
         description: "Cahaya menembusi dengan baik, jadi objek di belakang dapat dilihat dengan jelas.",
-        tags: ["Gelas Jernih", "Plastik Jernih", "Kaca Jernih"],
+        tags: ["Gelah", "Plastik", "Cuming"],
       },
       translucent: {
-        title: "Objek Lut Separa",
+        title: "Perantaro lutcahayo",
         description: "Sebahagian cahaya menembusi, jadi objek di belakang kelihatan kurang jelas.",
-        tags: ["Kaca Kabur", "Kertas Surih", "Kabus"],
+        tags: ["Cuming Gelak", "Ketah Minyok", "Kabuk"],
       },
       opaque: {
-        title: "Objek Legap",
+        title: "Beno Legap",
         description: "Cahaya tidak menembusi langsung, jadi objek di belakang tidak dapat dilihat.",
-        tags: ["Papan Kayu", "Besi", "Dinding Simen"],
+        tags: ["Pape", "Besi", "Dineng"],
       },
     },
   },
@@ -136,7 +136,7 @@ export default function P4LightConceptSummary() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const ui = useMemo(() => UI[language] ?? UI.th, [language]);
-  const backLabel = language === "en" ? "Back" : language === "ms" ? "Kembali" : "ย้อนกลับ";
+  const backLabel = language === "en" ? "Back" : language === "ms" ? "Pusing semula" : "ย้อนกลับ";
   const transparentExamples = [
     { src: "/images/materials/l10.png", label: ui.sections.transparent.tags[0] },
     { src: "/images/materials/l3.png", label: ui.sections.transparent.tags[1] },

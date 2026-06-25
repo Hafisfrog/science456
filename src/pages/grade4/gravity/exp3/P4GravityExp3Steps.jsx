@@ -67,20 +67,20 @@ export default function P4GravityExp3Steps() {
         step4: "Record the results",
       },
       ms: {
-        topic: "Eksperimen 3: Graviti Bumi dan Graviti Bulan",
-        label: "Langkah Eksperimen",
-        next: "Seterusnya",
-        back: "Kembali",
+        topic: "Kajiye 3  Tajuk Dayo Tarekke Bumi dengan Dayo Tarekke Bule",
+        label: "Caro Kajiye",
+        next: "Teruh",
+        back: "Pusing semula",
 
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         speak: "Dengar",
 
-        step1: "Pilih objek",
-        step2: "Perhatikan objek di Bumi dan di Bulan",
-        step3: "Tukar objek dan ulang eksperimen",
-        step4: "Catat keputusan",
+        step1: "Pilih beno kajiye",
+        step2: "Perati beno hok time atah bumi ngan bule",
+        step3: "Tukar beno kajiye dan buwak kajiye semula",
+        step4: "Catat hasil kajiye",
       },
     };
   }, []);

@@ -102,7 +102,8 @@ const TEXT = {
     f2Text: "เมื่อรุ่นลูกผสมกันเอง รุ่นหลานจะแสดงลักษณะเด่นต่อลักษณะด้อยในอัตราส่วน 3 : 1",
     f1Dom: "แสดงลักษณะเด่นทั้งหมด",
     f2Dom: "แสดงลักษณะเด่น : ด้อย\nในอัตราส่วน 3 : 1",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
     title: "Key Summary: Genetic Traits",
@@ -123,28 +124,30 @@ const TEXT = {
     f2Text: "When the F1 generation cross among themselves, the F2 generation shows dominant to recessive traits in a 3:1 ratio.",
     f1Dom: "All show the dominant trait",
     f2Dom: "Dominant : recessive\nratio 3 : 1",
-    back: "<< Back",
+    back: "Back",
+    next: "Next",
   },
   ms: {
-    title: "Rumusan Utama: Ciri Genetik",
+    title: "Kesimpule Isi Penting : Sifat Bako",
     leftTitle: "Pewarisan Ciri Manusia",
     leftSub: "Diwarisi daripada ibu bapa kepada anak",
     leftBubble: "Ciri yang Diwarisi",
     leftBubbleDesc: "Contohnya bentuk muka,\nwarna kulit, bentuk badan",
     rightTitle: "Ciri Dominan dan Resesif",
     rightSub: "Bandingkan hasil pada haiwan dan tumbuhan",
-    tableHead1: "Hidupan",
-    tableHead2: "Anak (F1)",
-    tableHead3: "Cucu F2",
-    rabbit1: "Arnab hitam - Dominan",
-    rabbit2: "Arnab putih - Resesif",
-    plant1: "Pokok tinggi merah jambu - Dominan",
-    plant2: "Pokok rendah merah jambu - Resesif",
-    f1Text: "Apabila ciri dominan dikacukkan dengan ciri resesif, semua generasi F1 menunjukkan ciri dominan 100%.",
-    f2Text: "Apabila generasi F1 dikacukkan sesama sendiri, generasi F2 menunjukkan nisbah dominan kepada resesif 3 : 1.",
-    f1Dom: "Semua menunjukkan ciri dominan",
-    f2Dom: "Dominan : resesif\nnisbah 3 : 1",
-    back: "<< Kembali",
+    tableHead1: "Beno Hidup",
+    tableHead2: "Gen Anok (F1)",
+    tableHead3: "Gen Cucu F2",
+    rabbit1: "Arnab bulu warno hite - sifat lebih",
+    rabbit2: "Arnab bulu warna putih - gen kughe",
+    plant1: "Pokok tingi warno meghoh jamu - gen lebih",
+    plant2: "Pokok renoh warno meghoh jamu - gen kughe ",
+    f1Text: "Jiko sifat lebih kahwin dengan sifat kughe, gen anok nok keluwar jadi gen lebih 100%",
+    f2Text: "Jika gen anok kahwin sendiri, gen cucu nok keluwar jadi gen kughe dale nisbah 3:1",
+    f1Dom: "Keluwar sifat lebih semuwo",
+    f2Dom: "Jadi  gen : lebih: kughe \ndale nisbah 3:1",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -158,8 +161,8 @@ export default function P5GeneticsHumansSummary3() {
   const middleRefs = useRef([]);
   const bottomRefs = useRef([]);
   const [treeLines, setTreeLines] = useState([]);
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
+  const backLabel = `« ${t.back}`;
+  const nextLabel = `${t.next} »`;
 
   useEffect(() => {
     const familyNode = familyRef.current;

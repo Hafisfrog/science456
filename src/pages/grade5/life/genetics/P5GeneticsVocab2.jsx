@@ -6,11 +6,11 @@ import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsVocab.css";
 
 const VOCAB = [
-  { th: "การสืบพันธุ์", ms: "บิญัก", en: "Reproduction" },
-  { th: "ลักษณะของขน", ms: "จีรี บูลู", en: "Hair Characteristics" },
-  { th: "ลักษณะใบหู", ms: "จีรี ตือลิงอ", en: "Ear Shape" },
-  { th: "สีดอก", ms: "วารนอ บูงอ", en: "Flower Color" },
-  { th: "เพิ่มจำนวน", ms: "ตามะ บีลาแง", en: "Proliferate" },
+  { th: "การสืบพันธุ์", ms: "Cara biyok", en: "Reproduction" },
+  { th: "ลักษณะของขน", ms: "Sifat bulu", en: "Hair Characteristics" },
+  { th: "ลักษณะใบหู", ms: "Sifat telingo", en: "Ear Shape" },
+  { th: "สีดอก", ms: "Warno bungo", en: "Flower Color" },
+  { th: "เพิ่มจำนวน", ms: "Tamoh jumlohง", en: "Proliferate" },
 ];
 
 const CONTENT = {
@@ -39,14 +39,14 @@ const CONTENT = {
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Kosa Kata Sains",
-    subtitle: "Topik: Ciri genetik",
+    title: "Kosa Kato Sains Yang Menarek",
+    subtitle: "Tajuk : Sifat bako",
     colTh: "Bahasa Thai",
     colMs: "Bahasa Melayu",
     colEn: "Bahasa Inggeris",
     colAudio: "Audio",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     speak: "Dengar",
     langLabel: { th: "Thai", en: "English", ms: "Melayu" },
   },

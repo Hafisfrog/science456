@@ -6,7 +6,7 @@ import "../grade4/gravity/exp1/P4GravityExp1Answer.css";
 const TEXT = {
   th: {
     title: "คำถามนี้มีคำตอบ",
-    question: "แรงไฟฟ้าเกิดขึ้นได้อย่างไรนะ",
+    question: "แรงไฟฟ้าเกิดขึ้นได้อย่างไรนะ?",
     answer: [
       "แรงไฟฟ้าเกิดจากการมีประจุไฟฟ้าของวัตถุ",
       "ซึ่งทำให้วัตถุดูดหรือผลักกันได้",
@@ -32,22 +32,22 @@ const TEXT = {
     reveal: "Show answer",
     hide: "Hide answer",
     speak: "Listen",
-    lang: { th: "Thai", en: "English", ms: "Malay" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   ms: {
-    title: "Soalan & Jawapan",
-    question: "Bagaimana daya elektrik berlaku?",
+    title: "Pertanyae Ado Jawape",
+    question: "Bagaimano dayo letrik buleh berlaku?",
     answer: [
-      "Daya elektrik berlaku kerana cas elektrik pada objek.",
-      "Ini menyebabkan objek saling menarik atau menolak.",
-      "Contoh: gosok belon, kemudian dekatkan dengan cebisan kertas -> kertas akan bergerak ke arah belon.",
+      "Dayo letrik berlaku dari cah letrik hok beno.",
+      "buleh buwak wi beno tarek masuk atau tolok tubek.",
+      "seperti buwoh gelemong dengan ramuk, amek letok dekat siket kertah –> kertah nok naye cari buwoh gelemong.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
-    reveal: "Tunjuk jawapan",
-    hide: "Sembunyi jawapan",
+    back: "Pusing semula",
+    next: "Teruh",
+    reveal: "Tunjuk Jawape",
+    hide: "Sorok Jawape",
     speak: "Dengar",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
 };
 
@@ -187,9 +187,9 @@ export default function P6ElectricGenerationConclusionQuestion() {
             </div>
 
             {showAnswer ? (
-              <div className="ans2-a !bg-[linear-gradient(180deg,#fff7ed,#ffffff)] !text-[#dc2626]">
+              <div className="ans2-a relative pr-16 !bg-[linear-gradient(180deg,#fff7ed,#ffffff)] !text-[#dc2626]">
                 <button
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
+                  className="absolute right-4 top-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
                   type="button"
                   onClick={() => speakText(t.answer.join(" "), speechLang)}
                   aria-label={t.speak}

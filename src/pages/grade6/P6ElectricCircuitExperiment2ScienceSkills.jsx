@@ -30,17 +30,17 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    experiment: "Eksperimen 2",
-    title: "Kesan Daya Elektrik",
-    section: "Kemahiran Proses Sains",
+    experiment: "Kajiye 2",
+    title: "Tajuk Hasil Dayo Letrik",
+    section: "Kemahire Proses Sains",
     skills: [
-      "Kemahiran Memerhati",
-      "Kemahiran Mengeksperimen",
-      "Membuat Inferens daripada Data",
-      "Mentafsir Data dan Membuat Kesimpulan",
+      "Kemahire perati",
+      "Kemahire kajiye",
+      "Kemahire beri pendapat dari maklumat",
+      "Kemahire tafsir makno maklumat dan buwak kesimpule",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

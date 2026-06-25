@@ -8,7 +8,7 @@ import "../exp1/P4GravityExp1Materials.css";
 const VOCAB = [
   {
     th: "มวลของวัตถุ",
-    ms: "Jisim objek",
+    ms: "Jisim beno",
     en: "Mass of an object",
     // audio: {
     //   th: "/audio/p4/gravity/gravity_th.mp3",
@@ -18,7 +18,7 @@ const VOCAB = [
   },
   {
     th: "แรงดึงดูดของโลก",
-    ms: "Daya tarikan graviti Bumi",
+    ms: "Dayo tarekke graviti Bumi",
     en: "Earth’s gravity",
     // audio: {
     //   th: "/audio/p4/gravity/center_th.mp3",
@@ -28,7 +28,7 @@ const VOCAB = [
   },
   {
     th: "เครื่องชั่งสปริง",
-    ms: "Penimbang spring",
+    ms: "Timbange spring",
     en: "Spring Scale",
     // audio: {
     //   th: "/audio/p4/gravity/weight_th.mp3",
@@ -38,7 +38,7 @@ const VOCAB = [
   },
   {
     th: "การยืดของสปริง",
-    ms: "Pemanjangan spring",
+    ms: "Renge spring",
     en: "Spring Extension",
     // audio: {
     //   th: "/audio/p4/gravity/mass_th.mp3",
@@ -87,8 +87,8 @@ export default function P4GravityExp2Vocab() {
       listenEn: "Listen in English",
     },
     ms: {
-      title: "Kosa Kata Sains",
-      subtitle: "Topik: Graviti Bumi dan berat objek",
+      title: "Kosa Kato Sains Yang Menarek",
+      subtitle: "Tajuk Dayo Tarekke Bumi dengan Beghak Beno",
       colTh: "Bahasa Thai",
       colMs: "Bahasa Melayu",
       colEn: "Bahasa Inggeris",

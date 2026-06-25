@@ -39,9 +39,9 @@ export default function P4GravityExp1Objectives() {
         back: "Back",
         next: "Next",
         speak: "Listen",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Malay",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
       ms: {
         heading: "Eksperimen 1",
@@ -55,9 +55,9 @@ export default function P4GravityExp1Objectives() {
         back: "Kembali",
         next: "Seterusnya",
         speak: "Dengar",
-        langTh: "Thai",
-        langEn: "Inggeris",
-        langMs: "Melayu",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
     };
   }, []);

@@ -29,12 +29,12 @@ const UI = {
       "Thinking question number one. Why do different materials allow us to see objects inside with different clarity?",
   },
   ms: {
-    title: "Soalan Pemikiran",
+    title: "Pertanyae Ajok Pikir",
     question:
-      "Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",
-    start: "Mula Eksperimen",
-    next: "Seterusnya",
-    back: "Kembali",
+      "Gano alat setiyak jenih buwakwi kito napok hok dale tok samo cerak?",
+    start: "Mula Kajiye",
+    next: "Teruh",
+    back: "Pusing semula",
     langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     speakText:
       "Soalan pemikiran nombor satu. Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",

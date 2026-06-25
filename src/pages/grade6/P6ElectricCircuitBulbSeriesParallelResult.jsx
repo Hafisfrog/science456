@@ -47,19 +47,19 @@ const TEXT = {
     },
   },
   ms: {
-    section: "Rumusan eksperimen",
-    intro: "Daripada aktiviti ini, didapati bahawa mentol berfungsi secara berbeza dalam litar siri dan selari.",
+    section: "Kesimpule Hasil Kajiye",
+    intro: "Dari hasil kegiate, terdapat bahawo jiko hubung litar letrik secaro berseri dan selari, bo pelito nok kerjo tok samo.",
     series: {
-      heading: "Sambungan siri",
-      body: "Apabila satu mentol padam, mentol yang satu lagi turut padam kerana litar terputus dan arus elektrik tidak dapat mengalir dengan lengkap.",
+      heading: "Caro hubung litar berseri",
+      body: "Jiko bo pelito yang satu mati, yang satu lagi pung ikut mati, sebab litar keno keghak, arus letrik tok buleh lalu semuwo.",
     },
     parallel: {
-      heading: "Sambungan selari",
-      body: "Apabila satu mentol padam, mentol yang satu lagi masih menyala kerana masih ada satu lagi laluan untuk arus elektrik mengalir.",
+      heading: "Caro hubung litar selari",
+      body: "Jiko bo pelito yang satu mati tetapi yang satu lagi masih cerah, kerano ado satu jalan lagi yang beri arus letrik lalu.",
     },
     listen: "Dengar rumusan",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     lang: {
       th: "Thai",
       en: "Inggeris",

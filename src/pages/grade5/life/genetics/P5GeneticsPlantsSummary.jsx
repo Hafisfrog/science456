@@ -18,7 +18,7 @@ const TEXT = {
     result:
       "เมื่อนำมาผสมกันพบว่า พืชทุกต้นแสดงลักษณะต้นสูง",
     listen: "ฟังสรุป",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
     select: "ต่อไป",
   },
   en: {
@@ -29,19 +29,19 @@ const TEXT = {
     b: "a = recessive allele, shows short trait",
     result: "When crossed, all offspring showed the tall trait.",
     listen: "Listen",
-    back: "<< Back",
+    back: "Back",
     select: "Next",
   },
   ms: {
-    title: "Rumusan Eksperimen",
-    p1: "Daripada eksperimen, didapati:",
-    items: ["Ciri ketinggian tumbuhan dikawal oleh satu pasangan gen.", "Terdapat 2 alel:"],
-    a: "A = alel dominan, menunjukkan ciri tinggi",
-    b: "a = alel resesif, menunjukkan ciri rendah",
-    result: "Apabila dikacukkan, semua anak menunjukkan ciri pokok tinggi.",
+    title: "Kesimpule Hasil Kajiye",
+    p1: "Dari kajiye, Terlihat bahawo:",
+    items: ["Sifat tingi hok tumbuhe keno kawal ngan gen 1 pase.", "Gen ado 2 bahagiye:"],
+    a: "A = Gen lebih sifatnyo tumbuhe tingi",
+    b: "a = Gen kughe sifatnyo tumbuhe renoh",
+    result: "Jika amek mari kawen terdapat bahawo tumbuhe jadi tingi semuwo.",
     listen: "Dengar rumusan",
-    back: "<< Kembali",
-    select: "Seterusnya",
+    back: "Pusing semula",
+    select: "Teruh",
   },
 };
 
@@ -65,8 +65,8 @@ export default function P5GeneticsPlantsSummary() {
   const { lang, setLang } = useP5GeneticsLang();
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
+  const backLabel = `« ${t.back}`;
+  const nextLabel = `${t.select} »`;
   const speakSummary = () => {
     speakText([t.p1, ...t.items, t.a, t.b, t.result].join(". "), lang);
   };

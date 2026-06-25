@@ -25,7 +25,7 @@ const CONTENT = {
   },
   en: {
     heading: "Experiment Steps",
-    hint: "Press the speaker to hear",
+    // hint: "Press the speaker to hear",
     steps: [
       "Rub 2 balloons with tissue paper.",
       "Place one balloon on a bottle cap and bring another balloon close to it.",
@@ -38,17 +38,17 @@ const CONTENT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    heading: "Langkah Eksperimen",
-    hint: "Tekan pembesar suara",
+    heading: "Langkoh Kajiye",
+    // hint: "Tekan pembesar suara",
     steps: [
-      "Gosok 2 belon dengan kertas tisu.",
-      "Letakkan satu belon di atas penutup botol dan dekatkan satu lagi belon.",
-      "Gosok hanya satu belon, dan satu lagi tidak digosok.",
-      "Tukar objek dan ulang langkah yang sama dari awal.",
-      "Perhatikan hasil.",
+      "Gesek  duwo biji  buwoh gelemong ngan kertah tisu.",
+      "Letok sebiji buwoh gelemong atah tudung botol, amek sebiji buwoh gelemong hok lain mari letok dekak ngan buwoh gelemong hok duk atah tudung botol.",
+      "Gesek sebiji buwoh gelemong ngan kertah tisu dan sebiji lagi tak keno gesek.",
+      "Tukar beno, lepahtu buwak ikut langkoh serupo dengan pertamo.",
+      "Perati hasil.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

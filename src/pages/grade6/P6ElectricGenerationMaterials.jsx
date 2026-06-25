@@ -13,7 +13,7 @@ const LANG = {
     next: "ต่อไป",
   },
   en: {
-    title: "Experiment 1: Electric Force Generation",
+    title: "Experiment 1 Electric Force Generation",
     equipment: "Materials and Equipment",
     balloon: "Balloon",
     cloth: "Dry Cloth",
@@ -22,13 +22,13 @@ const LANG = {
     next: "Next",
   },
   ms: {
-    title: "Eksperimen 1: Penghasilan Daya Elektrik",
-    equipment: "Bahan dan Peralatan",
-    balloon: "Belon",
-    cloth: "Kain Kering",
-    paper: "Kertas Kecil",
-    back: "Kembali",
-    next: "Seterusnya",
+    title: "Kajiye 1 Tajuk Kejadiye Dayo letrik",
+    equipment: "Beno",
+    balloon: "Buwoh Gelemong",
+    cloth: "Kain Keri",
+    paper: "Siket Kertah ",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

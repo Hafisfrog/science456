@@ -43,7 +43,8 @@ const TEXT = {
     incorrect: "ผิด",
     correctAnswer: "เฉลย",
     noAnswer: "ยังไม่ได้เลือก",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
     title: "Inheritance of Cat Fur Traits",
@@ -65,19 +66,20 @@ const TEXT = {
     incorrect: "Incorrect",
     correctAnswer: "Answer",
     noAnswer: "No answer selected",
-    back: "<< Back",
+    back: "Back",
+    next: "Next",
   },
   ms: {
-    title: "Pewarisan Ciri Bulu Kucing",
-    parent: "Induk",
-    child: "Anak",
-    geneText: "Ciri bulu dikawal oleh\n2 alel:",
-    badgeA: "A mewakili alel bulu hitam",
-    badgeB: "a mewakili alel bulu putih",
-    sideNote: "Pilih AA, Aa, atau aa bagi setiap anak kucing, kemudian tekan Jawapan",
-    reset: "Set semula",
+    title: "Caro pinoh bako hok kucing",
+    parent: "Gen Ibu Bapak",
+    child: "Anok",
+    geneText: "Gen kawal warno bulu kucing ado 2 alil yaitu:",
+    badgeA: "A Gati alil warno bulu kucing hite",
+    badgeB: "a Gati alil warno bulu kucing putih",
+    sideNote: "Pilih AA, Aa atau aa beri setiyap anok kucing lalu teke jawape",
+    reset: "Semula",
     resetAria: "Set semula jawapan anak",
-    reveal: "Jawapan",
+    reveal: "Jawape",
     revealAria: "Tunjukkan jawapan anak",
     blackCatAlt: "kucing hitam",
     whiteCatAlt: "kucing putih",
@@ -87,7 +89,8 @@ const TEXT = {
     incorrect: "Salah",
     correctAnswer: "Jawapan",
     noAnswer: "Belum pilih",
-    back: "<< Kembali",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -205,8 +208,6 @@ export default function P5GeneticsAnimals() {
 
   const t = TEXT[lang];
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
   const [lineA, lineB] = t.geneText.split("\n");
 
   return (
@@ -389,14 +390,14 @@ export default function P5GeneticsAnimals() {
               className="p5ga-back"
               onClick={() => navigate("/p5/life/genetics/animals/skills")}
             >
-              {backLabel}
+              &laquo; {t.back}
             </button>
             <button
               type="button"
               className="p5ga-next"
               onClick={() => navigate("/p5/life/genetics/animals/summary")}
             >
-              {nextLabel}
+              {t.next} &raquo;
             </button>
           </div>
         </footer>

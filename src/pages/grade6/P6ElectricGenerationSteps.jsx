@@ -39,26 +39,26 @@ const TEXT = {
     backToMaterials: "Back to materials and equipment",
     back: "Back",
     next: "Next",
-    langLabel: { th: "Thai", ms: "Malay", en: "English" },
+    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
   ms: {
-    title: "Eksperimen 1: Penghasilan Daya Elektrik",
-    heading: "Langkah Eksperimen",
+    title: "Kajiye 1 Tajuk Kejadiye Dayo letrik",
+    heading: "Langkoh Kajiye",
     steps: [
-      "Pilih objek untuk uji kaji",
-      "Gosok belon dengan kain kering",
-      "Perhati dan catat",
+      "Pilih beno hok nak kaji",
+      "Bawo kain kering mari gesek dengan buwoh gelemong",
+      "Perati dan catat hasil",
     ],
     detail: [
-      "Pusingan 1: tanpa gosokan kain kering",
-      "Pusingan 2: gosok dengan kain kering selama 2 minit",
-      "Pusingan 3: gosok dengan kain kering selama 5 minit",
+      "Kali 1 Tak dok gesek dengan kain kering",
+      "Kali 2 Gesek dengan kain kering 2 menek",
+      "Kali 3  Gesek dengan kain kering 5 menek",
     ],
     start: "Mula eksperimen",
     backToMaterials: "Kembali ke bahan dan peralatan",
-    back: "Kembali",
-    next: "Seterusnya",
-    langLabel: { th: "Thai", ms: "Melayu", en: "English" },
+    back: "Pusing semula",
+    next: "Teruh",
+    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
 };
 
@@ -185,7 +185,7 @@ export default function P6ElectricGenerationSteps() {
                 text={content.steps[1]}
                 onSpeak={() => speakText([content.steps[1], ...content.detail].join(" "), voice)}
               />
-              <div className="mx-auto mt-[clamp(12px,2vh,24px)] w-[min(560px,78vw)] text-[clamp(20px,2.25vw,38px)] font-black leading-[1.35] text-black max-[700px]:w-full max-[700px]:pl-[68px]">
+              <div className="mx-auto mt-[clamp(12px,2vh,24px)] w-[min(760px,78vw)] text-[clamp(20px,2.25vw,38px)] font-black leading-[1.35] text-black max-[700px]:w-full max-[700px]:pl-[68px]">
                 {content.detail.map((line) => (
                   <p className="m-0" key={line}>
                     {line}

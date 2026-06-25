@@ -63,9 +63,9 @@ const UI = {
     intro1:
       "From this activity, we found that when different materials block light, each material lets light pass differently.",
     intro2: "The materials can be grouped by how much light they allow through:",
-    lineTransparent: "Materials that let light pass well:",
-    lineTranslucent: "Materials that let some light pass:",
-    lineOpaque: "Materials that do not let light pass:",
+    lineTransparent: "Objects that allow light to pass through easily include clear glass, transparent plastic, and clear cups or glassware.",
+    lineTranslucent: "Objects that allow some light to pass through include frosted glass, wax paper, and fog",
+    lineOpaque: "Objek yang tidak membenarkan cahaya menembusinya ialah papan kayu, besi dan dinding konkrit.",
     andWord: "and",
     listenSummary: "🔊 Listen to summary",
     noMalayVoice: "Malay voice (ms-MY) is not available on this device, so reading is skipped to avoid mispronunciation.",
@@ -73,18 +73,18 @@ const UI = {
     next: "Next",
   },
   ms: {
-    title: "Ringkasan Eksperimen",
+    title: "Kesimpule Hasil Kajiye",
     intro1:
-      "Daripada aktiviti ini, didapati apabila bahan yang berbeza menghalang cahaya, setiap bahan membenarkan cahaya menembusi pada tahap berbeza.",
-    intro2: "Bahan boleh dikelaskan mengikut keupayaan menembusi cahaya seperti berikut:",
-    lineTransparent: "Bahan yang membenarkan cahaya menembusi dengan baik:",
-    lineTranslucent: "Bahan yang membenarkan sebahagian cahaya menembusi:",
-    lineOpaque: "Bahan yang tidak membenarkan cahaya menembusi:",
+      "Lepah kito buwak kegiate hasil adalah jiko amek beno mari sekat cahayo, setiyak jenih beno cahayo nak temuh secaro berbeza,",
+    intro2: "buleh bagi beno ikut jenih hok sekat cahayo, sebagai berikut.",
+    lineTransparent: "Beno hok cahayo buleh temus dengan baik seperti, cuming, plastik, gelah.",
+    lineTranslucent: "Beno hok cahayo buleh temuh sebahagiye sahajo seperti, cuming gelak, ketah minyok dan kabok.",
+    lineOpaque: "Beno hok tak beri cahayo temuh seperi, pape, besi dan dineng.",
     andWord: "dan",
     listenSummary: "🔊 Dengar ringkasan",
     noMalayVoice: "Suara Bahasa Melayu (ms-MY) tidak ditemui pada peranti ini, bacaan dihentikan untuk elak sebutan tersalah.",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -278,30 +278,30 @@ export default function P4LightSummary() {
                 <ul className="mt-2 space-y-2 sm:mt-3">
                   <li>
                     • {ui.lineTransparent}{" "}
-                    {formatList(
+                    {/* {formatList(
                       groupedNames.transparent,
                       FALLBACK_BY_TYPE.transparent[language] || FALLBACK_BY_TYPE.transparent.th,
                       language,
                       ui.andWord
-                    )}
+                    )} */}
                   </li>
                   <li>
                     • {ui.lineTranslucent}{" "}
-                    {formatList(
+                    {/* {formatList(
                       groupedNames.translucent,
                       FALLBACK_BY_TYPE.translucent[language] || FALLBACK_BY_TYPE.translucent.th,
                       language,
                       ui.andWord
-                    )}
+                    )} */}
                   </li>
                   <li>
                     • {ui.lineOpaque}{" "}
-                    {formatList(
+                    {/* {formatList(
                       groupedNames.opaque,
                       FALLBACK_BY_TYPE.opaque[language] || FALLBACK_BY_TYPE.opaque.th,
                       language,
                       ui.andWord
-                    )}
+                    )} */}
                   </li>
                 </ul>
               )}

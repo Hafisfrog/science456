@@ -54,27 +54,27 @@ const TRANSLATIONS = {
     ],
   },
   ms: {
-    stepsHeading: "Langkah eksperimen",
-    back: "Kembali",
-    next: "Seterusnya",
+    stepsHeading: "Langkoh Kajiye",
+    back: "Pusing semula",
+    next: "Teruh",
     sound: "Bunyi",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
     steps: [
       {
-        title: "Reka dan bina litar",
-        detail: "Sambungkan 2 bateri secara siri lalu hubungkan ke mentol dan suis hingga lengkap.",
+        title: "Reko dan Hubung Litar",
+        detail: "Hubung 2 tokol bateri pelito pecek secaro berseri, lepahtu hubung dengan bo pelito dan suwih wi cukup.",
       },
       {
-        title: "Uji dan perhati",
-        detail: "Hidupkan suis, perhatikan kecerahan mentol dan bandingkan.",
+        title: "Kaji dan Perati",
+        detail: "Buko suwih perati bo pelito cerah taro mano dan baneng hasil.",
       },
       {
-        title: "Uji lagi",
-        detail: "Guna 4 bateri, sambung semula dan perhatikan kecerahan sekali lagi.",
+        title: "Kaji Semula",
+        detail: "Tukar jadi hubung 4 tokol bateri, lepahtu perati bo pelito cerah taro mano.",
       },
       {
-        title: "Catat hasil",
-        detail: "Catat pemerhatian dan hubungkan bilangan bateri dengan kecerahan.",
+        title: "Catat Hasil",
+        detail: "Buleh catat beno hok nok perati dan buwak kesimpule hubunge hok jumlah bateri ngan cerah hok pelito.",
       },
     ],
   },

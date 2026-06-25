@@ -4,6 +4,7 @@ import HomeButton from "../HomeButton";
 
 const CONTENT = {
   th: {
+    grade: "ชั้นประถมศึกษาปีที่ 6",
     title: "วงจรไฟฟ้าใกล้ตัว",
     section: "จุดประสงค์การเรียนรู้",
     obj1: "อธิบายส่วนประกอบของวงจรไฟฟ้าอย่างง่ายได้",
@@ -13,6 +14,7 @@ const CONTENT = {
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   en: {
+    grade: "Grade 6",
     title: "Everyday Electric Circuits",
     section: "Learning Objectives",
     obj1: "Describe the components of a simple electric circuit. ",
@@ -22,12 +24,13 @@ const CONTENT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Litar Elektrik Sekeliling Kita",
-    section: "Objektif Pembelajaran",
-    obj1: "Menerangkan komponen litar elektrik yang ringkas.",
-    obj2: "Membina litar ringkas dan mengenal pasti litar terbuka/tertutup. ",
-    back: "Kembali",
-    next: "Seterusnya",
+    grade: "Kelah 6",
+    title: "Litar Letrik Kiling Kito",
+    section: "Tujuwe Pembelajare",
+    obj1: "Buleh hurai bahgiye litar letrik hok mudoh.",
+    obj2: "Buleh hubung litar letrik hok mudoh, lepahtu buleh check litar buka-katuk. ",
+    back: "Pusing semula",
+    next: "Teruh",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -107,14 +110,14 @@ export default function P6ElectricCircuitObjectives() {
       <div className="pointer-events-none absolute left-[6%] bottom-[22%] text-[92px] leading-none opacity-75 max-[900px]:hidden">🧲</div>
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1540px] flex-col">
-        <div className="w-fit rounded-[30px] bg-[#8fc8df] px-[clamp(18px,2.4vw,34px)] py-[clamp(8px,1vw,13px)] shadow-[inset_0_-4px_0_rgba(255,255,255,.2)]">
+        <div className="mt-16 w-fit rounded-[30px] bg-[#8fc8df] px-[clamp(18px,2.4vw,34px)] py-[clamp(8px,1vw,13px)] shadow-[inset_0_-4px_0_rgba(255,255,255,.2)] max-[640px]:mt-16">
           <div className="text-[clamp(24px,2.8vw,50px)] font-black leading-none text-white [text-shadow:_0_4px_0_#3f91bd,_2px_0_0_#3f91bd,_-2px_0_0_#3f91bd,_0_-2px_0_#3f91bd]">
-            ชั้นประถมศึกษาปีที่ 6
+            {t.grade}
           </div>
         </div>
 
         <section className="mx-auto flex w-full flex-1 flex-col items-center justify-center gap-[clamp(18px,2.6vw,38px)] py-[clamp(8px,1.4vw,18px)]">
-          <div className="relative w-[min(72vw,860px)] rounded-full border-[clamp(3px,.45vw,5px)] border-black bg-white px-[clamp(66px,8vw,120px)] py-[clamp(9px,1.25vw,18px)] text-center shadow-[clamp(9px,1vw,14px)_clamp(9px,1vw,14px)_0_rgba(0,0,0,.28)] max-[640px]:w-full">
+          <div className="relative w-[min(72vw,960px)] rounded-full border-[clamp(3px,.45vw,5px)] border-black bg-white px-[clamp(66px,8vw,120px)] py-[clamp(9px,1.25vw,18px)] text-center shadow-[clamp(9px,1vw,14px)_clamp(9px,1vw,14px)_0_rgba(0,0,0,.28)] max-[640px]:w-full">
             <div className="absolute left-[clamp(14px,1.8vw,26px)] top-1/2 h-[clamp(48px,6vw,82px)] w-[clamp(48px,6vw,82px)] -translate-y-1/2 rounded-full border-[clamp(3px,.45vw,5px)] border-black bg-[#f76525]" />
             <h1 className="m-0 text-[clamp(30px,3.55vw,62px)] font-black leading-tight text-black">
               {t.title}

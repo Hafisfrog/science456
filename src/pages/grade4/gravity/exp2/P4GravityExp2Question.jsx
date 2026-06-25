@@ -21,7 +21,7 @@ export default function P4GravityExp2Question() {
     return {
       th: {
         title: "คำถามชวนคิด",
-        q1: "1. เคยสงสัยหรือไม่ว่า ทำไมวัตถุทุกชนิดจึงตกลงสู่พื้นโลก และเหตุใดวัตถุแต่ละชนิดจึงมีน้ำหนักไม่เท่ากัน ?",
+        q1: "เคยสงสัยหรือไม่ว่า ทำไมวัตถุทุกชนิดจึงตกลงสู่พื้นโลก และเหตุใดวัตถุแต่ละชนิดจึงมีน้ำหนักไม่เท่ากัน ?",
         langTh: "ไทย",
         langEn: "อังกฤษ",
         langMs: "มลายู",
@@ -33,7 +33,7 @@ export default function P4GravityExp2Question() {
       },
       en: {
         title: "Thinking Question",
-        q1: "1. Have you ever wondered why all objects fall to the ground, and why different objects have different weights?",
+        q1: "Have you ever wondered why all objects fall to the ground, and why different objects have different weights?",
         langTh: "ไทย",
         langEn: "อังกฤษ",
         langMs: "มลายู",
@@ -44,15 +44,15 @@ export default function P4GravityExp2Question() {
         speak: "Listen",
       },
       ms: {
-        title: "Soalan Berfikir",
-        q1: "1. Pernahkah anda tertanya-tanya mengapa semua objek jatuh ke tanah, dan mengapa objek yang berbeza mempunyai berat yang berbeza?",
+        title: "Pertanyae yang menarek",
+        q1: "Pernoh pikir dok, gano beno semuwo jenih jatuh ko bumi dan sebab apo beno setiyak jenih nilai beghak tok samo?",
         langTh: "ไทย",
         langEn: "อังกฤษ",
         langMs: "มลายู",
         btnHint: "Cari\njawapan",
-        btnStart: "Mulakan Eksperimen",
-        back: "Kembali",
-        next: "Seterusnya",
+        btnStart: "Mula kajiye",
+        back: "Pusing semula",
+        next: "Teruh  ",
         speak: "Dengar soalan",
       },
     };

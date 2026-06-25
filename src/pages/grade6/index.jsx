@@ -15,12 +15,12 @@ const EXPERIMENTS = [
     title: {
       th: "การทดลองที่ 1",
       en: "Experiment 1",
-      ms: "Eksperimen 1",
+      ms: "Kajiye 1",
     },
     subtitle: {
       th: "การเกิดแรงไฟฟ้า",
       en: "Generating Electric Force",
-      ms: "Penghasilan Daya Elektrik",
+      ms: "Kejadiye Dayo Letrik",
     },
     image: "/images/p6/todlong7p6.png",
     // path: "/p6/experiment/electric-generation/materials?from=unit",
@@ -31,12 +31,12 @@ const EXPERIMENTS = [
     title: {
       th: "การทดลองที่ 2",
       en: "Experiment 2",
-      ms: "Eksperimen 2",
+      ms: "Kajiye 2",
     },
     subtitle: {
       th: "ผลของแรงไฟฟ้า",
       en: "Effects of Electric Force",
-      ms: "Kesan Daya Elektrik",
+      ms: "Hasil Dayo Letrikk",
     },
     image: "/images/p6/todlonf8p6.png",
     path: "/p6/experiment/electric-force-effect/objectives",
@@ -57,9 +57,9 @@ const PAGE_COPY = {
     languageLabel: "Choose language",
   },
   ms: {
-    title: "Daya Elektrik",
-    subtitle: "Pilih Eksperimen",
-    backLabel: "Kembali",
+    title: "Kenali Dayo Letrik",
+    subtitle: "Pilih Kajiye",
+    backLabel: "Pusing semula",
     languageLabel: "Pilih bahasa",
   },
 };

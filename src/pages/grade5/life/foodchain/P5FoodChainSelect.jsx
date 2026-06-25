@@ -173,7 +173,7 @@ const UI_COPY = {
   ms: {
     languages: { th: "Thai", en: "English", ms: "Melayu" },
     activityBadge: "Aktiviti susun rantai makanan",
-    pageTitle: "Bina rantai makanan mengikut urutan pemakanan",
+    pageTitle: "Bino ghata makene dengan caro susung ature make hok beno hidup",
     pageDescription:
       "Klik slot yang masih kosong untuk memilih hidupan yang betul, kemudian semak jawapan pada langkah seterusnya.",
     legendPrompt: "Slot kelabu = petunjuk",
@@ -183,25 +183,25 @@ const UI_COPY = {
     progressDesc: "Bilangan slot yang telah diisi daripada semua slot jawapan",
     clueTitle: "Petunjuk awal",
     clueDesc: "Bilangan slot yang dibuka oleh sistem",
-    randomQuestion: "Rawak soalan baru",
-    chainLabel: "Rantai Makanan",
+    randomQuestion: "Pilih Soale Baru",
+    chainLabel: "Soale",
     slotLabel: "Slot",
-    slotPrompt: "Petunjuk",
-    slotSelected: "Sudah pilih",
-    slotFill: "Isi jawapan",
+    slotPrompt: "Soale",
+    slotSelected: "Sudoh Pilih",
+    slotFill: "Isi Jawape",
     slotWrong: "Salah",
-    clickToChoose: "Klik untuk pilih",
-    rowComplete: "Sudah lengkap",
-    rowFilled: (filled, total) => `Diisi ${filled}/${total} slot`,
-    revealRow: "Tunjuk jawapan ",
+    clickToChoose: "Teke Utuk Pilih",
+    rowComplete: "Sudah Isi Semuwo",
+    rowFilled: (filled, total) => `Isi Doh  ${filled}/${total} Petok`,
+    revealRow: "Jawape ",
     listenIntro: "Dengar bahagian ini",
     listenRow: "Dengar baris ini",
     rowSpeechLabel: "Baris",
     emptySlotSpeech: "kosong",
-    answerCorrectAlready: "Jawapan sudah betul",
+    answerCorrectAlready: "Jawape Sudoh Betul",
     correctAnswerLabel: "Jawapan yang betul",
-    back: "Kembali",
-    viewAllAnswers: "Lihat semua jawapan",
+    back: "Pusing semula",
+    viewAllAnswers: "Jawape Semuwo",
     chooseLivingThing: "Pilih hidupan",
     fillAnswerFor: (chain, slot) => `Isi jawapan dalam ${chain} ${slot}`,
     chooseDescription:
@@ -220,17 +220,17 @@ const LANGUAGE_BUTTON_LABELS = {
 };
 
 const ANIMAL_TRANSLATIONS = {
-  "/images/p5/kaw.png": { en: "Rice Plant", ms: "Pokok Padi" },
-  "/images/p5/ya.png": { en: "Grass", ms: "Rumput" },
-  "/images/p5/lunamm.png": { en: "Aquatic Plant", ms: "Tumbuhan Air" },
-  "/images/p5/tag.png": { en: "Grasshopper", ms: "Belalang" },
-  "/images/p5/n.png": { en: "Field Rat", ms: "Tikus Sawah" },
-  "/images/p5/non.png": { en: "Caterpillar", ms: "Ulat" },
-  "/images/p5/lunam.png": { en: "Larva", ms: "Jentik-jentik" },
-  "/images/p5/pla.png": { en: "Fish", ms: "Ikan" },
-  "/images/p5/gop.png": { en: "Frog", ms: "Katak" },
+  "/images/p5/kaw.png": { en: "Rice Plant", ms: "Padi" },
+  "/images/p5/ya.png": { en: "Grass", ms: "Ruput" },
+  "/images/p5/lunamm.png": { en: "Aquatic Plant", ms: "Tumbuhe Air" },
+  "/images/p5/tag.png": { en: "Grasshopper", ms: "Belale" },
+  "/images/p5/n.png": { en: "Field Rat", ms: "Tikuh Bene" },
+  "/images/p5/non.png": { en: "Caterpillar", ms: "Ulak" },
+  "/images/p5/lunam.png": { en: "Larva", ms: "Anok Jetik" },
+  "/images/p5/pla.png": { en: "Fish", ms: "Ike Kecik" },
+  "/images/p5/gop.png": { en: "Frog", ms: "Katok" },
   "/images/p5/nog.png": { en: "Bird", ms: "Burung" },
-  "/images/p5/snack.png": { en: "Snake", ms: "Ular" },
+  "/images/p5/snack.png": { en: "Snake", ms: "Ula" },
   "/images/p5/y.png": { en: "Hawk", ms: "Helang" },
 };
 
@@ -264,9 +264,9 @@ export default function P5FoodChainSelect() {
   );
 
   const ui = UI_COPY[activeLang] ?? UI_COPY.th;
-  const totalScoreTitle =
+  const _totalScoreTitle =
     activeLang === "en" ? "Total score" : activeLang === "ms" ? "Jumlah markah" : "คะแนนรวม";
-  const totalScoreDesc =
+  const _totalScoreDesc =
     activeLang === "en"
       ? "Each food chain is worth 2 points"
       : activeLang === "ms"
@@ -330,11 +330,11 @@ export default function P5FoodChainSelect() {
           .map((name) => getAnimalMeta(name))
           .filter(Boolean)
       : [];
-  const totalScore = chains.reduce(
+  const _totalScore = chains.reduce(
     (score, row, rowIndex) => score + getRowScore(rowIndex, row, lockedSlots),
     0
   );
-  const totalPossibleScore = ANSWER_CHAINS.length * SCORE_PER_ROW;
+  const _totalPossibleScore = ANSWER_CHAINS.length * SCORE_PER_ROW;
 
   const speakText = (text) => {
     try {
