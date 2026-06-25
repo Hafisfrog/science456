@@ -1,27 +1,18 @@
-# ใช้ Node เวอร์ชัน 20
-
-FROM node:20
-
-# ตั้ง working directory ใน container
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
-# copy package.json และ package-lock.json
-
 COPY package*.json ./
-
-# ติดตั้ง dependencies
-
-RUN npm install
-
-# copy source code ทั้งหมดเข้า container
+RUN npm ci
 
 COPY . .
+RUN npm run build
 
-# เปิด port ของ Vite
+FROM nginx:1.27-alpine
 
-EXPOSE 5173
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# รัน vite dev server
+EXPOSE 80
 
-CMD ["npm", "run", "dev", "--", "--host"]
+CMD ["nginx", "-g", "daemon off;"]
