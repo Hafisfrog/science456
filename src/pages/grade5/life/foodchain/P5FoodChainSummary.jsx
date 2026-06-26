@@ -41,13 +41,13 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    title: "Ringkasan Eksperimen",
+    title: "Kesimpule Hasil Kajiye",
     paragraph1:
-      "Daripada aktiviti ini, kita dapati hidupan saling berkaitan dalam satu sistem. Tenaga dipindahkan daripada pengeluar kepada pengguna secara berurutan melalui hubungan pemakanan.",
+      "Dari kegiate tersebuk, beno hiduk setiyak jenih ado hubunge satu samo lain dale satu sistem melaluwi tenago pinoh dari oghe buwak ko oghe guno mengikut gilire proses make-makene.",
     paragraph2:
-      "Oleh itu, rantai makanan ialah mekanisme penting untuk pemindahan tenaga dan keseimbangan ekosistem. Setiap hidupan mempunyai peranan dalam sistem ini.",
-    back: "Kembali",
-    next: "Seterusnya",
+      "Mako ghata makene jadi hal peting dale segi pinoh tenago dan jago keseimbange hok tepat duduk, setiyap jenih beno hiduk ado tugah masing-masing.",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

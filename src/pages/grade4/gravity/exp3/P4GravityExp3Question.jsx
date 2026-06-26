@@ -14,7 +14,7 @@ export default function P4GravityExp3Question() {
     () => ({
       th: {
         title: "คำถามชวนคิด",
-        question: "1. วัตถุเดียวกันจะมีน้ำหนักเท่ากันหรือไม่เมื่ออยู่\nบนโลกและดวงจันทร์",
+        question: "วัตถุเดียวกันจะมีน้ำหนักเท่ากันหรือไม่เมื่ออยู่\nบนโลกและดวงจันทร์",
         hintBtn: "มาหาคำตอบกัน",
         startBtn: "เริ่มการทดลอง",
         backBtn: "« ย้อนกลับ",
@@ -26,7 +26,7 @@ export default function P4GravityExp3Question() {
       },
       en: {
         title: "Think & Ask",
-        question: "1. Will the same object have the same weight\non Earth and on the Moon?",
+        question: "Will the same object have the same weight\non Earth and on the Moon?",
         hintBtn: "Let's find the answer",
         startBtn: "Start Experiment",
         backBtn: "« Back",
@@ -37,12 +37,12 @@ export default function P4GravityExp3Question() {
         soundTitle: "Sound",
       },
       ms: {
-        title: "Soalan Pemikiran",
-        question: "1. Adakah objek yang sama mempunyai berat yang sama\napabila berada di Bumi dan Bulan?",
+        title: "Pertanyae yang menarek",
+        question: "Jenih beno hok samo, kalu duk atah bumi ngan bule nok ado beghak samo kedok ?",
         hintBtn: "Mari cari jawapan",
-        startBtn: "Mula Eksperimen",
-        backBtn: "« Kembali",
-        nextBtn: "Seterusnya »",
+        startBtn: "Mula kajiye",
+        backBtn: "« Pusing semula",
+        nextBtn: "Teruh »",
         thChip: "ไทย",
         enChip: "อังกฤษ",
         msChip: "มลายู",
@@ -179,7 +179,7 @@ export default function P4GravityExp3Question() {
             onClick={goBack}
             type="button"
           >
-            « {lang === "th" ? "ย้อนกลับ" : lang === "ms" ? "Kembali" : "Back"}
+            « {lang === "th" ? "ย้อนกลับ" : lang === "ms" ? "Pusing semula" : "Back"}
           </button>
 
           <button
@@ -187,7 +187,7 @@ export default function P4GravityExp3Question() {
             onClick={handleStart}
             type="button"
           >
-            {lang === "th" ? "ต่อไป" : lang === "ms" ? "Seterusnya" : "Next"} »
+            {lang === "th" ? "ต่อไป" : lang === "ms" ? "Teruh" : "Next"} »
           </button>
         </div>
       </div>

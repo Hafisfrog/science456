@@ -8,7 +8,7 @@ const LESSONS = [
     title: {
       th: "แรงไฟฟ้าน่ารู้",
       en: "Electric Force",
-      ms: "Daya Elektrik",
+      ms: "Kenali Dayo Letrik",
     },
     image: "/images/p6/fifanarup6.png",
     to: "/p6/electric-force",
@@ -18,15 +18,36 @@ const LESSONS = [
     title: {
       th: "วงจรไฟฟ้าอย่างง่าย",
       en: "Simple electric circuit",
-      ms: "Litar elektrik mudah",
+      ms: "Litar Letrik Hok Mudah",
     },
     image: "/images/p6/wongjon.png",
     to: "/p6/electric-circuit",
   },
 ];
 
+const PAGE_TEXT = {
+  th: {
+    title: "วิทยาศาสตร์ ป.6",
+    subtitle: "เลือกหน่วยการเรียนรู้",
+    back: "ย้อนกลับ",
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  },
+  en: {
+    title: "Science Grade 6",
+    subtitle: "Choose a learning unit",
+    back: "Back",
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  },
+  ms: {
+    title: "Sains Kelah 6",
+    subtitle: "Pilih Unit Pembelajare",
+    back: "Pusing semula",
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  },
+};
+
 function speakText(text, lang) {
-  if (!("speechSynthesis" in window)) return;
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
 
   window.speechSynthesis.cancel();
 
@@ -61,20 +82,12 @@ export default function P6() {
     ms: "ms-MY",
   };
 
-  const backLabels = {
-    th: "ย้อนกลับ",
-    en: "Back",
-    ms: "Kembali",
-  };
-
   const pageBg = {
     background:
       "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
   };
 
-  const backLabel = backLabels[lang];
-
-  const langLabels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const t = PAGE_TEXT[lang] ?? PAGE_TEXT.th;
 
   return (
     <div
@@ -107,11 +120,11 @@ export default function P6() {
       {/* Header */}
       <header className="relative z-10 mb-5">
         <h1 className="text-4xl font-extrabold text-blue-600 md:text-[46px]">
-          วิทยาศาสตร์ ป.6
+          {t.title}
         </h1>
 
         <p className="mt-2 text-lg text-slate-700 md:text-xl">
-          เลือกหน่วยการเรียนรู้
+          {t.subtitle}
         </p>
       </header>
 
@@ -129,7 +142,6 @@ export default function P6() {
               {/* Image */}
               <div
                 onClick={() => navigate(lesson.to)}
-                className="h-[clamp(220px,28vh,270px)] w-full cursor-pointer overflow-hidden bg-slate-200"
                 className="flex h-[clamp(255px,34vh,315px)] cursor-pointer items-center justify-center overflow-hidden bg-slate-200"
               >
                 <img
@@ -177,7 +189,7 @@ export default function P6() {
                 : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
           >
-            {langLabels.th}
+            {t.langLabels.th}
           </button>
 
           <button
@@ -188,7 +200,7 @@ export default function P6() {
                 : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
           >
-            {langLabels.ms}
+            {t.langLabels.ms}
           </button>
 
           <button
@@ -199,7 +211,7 @@ export default function P6() {
                 : "bg-[#e6f2ff] text-slate-900 hover:-translate-y-0.5 hover:shadow-[0_14px_22px_rgba(0,0,0,.14)]"
             }`}
           >
-            {langLabels.en}
+            {t.langLabels.en}
           </button>
 
         </div>
@@ -212,10 +224,10 @@ export default function P6() {
           className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[16px] max-[720px]:px-[16px] max-[720px]:py-[12px] max-[720px]:text-[18px]"
           onClick={() => navigate("/grades")}
           type="button"
-          aria-label={backLabel}
-          title={backLabel}
+          aria-label={t.back}
+          title={t.back}
         >
-          « {backLabel}
+          « {t.back}
         </button>
 
       </div>

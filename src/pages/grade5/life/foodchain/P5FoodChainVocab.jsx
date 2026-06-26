@@ -6,7 +6,7 @@ import "../../../grade4/gravity/exp2/P4GravityExp2Vocab.css";
 const VOCAB = [
   {
     th: "การพรางตัว",
-    ms: "Penyamaran",
+    ms: "Nyamar",
     en: "Camouflage",
     audio: {
       th: "/audio/p5/foodchain/camouflage_th.mp3",
@@ -16,7 +16,7 @@ const VOCAB = [
   },
   {
     th: "พืช",
-    ms: "Tumbuhan",
+    ms: "Tumbuhe",
     en: "Plant",
     audio: {
       th: "/audio/p5/foodchain/plant_th.mp3",
@@ -26,7 +26,7 @@ const VOCAB = [
   },
   {
     th: "สัตว์",
-    ms: "Haiwan",
+    ms: "Nate",
     en: "Animal",
     audio: {
       th: "/audio/p5/foodchain/animal_th.mp3",
@@ -36,7 +36,7 @@ const VOCAB = [
   },
   {
     th: "กลุ่มของสิ่งมีชีวิต",
-    ms: "Kumpulan Organisma",
+    ms: "Kumpule beno hidup",
     en: "Group of Organisms",
     audio: {
       th: "/audio/p5/foodchain/group_th.mp3",
@@ -46,7 +46,7 @@ const VOCAB = [
   },
   {
     th: "แหล่งที่อยู่อาศัย",
-    ms: "Habitat",
+    ms: "Tepat duduk",
     en: "Habitat",
     audio: {
       th: "/audio/p5/foodchain/habitat_th.mp3",
@@ -56,7 +56,7 @@ const VOCAB = [
   },
   {
     th: "ห่วงโซ่อาหาร",
-    ms: "Rantai Makanan",
+    ms: "Ghata makene",
     en: "Food Chain",
     audio: {
       th: "/audio/p5/foodchain/foodchain_th.mp3",
@@ -66,7 +66,7 @@ const VOCAB = [
   },
   {
     th: "การดำรงชีวิต",
-    ms: "Kelangsungan Hidup",
+    ms: "Caro hidup",
     en: "Survival",
     audio: {
       th: "/audio/p5/foodchain/survival_th.mp3",
@@ -76,7 +76,7 @@ const VOCAB = [
   },
   {
     th: "การถ่ายทอดพลังงาน",
-    ms: "Pemindahan Tenaga",
+    ms: "Caro pinoh tenago",
     en: "Energy Transfer",
     audio: {
       th: "/audio/p5/foodchain/energy_th.mp3",
@@ -86,7 +86,7 @@ const VOCAB = [
   },
   {
     th: "ผู้ผลิต",
-    ms: "Pengeluar",
+    ms: "Oghe buwak",
     en: "Producer",
     audio: {
       th: "/audio/p5/foodchain/producer_th.mp3",
@@ -96,7 +96,7 @@ const VOCAB = [
   },
   {
     th: "ผู้บริโภค",
-    ms: "Pengguna",
+    ms: "Oghe guno",
     en: "Consumer",
     audio: {
       th: "/audio/p5/foodchain/consumer_th.mp3",

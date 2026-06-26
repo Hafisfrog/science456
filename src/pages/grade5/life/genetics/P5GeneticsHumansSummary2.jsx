@@ -8,7 +8,8 @@ import "./P5GeneticsHumansSummaryOverrides.css";
 const TEXT = {
   th: {
     title: "สรุปผลการทดลอง",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
     inheritedTitle: "ลักษณะทางพันธุกรรมของคน",
     inheritedDesc: "เป็นลักษณะที่ถ่ายทอดมาจากพ่อแม่ และติดตัวมาตั้งแต่เกิด เช่น",
     inheritedItems: ["ตา 2 ชั้น", "จมูก", "รูปร่างใบหน้า", "ลักษณะผม (หยิก / ตรง)"],
@@ -19,7 +20,8 @@ const TEXT = {
   },
   en: {
     title: "Experiment Summary",
-    back: "<< Back",
+    back: "Back",
+    next: "Next",
     inheritedTitle: "Inherited Human Traits",
     inheritedDesc: "These are traits passed down from parents and present since birth, such as:",
     inheritedItems: ["Double eyelid", "Nose shape", "Face shape", "Hair type (curly / straight)"],
@@ -29,14 +31,15 @@ const TEXT = {
     listen: "Listen",
   },
   ms: {
-    title: "Rumusan Eksperimen",
-    back: "<< Kembali",
-    inheritedTitle: "Ciri Warisan Manusia",
-    inheritedDesc: "Ciri ini diwarisi daripada ibu bapa dan ada sejak lahir, contohnya:",
-    inheritedItems: ["Mata 2 kelopak", "Bentuk hidung", "Bentuk muka", "Jenis rambut (kerinting / lurus)"],
-    learnedTitle: "Ciri Daripada Pembelajaran",
-    learnedDesc: "Ciri ini tidak diwarisi secara genetik tetapi terbentuk melalui latihan atau minat, contohnya:",
-    learnedItems: ["Suka melukis", "Suka muzik", "Suka bersukan", "Suka warna hijau"],
+    title: "Kesimpulae Kajiye",
+    back: "Pusing semula",
+    next: "Teruh",
+    inheritedTitle: "Sifat bako hok oghe",
+    inheritedDesc: "Sifat yang turun temurun dari ibu bapak dan dari diri sendiri sejok beranok seperti:",
+    inheritedItems: ["Mato Duwa Lapeh", "Hidung", "Bentuk Muko", "Sifat Ramuk (Pelok/Betul)"],
+    learnedTitle: "Sifat dari hasil belajar",
+    learnedDesc: "Sifat hok buke turun-temurun dari ibu bapak, tapi dari latihe dan kesukaae seperti:",
+    learnedItems: ["Suko Lukih Gama", "Suko Main Qita", "Suko Main Suke", "Suko Warno Hija "],
     listen: "Dengar rumusan",
   },
 };
@@ -61,8 +64,8 @@ export default function P5GeneticsHumansSummary2() {
   const { lang, setLang } = useP5GeneticsLang();
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
   const t = TEXT[lang];
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
+  const backLabel = `« ${t.back}`;
+  const nextLabel = `${t.next} »`;
   const speakInherited = () =>
     speakText([t.inheritedTitle, t.inheritedDesc, ...t.inheritedItems].join(". "), lang);
   const speakLearned = () =>

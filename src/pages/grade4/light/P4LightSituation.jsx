@@ -29,16 +29,16 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    title: "Situasi Masalah",
+    title: "Keadae Masaalah",
     paragraphs: [
-      'Murid memainkan peranan sebagai "saintis" yang perlu mengenal pasti objek di dalam kotak melalui medium cahaya yang berbeza.',
-      "Murid berada di dalam bilik sains yang gelap dengan 3 kotak misteri. Setiap kotak mempunyai bahan penutup pada ruang melihat.",
-      "Murid memerhati cahaya yang melalui setiap bahan untuk menentukan objek yang berada di dalam kotak.",
+      'Murid tera jadi “Ahli Sains” keno ghoyak beno hok duk dale kotok.',
+      "Murid keno duk dale bilik sains hok gelak. Ado kotok pelek 3 kotok, tiyak-tiyak kotok ado beno tutup di lube sebeloh depe.",
+      "Murid keno perati cahayo hok temuh beno setiyak jenih, untuk tengok kato dale kotok ado beno gapo.",
     ],
     speakText:
       "Situasi masalah: murid bertindak sebagai saintis dan memerhati cahaya melalui bahan yang berbeza untuk mengenal pasti objek dalam kotak misteri.",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

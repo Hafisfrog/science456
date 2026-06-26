@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import "../exp2/P4GravityExp2Result.css";
@@ -14,8 +14,7 @@ export default function P4GravityExp3Result() {
   const state = location.state || {};
   const [lang, setLang] = useState(state.lang || "th");
 
-  const items = state.items || [];
-  const records = state.records || [];
+  const records = useMemo(() => state.records || [], [state.records]);
 
   const speakingRef = useRef(false);
   const speak = (msg) => {
@@ -81,26 +80,26 @@ export default function P4GravityExp3Result() {
           "Objects of the same type have the same mass, but their weight can be different when they are in places with different \ngravitational forces. The Earth has stronger gravity than the Moon, so objects weigh more on Earth than on the Moon.",
       },
       ms: {
-        title: "Keputusan Eksperimen",
-        colObj: "Objek",
-        colMeasured: "Tempat Eksperimen",
-        t1: "Berat di Bumi",
-        t2: "Berat di Bulan",
-        summaryTitle: "Rumusan",
-        back: "Kembali",
+        title: "Hasil Kajiye",
+        colObj: "Beno",
+        colMeasured: "Tepat Kajiye",
+        t1: "Beghak Atah Bumi",
+        t2: "Beghak Atah Bule",
+        summaryTitle: "Kesimpule Hasil Kajiye",
+        back: "Pusing semula",
         retry: "Cuba lagi",
-        next: "Seterusnya",
+        next: "Teruh",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         speakAll: "Dengar satu halaman",
         book: "Buku",
         rock: "Batu",
-        mango: "Mangga",
-        unitN: "N",
+        mango: "Buwoh pauh",
+        unitN: "Nutan",
         noData: "Tiada data",
         summary:
-          "Objek yang sama mempunyai jisim yang sama, tetapi beratnya berbeza apabila berada di kawasan dengan daya graviti yang berbeza. Bumi mempunyai daya graviti yang lebih kuat daripada Bulan, \noleh itu objek mempunyai berat yang lebih besar di Bumi berbanding di Bulan.",
+          "Beno hok jisim samo, jiko duk tepat hok ado dayo tarek tok samo,\n jadi beghak tok samo. Bumi ado dayo tarek lebih daripado bule, \n buwakwi beghak beno hok duk atah bumi banyok daripado bule.",
       },
     }),
     []
@@ -108,11 +107,11 @@ export default function P4GravityExp3Result() {
 
   const t = text[lang];
 
-  const labelOf = (id) => {
+  const labelOf = useCallback((id) => {
     if (id === "book") return t.book;
     if (id === "rock") return t.rock;
     return t.mango;
-  };
+  }, [t.book, t.rock, t.mango]);
 
   const fmtN = (value) => {
     const num = Number(value);
@@ -132,29 +131,16 @@ export default function P4GravityExp3Result() {
     const order = ["book", "rock", "mango"];
 
     return order.map((id) => {
-      const item = items.find((entry) => entry.id === id);
       const record = latestRecordByItemId[id];
 
       return {
         id,
-        label: item?.label || labelOf(id),
+        label: labelOf(id),
         earthN: record?.earthN ?? null,
         moonN: record?.moonN ?? null,
       };
     });
-  }, [items, latestRecordByItemId, t]);
-
-  const speakPage = () => {
-    const rowText = tableRows
-      .map((row) => {
-        const earth = row.earthN == null ? t.noData : `${fmtN(row.earthN)} ${t.unitN}`;
-        const moon = row.moonN == null ? t.noData : `${fmtN(row.moonN)} ${t.unitN}`;
-        return `${row.label}: ${t.t1} ${earth}. ${t.t2} ${moon}`;
-      })
-      .join("\n");
-
-    speak(`${t.title}\n${t.summaryTitle}\n${t.summary}\n\n${rowText}`);
-  };
+  }, [labelOf, latestRecordByItemId]);
 
   return (
     <div className="exp2r2-page">

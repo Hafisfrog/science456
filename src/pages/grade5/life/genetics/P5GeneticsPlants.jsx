@@ -93,7 +93,8 @@ const TEXT = {
     incorrect: "ผิด",
     correctAnswer: "เฉลย",
     noAnswer: "ยังไม่ได้เลือก",
-    back: "<< ย้อนกลับ",
+    back: "ย้อนกลับ",
+    next: "ต่อไป",
   },
   en: {
     title: "Inheritance of Plant Traits",
@@ -115,19 +116,20 @@ const TEXT = {
     incorrect: "Incorrect",
     correctAnswer: "Answer",
     noAnswer: "No answer selected",
-    back: "<< Back",
+    back: "Back",
+    next: "Next",
   },
   ms: {
-    title: "Pewarisan Ciri Tumbuhan",
-    parent: "Induk",
-    child: "Anak",
-    sideText: "Ketinggian tumbuhan dikawal gen\ndengan 2 alel:",
-    badgeA: "A mewakili alel tinggi",
-    badgeB: "a mewakili alel rendah",
-    sideNote: "Pilih AA, Aa, atau aa bagi setiap anak tumbuhan, kemudian tekan Jawapan",
-    reset: "Set semula",
+    title: "Caro Pinoh Bako Nok Tumbuhe",
+    parent: "Gen Ibu Bapak",
+    child: "Anok",
+    sideText: "Gen kawal tingi hok tumbuhe ado 2 alil yaitu:",
+    badgeA: "A Gati gen alil tingi hok tumbuhe",
+    badgeB: "a Gati gen alil renoh hok tumbuhe",
+    sideNote: "Pilih AA, Aa atau aa beri setiyap anok tumbuhe lalu teke Jawape",
+    reset: "Semula",
     resetAria: "Set semula jawapan anak",
-    reveal: "Jawapan",
+    reveal: "Jawape",
     revealAria: "Tunjukkan jawapan anak",
     tallAlt: "tumbuhan tinggi",
     shortAlt: "tumbuhan rendah",
@@ -137,7 +139,8 @@ const TEXT = {
     incorrect: "Salah",
     correctAnswer: "Jawapan",
     noAnswer: "Belum pilih",
-    back: "<< Kembali",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -248,8 +251,6 @@ export default function P5GeneticsPlants() {
 
   const t = TEXT[lang];
   const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
-  const backLabel = "« ย้อนกลับ";
-  const nextLabel = "ต่อไป »";
   const [lineA, lineB] = t.sideText.split("\n");
   const hasSelections = selectedGenotypes.some(Boolean);
   const hasAllSelections = selectedGenotypes.every(Boolean);
@@ -456,14 +457,14 @@ export default function P5GeneticsPlants() {
               className="p5gps-back-btn"
               onClick={() => navigate("/p5/life/genetics/plants/skills")}
             >
-              {backLabel}
+              &laquo; {t.back}
             </button>
             <button
               type="button"
               className="p5gps-next-btn"
               onClick={() => navigate("/p5/life/genetics/plants/summary")}
             >
-              {nextLabel}
+              {t.next} &raquo;
             </button>
           </div>
         </footer>

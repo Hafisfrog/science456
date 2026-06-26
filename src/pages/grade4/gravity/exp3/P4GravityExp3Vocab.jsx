@@ -4,9 +4,9 @@ import HomeButton from "../../../HomeButton";
 import "./P4GravityExp3Vocab.css";
 
 const VOCAB = [
-  { th: "การเปลี่ยนแปลง", ms: "Perubahan", en: "Change" },
-  { th: "การเคลื่อนที่ของวัตถุ", ms: "Pergerakan objek", en: "Object motion" },
-  { th: "เคลื่อนย้าย", ms: "Menggerakkan", en: "Move" },
+  { th: "การเปลี่ยนแปลง", ms: "Beruboh", en: "Change" },
+  { th: "การเคลื่อนที่ของวัตถุ", ms: "Gerakke beno", en: "Object motion" },
+  { th: "เคลื่อนย้าย", ms: "Alih/Pinoh", en: "Move" },
 ];
 
 export default function P4GravityExp3Vocab() {
@@ -48,8 +48,8 @@ export default function P4GravityExp3Vocab() {
         colMs: "Bahasa Melayu",
         colEn: "Bahasa Inggeris",
         colAudio: "Audio",
-        back: "Kembali",
-        next: "Seterusnya",
+        back: "Pusing semula",
+        next: "Teruh",
         chipTh: "Thai",
         chipEn: "English",
         chipMs: "Melayu",

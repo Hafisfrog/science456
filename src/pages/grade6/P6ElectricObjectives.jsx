@@ -22,13 +22,13 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    grade: "Tahun 6",
-    title: "Daya Elektrik",
-    section: "Objektif Pembelajaran",
-    obj1: "Menerangkan bagaimana daya elektrik terhasil.",
-    obj2: "Memerhati dan menerangkan kesan daya elektrik.",
-    back: "Kembali",
-    next: "Seterusnya",
+    grade: "Kelah 6",
+    title: "Kenali Dayo Letrik",
+    section: "Tujuwe Pembelajare",
+    obj1: "Buleh hurai kejadiye dayo letrik.",
+    obj2: "Buleh perati dan hurai hasil hok dayo letrik.",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -119,7 +119,7 @@ export default function P6ElectricObjectives() {
       </div>
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-[1540px] flex-col">
-        <div className="w-fit rounded-[30px] bg-[#8fc8df] px-[clamp(18px,2.4vw,34px)] py-[clamp(8px,1vw,13px)] shadow-[inset_0_-4px_0_rgba(255,255,255,.2)]">
+        <div className="mt-16 w-fit rounded-[30px] bg-[#8fc8df] px-[clamp(18px,2.4vw,34px)] py-[clamp(8px,1vw,13px)] shadow-[inset_0_-4px_0_rgba(255,255,255,.2)] max-[640px]:mt-16">
           <div className="text-[clamp(24px,2.8vw,50px)] font-black leading-none text-white [text-shadow:_0_4px_0_#3f91bd,_2px_0_0_#3f91bd,_-2px_0_0_#3f91bd,_0_-2px_0_#3f91bd]">
             {t.grade}
           </div>

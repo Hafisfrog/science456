@@ -112,17 +112,17 @@ export default function P4GravityExp3Action() {
         // toastReset: "Reset completed",
       },
       ms: {
-        title: "Graviti Bumi vs graviti Bulan",
-        choose: "Pilih objek",
+        title: "Dayo Tarekke Bumi dengan Dayo Tarekke Bule",
+        choose: "Pilih beno",
         read: "Baca bacaan",
-        save: "Simpan keputusan",
-        reset: "Tetapkan semula",
-        view: "Lihat keputusan",
-        back: "Kembali",
+        save: "Catat hasil kajiye",
+        reset: "Ule semula",
+        view: "Tengok hasil kajiye",
+        back: "Pusing semula",
         earth: "Bumi",
-        moon: "Bulan",
-        wEarth: "Berat di Bumi",
-        wMoon: "Berat di Bulan",
+        moon: "Bule",
+        wEarth: "Beghak Atah Bumi",
+        wMoon: "Beghak Atah Bule",
         mass: "Jisim",
         unitN: "newton",
         chipTh: "ไทย",
@@ -408,7 +408,7 @@ export default function P4GravityExp3Action() {
           type="button"
           onClick={goResult}
         >
-          {lang === "th" ? "ต่อไป" : lang === "ms" ? "Seterusnya" : "Next"} »
+          {lang === "th" ? "ต่อไป" : lang === "ms" ? "Teruh" : "Next"} »
         </button>
       </div>
 

@@ -6,7 +6,7 @@ import "./P4GravityVocab.css";
 const VOCAB = [
   {
     th: "แรงโน้มถ่วงของโลก",
-    ms: "Graviti Bumi",
+    ms: "Tarekke Bumi",
     en: "Earth's Gravity",
     // audio: {
     //   th: "/audio/p4/gravity/gravity_th.mp3",
@@ -16,7 +16,7 @@ const VOCAB = [
   },
   {
     th: "สู่ศูนย์กลางของโลก",
-    ms: "Ke arah pusat Bumi",
+    ms: "Tuju Pusat Bumi",
     en: "Toward the center of the Earth",
     // audio: {
     //   th: "/audio/p4/gravity/center_th.mp3",
@@ -26,7 +26,7 @@ const VOCAB = [
   },
   {
     th: "น้ำหนัก",
-    ms: "Berat",
+    ms: "Beghak",
     en: "Weight",
     // audio: {
     //   th: "/audio/p4/gravity/weight_th.mp3",

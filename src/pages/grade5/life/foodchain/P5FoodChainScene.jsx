@@ -135,8 +135,8 @@ const UI_COPY = {
   ms: {
     listenAll: "Dengar semua",
     listenOne: "Main audio",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     languages: {
       th: "Thai",
       en: "English",
@@ -153,7 +153,7 @@ const SCENE_ITEMS = [
     label: {
       th: "เหยี่ยว / ผู้บริโภค",
       en: "Hawk / Consumer",
-      ms: "Helang / Pengguna",
+      ms: "Helang / Oghe Guno",
     },
     containerClass: "top-[7%] left-[14%]",
     imageClass: "w-28 sm:w-32 lg:w-36",
@@ -168,7 +168,7 @@ const SCENE_ITEMS = [
     label: {
       th: "นก / ผู้บริโภค",
       en: "Bird / Consumer",
-      ms: "Burung / Pengguna",
+      ms: "Burung / Oghe Guno",
     },
     containerClass: "top-[20%] right-[7%]",
     labelRowClassByLang: {
@@ -186,7 +186,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ต้นข้าว / ผู้ผลิต",
       en: "Rice Plant / Producer",
-      ms: "Pokok Padi / Pengeluar",
+      ms: "Padi / Oghe Buwak",
     },
     containerClass: "top-[33%] left-[2%]",
     labelRowClassByLang: {
@@ -204,7 +204,7 @@ const SCENE_ITEMS = [
     label: {
       th: "หนอน / ผู้บริโภค",
       en: "Caterpillar / Consumer",
-      ms: "Ulat / Pengguna",
+      ms: "Ulak / Oghe Guno",
     },
     containerClass: "top-[45%] left-[23%]",
     imageClass: "w-[4.6rem] sm:w-[5.4rem] lg:w-24",
@@ -219,7 +219,7 @@ const SCENE_ITEMS = [
     label: {
       th: "หนูนา / ผู้บริโภค",
       en: "Field Rat / Consumer",
-      ms: "Tikus Sawah / Pengguna",
+      ms: "Tikuh Bene / Oghe Guno",
     },
     containerClass: "top-[29%] left-[47%]",
     imageClass: "w-20 sm:w-24 lg:w-28",
@@ -233,7 +233,7 @@ const SCENE_ITEMS = [
     label: {
       th: "งู / ผู้บริโภค",
       en: "Snake / Consumer",
-      ms: "Ular / Pengguna",
+      ms: "Ula / Oghe Guno",
     },
     containerClass: "top-[50%] left-[38%]",
     imageClass: "w-28 sm:w-32 lg:w-36",
@@ -248,7 +248,7 @@ const SCENE_ITEMS = [
     label: {
       th: "หญ้า / ผู้ผลิต",
       en: "Grass / Producer",
-      ms: "Rumput / Pengeluar",
+      ms: "Ruput / Oghe Buwak",
     },
     containerClass: "top-[81%] left-[28%]",
     imageClass: "w-[5.4rem] sm:w-24 lg:w-28",
@@ -262,7 +262,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ตั๊กแตน / ผู้บริโภค",
       en: "Grasshopper / Consumer",
-      ms: "Belalang / Pengguna",
+      ms: "Belale / Oghe Guno",
     },
     containerClass: "top-[42%] left-[67%]",
     labelRowClassByLang: {
@@ -281,7 +281,7 @@ const SCENE_ITEMS = [
     label: {
       th: "กบ / ผู้บริโภค",
       en: "Frog / Consumer",
-      ms: "Katak / Pengguna",
+      ms: "katok / Oghe Guno",
     },
     containerClass: "top-[79%] left-[60%]",
     labelBlockClass: "-translate-y-1 sm:-translate-y-2",
@@ -301,7 +301,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ลูกน้ำ / ผู้บริโภค",
       en: "Larva / Consumer",
-      ms: "Jentik-jentik / Pengguna",
+      ms: "Anok Jetik / Oghe Guno",
     },
     containerClass: "top-[64%] left-[66%]",
     labelRowClassByLang: {
@@ -320,7 +320,7 @@ const SCENE_ITEMS = [
     label: {
       th: "พืชน้ำ / ผู้ผลิต",
       en: "Water Plant / Producer",
-      ms: "Pokok Air / Pengeluar",
+      ms: "Tumbuhe Air / Oghe Buwak",
     },
     containerClass: "top-[74%] left-[46%]",
     labelBlockClass: "-translate-y-1 sm:-translate-y-2",
@@ -339,7 +339,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ปลา / ผู้บริโภค",
       en: "Fish / Consumer",
-      ms: "Ikan / Pengguna",
+      ms: "Ike / Oghe Guno",
     },
     containerClass: "top-[53%] right-[5%]",
     labelBlockClass: "-translate-y-2 sm:-translate-y-3",
@@ -410,7 +410,7 @@ export default function P5FoodChainScene() {
     activeLang === "en"
       ? "Observe the living things in the food chain."
       : activeLang === "ms"
-        ? "Perhatikan kedudukan hidupan dalam rantaian makanan."
+        ? "Perati tepat duduk hok beno hidup dale ghata mekene"
         : "สังเกตตำแหน่งของสิ่งมีชีวิตในห่วงโซ่อาหาร";
 
   const speakText = (text) => {

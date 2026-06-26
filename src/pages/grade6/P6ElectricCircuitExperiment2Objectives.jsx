@@ -26,15 +26,15 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    experiment: "Eksperimen 2",
-    title: "Litar Elektrik Mudah",
-    section: "Objektif Pembelajaran",
+    experiment: "Kajiye  2",
+    title: "Tajuk Litar Letrik Hok Mudoh",
+    section: "Tujuwe Pembelajare",
     objectives: [
-      "Mengkaji perbezaan antara litar elektrik bersiri dan selari.",
-      "Membandingkan operasi mentol dalam litar bersiri dan litar selari.",
+      "1.	Pelajari perbezae antaro caro hubung litar letrik secaro berseri dan selari.",
+      "2.	Baneng caro kerjo hok bo pelito dale litar berseri dan selari.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

@@ -73,22 +73,22 @@ export default function P4() {
         ],
       },
       ms: {
-        title: "Sains Tahun 4",
-        subtitle: "Pilih unit pembelajaran",
+        title: "Sains Kelah 4",
+        subtitle: "Pilih Unit Pembelajare",
         home: "Pilih tahun",
-        back: "Kembali",
+        back: "Pusing semula",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
         chipMs: "มลายู",
         cards: [
           {
-            title: "Graviti Bumi",
+            title: "Dayo Tarekke Bumi",
             image: "/images/p4/gravity.jpg",
             alt: "Graviti Bumi",
             onClick: () => navigate("/p4/gravity/objectives"),
           },
           {
-            title: "Medium Cahaya",
+            title: "Perantaro Cahayo",
             image: "/images/p4/light.jpg",
             alt: "Medium Cahaya",
             onClick: () => navigate("/p4/light/objective"),

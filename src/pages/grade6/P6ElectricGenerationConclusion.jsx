@@ -25,19 +25,19 @@ const TEXT = {
     back: "Back",
     next: "Next",
     listen: "Read screen",
-    lang: { th: "Thai", en: "English", ms: "Malay" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   ms: {
-    title: "Rumusan Eksperimen",
+    title: "Kesimpule Hasil Kajiye",
     body: [
-      "Daripada eksperimen, belon yang tidak digosok dengan kain kering tidak menunjukkan perubahan atau tarikan terhadap cebisan kertas.",
-      "Sebaliknya, belon yang digosok dengan kain kering boleh menarik cebisan kertas kecil yang berdekatan.",
-      "Ini menunjukkan bahawa masa menggosok yang lebih lama cenderung meningkatkan daya elektrik yang terhasil.",
+      "Dari kajiye terdapat bahawo, buwoh gelemong hok dok keno gesek ngan kain kering tak beruboh atau dayo tarekke ngan siket kertah.",
+      "manakalo buwoh gelemong hok keno gesek ngan kain kering buleh tarek siket kertah hokduk dekak. Ini tunjukke bahawo.",
+      "Jiko ado jangko maso utuk gesek ngan kain kering nok buwak wi dayo letrik tamoh banyok lagi.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
     listen: "Baca skrin",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
 };
 

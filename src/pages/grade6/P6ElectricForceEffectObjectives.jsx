@@ -26,19 +26,19 @@ const CONTENT = {
     ],
     back: "Back",
     next: "Next",
-    langLabel: { th: "Thai", ms: "Malay", en: "English" },
+    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
   ms: {
-    exp: "Eksperimen 2",
-    title: "Kesan Daya Elektrik",
-    section: "Objektif Pembelajaran",
+    exp: "Kajiye 2",
+    title: "Tajuk Hasil Dayo Letrik",
+    section: "Tujuwe Belajar",
     objectives: [
-      "Mengkaji kesan daya elektrik statik yang berlaku antara objek.",
-      "Membandingkan daya tolakan dan daya tarikan antara objek bercas elektrik.",
+      "Pelajari hasil dayo letrik statik berlaku daripado geseran.",
+      "Baneng dayo tolok ngan dayo tarek hok beno yang ada cah letrik.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
-    langLabel: { th: "Thai", ms: "Melayu", en: "English" },
+    back: "Pusing semula",
+    next: "Teruh",
+    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
 };
 

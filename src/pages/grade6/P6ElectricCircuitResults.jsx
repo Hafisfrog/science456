@@ -39,13 +39,13 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    section: "Rumusan Eksperimen",
+    section: "Kesimpule Hasil Kajiye",
     summary:
-      "Daripada aktiviti ini, didapati bahawa apabila lebih banyak sel disusun secara siri, arus dalam litar bertambah dan mentol menjadi lebih terang apabila bilangan sel meningkat.",
+      "Dari kegiate tersebut, dapati bahawo jiko amek sel letrik letok susun secaro berseri, arus letrik dale litar kho banyok, buwak wi bo pelito kho cerah ikut jumlah sel letrik hok banyok.",
     listen: "Dengar rumusan",
-    cellCount: (n) => `${n} sel`,
-    back: "Kembali",
-    next: "Seterusnya",
+    cellCount: (n) => `${n} Tokol`,
+    back: "Pusing semula",
+    next: "Teruh",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

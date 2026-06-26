@@ -20,12 +20,12 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    experiment: "Eksperimen 1",
-    title: "Kesan Daya Elektrik",
-    section: "Kemahiran Proses Sains",
-    skills: ["Kemahiran Memerhati", "Kemahiran Mengeksperimen", "Membuat Inferens daripada Data"],
-    back: "Kembali",
-    next: "Seterusnya",
+    experiment: "Kajiye 1",
+    title: "Tajuk Hasil Dayo Letrik",
+    section: "Kemahire Proses Sains",
+    skills: ["Kemahire Perati", "Kemahire Kajiye", "Kemahire beri pendapat dari Maklumat"],
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 

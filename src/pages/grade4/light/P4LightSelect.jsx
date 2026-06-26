@@ -7,42 +7,42 @@ const MATERIALS = [
   {
     id: 1,
     img: "/images/materials/l1.png",
-    name: { th: "กระจกใส", en: "Clear Glass", ms: "Kaca Jernih" },
+    name: { th: "กระจกใส", en: "Clear Glass", ms: "Cuming" },
   },
   {
     id: 2,
     img: "/images/materials/l10.png",
-    name: { th: "แก้วใส", en: "Clear Cup", ms: "Gelas Jernih" },
+    name: { th: "แก้วใส", en: "Clear Cup", ms: "Gelah" },
   },
   {
     id: 3,
     img: "/images/materials/l3.png",
-    name: { th: "พลาสติกใส", en: "Clear Plastic", ms: "Plastik Jernih" },
+    name: { th: "พลาสติกใส", en: "Clear Plastic", ms: "Plastik" },
   },
   {
     id: 4,
     img: "/images/materials/l8.png",
-    name: { th: "หมอก", en: "Fog", ms: "Kabus" },
+    name: { th: "หมอก", en: "Fog", ms: "Kabok" },
   },
   {
     id: 5,
     img: "/images/materials/l4.png",
-    name: { th: "กระดาษไข", en: "Wax Paper", ms: "Kertas Surih" },
+    name: { th: "กระดาษไข", en: "Wax Paper", ms: "Ketah Minyok" },
   },
   {
     id: 6,
     img: "/images/materials/l2.png",
-    name: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "Kaca Kabur" },
+    name: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "Cuming Gelak" },
   },
   {
     id: 7,
     img: "/images/materials/l5.png",
-    name: { th: "แผ่นไม้", en: "Wooden Board", ms: "Papan Kayu" },
+    name: { th: "แผ่นไม้", en: "Wooden Board", ms: "Pape" },
   },
   {
     id: 8,
     img: "/images/materials/l7.webp",
-    name: { th: "ผนังปูน", en: "Cement Wall", ms: "Dinding Simen" },
+    name: { th: "ผนังปูน", en: "Cement Wall", ms: "Dineng" },
   },
   {
     id: 9,
@@ -61,7 +61,7 @@ const UI = {
       "หน้าวัสดุอุปกรณ์การทดลองเรื่องตัวกลางของแสง ประกอบด้วยวัสดุโปร่งใส โปร่งแสง และทึบแสงหลายชนิด",
   },
   en: {
-    title: "Experiment 4: Medium of Light",
+    title: "Experiment 4 Medium of Light",
     label: "Materials",
     back: "Back",
     next: "Next",
@@ -69,10 +69,10 @@ const UI = {
       "This materials page includes transparent, translucent, and opaque items used in the medium of light experiment.",
   },
   ms: {
-    title: "Eksperimen 4: Medium Cahaya",
-    label: "Bahan",
-    back: "Kembali",
-    next: "Seterusnya",
+    title: "Kajiye 4 Tajuk Perantaro Cahayo",
+    label: "Beno",
+    back: "Pusing semula",
+    next: "Teruh",
     speakText:
       "Halaman bahan ini mengandungi objek lut sinar, separa lut sinar, dan legap untuk eksperimen medium cahaya.",
   },

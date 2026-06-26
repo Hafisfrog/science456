@@ -32,14 +32,14 @@ const UI_TEXT = {
     next: "Next",
   },
   ms: {
-    title: "Hasil Eksperimen",
-    object: "Objek",
-    outcome: "Hasil",
-    time: "Masa (minit)",
-    visual: "Paparan tarikan cebisan kertas",
-    balloonPaper: "Belon + Cebisan Kertas",
-    back: "Kembali",
-    next: "Seterusnya",
+    title: "Hasil Kajiye",
+    object: "Beno",
+    outcome: "Hasil Kajiye",
+    time: "Maso (menek)",
+    visual: "Gama Tunyuk Siket Kertah Keno Tarek",
+    balloonPaper: "Buwoh Gelemong + Siket Kertah",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -48,7 +48,7 @@ const RESULTS = {
     outcome: {
       th: "ไม่เกิดการเปลี่ยนแปลง",
       en: "No visible change",
-      ms: "Tiada perubahan yang ketara",
+      ms: "Tak Uboh",
     },
     time: "0",
     intensity: "low",
@@ -57,7 +57,7 @@ const RESULTS = {
     outcome: {
       th: "เศษกระดาษถูกดูดเล็กน้อย",
       en: "Paper bits are slightly attracted",
-      ms: "Cebisan kertas tertarik sedikit",
+      ms: "Siket kertah kena tarek sikit",
     },
     time: "2",
     intensity: "mid",
@@ -66,7 +66,7 @@ const RESULTS = {
     outcome: {
       th: "เศษกระดาษถูกดูดมากขึ้น",
       en: "Paper bits are strongly attracted",
-      ms: "Cebisan kertas tertarik dengan lebih kuat",
+      ms: "Siket kertah kena tarek banyok sekali",
     },
     time: "5",
     intensity: "high",

@@ -54,20 +54,20 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    heading: "Hasil Eksperimen",
+    heading: "Hasil Kajiye",
     table: {
-      circuit: "Jenis Litar",
-      setup: "Sambungan Litar",
-      remove: "Apabila 1 mentol ditanggalkan",
-      observe: "Pemerhatian Kecerahan",
-      series: "Siri",
-      parallel: "Selari",
-      seriesNote: "Mentol satu lagi padam",
-      parallelNote: "Mentol satu lagi masih menyala",
+      circuit: "Betuk Litar",
+      setup: "Gama Caro Hubung Litar Letrik",
+      remove: "Jiko Cabuk Bo Pelito Tubek 1 Bo",
+      observe: "Hasil Perati Bo Pelito Cerah Taro Mano",
+      series: "Litar Berseri",
+      parallel: "Litar Selari",
+      seriesNote: "Bo pelito satu lagi mati",
+      parallelNote: "Bo pelito satu lagi masih cerah",
     },
     nav: {
-      back: "Kembali",
-      next: "Seterusnya",
+      back: "Pusing semula",
+      next: "Teruh",
     },
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
@@ -285,7 +285,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSummary() {
 
       <div className="relative z-[1] mx-auto grid h-full w-full max-w-[1380px] grid-rows-[1fr] gap-2">
         <div className="p6-circuit-bsp-summary-card relative rounded-[30px] border border-[#eadfce] bg-[#fffaf3]/90 px-[clamp(14px,1.6vw,20px)] pb-4 pt-4 shadow-[0_18px_34px_rgba(92,72,49,0.12)] backdrop-blur-[1px]">
-          <h1 className="mb-3 ml-1 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">
+          <h1 className="mb-3 ml-10 mt-0 text-left text-[clamp(34px,2.5vw,54px)] font-black leading-[1.05] text-slate-900">
             {t.heading}
           </h1>
           <div className="p6-circuit-bsp-summary-inner">

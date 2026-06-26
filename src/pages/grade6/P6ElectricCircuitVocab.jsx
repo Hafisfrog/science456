@@ -4,18 +4,18 @@ import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp2/P4GravityExp2Vocab.css";
 
 const VOCAB = [
-  { th: "วงจรไฟฟ้า", ms: "litar elektrik", en: "Electric Circuit" },
-  { th: "แหล่งกำเนิดไฟฟ้า", ms: "sumber kuasa", en: "Power Source" },
-  { th: "สายไฟฟ้า", ms: "wayar elektrik", en: "Electric Wire" },
-  { th: "เครื่องใช้ไฟฟ้า", ms: "peralatan elektrik", en: "Electrical Appliance" },
-  { th: "ถ่านไฟฉาย", ms: "bateri lampu suluh", en: "Flashlight Battery" },
-  { th: "แบตเตอรี่", ms: "bateri", en: "Battery" },
-  { th: "เซลล์ไฟฟ้า", ms: "sel elektrik", en: "Electric Cell" },
-  { th: "แบบอนุกรม", ms: "sel bersiri", en: "Electric cells in series" },
-  { th: "แบบขนาน", ms: "sel selari", en: "Electric cells in parallel" },
-  { th: "วงจรเปิด", ms: "litar terbuka", en: "Open Circuit" },
-  { th: "วงจรปิด", ms: "litar tertutup", en: "Closed Circuit" },
-  { th: "ตัวนำไฟฟ้า", ms: "konduktor elektrik", en: "Electrical Conductor" },
+  { th: "วงจรไฟฟ้า", ms: "Litar letrik", en: "Electric Circuit" },
+  { th: "แหล่งกำเนิดไฟฟ้า", ms: "Tepak kejadiye letrik", en: "Power Source" },
+  { th: "สายไฟฟ้า", ms: "Woya letrik", en: "Electric Wire" },
+  { th: "เครื่องใช้ไฟฟ้า", ms: "Alat letrik", en: "Electrical Appliance" },
+  { th: "ถ่านไฟฉาย", ms: "Bateri pelito pecek", en: "Flashlight Battery" },
+  { th: "แบตเตอรี่", ms: "Bateri", en: "Battery" },
+  { th: "เซลล์ไฟฟ้า", ms: "Sel letrik", en: "Electric Cell" },
+  { th: "แบบอนุกรม", ms: "Sel seri", en: "Electric cells in series" },
+  { th: "แบบขนาน", ms: "Sel selari", en: "Electric cells in parallel" },
+  { th: "วงจรเปิด", ms: "Litar buka", en: "Open Circuit" },
+  { th: "วงจรปิด", ms: "Litar katuk", en: "Closed Circuit" },
+  { th: "ตัวนำไฟฟ้า", ms: "Pengalir letrik", en: "Electrical Conductor" },
 ];
 
 const UI_TEXT = {

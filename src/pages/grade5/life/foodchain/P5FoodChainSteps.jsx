@@ -21,10 +21,10 @@ const PAGE_COPY = {
     langLabels: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    mainTitle: "Eksperimen 5: Rantaian Makanan",
-    stepLabel: "Langkah Eksperimen",
-    back: "Kembali",
-    nextButton: "Seterusnya",
+    mainTitle: "Kajiye 5 Tajuk: Ghata Makene",
+    stepLabel: "Langkoh Kajiye",
+    back: "Pusing semula",
+    nextButton: "Teruh",
     next: "Mula Eksperimen",
     langLabels: { th: "Thai", en: "Inggeris", ms: "Melayu" },
   },
@@ -34,22 +34,22 @@ const STEPS = [
   {
     th: "สำรวจสิ่งมีชีวิตในระบบนิเวศ",
     en: "Observe organisms in the ecosystem",
-    ms: "Perhati hidupan dalam ekosistem",
+    ms: "Perekso beno hidup dale sistem ekologi",
   },
   {
     th: "จำแนกสิ่งมีชีวิตออกเป็นกลุ่ม ผู้ผลิตและผู้บริโภค",
     en: "Classify producers and consumers",
-    ms: "Kelaskan pengeluar dan pengguna",
+    ms: "Bagi kumpule beno hidup jadi oghe buwak dan oghe guno",
   },
   {
     th: "สร้างห่วงโซ่อาหาร",
     en: "Build the food chain",
-    ms: "Bina rantaian makanan",
+    ms: "Bino ghata makene",
   },
   {
     th: "บันทึกผลการทดลอง",
     en: "Record experiment results",
-    ms: "Catat keputusan eksperimen",
+    ms: "Catat hasil kajiye",
   },
 ];
 

@@ -114,8 +114,8 @@ const PAGE_COPY = {
   ms: {
     title: "Eksperimen 5: Rantaian Makanan",
     materials: "Bahan",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -131,35 +131,35 @@ const topMaterials = [
   },
   {
     key: "water-plant",
-    name: { th: "พืชน้ำ", en: "Aquatic Plant", ms: "Tumbuhan Akuatik" },
+    name: { th: "พืชน้ำ", en: "Aquatic Plant", ms: "Tumbuhe Air" },
     img: "/images/p5/lunamm.png",
     delay: "0.2s",
     duration: "3.5s",
   },
   {
     key: "grasshopper",
-    name: { th: "ตั๊กแตน", en: "Grasshopper", ms: "Belalang" },
+    name: { th: "ตั๊กแตน", en: "Grasshopper", ms: "Belale" },
     img: "/images/p5/tag.png",
     delay: "0.4s",
     duration: "3.1s",
   },
   {
     key: "field-rat",
-    name: { th: "หนูนา", en: "Field Rat", ms: "Tikus Sawah" },
+    name: { th: "หนูนา", en: "Field Rat", ms: "Tikuh Bene" },
     img: "/images/p5/n.png",
     delay: "0.6s",
     duration: "3.6s",
   },
   {
     key: "worm",
-    name: { th: "หนอน", en: "Caterpillar", ms: "Ulat" },
+    name: { th: "หนอน", en: "Caterpillar", ms: "Ulak" },
     img: "/images/p5/non.png",
     delay: "0.8s",
     duration: "3.3s",
   },
   {
     key: "grass",
-    name: { th: "หญ้า", en: "Grass", ms: "Rumput" },
+    name: { th: "หญ้า", en: "Grass", ms: "Ruput" },
     img: "/images/p5/ya.png",
     delay: "1s",
     duration: "3.7s",
@@ -169,21 +169,21 @@ const topMaterials = [
 const bottomMaterials = [
   {
     key: "frog",
-    name: { th: "กบ", en: "Frog", ms: "Katak" },
+    name: { th: "กบ", en: "Frog", ms: "Katok" },
     img: "/images/p5/gop.png",
     delay: "0.15s",
     duration: "3.4s",
   },
   {
     key: "small-fish",
-    name: { th: "ปลาเล็ก", en: "Small Fish", ms: "Ikan Kecil" },
+    name: { th: "ปลาเล็ก", en: "Small Fish", ms: "Ike Kecik" },
     img: "/images/p5/pla.png",
     delay: "0.35s",
     duration: "3.2s",
   },
   {
     key: "snake",
-    name: { th: "งู", en: "Snake", ms: "Ular" },
+    name: { th: "งู", en: "Snake", ms: "Ula" },
     img: "/images/p5/snack.png",
     delay: "0.55s",
     duration: "3.8s",
@@ -204,7 +204,7 @@ const bottomMaterials = [
   },
   {
     key: "larva",
-    name: { th: "ลูกน้ำ", en: "Larva", ms: "Jentik-jentik" },
+    name: { th: "ลูกน้ำ", en: "Larva", ms: "Anok Jetik" },
     img: "/images/p5/lunam.png",
     delay: "1.15s",
     duration: "3.1s",

@@ -30,7 +30,7 @@ const LANG = {
     exp1sub: "Menyambung litar elektrik mudah",
     exp2: "Eksperimen 2",
     exp2sub: "Litar Mentol Bersiri dan Selari",
-    back: "Kembali",
+    back: "Pusing semula",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

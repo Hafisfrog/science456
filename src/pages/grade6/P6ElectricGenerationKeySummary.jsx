@@ -30,17 +30,17 @@ const TEXT = {
     level5Label: "Rub 5 min: stronger attraction",
   },
   ms: {
-    title: "Ringkasan Eksperimen",
+    title: "Kesimpule Hasil Kajiye",
     summaryLines: [
-      "Apabila kedua-dua belon digosok dengan kain kering, kedua-duanya bercas sama lalu menolak apabila didekatkan.",
-      "Apabila hanya satu belon digosok, aruhan cas berlaku dan kedua-duanya akan menarik apabila didekatkan.",
+      "Jika duwo biji buwoh gelemong keno gesek dengan kain kering hok ado cah letrik hok samo, lepahtu amek mari letok dekat, nok buwak wi jadi dayo tolok.",
+      "Jika gesek buwoh gelemong cumo satu biji, lepahtu amek mari letok dekat, nok buwak wi jadi dayo tarekke.",
     ],
-    back: "Kembali",
-    next: "Seterusnya",
-    visualTitle: "Ilustrasi Eksperimen",
-    level0Label: "Tidak digosok (0 min): belum menarik kertas",
-    level2Label: "Gosok 2 minit: menarik sedikit",
-    level5Label: "Gosok 5 minit: menarik lebih banyak",
+    back: "Pusing semula",
+    next: "Teruh",
+    visualTitle: "Gama Penerange Kajiye",
+    level0Label: "Tak dok gesek (0 menek): tak uboh",
+    level2Label: "Gesek 2 menek:  siket kertah keno tarek sikit",
+    level5Label: "Gesek 5 menek:  siket kertah keno tarek banyok sekali",
   },
 };
 

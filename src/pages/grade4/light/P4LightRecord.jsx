@@ -11,6 +11,7 @@ const SPEECH_LOCALES = {
 
 const MATERIAL_NAMES = {
   "/images/materials/l1.png": { th: "กระจกใส", en: "Clear Glass", ms: "Kaca Jernih" },
+  "/images/materials/p1.png": { th: "กระจกใส", en: "Clear Glass", ms: "Cuming" },
   "/images/materials/l10.png": { th: "แก้วใส", en: "Clear Cup", ms: "Gelas Jernih" },
   "/images/materials/l3.png": { th: "พลาสติกใส", en: "Clear Plastic", ms: "Plastik Jernih" },
   "/images/materials/l8.png": { th: "หมอก", en: "Fog", ms: "Kabus" },
@@ -19,6 +20,18 @@ const MATERIAL_NAMES = {
   "/images/materials/l5.png": { th: "แผ่นไม้", en: "Wooden Board", ms: "Papan Kayu" },
   "/images/materials/l7.webp": { th: "ผนังปูน", en: "Cement Wall", ms: "Dinding Simen" },
   "/images/materials/l6.png": { th: "เหล็ก", en: "Steel", ms: "Besi" },
+};
+
+const MATERIAL_NAMES_BY_ID = {
+  1: { th: "กระจกใส", en: "Clear Glass", ms: "Cuming" },
+  2: { th: "แก้วใส", en: "Clear Cup", ms: "Gelah" },
+  3: { th: "พลาสติกใส", en: "Clear Plastic", ms: "Plastik" },
+  4: { th: "หมอก", en: "Fog", ms: "Kabok" },
+  5: { th: "กระดาษไข", en: "Wax Paper", ms: "Ketah Minyok" },
+  6: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "Cuming Gelak" },
+  7: { th: "แผ่นไม้", en: "Wooden Board", ms: "Pape" },
+  8: { th: "ผนังปูน", en: "Cement Wall", ms: "Dineng" },
+  9: { th: "เหล็ก", en: "Steel", ms: "Besi" },
 };
 
 const UI = {
@@ -75,16 +88,16 @@ const UI = {
   ms: {
     title: "📋 Rekod Eksperimen 4",
     subtitle: (count) => `Topik: Medium Cahaya • Jumlah ${count} kali eksperimen`,
-    tableTitle: "Keputusan Eksperimen",
-    objectName: "Nama Objek",
-    lightPass: "Cahaya Melalui Objek",
-    classifyAs: "Klasifikasi Objek",
-    passGood: "Menembusi Baik",
-    passSome: "Menembusi Sebahagian",
-    passNone: "Tidak Menembusi",
-    transparent: "Lutsinar",
-    translucent: "Lut Separa",
-    opaque: "Legap",
+    tableTitle: "Hasil Kajiye",
+    objectName: "Namo Beno",
+    lightPass: "Cahayo Boleh Temuh",
+    classifyAs: "Bagi Beno Jadi",
+    passGood: "Temuh Dengan Baik",
+    passSome: "Temuh Sebahagiye",
+    passNone: "Tok Buleh Temuh",
+    transparent: "Perantaro Jenih",
+    translucent: "Perantaro Separa Telus ",
+    opaque: "Beno Legap Cahayo",
     summaryTitle: "📌 Ringkasan Eksperimen",
     summaryItems: [
       "• Objek lutsinar membenarkan cahaya melalui dengan baik dan boleh dilihat jelas.",
@@ -94,8 +107,8 @@ const UI = {
     speakLabel: "🔊 Dengar ringkasan (Thai / English / Malay)",
     rowSpeak: "Dengar",
     addMore: "Cuba Semula",
-    back: "Kembali",
-    next: "Seterusnya",
+    back: "Pusing semula",
+    next: "Teruh",
   },
 };
 
@@ -134,6 +147,8 @@ export default function P4LightRecord() {
   };
 
   const getMaterialName = (item) => {
+    const byId = MATERIAL_NAMES_BY_ID[item.material.id]?.[language];
+    if (byId) return byId;
     const byImage = MATERIAL_NAMES[item.material.img]?.[language];
     return byImage || item.material.name;
   };

@@ -46,8 +46,8 @@ const TEXT = {
   },
   en: {
     heading: "Science P.5",
-    subheading: "Choose a Lesson",
-    sub: "Pick a topic to enter its activities and learning media.",
+    // subheading: "Choose a Lesson",
+    sub: "Choose a learning unit",
     back: "Back",
     open: "Open Lesson",
     topics: [
@@ -64,20 +64,20 @@ const TEXT = {
     ],
   },
   ms: {
-    heading: "Sains Tahun 5",
-    subheading: "Pilih Pelajaran",
-    sub: "Pilih topik untuk masuk aktiviti dan bahan pembelajaran.",
-    back: "Kembali",
+    heading: "Sains Kelah 5",
+    // subheading: "Pilih Pelajaran",
+    sub: "Pilih Unit Pembelajare",
+    back: "Pusing semula",
     open: "Masuk Pelajaran",
     topics: [
       {
         id: "foodchain",
-        title: "Rantaian Makanan",
+        title: "Hubunge Kehidupe",
         to: "/p5/life/foodchain",
       },
       {
         id: "genetics",
-        title: "Genetik",
+        title: "Sifat Bako",
         to: "/p5/life/genetics/objectives",
       },
     ],
