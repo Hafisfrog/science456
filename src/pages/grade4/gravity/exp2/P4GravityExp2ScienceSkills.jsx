@@ -98,6 +98,9 @@ export default function P4GravityExp2ScienceSkills() {
       <img
         src="/images/p4/backgrounds-p4.jpg"
         alt="Laboratory background"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.86]"
       />
 
