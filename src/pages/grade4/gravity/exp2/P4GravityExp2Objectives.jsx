@@ -39,9 +39,9 @@ export default function P4GravityExp2Objectives() {
         back: "Back",
         next: "Next",
         speak: "Listen",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Malay",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
       ms: {
         heading: "Kajiye 2",
@@ -55,9 +55,9 @@ export default function P4GravityExp2Objectives() {
         back: "Pusing semula",
         next: "Teruh  ",
         speak: "Dengar",
-        langTh: "Thai",
-        langEn: "Inggeris",
-        langMs: "Melayu",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
     };
   }, []);
@@ -92,6 +92,9 @@ export default function P4GravityExp2Objectives() {
       <img
         src="/images/p4/backgrounds-p4.jpg"
         alt="Laboratory background"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.86]"
       />
 
@@ -185,6 +188,8 @@ export default function P4GravityExp2Objectives() {
           className="pointer-events-none absolute bottom-[80px] right-[-70px] z-[2] h-auto w-[min(29%,390px)] select-none [filter:drop-shadow(0_18px_20px_rgba(0,0,0,.20))] max-[1100px]:right-[-50px] max-[1100px]:w-[min(32%,340px)] max-[900px]:bottom-[100px] max-[900px]:w-[min(34%,280px)] max-[640px]:hidden"
           src="/images/p4/exp1/gunkru.png"
           alt="character"
+          decoding="async"
+          fetchPriority="low"
           draggable="false"
         />
 

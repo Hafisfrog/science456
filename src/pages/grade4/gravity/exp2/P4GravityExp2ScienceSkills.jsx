@@ -43,9 +43,9 @@ export default function P4GravityExp2ScienceSkills() {
         back: "Back",
         next: "Next",
         speak: "Listen",
-        langTh: "Thai",
-        langEn: "English",
-        langMs: "Malay",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
       ms: {
         heading: "Kajiye  2",
@@ -61,9 +61,9 @@ export default function P4GravityExp2ScienceSkills() {
         back: "Pusing semula",
         next: "Teruh",
         speak: "Dengar",
-        langTh: "Thai",
-        langEn: "Inggeris",
-        langMs: "Melayu",
+        langTh: "ไทย",
+        langEn: "อังกฤษ",
+        langMs: "มลายู",
       },
     };
   }, []);
@@ -98,6 +98,9 @@ export default function P4GravityExp2ScienceSkills() {
       <img
         src="/images/p4/backgrounds-p4.jpg"
         alt="Laboratory background"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover blur-[2px] brightness-[0.86]"
       />
 
