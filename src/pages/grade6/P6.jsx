@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const LESSONS = [
   {
@@ -8,7 +8,10 @@ const LESSONS = [
     title: {
       th: "แรงไฟฟ้าน่ารู้",
       en: "Electric Force",
-      ms: "Kenali Dayo Letrik",
+      ms: "แร็ง อาปีเฮาะ กือนอตาฮู",
+    },
+    audio: {
+      ms: "/audio/p6/1.3.mp3",
     },
     image: "/images/p6/fifanarup6.png",
     to: "/p6/electric-force",
@@ -18,7 +21,10 @@ const LESSONS = [
     title: {
       th: "วงจรไฟฟ้าอย่างง่าย",
       en: "Simple electric circuit",
-      ms: "Litar Letrik Hok Mudah",
+      ms: "ลีตาร อาปีซือจารอ มูเดาะฮ",
+    },
+    audio: {
+      ms: "/audio/p6/1.4.mp3",
     },
     image: "/images/p6/wongjon.png",
     to: "/p6/electric-circuit",
@@ -39,9 +45,9 @@ const PAGE_TEXT = {
     langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   ms: {
-    title: "Sains Kelah 6",
-    subtitle: "Pilih Unit Pembelajare",
-    back: "Pusing semula",
+    title: "วิตายาซะ กือละฮ 6",
+    subtitle: "ปีเละฮ ยูนิ ปือลายาแร",
+    back: "ฮูโนกือเละ",
     langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
 };
@@ -73,6 +79,7 @@ function Spark({ className }) {
 
 export default function P6() {
   const navigate = useNavigate();
+  const titleAudioRef = useRef(null);
 
   const [lang, setLang] = useState("th");
 
@@ -88,6 +95,44 @@ export default function P6() {
   };
 
   const t = PAGE_TEXT[lang] ?? PAGE_TEXT.th;
+
+  const stopTitleAudio = () => {
+    if (!titleAudioRef.current) return;
+    titleAudioRef.current.pause();
+    titleAudioRef.current.currentTime = 0;
+  };
+
+  const speakTitle = () => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopTitleAudio();
+
+    if (lang !== "ms") {
+      speakText(t.title, voiceMap[lang]);
+      return;
+    }
+
+    const audio = new Audio("/audio/p6/1.1.mp3");
+    titleAudioRef.current = audio;
+    audio.play();
+  };
+
+  const speakLessonTitle = (lesson) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopTitleAudio();
+
+    if (lang !== "ms" || !lesson.audio?.ms) {
+      speakText(lesson.title[lang], voiceMap[lang]);
+      return;
+    }
+
+    const audio = new Audio(lesson.audio.ms);
+    titleAudioRef.current = audio;
+    audio.play();
+  };
 
   return (
     <div
@@ -119,9 +164,21 @@ export default function P6() {
 
       {/* Header */}
       <header className="relative z-10 mb-5">
-        <h1 className="text-4xl font-extrabold text-blue-600 md:text-[46px]">
-          {t.title}
-        </h1>
+        <div className="flex items-center justify-center gap-3">
+          <h1 className="text-4xl font-extrabold text-blue-600 md:text-[46px]">
+            {t.title}
+          </h1>
+
+          <button
+            type="button"
+            onClick={speakTitle}
+            className="inline-grid h-12 w-12 shrink-0 place-items-center rounded-full bg-sky-100 text-[24px] text-sky-700 shadow-[0_10px_22px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-200 md:h-14 md:w-14 md:text-[26px]"
+            aria-label={t.title}
+            title={t.title}
+          >
+            {"\u{1F50A}"}
+          </button>
+        </div>
 
         <p className="mt-2 text-lg text-slate-700 md:text-xl">
           {t.subtitle}
@@ -160,7 +217,7 @@ export default function P6() {
 
                 <button
                   type="button"
-                  onClick={() => speakText(lesson.title[lang], voiceMap[lang])}
+                  onClick={() => speakLessonTitle(lesson)}
                   className="inline-grid h-14 w-14 shrink-0 place-items-center rounded-full bg-sky-100 text-[26px] text-sky-700 shadow-[0_10px_22px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-200"
                   aria-label={lesson.title[lang]}
                   title={lesson.title[lang]}

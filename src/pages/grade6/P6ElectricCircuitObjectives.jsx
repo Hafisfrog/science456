@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -24,13 +24,13 @@ const CONTENT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    grade: "Kelah 6",
-    title: "Litar Letrik Kiling Kito",
-    section: "Tujuwe Pembelajare",
-    obj1: "Buleh hurai bahgiye litar letrik hok mudoh.",
-    obj2: "Buleh hubung litar letrik hok mudoh, lepahtu buleh check litar buka-katuk. ",
-    back: "Pusing semula",
-    next: "Teruh",
+    grade: "กือละฮ 6",
+    title: "ลีตาร อาปีดือกะ กีตอ",
+    section: "ตูยูแว ปืมบือลายาแร",
+    obj1: "บูเละฮ ฮูรา บาฮากีแย ลีตาร อาปีดืองา จารอ มูเดาะฮ",
+    obj2: "บูเละฮ ฮูบง ลีตาร อาปีดืองา จารอ มูเดาะฮ, ลือปะฮ ตูบูเละฮ เชะ ลีตาร บูกอ-กาโตะ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -40,6 +40,8 @@ const LANGUAGE_OPTIONS = [
   { id: "ms", speechLang: "ms-MY", label: "มลายู" },
   { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
+
+const MALAY_OBJECTIVE_AUDIO = ["/audio/p6/17.1.mp3", "/audio/p6/17.2.mp3"];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -63,9 +65,37 @@ function speakText(text, lang) {
 export default function P6ElectricCircuitObjectives() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const t = CONTENT[lang] ?? CONTENT.th;
   const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang ?? "th-TH";
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  const speakObjective = useCallback(
+    (objective, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_OBJECTIVE_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(objective, speechLang);
+    },
+    [lang, speechLang, stopAudio],
+  );
 
   const pageBg = {
     background:
@@ -78,6 +108,15 @@ export default function P6ElectricCircuitObjectives() {
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
 
   return (
     <div
@@ -141,7 +180,7 @@ export default function P6ElectricCircuitObjectives() {
                   <div className="flex min-w-0 items-center gap-[clamp(8px,1vw,14px)] rounded-[clamp(20px,2vw,32px)] border-[clamp(7px,.9vw,12px)] border-[#7caf44] bg-[#f2f5f4] px-[clamp(14px,1.8vw,28px)] py-[clamp(8px,.9vw,12px)] text-[clamp(21px,2.25vw,38px)] font-normal leading-tight text-black [overflow-wrap:anywhere]">
                     <span className="min-w-0 flex-1">{objective}</span>
                     <button
-                      onClick={() => speakText(objective, speechLang)}
+                      onClick={() => speakObjective(objective, index)}
                       className="grid h-[clamp(38px,4vw,54px)] w-[clamp(38px,4vw,54px)] shrink-0 place-items-center rounded-full bg-[#f47c4b] text-[clamp(18px,1.8vw,26px)] text-white shadow-[0_8px_18px_rgba(0,0,0,.18)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_22px_rgba(0,0,0,.2)] active:translate-y-[1px]"
                       type="button"
                       aria-label={`Play objective ${index + 1}`}

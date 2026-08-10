@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -24,13 +24,13 @@ const LANG = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Kajiye 2  Tajuk Hasil Dayo Letrik",
-    equipment: "Beno",
-    balloons: "Duwo biji buwoh gelemong hok sudoh siyup Terek ",
-    markers: "Duwo putung kale Mecik",
-    tissue: "Kertah Tisu",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ปือจูบอแอ 2 ตาโยะ; ฮาเซ แร็ง อาปี",
+    equipment: "อาละ-อาละ",
+    balloons: "กือลือมง เฮาะ ซูเดาะฮ ซียุ ยาดี ตือเระ ดูวอ บูเต",
+    markers: "กาแล เมจิดูวอ ปูตง",
+    tissue: "กือรือตะฮ ตีซู",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -46,6 +46,12 @@ const EQUIPMENT_ITEMS = [
   { id: "markers", image: "/images/p6/kalae.png" },
   { id: "tissue", image: "/images/p6/equipment/tissue-real.svg" },
 ];
+
+const MALAY_EQUIPMENT_AUDIO = {
+  balloons: "/audio/p6/14.1.mp3",
+  markers: "/audio/p6/14.2.mp3",
+  tissue: "/audio/p6/14.3.mp3",
+};
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -69,8 +75,10 @@ function Spark({ className }) {
   );
 }
 
-function EquipmentCard({ item, label, lang }) {
+function EquipmentCard({ item, label, lang, activeLang, onSpeak }) {
   const isBalloons = item.id === "balloons";
+  const audioSrc = activeLang === "ms" ? MALAY_EQUIPMENT_AUDIO[item.id] : undefined;
+
   return (
     <div className="flex w-[clamp(220px,22vw,280px)] shrink-0 flex-col items-center">
       <div className="relative flex h-[clamp(190px,24vh,250px)] w-full items-center justify-center rounded-[24px] border-[2px] border-[#7587af] bg-[linear-gradient(180deg,#ecdfc3_0%,#dfccaa_100%)] p-4 shadow-[0_12px_20px_rgba(20,33,64,0.2),inset_0_1px_0_rgba(255,255,255,0.72)]">
@@ -103,7 +111,7 @@ function EquipmentCard({ item, label, lang }) {
         <p className="whitespace-pre-line text-center text-[clamp(18px,2.2vw,30px)] font-bold text-slate-900">{label}</p>
 
         <button
-          onClick={() => speakText(label, lang)}
+          onClick={() => onSpeak(label, lang, audioSrc)}
           className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
           type="button"
           aria-label={label}
@@ -118,6 +126,7 @@ function EquipmentCard({ item, label, lang }) {
 
 export default function P6ElectricForceEffect() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
 
   const t = LANG[lang] ?? LANG.th;
@@ -129,6 +138,28 @@ export default function P6ElectricForceEffect() {
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }, []);
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const playAudio = (text, speechLang, audioSrc) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(text, speechLang);
+  };
 
   const pageBg = {
     background:
@@ -171,7 +202,14 @@ export default function P6ElectricForceEffect() {
           <div className="flex flex-1 items-center justify-center">
             <div className="flex w-full max-w-[1020px] justify-center gap-[40px]">
               {EQUIPMENT_ITEMS.map((item) => (
-                <EquipmentCard key={item.id} item={item} label={t[item.id]} lang={speechLang} />
+                <EquipmentCard
+                  key={item.id}
+                  item={item}
+                  label={t[item.id]}
+                  lang={speechLang}
+                  activeLang={lang}
+                  onSpeak={playAudio}
+                />
               ))}
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "./P6ElectricGenerationObjectives.css";
@@ -31,16 +31,16 @@ const CONTENT = {
     langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
   ms: {
-    exp: "Kajiye 1",
-    title: "Kejadiye Dayo Letrik",
-    section: "Tujuwe Pembelajare",
+    exp: "ปือจูบอแอ 1",
+    title: "ตาโยะ; กือยาดีแยแร็ง อาปี",
+    section: "ตูยูแว ปืมบือลายาแร",
     objectives: [
-      "Pelajari kejadiye dayo letrik statik terjadi daripado geseran.",
-      "Perati hasil dayo letrik hok berlaku.",
-      "Pelajari hubunge antara jangka masa hok buwoh gelemong gesek dengan dayo letrik hok berlaku.",
+      "ปือลายารีกือยาดีแย แร็ง อาปีเฮาะ มือลือกะ ดารีดูวอ บือนอ เบอแกแซะ",
+      "ปือราตีฮาเซ แร็ง อาปีเฮาะ บือลากู",
+      "ปือลายารีฮูบูแง อันตารอ ยากอ มาซอ บูเวาะฮ กือลือมง แกแซะ ดืองา แร็ง อาปีเฮาะ บือลากู",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
 };
@@ -50,6 +50,12 @@ const SPEECH_LANG = {
   en: "en-US",
   ms: "ms-MY",
 };
+
+const MALAY_OBJECTIVE_AUDIO = [
+  "/audio/p6/5.1.mp3",
+  "/audio/p6/5.2.mp3",
+  "/audio/p6/5.3.mp3",
+];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -63,8 +69,31 @@ function speakText(text, lang) {
 
 export default function P6ElectricGenerationObjectives() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
   const t = CONTENT[lang] ?? CONTENT.th;
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const speakObjective = (objective, index) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio(MALAY_OBJECTIVE_AUDIO[index]);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(objective, lang);
+  };
 
   return (
     <div className="p6gen-obj-page">
@@ -94,7 +123,7 @@ export default function P6ElectricGenerationObjectives() {
                   <span>{objective}</span>
                   <button
                     className="p6gen-obj-audio"
-                    onClick={() => speakText(objective, lang)}
+                    onClick={() => speakObjective(objective, index)}
                     type="button"
                     aria-label={objective}
                     title={objective}

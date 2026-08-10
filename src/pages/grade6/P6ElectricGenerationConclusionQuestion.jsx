@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp1/P4GravityExp1Answer.css";
@@ -35,17 +35,17 @@ const TEXT = {
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   ms: {
-    title: "Pertanyae Ado Jawape",
-    question: "Bagaimano dayo letrik buleh berlaku?",
+    title: "ซออาแล นิง อาดอ ยาวะแป",
+    question: "ลากู มานอ แร็ง อาปีบูเละฮ บือลากู?",
     answer: [
-      "Dayo letrik berlaku dari cah letrik hok beno.",
-      "buleh buwak wi beno tarek masuk atau tolok tubek.",
-      "seperti buwoh gelemong dengan ramuk, amek letok dekat siket kertah –> kertah nok naye cari buwoh gelemong.",
+      "แร็ง อาปีบือลากูอาปอบีลอ บือนอ ตู อาดอ จะฮ อาปีบูวะ วี บือนอ ตาเระ มาโซะ อาตาวอ ตอเลาะ ตูเบะ, ซือปือตีบูเวาะฮ กือลือมง ดืองา ฆาโมะ, อาเมะ ลือเตาะ ดือกะ กือรือตะฮ กือจิ– กือรือตะฮ เนาะ นาแยจารี บูเวาะฮ กือลือมง",
+      // "buleh buwak wi beno tarek masuk atau tolok tubek.",
+      // "seperti buwoh gelemong dengan ramuk, amek letok dekat siket kertah –> kertah nok naye cari buwoh gelemong.",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
-    reveal: "Tunjuk Jawape",
-    hide: "Sorok Jawape",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
+    reveal: "บูกอ ยาวะแป",
+    hide: "ซูซุ ยาวะแป",
     speak: "Dengar",
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
@@ -114,16 +114,57 @@ function QuestionBadge({ text }) {
 
 export default function P6ElectricGenerationConclusionQuestion() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
   const [showAnswer, setShowAnswer] = useState(false);
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
   const speechLang = SPEECH_LANG[lang] ?? "th-TH";
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const playMalayAudio = (src) => {
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    const audio = new Audio(src);
+    audioRef.current = audio;
+    audio.play();
+  };
+
+  const speakQuestion = () => {
+    if (typeof window === "undefined") return;
+
+    if (lang === "ms") {
+      playMalayAudio("/audio/p6/11.1.mp3");
+      return;
+    }
+
+    stopAudio();
+    speakText(t.question, speechLang);
+  };
+
+  const speakAnswer = () => {
+    if (typeof window === "undefined") return;
+
+    if (lang === "ms") {
+      playMalayAudio("/audio/p6/11.2.mp3");
+      return;
+    }
+
+    stopAudio();
+    speakText(t.answer.join(" "), speechLang);
+  };
 
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
+      stopAudio();
     };
   }, []);
 
@@ -172,7 +213,7 @@ export default function P6ElectricGenerationConclusionQuestion() {
               <button
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
                 type="button"
-                onClick={() => speakText(t.question, speechLang)}
+                onClick={speakQuestion}
                 aria-label={t.speak}
                 title={t.speak}
               >
@@ -191,7 +232,7 @@ export default function P6ElectricGenerationConclusionQuestion() {
                 <button
                   className="absolute right-4 top-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"
                   type="button"
-                  onClick={() => speakText(t.answer.join(" "), speechLang)}
+                  onClick={speakAnswer}
                   aria-label={t.speak}
                   title={t.speak}
                 >

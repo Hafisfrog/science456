@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -42,22 +42,22 @@ const TEXT = {
     langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
   ms: {
-    title: "Kajiye 1 Tajuk Kejadiye Dayo letrik",
-    heading: "Langkoh Kajiye",
+    title: "ปือจูบอแอ 1 ตาโยะ; กือยาดีแยแร็ง อาปี",
+    heading: "จารอ บูวะ ปือจูบอแอ",
     steps: [
-      "Pilih beno hok nak kaji",
-      "Bawo kain kering mari gesek dengan buwoh gelemong",
-      "Perati dan catat hasil",
+      "ปีเละฮ บือนอ เฮาะ เนาะ บูวะ ปือจูบอแอ",
+      "โบเวาะ กา-เอ็ง กือริง มารีแกแซะ ดืองา บูเวาะฮ กือลือมง",
+      "ปือราตีลือปะฮ ตูตานอ ฮาเซ",
     ],
     detail: [
-      "Kali 1 Tak dok gesek dengan kain kering",
-      "Kali 2 Gesek dengan kain kering 2 menek",
-      "Kali 3  Gesek dengan kain kering 5 menek",
+      "กาลี 1 ตะเดาะ แกแซะ ดืองา กา-เอ็ง กือริง",
+      "กาลี 2 แกแซะ ดืองา กา-เอ็ง กือริง 2 แมแนะ",
+      "กาลี 3 แกแซะ ดืองา กา-เอ็ง กือริง 5 แมแนะ",
     ],
     start: "Mula eksperimen",
     backToMaterials: "Kembali ke bahan dan peralatan",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
 };
@@ -67,6 +67,12 @@ const SPEECH_LANG = {
   ms: "ms-MY",
   en: "en-US",
 };
+
+const MALAY_STEP_AUDIO = [
+  "/audio/p6/8.1.mp3",
+  "/audio/p6/8.2.mp3",
+  "/audio/p6/8.3.mp3",
+];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -116,6 +122,7 @@ function StepPill({ no, text, onSpeak }) {
 export default function P6ElectricGenerationSteps() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
 
   const content = TEXT[lang] ?? TEXT.th;
@@ -134,6 +141,28 @@ export default function P6ElectricGenerationSteps() {
   const pageBg = {
     background:
       "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
+  };
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const speakStep = (index, text) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio(MALAY_STEP_AUDIO[index]);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(text, voice);
   };
 
   return (
@@ -177,13 +206,13 @@ export default function P6ElectricGenerationSteps() {
           </h2>
 
           <div className="mx-auto flex w-full max-w-[min(860px,82vw)] flex-col gap-[clamp(16px,2.2vh,28px)] max-[700px]:max-w-full">
-            <StepPill no={1} text={content.steps[0]} onSpeak={() => speakText(content.steps[0], voice)} />
+            <StepPill no={1} text={content.steps[0]} onSpeak={() => speakStep(0, content.steps[0])} />
 
             <div>
               <StepPill
                 no={2}
                 text={content.steps[1]}
-                onSpeak={() => speakText([content.steps[1], ...content.detail].join(" "), voice)}
+                onSpeak={() => speakStep(1, [content.steps[1], ...content.detail].join(" "))}
               />
               <div className="mx-auto mt-[clamp(12px,2vh,24px)] w-[min(760px,78vw)] text-[clamp(20px,2.25vw,38px)] font-black leading-[1.35] text-black max-[700px]:w-full max-[700px]:pl-[68px]">
                 {content.detail.map((line) => (
@@ -194,7 +223,7 @@ export default function P6ElectricGenerationSteps() {
               </div>
             </div>
 
-            <StepPill no={3} text={content.steps[2]} onSpeak={() => speakText(content.steps[2], voice)} />
+            <StepPill no={3} text={content.steps[2]} onSpeak={() => speakStep(2, content.steps[2])} />
           </div>
         </section>
       </main>

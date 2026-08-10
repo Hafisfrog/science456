@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "./P6ElectricGenerationObjectives.css";
@@ -31,16 +31,16 @@ const CONTENT = {
     langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
   ms: {
-    exp: "Kajiye 2",
-    title: "Tajuk Hasil Dayo Letrik",
-    section: "Kemahire Proses Sains",
+    exp: "ปือจูบอแอ 2",
+    title: "Tตาโยะ; ฮาเซ แร็ง อาปี",
+    section: "กือมาฮีแร ดาแล โปรเซะฮ วิตายาซะ",
     skills: [
-      { number: 1, text: "Kemahire Perati." },
-      { number: 2, text: "Kemahire tafsir makno maklumat dan buwak Kesimpule." },
-      { number: 3, text: "Kemahire beri pendapat dari Maklumat." },
+      { number: 1, text: "กือมาฮีแร ปือราตี" },
+      { number: 2, text: "กือมาฮีแร ตัฟเซ มักโน มะลูมะ ลือปะฮ ตูบูวะ กือซีปูแล" },
+      { number: 3, text: "กือมาฮีแร บูวี ปาแนแง ดารีมะลูมะ" },
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
   },
 };
@@ -50,6 +50,12 @@ const SPEECH_LANG = {
   en: "en-US",
   ms: "ms-MY",
 };
+
+const MALAY_SKILL_AUDIO = [
+  "/audio/p6/13.1.mp3",
+  "/audio/p6/13.2.mp3",
+  "/audio/p6/13.3.mp3",
+];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -63,8 +69,31 @@ function speakText(text, lang) {
 
 export default function P6ElectricForceEffectScienceSkills() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
   const t = CONTENT[lang] ?? CONTENT.th;
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const speakSkill = (skill, index) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio(MALAY_SKILL_AUDIO[index]);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(skill.text, lang);
+  };
 
   return (
     <div className="p6gen-obj-page">
@@ -87,7 +116,7 @@ export default function P6ElectricForceEffectScienceSkills() {
           <div className="p6gen-obj-label">{t.section}</div>
 
           <div className="p6gen-force-skills-list">
-            {t.skills.map((skill) => (
+            {t.skills.map((skill, index) => (
               <div
                 className="p6gen-skill-pill p6gen-force-skill-pill p6gen-skill-pill-with-audio"
                 key={skill.number}
@@ -96,7 +125,7 @@ export default function P6ElectricForceEffectScienceSkills() {
                 <div className="p6gen-skill-text">{skill.text}</div>
                 <button
                   className="p6gen-obj-audio"
-                  onClick={() => speakText(skill.text, lang)}
+                  onClick={() => speakSkill(skill, index)}
                   type="button"
                   aria-label={skill.text}
                   title={skill.text}

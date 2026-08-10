@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -38,20 +38,28 @@ const CONTENT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    heading: "Langkoh Kajiye",
+    heading: "จารอ บูวะ ปือจูบอแอ",
     // hint: "Tekan pembesar suara",
     steps: [
-      "Gesek  duwo biji  buwoh gelemong ngan kertah tisu.",
-      "Letok sebiji buwoh gelemong atah tudung botol, amek sebiji buwoh gelemong hok lain mari letok dekak ngan buwoh gelemong hok duk atah tudung botol.",
-      "Gesek sebiji buwoh gelemong ngan kertah tisu dan sebiji lagi tak keno gesek.",
-      "Tukar beno, lepahtu buwak ikut langkoh serupo dengan pertamo.",
-      "Perati hasil.",
+      "แกแซะ ดูวอ บูเต บูเวาะฮ กือลือมง ดืองา กือรือตะฮตีซู",
+      "ลือเตาะ ซือบูเต บูเวาะฮ กือลือมง อาตะฮ์ ตูดง โบตอล, อาเมะ ซือบูเต บูเวาะฮ กือลือมง เฮาะ ไลงมารีลือเตาะ ดือกะ ดืองา บูเวาะฮ กือลือมง เฮาะ โด๊ะ อาตะฮ์ ตูดง โบตอล",
+      "แกแซะ ซือบูเต บูเวาะฮ กือลือมง ดืองา กือรือตะฮตีซู ดัน ซือบูเต ลากี เตาะกือนอแกแซะ",
+      "ตูกา บือนอ, ลือปะฮ ตูบูวะ อีกุต จารอ ซูปอดืองา ยังซาตู",
+      "ปือราตีฮาเซ ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
+
+const MALAY_STEP_AUDIO = [
+  "/audio/p6/15.1.mp3",
+  "/audio/p6/15.2.mp3",
+  "/audio/p6/15.3.mp3",
+  "/audio/p6/15.4.mp3",
+  "/audio/p6/15.5.mp3",
+];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -78,16 +86,46 @@ function Spark({ className }) {
 export default function P6ElectricForceEffectSteps() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
 
   const t = CONTENT[language] ?? CONTENT.th;
   const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === language)?.speechLang ?? "th-TH";
   const steps = useMemo(() => t.steps, [t.steps]);
 
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
   const speakStep = useCallback(
-    (stepText) => {
+    (stepText, index) => {
+      stopAudio();
+
+      if (language === "ms") {
+        const audioSrc = MALAY_STEP_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       speakText(stepText, speechLang);
     },
-    [speechLang],
+    [language, speechLang, stopAudio],
   );
 
   const pageBg = {
@@ -141,7 +179,7 @@ export default function P6ElectricForceEffectSteps() {
                 <span className="flex-1 text-[clamp(16px,1.6vw,24px)] font-bold">{text}</span>
 
                 <button
-                  onClick={() => speakStep(text)}
+                  onClick={() => speakStep(text, idx)}
                   className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-100 text-lg text-orange-700 shadow transition hover:scale-105"
                   type="button"
                   aria-label={text}

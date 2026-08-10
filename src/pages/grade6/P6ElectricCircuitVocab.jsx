@@ -1,21 +1,21 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp2/P4GravityExp2Vocab.css";
 
 const VOCAB = [
-  { th: "วงจรไฟฟ้า", ms: "Litar letrik", en: "Electric Circuit" },
-  { th: "แหล่งกำเนิดไฟฟ้า", ms: "Tepak kejadiye letrik", en: "Power Source" },
-  { th: "สายไฟฟ้า", ms: "Woya letrik", en: "Electric Wire" },
-  { th: "เครื่องใช้ไฟฟ้า", ms: "Alat letrik", en: "Electrical Appliance" },
-  { th: "ถ่านไฟฉาย", ms: "Bateri pelito pecek", en: "Flashlight Battery" },
-  { th: "แบตเตอรี่", ms: "Bateri", en: "Battery" },
-  { th: "เซลล์ไฟฟ้า", ms: "Sel letrik", en: "Electric Cell" },
-  { th: "แบบอนุกรม", ms: "Sel seri", en: "Electric cells in series" },
-  { th: "แบบขนาน", ms: "Sel selari", en: "Electric cells in parallel" },
-  { th: "วงจรเปิด", ms: "Litar buka", en: "Open Circuit" },
-  { th: "วงจรปิด", ms: "Litar katuk", en: "Closed Circuit" },
-  { th: "ตัวนำไฟฟ้า", ms: "Pengalir letrik", en: "Electrical Conductor" },
+  { th: "วงจรไฟฟ้า", ms: "ลีตาร อาปี", en: "Electric Circuit" },
+  { th: "แหล่งกำเนิดไฟฟ้า", ms: "ตือปะ ฮาเซ อาปี", en: "Power Source" },
+  { th: "สายไฟฟ้า", ms: "วอยา อาปี", en: "Electric Wire" },
+  { th: "เครื่องใช้ไฟฟ้า", ms: "บาแร อาปี", en: "Electrical Appliance" },
+  { th: "ถ่านไฟฉาย", ms: "ปือลีตอ แปเจะ", en: "Flashlight Battery" },
+  { th: "แบตเตอรี่", ms: "แบะตือรี", en: "Battery" },
+  { th: "เซลล์ไฟฟ้า", ms: "เซ อาปี", en: "Electric Cell" },
+  { th: "แบบอนุกรม", ms: "เซ แดแระ", en: "Electric cells in series" },
+  { th: "แบบขนาน", ms: "เซ ซือลารี", en: "Electric cells in parallel" },
+  { th: "วงจรเปิด", ms: "ลีตาร บูกอ", en: "Open Circuit" },
+  { th: "วงจรปิด", ms: "ลีตาร กาโตะ", en: "Closed Circuit" },
+  { th: "ตัวนำไฟฟ้า", ms: "ปืองาเล อาปี ", en: "Electrical Conductor" },
 ];
 
 const UI_TEXT = {
@@ -30,6 +30,21 @@ const UI_TEXT = {
   back: "ย้อนกลับ",
   next: "ต่อไป",
 };
+
+const MALAY_VOCAB_AUDIO = [
+  "/audio/p6/18.1.mp3",
+  "/audio/p6/18.2.mp3",
+  "/audio/p6/18.3.mp3",
+  "/audio/p6/18.4.mp3",
+  "/audio/p6/18.5.mp3",
+  "/audio/p6/18.6.mp3",
+  "/audio/p6/18.7.mp3",
+  "/audio/p6/18.8.mp3",
+  "/audio/p6/18.9.mp3",
+  "/audio/p6/18.10.mp3",
+  "/audio/p6/18.11.mp3",
+  "/audio/p6/18.12.mp3",
+];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -54,6 +69,13 @@ function speakText(text, lang) {
 
 export default function P6ElectricCircuitVocab() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
 
   useEffect(() => {
     if (!("speechSynthesis" in window)) return;
@@ -66,9 +88,35 @@ export default function P6ElectricCircuitVocab() {
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }, []);
 
-  const onSpeak = useCallback((text, lang) => {
-    speakText(text, lang);
-  }, []);
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const onSpeak = useCallback(
+    (text, lang, index) => {
+      stopAudio();
+
+      if (lang === "ms-MY") {
+        const audioSrc = MALAY_VOCAB_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(text, lang);
+    },
+    [stopAudio],
+  );
 
   return (
     <div className="vocab-page" style={{ position: "relative" }}>
@@ -90,7 +138,7 @@ export default function P6ElectricCircuitVocab() {
             </tr>
           </thead>
           <tbody>
-            {VOCAB.map((row) => (
+            {VOCAB.map((row, index) => (
               <tr key={`${row.th}-${row.en}`}>
                 <td className="cell-th">{row.th}</td>
                 <td className="cell-ms">{row.ms}</td>
@@ -99,7 +147,7 @@ export default function P6ElectricCircuitVocab() {
                   <button className="audio-btn th" onClick={() => onSpeak(row.th, "th-TH")} type="button">
                     TH
                   </button>
-                  <button className="audio-btn ms" onClick={() => onSpeak(row.ms, "ms-MY")} type="button">
+                  <button className="audio-btn ms" onClick={() => onSpeak(row.ms, "ms-MY", index)} type="button">
                     MY
                   </button>
                   <button className="audio-btn en" onClick={() => onSpeak(row.en, "en-GB")} type="button">

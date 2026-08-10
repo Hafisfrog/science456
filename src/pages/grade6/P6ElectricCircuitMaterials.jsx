@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -60,22 +60,30 @@ const TRANSLATIONS = {
     },
   },
   ms: {
-    title: "Kajiye 1 Tajuk Caro Hubung Litar Letrik Berseri",
-    equipmentHeading: "Beno",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ปือจูบอแอ 1 ตาโยะ; จารอ ฮูบง ปูตาแร อาปีแบะ",
+    equipmentHeading: "อาละ-อาละ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
     equipment: {
-      cell: { title: "Bateri pelito pecek ", subtitle: "4 Tokol" },
-      wire: { title: "Kali api sekali ngepek ", subtitle: "4 Tali" },
-      holder: { title: "Bekas letok bateri pelito pecek untuk ", subtitle: "untuk 4 Tokol" },
-      bulb: { title: "Bo pelito sekali tapok ", subtitle: "1 Sek" },
-      switch: { title: "Suwih ", subtitle: "1 Biji" },
+      cell: { title: "แบะตือรีปือลีตอ แปเจะ", subtitle: "4 ตอกอ" },
+      wire: { title: "ตาลี อาปี ซือกาลีดืองา งือเปะ", subtitle: "4 ออระ" },
+      holder: { title: "บือกะฮ ลือเตาะ แบะตือรีปือลีตอ แปเจะ", subtitle: "อูโตะ 4 ตอกอ" },
+      bulb: { title: "โบ ปือลีตอ ซือกาลีดืองา ตาโปะ", subtitle: " 1 ชุ" },
+      switch: { title: "ซูวิฮ", subtitle: "1 บูเต" },
     },
   },
 };
 
 const EQUIPMENT_ORDER = ["cell", "wire", "holder", "bulb", "switch"];
+
+const MALAY_EQUIPMENT_AUDIO = {
+  cell: "/audio/p6/21.1.mp3",
+  wire: "/audio/p6/21.2.mp3",
+  holder: "/audio/p6/21.3.mp3",
+  bulb: "/audio/p6/21.4.mp3",
+  switch: "/audio/p6/21.5.mp3",
+};
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
@@ -201,14 +209,46 @@ export default function P6ElectricCircuitMaterials() {
   const navigate = useNavigate();
   const [brokenImages, setBrokenImages] = useState({});
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
 
   const speechLang = LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang ?? "th-TH";
 
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
   const onSpeak = useCallback(
-    (text) => speakText(text, speechLang),
-    [speechLang]
+    (text, id) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_EQUIPMENT_AUDIO[id];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(text, speechLang);
+    },
+    [lang, speechLang, stopAudio]
   );
 
   const markImageBroken = useCallback((id) => {
@@ -280,7 +320,7 @@ export default function P6ElectricCircuitMaterials() {
                 imageBroken={Boolean(brokenImages[item.id])}
                 onImageError={() => markImageBroken(item.id)}
                 onSpeak={() =>
-                  onSpeak(`${item.title} ${item.subtitle}`)
+                  onSpeak(`${item.title} ${item.subtitle}`, item.id)
                 }
               />
             ))}

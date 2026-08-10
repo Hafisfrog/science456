@@ -16,7 +16,7 @@ const TRIAL_OPTIONS = [
     label: {
       th: "ขัดถูลูกโป่งทั้ง 2 ใบด้วยกระดาษเยื่อ",
       en: "Rub both balloons with tissue paper",
-      ms: "Gesek duwo biji buwoh gelemong ngan kertah tisu",
+      ms: "แกแซะ ดูวอ บูเต บูเวาะฮ กือลือมง ดืองา กือรือตะฮตีซู",
     },
   },
   {
@@ -26,7 +26,7 @@ const TRIAL_OPTIONS = [
     label: {
       th: "ขัดถูลูกโป่ง 1 ใบ (ใบซ้าย) ด้วยกระดาษเยื่อ",
       en: "Rub 1 balloon (left) with tissue paper",
-      ms: "Gesek sebiji buwoh gelemong (kiri) ngan kertah tisu",
+      ms: "แกแซะ ซือบูเต บูเวาะฮ กือลือมง (กีรี) ดืองา กือรือตะฮตีซู",
     },
   },
   {
@@ -36,7 +36,7 @@ const TRIAL_OPTIONS = [
     label: {
       th: "ขัดถูปากกาเมจิกทั้ง 2 ด้ามด้วยกระดาษเยื่อ",
       en: "Rub both marker pens with tissue paper",
-      ms: "Gesek duwa putung kale mecik dengan kertah tisu",
+      ms: "แกแซะ ดูวอ ปูตง กาแล เมจิดืองา กือรือตะฮตีซู",
     },
   },
   {
@@ -46,7 +46,7 @@ const TRIAL_OPTIONS = [
     label: {
       th: "ขัดถูปากกาเมจิก 1 ด้าม (ด้ามซ้าย) ด้วยกระดาษเยื่อ",
       en: "Rub 1 marker pen (left) with tissue paper",
-      ms: "Gesek seputung kale mecik (kiri) ngan kertah tisu",
+      ms: "แกแซะ ซือปูตง กาแล เมจิ(กีรี) ดืองา กือรือตะฮ ตีซู",
     },
   },
 ];
@@ -54,12 +54,12 @@ const RESULT_BY_MODE = {
   both: {
     th: "ผลักกัน",
     en: "Repel",
-    ms: "Tolok tubek",
+    ms: "ตอเลาะ ตูเบะ",
   },
   one: {
     th: "ดึงดูดกัน",
     en: "Attract",
-    ms: "Tarik-menarik",
+    ms: "ซือเราะ มาโซะ",
   },
 };
 const EQUIPMENT_LABEL = {
@@ -147,25 +147,25 @@ const UI_TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    backTop: "<< Pusing semula",
-    selectTrial: "Pilih Kajiye",
-    start: "Mula",
-    progress: "Kemajuwe",
+    backTop: "ฮูโนกือเละ",
+    selectTrial: "ปีเละฮ ปือจูบอแอ",
+    start: "มูลา",
+    progress: "ปือกือแมแง",
     menuTitle: `Pilih peralatan dan ujian (satu demi satu) - ${MIN_RUB_SECONDS} saat setiap ujian`,
-    done: "Buwak Doh ",
+    done: "บูวะ เดาะฮ",
     waiting: "menunggu",
     selected: "Pilihan",
-    currentTrial: "Sekaghe kajiye ini",
-    hiddenSummary: 'Ringkasan disorok. Tekan "Ringkasan Eksperimen" untuk lihat semua hasil.',
+    currentTrial: "ซือกาแร บูวะ ปือจูบอแอ อีนี",
+    // hiddenSummary: 'Ringkasan disorok. Tekan "Ringkasan Eksperimen" untuk lihat semua hasil.',
     backSteps: "<< Pusing semula ke langkah",
-    summary: "Kesimpule Hasil Kajiye",
-    reset: "Buwak semula",
+    summary: "กือซีปูแลฮาเซ ปือจูบอแอ",
+    reset: "บูวะ ซือมูลา",
     stop: "Berhenti",
-    skip: "Langkau",
-    time: "Maso gesek",
-    result: "Hasil Kajiye",
+    skip: "วือตี",
+    time: "มาซอ แกแซะ",
+    result: "ฮาเซ ปือจูบอแอ",
     chooseEquipAndTrial: "Sila pilih peralatan dan ujian sebelum mula.",
-    chooseTrialFirst: "Haghak pilih kajiye sebelum nok mulai.",
+    chooseTrialFirst: "มีเตาะ ปีเละฮ ปือจูบอแอ ซือบือลง เนาะ มูลา",
     chooseEquipFirst: "Pilih peralatan dahulu: belon atau pen marker.",
     chooseTrialInEquip: "Pilih ujian dalam peralatan yang dipilih dahulu.",
     chooseEquipForExperiment: "Pilih peralatan dahulu (belon atau pen marker).",
@@ -178,8 +178,8 @@ const UI_TEXT = {
     oneMarkerHint: "Apa jadi jika hanya satu pen marker (kiri) digosok?",
     completeHint: 'Semua ujian selesai. Tekan "Ringkasan Eksperimen".',
     rubTooShort: `Masa gosokan terlalu singkat. Gosok sekurang-kurangnya ${MIN_RUB_SECONDS} saat untuk melihat hasil.`,
-    timerTitle: "Maso Kajiye",
-    timerHint: `Pege Maso  ${MIN_RUB_SECONDS} Detik`,
+    timerTitle: "มาซอ ปือจูบอแอ",
+    timerHint: `กีรอ มาซอ ${MIN_RUB_SECONDS} ซาอัต`,
     lang: { th: "Thai", en: "Inggeris", ms: "Melayu" },
   },
 };
@@ -219,29 +219,29 @@ function getTrialCompactLabel(trial, language) {
     "balloon-both": {
       th: "ลูกโป่ง 2 ใบ",
       en: "2 balloons",
-      ms: "Duwa biji buwoh Gelemong",
+      ms: "ดูวอ บูเต บูเวาะฮ กือลือมง",
     },
     "balloon-one": {
       th: "ลูกโป่ง 1 ใบ",
       en: "1 balloon",
-      ms: "Sebiji buwoh Gelemong  ",
+      ms: "ซือบูเต บูเวาะฮ กือลือมง",
     },
     "marker-both": {
       th: "เมจิก 2 ด้าม",
       en: "2 markers",
-      ms: "Duwo kale Mecik ",
+      ms: "ดูวอ ปูตง กาแล เมจิ",
     },
     "marker-one": {
       th: "เมจิก 1 ด้าม",
       en: "1 marker",
-      ms: "Seputung kale Mecik ",
+      ms: "ซือปูตง กาแล เมจิ",
     },
   };
   return compact[trial?.id]?.[language] || compact[trial?.id]?.th || getTrialLabel(trial, language);
 }
 function getTrialDurationLabel(language) {
   if (language === "en") return `(${MIN_RUB_SECONDS} sec)`;
-  if (language === "ms") return `(${MIN_RUB_SECONDS} detik)`;
+  if (language === "ms") return `(${MIN_RUB_SECONDS} ซาอัต)`;
   return `(${MIN_RUB_SECONDS} วินาที)`;
 }
 export default function P6ElectricForceEffectSim() {
@@ -270,7 +270,7 @@ export default function P6ElectricForceEffectSim() {
   const selectedTrialMeta = TRIAL_OPTIONS.find((t) => t.id === selectedTrial) || null;
   const selectedTrialLabel = selectedTrialMeta ? getTrialLabel(selectedTrialMeta, language) : "";
   const notSelectedLabel =
-    language === "th" ? "ยังไม่ได้เลือก" : language === "en" ? "Not selected" : "Belum Pilih";
+    language === "th" ? "ยังไม่ได้เลือก" : language === "en" ? "Not selected" : "บือลง ปีเละฮ";
   const currentResult = selectedTrial ? trialResults[selectedTrial] : null;
   const currentResultMode = currentResult?.mode || selectedTrialMeta?.mode || "one";
   const currentResultLabel = currentResult
@@ -302,14 +302,14 @@ export default function P6ElectricForceEffectSim() {
         ? `ทำครบทั้ง ${totalTrials} การทดลองแล้ว กด "${t.summary}" เพื่อดูผล`
         : language === "en"
           ? `Completed all ${totalTrials} trials. Press "${t.summary}" to view results.`
-          : `Sudoh buwak kajiye cukup  ${totalTrials} Kali. Teke "${t.summary}" untuk tengok hasil.`;
+          : `ซูเดาะฮ บูวะ ปือจูบอแอ จูโกะ  ${totalTrials} กาลี "${t.summary}" อูโตะ แตเงาะ ฮาเซ`;
     if (nextPendingTrial) {
       const nextLabel = getTrialLabel(nextPendingTrial, language);
       return language === "th"
         ? `ทำการทดลองทีละอย่าง: ทำแล้ว ${completedCount}/${totalTrials} (ถัดไป: ${nextLabel})`
         : language === "en"
           ? `Run one trial at a time: ${completedCount}/${totalTrials} done (next: ${nextLabel}).`
-          : `Buwak kajiye satu-satu: buwak doh : ${completedCount}/${totalTrials} (Teruh: ${nextLabel}).`;
+          : `บูวะ ปือจูบอแอ ซาตู-ซาตู: ซูเดาะฮ บูวะ : ${completedCount}/${totalTrials} (ตือรุฮ: ${nextLabel}).`;
     }
     return "";
   }, [allTrialsCompleted, completedCount, isRunning, language, nextPendingTrial, t.chooseTrialFirst, t.summary, totalTrials]);
@@ -706,7 +706,7 @@ export default function P6ElectricForceEffectSim() {
             type="button"
             onClick={() => navigate("/p6/experiment/electric-force-effect/steps")}
           >
-            {language === "th" ? "« ย้อนกลับ" : language === "en" ? "« Back" : "« Pusing semula"}
+            {language === "th" ? "« ย้อนกลับ" : language === "en" ? "« Back" : "« ฮูโนกือเละ"}
           </button>
         </div>
       </div>
