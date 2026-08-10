@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -28,16 +28,16 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    experiment: "Kajiye 1",
-    title: "Tajuk Litar Letrik Hok Mudah",
-    section: "Tujuwe Pembelajare",
+    experiment: "ปือจูบอแอ 1",
+    title: "ตาโยะ; ลีตาร อาปีซือจารอ มูเดาะฮ",
+    section: "ตูยูแว ปืมบือลายาแร",
     objectives: [
-      "Pelajari caro hubung litar letrik ngan mudah.",
-      "Pelajari hubunge di antaro jumloh bateri pelito pecek ngan cerah hok bo pelito.",
-      "Perati hasil hok tepak kejadiye letrik bagi kerjae hok bo pelito.",
+      "ปือลายารีจารอ ฮูบง ลีตาร อาปีดืองา จารอ มูเดาะฮ",
+      "ปือลายารีฮูบูแง ดี อันตารอ ยุมเลาะฮ แบะตือรีปือลีตอ แปเจะ ดืองา จือรอฮ โบ ปือลีตอ",
+      "ปือราตีตือปะ ฮาเซ อาปีบูวี กือแซ ปาดอ จารอ กีจอ เฮาะ โบ ปือลีตอ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -45,6 +45,12 @@ const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
   { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
+];
+
+const MALAY_OBJECTIVE_AUDIO = [
+  "/audio/p6/19.1.mp3",
+  "/audio/p6/19.2.mp3",
+  "/audio/p6/19.3.mp3",
 ];
 
 function speakText(text, lang) {
@@ -100,8 +106,45 @@ function SideBulb({ side }) {
 export default function P6ElectricCircuitExperiment1Objectives() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const t = CONTENT[lang] ?? CONTENT.th;
   const speechLang = { th: "th-TH", ms: "ms-MY", en: "en-US" }[lang] ?? "th-TH";
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const speakObjective = useCallback(
+    (objective, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_OBJECTIVE_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(objective, speechLang);
+    },
+    [lang, speechLang, stopAudio],
+  );
 
   const pageBg = {
     background:
@@ -161,7 +204,7 @@ export default function P6ElectricCircuitExperiment1Objectives() {
                   <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">{objective}</span>
                   <button
                     type="button"
-                    onClick={() => speakText(objective, speechLang)}
+                    onClick={() => speakObjective(objective, index)}
                     className="grid aspect-square w-[clamp(38px,3.6vw,52px)] shrink-0 place-items-center rounded-full bg-orange-100 text-[clamp(18px,1.65vw,25px)] text-orange-700 shadow-[0_8px_18px_rgba(15,23,42,.16)] transition hover:-translate-y-0.5 hover:bg-orange-200 active:translate-y-[1px]"
                     aria-label={objective}
                     title={objective}

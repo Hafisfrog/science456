@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -28,14 +28,14 @@ const TEXT = {
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   ms: {
-    title: "Kesimpule Hasil Kajiye",
+    title: "กือซีปูแลฮาเซ ปือจูบอแอ",
     body: [
-      "Dari kajiye terdapat bahawo, buwoh gelemong hok dok keno gesek ngan kain kering tak beruboh atau dayo tarekke ngan siket kertah.",
-      "manakalo buwoh gelemong hok keno gesek ngan kain kering buleh tarek siket kertah hokduk dekak. Ini tunjukke bahawo.",
-      "Jiko ado jangko maso utuk gesek ngan kain kering nok buwak wi dayo letrik tamoh banyok lagi.",
+      "ดารีฮาเซ ปือจูบอแอ ดีดาปาตี บาฮาวอ, บูเวาะฮ กือลือมง เฮาะ เดาะ กือนอแกแซะ ดืองา กา-เอ็ง กือริงเตาะ บือรูเบาะฮ อาตาวอ แร็ง ตาเระ ดืองา กือรือตะฮ กือจิ",
+      "มานอกาลอ บูเวาะฮ กือลือมง เฮาะกือนอแกแซะ ดืองา กา-เอ็ง กือริง บูเละฮ ตาเระ กือรือตะฮกือจิเฮาะ โดะ ดือกะมากอ, อีนี บูเละฮ ตูโญะ กาตอ",
+      "กาลู อาดอ ยากอ มาซอ อูโตะ แกแซะ ดืองา กา-เอ็ง กือริง เนาะ บูวะ วี แร็งอาปีตาเมาะฮ บาเญาะ ลากี",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     listen: "Baca skrin",
     lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
@@ -96,17 +96,41 @@ function LanguagePills({ lang, setLang, labels }) {
 
 export default function P6ElectricGenerationConclusion() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
   const speechLang = SPEECH_LANG[lang] ?? "th-TH";
   const listenLabel = t.listen ?? "Listen";
   const readAllText = useMemo(() => [t.title, ...t.body].join(". "), [t]);
 
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const speakConclusion = () => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio("/audio/p6/10.1.mp3");
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(readAllText, speechLang);
+  };
+
   useEffect(() => {
     return () => {
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
       }
+      stopAudio();
     };
   }, []);
 
@@ -147,7 +171,7 @@ export default function P6ElectricGenerationConclusion() {
             <h1 className="m-0 text-[clamp(28px,3.1vw,40px)] font-black text-slate-900">{t.title}</h1>
             <button
               type="button"
-              onClick={() => speakText(readAllText, speechLang)}
+              onClick={speakConclusion}
               aria-label={listenLabel}
               title={listenLabel}
               className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"

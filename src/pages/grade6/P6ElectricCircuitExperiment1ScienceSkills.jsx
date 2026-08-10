@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -20,12 +20,12 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    experiment: "Kajiye 1",
-    title: "Tajuk Hasil Dayo Letrik",
-    section: "Kemahire Proses Sains",
-    skills: ["Kemahire Perati", "Kemahire Kajiye", "Kemahire beri pendapat dari Maklumat"],
-    back: "Pusing semula",
-    next: "Teruh",
+    experiment: "ปือจูบอแอ 1",
+    title: "ตาโยะ; ฮาเซ แร็ง อาปี",
+    section: "กือมาฮีแร ดาแล ปือจูบอแอ วิตายาซะ",
+    skills: ["กือมาฮีแร ปือราตี", "กือมาฮีแร ปือจูบอแอ", "กือมาฮีแร บูวี ปาแนแง ดารีมะลูมะ"],
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -33,6 +33,12 @@ const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
   { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
+];
+
+const MALAY_SKILL_AUDIO = [
+  "/audio/p6/20.1.mp3",
+  "/audio/p6/20.2.mp3",
+  "/audio/p6/20.3.mp3",
 ];
 
 function speakText(text, lang) {
@@ -89,8 +95,45 @@ function SideBulb({ side }) {
 export default function P6ElectricCircuitExperiment1ScienceSkills() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const t = CONTENT[lang] ?? CONTENT.th;
   const speechLang = { th: "th-TH", ms: "ms-MY", en: "en-US" }[lang] ?? "th-TH";
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const speakSkill = useCallback(
+    (skill, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_SKILL_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(skill, speechLang);
+    },
+    [lang, speechLang, stopAudio],
+  );
 
   const pageBg = {
     background:
@@ -149,7 +192,7 @@ export default function P6ElectricCircuitExperiment1ScienceSkills() {
                 <span className="min-w-0 flex-1 [overflow-wrap:anywhere]">{skill}</span>
                 <button
                   type="button"
-                  onClick={() => speakText(skill, speechLang)}
+                  onClick={() => speakSkill(skill, index)}
                   className="grid aspect-square w-[clamp(38px,3.6vw,52px)] shrink-0 place-items-center rounded-full bg-orange-100 text-[clamp(18px,1.65vw,25px)] text-orange-700 shadow-[0_8px_18px_rgba(15,23,42,.16)] transition hover:-translate-y-0.5 hover:bg-orange-200 active:translate-y-[1px]"
                   aria-label={skill}
                   title={skill}

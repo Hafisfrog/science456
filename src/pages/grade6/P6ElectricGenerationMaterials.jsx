@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -22,13 +22,13 @@ const LANG = {
     next: "Next",
   },
   ms: {
-    title: "Kajiye 1 Tajuk Kejadiye Dayo letrik",
-    equipment: "Beno",
-    balloon: "Buwoh Gelemong",
-    cloth: "Kain Keri",
-    paper: "Siket Kertah ",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ปือจูบอแอ 1 ตาโยะ; กือยาดีแยแร็ง อาปี",
+    equipment: "อาละ-อาละ",
+    balloon: "บูเวาะฮ กือลือมง",
+    cloth: "กา-เอ็ง กือริง",
+    paper: "กือรือตะฮ กือจิ-กือจิ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -37,6 +37,12 @@ const EQUIPMENT_ITEMS = [
   { id: "cloth", image: "/images/p6/pahang.png" },
   { id: "paper", image: "/images/p6/sedkradad.png" },
 ];
+
+const MALAY_EQUIPMENT_AUDIO = {
+  balloon: "/audio/p6/7.1.mp3",
+  cloth: "/audio/p6/7.2.mp3",
+  paper: "/audio/p6/7.3.mp3",
+};
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -66,10 +72,10 @@ function Spark({ className }) {
   );
 }
 
-function EquipmentCard({ item, label, lang, failed, onError }) {
+function EquipmentCard({ item, label, lang, failed, onError, onSpeak }) {
   const speak = () => {
     const langMap = { th: "th-TH", en: "en-US", ms: "ms-MY" };
-    speakText(label, langMap[lang]);
+    onSpeak(label, langMap[lang], lang === "ms" ? MALAY_EQUIPMENT_AUDIO[item.id] : undefined);
   };
 
   return (
@@ -108,6 +114,7 @@ function EquipmentCard({ item, label, lang, failed, onError }) {
 export default function P6ElectricGenerationMaterials() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
   const [broken, setBroken] = useState({});
 
@@ -135,6 +142,28 @@ export default function P6ElectricGenerationMaterials() {
   const pageBg = {
     background:
       "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
+  };
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const playAudio = (label, speechLang, audioSrc) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(label, speechLang);
   };
 
   return (
@@ -178,6 +207,7 @@ export default function P6ElectricGenerationMaterials() {
                 lang={lang}
                 failed={Boolean(broken[item.id])}
                 onError={() => setBroken((prev) => ({ ...prev, [item.id]: true }))}
+                onSpeak={playAudio}
               />
             ))}
           </div>

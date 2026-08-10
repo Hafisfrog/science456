@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -30,17 +30,17 @@ const TEXT = {
     level5Label: "Rub 5 min: stronger attraction",
   },
   ms: {
-    title: "Kesimpule Hasil Kajiye",
+    title: "กือซีปูแลฮาเซ ปือจูบอแอ",
     summaryLines: [
-      "Jika duwo biji buwoh gelemong keno gesek dengan kain kering hok ado cah letrik hok samo, lepahtu amek mari letok dekat, nok buwak wi jadi dayo tolok.",
-      "Jika gesek buwoh gelemong cumo satu biji, lepahtu amek mari letok dekat, nok buwak wi jadi dayo tarekke.",
+      "กาลู ดูวอ บูเต บูเวาะฮ กือลือมง กือนอ แกแซะ ดืองา กา-เอ็ง กือริง เฮาะ อาดอ จะฮ อาปีเฮาะ ซามอ, ลือปะฮ ตูอาเมะ มารีลือเตาะ ดือกะ, เนาะ บูวะ วี ยาดีแร็ง ตอเลาะ",
+      "กาลู แกแซะ บูเวาะฮ กือลือมง เซอบูเต, ลือปะฮ ตูอาเมะ มารีลือเตาะ ดือกะ, เนาะ บูวะ วี ยาดีแร็งตาเระ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
-    visualTitle: "Gama Penerange Kajiye",
-    level0Label: "Tak dok gesek (0 menek): tak uboh",
-    level2Label: "Gesek 2 menek:  siket kertah keno tarek sikit",
-    level5Label: "Gesek 5 menek:  siket kertah keno tarek banyok sekali",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
+    visualTitle: "กามา ฮูราแย ปือจูบอแอ",
+    level0Label: "ตะเดาะ แกแซะ (0 แมแนะ): เตาะบือรูเบาะฮ",
+    level2Label: "แกแซะ 2 แมแนะ: กือรือตะฮ กือนอ ซือเราะ ซีกิ",
+    level5Label: "แกแซะ 5 แมแนะ: กือรือตะฮ กือนอ ซือเราะ บาเญาะ ซือกาลี",
   },
 };
 
@@ -80,11 +80,26 @@ function Spark({ className }) {
 
 export default function P6ElectricGenerationKeySummary() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
   const listenLabel = LISTEN_LABELS[lang] ?? LISTEN_LABELS.th;
   const langMap = { th: "th-TH", en: "en-US", ms: "ms-MY" };
   const speakSummary = () => {
+    window.speechSynthesis?.cancel();
+
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+
+    if (lang === "ms") {
+      const audio = new Audio("/audio/p6/9.1.mp3");
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
     const content = [t.title, ...t.summaryLines].join(". ");
     speakText(content, langMap[lang] || "th-TH");
   };

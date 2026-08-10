@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -59,18 +59,18 @@ const TRANSLATIONS = {
     },
   },
   ms: {
-    title: "Kajiye 2 Tajuk Caro Hubung Bo Pelito Secaro Berseri dan Selari",
-    equipmentHeading: "Beno",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ปือจูบอแอ 2 ตาโยะ; จารอ ฮูบง โบ ปือลีตอ ซือจารอ แดแระ ดืองา ซือลารี",
+    equipmentHeading: "อาละ-อาละ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     sound: "Bunyi",
     speech: "ms-MY",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
     equipment: {
-      cell: { title: "Bateri pelito pecek ", subtitle: "4 Tokol" },
-      wire: { title: "Tali api sekali ngepek ", subtitle: "4 Tali" },
-      holder: { title: "Bekas letok bateri pelito pecek ", subtitle: "Nntuk 4 Tokol" },
-      bulb: { title: "Bo pelito sekali tapak ", subtitle: "1 Sek" },
+      cell: { title: "แบะตือรี ปือลีตอ แปเจะ ", subtitle: "4 ตอกอ" },
+      wire: { title: " ตาลี อาปี ซือกาลี ดืองา งือเปะ ", subtitle: "4 ออระ" },
+      holder: { title: "บือกะฮ ลือเตาะ แบะตือรี ปือลีตอ แปเจะ", subtitle: "อูโตะ 4 ตอกอ" },
+      bulb: { title: "โบ ปือลีตอ ซือกาลี ดืองา ตาเปาะ", subtitle: "1 ชุ" },
     },
   },
 };
@@ -82,6 +82,13 @@ const LANGS = [
 ];
 
 const EQUIPMENT = ["cell", "wire", "holder", "bulb"];
+
+const MALAY_EQUIPMENT_AUDIO = {
+  cell: "/audio/p6/26.1.mp3",
+  wire: "/audio/p6/26.2.mp3",
+  holder: "/audio/p6/26.3.mp3",
+  bulb: "/audio/p6/26.4.mp3",
+};
 
 const EQUIPMENT_MEDIA = {
   cell: {
@@ -120,7 +127,46 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const [brokenImages, setBrokenImages] = useState({});
+  const audioRef = useRef(null);
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const speakEquipment = useCallback(
+    (id) => {
+      stopAudio();
+      const text = `${t.equipment[id].title} ${t.equipment[id].subtitle}`;
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_EQUIPMENT_AUDIO[id];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(text, t.speech);
+    },
+    [lang, stopAudio, t.equipment, t.speech],
+  );
+
   const markImageBroken = useCallback((id) => {
     setBrokenImages((current) =>
       current[id] ? current : { ...current, [id]: true }
@@ -200,9 +246,7 @@ export default function P6ElectricCircuitBulbSeriesParallel() {
                   <div className="text-[20px] font-black leading-tight text-slate-900">{t.equipment[id].title}</div>
                   <button
                     type="button"
-                    onClick={() =>
-                      speakText(`${t.equipment[id].title} ${t.equipment[id].subtitle}`, t.speech)
-                    }
+                    onClick={() => speakEquipment(id)}
                     className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
                     aria-label={`${t.sound} ${t.equipment[id].title}`}
                     title={t.sound}

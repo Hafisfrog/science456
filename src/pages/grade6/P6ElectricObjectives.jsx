@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -22,13 +22,13 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    grade: "Kelah 6",
-    title: "Kenali Dayo Letrik",
-    section: "Tujuwe Pembelajare",
-    obj1: "Buleh hurai kejadiye dayo letrik.",
-    obj2: "Buleh perati dan hurai hasil hok dayo letrik.",
-    back: "Pusing semula",
-    next: "Teruh",
+    grade: "กือละฮ 6",
+    title: "แร็ง อาปีเฮาะ กือนอตาฮู",
+    section: "ตูยูแว ปืมบือลายาแร",
+    obj1: "บูเละฮ ฮูไร ลากู มานอแร็ง อาปีบูเละฮ บือลากู",
+    obj2: "บูเละฮ ปือราตี ดัน บูเละฮ ฮูไร ฮาเซ แร็ง อาปี",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -37,6 +37,8 @@ const LANGUAGE_OPTIONS = [
   { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
 ];
+
+const MALAY_OBJECTIVE_AUDIO = ["/audio/p6/2.1.mp3", "/audio/p6/2.2.mp3"];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -60,6 +62,7 @@ function speakText(text, lang) {
 export default function P6ElectricObjectives() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const audioRef = useRef(null);
   const [lang, setLang] = useState("th");
 
   const t = CONTENT[lang] ?? CONTENT.th;
@@ -79,6 +82,28 @@ export default function P6ElectricObjectives() {
     loadVoices();
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }, []);
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const speakObjective = (objective, index) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (lang !== "ms") {
+      speakText(objective, speechLang);
+      return;
+    }
+
+    const audio = new Audio(MALAY_OBJECTIVE_AUDIO[index]);
+    audioRef.current = audio;
+    audio.play();
+  };
 
   return (
     <div
@@ -150,7 +175,7 @@ export default function P6ElectricObjectives() {
                   <div className="flex min-w-0 items-center gap-[clamp(8px,1vw,14px)] rounded-[clamp(20px,2vw,32px)] border-[clamp(7px,.9vw,12px)] border-[#7caf44] bg-[#f2f5f4] px-[clamp(14px,1.8vw,28px)] py-[clamp(8px,.9vw,12px)] text-[clamp(21px,2.25vw,38px)] font-normal leading-tight text-black [overflow-wrap:anywhere]">
                     <span className="min-w-0 flex-1">{objective}</span>
                     <button
-                      onClick={() => speakText(objective, speechLang)}
+                      onClick={() => speakObjective(objective, index)}
                       className="grid h-[clamp(38px,4vw,54px)] w-[clamp(38px,4vw,54px)] shrink-0 place-items-center rounded-full bg-[#f47c4b] text-[clamp(18px,1.8vw,26px)] text-white shadow-[0_8px_18px_rgba(0,0,0,.18)] transition hover:-translate-y-0.5 hover:shadow-[0_12px_22px_rgba(0,0,0,.2)] active:translate-y-[1px]"
                       type="button"
                       aria-label={`Play objective ${index + 1}`}

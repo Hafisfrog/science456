@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -47,19 +47,19 @@ const TEXT = {
     },
   },
   ms: {
-    section: "Kesimpule Hasil Kajiye",
-    intro: "Dari hasil kegiate, terdapat bahawo jiko hubung litar letrik secaro berseri dan selari, bo pelito nok kerjo tok samo.",
+    section: "กือซีปูแล ฮาเซ ปือจูบอแอ",
+    intro: "ดารีฮาเซ ปือจูบอแอ, ดีดาปาตี บาฮาวอ กาลู ฮูบง ปูตาแร อาปีซือจารอ บือซีรี แด ซือลารี, จารอ โบ ปือลีตอ บือกือยอ เตาะ ซามอ",
     series: {
-      heading: "Caro hubung litar berseri",
-      body: "Jiko bo pelito yang satu mati, yang satu lagi pung ikut mati, sebab litar keno keghak, arus letrik tok buleh lalu semuwo.",
+      heading: "จารอ ฮูบง ลีตาร แดแระ",
+      body: "กาลู โบ ปือลีตอ ซาตู ตู มาโปะฮ, เฮาะ ซาตู ลากี ปุง มาโปะฮ ยูเกาะ ซือบะ ลีตาร กือนอ กือระ, อารุฮอาปีเตาะ บูเละฮ ลาลู ซือมอ",
     },
     parallel: {
-      heading: "Caro hubung litar selari",
-      body: "Jiko bo pelito yang satu mati tetapi yang satu lagi masih cerah, kerano ado satu jalan lagi yang beri arus letrik lalu.",
+      heading: "จารอ ฮูบง ลีตาร ซือลารี",
+      body: "กาลู โบ ปือลีตอ ซาตู ตู มาโปะฮ ตาปี เฮาะ ซาตู ลากี มาเซะฮ จือเราะฮ ซือบะ อาดอ ซาตู ยาแล ลากีเฮาะ บูวี อารุฮ อาปีลาลู",
     },
-    listen: "Dengar rumusan",
-    back: "Pusing semula",
-    next: "Teruh",
+    // listen: "Dengar rumusan",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: {
       th: "Thai",
       en: "Inggeris",
@@ -73,6 +73,11 @@ const LANGS = [
   { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
 ];
+
+const MALAY_RESULT_AUDIO = {
+  series: "/audio/p6/28.1.mp3",
+  parallel: "/audio/p6/28.2.mp3",
+};
 
 function speakText(text, lang) {
   if (typeof window === "undefined" || !window.speechSynthesis || !text) return;
@@ -100,15 +105,44 @@ function Spark({ className = "" }) {
 export default function P6ElectricCircuitBulbSeriesParallelResult() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
 
   useEffect(() => {
     return () => {
+      stopAudio();
       if (typeof window !== "undefined" && window.speechSynthesis) {
         window.speechSynthesis.cancel();
       }
     };
-  }, []);
+  }, [stopAudio]);
+
+  const speakResult = useCallback(
+    (key, text) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_RESULT_AUDIO[key];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(text, lang);
+    },
+    [lang, stopAudio],
+  );
 
   const pageBg = {
     background:
@@ -160,7 +194,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
               <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.series.heading}</div>
               <button
                 type="button"
-                onClick={() => speakText(`${t.series.heading} ${t.series.body}`, lang)}
+                onClick={() => speakResult("series", `${t.series.heading} ${t.series.body}`)}
                 aria-label={t.listen}
                 title={t.listen}
                 className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
@@ -176,7 +210,7 @@ export default function P6ElectricCircuitBulbSeriesParallelResult() {
               <div className="text-[clamp(18px,1.5vw,24px)] font-black text-slate-900">{t.parallel.heading}</div>
               <button
                 type="button"
-                onClick={() => speakText(`${t.parallel.heading} ${t.parallel.body}`, lang)}
+                onClick={() => speakResult("parallel", `${t.parallel.heading} ${t.parallel.body}`)}
                 aria-label={t.listen}
                 title={t.listen}
                 className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"

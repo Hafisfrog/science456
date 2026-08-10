@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp2/P4GravityExp2Vocab.css";
@@ -11,12 +11,21 @@ const FORCE_VOCAB = [
 ];
 
 const ELECTRIC_VOCAB = [
-  { th: "แรงดึงดูด", ms: "Dayo tarekke", en: "Gravitational Force" },
-  { th: "แรงผลัก", ms: "Dayo tolok", en: "Push Force" },
-  { th: "แรงไม่มีสัมผัส", ms: "Dayo tak tekuh", en: "Non-contact Force" },
-  { th: "ประจุไฟฟ้า", ms: "Cah letrik", en: "Electric Charge" },
-  { th: "แรงไฟฟ้า", ms: "Dayo letrik", en: "Electric Force" },
-  { th: "ความชื้น", ms: "Lemak", en: "Humidity" },
+  { th: "แรงดึงดูด", ms: "แร็ง ตาเระ", en: "Gravitational Force" },
+  { th: "แรงผลัก", ms: "แร็ง ตอเลาะ", en: "Push Force" },
+  { th: "แรงไม่มีสัมผัส", ms: "แร็ง เตาะ ซือโตะฮ", en: "Non-contact Force" },
+  { th: "ประจุไฟฟ้า", ms: "จะฮ อาปี", en: "Electric Charge" },
+  { th: "แรงไฟฟ้า", ms: "แร็ง อาปี", en: "Electric Force" },
+  { th: "ความชื้น", ms: "ลือมะ", en: "Humidity" },
+];
+
+const MALAY_ELECTRIC_VOCAB_AUDIO = [
+  "/audio/p6/3.1.mp3",
+  "/audio/p6/3.2.mp3",
+  "/audio/p6/3.3.mp3",
+  "/audio/p6/3.4.mp3",
+  "/audio/p6/3.5.mp3",
+  "/audio/p6/3.6.mp3",
 ];
 
 function speakText(text, lang) {
@@ -45,6 +54,7 @@ function speakText(text, lang) {
 export default function P6ElectricVocab() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const audioRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -78,9 +88,32 @@ export default function P6ElectricVocab() {
 
   const rows = isUnitFlow ? ELECTRIC_VOCAB : FORCE_VOCAB;
 
-  const onSpeak = useCallback((text, lang) => {
-    speakText(text, lang);
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
   }, []);
+
+  const onSpeak = useCallback((text, lang, audioSrc) => {
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(text, lang);
+  }, [stopAudio]);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      window.speechSynthesis?.cancel();
+    };
+  }, [stopAudio]);
 
   return (
     <div className="vocab-page" style={{ position: "relative" }}>
@@ -102,7 +135,7 @@ export default function P6ElectricVocab() {
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
+            {rows.map((row, index) => (
               <tr key={`${row.th}-${row.en}`}>
                 <td className="cell-th">{row.th}</td>
                 <td className="cell-ms">{row.ms}</td>
@@ -111,7 +144,13 @@ export default function P6ElectricVocab() {
                   <button className="audio-btn th" onClick={() => onSpeak(row.th, "th-TH")} type="button">
                     TH
                   </button>
-                  <button className="audio-btn ms" onClick={() => onSpeak(row.ms, "ms-MY")} type="button">
+                  <button
+                    className="audio-btn ms"
+                    onClick={() =>
+                      onSpeak(row.ms, "ms-MY", isUnitFlow ? MALAY_ELECTRIC_VOCAB_AUDIO[index] : undefined)
+                    }
+                    type="button"
+                  >
                     MY
                   </button>
                   <button className="audio-btn en" onClick={() => onSpeak(row.en, "en-GB")} type="button">

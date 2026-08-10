@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -54,27 +54,27 @@ const TRANSLATIONS = {
     ],
   },
   ms: {
-    stepsHeading: "Langkoh Kajiye",
-    back: "Pusing semula",
-    next: "Teruh",
+    stepsHeading: "จารอ บูวะ ปือจูบอแอ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     sound: "Bunyi",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
     steps: [
       {
-        title: "Reko dan Hubung Litar",
-        detail: "Hubung 2 tokol bateri pelito pecek secaro berseri, lepahtu hubung dengan bo pelito dan suwih wi cukup.",
+        title: "บูวะ บือโตะ ดัน ฮูบง ลีตาร",
+        detail: "ฮูบง 2 ตอกอ แบะตือรีปือลีตอ แปเจะ ซือจารอ แดแระ ลือปะฮ ตูฮูบง ดืองา โบ ปือลีตอ ดืองา ซูวิฮวี จูโกะ",
       },
       {
-        title: "Kaji dan Perati",
-        detail: "Buko suwih perati bo pelito cerah taro mano dan baneng hasil.",
+        title: "บูวะ ปือจูบอแอ ดัน ปือราตี",
+        detail: "บูกอ ซูวิฮ ปือราตีโบ ปือลีตอ จือเราะฮ ซือตารอ มานอ ลือปะฮ ตูบาเน็ง ฮาเซ",
       },
       {
-        title: "Kaji Semula",
-        detail: "Tukar jadi hubung 4 tokol bateri, lepahtu perati bo pelito cerah taro mano.",
+        title: "บูวะ ปือจูบอแอ ซือมูลา",
+        detail: "ตูกา ยาดีฮูบง 4 ตอกอ แบะตือรี, ลือปะฮ ตูปือราตีโบ ปือลีตอ จือเราะฮ ซือตารอ มานอ",
       },
       {
-        title: "Catat Hasil",
-        detail: "Buleh catat beno hok nok perati dan buwak kesimpule hubunge hok jumlah bateri ngan cerah hok pelito.",
+        title: "ตานอ ฮาเซ",
+        detail: "บูเละฮ ตานอ บือนอ เฮาะ เนาะ ปือราตีลือปะฮ ตูบูวะ กือซีปูแล ฮูบูแง ยุมเลาะฮ แบะตือรีดืองาจือรแฮ ปือลีตอ",
       },
     ],
   },
@@ -91,6 +91,13 @@ const SPEECH_LANGUAGES = {
   en: "en-US",
   ms: "ms-MY",
 };
+
+const MALAY_STEP_AUDIO = [
+  "/audio/p6/27.1.mp3",
+  "/audio/p6/27.2.mp3",
+  "/audio/p6/27.3.mp3",
+  "/audio/p6/27.4.mp3",
+];
 
 function speak(text, lang = "th-TH") {
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -117,9 +124,45 @@ function Spark({ className = "" }) {
 export default function P6ElectricCircuitBulbSeriesParallelSteps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const t = useMemo(() => TRANSLATIONS[lang] ?? TRANSLATIONS.th, [lang]);
   const speechLang = useMemo(() => SPEECH_LANGUAGES[lang] ?? "th-TH", [lang]);
-  const handleSpeak = useCallback((text) => speak(text, speechLang), [speechLang]);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const handleSpeak = useCallback(
+    (text, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_STEP_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speak(text, speechLang);
+    },
+    [lang, speechLang, stopAudio],
+  );
 
   const pageBg = {
     background:
@@ -177,7 +220,7 @@ export default function P6ElectricCircuitBulbSeriesParallelSteps() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => handleSpeak(`${index + 1}. ${step.title}. ${step.detail}`)}
+                    onClick={() => handleSpeak(`${index + 1}. ${step.title}. ${step.detail}`, index)}
                     className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
                     aria-label={`${t.sound} ${index + 1}`}
                     title={t.sound}

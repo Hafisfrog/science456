@@ -32,14 +32,14 @@ const UI_TEXT = {
     next: "Next",
   },
   ms: {
-    title: "Hasil Kajiye",
-    object: "Beno",
-    outcome: "Hasil Kajiye",
-    time: "Maso (menek)",
-    visual: "Gama Tunyuk Siket Kertah Keno Tarek",
-    balloonPaper: "Buwoh Gelemong + Siket Kertah",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ฮาเซ ปือจูบอแอ",
+    object: "บือนอ",
+    outcome: "ฮาเซ ปือจูบอแอ",
+    time: "มาซอ (แมแนะ)",
+    visual: "กามา ตูโญะ กือนอซือเราะ เฮาะ กือรือตะฮ",
+    balloonPaper: "บูเวาะฮ กือลือมง + กือรือตะฮกือจ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -48,7 +48,7 @@ const RESULTS = {
     outcome: {
       th: "ไม่เกิดการเปลี่ยนแปลง",
       en: "No visible change",
-      ms: "Tak Uboh",
+      ms: "เตาะบือรูเบาะฮ",
     },
     time: "0",
     intensity: "low",
@@ -57,7 +57,7 @@ const RESULTS = {
     outcome: {
       th: "เศษกระดาษถูกดูดเล็กน้อย",
       en: "Paper bits are slightly attracted",
-      ms: "Siket kertah kena tarek sikit",
+      ms: "กือรือตะฮ กือนอซือเราะ ซีกิ",
     },
     time: "2",
     intensity: "mid",
@@ -66,7 +66,7 @@ const RESULTS = {
     outcome: {
       th: "เศษกระดาษถูกดูดมากขึ้น",
       en: "Paper bits are strongly attracted",
-      ms: "Siket kertah kena tarek banyok sekali",
+      ms: "กือรือตะฮ กือนอซือเราะ บาเญาะ",
     },
     time: "5",
     intensity: "high",

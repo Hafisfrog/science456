@@ -56,10 +56,10 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    section: "Hasil Eksperimen",
-    colCircuit: "Susunan Litar",
-    colObserve: "Pemerhatian Kecerahan Mentol",
-    rows: ["Mentol menyala malap", "Mentol bertambah terang", "Mentol lebih terang lagi", "Mentol paling terang"],
+    section: "ฮาเซ ปือจูบอแอ",
+    colCircuit: "ซูซูนัน ลีตาร",
+    colObserve: "เปอเมอฮียัน เกอราฮัน เมนเทล",
+    rows: ["โบ ปือลีตอ จือเราะฮ ซีกิ", "โบ ปือลีตอ คอฮอ จือเราะฮ", "โบ ปือลีตอ จือเราะฮ บาเญาะ", "โบ ปือลีตอ นาเปาะ จือเราะฮ บาเยาะ ซือกาลี"],
     rowVoice: [
       "Dengan satu sel, mentol menyala malap.",
       "Dengan dua sel, mentol bertambah terang.",
@@ -67,8 +67,8 @@ const TEXT = {
       "Dengan empat sel, mentol paling terang.",
     ],
     listen: "Dengar baris ini",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

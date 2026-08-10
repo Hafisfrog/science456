@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -32,17 +32,17 @@ const TEXT = {
     ],
   },
   ms: {
-    heading: "Langkoh Kajiye",
-    hint: "Tekan ikon pembesar suara untuk mendengar",
-    back: "Pusing semula",
-    next: "Teruh",
+    heading: "จารอ บูวะ ปือจูบอแอ",
+    // hint: "Tekan ikon pembesar suara untuk mendengar",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     speech: "ms-MY",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
     steps: [
-      "Reko dan hubung litar: hubung bateri pelito pecek duwo tokol secaro bersiri lepahtu hubung pulo dengan bo pelito dan suwih wi cukup.",
-      "Kaji dan perati: buko suwih, perati tengoh bo pelito cerah taro mano, lepahtu baneng hasil.",
-      "Kaji semula: tukar bateri jadi 4 tokol, lepahtu tengok sekali lagi kato cerah taro mano.",
-      "Catat hasil: buleh catat beno hok nok perati dan buwak kesimpule hubunge hok jumlah bateri dengan cerah hok pelito.",
+      "บูวะ บือโตะดืองา ฮูบง ลีตาร: ฮูบง แบะตือรีปือลีตอ แปเจะ ดูวอ ตอกอ ซือจารอ แดแระ ลือปะฮ ตูฮูบง ปูเลาะ ดืองา โบ ปือลีตอ แด ซูวิฮ วี จูโกะ",
+      "บูวะ ปือจูบอแอ ดัน ปือราตี: บูกอ ซูวิฮ, ปือราตีแตเงาะ โบ ปือลีตอ จือเราะฮ ซือตารอ มานอ ลือปะฮ ตูบาเน็ง ฮาเซ",
+      "บูวะ ซือมูลา: ตูกา แบะตือรียาดี4 ตอกอ, ลือปะฮ ตูแตเงาะ ซือกาลีลากี กาตอ จือเราะฮ ซือตารอมานอ",
+      "ตานอ ฮาเซ: บูเละฮ ตานอ บือนอ เฮาะ เนาะ ปือราตีดืองา บูวะ กือซีปูแล ฮูบูแง ยุมเลาะฮแบะตือรีดืองา จือรอฮ ปือลีตอ",
     ],
   },
 };
@@ -51,6 +51,13 @@ const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
    { id: "ms", label: "มลายู" },
   { id: "en", label: "อังกฤษ" },
+];
+
+const MALAY_STEP_AUDIO = [
+  "/audio/p6/22.1.mp3",
+  "/audio/p6/22.2.mp3",
+  "/audio/p6/22.3.mp3",
+  "/audio/p6/22.4.mp3",
 ];
 
 function speakText(text, lang) {
@@ -81,7 +88,44 @@ function Spark({ className }) {
 export default function P6ElectricCircuitSteps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const speakStep = useCallback(
+    (text, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_STEP_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(text, t.speech);
+    },
+    [lang, stopAudio, t.speech],
+  );
 
   const pageBg = {
     background:
@@ -135,7 +179,7 @@ export default function P6ElectricCircuitSteps() {
 
                   <button
                     type="button"
-                    onClick={() => speakText(text, t.speech)}
+                    onClick={() => speakStep(text, index)}
                     className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 transition hover:scale-105"
                     aria-label={t.hint}
                     title={t.hint}

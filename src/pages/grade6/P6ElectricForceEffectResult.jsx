@@ -32,14 +32,14 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Hasil Kajiye",
-    headers: ["Beno", "Gesek ngan kertah tisu keduwo-duwonyo", "Gesek dengan kertah tisu hanyo satu"],
+    title: "ฮาเซ ปือจูบอแอ",
+    headers: ["บือนอ", "แกแซะ ดืองา กือรือตะฮตีซู กือดูวอ-ดูวอญอ", "แกแซะ ดืองา กือรือตะฮ ตีซู ซาตูซายอ"],
     rows: [
-      { label: "Buwoh gelemong", both: "Tolok tubek", one: "Tarek masuk" },
-      { label: "Kale mecik", both: "Tolok tubek", one: "Tarek masuk" },
+      { label: "บูเวาะฮ กือลือมง", both: "ตอเลาะ ตูเบะ", one: "ตาเระ มาโซะ" },
+      { label: "กาแล เมจิ", both: "ตอเลาะ ตูเบะ", one: "ตาเระ มาโซะ" },
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };

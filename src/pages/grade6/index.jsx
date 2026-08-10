@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import { GRADE6_LANG_BAR_CLASS, grade6LangButtonClass } from "./grade6LangStyles";
@@ -15,14 +15,17 @@ const EXPERIMENTS = [
     title: {
       th: "การทดลองที่ 1",
       en: "Experiment 1",
-      ms: "Kajiye 1",
+      ms: "ปือจูบอแอ 1",
     },
     subtitle: {
       th: "การเกิดแรงไฟฟ้า",
       en: "Generating Electric Force",
-      ms: "Kejadiye Dayo Letrik",
+      ms: "กือยาดีแย แร็ง อาปี",
     },
     image: "/images/p6/todlong7p6.png",
+    audio: {
+      ms: "/audio/p6/4.1.mp3",
+    },
     // path: "/p6/experiment/electric-generation/materials?from=unit",
     path: "/p6/experiment/electric-generation",
   },
@@ -31,14 +34,17 @@ const EXPERIMENTS = [
     title: {
       th: "การทดลองที่ 2",
       en: "Experiment 2",
-      ms: "Kajiye 2",
+      ms: "ปือจูบอแอ 2",
     },
     subtitle: {
       th: "ผลของแรงไฟฟ้า",
       en: "Effects of Electric Force",
-      ms: "Hasil Dayo Letrikk",
+      ms: "ฮาเซ แร็ง อาปี",
     },
     image: "/images/p6/todlonf8p6.png",
+    audio: {
+      ms: "/audio/p6/4.2.mp3",
+    },
     path: "/p6/experiment/electric-force-effect/objectives",
   },
 ];
@@ -57,9 +63,9 @@ const PAGE_COPY = {
     languageLabel: "Choose language",
   },
   ms: {
-    title: "Kenali Dayo Letrik",
-    subtitle: "Pilih Kajiye",
-    backLabel: "Pusing semula",
+    title: "แร็ง อาปีเฮาะ กือนอตาฮู",
+    subtitle: "ปีเละฮ ปือจูบอแอ",
+    backLabel: "ฮูโนกือเละ",
     languageLabel: "Pilih bahasa",
   },
 };
@@ -100,6 +106,7 @@ function Spark({ className = "" }) {
 
 export default function Grade6() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const [language, setLanguage] = useState("th");
   const backPath = "/p6/electric-force/vocab";
   const copy = PAGE_COPY[language];
@@ -107,6 +114,28 @@ export default function Grade6() {
   const pageBg = {
     background:
       "radial-gradient(46% 27% at 8% 41%, #cdebf4 0 61%, transparent 62%), radial-gradient(40% 26% at 94% 42%, #cdebf4 0 60%, transparent 61%), radial-gradient(72% 35% at 50% 33%, #f7f0ef 0 63%, transparent 64%), radial-gradient(80% 50% at 50% 75%, #f7f0ef 0 62%, transparent 63%), linear-gradient(180deg, #fbf5f2 0%, #fbf5f2 100%)",
+  };
+
+  const stopAudio = () => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  };
+
+  const speakExperiment = (item) => {
+    if (typeof window === "undefined") return;
+
+    window.speechSynthesis?.cancel();
+    stopAudio();
+
+    if (language === "ms" && item.audio?.ms) {
+      const audio = new Audio(item.audio.ms);
+      audioRef.current = audio;
+      audio.play();
+      return;
+    }
+
+    speakText(`${item.title[language]}. ${item.subtitle[language]}`, language);
   };
 
   return (
@@ -174,7 +203,7 @@ export default function Grade6() {
                       className="flex h-12 w-12 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
                       onClick={(event) => {
                         event.stopPropagation();
-                        speakText(`${item.title[language]}. ${item.subtitle[language]}`, language);
+                        speakExperiment(item);
                       }}
                       aria-label={item.subtitle[language]}
                       title={item.subtitle[language]}

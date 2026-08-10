@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -39,13 +39,13 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    section: "Kesimpule Hasil Kajiye",
+    section: "กือซีปูแล ฮาเซ ปือจูบอแอ",
     summary:
-      "Dari kegiate tersebut, dapati bahawo jiko amek sel letrik letok susun secaro berseri, arus letrik dale litar kho banyok, buwak wi bo pelito kho cerah ikut jumlah sel letrik hok banyok.",
-    listen: "Dengar rumusan",
-    cellCount: (n) => `${n} Tokol`,
-    back: "Pusing semula",
-    next: "Teruh",
+      "กาลู อาเมะ เซ อาปีลือเตาะ ซูซง ซือจารอ แดแระ, อารุฮ อาปีดาแล ลีตาร คอฮอ บาเญาะ, บูวะ วีโบ ปือลีตอ คอฮอ จือเราะฮ อีโกะ ยุมเลาะฮ เซ อาปีคอ บาเญาะ",
+    // listen: "Dengar rumusan",
+    cellCount: (n) => `${n} ตอกอ`,
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -56,6 +56,8 @@ const LANGS = [
   { id: "en", label: "อังกฤษ" },
  
 ];
+
+const MALAY_SUMMARY_AUDIO = "/audio/p6/23.1.mp3";
 
 function speakText(text, lang) {
   if (typeof window === "undefined" || !window.speechSynthesis || !text) return;
@@ -220,15 +222,39 @@ export default function P6ElectricCircuitResults() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
   const [summaryCells, setSummaryCells] = useState(4);
+  const audioRef = useRef(null);
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
 
   useEffect(() => {
     return () => {
+      stopAudio();
       if (typeof window !== "undefined" && window.speechSynthesis) {
         window.speechSynthesis.cancel();
       }
     };
-  }, []);
+  }, [stopAudio]);
+
+  const speakSummary = useCallback(() => {
+    stopAudio();
+
+    if (lang === "ms") {
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+      const audio = new Audio(MALAY_SUMMARY_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
+    speakText(t.summary, lang);
+  }, [lang, stopAudio, t.summary]);
 
   const pageBg = {
     background:
@@ -277,7 +303,7 @@ export default function P6ElectricCircuitResults() {
               </p>
               <button
                 type="button"
-                onClick={() => speakText(t.summary, lang)}
+                onClick={speakSummary}
                 aria-label={t.listen}
                 title={t.listen}
                 className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-xl text-orange-700 shadow transition hover:scale-105"

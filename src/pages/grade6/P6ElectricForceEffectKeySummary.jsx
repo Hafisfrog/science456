@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -47,20 +47,20 @@ const TEXT = {
     lang: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Kesimpule Isi Peting: Dayo Letrik Hok Keno Tahu",
-    sectionCause: "Kejadiye Dayo Letrik",
-    sectionEffect: "Hasil Kejadiye Letrik",
-    sectionExamples: "Contoh Dale Hidup Sehariye",
+    title: "กือซีปูแล อีซี ปือติง: แร็ง อาปีเฮาะ กือนอ ตาฮู",
+    sectionCause: "กือยาดีแย แร็ง อาปี",
+    sectionEffect: "ฮาเซ กือยาดีแย อาปี",
+    sectionExamples: "จอตอ ดาแล กือฮีดูปา ซือฮารีแย",
     causeIntro:
-      "Dayo letrik yaitu dayo hok berlaku di antara cah letrik. Ada juga dayo tarekke dan dayo tolok.",
-    chargeKinds: "Cah letrik ada 2 jenih yaitu cah letrik positif dan cah letrik negatif.",
+      "แร็ง อาปียาอีตู แร็ง เฮาะ บือลากูดี อันตารอ จะฮ อาปีอาดอ ยูเกาะ แร็ง ตาเระแก ดืองา แร็ง ตอเลาะแก",
+    chargeKinds: "จะฮ อาปีอาดอ ดูวอ ยอนีฮ ยาอีตู จะฮ อาปีโปซีติฮ ดืองา จะฮ อาปีเนกาตีฮ",
     chargeInduction:
-      "Berlaku apabilo ado setengoh beno tukar cah letrik buwakwi beno tak jadi neutral letrik.",
-    effectAttract: "Cah tok samo “tarek masuk” beno hok ado cah tok samo jenih nok jadi dayo tarek di antaranyo.",
-    effectRepel: "Cah hok samo “tolok tubek” beno hok ado cah jenih samo, nak jadi dayo tarekke.",
-    example: "Guno tise plastik atah kain buwakwi ramuk lekat di tise.",
-    back: "Pusing semula",
-    next: "Teruh",
+      "บือลากูอาปอบีลอ อาดอซือตือเงาะฮ บือนอ ตูกา จะฮ อาปีบูวะวี บือนอ เตาะยาดีนิวตรัล อาปี",
+    effectAttract: "จะฮ เตาะ ซามอ 'ตาเระ มาโซะ' บือนอ เฮาะ อาดอ จะฮ เตาะ ซามอ ยือนีฮ เนาะ ยาดีแร็ง ตาเระ ดีอันตารอญอ",
+    effectRepel: "จะฮ เฮาะ ซามอ 'ตอเลาะ ตูเบะ' บือนอ เฮาะ อาดอ จะฮ ยือนีฮ ซามอ, เนาะ ยาดีแร็ง ตาเระแก",
+    example: "กูนอ ตีเซ ปลาสติก อาตะฮ กา-เอ็ง บูวะวี ราโมะ ลือกะ ดี ตีเซ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     lang: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
@@ -69,6 +69,12 @@ const LISTEN_LABELS = {
   th: "ฟัง",
   en: "Listen",
   ms: "Dengar",
+};
+
+const MALAY_SECTION_AUDIO = {
+  cause: "/audio/p6/16.1.mp3",
+  effect: "/audio/p6/16.2.mp3",
+  example: "/audio/p6/16.3.mp3",
 };
 
 function speakText(text, lang) {
@@ -123,12 +129,51 @@ function LanguagePills({ lang, setLang }) {
 export default function P6ElectricForceEffectKeySummary() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const t = useMemo(() => TEXT[lang] ?? TEXT.th, [lang]);
   const listenLabel = LISTEN_LABELS[lang] ?? LISTEN_LABELS.th;
   const speechLang = { th: "th-TH", en: "en-US", ms: "ms-MY" }[lang] || "th-TH";
-  const speakCause = () => speakText([t.sectionCause, t.causeIntro, t.chargeKinds, t.chargeInduction].join(". "), speechLang);
-  const speakEffect = () => speakText([t.sectionEffect, t.effectAttract, t.effectRepel].join(". "), speechLang);
-  const speakExample = () => speakText([t.sectionExamples, t.example].join(". "), speechLang);
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const speakSection = useCallback(
+    (sectionKey, fallbackText) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_SECTION_AUDIO[sectionKey];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(fallbackText, speechLang);
+    },
+    [lang, speechLang, stopAudio],
+  );
+
+  const speakCause = () =>
+    speakSection("cause", [t.sectionCause, t.causeIntro, t.chargeKinds, t.chargeInduction].join(". "));
+  const speakEffect = () => speakSection("effect", [t.sectionEffect, t.effectAttract, t.effectRepel].join(". "));
+  const speakExample = () => speakSection("example", [t.sectionExamples, t.example].join(". "));
 
   const pageBg = {
     background:
