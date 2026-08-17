@@ -4,6 +4,13 @@ import HomeButton from "../../../HomeButton";
 import "../exp1/P4GravityExp1Materials.css";
 import "../exp2/P4GravityExp2Materials.css";
 
+const MALAY_MATERIAL_AUDIO = [
+  "/audio/p4/25.1.mp3",
+  "/audio/p4/25.2.mp3",
+  "/audio/p4/25.3.mp3",
+  "/audio/p4/25.4.mp3",
+];
+
 export default function P4GravityExp3Materials() {
   const navigate = useNavigate();
 
@@ -12,6 +19,7 @@ export default function P4GravityExp3Materials() {
 
   const [lang, setLang] = useState("th");
   const speakingKeyRef = useRef(null);
+  const audioRef = useRef(null);
 
   const assets = useMemo(() => {
     return {
@@ -31,7 +39,7 @@ export default function P4GravityExp3Materials() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         items: [
           { key: "book", name: "หนังสือ" },
           { key: "rock", name: "ก้อนหิน" },
@@ -46,7 +54,7 @@ export default function P4GravityExp3Materials() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         items: [
           { key: "book", name: "Book" },
           { key: "rock", name: "Rock" },
@@ -55,18 +63,18 @@ export default function P4GravityExp3Materials() {
         ],
       },
       ms: {
-        title: "Kajiye 3  Tajuk Dayo Tarekke Bumi dengan Dayo Tarekke Bule",
-        badge: "Beno",
-        back: "Pusing semula",
-        next: "Teruh",
+        title: "ปือจูบอแอ 3 ตาโยะ; แร็ง บูมี ตาเระ บือนอ ดืองา แร็ง บูแล ตาเระ บือนอ",
+        badge: "อาละ-อาละ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         items: [
-          { key: "book", name: "Buku" },
-          { key: "rock", name: "Batu" },
-          { key: "mango", name: "Buwoh pauh" },
-          { key: "springScale", name: "Timenge spring" },
+          { key: "book", name: "ซูระ" },
+          { key: "rock", name: "บาตู" },
+          { key: "mango", name: "บูเวาะฮ ปา-โอะฮ" },
+          { key: "springScale", name: "แกโล สปริง" },
         ],
       },
     };
@@ -78,9 +86,39 @@ export default function P4GravityExp3Materials() {
 
   const stopSpeak = () => {
     try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       speakingKeyRef.current = null;
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakMaterial = (msg, key, index) => {
+    try {
+      stopSpeak();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_MATERIAL_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        speakingKeyRef.current = key;
+        audio.onended = () => {
+          speakingKeyRef.current = null;
+        };
+        audio.play().catch(() => {
+          speakingKeyRef.current = null;
+        });
+        return;
+      }
+
+      speak(msg, key);
     } catch {
       // ignore
     }
@@ -130,14 +168,14 @@ export default function P4GravityExp3Materials() {
           <div className="text-[32px] font-black leading-tight text-slate-900 max-[980px]:text-[24px] max-[720px]:text-[20px]">
             {t.title}
           </div>
-          <button
+          {/* <button
             className={`exp1m-speak ${isSpeaking("title") ? "speaking" : ""}`}
             type="button"
             onClick={() => speak(t.title, "title")}
             title="Speak"
           >
             🔊
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -148,7 +186,7 @@ export default function P4GravityExp3Materials() {
       <div className="exp1m-center">
         <div className="max-h-full overflow-y-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="exp1m-grid">
-            {t.items.map((it) => (
+            {t.items.map((it, index) => (
               <div key={it.key} className="exp1m-card">
                 <div className="exp1m-cardInner">
                   <div className="exp1m-imgBox">
@@ -170,7 +208,7 @@ export default function P4GravityExp3Materials() {
                     <button
                       className={`exp1m-itemSpeak ${isSpeaking(it.key) ? "speaking" : ""}`}
                       type="button"
-                      onClick={() => speak(it.name, it.key)}
+                      onClick={() => speakMaterial(it.name, it.key, index)}
                       title="Speak"
                     >
                       🔊

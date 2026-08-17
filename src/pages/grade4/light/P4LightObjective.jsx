@@ -31,22 +31,22 @@ const CONTENT = {
     speakDivider: "Objective",
   },
   ms: {
-    gradeLabel: "Tahun 4",
-    title: "Perantaro Cahayo",
-    sectionTitle: "Tujuwe Pembelajare",
+    gradeLabel: "กือละฮ 4",
+    title: "บือนอ เฮาะ จายอ บูเละฮ ลาลู",
+    sectionTitle: "ตูยูแว ปืมบือลายาแร",
     objectives: [
-      "Buleh perati tengok cahayo nok temuh lepah beno lain-lain.",
-      "Buleh bagi jenis beno hok mari sekak cahayo jadi beno lutsinar, beno lutcahayo dan beno legap cahayo.",
+      "บูเละฮ ปือราตีแตเงาะ จายอ เนาะ ลาลูลือปะฮ บือนอ ลา-เอ็ง",
+      "บูเละฮ บากียือนิฮ บือนอ เฮาะ มารีซือกะ จายอ ยาอีตู, บือนอ เฮาะ จาห์ยอ บูเละฮ เตอมุฮ, บือนอเฮาะ จาห์ยอ บูเละฮ ลาลู ซีกิ, ดัน บือนอ เฮาะ จาห์ยอ เตาะ บูเละฮ ลาลู ลาซง",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     speakPrefix: "Objektif pembelajaran",
     speakDivider: "Objektif",
   },
 };
 
 const LANG_LABELS = {
-  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
@@ -56,6 +56,11 @@ const SPEAK_LABELS = {
   en: "Listen",
   ms: "Dengar",
 };
+
+const MALAY_OBJECTIVE_AUDIO = [
+  "/audio/p4/30.2.mp3",
+  "/audio/p4/30.3.mp3",
+];
 
 export default function P4LightObjective() {
   const navigate = useNavigate();
@@ -70,6 +75,7 @@ export default function P4LightObjective() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      audioRef.current = null;
     }
     if (window.speechSynthesis) {
       window.speechSynthesis.cancel();
@@ -82,6 +88,28 @@ export default function P4LightObjective() {
       if (!window.speechSynthesis || !text) return;
       const u = new SpeechSynthesisUtterance(text);
       u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      window.speechSynthesis.speak(u);
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakObjective = (text, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_OBJECTIVE_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis || !text) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = lang === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(u);
     } catch {
       // ignore
@@ -109,14 +137,14 @@ export default function P4LightObjective() {
             <h1 className="m-0 text-6xl font-black text-gray-900 [text-shadow:0_4px_0_rgba(255,255,255,.6)] max-[900px]:text-[42px] max-[640px]:text-[34px]">
               {t.title}
             </h1>
-            <button
+            {/* <button
               className="h-[54px] w-[54px] cursor-pointer rounded-2xl border-none bg-white/90 text-[22px] shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)] max-[640px]:h-12 max-[640px]:w-12"
               onClick={() => speakText(t.title)}
               type="button"
               title={speakLabel}
             >
               {"\uD83D\uDD0A"}
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -136,7 +164,7 @@ export default function P4LightObjective() {
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(obj1)}
+              onClick={() => speakObjective(obj1, 0)}
               type="button"
               title={speakLabel}
             >
@@ -153,7 +181,7 @@ export default function P4LightObjective() {
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(obj2)}
+              onClick={() => speakObjective(obj2, 1)}
               type="button"
               title={speakLabel}
             >

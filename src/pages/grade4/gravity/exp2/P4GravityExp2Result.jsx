@@ -4,6 +4,8 @@ import HomeButton from "../../../HomeButton";
 import "./P4GravityExp2Result.css";
 import "../exp1/P4GravityExp1Materials.css";
 
+const MALAY_SUMMARY_AUDIO = "/audio/p4/20.1.mp3";
+
 export default function P4GravityExp2Result() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,12 +21,26 @@ export default function P4GravityExp2Result() {
   const selectedIds = state.selectedIds || [];
 
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    speakingRef.current = false;
+  };
+
   const speak = (msg) => {
     try {
+      stopAudio();
       if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(msg);
-      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
       speakingRef.current = true;
       utterance.onend = () => {
         speakingRef.current = false;
@@ -32,6 +48,29 @@ export default function P4GravityExp2Result() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore speech errors
+    }
+  };
+
+  const speakSummary = () => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        speakingRef.current = true;
+        const audio = new Audio(MALAY_SUMMARY_AUDIO);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
+      speak(t.summary);
+    } catch {
+      // ignore audio errors
     }
   };
 
@@ -51,7 +90,7 @@ export default function P4GravityExp2Result() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "ฟังทั้งหน้า",
         ball: "ลูกบอล",
         bocce: "ลูกเปตอง",
@@ -75,7 +114,7 @@ export default function P4GravityExp2Result() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Listen to page",
         ball: "Ball",
         bocce: "Bocce Ball",
@@ -86,28 +125,28 @@ export default function P4GravityExp2Result() {
           "From the activity, it is found that the mass of an object affects Earth’s gravitational force, which can be observed from the extension of the spring in a spring balance. \nGreater mass → greater gravitational force → greater weight \nLess mass → less gravitational force → less weight \nTherefore, the Earth’s gravitational force acting on different objects is not the same.",
       },
       ms: {
-        title: "Hasil Kajiye",
-        colObj: "Beno",
-        colMeasured: "Bengak Timenge",
-        t1: "Kali yang 1",
-        t2: "Kali yang 2",
-        t3: "Kali yang 3",
-        avg: "Beghak",
-        summaryTitle: "Kesimpule Hasil Kajiye",
-        back: "Pusing semula",
-        retry: "Cuba lagi",
-        next: "Teruh  ",
+        title: "ฮาเซ ปือจูบอแอ",
+        colObj: "บือนอ",
+        colMeasured: "บือระตีแมแง",
+        t1: "กาลี ยัง 1",
+        t2: "กาลี ยัง 2",
+        t3: "กาลี ยัง 3",
+        avg: "บือระ",
+        summaryTitle: "กือซีปูแล ฮาเซ ปือจูบอแอ",
+        back: "ฮูโนกือเละ",
+        retry: "มูลา",
+        next: "ตือรุฮ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Dengar satu halaman",
-        ball: "Bola",
-        bocce: "Buwoh Petong",
-        feather: "Bulu Burung",
+        ball: "บอลา",
+        bocce: "บูเวาะฮ เปต็อง",
+        feather: "บูลู บูรง",
         unitN: "N",
-        noData: "Tiada data",
+        noData: "ตาเดาะ ฮาเซ",
         summary:
-          "Lepah buwak kegiate beghak hok beno ada hasil dayo tarekke bumi. Perati dari renge hok spring dale timenge spring. \nJisim banyok  → Dayo tarekke graviti bumi banyok  → Beghak lebih banyok \nJisim sikit → Dayo tarekke graviti bumi sikit  → Beghak nok sikit \nMako, dayo tarekke graviti bumi nok tarek dengan beno hok lain jenih, buwakwi nilai tok samo.",
+          "ลือปะฮ บูวะ ปือจูบอแอ, ฮาเซ ญอ บือระ บือนอ บือรี เกอแซ ปาดอ แร็ง บูมี ตาเระ บือนอ ดี มานอ กีตอ บูเละฮ ปือราตีบีลอ สปริง ตู คอฮอ ปาแญ ดี ดาแล แกโล สปริง \n- จีซีม บาเญาะ  → แร็ง บูมี ตาเระ บือนอ บาเญาะ → บือระปง บาเญาะ \n- จีซีม ซีก → แร็ง บูมี ตาเระ บือนอ ซีก → บือระ เดาะ บาเญาะ \nมากอ, แร็ง บูมี ตาเระ บือนอ เฮาะ ตียะ-ตียะ ยือนิฮ บือระ วีเตาะ ซามอ.",
       },
     }),
     []
@@ -242,7 +281,7 @@ export default function P4GravityExp2Result() {
           <button
             className="exp2r2-summarySpeak"
             type="button"
-            onClick={() => speak(t.summary)}
+            onClick={speakSummary}
             title={t.speakAll}
           >
             🔊

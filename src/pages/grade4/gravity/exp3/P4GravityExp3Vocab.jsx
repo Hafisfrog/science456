@@ -3,10 +3,16 @@ import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import "./P4GravityExp3Vocab.css";
 
+const MALAY_VOCAB_AUDIO = [
+  "/audio/p4/24.1.mp3",
+  "/audio/p4/24.2.mp3",
+  "/audio/p4/24.3.mp3",
+];
+
 const VOCAB = [
-  { th: "การเปลี่ยนแปลง", ms: "Beruboh", en: "Change" },
-  { th: "การเคลื่อนที่ของวัตถุ", ms: "Gerakke beno", en: "Object motion" },
-  { th: "เคลื่อนย้าย", ms: "Alih/Pinoh", en: "Move" },
+  { th: "การเปลี่ยนแปลง", ms: "ปือรูบอแฮ", en: "Change" },
+  { th: "การเคลื่อนที่ของวัตถุ", ms: "กือเราะแก บือนอ", en: "Object motion" },
+  { th: "เคลื่อนย้าย", ms: "วาเละฮ ตือปะ", en: "Move" },
 ];
 
 export default function P4GravityExp3Vocab() {
@@ -72,6 +78,18 @@ export default function P4GravityExp3Vocab() {
     }
   };
 
+  const speakMalayVocab = (index) => {
+    try {
+      window.speechSynthesis?.cancel();
+      const audioSrc = MALAY_VOCAB_AUDIO[index];
+      if (!audioSrc) return;
+      const audio = new Audio(audioSrc);
+      audio.play().catch(() => {});
+    } catch {
+      // ignore
+    }
+  };
+
   return (
     <div className="exp3-vocab-page">
       <HomeButton />
@@ -101,7 +119,7 @@ export default function P4GravityExp3Vocab() {
                   <button className="audio-btn th" onClick={() => speak(row.th, "th")} type="button">
                     TH
                   </button>
-                  <button className="audio-btn ms" onClick={() => speak(row.ms, "ms")} type="button">
+                  <button className="audio-btn ms" onClick={() => speakMalayVocab(idx)} type="button">
                     MY
                   </button>
                   <button className="audio-btn en" onClick={() => speak(row.en, "en")} type="button">

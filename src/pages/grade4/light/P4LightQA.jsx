@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
@@ -8,6 +8,18 @@ const SPEECH_LOCALES = {
   en: "en-US",
   ms: "ms-MY",
 };
+
+const MALAY_QUESTION_AUDIO = [
+  "/audio/p4/39.2.mp3",
+  "/audio/p4/39.4.mp3",
+  "/audio/p4/39.6.mp3",
+];
+
+const MALAY_ANSWER_AUDIO = [
+  "/audio/p4/39.3.mp3",
+  "/audio/p4/39.5.mp3",
+  "/audio/p4/39.7.mp3",
+];
 
 const UI = {
   th: {
@@ -89,43 +101,43 @@ const UI = {
     finish: "Next",
   },
   ms: {
-    header: "Pertanyae Ado Jawape",
+    header: "ซออาแล นิง อาดอยาวะแป",
     headerSpeakLabel: "Dengar tajuk di atas",
     answerTitle: "👉 Kerana setiap bahan membenarkan cahaya melalui pada tahap berbeza",
-    hiddenPlaceholder: "Teke tombol jawape untuk tengok huraian.",
-    reveal: "Tunjuk Jawapan",
-    hide: "Sembunyikan Jawapan",
+    hiddenPlaceholder: "ตือแก ตือปะ ยาวะแป อูโตะ แตเงาะ ฮูราแย.",
+    reveal: "ยาวะแป",
+    hide: "ซูซุ ยาวะแป ",
     cards: [
       {
         number: "1",
-        title: "Perantaro jenih ",
+        title: "บือนอ เฮาะ จายอ บูเละฮ ลาลูดืองา มูเดาะห.",
         color: "blue",
-        examples: "Seperti: cuming, gelah, Plastik",
-        pass: "Cahayo buleh temuh semuwo",
-        result: "Napok beno hok duk blake nga jelah",
+        examples: "ซือปือตี; จูมิง ยือรือนิฮ, กือละฮ , ปลาสติก.",
+        pass: "จาฮายอ บูเละฮ ลาลู ซือมอ",
+        result: "นาเปาะ บือนอ โดะ บือลาแก จือระ มอและ.",
       },
       {
         number: "2",
-        title: "Perantaro lutcahayo",
+        title: "บือนอ เฮาะ จายอ บูเละฮ ลาลูซีกิ.",
         color: "amber",
-        examples: "Seperti: cuming gelak, ketah minyok, Kabuk ",
-        pass: "Cahayo buleh temuh sebahagian sahajo",
-        result: "Napok beno hok duk belake tidok jelah",
+        examples: "ซือปือตี; จูมิง กือลาบู, กือรือตะฮ มีเญาะ, กาโบะ.",
+        pass: "จาฮายอ บูเละฮ ลาลู ซีกิ",
+        result: "นาเปาะ บือนอ เฮาะ โดะ บือลาแก เตาะ จือระ.",
       },
       {
         number: "3",
-        title: "Beno legap cahayo   ",
+        title: "บือนอ จายอ เตาะ บูเละฮ ลาลูลาซง.",
         color: "gray",
-        examples: "Seperti: kayu, besi, Dineng",
-        pass: "Cahayo nok lalu tok buleh",
-        result: "Tokleh napok beno hok duk blake",
+        examples: "ซือปือตี; กายู, บือซี, ดีเน็ง.",
+        pass: "จาฮายอ เนาะ ลาลูเตาะ บูเละฮ",
+        result: "เตาะเละฮ นาเปาะ บือนอ โดะ บือลาแก.",
       },
     ],
     topSpeakLabel: "Dengar soalan di atas",
     speakLabel: "Dengar kad ini",
     answerSpeakLabel: "Dengar jawapan ini",
-    back: "Pusing semula",
-    finish: "Teruh",
+    back: "ฮูโนกือเละ",
+    finish: "ตือรุฮ",
   },
 };
 
@@ -157,6 +169,7 @@ export default function P4LightQA() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const [revealedAnswers, setRevealedAnswers] = useState({});
+  const audioRef = useRef(null);
   const content = useMemo(() => UI[language] ?? UI.th, [language]);
 
   const toggleAnswer = (cardNumber) => {
@@ -189,7 +202,28 @@ export default function P4LightQA() {
     return `${card.pass}. ${card.result}.`;
   };
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const playMalayAudio = (audioSrc) => {
+    if (!audioSrc) return;
+    stopAudio();
+    const audio = new Audio(audioSrc);
+    audioRef.current = audio;
+    audio.play().catch(() => {});
+  };
+
   const speakText = (text) => {
+    stopAudio();
+
     if (
       typeof window === "undefined" ||
       typeof SpeechSynthesisUtterance === "undefined" ||
@@ -256,8 +290,20 @@ export default function P4LightQA() {
     }, 500);
   };
 
-  const speakCard = (card) => {
+  const speakCard = (card, index) => {
+    if (language === "ms") {
+      playMalayAudio(MALAY_QUESTION_AUDIO[index]);
+      return;
+    }
     speakText(buildCardSpeechText(card));
+  };
+
+  const speakAnswer = (card, index) => {
+    if (language === "ms") {
+      playMalayAudio(MALAY_ANSWER_AUDIO[index]);
+      return;
+    }
+    speakText(buildAnswerSpeechText(card));
   };
 
   return (
@@ -275,7 +321,7 @@ export default function P4LightQA() {
           <div className="mb-3 flex items-center justify-start pl-[240px] max-[900px]:pl-[190px] max-[640px]:justify-center max-[640px]:pl-0">
             <h1 className="m-0 inline-flex w-fit items-center gap-4 rounded-2xl border-2 border-sky-200 bg-white/90 px-6 py-3 text-center text-xl font-extrabold text-sky-900 shadow-[0_10px_22px_rgba(14,116,144,0.2)] backdrop-blur-sm sm:text-3xl">
               <span>{content.header}</span>
-              <button
+              {/* <button
                 type="button"
                 onClick={() => speakText(buildHeaderSpeechText())}
                 className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-sky-200 bg-white/95 text-lg text-sky-800 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-sky-100 sm:h-12 sm:w-12"
@@ -283,7 +329,7 @@ export default function P4LightQA() {
                 title={content.headerSpeakLabel}
               >
                 🔊
-              </button>
+              </button> */}
             </h1>
           </div>
 
@@ -301,7 +347,7 @@ export default function P4LightQA() {
                 <div className="rounded-[28px] border-[4px] border-sky-300 bg-white/95 p-5 shadow-[0_12px_26px_rgba(14,116,144,0.22)] backdrop-blur-sm sm:p-6">
 
                   <div className="grid gap-4">
-                    {content.cards.map((card) => {
+                    {content.cards.map((card, index) => {
                       const theme = CARD_THEMES[card.color] ?? CARD_THEMES.blue;
                       const isRevealed = Boolean(revealedAnswers[card.number]);
 
@@ -330,7 +376,7 @@ export default function P4LightQA() {
                             <div className="flex shrink-0 items-center gap-2 self-start sm:self-auto">
                               <button
                                 type="button"
-                                onClick={() => speakCard(card)}
+                                onClick={() => speakCard(card, index)}
                                 className={`inline-flex h-10 w-10 items-center justify-center rounded-2xl border text-lg shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 ${theme.listen}`}
                                 aria-label={`${content.speakLabel}: ${card.title}`}
                                 title={`${content.speakLabel}: ${card.title}`}
@@ -364,7 +410,7 @@ export default function P4LightQA() {
 
                                 <button
                                   type="button"
-                                  onClick={() => speakText(buildAnswerSpeechText(card))}
+                                  onClick={() => speakAnswer(card, index)}
                                   className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-red-200 bg-white/95 text-lg text-red-500 shadow-[0_10px_20px_rgba(15,23,42,0.08)] transition hover:-translate-y-0.5 hover:bg-red-50"
                                   aria-label={`${content.answerSpeakLabel}: ${card.title}`}
                                   title={`${content.answerSpeakLabel}: ${card.title}`}
@@ -394,7 +440,7 @@ export default function P4LightQA() {
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
-          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" }}
         />
       </div>
 

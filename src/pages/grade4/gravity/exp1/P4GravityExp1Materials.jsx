@@ -2,6 +2,15 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 
+const MALAY_MATERIAL_AUDIO = [
+  "/audio/p4/8.1.mp3",
+  "/audio/p4/8.2.mp3",
+  "/audio/p4/8.3.mp3",
+  "/audio/p4/8.4.mp3",
+  "/audio/p4/8.5.mp3",
+  "/audio/p4/8.6.mp3",
+];
+
 export default function P4GravityExp1Materials() {
   const navigate = useNavigate();
 
@@ -10,6 +19,7 @@ export default function P4GravityExp1Materials() {
 
   const [lang, setLang] = useState("th");
   const speakingKeyRef = useRef(null);
+  const audioRef = useRef(null);
 
   const assets = useMemo(() => {
     return {
@@ -32,7 +42,7 @@ export default function P4GravityExp1Materials() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "ฟังทั้งหมด",
         items: [
           { key: "ball", name: "ลูกบอล" },
@@ -50,7 +60,7 @@ export default function P4GravityExp1Materials() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Listen all",
         items: [
           { key: "ball", name: "Ball" },
@@ -62,21 +72,21 @@ export default function P4GravityExp1Materials() {
         ],
       },
       ms: {
-        title: "Kajiye 1 Tajuk Hasil Tarekke Bumi",
-        badge: "Beno",
-        back: "Pusing semula",
-        next: "Teruh",
+        title: "ปือจูบอแอ 1 ตาโยะ: ฮาเซ แร็ง ตาเระ บือนอ",
+        badge: "อาละ-อาละ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Dengar semua",
         items: [
-          { key: "ball", name: "Bola" },
-          { key: "bocce", name: "Buwoh Petong" },
-          { key: "feather", name: "Bulu Burung" },
-          { key: "timer", name: "Ge Geghok" },
-          { key: "ruler", name: "Kayu Ngukur" },
-          { key: "platform", name: "Kayu Lapik" },
+          { key: "ball", name: "บอลา" },
+          { key: "bocce", name: "บูเวาะฮ เปต็อง" },
+          { key: "feather", name: "บูลู บูรง" },
+          { key: "timer", name: "แย กีรอ มาซอ" },
+          { key: "ruler", name: "กายู งูโก" },
+          { key: "platform", name: "กายู ลาเปะ" },
         ],
       },
     };
@@ -88,9 +98,39 @@ export default function P4GravityExp1Materials() {
 
   const stopSpeak = () => {
     try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       speakingKeyRef.current = null;
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakMaterial = (msg, key, index) => {
+    try {
+      stopSpeak();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_MATERIAL_AUDIO[index];
+        if (!audioSrc) return;
+        speakingKeyRef.current = key;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingKeyRef.current = null;
+        };
+        audio.play().catch(() => {
+          speakingKeyRef.current = null;
+        });
+        return;
+      }
+
+      speak(msg, key);
     } catch {
       // ignore
     }
@@ -158,7 +198,7 @@ export default function P4GravityExp1Materials() {
             {t.title}
           </div>
 
-          <button
+          {/* <button
             className={`h-12 w-12 shrink-0 rounded-[14px] text-[20px] shadow-[inset_0_-4px_0_rgba(0,0,0,.12),0_16px_28px_rgba(0,0,0,.16)] transition hover:-translate-y-0.5 hover:shadow-[inset_0_-4px_0_rgba(0,0,0,.12),0_20px_34px_rgba(0,0,0,.20)] active:translate-y-[1px] ${
               isSpeaking("title") ? "bg-green-200 saturate-110" : "bg-blue-100"
             }`}
@@ -167,7 +207,7 @@ export default function P4GravityExp1Materials() {
             title="Speak"
           >
             🔊
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -180,7 +220,7 @@ export default function P4GravityExp1Materials() {
       <div className="absolute bottom-[110px] left-[18px] right-[18px] top-[182px] z-[3] flex items-center justify-center max-[980px]:top-[210px] max-[720px]:bottom-[140px] max-[720px]:top-[220px]">
         <div className="max-h-full overflow-y-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="grid w-[min(760px,88vw)] grid-cols-3 justify-items-center gap-[12px] max-[980px]:w-[min(640px,90vw)] max-[980px]:grid-cols-2 max-[720px]:w-[min(420px,88vw)] max-[720px]:grid-cols-1 max-[720px]:gap-[14px]">
-            {t.items.map((it) => (
+            {t.items.map((it, index) => (
               <div key={it.key} className="flex w-full max-w-[220px] justify-center">
                 <div className="flex w-[82%] flex-col items-center rounded-[16px] border-[3px] border-slate-600/45 bg-white/90 px-[12px] pb-[10px] pt-[12px] shadow-[0_18px_36px_rgba(0,0,0,.16)]">
                   <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-2xl border-[3px] border-slate-600/35 bg-[linear-gradient(180deg,#fff,#f3f4f6)]">
@@ -205,7 +245,7 @@ export default function P4GravityExp1Materials() {
                         isSpeaking(it.key) ? "bg-green-200 saturate-110" : "bg-blue-100"
                       }`}
                       type="button"
-                      onClick={() => speak(it.name, it.key)}
+                      onClick={() => speakMaterial(it.name, it.key, index)}
                       title="Speak"
                     >
                       🔊

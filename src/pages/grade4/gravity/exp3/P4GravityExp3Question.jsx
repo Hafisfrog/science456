@@ -2,6 +2,8 @@ import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 
+const MALAY_QUESTION_AUDIO = "/audio/p4/27.1.mp3";
+
 export default function P4GravityExp3Question() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -21,7 +23,7 @@ export default function P4GravityExp3Question() {
         nextBtn: "ต่อไป »",
         thChip: "ไทย",
         enChip: "อังกฤษ",
-        msChip: "มลายู",
+        msChip: "มลายูถิ่น",
         soundTitle: "ฟังเสียง",
       },
       en: {
@@ -33,19 +35,19 @@ export default function P4GravityExp3Question() {
         nextBtn: "Next »",
         thChip: "ไทย",
         enChip: "อังกฤษ",
-        msChip: "มลายู",
+        msChip: "มลายูถิ่น",
         soundTitle: "Sound",
       },
       ms: {
-        title: "Pertanyae yang menarek",
-        question: "Jenih beno hok samo, kalu duk atah bumi ngan bule nok ado beghak samo kedok ?",
+        title: "ซออาแล ปากะ ปีเก",
+        question: "บือนอ ซือรูปอ, กาลู โดะ อาตะฮ บูมี ดืองา บูแล เนาะ ซามอ บือระ กือเดาะ ?",
         hintBtn: "Mari cari jawapan",
-        startBtn: "Mula kajiye",
-        backBtn: "« Pusing semula",
-        nextBtn: "Teruh »",
+        startBtn: "มูลา ปือจูบอแอ",
+        backBtn: "« ฮูโนกือเละ",
+        nextBtn: "ตือรุฮ »",
         thChip: "ไทย",
         enChip: "อังกฤษ",
-        msChip: "มลายู",
+        msChip: "มลายูถิ่น",
         soundTitle: "Bunyi",
       },
     }),
@@ -58,6 +60,7 @@ export default function P4GravityExp3Question() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
+      audioRef.current = null;
     }
     if (window.speechSynthesis) {
       window.speechSynthesis.cancel();
@@ -66,10 +69,18 @@ export default function P4GravityExp3Question() {
 
   const playQuestionAudio = () => {
     try {
-      if (!window.speechSynthesis) return;
       stopAudio();
+
+      if (lang === "ms") {
+        const audio = new Audio(MALAY_QUESTION_AUDIO);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
       const utter = new SpeechSynthesisUtterance(`${t.title}\n${t.question}`);
-      utter.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utter.lang = lang === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(utter);
     } catch {
       // ignore
@@ -179,7 +190,7 @@ export default function P4GravityExp3Question() {
             onClick={goBack}
             type="button"
           >
-            « {lang === "th" ? "ย้อนกลับ" : lang === "ms" ? "Pusing semula" : "Back"}
+            « {lang === "th" ? "ย้อนกลับ" : lang === "ms" ? "ฮูโนกือเละ" : "Back"}
           </button>
 
           <button
@@ -187,7 +198,7 @@ export default function P4GravityExp3Question() {
             onClick={handleStart}
             type="button"
           >
-            {lang === "th" ? "ต่อไป" : lang === "ms" ? "Teruh" : "Next"} »
+            {lang === "th" ? "ต่อไป" : lang === "ms" ? "ตือรุฮ" : "Next"} »
           </button>
         </div>
       </div>

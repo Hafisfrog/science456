@@ -1,9 +1,31 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const SPEECH_LANGUAGES = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+const MALAY_GRADE_AUDIO = {
+  p4: "/audio/p4/1.1.mp3",
+  p5: "/audio/p4/1.2.mp3",
+  p6: "/audio/p4/1.3.mp3",
+};
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+  window.speechSynthesis.speak(utterance);
+}
 
 export default function SelectGrade() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const copy = useMemo(
     () => ({
@@ -13,7 +35,7 @@ export default function SelectGrade() {
         subtitle: "เพื่อเริ่มการทดลองวิทยาศาสตร์",
         back: "ย้อนกลับ",
         chipTh: "ไทย",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         chipEn: "อังกฤษ",
         cards: [
           { id: "p4", label: "ประถมศึกษาปีที่ 4", subtitle: "แรงโน้มถ่วงและตัวกลางของแสง", image: "/images/pp4.jpg", to: "/p4" },
@@ -27,7 +49,7 @@ export default function SelectGrade() {
         subtitle: "To start a science experiment",
         back: "Back",
         chipTh: "ไทย",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         chipEn: "อังกฤษ",
         cards: [
           { id: "p4", label: "Grade 4", subtitle: "Gravity and the medium of light", image: "/images/pp4.jpg", to: "/p4" },
@@ -37,16 +59,16 @@ export default function SelectGrade() {
       },
       ms: {
         // lab: "Science Lab",
-        title: "Pilih Kelah",
-        subtitle: "Untuk mula kaji sains",
-        back: "Pusing semula",
+        title: "ปีเละฮ กือละฮ",
+        subtitle: "อูโตะ มูลอ ปือจูบอแอ วิตายาซะ",
+        back: "ฮูโนกือเละ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         cards: [
-          { id: "p4", label: "Kelah 4", subtitle: "Dayo Tarekke bumi dan Perantaro Cahayo", image: "/images/pp4.jpg", to: "/p4" },
-          { id: "p5", label: "Kelah 5", subtitle: "Hubunge Kehidupe dan Bako", image: "/images/pp5.jpg", to: "/p5/life" },
-          { id: "p6", label: "Kelah 6", subtitle: "Dayo letrik dan litar letrik", image: "/images/pp6.jpg", to: "/p6" },
+          { id: "p4", label: "กือละฮ 4", subtitle: "แร็ง บูมี ตาแระ บือนอ ดืองา บือนอ เฮาะ จาห์ยอ บูเละฮ ลาลู", image: "/images/pp4.jpg", to: "/p4" },
+          { id: "p5", label: "กือละฮ 5", subtitle: "ฮูบูแง บือนอ ฮีโดะ ดืองา บากอ", image: "/images/pp5.jpg", to: "/p5/life" },
+          { id: "p6", label: "กือละฮ 6", subtitle: "แร็ง อาปีดืองา ลีตาร อาปี", image: "/images/pp6.jpg", to: "/p6" },
         ],
       },
     }),
@@ -54,6 +76,42 @@ export default function SelectGrade() {
   );
 
   const t = copy[lang];
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const playGradeAudio = useCallback(
+    (card) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_GRADE_AUDIO[card.id];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(`${card.label}. ${card.subtitle}`, SPEECH_LANGUAGES[lang] ?? "th-TH");
+    },
+    [lang, stopAudio],
+  );
 
   const bgStyle = {
     background:
@@ -89,10 +147,17 @@ export default function SelectGrade() {
 
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
           {t.cards.map((card) => (
-            <button
+            <div
               key={card.id}
-              type="button"
               onClick={() => navigate(card.to)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  navigate(card.to);
+                }
+              }}
+              role="button"
+              tabIndex={0}
               className="overflow-hidden rounded-[26px] border border-white/80 bg-white/85 text-left shadow-[0_18px_36px_rgba(23,60,110,0.14)] transition duration-200 hover:-translate-y-1.5 hover:shadow-[0_22px_44px_rgba(23,60,110,0.2)]"
             >
               <img
@@ -101,14 +166,28 @@ export default function SelectGrade() {
                 className="h-[240px] w-full object-cover bg-[#f1f4f9] md:h-[280px]"
               />
               <div className="px-5 pb-6 pt-4">
-                <div className="text-[2rem] font-extrabold leading-tight text-slate-900 md:text-[2.2rem]">
-                  {card.label}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="text-[2rem] font-extrabold leading-tight text-slate-900 md:text-[2.2rem]">
+                    {card.label}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      playGradeAudio(card);
+                    }}
+                    className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-orange-100 text-2xl text-orange-700 shadow transition hover:scale-105"
+                    aria-label={`Play ${card.label}`}
+                    title={card.label}
+                  >
+                    {"🔊"}
+                  </button>
                 </div>
                 <div className="mt-2 text-[1.3rem] leading-snug text-slate-650 md:text-[1.3rem]">
                   {card.subtitle}
                 </div>
               </div>
-            </button>
+            </div>
           ))}
         </div>
       </div>

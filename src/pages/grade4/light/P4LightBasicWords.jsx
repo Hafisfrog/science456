@@ -6,41 +6,41 @@ import { LightNavButtons } from "./LightControls";
 const VOCAB = [
   {
     th: "แสง",
-    ms: "Cahaya",
+    ms: "จาห์ยอ",
     en: "Light",
     audio: {
       th: "/audio/p4/light/basic_light_th.mp3",
-      ms: "/audio/p4/light/basic_light_ms.mp3",
+      ms: "/audio/p4/32.5.mp3",
       en: "/audio/p4/light/basic_light_en.mp3",
     },
   },
   {
     th: "แหล่งกำเนิดแสง",
-    ms: "Sumber Cahaya",
+    ms: "ตือปะ ฮาเซ จายอ",
     en: "Light Source",
     audio: {
       th: "/audio/p4/light/basic_source_th.mp3",
-      ms: "/audio/p4/light/basic_source_ms.mp3",
+      ms: "/audio/p4/32.6.mp3",
       en: "/audio/p4/light/basic_source_en.mp3",
     },
   },
   {
     th: "เคลื่อนที่ผ่านอากาศ",
-    ms: "Bergerak Melalui Udara",
+    ms: "กือเราะ ลือปะห์ อูดารอ",
     en: "Move Through Air",
     audio: {
       th: "/audio/p4/light/basic_move_th.mp3",
-      ms: "/audio/p4/light/basic_move_ms.mp3",
+      ms: "/audio/p4/32.7.mp3",
       en: "/audio/p4/light/basic_move_en.mp3",
     },
   },
   {
     th: "กั้น",
-    ms: "Menghalang",
+    ms: "ซือกะ",
     en: "Block",
     audio: {
       th: "/audio/p4/light/basic_block_th.mp3",
-      ms: "/audio/p4/light/basic_block_ms.mp3",
+      ms: "/audio/p4/32.8.mp3",
       en: "/audio/p4/light/basic_block_en.mp3",
     },
   },

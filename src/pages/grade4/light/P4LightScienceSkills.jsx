@@ -33,20 +33,27 @@ const CONTENT = {
     speak: "Listen",
   },
   ms: {
-    gradeLabel: "Tahun 4",
-    title: "Perantaro Cahayo",
-    sectionTitle: "Kemahire Proses Sains",
+    gradeLabel: "กือละฮ 4",
+    title: "บือนอ จายอ บูเละฮ ลาลู",
+    sectionTitle: "กือมาฮีแร ดาแล ปือจูบอแอ วิตายาซะ",
     skills: [
-      "Kemahire perati",
-      "Kemahire bagi ikut jenih",
-      "Kemahire teko/meramal",
-      "Kamahire beri pendapat dari maklumat",
+      "กือมาฮีแร ปือราตี",
+      "กือมาฮีแรบากีอีโกะ ยือนิฮ",
+      "กือมาฮีแร มือนือกอ",
+      "กือมาฮีแร บือรี ปาแนแง ดารี มะลูมะ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     speak: "Dengar",
   },
 };
+
+const MALAY_SKILL_AUDIO = [
+  "/audio/p4/31.2.mp3",
+  "/audio/p4/31.3.mp3",
+  "/audio/p4/31.4.mp3",
+  "/audio/p4/31.5.mp3",
+];
 
 export default function P4LightScienceSkills() {
   const navigate = useNavigate();
@@ -77,6 +84,28 @@ export default function P4LightScienceSkills() {
     }
   };
 
+  const speakSkill = (text, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_SKILL_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis || !text) return;
+      const utterance = new SpeechSynthesisUtterance(text.replace(/\n/g, " "));
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore
+    }
+  };
+
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 font-['Prompt',sans-serif]">
       <HomeButton />
@@ -98,14 +127,14 @@ export default function P4LightScienceSkills() {
             <h1 className="m-0 text-6xl font-black text-gray-900 [text-shadow:0_4px_0_rgba(255,255,255,.6)] max-[900px]:text-[42px] max-[640px]:text-[34px]">
               {t.title}
             </h1>
-            <button
+            {/* <button
               className="h-[54px] w-[54px] cursor-pointer rounded-2xl border-none bg-white/90 text-[22px] shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)] max-[640px]:h-12 max-[640px]:w-12"
               onClick={() => speakText(t.title)}
               type="button"
               title={t.speak}
             >
               {"\uD83D\uDD0A"}
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -130,7 +159,7 @@ export default function P4LightScienceSkills() {
                 </div>
                 <button
                   className="h-[46px] w-[46px] shrink-0 cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-                  onClick={() => speakText(skill)}
+                  onClick={() => speakSkill(skill, index)}
                   type="button"
                   title={t.speak}
                 >

@@ -1,11 +1,7 @@
 const DEFAULT_LANGUAGE_LABELS = {
-  th: {
-    th: "\u0e44\u0e17\u0e22",
-    en: "\u0e2d\u0e31\u0e07\u0e01\u0e24\u0e29",
-    ms: "\u0e21\u0e25\u0e32\u0e22\u0e39",
-  },
-  en: { th: "Thai", en: "English", ms: "Malay" },
-  ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+  th: {th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น"},
+  en: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
+  ms: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
 };
 
 const LANGUAGE_ORDER = ["th", "ms", "en"];

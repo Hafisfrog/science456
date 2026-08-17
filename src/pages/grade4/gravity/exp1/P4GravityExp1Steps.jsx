@@ -2,6 +2,13 @@ import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 
+const MALAY_STEP_AUDIO = [
+  "/audio/p4/9.1.mp3",
+  "/audio/p4/9.2.mp3",
+  "/audio/p4/9.3.mp3",
+  "/audio/p4/9.4.mp3",
+];
+
 export default function P4GravityExp1Steps() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -10,6 +17,7 @@ export default function P4GravityExp1Steps() {
   const NEXT_PATH = "/p4/gravity/exp1/question";
 
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
 
   const text = useMemo(() => {
     return {
@@ -25,7 +33,7 @@ export default function P4GravityExp1Steps() {
         speak: "ฟัง",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
       en: {
         topic: "Experiment 1 Effect of Gravity",
@@ -39,29 +47,38 @@ export default function P4GravityExp1Steps() {
         speak: "Listen",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
       ms: {
-        topic: "Kajiye 1 Tajuk Hasil Tarekke Bumi",
-        label: "Caro Kaji",
-        step1: "Pilih beno hok nak kaji.",
-        step2: "Letak beno atah kayu lapik.",
-        step3: "Lepah beno dan perati caro jatuh.",
-        step4: "Ubah ketinggiye lepahtu kaji semula.",
-        back: "Pusing semula",
-        next: "Teruh",
+        topic: "ปือจูบอแอ 1 ตาโยะ: ฮาเซ แร็ง ตาเระ บือนอ",
+        label: "จารอ บูวะ ปือจูบอแอ",
+        step1: "ปีเละฮ บือนอ เฮาะ เนาะ บูวะ ปือจูบอแอ",
+        step2: "ลือเตาะ บือนอ อาตะฮ กายู ลาเปะ",
+        step3: "ลือปะฮ บือนอ ลือปะหตูจารอ ปือราตียาโตะฮ",
+        step4: "ตูกา กือตีงีแย ลือปะฮ ตู บูวะ ปือจูบอแอ ซือมูลา",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         speak: "Dengar",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
     };
   }, []);
 
   const t = text[lang];
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+  };
+
   const speak = (msg) => {
     try {
+      stopAudio();
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
 
@@ -71,6 +88,34 @@ export default function P4GravityExp1Steps() {
       u.onend = () => (speakingRef.current = false);
       u.onerror = () => (speakingRef.current = false);
       window.speechSynthesis.speak(u);
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakStep = (msg, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_STEP_AUDIO[index];
+        if (!audioSrc) return;
+        if (window.speechSynthesis) {
+          window.speechSynthesis.cancel();
+        }
+        speakingRef.current = true;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
+      speak(msg);
     } catch {
       // ignore
     }
@@ -108,7 +153,7 @@ export default function P4GravityExp1Steps() {
         <div className="mt-3 overflow-hidden rounded-[20px] border border-white/20 bg-white/20 shadow-[0_22px_44px_rgba(0,0,0,.30)] backdrop-blur-[10px] min-[641px]:mt-4 min-[641px]:rounded-[26px]">
           <div className="m-3 flex gap-3 rounded-[16px] bg-white/95 p-3 shadow-[inset_0_-6px_0_rgba(0,0,0,.10)] min-[641px]:m-4 min-[641px]:gap-[18px] min-[641px]:rounded-[22px] min-[641px]:p-[18px] max-[980px]:flex-col">
             <div className="flex min-w-0 flex-[1.25] flex-col gap-3 min-[641px]:gap-[18px] min-[641px]:pr-[10px]">
-              {steps.map((s) => (
+              {steps.map((s, index) => (
                 <div
                   className="flex w-full items-center gap-3 rounded-2xl border border-[rgba(15,23,42,.10)] bg-white/90 px-3 py-[9px] shadow-[0_14px_26px_rgba(0,0,0,.12)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_rgba(0,0,0,.16)] min-[641px]:rounded-full min-[641px]:px-4 min-[641px]:py-[10px] min-[641px]:pl-[10px]"
                   key={s.n}
@@ -123,7 +168,7 @@ export default function P4GravityExp1Steps() {
                     <button
                       className="h-10 w-10 shrink-0 cursor-pointer rounded-xl bg-[#eef2ff] text-[16px] shadow-[inset_0_-4px_0_rgba(0,0,0,.10),0_14px_22px_rgba(0,0,0,.14)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[inset_0_-4px_0_rgba(0,0,0,.10),0_18px_28px_rgba(0,0,0,.18)] active:translate-y-px min-[641px]:h-[46px] min-[641px]:w-[46px] min-[641px]:rounded-2xl min-[641px]:text-[20px]"
                       type="button"
-                      onClick={() => speak(s.text)}
+                      onClick={() => speakStep(s.text, index)}
                       title={t.speak}
                     >
                       {"\uD83D\uDD0A"}

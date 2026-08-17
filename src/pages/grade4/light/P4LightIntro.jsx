@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
@@ -33,26 +33,33 @@ const UI = {
     speakDivider: "Step",
   },
   ms: {
-    title: "Kajiye 4 Tajuk Perantaro Cahayo",
-    stepLabel: "Caro kaji",
+    title: "ปือจูบอแอ 4 ตาโยะ บือนอ เฮาะ จายอ บูเละฮ ลาลู",
+    stepLabel: "จารอ บูวะ ปือจูบอแอ",
     steps: [
-      "Pilih beno hok nok kaji.",
-      "Perati hasil.",
-      "Tukar beno lain dan buwak kajiye semula.",
-      "Catat hasil kajiye.",
+      "ปีเละฮ บือนอ เนาะ บูวะ ปือจูบอแอ",
+      "ปือราตี ฮาเซ",
+      "ตูกา บือนอ ลา-เอ็ง ลือปะฮ ตู บูวะ ปือจูบอแอ ซือมูลา",
+      "ตานอ ฮาเซ ปือจูบอแอ",
     ],
-    back: "Pusing semula",
-    start: "Teruh",
+    back: "ฮูโนกือเละ",
+    start: "ตือรุฮ",
     speakPrefix: "Langkah eksperimen",
     speakDivider: "Langkah",
   },
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
+
+const MALAY_STEP_AUDIO = [
+  "/audio/p4/35.1.mp3",
+  "/audio/p4/35.2.mp3",
+  "/audio/p4/35.3.mp3",
+  "/audio/p4/35.4.mp3",
+];
 
 function StepItem({ number, text, onSpeak }) {
   return (
@@ -76,7 +83,43 @@ function StepItem({ number, text, onSpeak }) {
 export default function P4LightIntro() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
   const content = UI[language] ?? UI.th;
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const speakStep = (step, index) => {
+    try {
+      stopAudio();
+
+      if (language === "ms") {
+        const audioSrc = MALAY_STEP_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
+      const utterance = new SpeechSynthesisUtterance(
+        `${content.speakDivider} ${index + 1} ${step}`
+      );
+      utterance.lang = language === "th" ? "th-TH" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore
+    }
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-cyan-300 via-sky-500 to-sky-800 px-4 pb-28 pt-6 font-['Prompt',sans-serif] sm:px-8 sm:pb-32">
@@ -112,13 +155,7 @@ export default function P4LightIntro() {
                   key={`${index + 1}-${step}`}
                   number={index + 1}
                   text={step}
-                  onSpeak={() =>
-                    window.speechSynthesis?.speak(
-                      new SpeechSynthesisUtterance(
-                        `${content.speakDivider} ${index + 1} ${step}`
-                      )
-                    )
-                  }
+                  onSpeak={() => speakStep(step, index)}
                 />
               ))}
             </div>

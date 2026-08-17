@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import "./P4GravityExp3Action.css";
 
+const MALAY_TITLE_AUDIO = "/audio/p4/28.1.mp3";
+
 export default function P4GravityExp3Action() {
   const navigate = useNavigate();
 
@@ -15,15 +17,49 @@ export default function P4GravityExp3Action() {
 
   // speech
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
   const speak = (msg) => {
     try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(msg);
-      u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      u.lang = lang === "th" ? "th-TH" : "en-US";
       speakingRef.current = true;
       u.onend = () => (speakingRef.current = false);
       window.speechSynthesis.speak(u);
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakTitle = () => {
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+      window.speechSynthesis?.cancel();
+
+      if (lang === "ms") {
+        const audio = new Audio(MALAY_TITLE_AUDIO);
+        audioRef.current = audio;
+        speakingRef.current = true;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
+      speak(`${t.title}\n${t.choose}`);
     } catch {
       // ignore
     }
@@ -75,7 +111,7 @@ export default function P4GravityExp3Action() {
         unitN: "นิวตัน",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "ฟังทั้งหน้า",
         obj_book: "หนังสือ",
         obj_rock: "ก้อนหิน",
@@ -101,7 +137,7 @@ export default function P4GravityExp3Action() {
         unitN: "newton",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Listen to page",
         obj_book: "Book",
         obj_rock: "Rock",
@@ -112,26 +148,26 @@ export default function P4GravityExp3Action() {
         // toastReset: "Reset completed",
       },
       ms: {
-        title: "Dayo Tarekke Bumi dengan Dayo Tarekke Bule",
-        choose: "Pilih beno",
+        title: "แร็ง บูมี ตาเระ บือนอ ดืองา แร็ง บูแล ตาเระ บือนอ",
+        choose: "ปีเละฮ บือนอ",
         read: "Baca bacaan",
-        save: "Catat hasil kajiye",
-        reset: "Ule semula",
-        view: "Tengok hasil kajiye",
-        back: "Pusing semula",
-        earth: "Bumi",
-        moon: "Bule",
-        wEarth: "Beghak Atah Bumi",
-        wMoon: "Beghak Atah Bule",
-        mass: "Jisim",
+        save: "ตานอ ฮาเซ บูวะ ปือจูบอแอ",
+        reset: "ปาเตาะฮ กือเละ",
+        view: "แตเงาะ ฮาเซ ปือจูบอแอ",
+        back: "ฮูโนกือเละ",
+        earth: "บูมี",
+        moon: "บูแล",
+        wEarth: "บือระ อาตะฮ บูมี",
+        wMoon: "บือระ อาตะฮ บูแล",
+        mass: "บือระ บือนอ",
         unitN: "newton",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Dengar satu halaman",
-        obj_book: "Buku",
-        obj_rock: "Batu",
-        obj_mango: "Mangga",
+        obj_book: "ซูระ",
+        obj_rock: "บาตู",
+        obj_mango: "บูเวาะฮ ปาโอะฮ",
         selected: "Dipilih",
         savedTag: "Disimpan",
         // toastSaved: "Berjaya disimpan",
@@ -202,7 +238,7 @@ export default function P4GravityExp3Action() {
     // speak(t.toastReset);
   };
 
-  const speakAll = () => speak(`${t.title}\n${t.choose}`);
+  const speakAll = () => speakTitle();
 
   const goResult = () => {
     const itemsWithLabel = items.map((it) => ({ ...it, label: labelOf(it.id) }));
@@ -408,7 +444,7 @@ export default function P4GravityExp3Action() {
           type="button"
           onClick={goResult}
         >
-          {lang === "th" ? "ต่อไป" : lang === "ms" ? "Teruh" : "Next"} »
+          {lang === "th" ? "ต่อไป" : lang === "ms" ? "ตือรุฮ" : "Next"} »
         </button>
       </div>
 
@@ -422,4 +458,3 @@ export default function P4GravityExp3Action() {
     </div>
   );
 }
-

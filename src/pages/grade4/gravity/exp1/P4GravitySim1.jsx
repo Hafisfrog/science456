@@ -26,10 +26,10 @@ export default function P4GravitySim1() {
         speakTitle: "Listen",
       },
       ms: {
-        bubble: 'Pernoh pikir, Gano bola jatuh tanoh tok naye naik ko atah langit ?',
-        caption: "Mula kajiye",
-        back: "Pusing semula",
-        next: "Teruh",
+        bubble: 'แบซอ ปีเก เกอเดาะ, บะปอ บอลา ยาโตะฮ ตาเนาะฮ เตาะ นาแย นา-อิโกะ อาตะฮ ลางิ ?',
+        caption: "มูลา ปือจูบอแอ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         // hint: "Tekan 🔊 untuk dengar, atau ▶ untuk mula",
         speakTitle: "Dengar",
       },
@@ -38,9 +38,9 @@ export default function P4GravitySim1() {
 
   const t = copy[lang];
   const langLabels = {
-    th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
-    en: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
-    ms: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    th: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
+    en: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
+    ms: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   };
 
   const stopAudio = () => {
@@ -69,7 +69,7 @@ export default function P4GravitySim1() {
     const audioSrc = {
       th: "/audio/sim/p4_gravity_intro_th.mp3",
       en: "/audio/sim/p4_gravity_intro_en.mp3",
-      ms: "/audio/sim/p4_gravity_intro_ms.mp3",
+      ms: "/audio/p4/7.1.mp3",
     }[lang];
 
     stopAudio();

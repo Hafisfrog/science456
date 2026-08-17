@@ -3,6 +3,13 @@ import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import "./P4GravityExp1Answer.css";
 
+const MALAY_ANSWER_AUDIO = {
+  q1: "/audio/p4/12.1.mp3",
+  a1: "/audio/p4/12.2.mp3",
+  q2: "/audio/p4/12.3.mp3",
+  a2: "/audio/p4/12.4.mp3",
+};
+
 export default function P4GravityExp1Answer() {
   const navigate = useNavigate();
 
@@ -38,7 +45,7 @@ export default function P4GravityExp1Answer() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         reveal: "เฉลยคำตอบ",
         hide: "ซ่อนคำตอบ",
       },
@@ -59,30 +66,30 @@ export default function P4GravityExp1Answer() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         reveal: "Show answer",
         hide: "Hide answer",
       },
       ms: {
-        title: "Tanya Jawab",
+        title: "ซออาแล นิง อาดอ ยาวะแป",
         sub: "Baca penjelasan ini dan cuba terangkan semula dengan kata-kata sendiri.",
-        q1: "1.	Pernoh pikir kedok, gano bola jatuh ko tanoh tok naye naik ko atah langit?",
+        q1: "1.	แบซอ ปีเก เกอเดาะ, บะปอ บอลา ยาโตะฮ ตาเนาะฮ เตาะ นาแย นา-อิโกะ อาตะฮ ลางิ?",
         a1:
-          "Bumi kito ado tarek pangil dayo tarekke.",
-        q2: "2.	Jika lepah beno, beno nok geghok ko mano dan apo yang bulehwi beno jatuh ko tanoh?",
-        a2a_b: "Aghoh hok beno geghok:",
-        a2a: "Turun Ko Bumi",
-        a2b_b: "Dayo tarek buwakwi beno jatuh:",
-        a2b: "Dayo tarek Graviti Bumi",
+          "บูมี กีตอ อาดอ แร็ง ตาเระ บือนอ, แร็ง อีตู กีตอ ปาแง แร็ง บูมี ตาเระ บือนอ, บูวะวี บือนอ สมูวอ มาโซะ ซารีปูซะ บูมี, บีลอ กีตอ ลือปะฮ บอลา ดารี ตาแง กีตอ, แร็ง บูมี ตาเระ บือนอ บูวะ บอลา วี ยาโตะฮ บอเวาะฮ.เฮาะ นิง บูวะ วี บอลา ตู ยาโตะฮ ตาเนาะฮ.",
+        q2: "2.	กาลู ลือปะฮ บือนอ, บือนอ เนาะ กือเราะ โกะมานอ, ลือปะฮตู กาปอ บูวะ วี บือนอ ตู ยาโตะฮ ตาเนาะฮ?",
+        a2a_b: "ยาและ เฮาะ บือนอ กือเราะ:",
+        a2a: "ตูรง โกะ บูมี.",
+        a2b_b: "แร็ง เฮาะ บูวะ วี บือนอ ยาโตะฮ:",
+        a2b: "แร็ง บูมี ตาเระ บือนอ.",
         speakAll: "Dengar semua",
         speak: "Dengar",
-        back: "Pusing semula",
-        next: "Teruh",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
-        reveal: "Tunjuk jawapan",
-        hide: "Sorok jawape",
+        chipMs: "มลายูถิ่น",
+        reveal: "ยาวะแป",
+        hide: "ซูซุ ยาวะแป",
       },
     }),
     []
@@ -91,14 +98,27 @@ export default function P4GravityExp1Answer() {
   const t = text[lang];
 
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    speakingRef.current = false;
+  };
 
   const speak = (msg) => {
     try {
+      stopAudio();
       if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
 
       const utterance = new SpeechSynthesisUtterance(msg);
-      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
       speakingRef.current = true;
       utterance.onend = () => {
         speakingRef.current = false;
@@ -107,6 +127,30 @@ export default function P4GravityExp1Answer() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore speech errors
+    }
+  };
+
+  const speakPart = (msg, audioKey) => {
+    try {
+      if (lang === "ms") {
+        stopAudio();
+        const audioSrc = MALAY_ANSWER_AUDIO[audioKey];
+        if (!audioSrc) return;
+        speakingRef.current = true;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
+      speak(msg);
+    } catch {
+      // ignore audio errors
     }
   };
 
@@ -176,7 +220,7 @@ export default function P4GravityExp1Answer() {
                   <button
                     className="ans2-miniSpeak"
                     type="button"
-                    onClick={() => speak(t.q1)}
+                    onClick={() => speakPart(t.q1, "q1")}
                     title={t.speak}
                   >
                     🔊
@@ -189,7 +233,7 @@ export default function P4GravityExp1Answer() {
                 </div>
                 {revealedAnswers.q1 && (
                   <div className="ans2-a">
-                    <button className="ans2-answerSpeak" type="button" onClick={() => speak(t.a1)} title={t.speak}>
+                    <button className="ans2-answerSpeak" type="button" onClick={() => speakPart(t.a1, "a1")} title={t.speak}>
                       🔊
                     </button>
                     <div>{t.a1}</div>
@@ -203,7 +247,7 @@ export default function P4GravityExp1Answer() {
                   <button
                     className="ans2-miniSpeak"
                     type="button"
-                    onClick={() => speak(t.q2)}
+                    onClick={() => speakPart(t.q2, "q2")}
                     title={t.speak}
                   >
                     🔊
@@ -219,7 +263,7 @@ export default function P4GravityExp1Answer() {
                     <button
                       className="ans2-answerSpeak"
                       type="button"
-                      onClick={() => speak(`${t.a2a_b} ${t.a2a}\n${t.a2b_b} ${t.a2b}`)}
+                      onClick={() => speakPart(`${t.a2a_b} ${t.a2a}\n${t.a2b_b} ${t.a2b}`, "a2")}
                       title={t.speak}
                     >
                       🔊

@@ -16,7 +16,7 @@ const UI = {
     listenTitle: "ฟังหัวข้อด้านบน",
     listen: "ฟังสรุป",
     listenSection: "ฟังบล็อกนี้",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     sections: {
       transparent: {
         title: "ตัวกลางโปร่งใส",
@@ -61,27 +61,27 @@ const UI = {
     },
   },
   ms: {
-    pageTitle: "Kesimpule isi peting: Perantaro Cahayo",
-    next: "Teruh",
+    pageTitle: "กือซีปูแล อีซี ปือติง: บือนอ เฮาะ จายอ บูเละฮ ลาลู",
+    next: "ฮาบิฮ เปอลายาแร",
     listenTitle: "Dengar tajuk di atas",
     listen: "Dengar",
     listenSection: "Dengar blok ini",
     lang: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     sections: {
       transparent: {
-        title: "Perantaro jenih",
-        description: "Cahaya menembusi dengan baik, jadi objek di belakang dapat dilihat dengan jelas.",
-        tags: ["Gelah", "Plastik", "Cuming"],
+        title: "ปือรันตารอ ยือนิห",
+        description: "บือนอ เฮาะ จาห์ยอ บูเละฮ เตอมุฮ",
+        tags: ["กือละฮ", "ปลาสติก", "จูมิง ยือรือนิฮ"],
       },
       translucent: {
-        title: "Perantaro lutcahayo",
-        description: "Sebahagian cahaya menembusi, jadi objek di belakang kelihatan kurang jelas.",
-        tags: ["Cuming Gelak", "Ketah Minyok", "Kabuk"],
+        title: "ปือรันตารอ ลัตจาฮายอ",
+        description: "บือนอ เฮาะ จายอ บูเละฮ ลาลูซีกิ",
+        tags: ["จูมิง กือลาบ", "กือรือตะฮ มีเญาะ", "กาโบะ"],
       },
       opaque: {
-        title: "Beno Legap",
-        description: "Cahaya tidak menembusi langsung, jadi objek di belakang tidak dapat dilihat.",
-        tags: ["Pape", "Besi", "Dineng"],
+        title: "บือนอ ลีคับ",
+        description: "บือนอ เฮาะ จาห์ยอ เตาะ บูเละฮ ลาลู ลาซง",
+        tags: ["ปาแป", "บือซี", "ดีเน็ง"],
       },
     },
   },
@@ -136,7 +136,7 @@ export default function P4LightConceptSummary() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
   const ui = useMemo(() => UI[language] ?? UI.th, [language]);
-  const backLabel = language === "en" ? "Back" : language === "ms" ? "Pusing semula" : "ย้อนกลับ";
+  const backLabel = language === "en" ? "Back" : language === "ms" ? "ฮูโนกือเละ" : "ย้อนกลับ";
   const transparentExamples = [
     { src: "/images/materials/l10.png", label: ui.sections.transparent.tags[0] },
     { src: "/images/materials/l3.png", label: ui.sections.transparent.tags[1] },
@@ -265,7 +265,7 @@ export default function P4LightConceptSummary() {
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-3">
                     <SectionBadge>{ui.sections.transparent.title}</SectionBadge>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() => speakSection(ui.sections.transparent)}
                       aria-label={`${ui.listenSection}: ${ui.sections.transparent.title}`}
@@ -273,7 +273,7 @@ export default function P4LightConceptSummary() {
                       className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-sky-300 bg-white/85 text-lg text-sky-700 shadow-[0_8px_18px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-50"
                     >
                       🔊
-                    </button>
+                    </button> */}
                   </div>
                   <p className="mt-2 text-lg leading-snug text-slate-900 sm:text-xl">
                     {ui.sections.transparent.description}
@@ -313,7 +313,7 @@ export default function P4LightConceptSummary() {
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-3">
                     <SectionBadge>{ui.sections.translucent.title}</SectionBadge>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() => speakSection(ui.sections.translucent)}
                       aria-label={`${ui.listenSection}: ${ui.sections.translucent.title}`}
@@ -321,7 +321,7 @@ export default function P4LightConceptSummary() {
                       className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white/85 text-lg text-slate-700 shadow-[0_8px_18px_rgba(100,116,139,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-50"
                     >
                       🔊
-                    </button>
+                    </button> */}
                   </div>
                   <p className="mt-2 text-lg leading-snug text-slate-900 sm:text-xl">
                     {ui.sections.translucent.description}
@@ -360,7 +360,7 @@ export default function P4LightConceptSummary() {
                 <div className="relative z-10">
                   <div className="flex items-start justify-between gap-3">
                     <SectionBadge>{ui.sections.opaque.title}</SectionBadge>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() => speakSection(ui.sections.opaque)}
                       aria-label={`${ui.listenSection}: ${ui.sections.opaque.title}`}
@@ -368,7 +368,7 @@ export default function P4LightConceptSummary() {
                       className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-400 bg-white/85 text-lg text-slate-800 shadow-[0_8px_18px_rgba(71,85,105,0.18)] transition hover:-translate-y-0.5 hover:bg-slate-50"
                     >
                       🔊
-                    </button>
+                    </button> */}
                   </div>
                   <p className="mt-2 text-lg leading-snug text-slate-900 sm:text-xl">
                     {ui.sections.opaque.description}

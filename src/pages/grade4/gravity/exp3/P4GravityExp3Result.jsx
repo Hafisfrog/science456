@@ -4,6 +4,8 @@ import HomeButton from "../../../HomeButton";
 import "../exp2/P4GravityExp2Result.css";
 import "../exp1/P4GravityExp1Materials.css";
 
+const MALAY_SUMMARY_AUDIO = "/audio/p4/29.1.mp3";
+
 export default function P4GravityExp3Result() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,12 +19,18 @@ export default function P4GravityExp3Result() {
   const records = useMemo(() => state.records || [], [state.records]);
 
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
   const speak = (msg) => {
     try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(msg);
-      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
       speakingRef.current = true;
       utterance.onend = () => {
         speakingRef.current = false;
@@ -30,6 +38,34 @@ export default function P4GravityExp3Result() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore speech errors
+    }
+  };
+
+  const speakSummary = () => {
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+      window.speechSynthesis?.cancel();
+
+      if (lang === "ms") {
+        const audio = new Audio(MALAY_SUMMARY_AUDIO);
+        audioRef.current = audio;
+        speakingRef.current = true;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
+      speak(t.summary);
+    } catch {
+      // ignore audio errors
     }
   };
 
@@ -47,7 +83,7 @@ export default function P4GravityExp3Result() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "ฟังทั้งหน้า",
         book: "หนังสือ",
         rock: "ก้อนหิน",
@@ -69,7 +105,7 @@ export default function P4GravityExp3Result() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Listen to page",
         book: "Book",
         rock: "Rock",
@@ -80,26 +116,26 @@ export default function P4GravityExp3Result() {
           "Objects of the same type have the same mass, but their weight can be different when they are in places with different \ngravitational forces. The Earth has stronger gravity than the Moon, so objects weigh more on Earth than on the Moon.",
       },
       ms: {
-        title: "Hasil Kajiye",
-        colObj: "Beno",
-        colMeasured: "Tepat Kajiye",
-        t1: "Beghak Atah Bumi",
-        t2: "Beghak Atah Bule",
-        summaryTitle: "Kesimpule Hasil Kajiye",
-        back: "Pusing semula",
-        retry: "Cuba lagi",
-        next: "Teruh",
+        title: "ฮาเซ บูวะ ปือจูบอแอ",
+        colObj: "บือนอ",
+        colMeasured: "ตือปะ บูวะ ปือจูบอแอ",
+        t1: "บือระ อาตะฮ บูมี",
+        t2: "บือระ อาตะฮ บูแล",
+        summaryTitle: "กือซีปูแล ฮาเซ ปือจูบอแอ",
+        back: "ฮูโนกือเละ",
+        retry: "มูลา",
+        next: "ตือรุฮ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         speakAll: "Dengar satu halaman",
-        book: "Buku",
-        rock: "Batu",
-        mango: "Buwoh pauh",
+        book: "บูกู",
+        rock: "บาตู",
+        mango: "บูวอฮ เปาะฮ",
         unitN: "Nutan",
-        noData: "Tiada data",
+        noData: "ตาเดาะ อาเซ",
         summary:
-          "Beno hok jisim samo, jiko duk tepat hok ado dayo tarek tok samo,\n jadi beghak tok samo. Bumi ado dayo tarek lebih daripado bule, \n buwakwi beghak beno hok duk atah bumi banyok daripado bule.",
+          "บือนอ ยือนิฮ เฮาะ ซามอ จีซีม, ตาปี กาลู โดะ ตือปะ เฮาะ อาดอ แร็ง ตาเระ บือนอ เตาะ ซามอ,\n ยาดี บือระปง เตาะ ซามอ, บูมี อาดอ แร็ง ตาเระ บือนอ บาเญาะ ดารีปาดอ บูแล, \n บูวะ วี บือระ บือนอ เฮาะ โดะ อาตะฮบูมี บาเญาะ ดารีปาดอ บูแล.",
       },
     }),
     []
@@ -207,7 +243,7 @@ export default function P4GravityExp3Result() {
           <button
             className="exp2r2-summarySpeak"
             type="button"
-            onClick={() => speak(t.summary)}
+            onClick={speakSummary}
             title={t.speakAll}
           >
             🔊
