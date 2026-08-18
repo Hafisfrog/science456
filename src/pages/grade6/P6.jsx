@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+﻿import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import { useRef, useState } from "react";
 
@@ -36,19 +36,19 @@ const PAGE_TEXT = {
     title: "วิทยาศาสตร์ ป.6",
     subtitle: "เลือกหน่วยการเรียนรู้",
     back: "ย้อนกลับ",
-    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Science Grade 6",
     subtitle: "Choose a learning unit",
     back: "Back",
-    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
     title: "วิตายาซะ กือละฮ 6",
     subtitle: "ปีเละฮ ยูนิ ปือลายาแร",
     back: "ฮูโนกือเละ",
-    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 

@@ -18,7 +18,7 @@ const TEXT = {
     time: "เวลาการถู",
     back: "ย้อนกลับ",
     next: "สรุปสาระสำคัญ",
-    lang: { th: "ไทย", en: "English", ms: "Melayu" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Experiment Summary",
@@ -35,7 +35,7 @@ const TEXT = {
     time: "Rubbing time",
     back: "Back",
     next: "Key Takeaways",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    lang: { th: "Thai", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
     title: "Ringkasan Eksperimen",
@@ -52,7 +52,7 @@ const TEXT = {
     time: "Masa menggosok",
     back: "Kembali",
     next: "Ringkasan Utama",
-    lang: { th: "Thai", en: "English", ms: "Melayu" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 

@@ -103,7 +103,7 @@ export default function P6ElectricGenerationKeySummary() {
     const content = [t.title, ...t.summaryLines].join(". ");
     speakText(content, langMap[lang] || "th-TH");
   };
-  const langLabels = { th: "ไทย", ms: "มลายู",en: "อังกฤษ" };
+  const langLabels = { th: "ไทย", ms: "มลายูถิ่น",en: "อังกฤษ" };
 
   return (
     <div

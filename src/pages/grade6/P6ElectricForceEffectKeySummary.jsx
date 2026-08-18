@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-    { id: "ms", label: "มลายู" },
+    { id: "ms", label: "มลายูถิ่น" },
   { id: "en", label: "อังกฤษ" },
 
 ];
@@ -27,7 +27,7 @@ const TEXT = {
     example: "การใช้หวีพลาสติกบนผ้าแล้วทำให้เส้นผมติดหวีขึ้นมาได้",
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Key Takeaways: Electric Force",

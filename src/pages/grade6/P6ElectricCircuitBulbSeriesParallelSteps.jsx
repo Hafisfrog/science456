@@ -8,7 +8,7 @@ const TRANSLATIONS = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     sound: "เปิดเสียง",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     steps: [
       {
         title: "ออกแบบและต่อวงจร",
@@ -82,7 +82,7 @@ const TRANSLATIONS = {
 
 const LANGS = [
   { id: "th", label: "ไทย" },
-    { id: "ms", label: "มลายู" },
+    { id: "ms", label: "มลายูถิ่น" },
   { id: "en", label: "อังกฤษ" },
 ];
 

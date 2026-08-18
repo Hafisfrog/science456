@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -36,7 +36,7 @@ const TRANSLATIONS = {
     equipmentHeading: "วัสดุอุปกรณ์",
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", ms: "มลายู",en: "อังกฤษ" },
+    lang: { th: "ไทย", ms: "มลายูถิ่น",en: "อังกฤษ" },
     equipment: {
       cell: { title: "ถ่านไฟฉาย", subtitle: "4 ก้อน" },
       wire: { title: "สายไฟพร้อมหัวหนีบ", subtitle: "4 เส้น" },
@@ -87,7 +87,7 @@ const MALAY_EQUIPMENT_AUDIO = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
-   { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+   { id: "ms", speechLang: "ms-MY", label: "มลายูถิ่น" },
   { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 

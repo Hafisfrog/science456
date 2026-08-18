@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -38,7 +38,7 @@ const TEXT = {
     },
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     badge: "Electricity Around You",
@@ -84,7 +84,7 @@ const TEXT = {
 
 const LANGS = [
   { id: "th", label: "ไทย" },
-    { id: "ms", label: "มลายู" },
+    { id: "ms", label: "มลายูถิ่น" },
   { id: "en", label: "อังกฤษ" },
 
 ];

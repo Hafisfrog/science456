@@ -15,7 +15,7 @@ const CONTENT = {
     ],
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+    langLabel: { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" },
   },
   en: {
     exp: "Experiment 1",
@@ -28,7 +28,7 @@ const CONTENT = {
     ],
     back: "Back",
     next: "Next",
-    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+    langLabel: { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" },
   },
   ms: {
     exp: "ปือจูบอแอ 1",
@@ -41,7 +41,7 @@ const CONTENT = {
     ],
     back: "ฮูโนกือเละ",
     next: "ตือรุฮ",
-    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+    langLabel: { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" },
   },
 };
 

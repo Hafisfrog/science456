@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+﻿import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-   { id: "ms", label: "มลายู" },
+   { id: "ms", label: "มลายูถิ่น" },
   { id: "en", label: "อังกฤษ" },
 ];
 const MIN_RUB_SECONDS = 15;
@@ -108,7 +108,7 @@ const UI_TEXT = {
     rubTooShort: `เวลาถูยังน้อยเกินไป ต้องถูอย่างน้อย ${MIN_RUB_SECONDS} วินาที จึงจะเห็นผล`,
     timerTitle: "เวลาทดลอง",
     timerHint: `จับเวลา ${MIN_RUB_SECONDS} วินาที`,
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     backTop: "<< Back",

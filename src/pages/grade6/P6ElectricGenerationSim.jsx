@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import forceEffectSimStyles from "./P6ElectricForceEffectSimStyles";
@@ -8,7 +8,7 @@ const COMPLETED_TRIALS_KEY = "p6_electric_generation_completed_trials";
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย", speechLang: "th-TH" },
   { id: "en", label: "อังกฤษ", speechLang: "en-US" },
-  { id: "ms", label: "มลายู", speechLang: "ms-MY" },
+  { id: "ms", label: "มลายูถิ่น", speechLang: "ms-MY" },
 ];
 
 const UI_TEXT = {
@@ -360,7 +360,7 @@ export default function P6ElectricGenerationSim() {
   const isFreshStart = searchParams.get("fresh") === "1";
   const [lang, setLang] = useState("th");
   const t = UI_TEXT[lang] || UI_TEXT.th;
-  const langLabels = { th: "ไทย",ms: "มลายู" , en: "อังกฤษ" };
+  const langLabels = { th: "ไทย",ms: "มลายูถิ่น" , en: "อังกฤษ" };
   const speechLang =
     LANGUAGE_OPTIONS.find((item) => item.id === lang)?.speechLang || LANGUAGE_OPTIONS[0].speechLang;
   const from = searchParams.get("from");

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+﻿import { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -11,7 +11,7 @@ const CONTENT = {
     obj2: "ต่อวงจรไฟฟ้าอย่างง่าย และตรวจสอบวงจรเปิด-ปิดได้",
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     grade: "Grade 6",
@@ -37,7 +37,7 @@ const CONTENT = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
-  { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "ms", speechLang: "ms-MY", label: "มลายูถิ่น" },
   { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 

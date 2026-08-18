@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -11,7 +11,7 @@ const LANG = {
     exp2: "การทดลองที่ 2",
     exp2sub: "การต่อหลอดไฟฟ้าแบบอนุกรมและแบบขนาน",
     back: "ย้อนกลับ",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Simple electric circuit",
@@ -37,7 +37,7 @@ const LANG = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", voice: "th-TH", label: "ไทย" },
-  { id: "ms", voice: "ms-MY", label: "มลายู" },
+  { id: "ms", voice: "ms-MY", label: "มลายูถิ่น" },
   { id: "en", voice: "en-US", label: "อังกฤษ" },
 ];
 

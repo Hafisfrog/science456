@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp1/P4GravityExp1Answer.css";
@@ -17,7 +17,7 @@ const TEXT = {
     reveal: "เฉลยคำตอบ",
     hide: "ซ่อนคำตอบ",
     speak: "ฟัง",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Question & Answer",
@@ -32,7 +32,7 @@ const TEXT = {
     reveal: "Show answer",
     hide: "Hide answer",
     speak: "Listen",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
     title: "ซออาแล นิง อาดอ ยาวะแป",
@@ -47,7 +47,7 @@ const TEXT = {
     reveal: "บูกอ ยาวะแป",
     hide: "ซูซุ ยาวะแป",
     speak: "Dengar",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 

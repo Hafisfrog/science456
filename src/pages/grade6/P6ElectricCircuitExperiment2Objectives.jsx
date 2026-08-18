@@ -40,7 +40,7 @@ const CONTENT = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-  { id: "ms", label: "มลายู" },
+  { id: "ms", label: "มลายูถิ่น" },
   { id: "en", label: "อังกฤษ" },
 ];
 

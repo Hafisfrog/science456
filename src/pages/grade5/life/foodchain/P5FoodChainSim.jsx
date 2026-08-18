@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
@@ -44,18 +44,18 @@ const ANIMAL_IMAGES = {
 };
 
 const ANIMAL_LABELS = {
-  "ต้นข้าว": { th: "ต้นข้าว", en: "Rice Plant", ms: "Padi" },
-  "หญ้า": { th: "หญ้า", en: "Grass", ms: "Ruput" },
-  "พืชน้ำ": { th: "พืชน้ำ", en: "Water Plant", ms: "Tumbuhe Air" },
-  "ตั๊กแตน": { th: "ตั๊กแตน", en: "Grasshopper", ms: "Belale" },
-  "หนูนา": { th: "หนูนา", en: "Field Mouse", ms: "Tikuh Bene" },
-  "หนอน": { th: "หนอน", en: "Caterpillar", ms: "Ulak" },
-  "ลูกน้ำ": { th: "ลูกน้ำ", en: "Mosquito Larva", ms: "Anok Jetik" },
-  "ปลา": { th: "ปลา", en: "Fish", ms: "Ike Kecik" },
-  "กบ": { th: "กบ", en: "Frog", ms: "Katok" },
-  "นก": { th: "นก", en: "Bird", ms: "Burung" },
-  "งู": { th: "งู", en: "Snake", ms: "Ula" },
-  "เหยี่ยว": { th: "เหยี่ยว", en: "Hawk", ms: "Helang" }
+  "ต้นข้าว": { th: "ต้นข้าว", en: "Rice Plant", ms: "ปาดี" },
+  "หญ้า": { th: "หญ้า", en: "Grass", ms: "รูปุ" },
+  "พืชน้ำ": { th: "พืชน้ำ", en: "Water Plant", ms: "๖ูมูแฮ อาย" },
+  "ตั๊กแตน": { th: "ตั๊กแตน", en: "Grasshopper", ms: "บือลาแล" },
+  "หนูนา": { th: "หนูนา", en: "Field Mouse", ms: "ตีกุฮ บือแน" },
+  "หนอน": { th: "หนอน", en: "Caterpillar", ms: "อูละ" },
+  "ลูกน้ำ": { th: "ลูกน้ำ", en: "Mosquito Larva", ms: "เกาะกะ" },
+  "ปลา": { th: "ปลา", en: "Fish", ms: "อีแก" },
+  "กบ": { th: "กบ", en: "Frog", ms: "กาเตาะ" },
+  "นก": { th: "นก", en: "Bird", ms: "บูรง" },
+  "งู": { th: "งู", en: "Snake", ms: "อูลา" },
+  "เหยี่ยว": { th: "เหยี่ยว", en: "Hawk", ms: "บูรง แล" }
 };
 
 const UI = {
@@ -93,16 +93,16 @@ const UI = {
   },
   ms: {
     badge: "Halaman Jawapan Rantai Makanan",
-    title: "Jawape",
-    score: "Markah Penuh",
-    chain: "Soale ",
-    correct: "Betul",
-    wrong: "Salah",
-    studentAnswer: "Jawape Soale  ",
-    correctAnswer: "Jawape Hok Betul",
-    noAnswer: "Belum ada jawapan",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ยาวะแป",
+    score: "มัรกะฮ ปือนุฮ",
+    chain: "ซออาแล ",
+    correct: "บือตุล",
+    wrong: "ซาเลาะฮ",
+    studentAnswer: "ยาวะแป ซออาแล  ",
+    correctAnswer: "ยาวะแป ยัง บือตุฮ",
+    noAnswer: "บือลุม อาดอ ยาวะแป",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
     listen: "Dengar",
     studentAnswerSpeech: "Jawapan kami",
     correctAnswerSpeech: "Jawapan betul",
@@ -110,6 +110,7 @@ const UI = {
 };
 
 const LANGUAGE_LABELS = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
+const MALAY_SIM_AUDIO = "/audio/p5/11.1.mp3";
 
 const getAnimalLabel = (name, language) =>
   ANIMAL_LABELS[name]?.[language] ?? ANIMAL_LABELS[name]?.th ?? name;
@@ -123,13 +124,14 @@ const getSpeechLang = (language) => {
 export default function P5FoodChainSim() {
   const navigate = useNavigate();
   const location = useLocation();
+  const audioRef = useRef(null);
   const [language, setLanguage] = useState("th");
   const ui = UI[language] ?? UI.th;
   const studentChains = location.state?.chains || [];
   const lockedSlotSet = new Set(location.state?.lockedSlots || []);
   const hasLockedSlots = lockedSlotSet.size > 0;
   const rowScoreLabel =
-    language === "en" ? "Score" : language === "ms" ? "Markah" : "คะแนน";
+    language === "en" ? "Score" : language === "ms" ? "มัรกะฮ" : "คะแนน";
   const totalPossibleScore = ANSWERS.length * SCORE_PER_ROW;
   const rowScores = ANSWERS.map((answer, index) =>
     getRowScore(answer, studentChains[index] || [], index, lockedSlotSet, hasLockedSlots)
@@ -140,8 +142,30 @@ export default function P5FoodChainSim() {
   const getStudentAnswerLabel = (index) =>
     language === "th" ? `คำตอบข้อที่ ${index + 1}` : ui.studentAnswer;
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speakChainSummary = (index, studentAnswer, correctAnswer, correct) => {
-    if (typeof window === "undefined" || !window.speechSynthesis) return;
+    if (typeof window === "undefined") return;
+
+    if (language === "ms") {
+      stopAudio();
+      const audio = new Audio(MALAY_SIM_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
+    if (!window.speechSynthesis) return;
 
     const studentText =
       studentAnswer.length > 0
@@ -153,14 +177,18 @@ export default function P5FoodChainSim() {
       language === "en"
         ? `Chain ${index + 1}. ${correct ? "Correct." : "Incorrect."} ${ui.studentAnswerSpeech}: ${studentText}. ${ui.correctAnswerSpeech}: ${correctText}.`
         : language === "ms"
-          ? `Rantaian ${index + 1}. ${correct ? "Betul." : "Salah."} ${ui.studentAnswerSpeech}: ${studentText}. ${ui.correctAnswerSpeech}: ${correctText}.`
+          ? `Rantaian ${index + 1}. ${correct ? "บือตุล." : "ซาเลาะฮ."} ${ui.studentAnswerSpeech}: ${studentText}. ${ui.correctAnswerSpeech}: ${correctText}.`
           : `ข้อที่ ${index + 1} ${correct ? "ถูกต้อง" : "ผิด"} ${ui.studentAnswerSpeech} ${studentText} ${ui.correctAnswerSpeech} ${correctText}`;
 
-    window.speechSynthesis.cancel();
+    stopAudio();
     const utterance = new SpeechSynthesisUtterance(speechText);
     utterance.lang = getSpeechLang(language);
     window.speechSynthesis.speak(utterance);
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">

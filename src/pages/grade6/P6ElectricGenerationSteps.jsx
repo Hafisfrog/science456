@@ -20,7 +20,7 @@ const TEXT = {
     backToMaterials: "กลับหน้าวัสดุอุปกรณ์",
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+    langLabel: { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" },
   },
   en: {
     title: "Experiment 1: Electric Force Generation",
@@ -39,7 +39,7 @@ const TEXT = {
     backToMaterials: "Back to materials and equipment",
     back: "Back",
     next: "Next",
-    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+    langLabel: { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" },
   },
   ms: {
     title: "ปือจูบอแอ 1 ตาโยะ; กือยาดีแยแร็ง อาปี",
@@ -58,7 +58,7 @@ const TEXT = {
     backToMaterials: "Kembali ke bahan dan peralatan",
     back: "ฮูโนกือเละ",
     next: "ตือรุฮ",
-    langLabel: { th: "ไทย", ms: "มลายู", en: "อังกฤษ" },
+    langLabel: { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" },
   },
 };
 

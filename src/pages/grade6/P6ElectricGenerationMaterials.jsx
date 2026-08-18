@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -121,7 +121,7 @@ export default function P6ElectricGenerationMaterials() {
   const t = LANG[lang];
   const langLabels = {
     th: "ไทย",
-    ms: "มลายู",
+    ms: "มลายูถิ่น",
     en: "อังกฤษ",
   };
 

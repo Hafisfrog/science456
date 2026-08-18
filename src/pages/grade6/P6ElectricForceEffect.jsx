@@ -11,7 +11,7 @@ const LANG = {
     tissue: "กระดาษเยื่อ",
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Experiment 2 Effects of Electric Force",
@@ -37,7 +37,7 @@ const LANG = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
-  { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "ms", speechLang: "ms-MY", label: "มลายูถิ่น" },
   { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
@@ -87,6 +87,8 @@ const VOICE_LANG = {
   ms: "ms-MY",
 };
 
+const MALAY_INTRO_AUDIO = "/audio/p5/9.1.mp3";
+
 const UI_COPY = {
   th: {
     languages: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
@@ -172,10 +174,10 @@ const UI_COPY = {
   },
   ms: {
     languages: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
-    activityBadge: "Aktiviti susun rantai makanan",
+    activityBadge: "ซออาลัน ซูซง ",
     pageTitle: "บูวะ ราตา มาแกแน ดืองา จารอ ซูซง, จารอ มาแก เฮาะ บือนอ ฮีโดะ.  ",
     pageDescription:
-      "Klik slot yang masih kosong untuk memilih hidupan yang betul, kemudian semak jawapan pada langkah seterusnya.",
+      " ซออาแล อีซี ยาวะแป อีซี ยาวะแป ซออาแล ชอง ตือแก อูโตะ ปีเละฮ ตือแก อูโตะ ปีเละฮ ซูเดาะฮ อีซี 0/2 ชอง   ",
     legendPrompt: "Slot kelabu = petunjuk",
     legendFill: "Slot krim = isi jawapan",
     legendReveal: "Butang jawapan = tunjuk seluruh baris",
@@ -183,33 +185,33 @@ const UI_COPY = {
     progressDesc: "Bilangan slot yang telah diisi daripada semua slot jawapan",
     clueTitle: "Petunjuk awal",
     clueDesc: "Bilangan slot yang dibuka oleh sistem",
-    randomQuestion: "Pilih Soale Baru",
-    chainLabel: "Soale",
+    randomQuestion: "ปีเละฮ ซออาแล บารู",
+    chainLabel: "ซออาแล",
     slotLabel: "Slot",
-    slotPrompt: "Soale",
-    slotSelected: "Sudoh Pilih",
-    slotFill: "Isi Jawape",
+    slotPrompt: "ซออาแล",
+    slotSelected: "ซูดอฮ ปีเละฮ",
+    slotFill: "อีซี ยาวะแป",
     slotWrong: "Salah",
-    clickToChoose: "Teke Utuk Pilih",
-    rowComplete: "Sudah Isi Semuwo",
-    rowFilled: (filled, total) => `Isi Doh  ${filled}/${total} Petok`,
-    revealRow: "Jawape ",
+    clickToChoose: "ตือแก ปีเละฮ",
+    rowComplete: "ซูดอฮ ปีเละฮ",
+    rowFilled: (filled, total) => `เดาะฮ ปีเละฮ  ${filled}/${total} `,
+    revealRow: "ยาวะแป",
     listenIntro: "Dengar bahagian ini",
     listenRow: "Dengar baris ini",
     rowSpeechLabel: "Baris",
     emptySlotSpeech: "kosong",
     answerCorrectAlready: "Jawape Sudoh Betul",
     correctAnswerLabel: "Jawapan yang betul",
-    back: "Pusing semula",
-    viewAllAnswers: "Jawape Semuwo",
-    chooseLivingThing: "Pilih hidupan",
-    fillAnswerFor: (chain, slot) => `Isi jawapan dalam ${chain} ${slot}`,
+    back: "ฮูโน กือเละ",
+    viewAllAnswers: "ยาวะแป ดีปีเละฮ",
+    chooseLivingThing: "ปีเละฮ ฮีโดะแป",
+    fillAnswerFor: (chain, slot) => `อีซี ยาวะแป ${chain} ${slot}`,
     chooseDescription:
-      "Tekan kad di bawah untuk mengisi jawapan, atau pilih butang padam untuk mengosongkan slot yang dipilih.",
-    close: "Tutup",
-    clearAnswer: "Padam jawapan",
-    clearSlot: "Kosongkan slot dipilih",
-    fillAllAlert: "Sila isi semua slot dahulu",
+      "ตือแก ดีบอวอฮ อูโตะ ดีปีเละฮ",
+    close: "ตูตบ",
+    clearAnswer: "ปาดัม ยาวะแป",
+    clearSlot: "กอซอง ดีปีเละฮ",
+    fillAllAlert: "ซีลอ ยาวะแป ซือมูวอ",
   },
 };
 
@@ -220,22 +222,23 @@ const LANGUAGE_BUTTON_LABELS = {
 };
 
 const ANIMAL_TRANSLATIONS = {
-  "/images/p5/kaw.png": { en: "Rice Plant", ms: "Padi" },
-  "/images/p5/ya.png": { en: "Grass", ms: "Ruput" },
-  "/images/p5/lunamm.png": { en: "Aquatic Plant", ms: "Tumbuhe Air" },
-  "/images/p5/tag.png": { en: "Grasshopper", ms: "Belale" },
-  "/images/p5/n.png": { en: "Field Rat", ms: "Tikuh Bene" },
-  "/images/p5/non.png": { en: "Caterpillar", ms: "Ulak" },
-  "/images/p5/lunam.png": { en: "Larva", ms: "Anok Jetik" },
-  "/images/p5/pla.png": { en: "Fish", ms: "Ike Kecik" },
-  "/images/p5/gop.png": { en: "Frog", ms: "Katok" },
-  "/images/p5/nog.png": { en: "Bird", ms: "Burung" },
-  "/images/p5/snack.png": { en: "Snake", ms: "Ula" },
-  "/images/p5/y.png": { en: "Hawk", ms: "Helang" },
+  "/images/p5/kaw.png": { en: "Rice Plant", ms: "ปาดี" },
+  "/images/p5/ya.png": { en: "Grass", ms: "รูปุ" },
+  "/images/p5/lunamm.png": { en: "Aquatic Plant", ms: "ตูมูแฮ อาย" },
+  "/images/p5/tag.png": { en: "Grasshopper", ms: "บือลาแล" },
+  "/images/p5/n.png": { en: "Field Rat", ms: "ตีกุฮ บือแน" },
+  "/images/p5/non.png": { en: "Caterpillar", ms: "อูละ" },
+  "/images/p5/lunam.png": { en: "Larva", ms: "เกาะกะ" },
+  "/images/p5/pla.png": { en: "Fish", ms: "อีแก" },
+  "/images/p5/gop.png": { en: "Frog", ms: "กาเตาะ" },
+  "/images/p5/nog.png": { en: "Bird", ms: "บูรง" },
+  "/images/p5/snack.png": { en: "Snake", ms: "อูลา" },
+  "/images/p5/y.png": { en: "Hawk", ms: "บูรง แล" },
 };
 
 export default function P5FoodChainSelect() {
   const navigate = useNavigate();
+  const audioRef = useRef(null);
   const animals = [
     { name: "ต้นข้าว", img: "/images/p5/kaw.png", color: "from-amber-300 to-yellow-400" },
     { name: "หญ้า", img: "/images/p5/ya.png", color: "from-lime-300 to-green-400" },
@@ -336,13 +339,25 @@ export default function P5FoodChainSelect() {
   );
   const _totalPossibleScore = ANSWER_CHAINS.length * SCORE_PER_ROW;
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speakText = (text) => {
     try {
       if (typeof window === "undefined" || !text || !window.speechSynthesis) {
         return;
       }
 
-      window.speechSynthesis.cancel();
+      stopAudio();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = VOICE_LANG[activeLang] ?? VOICE_LANG.th;
       utterance.rate = 0.95;
@@ -368,8 +383,20 @@ export default function P5FoodChainSelect() {
   };
 
   const handleSpeakIntro = () => {
+    if (activeLang === "ms") {
+      stopAudio();
+      const audio = new Audio(MALAY_INTRO_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     speakText([ui.activityBadge, ui.pageTitle, ui.pageDescription].join(". "));
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   const clearRevealForRow = (rowIndexToClear) => {
     setRowRevealResults((prev) =>

@@ -154,11 +154,11 @@ const MALAY_SCENE_AUDIO = {
   worm: "/audio/p5/6.6.mp3",
   snake: "/audio/p5/6.7.mp3",
   grasshopper: "/audio/p5/6.8.mp3",
-  fish: "/audio/p5/6.14.mp3",
+  fish: "/audio/p5/6.9.mp3",
   larva: "/audio/p5/6.10.mp3",
   grass: "/audio/p5/6.11.mp3",
-  "water-plant": "/audio/p5/6.12.mp3",
-  frog: "/audio/p5/6.13.mp3",
+  'water-plant': "/audio/p5/6.12.mp3",
+  frog: "/audio/p5/6.14.mp3",
 };
 
 const SCENE_ITEMS = [

@@ -13,7 +13,7 @@ export default function SelectGrade() {
         subtitle: "เพื่อเริ่มการทดลองวิทยาศาสตร์",
         back: "ย้อนกลับ",
         chipTh: "ไทย",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         chipEn: "อังกฤษ",
         cards: [
           { id: "p4", label: "ประถมศึกษาปีที่ 4", subtitle: "แรงโน้มถ่วงและตัวกลางของแสง", image: "/images/pp4.jpg", to: "/p4" },

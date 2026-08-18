@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -35,7 +35,7 @@ const TRANSLATIONS = {
     next: "ต่อไป",
     sound: "เปิดเสียง",
     speech: "th-TH",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     equipment: {
       cell: { title: "ถ่านไฟฉาย", subtitle: "4 ก้อน" },
       wire: { title: "สายไฟพร้อมหัวหนีบ", subtitle: "4 เส้น" },
@@ -77,7 +77,7 @@ const TRANSLATIONS = {
 
 const LANGS = [
   { id: "th", label: "ไทย" },
-  { id: "ms", label: "มลายู" },
+  { id: "ms", label: "มลายูถิ่น" },
     { id: "en", label: "อังกฤษ" },
 ];
 

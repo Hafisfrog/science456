@@ -13,7 +13,7 @@ const TEXT = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     listen: "ฟังข้อความ",
-    lang: { th: "ไทย",  ms: "มลายู",en: "อังกฤษ", },
+    lang: { th: "ไทย",  ms: "มลายูถิ่น",en: "อังกฤษ", },
   },
   en: {
     title: "Experiment Summary",
@@ -25,7 +25,7 @@ const TEXT = {
     back: "Back",
     next: "Next",
     listen: "Read screen",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
     title: "กือซีปูแลฮาเซ ปือจูบอแอ",
@@ -37,7 +37,7 @@ const TEXT = {
     back: "ฮูโนกือเละ",
     next: "ตือรุฮ",
     listen: "Baca skrin",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 

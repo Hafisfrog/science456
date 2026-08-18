@@ -4,7 +4,7 @@ import HomeButton from "../HomeButton";
 
 const LANGUAGE_OPTIONS = [
   { id: "th", speechLang: "th-TH", label: "ไทย" },
-  { id: "ms", speechLang: "ms-MY", label: "มลายู" },
+  { id: "ms", speechLang: "ms-MY", label: "มลายูถิ่น" },
   { id: "en", speechLang: "en-US", label: "อังกฤษ" },
 ];
 
@@ -21,7 +21,7 @@ const CONTENT = {
     ],
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     heading: "Experiment Steps",

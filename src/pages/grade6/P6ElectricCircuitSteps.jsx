@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+﻿import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 
@@ -9,7 +9,7 @@ const TEXT = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     speech: "th-TH",
-    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    lang: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     steps: [
       "ออกแบบและต่อวงจร: ต่อถ่านไฟฉาย 2 ก้อนแบบอนุกรม แล้วเชื่อมกับหลอดไฟและสวิตช์ให้ครบวงจร",
       "ทดลองและสังเกต: เปิดสวิตช์ สังเกตความสว่างของหลอดไฟ และเปรียบเทียบผล",
@@ -49,7 +49,7 @@ const TEXT = {
 
 const LANGUAGE_OPTIONS = [
   { id: "th", label: "ไทย" },
-   { id: "ms", label: "มลายู" },
+   { id: "ms", label: "มลายูถิ่น" },
   { id: "en", label: "อังกฤษ" },
 ];
 

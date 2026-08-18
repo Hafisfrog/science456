@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+﻿import { useCallback, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../HomeButton";
 import "../grade4/gravity/exp2/P4GravityExp2Vocab.css";
@@ -23,7 +23,7 @@ const UI_TEXT = {
   subtitle: "เรื่อง วงจรไฟฟ้าใกล้ตัว",
   headers: {
     th: "ภาษาไทย",
-    ms: "ภาษามลายู",
+    ms: "ภาษามลายูถิ่น",
     en: "ภาษาอังกฤษ",
     voice: "ฟังเสียง",
   },
