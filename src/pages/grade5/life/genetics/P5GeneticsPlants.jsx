@@ -120,27 +120,27 @@ const TEXT = {
     next: "Next",
   },
   ms: {
-    title: "Caro Pinoh Bako Nok Tumbuhe",
-    parent: "Gen Ibu Bapak",
-    child: "Anok",
-    sideText: "Gen kawal tingi hok tumbuhe ado 2 alil yaitu:",
-    badgeA: "A Gati gen alil tingi hok tumbuhe",
-    badgeB: "a Gati gen alil renoh hok tumbuhe",
-    sideNote: "Pilih AA, Aa atau aa beri setiyap anok tumbuhe lalu teke Jawape",
-    reset: "Semula",
+    title: "จารอ ปีเนาะฮ บากอ ยือนิฮ ตูมูแฮ ",
+    parent: "ยีน อีบู บาเปาะ ",
+    child: "ยีน อาเนาะ ",
+    sideText: "ยีน กาวา ตีงีแย เฮาะ ตูมูแฮ อาดอ 2 อาลิล, ยาอีตู; ",
+    badgeA: "A: กาตี ยีน อาลิล ตีงี ยือนิฮ ตูมูแฮ ",
+    badgeB: "a: กาตี ยีน อาลิล รือเนาะฮ ยือนิฮ ตูมูแฮ ",
+    sideNote: "ปีเละฮ AA, Aa อาตาวอ aa บูวี ซือตียะ อาเนาะ ตูมู แฮ ลือปะฮ ตู ตือแก ยาวะแป ",
+    reset: "ซือมูลา",
     resetAria: "Set semula jawapan anak",
-    reveal: "Jawape",
+    reveal: "ยาวะแป",
     revealAria: "Tunjukkan jawapan anak",
     tallAlt: "tumbuhan tinggi",
     shortAlt: "tumbuhan rendah",
     childAlt: "anak tumbuhan",
     optionAlt: "pilihan genotip anak tumbuhan",
-    correct: "Betul",
-    incorrect: "Salah",
-    correctAnswer: "Jawapan",
+    correct: "บือตุล",
+    incorrect: "ซาเลาะฮ",
+    correctAnswer: "ยาวะแป",
     noAnswer: "Belum pilih",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -250,7 +250,7 @@ export default function P5GeneticsPlants() {
     : [];
 
   const t = TEXT[lang];
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
   const [lineA, lineB] = t.sideText.split("\n");
   const hasSelections = selectedGenotypes.some(Boolean);
   const hasAllSelections = selectedGenotypes.every(Boolean);

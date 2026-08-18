@@ -1,4 +1,5 @@
-﻿import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
@@ -33,19 +34,19 @@ const TEXT = {
     select: "Next",
   },
   ms: {
-    title: "Kesimpule Hasil Kajiye",
-    p1: "Dari kajiye, kito amek bapak kucing dan ibu kucing hok warno bulu tak samo mari kawen.",
-    father: "Bapak Kucing ",
-    fatherDesc: "Bulu Warno Hite",
-    mother: "Ibu Kucing ",
-    motherDesc: "Bulu Warno Putih",
-    p2: "Bilo beranok tubek, terlihat bahawo",
-    result: "Anok kucing semuwo ado bulu warno hite.",
+    title: "กือซีปูแล ฮาเซ ปือจูบอแอ ",
+    p1: "ดารี ปือจูบอแอ, กีตอ อาเมะ บาเปาะ กูจิง ดืองา อีบู กูจิง เฮาะ จายอ บูลู เตาะ ซามอ มารี กาเว็ง. ",
+    father: " - บาเปาะ กูจิง บูลู จายอ ฮีแต.  ",
+    mother: "- อีบู กูจิง บูลู จายอ ปูเตะฮ.  ",
+    p2: "บีลอ บือราเนาะ ตูเบะ",
+    result: " ซือมอ อาเนาะ กูจิง บูลู ญอ จาฮายอ ฮีแต. ",
     listen: "Dengar rumusan",
-    back: "Pusing semula",
-    select: "Teruh",
+    back: "ฮูโน กือเละ",
+    select: "ตือรุฮ",
   },
 };
+
+const MALAY_SUMMARY_AUDIO = "/audio/p5/18.1.mp3";
 
 const LANG_TO_VOICE = {
   th: "th-TH",
@@ -65,14 +66,40 @@ function speakText(text, lang) {
 export default function P5GeneticsAnimalsSummary() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
+  const audioRef = useRef(null);
   const t = TEXT[lang];
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speakSummary = () => {
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio(MALAY_SUMMARY_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     speakText(
       [t.p1, `${t.father} ${t.fatherDesc}`, `${t.mother} ${t.motherDesc}`, t.p2, t.result].join(". "),
       lang
     );
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>

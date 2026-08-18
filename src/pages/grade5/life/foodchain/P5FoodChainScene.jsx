@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
@@ -118,7 +118,7 @@ const UI_COPY = {
     languages: {
       th: "ไทย",
       en: "อังกฤษ",
-      ms: "มลายู",
+      ms: "มลายูถิ่น",
     },
   },
   en: {
@@ -127,22 +127,38 @@ const UI_COPY = {
     back: "Back",
     next: "Next",
     languages: {
-      th: "Thai",
-      en: "English",
-      ms: "Malay",
+      th: "ไทย",
+      en: "อังกฤษ",
+      ms: "มลายูถิ่น",
     },
   },
   ms: {
     listenAll: "Dengar semua",
     listenOne: "Main audio",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     languages: {
-      th: "Thai",
-      en: "English",
-      ms: "Melayu",
+      th: "ไทย",
+      en: "อังกฤษ",
+      ms: "มลายูถิ่น",
     },
   },
+};
+
+const MALAY_SCENE_AUDIO = {
+  hint: "/audio/p5/6.1.mp3",
+  hawk: "/audio/p5/6.2.mp3",
+  rat: "/audio/p5/6.3.mp3",
+  bird: "/audio/p5/6.4.mp3",
+  rice: "/audio/p5/6.5.mp3",
+  worm: "/audio/p5/6.6.mp3",
+  snake: "/audio/p5/6.7.mp3",
+  grasshopper: "/audio/p5/6.8.mp3",
+  fish: "/audio/p5/6.14.mp3",
+  larva: "/audio/p5/6.10.mp3",
+  grass: "/audio/p5/6.11.mp3",
+  "water-plant": "/audio/p5/6.12.mp3",
+  frog: "/audio/p5/6.13.mp3",
 };
 
 const SCENE_ITEMS = [
@@ -153,7 +169,7 @@ const SCENE_ITEMS = [
     label: {
       th: "เหยี่ยว / ผู้บริโภค",
       en: "Hawk / Consumer",
-      ms: "Helang / Oghe Guno",
+      ms: "บูรง แล อียอละห์ ออแร กูนอ ",
     },
     containerClass: "top-[7%] left-[14%]",
     imageClass: "w-28 sm:w-32 lg:w-36",
@@ -168,7 +184,7 @@ const SCENE_ITEMS = [
     label: {
       th: "นก / ผู้บริโภค",
       en: "Bird / Consumer",
-      ms: "Burung / Oghe Guno",
+      ms: " บูรง อียอละห์ ออแร กูนอ ",
     },
     containerClass: "top-[20%] right-[7%]",
     labelRowClassByLang: {
@@ -186,7 +202,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ต้นข้าว / ผู้ผลิต",
       en: "Rice Plant / Producer",
-      ms: "Padi / Oghe Buwak",
+      ms: "ปาดี อียอละห์ ออแร บูวะ",
     },
     containerClass: "top-[33%] left-[2%]",
     labelRowClassByLang: {
@@ -204,7 +220,7 @@ const SCENE_ITEMS = [
     label: {
       th: "หนอน / ผู้บริโภค",
       en: "Caterpillar / Consumer",
-      ms: "Ulak / Oghe Guno",
+      ms: "อูละ อียอละห์ ออแร กูนอ    ",
     },
     containerClass: "top-[45%] left-[23%]",
     imageClass: "w-[4.6rem] sm:w-[5.4rem] lg:w-24",
@@ -219,7 +235,7 @@ const SCENE_ITEMS = [
     label: {
       th: "หนูนา / ผู้บริโภค",
       en: "Field Rat / Consumer",
-      ms: "Tikuh Bene / Oghe Guno",
+      ms: "  ตีกุฮ บือแน อียอละห์ ออแร กูนอ",
     },
     containerClass: "top-[29%] left-[47%]",
     imageClass: "w-20 sm:w-24 lg:w-28",
@@ -233,7 +249,7 @@ const SCENE_ITEMS = [
     label: {
       th: "งู / ผู้บริโภค",
       en: "Snake / Consumer",
-      ms: "Ula / Oghe Guno",
+      ms: "อูลา  อียอละห์ ออแร กูนอ ",
     },
     containerClass: "top-[50%] left-[38%]",
     imageClass: "w-28 sm:w-32 lg:w-36",
@@ -248,7 +264,7 @@ const SCENE_ITEMS = [
     label: {
       th: "หญ้า / ผู้ผลิต",
       en: "Grass / Producer",
-      ms: "Ruput / Oghe Buwak",
+      ms: " รูปุ อียอละห์ ออแร บูวะ",
     },
     containerClass: "top-[81%] left-[28%]",
     imageClass: "w-[5.4rem] sm:w-24 lg:w-28",
@@ -262,7 +278,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ตั๊กแตน / ผู้บริโภค",
       en: "Grasshopper / Consumer",
-      ms: "Belale / Oghe Guno",
+      ms: " บือลาแล อียอละห์ ออแร กูนอ",
     },
     containerClass: "top-[42%] left-[67%]",
     labelRowClassByLang: {
@@ -281,7 +297,7 @@ const SCENE_ITEMS = [
     label: {
       th: "กบ / ผู้บริโภค",
       en: "Frog / Consumer",
-      ms: "katok / Oghe Guno",
+      ms: "กาเตาะ อียอละห์ ออแรกูนอ ",
     },
     containerClass: "top-[79%] left-[60%]",
     labelBlockClass: "-translate-y-1 sm:-translate-y-2",
@@ -301,7 +317,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ลูกน้ำ / ผู้บริโภค",
       en: "Larva / Consumer",
-      ms: "Anok Jetik / Oghe Guno",
+      ms: "เกาะกะ อียอละห์ ออแร กูนอ",
     },
     containerClass: "top-[64%] left-[66%]",
     labelRowClassByLang: {
@@ -320,7 +336,7 @@ const SCENE_ITEMS = [
     label: {
       th: "พืชน้ำ / ผู้ผลิต",
       en: "Water Plant / Producer",
-      ms: "Tumbuhe Air / Oghe Buwak",
+      ms: " ตูมูแฮ อา-เอ อียอละห์ ออแร บูวะ",
     },
     containerClass: "top-[74%] left-[46%]",
     labelBlockClass: "-translate-y-1 sm:-translate-y-2",
@@ -339,7 +355,7 @@ const SCENE_ITEMS = [
     label: {
       th: "ปลา / ผู้บริโภค",
       en: "Fish / Consumer",
-      ms: "Ike / Oghe Guno",
+      ms: "อีแก อียอละห์ ออแรกูนอ",
     },
     containerClass: "top-[53%] right-[5%]",
     labelBlockClass: "-translate-y-2 sm:-translate-y-3",
@@ -390,7 +406,7 @@ function SceneItem({
 
         <button
           type="button"
-          onClick={() => onSpeak(label)}
+          onClick={() => onSpeak(label, item)}
           aria-label={`${voiceLabel}: ${label}`}
           className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/80 bg-[#eaf3ff]/95 text-xs text-[#2563eb] shadow-[0_6px_14px_rgba(59,130,246,0.18)] transition hover:bg-[#dcecff] sm:h-8 sm:w-8 sm:text-sm"
         >
@@ -404,26 +420,48 @@ function SceneItem({
 export default function P5FoodChainScene() {
   const navigate = useNavigate();
   const [activeLang, setActiveLang] = useState("th");
+  const audioRef = useRef(null);
 
   const ui = UI_COPY[activeLang] ?? UI_COPY.th;
   const sceneHintText =
     activeLang === "en"
       ? "Observe the living things in the food chain."
       : activeLang === "ms"
-        ? "Perati tepat duduk hok beno hidup dale ghata mekene"
+        ? "ปือราตี ตือปะ ดูโดะ เฮาะ บือนอ ฮีโดะ ดาแล ราตา มาแกแน "
         : "สังเกตตำแหน่งของสิ่งมีชีวิตในห่วงโซ่อาหาร";
 
-  const speakText = (text) => {
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (isSpeechSupported()) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const speakText = (text, item) => {
     try {
+      stopAudio();
+
+      const audioSrc = activeLang === "ms" ? MALAY_SCENE_AUDIO[item?.key] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       speakWithBestVoice(text, activeLang);
     } catch {
       // ignore speech issues on unsupported browsers
     }
   };
 
-  const speakAll = () => {
-    speakText(SCENE_ITEMS.map((item) => item.label[activeLang] ?? item.label.th).join(". "));
-  };
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/fos.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif] text-slate-900">
@@ -431,8 +469,16 @@ export default function P5FoodChainScene() {
 
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.08)_58%,rgba(255,255,255,0.03))]" />
 
-      <div className="absolute left-1/2 top-3 z-50 max-w-[min(88vw,30rem)] -translate-x-1/2 rounded-full bg-white/78 px-6 py-3 text-center text-xs font-bold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm sm:px-8 sm:py-4 sm:text-lg">
-        {sceneHintText}
+      <div className="absolute left-1/2 top-3 z-50 flex max-w-[min(88vw,34rem)] -translate-x-1/2 items-center justify-center gap-2 rounded-full bg-white/78 px-5 py-3 text-center text-xs font-bold text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.14)] backdrop-blur-sm sm:px-7 sm:py-4 sm:text-lg">
+        <span>{sceneHintText}</span>
+        <button
+          type="button"
+          onClick={() => speakText(sceneHintText, { key: "hint" })}
+          aria-label={`${ui.listenOne}: ${sceneHintText}`}
+          className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/80 bg-[#eaf3ff]/95 text-xs text-[#2563eb] shadow-[0_6px_14px_rgba(59,130,246,0.18)] transition hover:bg-[#dcecff] sm:h-8 sm:w-8 sm:text-sm"
+        >
+          {"\uD83D\uDD0A"}
+        </button>
       </div>
 
       <div className="fixed bottom-[18px] left-[18px] z-[7]">

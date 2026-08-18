@@ -1,4 +1,5 @@
-﻿import { useNavigate } from "react-router-dom";
+﻿import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
@@ -33,17 +34,19 @@ const TEXT = {
     select: "Next",
   },
   ms: {
-    title: "Kesimpule Hasil Kajiye",
-    p1: "Dari kajiye, Terlihat bahawo:",
-    items: ["Sifat tingi hok tumbuhe keno kawal ngan gen 1 pase.", "Gen ado 2 bahagiye:"],
-    a: "A = Gen lebih sifatnyo tumbuhe tingi",
-    b: "a = Gen kughe sifatnyo tumbuhe renoh",
-    result: "Jika amek mari kawen terdapat bahawo tumbuhe jadi tingi semuwo.",
+    title: "กือซีปูแล ฮาเซ ปือจูบอแอ ",
+    p1: "ดารี ปือจูบอแอ, กีตอ บูเละฮ แตเงาะ กาตอ. ",
+    items: ["ตีงีแย ตูมูแฮ กือนอ กาวา ดืองา ยีน 1 ปาแซ. ", "ยีน อาดอ 2 บาฮากีแย."],
+    a: "A = ยีน โดมีนัน ตูโญะ ซีฟะ ตูมูแฮ ตีงี.   ",
+    b: "a =  ยีน เรเซซิฟ ตูโญะ ซีฟะ ตูมูแฮ รือเนาะฮ.  ",
+    result: "กาลู อาเมะ มารี กาเว็ง เนาะ บูเละฮ ตูมูแฮ ตีงี ซือมอ.",
     listen: "Dengar rumusan",
-    back: "Pusing semula",
-    select: "Teruh",
+    back: "ฮูโน กือเละ",
+    select: "ตือรุฮ",
   },
 };
+
+const MALAY_SUMMARY_AUDIO = "/audio/p5/21.1.mp3";
 
 const LANG_TO_VOICE = {
   th: "th-TH",
@@ -63,13 +66,39 @@ function speakText(text, lang) {
 export default function P5GeneticsPlantsSummary() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
+  const audioRef = useRef(null);
   const t = TEXT[lang];
   const backLabel = `« ${t.back}`;
   const nextLabel = `${t.select} »`;
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speakSummary = () => {
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio(MALAY_SUMMARY_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     speakText([t.p1, ...t.items, t.a, t.b, t.result].join(". "), lang);
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>

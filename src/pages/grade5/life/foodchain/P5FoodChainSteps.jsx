@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
@@ -10,7 +10,7 @@ const PAGE_COPY = {
     back: "ย้อนกลับ",
     nextButton: "ต่อไป",
     next: "เริ่มการทดลอง",
-    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     mainTitle: "Experiment 5: Food Chain",
@@ -18,15 +18,15 @@ const PAGE_COPY = {
     back: "Back",
     nextButton: "Next",
     next: "Start Experiment",
-    langLabels: { th: "Thai", en: "English", ms: "Malay" },
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
-    mainTitle: "Kajiye 5 Tajuk: Ghata Makene",
-    stepLabel: "Langkoh Kajiye",
-    back: "Pusing semula",
-    nextButton: "Teruh",
+    mainTitle: "ปือจูบอแอ 5 ตาโยะ: ราตามาแกแน ",
+    stepLabel: "จารอ บูวะ ปือจูบอแอ ",
+    back: "ฮูโนกือเละ",
+    nextButton: "ตือรุฮ",
     next: "Mula Eksperimen",
-    langLabels: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+    langLabels: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 
@@ -34,34 +34,57 @@ const STEPS = [
   {
     th: "สำรวจสิ่งมีชีวิตในระบบนิเวศ",
     en: "Observe organisms in the ecosystem",
-    ms: "Perekso beno hidup dale sistem ekologi",
+    ms: " สารี บือนอ ฮีโดะ ดาแล เอโกะ ฮูบูแง อันตารา บือนอ ฮีโดะ ดืองา อาแล. ",
   },
   {
     th: "จำแนกสิ่งมีชีวิตออกเป็นกลุ่ม ผู้ผลิตและผู้บริโภค",
     en: "Classify producers and consumers",
-    ms: "Bagi kumpule beno hidup jadi oghe buwak dan oghe guno",
+    ms: "บากี กูปูแล บือนอ ฮีโดะ เฮาะ ยาดี ออแร บูวะ ดัน ออแร กูนอ. ",
   },
   {
     th: "สร้างห่วงโซ่อาหาร",
     en: "Build the food chain",
-    ms: "Bino ghata makene",
+    ms: "บูวะ ราตา มาแกแน. ",
   },
   {
     th: "บันทึกผลการทดลอง",
     en: "Record experiment results",
-    ms: "Catat hasil kajiye",
+    ms: " ตานอ ฮาเซ ปือจูบอแอ. ",
   },
 ];
+
+const MALAY_STEP_AUDIO = ["/audio/p5/8.1.mp3", "/audio/p5/8.2.mp3", "/audio/p5/8.3.mp3", "/audio/p5/8.4.mp3"];
 
 export default function P5FoodChainSteps() {
   const navigate = useNavigate();
   const [activeLang, setActiveLang] = useState("th");
+  const audioRef = useRef(null);
   const t = PAGE_COPY[activeLang] ?? PAGE_COPY.th;
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
 
   const speakStep = (text, index) => {
     try {
-      if (!text || !window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
+      stopAudio();
+
+      const audioSrc = activeLang === "ms" ? MALAY_STEP_AUDIO[index] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!text || typeof window === "undefined" || !window.speechSynthesis) return;
       const utterance = new SpeechSynthesisUtterance(`${index + 1}. ${text}`);
       utterance.lang = activeLang === "th" ? "th-TH" : activeLang === "ms" ? "ms-MY" : "en-US";
       window.speechSynthesis.speak(utterance);
@@ -69,6 +92,10 @@ export default function P5FoodChainSteps() {
       // ignore
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">

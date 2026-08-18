@@ -296,24 +296,24 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    title: "Kesimpule Isi Penting : Pemindahe Tenago Ghata Makene",
-    intro: "Ghata makene adalah hubunge hok beno hidup ngan make secaro bertekat-tekat.",
-    startTitle: 'Awali oghe buwak sokmo',
-    startDesc: "Tak kiro ghata makene dale mano-mano ekosistem titik awal hok terimo tenago jadi oghe buwak sokmo.",
-    principleTitle: "Prinsip Alire dan Pinoh Tenago",
-    examplePrefix: "Seperti :",
+    title: "กือซีปูแล อีซี ปือติง: ปือมินดาแฮ ตือนากอ ดาแล ราตาแย มาแกแน ",
+    intro: "ราตา มาแกแน อาดอละฮ ฮูบูแง เฮาะ บือนอ ฮีโดะ ดืองา จารอ มาแกแน บือแตกะ-แตกะ",
+    startTitle: 'มูลอ เดองา ออแร บูวะ เซาะมอ ',
+    startDesc: "เตาะ กีรอ ราตาแย มาแกแน ดา แล มานอ-มานอ ระโบะ, ตีเตะ มูลอ เฮาะ บูเละฮฮ ตือนากอ อา แก ยาดี ออแร บูวะ เซาะมอ ",
+    principleTitle: "อาซะฮ เปอมีดอแอ ตือนากอ ",
+    examplePrefix: "โจโต : ",
     exampleItems: [
-      { key: "carrot", label: "Kerok", ringClass: "border-lime-500" },
-      { key: "rabbit", label: "Arnab", ringClass: "border-orange-400" },
-      { key: "snake", label: "Ula", ringClass: "border-red-500" },
-      { key: "eagle", label: "Helang", ringClass: "border-amber-500" },
+      { key: "carrot", label: "แคเราะ", ringClass: "border-lime-500" },
+      { key: "rabbit", label: "อารือนะ", ringClass: "border-orange-400" },
+      { key: "snake", label: "อูลา", ringClass: "border-red-500" },
+      { key: "eagle", label: "บูรง แล ", ringClass: "border-amber-500" },
     ],
-    directionTitle: "Aghoh hok anok panoh",
-    directionDesc: "Palo manoh keno tuju pada oghe guno somo.",
-    producerTitle: "Ore Buak",
-    producerDesc: "Beno hidup bina makene sendiri dengan caro fotosintesis, seperti tumbuhe, rupuk, saghe.",
-    consumerTitle: "Ore Buak",
-    consumerDesc: "Beno hidup hok bino makene sediri tok buleh, keno make tumbuhe atau nate lain untuk amek tenago.",
+    directionTitle: "อาเราะฮ เฮาะ อาเนาะ ปาเนาะฮ ",
+    directionDesc: "ปาลอ มาเนาะฮ กือนอ ตูยุ โกะะ ออแร  กูนอ เซาะมอ (ออแร บูเละฮฮ ตือนากอ)   ",
+    producerTitle: "ออแร บูวะ ",
+    producerDesc: "บือนอ ฮีโดะ ฮาเซ มาแกแน ซือดีรี ดืองา จารอ กูนอ จายอ มาตาฮารี, อา-เอ ดัน อูดารอ  ซือปือตี ตูมูแฮ, รูปุ, แซรา",
+    consumerTitle: "ออแร บูวะ ",
+    consumerDesc: "บือนอ ฮีโดะ เฮาะ เตาะเละฮ บูวะ มาแกแน  ซือดีรี, กือนอ มาแก ตูมูแฮ อาตาวอ บีนาแต  ลา-เอ็ง อูโตะ ดาปะ ตือนากอ. ",
     consumerCards: [
       {
         id: "herbivore",
@@ -334,10 +334,10 @@ const CONTENT = {
         toneClass: "border-[#ff5c50]",
       },
     ],
-    decomposerTitle: "Ore ngura dan  Ore Make Bakhe",
-    decomposerDesc: "Tolong ngura bakhe tumbuhe dan nate wi jadi zat dale tanoh, seperti kulat dan bateria.",
-    back: "Pusing semula",
-    next: "Teruh",
+    decomposerTitle: "ออแร งูรา เดองา ออแร มาแก บาเค ",
+    decomposerDesc: "ตูลง งูรา บาเค ตูมู แฮ ดืองา บีนาแต วี ยาดี ซะ ดาแล ตาเนาะฮ, ซือปือตี กูละ ดัน แบะทีเรีย",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -521,7 +521,7 @@ export default function P5FoodChainsss() {
           size="materials"
           value={activeLang}
           onChange={setActiveLang}
-          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" }}
         />
       </div>
 

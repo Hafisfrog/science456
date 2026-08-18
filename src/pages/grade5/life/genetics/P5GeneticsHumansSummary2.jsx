@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
@@ -31,18 +32,20 @@ const TEXT = {
     listen: "Listen",
   },
   ms: {
-    title: "Kesimpulae Kajiye",
-    back: "Pusing semula",
-    next: "Teruh",
-    inheritedTitle: "Sifat bako hok oghe",
-    inheritedDesc: "Sifat yang turun temurun dari ibu bapak dan dari diri sendiri sejok beranok seperti:",
-    inheritedItems: ["Mato Duwa Lapeh", "Hidung", "Bentuk Muko", "Sifat Ramuk (Pelok/Betul)"],
-    learnedTitle: "Sifat dari hasil belajar",
-    learnedDesc: "Sifat hok buke turun-temurun dari ibu bapak, tapi dari latihe dan kesukaae seperti:",
-    learnedItems: ["Suko Lukih Gama", "Suko Main Qita", "Suko Main Suke", "Suko Warno Hija "],
+    title: "เกอซีปูแล ปือจูบอแอ ",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
+    inheritedTitle: "ซีฟะ บากอ ยือนิฮ ออแร ",
+    inheritedDesc: "ซีฟะ เฮาะ นูรง ดารี อีบู บาเปาะ ดัน ดารี  ซือดีรี ซือเยาะ บือราเนาะ ซือปือตี; ",
+    inheritedItems: ["มาตอ สลาเปะห มาตอ ดูวอ ลาเปะฮ. ", "ฮีดงมาจง ฮีดงกือแปะ. ", "รูปอ มูกอ ปาแย รูปอ มูกอ บูละ. ", "ซีฟะ ราโมะ (ราโมะ ปือเลาะ/ราโมะ บือโต) "],
+    learnedTitle: "ซีฟะ ดารี ฮาเซ ปืองาลาแม",
+    learnedDesc: "ซีฟะ เฮาะ บูแก นูรง ดารี อีบู บาเปาะ, ตาปี ดารี ลาตีแฮ ดือ งา มีนัต ซือปือตี; ",
+    learnedItems: ["ซูกอ ลูกิฮ กามา ", "ซูกอ มา-อิง กีตา ", "ซูกอ มา-อิง ซูแก ", "ซูกอ จะ ฮียา "],
     listen: "Dengar rumusan",
   },
 };
+
+const MALAY_SUMMARY_AUDIO = ["/audio/p5/25.1.mp3", "/audio/p5/25.2.mp3"];
 
 const LANG_TO_VOICE = {
   th: "th-TH",
@@ -62,14 +65,50 @@ function speakText(text, lang) {
 export default function P5GeneticsHumansSummary2() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
+  const audioRef = useRef(null);
   const t = TEXT[lang];
   const backLabel = `« ${t.back}`;
   const nextLabel = `${t.next} »`;
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const playMalayAudio = (index) => {
+    const audioSrc = MALAY_SUMMARY_AUDIO[index];
+    if (!audioSrc) return false;
+
+    const audio = new Audio(audioSrc);
+    audioRef.current = audio;
+    audio.play().catch(() => {});
+    return true;
+  };
+
+  const speakSection = (text, index) => {
+    stopAudio();
+
+    if (lang === "ms" && playMalayAudio(index)) {
+      return;
+    }
+
+    speakText(text, lang);
+  };
+
   const speakInherited = () =>
-    speakText([t.inheritedTitle, t.inheritedDesc, ...t.inheritedItems].join(". "), lang);
+    speakSection([t.inheritedTitle, t.inheritedDesc, ...t.inheritedItems].join(". "), 0);
   const speakLearned = () =>
-    speakText([t.learnedTitle, t.learnedDesc, ...t.learnedItems].join(". "), lang);
+    speakSection([t.learnedTitle, t.learnedDesc, ...t.learnedItems].join(". "), 1);
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>

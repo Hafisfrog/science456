@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 
 const LANGS = [
   { id: "th", label: "ไทย", voice: "th-TH" },
-  { id: "ms", label: "มลายู", voice: "ms-MY" },
+  { id: "ms", label: "มลายูถิ่น", voice: "ms-MY" },
   { id: "en", label: "อังกฤษ", voice: "en-US" },
 ];
 
@@ -17,11 +17,19 @@ const TOPIC_MEDIA = {
     accent: "from-emerald-500 to-lime-500",
   },
   genetics: {
-    image:
-      "C:\Users\ASUS\Pictures\img project\familytree.png",
+    image: "/images/p5-genetic.png",
     fallbackImage: "/images/p5-genetic.png",
     imagePosition: "center 28%",
     accent: "from-sky-500 to-blue-600",
+  },
+};
+
+const TOPIC_AUDIO = {
+  foodchain: {
+    ms: "/audio/p5/1.1.mp3",
+  },
+  genetics: {
+    ms: "/audio/p5/1.2.mp3",
   },
 };
 
@@ -64,20 +72,20 @@ const TEXT = {
     ],
   },
   ms: {
-    heading: "Sains Kelah 5",
+    heading: "วิตายาซะ กือละฮ 5",
     // subheading: "Pilih Pelajaran",
-    sub: "Pilih Unit Pembelajare",
-    back: "Pusing semula",
+    sub: "ปิเละฮ ยูนื ปืมปือลายาแร",
+    back: "ฮูโน กือเละ",
     open: "Masuk Pelajaran",
     topics: [
       {
         id: "foodchain",
-        title: "Hubunge Kehidupe",
+        title: "ฮูบูแง กือฮีดูแป",
         to: "/p5/life/foodchain",
       },
       {
         id: "genetics",
-        title: "Sifat Bako",
+        title: "ซีฟะ บากอ",
         to: "/p5/life/genetics/objectives",
       },
     ],
@@ -99,7 +107,7 @@ function speakText(text, lang) {
   synth.speak(utterance);
 }
 
-function TopicCard({ topic, voice, openLabel, onOpen }) {
+function TopicCard({ topic, onSpeak, onOpen }) {
   const media = TOPIC_MEDIA[topic.id];
 
   return (
@@ -139,7 +147,7 @@ function TopicCard({ topic, voice, openLabel, onOpen }) {
             type="button"
             onClick={(event) => {
               event.stopPropagation();
-              speakText(topic.title, voice);
+              onSpeak(topic);
             }}
             className="inline-grid h-14 w-14 shrink-0 place-items-center rounded-full bg-sky-100 text-[26px] text-sky-700 shadow-[0_10px_22px_rgba(59,130,246,0.18)] transition hover:-translate-y-0.5 hover:bg-sky-200"
             aria-label={topic.title}
@@ -157,8 +165,37 @@ function TopicCard({ topic, voice, openLabel, onOpen }) {
 export default function P5LifeIntro() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
   const content = TEXT[lang];
   const voice = useMemo(() => LANGS.find((item) => item.id === lang)?.voice || "th-TH", [lang]);
+
+  const stopAudio = useCallback(() => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
+    }
+
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+    audioRef.current = null;
+  }, []);
+
+  const playTopicAudio = useCallback(
+    (topic) => {
+      stopAudio();
+
+      const audioSrc = TOPIC_AUDIO[topic.id]?.[lang];
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(topic.title, voice);
+    },
+    [lang, stopAudio, voice],
+  );
 
   useEffect(() => {
     if (!("speechSynthesis" in window)) return;
@@ -166,6 +203,8 @@ export default function P5LifeIntro() {
     preload();
     window.speechSynthesis.onvoiceschanged = preload;
   }, []);
+
+  useEffect(() => stopAudio, [stopAudio]);
 
   const pageBg =
     "linear-gradient(180deg, #bfe1f4 0%, #d6eef9 26%, #d2efdc 52%, #95d27d 74%, #70bf62 100%)";
@@ -214,8 +253,7 @@ export default function P5LifeIntro() {
             <TopicCard
               key={topic.id}
               topic={topic}
-              voice={voice}
-              openLabel={content.open}
+              onSpeak={playTopicAudio}
               onOpen={() => navigate(topic.to)}
             />
           ))}

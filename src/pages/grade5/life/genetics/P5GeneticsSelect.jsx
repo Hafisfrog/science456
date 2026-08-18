@@ -1,4 +1,5 @@
 ﻿import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import HomeButton from "../../../HomeButton";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsSelect.css";
@@ -13,6 +14,8 @@ const LANG_TO_VOICE = {
   ms: "ms-MY",
 };
 
+const MALAY_SELECT_AUDIO = ["/audio/p5/15.1.mp3", "/audio/p5/15.2.mp3", "/audio/p5/15.3.mp3"];
+
 const PAGE_TEXT = {
   th: {
     chip: "ชั้นประถมศึกษาปีที่ 5",
@@ -21,7 +24,7 @@ const PAGE_TEXT = {
     next: "ต่อไป",
     chipTh: "ไทย",
     chipEn: "อังกฤษ",
-    chipMs: "มลายู",
+    chipMs: "มลายูถิ่น",
     experiments: [
       {
         id: 6,
@@ -62,7 +65,7 @@ const PAGE_TEXT = {
     next: "Next",
     chipTh: "ไทย",
     chipEn: "อังกฤษ",
-    chipMs: "มลายู",
+    chipMs: "มลายูถิ่น",
     experiments: [
       {
         id: 6,
@@ -94,18 +97,18 @@ const PAGE_TEXT = {
     ],
   },
   ms: {
-    chip: "Kelah 5",
-    title: "Sifat Bako",
-    back: "Pusing semula",
+    chip: "กือละฮ 5 ",
+    title: "ซีฟะ บากอ ",
+    back: "ฮูโน กือเละ",
     next: "Teruh",
     chipTh: "ไทย",
     chipEn: "อังกฤษ",
-    chipMs: "มลายู",
+    chipMs: "มลายูถิ่น",
     experiments: [
       {
         id: 6,
-        title: "Kajiye 6",
-        label: "Sifat bako hok nateoghe",
+        title: "ปือจูบอแอ 1 ",
+        label: "ซีฟะ บากอ ยือนิฮ บีนาแต   ",
         path: "/p5/life/genetics/animals/objectives",
         tone: "exp-red",
         image: "/images/p5/genetics/satp5.png",
@@ -113,8 +116,8 @@ const PAGE_TEXT = {
       },
       {
         id: 7,
-        title: "Kajiye 7",
-        label: "Sifat bako hok tumbuhe",
+        title: " ปือจูบอแอ 2  ",
+        label: "  ซีฟะ บากอ ยือนิฮ ตูมูแฮ",
         path: "/p5/life/genetics/plants/objectives",
         tone: "exp-green",
         image: "/images/p5/genetics/peuchp5.png",
@@ -122,8 +125,8 @@ const PAGE_TEXT = {
       },
       {
         id: 8,
-        title: "Kajiye 8",
-        label: "Sifat bako hok ",
+        title: " ปือจูบอแอ 3 ",
+        label: " ซีฟะ บากอ ยือนิฮ ออแร ",
         path: "/p5/life/genetics/humans/objectives",
         tone: "exp-blue",
         image: "/images/p5/genetics/konp5.png",
@@ -136,21 +139,45 @@ const PAGE_TEXT = {
 export default function P5GeneticsSelect() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
+  const audioRef = useRef(null);
   const t = PAGE_TEXT[lang];
 
-  const speakCard = (event, exp) => {
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const speakCard = (event, exp, index) => {
     event.stopPropagation();
+    stopAudio();
+
+    const audioSrc = lang === "ms" ? MALAY_SELECT_AUDIO[index] : undefined;
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     if (typeof window === "undefined" || !("speechSynthesis" in window) || typeof SpeechSynthesisUtterance === "undefined") {
       return;
     }
 
-    const synth = window.speechSynthesis;
-    synth.cancel();
-
     const utterance = new SpeechSynthesisUtterance(`${exp.title}. ${exp.label}`);
     utterance.lang = LANG_TO_VOICE[lang];
-    synth.speak(utterance);
+    window.speechSynthesis.speak(utterance);
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="p5gen-page notranslate" translate="no">
@@ -163,7 +190,7 @@ export default function P5GeneticsSelect() {
         </div>
 
         <section className="p5gen-card-grid">
-          {t.experiments.map((exp) => (
+          {t.experiments.map((exp, index) => (
             <div
               key={exp.id}
               className={`p5gen-card ${exp.tone}`}
@@ -193,7 +220,7 @@ export default function P5GeneticsSelect() {
                   type="button"
                   className="p5gen-card-audio"
                   aria-label={`play ${exp.title}`}
-                  onClick={(event) => speakCard(event, exp)}
+                  onClick={(event) => speakCard(event, exp, index)}
                 >
                   {"🔊"}
                 </button>

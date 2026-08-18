@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
@@ -16,10 +16,12 @@ const VOICE_LABEL = {
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
-  en: { th: "Thai", en: "English", ms: "Malay" },
-  ms: { th: "Thai", en: "English", ms: "Melayu" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
+  en: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
+  ms: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
 };
+
+const MALAY_SUMMARY_AUDIO = ["/audio/p5/12.1.mp3", "/audio/p5/12.2.mp3"];
 
 const CONTENT = {
   th: {
@@ -41,13 +43,13 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    title: "Kesimpule Hasil Kajiye",
+    title: "เกอซีปูลาแอ ฮาเซ ปือจูบอแอ ",
     paragraph1:
-      "Dari kegiate tersebuk, beno hiduk setiyak jenih ado hubunge satu samo lain dale satu sistem melaluwi tenago pinoh dari oghe buwak ko oghe guno mengikut gilire proses make-makene.",
+      "ดารี ปือจูบอแอ ซากนีง, บือนอ ฮีโดะ ตียะ-ตียะ ยือนิฮ อาดอ ฮูบูแง ซาตู ซามอ ลา-เอ็ง ดาแล ซาตู ซีสเต็ม เฮาะ มานอ ตือนากอ ปีเนาะฮ ดารี ออแร บูวะ กือปาดอ ออแร กูนอ อีโกะ กีลีแร โปรเซะฮ มาแกแน ",
     paragraph2:
-      "Mako ghata makene jadi hal peting dale segi pinoh tenago dan jago keseimbange hok tepat duduk, setiyap jenih beno hiduk ado tugah masing-masing.",
-    back: "Pusing semula",
-    next: "Teruh",
+      "มากอ ราตา มาแกแน ปือติง ดาแล ซือกี ปีเนาะฮ ตือนากอ ดืองา จารอ กือซืออิมแบแง เอโกะ ซิสเตม (ฮูบูแง อัน ตารา บือนอ ฮีโดะ ดืองา อาแล) ซือมอ ยือนิฮ บือนอ ซามอ-ซามอ อาดอ ปือราแน ",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -82,17 +84,38 @@ function SectionVoiceButton({ onClick, label, className = "" }) {
 export default function P5FoodChainSummary() {
   const navigate = useNavigate();
   const [activeLang, setActiveLang] = useState("th");
+  const audioRef = useRef(null);
 
   const content = CONTENT[activeLang] ?? CONTENT.th;
   const voiceLabel = VOICE_LABEL[activeLang] ?? VOICE_LABEL.th;
   const languageLabels = LANGUAGE_LABELS.th;
 
-  const speakText = (text) => {
-    if (typeof window === "undefined" || !window.speechSynthesis || !text) {
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const speakText = (text, index) => {
+    stopAudio();
+
+    const audioSrc = activeLang === "ms" ? MALAY_SUMMARY_AUDIO[index] : undefined;
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
       return;
     }
 
-    window.speechSynthesis.cancel();
+    if (typeof window === "undefined" || !window.speechSynthesis || !text) {
+      return;
+    }
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = VOICE_LANG[activeLang] ?? VOICE_LANG.th;
@@ -100,6 +123,10 @@ export default function P5FoodChainSummary() {
     utterance.pitch = 1;
     window.speechSynthesis.speak(utterance);
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
@@ -117,7 +144,7 @@ export default function P5FoodChainSummary() {
             <div className="flex items-start justify-between gap-4">
               <p className="flex-1">{content.paragraph1}</p>
               <SectionVoiceButton
-                onClick={() => speakText(content.paragraph1)}
+                onClick={() => speakText(content.paragraph1, 0)}
                 label={voiceLabel}
                 className="h-9 w-9 shrink-0"
               />
@@ -128,7 +155,7 @@ export default function P5FoodChainSummary() {
             <div className="flex items-start justify-between gap-4">
               <p className="flex-1">{content.paragraph2}</p>
               <SectionVoiceButton
-                onClick={() => speakText(content.paragraph2)}
+                onClick={() => speakText(content.paragraph2, 1)}
                 label={voiceLabel}
                 className="h-9 w-9 shrink-0"
               />

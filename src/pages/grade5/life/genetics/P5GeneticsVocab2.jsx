@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainNavButtons } from "../foodchain/FoodChainControls";
@@ -6,10 +6,10 @@ import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsVocab.css";
 
 const VOCAB = [
-  { th: "การสืบพันธุ์", ms: "Cara biyok", en: "Reproduction" },
-  { th: "ลักษณะของขน", ms: "Sifat bulu", en: "Hair Characteristics" },
-  { th: "ลักษณะใบหู", ms: "Sifat telingo", en: "Ear Shape" },
-  { th: "สีดอก", ms: "Warno bungo", en: "Flower Color" },
+  { th: "การสืบพันธุ์", ms: "จารอ บีเยาะ  ", en: "Reproduction" },
+  { th: "ลักษณะของขน", ms: "จีรี บูลู  ", en: "Hair Characteristics" },
+  { th: "ลักษณะใบหู", ms: "จีรี ตือลีงอ ", en: "Ear Shape" },
+  { th: "สีดอก", ms: "ตาเมาะฮ ยุมเลาะฮ ", en: "Flower Color" },
   { th: "เพิ่มจำนวน", ms: "Tamoh jumlohง", en: "Proliferate" },
 ];
 
@@ -45,18 +45,20 @@ const CONTENT = {
     colMs: "Bahasa Melayu",
     colEn: "Bahasa Inggeris",
     colAudio: "Audio",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุอ",
     speak: "Dengar",
     langLabel: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_VOCAB_AUDIO = ["/audio/p5/14.6.mp3", "/audio/p5/14.7.mp3"];
 
 export default function P5GeneticsVocab2() {
   const navigate = useNavigate();
   const { lang } = useP5GeneticsLang();
+  const audioRef = useRef(null);
   const content = CONTENT[lang] ?? CONTENT.th;
 
   const tableSpeech = useMemo(
@@ -68,10 +70,31 @@ export default function P5GeneticsVocab2() {
     [content.title]
   );
 
-  const speak = (text, voiceKey = lang) => {
-    try {
-      if (!text || typeof window === "undefined" || !window.speechSynthesis) return;
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
+    }
+  };
+
+  const speak = (text, voiceKey = lang, index) => {
+    try {
+      stopAudio();
+
+      const audioSrc = voiceKey === "ms" ? MALAY_VOCAB_AUDIO[index] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!text || typeof window === "undefined" || !window.speechSynthesis) return;
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = VOICE_LANG[voiceKey] ?? VOICE_LANG.th;
       utterance.rate = 0.92;
@@ -80,6 +103,10 @@ export default function P5GeneticsVocab2() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="p5gv-page">
@@ -109,7 +136,7 @@ export default function P5GeneticsVocab2() {
             </tr>
           </thead>
           <tbody>
-            {VOCAB.map((row) => (
+            {VOCAB.map((row, index) => (
               <tr key={row.en}>
                 <td className="p5gv-cellTh">{row.th}</td>
                 <td className="p5gv-cellMs">{row.ms}</td>
@@ -118,7 +145,7 @@ export default function P5GeneticsVocab2() {
                   <button className="p5gv-audioBtn th" type="button" onClick={() => speak(row.th, "th")}>
                     TH
                   </button>
-                  <button className="p5gv-audioBtn ms" type="button" onClick={() => speak(row.ms, "ms")}>
+                  <button className="p5gv-audioBtn ms" type="button" onClick={() => speak(row.ms, "ms", index)}>
                     MY
                   </button>
                   <button className="p5gv-audioBtn en" type="button" onClick={() => speak(row.en, "en")}>

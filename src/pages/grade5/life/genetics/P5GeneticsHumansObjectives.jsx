@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "../foodchain/FoodChainControls";
@@ -16,7 +16,7 @@ const CONTENT = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     speak: "ฟัง",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     exp: "Experiment 3",
@@ -29,24 +29,25 @@ const CONTENT = {
     back: "Back",
     next: "Next",
     speak: "Listen",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
-    exp: "Kajiye 3",
-    title: "Tajuk Sifat Bako Hok Oghe",
-    section: "Tujuwe Pembelajare",
+    exp: "ปือจูบอแอ 3 ",
+    title: "ตาโยะ; ซีฟะ บากอ ยือนิฮ ออแร ",
+    section: "ตูยูแว ปืมบือลายาแร ",
     objectives: [
-      "Pelajari perbezae antara sifat bako dengan sifat hok jadi hasil dari belajar.",
-      "Berlatih utuk perati maklumat dan buwak keputuse dengan alase yang munasabah dari contoh sebenar.",
+      "ปือลายา ปือเบซอแอ อันตารอ ซีฟะ บากอ ดืองา ซีฟะ ดารี ปืองาลาแม ",
+      " ปือลายา อูโตะ ปือราตี มะลูมะ ดัน บูวะ กือปูตูแซ ดืองา อาลาแซ เฮาะ มูนาซาเบาะฮ ดารี จอตอ  ซือบือนา ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
     speak: "Dengar",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_OBJECTIVE_AUDIO = ["/audio/p5/22.1.mp3", "/audio/p5/22.2.mp3"];
 
 export default function P5GeneticsHumansObjectives() {
   const navigate = useNavigate();
@@ -65,9 +66,18 @@ export default function P5GeneticsHumansObjectives() {
     }
   };
 
-  const speak = (text) => {
+  const speak = (text, index) => {
     try {
       stopAudio();
+
+      const audioSrc = lang === "ms" ? MALAY_OBJECTIVE_AUDIO[index] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       if (
         !text ||
         typeof window === "undefined" ||
@@ -86,6 +96,10 @@ export default function P5GeneticsHumansObjectives() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-[100dvh] w-full overflow-x-hidden overflow-y-auto bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
@@ -134,7 +148,7 @@ export default function P5GeneticsHumansObjectives() {
                   </div>
                   <button
                     className="grid h-[clamp(36px,3.3vw,44px)] w-[clamp(36px,3.3vw,44px)] shrink-0 place-items-center rounded-[14px] border-none bg-[#f4fbef] text-lg shadow-[0_10px_18px_rgba(0,0,0,.13)] transition duration-150 hover:-translate-y-0.5 hover:bg-white max-[640px]:text-sm"
-                    onClick={() => speak(objective)}
+                    onClick={() => speak(objective, index)}
                     type="button"
                     title={content.speak}
                   >

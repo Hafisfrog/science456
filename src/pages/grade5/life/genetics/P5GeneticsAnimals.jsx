@@ -70,27 +70,27 @@ const TEXT = {
     next: "Next",
   },
   ms: {
-    title: "Caro pinoh bako hok kucing",
-    parent: "Gen Ibu Bapak",
-    child: "Anok",
-    geneText: "Gen kawal warno bulu kucing ado 2 alil yaitu:",
-    badgeA: "A Gati alil warno bulu kucing hite",
-    badgeB: "a Gati alil warno bulu kucing putih",
-    sideNote: "Pilih AA, Aa atau aa beri setiyap anok kucing lalu teke jawape",
-    reset: "Semula",
+    title: "จารอ ปีเนาะฮ บากอ กูจิง ",
+    parent: "ยีน อีบู บาเปาะ ",
+    child: "ยีน อาเนาะ ",
+    geneText: "ยีน กาวา จายอ บูลู กูจิง อาดอ 2 อาลิล, ยาอีตู; ",
+    badgeA: "A: กาตี อาลิล จายอ บูลู กูจิง ฮีแต. ",
+    badgeB: "a  กาตี อาลิล จายอ บูลู กูจิง ปูเตะฮ. ",
+    sideNote: "ปีเละฮ AA, Aa อาตาวอ aa บูวี ซือตียะ อาเนาะ กู จิง ลือปะฮ ตู ตือแก ยาวะแป. ",
+    reset: "ซือมูลา",
     resetAria: "Set semula jawapan anak",
-    reveal: "Jawape",
+    reveal: "ยาวะแป ",
     revealAria: "Tunjukkan jawapan anak",
     blackCatAlt: "kucing hitam",
     whiteCatAlt: "kucing putih",
     kittenAlt: "anak kucing hitam",
     optionAlt: "pilihan genotip anak kucing",
-    correct: "Betul",
-    incorrect: "Salah",
-    correctAnswer: "Jawapan",
+    correct: "บือตุล",
+    incorrect: "สาเลาะฮ",
+    correctAnswer: "ยาวะแป",
     noAnswer: "Belum pilih",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -207,7 +207,7 @@ export default function P5GeneticsAnimals() {
     : [];
 
   const t = TEXT[lang];
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
   const [lineA, lineB] = t.geneText.split("\n");
 
   return (

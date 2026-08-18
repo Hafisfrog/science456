@@ -1,7 +1,16 @@
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "../foodchain/FoodChainControls";
 import { useP5GeneticsLang } from "./p5GeneticsI18n";
+
+const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_SKILL_AUDIO = [
+  "/audio/p5/20.1.mp3",
+  "/audio/p5/20.2.mp3",
+  "/audio/p5/20.3.mp3",
+  "/audio/p5/20.4.mp3",
+];
 
 const CONTENT = {
   th: {
@@ -16,7 +25,7 @@ const CONTENT = {
     ],
     back: "ย้อนกลับ",
     next: "ต่อไป",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     exp: "Experiment 2",
@@ -30,28 +39,77 @@ const CONTENT = {
     ],
     back: "Back",
     next: "Next",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    speak: "Listen",
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
-    exp: "Kajiye 2",
-    title: "Tajuk Sifat Bako Hok Tumbuhe",
-    section: "Kemahire Proses Sains",
+    exp: "ปือจูบอแอ 2 ",
+    title: "ตาโยะ; ซีฟะ บากอ ยือนิฮ ตูมูแฮ ",
+    section: "กือมาฮีแร ดาแล ปือจูบอแอ วิตายาซะ ",
     skills: [
-      "Kemahire Perati",
-      "Kemahire Bagi Jenih",
-      "Kemahire Meramal",
-      "Kemahire Beri Pendapat Dari Maklumat",
+      "กือมาฮีแร ปือราต",
+      " กือมาฮีแร บากี ยือนิฮ ",
+      "กือมาฮีแร มือนือกอ ",
+      "กือมาฮีแร บูวี ปาแนแง ดารี มะลูมะ ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
+    speak: "Dengar",
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 
 export default function P5GeneticsPlantsScienceSkills() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
+  const audioRef = useRef(null);
   const content = CONTENT[lang] ?? CONTENT.th;
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const speak = (text, index) => {
+    try {
+      stopAudio();
+
+      const audioSrc = lang === "ms" ? MALAY_SKILL_AUDIO[index] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (
+        !text ||
+        typeof window === "undefined" ||
+        typeof SpeechSynthesisUtterance === "undefined" ||
+        !window.speechSynthesis
+      ) {
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = VOICE_LANG[lang] ?? VOICE_LANG.th;
+      utterance.rate = 0.95;
+      utterance.pitch = 1;
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // ignore speech errors
+    }
+  };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative h-[100svh] w-full overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
@@ -83,9 +141,17 @@ export default function P5GeneticsPlantsScienceSkills() {
                 <div className="mr-[clamp(10px,1.4vw,18px)] grid h-[clamp(40px,4vw,56px)] w-[clamp(40px,4vw,56px)] shrink-0 place-items-center rounded-full bg-[#f47c4b] text-[clamp(20px,2vw,29px)] font-black text-white shadow-[0_10px_18px_rgba(0,0,0,.14)]">
                   {index + 1}
                 </div>
-                <div className="min-w-0 text-[clamp(18px,1.85vw,30px)] font-black leading-[1.15] text-black">
+                <div className="min-w-0 flex-1 text-[clamp(18px,1.85vw,30px)] font-black leading-[1.15] text-black">
                   {skill}
                 </div>
+                <button
+                  className="grid h-[clamp(36px,3.3vw,44px)] w-[clamp(36px,3.3vw,44px)] shrink-0 place-items-center rounded-[14px] border-none bg-[#f4fbef] text-lg shadow-[0_10px_18px_rgba(0,0,0,.13)] transition duration-150 hover:-translate-y-0.5 hover:bg-white max-[640px]:text-sm"
+                  onClick={() => speak(skill, index)}
+                  type="button"
+                  title={content.speak}
+                >
+                  {"\uD83D\uDD0A"}
+                </button>
               </div>
             ))}
           </div>

@@ -128,33 +128,33 @@ const TEXT = {
     next: "Next",
   },
   ms: {
-    title: "Kesimpule Isi Penting : Sifat Bako",
-    leftTitle: "Pewarisan Ciri Manusia",
-    leftSub: "Diwarisi daripada ibu bapa kepada anak",
-    leftBubble: "Ciri yang Diwarisi",
-    leftBubbleDesc: "Contohnya bentuk muka,\nwarna kulit, bentuk badan",
-    rightTitle: "Ciri Dominan dan Resesif",
-    rightSub: "Bandingkan hasil pada haiwan dan tumbuhan",
-    tableHead1: "Beno Hidup",
-    tableHead2: "Gen Anok (F1)",
-    tableHead3: "Gen Cucu F2",
-    rabbit1: "Arnab bulu warno hite - sifat lebih",
-    rabbit2: "Arnab bulu warna putih - gen kughe",
-    plant1: "Pokok tingi warno meghoh jamu - gen lebih",
-    plant2: "Pokok renoh warno meghoh jamu - gen kughe ",
-    f1Text: "Jiko sifat lebih kahwin dengan sifat kughe, gen anok nok keluwar jadi gen lebih 100%",
-    f2Text: "Jika gen anok kahwin sendiri, gen cucu nok keluwar jadi gen kughe dale nisbah 3:1",
-    f1Dom: "Keluwar sifat lebih semuwo",
-    f2Dom: "Jadi  gen : lebih: kughe \ndale nisbah 3:1",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "เกอซีปูแล อีซี ปือติง: ซีฟะ บากอ ",
+    leftTitle: "ซีฟะ-ซีฟะ บากอ ยือนิฮ ออแร ",
+    leftSub: "วารีแซ ซีฟะ บากอ ดารี อีบู บาเปาะ ",
+    leftBubble: "ซีฟะ เฮาะ วารีแซ ",
+    leftBubbleDesc: " ซือปือตี ซีฟัตมูกอ  จาฮายอกูลิต รูปอ   ",
+    rightTitle: "ซีฟะ ลือเบะฮ กูวะ ดัน ซีฟะ กูแร กูวะ. ",
+    rightSub: "บาเน็ง บูวะแป ดาแล บีนาแต ดัน ตูมูแฮ ",
+    tableHead1: "บือนอ ฮีโดะ ",
+    tableHead2: "ยีน อาเนาะ (F1) ",
+    tableHead3: "ยีน จูจู (F2) ",
+    rabbit1: "อารือนะ บูลู จะ ฮีแต: ซีฟะ ลือ เบะฮ กูวะ. ",
+    rabbit2: "อารือนะ บูลู จะ ปูเตะฮ: ยีน กูแร กูวะ. ",
+    plant1: "ปอฮง ตีงี จะ แมเราะฮ ยามู: ยีน ลือเบะฮ กูวะ. ",
+    plant2: "ปอฮง รือเนาะฮ จะ เเมเราะฮ ยามู: ยีน กูแร กูวะ. ",
+    f1Text: "กาลู ซีฟะ ลือเบะฮ กูวะ กาเว็ง ดือ งา ซีฟะ กูแร, ยีน อาเนาะ ตูเบะ ยาดี ยีน ลือเบะฮ กูวะ ซือบาเญาะ 100% ",
+    f2Text: "กาลู ยีน อาเนาะ กาเว็ง ซือดีรี, ยีน จูจู เนาะ ตูเบะ ยาดี ยีน กูแร กูวะ ดาแล นิซบะฮ 3:1 ",
+    f1Dom: "ตูเบะ ซีฟะ ลือเบะฮ กูวะ ซือมอ ",
+    f2Dom: "ยาดี ยีน: ลือเบะฮ กูวะ : กูแร กูวะ ดาแล นิซบะฮ 3:1 ",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
   },
 };
 
 export default function P5GeneticsHumansSummary3() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
   const t = TEXT[lang];
   const familyRef = useRef(null);
   const topRefs = useRef([]);

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import LabLayout from "../../../../components/LabLayout";
@@ -23,14 +24,16 @@ const TEXT = {
     next: "Next",
   },
   ms: {
-    title: "Kesimpulae Hasil Kajiye",
+    title: "เกอซีปูแล ฮาเซ ปือจูบอแอ ",
     summary:
-      "Dari hasil kajiye, terdapat bahawo\nSifat hok ore bagi 2 jenih, yaitu:\n1.	Sifat bako\n2.	Sifat dari hasil belajar atau hok suka peribadi",
+      "ดารี ฮาเซ ปือจูบอแอ, บูเละฮ แตเงาะ กาตอ; \nซีฟะ ออแร บากี 2 ยือนิฮ, ยาอีตู \n1.	ซีฟะ บากอ. \n2.	ซีฟะ ดารี ฮาเซ ปืองาลาแม อาตาวอ เฮาะ ซูกอ ซือดีรี. ",
     listen: "Dengar rumusan",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ  ",
+    next: "ตือรุฮ  ",
   },
 };
+
+const MALAY_SUMMARY_AUDIO = "/audio/p5/24.1.mp3";
 
 const LANG_TO_VOICE = {
   th: "th-TH",
@@ -50,11 +53,39 @@ function speakText(text, lang) {
 export default function P5GeneticsHumansSummary() {
   const navigate = useNavigate();
   const { lang, setLang } = useP5GeneticsLang();
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
+  const audioRef = useRef(null);
   const t = TEXT[lang];
   const backLabel = `« ${t.back}`;
   const nextLabel = `${t.next} »`;
-  const speakSummary = () => speakText(t.summary, lang);
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
+  const speakSummary = () => {
+    stopAudio();
+
+    if (lang === "ms") {
+      const audio = new Audio(MALAY_SUMMARY_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
+    speakText(t.summary, lang);
+  };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <LabLayout title={t.title} showTeacher={false}>

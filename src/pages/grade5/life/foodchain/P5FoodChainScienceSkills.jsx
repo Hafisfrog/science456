@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
@@ -16,7 +16,7 @@ const CONTENT = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     speak: "ฟัง",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     heading: "Experiment 1",
@@ -30,25 +30,26 @@ const CONTENT = {
     back: "Back",
     next: "Next",
     speak: "Listen",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
-    heading: "Kajiye 1",
-    title: "Ghata Makene",
-    section: "Kemahire Proses Sains",
+    heading: "ปือจูบอแอ 1 ",
+    title: "ราตา มาแกแน ",
+    section: "กือมาฮีแร ดาแล โปรเซะฮ ปือจูบอแอ วิตายาซะ ",
     skills: [
-      "Kemahire Perati",
-      "Kemahire buwak dan menyampai Maklumat",
-      "Kemahire beri pendapat dari Maklumat",
+      "กือมาฮีแร ปือราตี ",
+      "กือมาฮีแร บูวะ ดัน บูวี มะลูมะ ",
+      "กือมาฮีแร บูวี ปาแนแง ดารี มะลูมะ ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     speak: "Dengar",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_SKILL_AUDIO = ["/audio/p5/4.1.mp3", "/audio/p5/4.2.mp3", "/audio/p5/4.3.mp3"];
 
 export default function P5FoodChainScienceSkills() {
   const navigate = useNavigate();
@@ -62,14 +63,22 @@ export default function P5FoodChainScienceSkills() {
       audioRef.current.currentTime = 0;
       audioRef.current = null;
     }
-    if (window.speechSynthesis) {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
   };
 
-  const speak = (text) => {
+  const speak = (text, audioSrc) => {
     try {
       stopAudio();
+
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       if (
         !text ||
         typeof window === "undefined" ||
@@ -88,6 +97,10 @@ export default function P5FoodChainScienceSkills() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
@@ -139,7 +152,7 @@ export default function P5FoodChainScienceSkills() {
                 </div>
                 <button
                   className="grid h-[clamp(36px,3.3vw,44px)] w-[clamp(36px,3.3vw,44px)] shrink-0 place-items-center rounded-[14px] border-none bg-[#f4fbef] text-lg shadow-[0_10px_18px_rgba(0,0,0,.13)] transition duration-150 hover:-translate-y-0.5 hover:bg-white max-[640px]:text-sm"
-                  onClick={() => speak(skill)}
+                  onClick={() => speak(skill, language === "ms" ? MALAY_SKILL_AUDIO[index] : undefined)}
                   type="button"
                   title={content.speak}
                 >

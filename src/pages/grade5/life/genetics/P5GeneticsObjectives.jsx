@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "../foodchain/FoodChainControls";
@@ -32,21 +32,22 @@ const CONTENT = {
     langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
   },
   ms: {
-    grade: "Kelah 5",
-    title: "Sifat Bakok",
-    section: "Tujuwe Pembelajare",
+    grade: "กือละฮ 5 ",
+    title: "ซีฟะ บากอ",
+    section: "ตูยูแว ปืมบือลายาแร ",
     objectives: [
-      "Buleh hurai sifat bako hok pinoh dari ibu bapak ko anak.",
-      "Buleh baneng sifat bako hok beno hidup.",
+      "บูเละฮ ฮูราย ซีฟะ บากอ เฮาะ ปีเนาะฮ ดารี อีบู บาเปาะ โกะ อาเนาะ ",
+      "บูเละฮ บาเนง ซีฟะ บากอ เฮาะ บือนอ ฮีโดะ ",
     ],
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
     speak: "Dengar",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_OBJECTIVE_AUDIO = ["/audio/p5/13.1.mp3", "/audio/p5/13.2.mp3"];
 
 export default function P5GeneticsObjectives() {
   const navigate = useNavigate();
@@ -65,9 +66,18 @@ export default function P5GeneticsObjectives() {
     }
   };
 
-  const speak = (text) => {
+  const speak = (text, index) => {
     try {
       stopAudio();
+
+      const audioSrc = lang === "ms" ? MALAY_OBJECTIVE_AUDIO[index] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       if (
         !text ||
         typeof window === "undefined" ||
@@ -86,6 +96,10 @@ export default function P5GeneticsObjectives() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-[100dvh] w-full overflow-x-hidden overflow-y-auto bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
@@ -137,7 +151,7 @@ export default function P5GeneticsObjectives() {
                   </div>
                   <button
                     className="grid h-[clamp(36px,3.3vw,44px)] w-[clamp(36px,3.3vw,44px)] shrink-0 place-items-center rounded-[14px] border-none bg-[#f4fbef] text-lg shadow-[0_10px_18px_rgba(0,0,0,.13)] transition duration-150 hover:-translate-y-0.5 hover:bg-white max-[640px]:text-sm"
-                    onClick={() => speak(objective)}
+                    onClick={() => speak(objective, index)}
                     type="button"
                     title={content.speak}
                   >

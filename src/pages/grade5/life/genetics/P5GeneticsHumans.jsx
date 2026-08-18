@@ -79,34 +79,34 @@ const TEXT = {
   },
   ms: {
     title: "Pewarisan Ciri Genetik Manusia",
-    topic: "Sifat-sifat Bako Hok Oghe",
-    tapImage: "Keterange : Pelajar keno pilih gama hok jadi sifat bako",
-    reset: "Set semula",
-    reveal: "Jawapan",
-    back: "Pusing semula",
-    next: "Teruh",
-    correct: "Betul",
-    incorrect: "Salah",
-    score: "Markah",
-    scoreLabel: "Markah",
-    selectedLabel: "Pilih Dah",
+    topic: "ซีฟะ-ซีฟะ บากอ ยือนิฮ ออแร ",
+    tapImage: "กือตือแรแง: อาเนาะ ซือกอเลาะฮ กือนอ ปีเละฮ กามา เฮาะ ยาดี ซีฟะ บากอ  ",
+    reset: "บูวะ มูลา",
+    reveal: "ยาวะแป",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
+    correct: "บือตุล",
+    incorrect: "ซาลาฮ",
+    score: "มารือกะฮ",
+    scoreLabel: "มารือกะฮ",
+    selectedLabel: "ปีเละฮ เดาะฮ: ",
     wrongItems: "Item yang Salah",
     unansweredItems: "Item Belum Dipilih",
     allCorrect: "Bagus, semua jawapan betul",
     close: "Tutup",
     traits: {
-      "straight-hair": "Ramuk Betu",
-      "double-eyelid": "Mato 2 Lapeh",
-      draw: "Suko Lukih Gama",
-      dimple: "Aado Lesung Pipi",
-      "no-dimple": "Tak Dok Lesung Pipi",
-      music: "Suko Main Gita",
-      "curly-hair": "Ramuk Pelok",
-      green: "Suko Warno Hija",
-      nose: "Hidung Macung",
-      tongue: "Buleh Gulung Lidoh",
-      sports: "Suko Main Suke",
-      "single-eyelid": "Mato Selapeh",
+      "straight-hair": "ราโมะ บือโต ",
+      "double-eyelid": "มาตอ ดูวอ ลา เปะฮ ",
+      draw: "ซูกอ ลูกิฮ กามา",
+      dimple: "อาดอ ลือซุง  ปีปี",
+      "no-dimple": "ตะเดาะ ลือซุง  ปีปี ",
+      music: "ซูกอ มา-อิง กีตา ",
+      "curly-hair": "ราโมะ ปือเลาะ ",
+      green: "ซูกอ จะ ฮียา ",
+      nose: "ฮีดง มาจง ",
+      tongue: "บูเละฮ กูลง ลี เดาะฮ ",
+      sports: "ซูกอ มา-อิง  ซูแก ",
+      "single-eyelid": "มาตอ ซือลา เปะฮ ",
     },
   },
 };
@@ -215,7 +215,7 @@ export default function P5GeneticsHumans() {
   const [showResults, setShowResults] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
   const t = TEXT[lang];
-  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+  const labels = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
   const backLabel = `« ${t.back}`;
   const nextLabel = `${t.next} »`;
   const hasAnswers = Object.keys(selectedTraits).length > 0;

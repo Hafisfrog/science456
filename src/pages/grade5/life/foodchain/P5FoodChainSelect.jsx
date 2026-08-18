@@ -89,7 +89,7 @@ const VOICE_LANG = {
 
 const UI_COPY = {
   th: {
-    languages: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    languages: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     activityBadge: "กิจกรรมฝึกเรียงลำดับห่วงโซ่อาหาร",
     pageTitle: "สร้างห่วงโซ่อาหารโดยเรียงลำดับการกินของสิ่งมีชีวิต",
     pageDescription:
@@ -130,7 +130,7 @@ const UI_COPY = {
     fillAllAlert: "กรุณาเติมคำตอบให้ครบทุกช่องก่อน",
   },
   en: {
-    languages: { th: "Thai", en: "English", ms: "Malay" },
+    languages: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     activityBadge: "Food chain ordering practice",
     pageTitle: "Build food chains by arranging the feeding order",
     pageDescription:
@@ -171,9 +171,9 @@ const UI_COPY = {
     fillAllAlert: "Please fill every slot before continuing",
   },
   ms: {
-    languages: { th: "Thai", en: "English", ms: "Melayu" },
+    languages: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     activityBadge: "Aktiviti susun rantai makanan",
-    pageTitle: "Bino ghata makene dengan caro susung ature make hok beno hidup",
+    pageTitle: "บูวะ ราตา มาแกแน ดืองา จารอ ซูซง, จารอ มาแก เฮาะ บือนอ ฮีโดะ.  ",
     pageDescription:
       "Klik slot yang masih kosong untuk memilih hidupan yang betul, kemudian semak jawapan pada langkah seterusnya.",
     legendPrompt: "Slot kelabu = petunjuk",
@@ -216,7 +216,7 @@ const UI_COPY = {
 const LANGUAGE_BUTTON_LABELS = {
   th: "ไทย",
   en: "อังกฤษ",
-  ms: "มลายู",
+  ms: "มลายูถิ่น",
 };
 
 const ANIMAL_TRANSLATIONS = {

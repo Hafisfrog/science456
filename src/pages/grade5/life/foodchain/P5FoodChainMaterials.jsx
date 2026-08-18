@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 
@@ -112,54 +112,69 @@ const PAGE_COPY = {
     next: "Next",
   },
   ms: {
-    title: "Eksperimen 5: Rantaian Makanan",
-    materials: "Bahan",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ปือจูบอแอ 5 ตาโยะ ; ราตาแย มาแกแน ",
+    materials: "อาละ-อาละ ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
-const LANGUAGE_LABELS = { th: "ไทย", ms: "มลายู", en: "อังกฤษ" };
+const LANGUAGE_LABELS = { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" };
+
+const MALAY_MATERIAL_AUDIO = {
+  rice: "/audio/p5/7.1.mp3",
+  "water-plant": "/audio/p5/7.2.mp3",
+  grasshopper: "/audio/p5/7.3.mp3",
+  "field-rat": "/audio/p5/7.4.mp3",
+  worm: "/audio/p5/7.5.mp3",
+  grass: "/audio/p5/7.6.mp3",
+  frog: "/audio/p5/7.7.mp3",
+  "small-fish": "/audio/p5/7.8.mp3",
+  snake: "/audio/p5/7.9.mp3",
+  hawk: "/audio/p5/7.10.mp3",
+  bird: "/audio/p5/7.11.mp3",
+  larva: "/audio/p5/7.12.mp3",
+};
 
 const topMaterials = [
   {
     key: "rice",
-    name: { th: "ข้าว", en: "Rice Plant", ms: "Padi" },
+    name: { th: "ข้าว", en: "Rice Plant", ms: "ปาดี" },
     img: "/images/p5/kaw.png",
     delay: "0s",
     duration: "3.2s",
   },
   {
     key: "water-plant",
-    name: { th: "พืชน้ำ", en: "Aquatic Plant", ms: "Tumbuhe Air" },
+    name: { th: "พืชน้ำ", en: "Aquatic Plant", ms: "ตูมูแฮ อา-เอ " },
     img: "/images/p5/lunamm.png",
     delay: "0.2s",
     duration: "3.5s",
   },
   {
     key: "grasshopper",
-    name: { th: "ตั๊กแตน", en: "Grasshopper", ms: "Belale" },
+    name: { th: "ตั๊กแตน", en: "Grasshopper", ms: " บือลาแล  " },
     img: "/images/p5/tag.png",
     delay: "0.4s",
     duration: "3.1s",
   },
   {
     key: "field-rat",
-    name: { th: "หนูนา", en: "Field Rat", ms: "Tikuh Bene" },
+    name: { th: "หนูนา", en: "Field Rat", ms: " ตีกุฮ บือแน " },
     img: "/images/p5/n.png",
     delay: "0.6s",
     duration: "3.6s",
   },
   {
     key: "worm",
-    name: { th: "หนอน", en: "Caterpillar", ms: "Ulak" },
+    name: { th: "หนอน", en: "Caterpillar", ms: "อูละ" },
     img: "/images/p5/non.png",
     delay: "0.8s",
     duration: "3.3s",
   },
   {
     key: "grass",
-    name: { th: "หญ้า", en: "Grass", ms: "Ruput" },
+    name: { th: "หญ้า", en: "Grass", ms: "รูปุ " },
     img: "/images/p5/ya.png",
     delay: "1s",
     duration: "3.7s",
@@ -169,42 +184,42 @@ const topMaterials = [
 const bottomMaterials = [
   {
     key: "frog",
-    name: { th: "กบ", en: "Frog", ms: "Katok" },
+    name: { th: "กบ", en: "Frog", ms: "กาเตาะ" },
     img: "/images/p5/gop.png",
     delay: "0.15s",
     duration: "3.4s",
   },
   {
     key: "small-fish",
-    name: { th: "ปลาเล็ก", en: "Small Fish", ms: "Ike Kecik" },
+    name: { th: "ปลาเล็ก", en: "Small Fish", ms: " อีแก กือจิ " },
     img: "/images/p5/pla.png",
     delay: "0.35s",
     duration: "3.2s",
   },
   {
     key: "snake",
-    name: { th: "งู", en: "Snake", ms: "Ula" },
+    name: { th: "งู", en: "Snake", ms: "อูลา" },
     img: "/images/p5/snack.png",
     delay: "0.55s",
     duration: "3.8s",
   },
   {
     key: "hawk",
-    name: { th: "เหยี่ยว", en: "Hawk", ms: "Helang" },
+    name: { th: "เหยี่ยว", en: "Hawk", ms: "บูรง แล" },
     img: "/images/p5/y.png",
     delay: "0.75s",
     duration: "3.3s",
   },
   {
     key: "bird",
-    name: { th: "นก", en: "Bird", ms: "Burung" },
+    name: { th: "นก", en: "Bird", ms: "บูรง" },
     img: "/images/p5/nog.png",
     delay: "0.95s",
     duration: "3.6s",
   },
   {
     key: "larva",
-    name: { th: "ลูกน้ำ", en: "Larva", ms: "Anok Jetik" },
+    name: { th: "ลูกน้ำ", en: "Larva", ms: "เกาะกะ " },
     img: "/images/p5/lunam.png",
     delay: "1.15s",
     duration: "3.1s",
@@ -216,13 +231,39 @@ const materialImageClass = "w-24 sm:w-28 md:w-32 lg:w-36 mx-auto drop-shadow-xl"
 export default function P5FoodChainMaterials() {
   const navigate = useNavigate();
   const [activeLang, setActiveLang] = useState("th");
+  const audioRef = useRef(null);
 
   const t = PAGE_COPY[activeLang];
   const getName = (item) => item.name[activeLang] || item.name.th;
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (isSpeechSupported()) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speakItem = (item) => {
+    stopAudio();
+
+    const audioSrc = activeLang === "ms" ? MALAY_MATERIAL_AUDIO[item.key] : undefined;
+    if (audioSrc) {
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     speakWithBestVoice(getName(item), activeLang);
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">

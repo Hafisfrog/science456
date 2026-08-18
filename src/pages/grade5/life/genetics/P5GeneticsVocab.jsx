@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainNavButtons } from "../foodchain/FoodChainControls";
@@ -6,11 +6,11 @@ import { useP5GeneticsLang } from "./p5GeneticsI18n";
 import "./P5GeneticsVocab.css";
 
 const VOCAB = [
-  { th: "ลักษณะทางพันธุกรรม", ms: "Sifat bako", en: "Genetic Traits" },
-  { th: "ลักษณะเด่น", ms: "Sifat lebih", en: "Dominant Trait" },
-  { th: "ลักษณะด้อย", ms: "Sifat kughe", en: "Recessive Trait" },
-  { th: "แอลลีล", ms: "Gen alil", en: "Allele" },
-  { th: "ปู่และย่า", ms: "Datok dan nenek", en: "Paternal Grandparents" },
+  { th: "ลักษณะทางพันธุกรรม", ms: "ซีฟะ บากอ", en: "Genetic Traits" },
+  { th: "ลักษณะเด่น", ms: "ซีฟะ ลือเบะฮ กูวะ ", en: "Dominant Trait" },
+  { th: "ลักษณะด้อย", ms: "ซีฟะ กูแร กูวะ", en: "Recessive Trait" },
+  { th: "แอลลีล", ms: "ยีน บือรือกู เฮาะ มือนือตู ซีฟะ บือนอ ฮีโดะ ", en: "Allele" },
+  { th: "ปู่และย่า", ms: "โตะ ยาแต ดืองา โตะ ตีนอ ", en: "Paternal Grandparents" },
 ];
 
 const CONTENT = {
@@ -39,24 +39,32 @@ const CONTENT = {
     langLabel: { th: "Thai", en: "English", ms: "Malay" },
   },
   ms: {
-    title: "Kosa Kato Sains Yang Menarek",
-    subtitle: "Tajuk : Sifat bako",
+    title: "เปอกาตอแอ วิตายาซะ เฮาะ กือนอ ตาฮู ",
+    subtitle: "ตาโยะ; ซีฟะ บากอ ",
     colTh: "Bahasa Thai",
     colMs: "Bahasa Melayu",
     colEn: "Bahasa Inggeris",
     colAudio: "Audio",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโน กือเละ",
+    next: "ตือรุฮ",
     speak: "Dengar",
     langLabel: { th: "Thai", en: "English", ms: "Melayu" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_VOCAB_AUDIO = [
+  "/audio/p5/14.1.mp3",
+  "/audio/p5/14.2.mp3",
+  "/audio/p5/14.3.mp3",
+  "/audio/p5/14.4.mp3",
+  "/audio/p5/14.5.mp3",
+];
 
 export default function P5GeneticsVocab() {
   const navigate = useNavigate();
   const { lang } = useP5GeneticsLang();
+  const audioRef = useRef(null);
   const content = CONTENT[lang] ?? CONTENT.th;
 
   const tableSpeech = useMemo(
@@ -68,10 +76,31 @@ export default function P5GeneticsVocab() {
     [content.title]
   );
 
-  const speak = (text, voiceKey = lang) => {
-    try {
-      if (!text || typeof window === "undefined" || !window.speechSynthesis) return;
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
+    }
+  };
+
+  const speak = (text, voiceKey = lang, index) => {
+    try {
+      stopAudio();
+
+      const audioSrc = voiceKey === "ms" ? MALAY_VOCAB_AUDIO[index] : undefined;
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!text || typeof window === "undefined" || !window.speechSynthesis) return;
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = VOICE_LANG[voiceKey] ?? VOICE_LANG.th;
       utterance.rate = 0.92;
@@ -80,6 +109,10 @@ export default function P5GeneticsVocab() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="p5gv-page">
@@ -109,7 +142,7 @@ export default function P5GeneticsVocab() {
             </tr>
           </thead>
           <tbody>
-            {VOCAB.map((row) => (
+            {VOCAB.map((row, index) => (
               <tr key={row.en}>
                 <td className="p5gv-cellTh">{row.th}</td>
                 <td className="p5gv-cellMs">{row.ms}</td>
@@ -118,7 +151,7 @@ export default function P5GeneticsVocab() {
                   <button className="p5gv-audioBtn th" type="button" onClick={() => speak(row.th, "th")}>
                     TH
                   </button>
-                  <button className="p5gv-audioBtn ms" type="button" onClick={() => speak(row.ms, "ms")}>
+                  <button className="p5gv-audioBtn ms" type="button" onClick={() => speak(row.ms, "ms", index)}>
                     MY
                   </button>
                   <button className="p5gv-audioBtn en" type="button" onClick={() => speak(row.en, "en")}>

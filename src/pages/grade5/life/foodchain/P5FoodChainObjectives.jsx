@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher, FoodChainNavButtons } from "./FoodChainControls";
@@ -15,7 +15,7 @@ const CONTENT = {
     back: "ย้อนกลับ",
     next: "ต่อไป",
     speak: "ฟัง",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     title: "Food Chain",
@@ -28,24 +28,25 @@ const CONTENT = {
     back: "Back",
     next: "Next",
     speak: "Listen",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   ms: {
-    title: "Ghata Makene",
-    section: "Tujuwe Pembelajare",
+    title: "ราตา มาแกแน ",
+    section: "ตูยูแว ปืมบือลายาแร ",
     objectives: [
-      "Buleh hurai hubunge hok beno hidup ngan beno hidup dale betuk ghata makene.",
-      "Bagi jenih beno hidup jadi oghe buwak ngan oghe guno.",
-      "Buleh tulis ghata makene dale betuk gama.",
+      "บูเละฮ ฮูราย ฮูบูแง บือนอ เฮาะ ฮีโดะ ดืองา บือนอ ฮีโดะ ดาแล บือโตะ ราตา มาแกแน ",
+      "บากี ยือนิฮ บือนอ ฮีโดะ เฮาะ มานอ ยาดี ออแร บูวะ ดัน ออแร กูนอ ",
+      "บูเละฮ บูวะ กามา ราตา มาแกแน ",
     ],
-    back: "Pusing semula",
-    next: "Teruh", 
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ", 
     speak: "Dengar",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
+const MALAY_OBJECTIVE_AUDIO = ["/audio/p5/3.1.mp3", "/audio/p5/3.2.mp3", "/audio/p5/3.3.mp3"];
 
 export default function P5FoodChainObjectives() {
   const navigate = useNavigate();
@@ -59,14 +60,22 @@ export default function P5FoodChainObjectives() {
       audioRef.current.currentTime = 0;
       audioRef.current = null;
     }
-    if (window.speechSynthesis) {
+    if (typeof window !== "undefined" && window.speechSynthesis) {
       window.speechSynthesis.cancel();
     }
   };
 
-  const speak = (text) => {
+  const speak = (text, audioSrc) => {
     try {
       stopAudio();
+
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       if (
         !text ||
         typeof window === "undefined" ||
@@ -85,6 +94,10 @@ export default function P5FoodChainObjectives() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-[100dvh] w-full overflow-x-hidden overflow-y-auto bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat font-['Prompt',sans-serif]">
@@ -132,7 +145,7 @@ export default function P5FoodChainObjectives() {
                   </div>
                   <button
                     className="grid h-[clamp(36px,3.3vw,44px)] w-[clamp(36px,3.3vw,44px)] shrink-0 place-items-center rounded-[14px] border-none bg-[#f4fbef] text-lg shadow-[0_10px_18px_rgba(0,0,0,.13)] transition duration-150 hover:-translate-y-0.5 hover:bg-white max-[640px]:text-sm"
-                    onClick={() => speak(objective)}
+                    onClick={() => speak(objective, language === "ms" ? MALAY_OBJECTIVE_AUDIO[index] : undefined)}
                     type="button"
                     title={content.speak}
                   >

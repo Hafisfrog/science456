@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import { FoodChainLanguageSwitcher } from "./FoodChainControls";
@@ -15,7 +15,7 @@ const UI = {
     subtitle: "เลือกเรื่อง",
     back: "ย้อนกลับ",
     // next: "ต่อไป",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   },
   en: {
     grade: "Grade 5",
@@ -24,30 +24,53 @@ const UI = {
     subtitle: "Select a topic",
     back: "Back",
     // next: "Next",
-    langLabel: { th: "Thai", en: "English", ms: "Malay" },
+    langLabel: { th: "Thai", en: "English", ms: "มลายูถิ่น" },
   },
   ms: {
-    grade: "Sains Kelah 5",
-    experiment: "Sains Tahun 5",
-    lesson: "Ghata Makene",
-    subtitle: "Pilih Tajuk",
-    back: "Pusing semula",
+    grade: "วิตายาซะ กือละฮ 5",
+    experiment: "วิตายาซะ กือละฮ 5",
+    lesson: "ราตา มาแกแน",
+    subtitle: "ปีเละฮ ตาโยะ",
+    back: "ฮูโนกือเละ",
     // next: "Seterusnya",
-    langLabel: { th: "Thai", en: "English", ms: "Melayu" },
+    langLabel: { th: "Thai", en: "English", ms: "มลายูถิ่น" },
   },
 };
 
 const VOICE_LANG = { th: "th-TH", en: "en-US", ms: "ms-MY" };
-const LANGUAGE_BUTTON_LABELS = { th: "ไทย", ms: "มลายู", en: "อังกฤษ" };
+const LANGUAGE_BUTTON_LABELS = { th: "ไทย", ms: "มลายูถิ่น", en: "อังกฤษ" };
+const LESSON_AUDIO = { ms: "/audio/p5/2.1.mp3" };
 
 export default function P5FoodChainIntro() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
   const content = UI[language] ?? UI.th;
   const nextPath = "/p5/life/foodchain/objectives";
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speak = (text) => {
     try {
+      stopAudio();
+
+      const audioSrc = LESSON_AUDIO[language];
+      if (audioSrc) {
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       if (
         !text ||
         typeof window === "undefined" ||
@@ -56,7 +79,6 @@ export default function P5FoodChainIntro() {
       ) {
         return;
       }
-      window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = VOICE_LANG[language] ?? "th-TH";
       utterance.rate = 0.95;
@@ -66,6 +88,10 @@ export default function P5FoodChainIntro() {
       // ignore speech errors
     }
   };
+
+  useEffect(() => {
+    return () => stopAudio();
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[url('/images/p5/back.png')] bg-cover bg-center bg-no-repeat">

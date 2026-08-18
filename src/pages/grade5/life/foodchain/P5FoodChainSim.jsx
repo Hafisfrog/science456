@@ -109,7 +109,7 @@ const UI = {
   }
 };
 
-const LANGUAGE_LABELS = { th: "ไทย", en: "อังกฤษ", ms: "มลายู" };
+const LANGUAGE_LABELS = { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" };
 
 const getAnimalLabel = (name, language) =>
   ANIMAL_LABELS[name]?.[language] ?? ANIMAL_LABELS[name]?.th ?? name;
