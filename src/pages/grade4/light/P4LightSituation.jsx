@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
@@ -29,36 +29,63 @@ const CONTENT = {
     next: "Next",
   },
   ms: {
-    title: "Keadae Masaalah",
+    title: "เกออาดาแอ มาซออาเลาะฮ",
     paragraphs: [
-      'Murid tera jadi “Ahli Sains” keno ghoyak beno hok duk dale kotok.',
-      "Murid keno duk dale bilik sains hok gelak. Ado kotok pelek 3 kotok, tiyak-tiyak kotok ado beno tutup di lube sebeloh depe.",
-      "Murid keno perati cahayo hok temuh beno setiyak jenih, untuk tengok kato dale kotok ado beno gapo.",
+      'เฟาะกีตอ ตือรา ยาดี "อะฮลี วิตายาซะ" กือนอ รอยะ บือนอ เฮาะ โดะ ดาแล กอเตาะ.',
+      "อาเนาะเฟาะกีตอ กือนอ โดะ ดาแล บีเละ วิตายาซะ เฮาะ กือละ. อาดอ กอเตาะ ปีและห 3 กอเตาะ, ตียะ-ตียะ กอเตาะ อาดอ บือนอ กาโตะ ดี ลูแบ ซือบือเลาะฮ ดือแป.",
+      "เฟาะกีตอ กือนอ ปือราตีจายอ เฮาะ ลาลูบือนอ ตียะตียะ ยือนิฮ, อูโตะ แตเงาะ กาตอ ดาแล กอเตาะ อาดอ บือนอ กาปอ.",
     ],
     speakText:
       "Situasi masalah: murid bertindak sebagai saintis dan memerhati cahaya melalui bahan yang berbeza untuk mengenal pasti objek dalam kotak misteri.",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
+};
+
+const MALAY_AUDIO = {
+  title: "/audio/p4/33.1.mp3",
+  paragraphs: "/audio/p4/33.2.mp3",
 };
 
 export default function P4LightSituation() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
   const content = CONTENT[language] ?? CONTENT.th;
 
-  const speak = (text) => {
-    try {
-      if (!text || !window.speechSynthesis) return;
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
       window.speechSynthesis.cancel();
+    }
+  };
+
+  const speak = (text, audioKey) => {
+    try {
+      stopAudio();
+
+      if (language === "ms") {
+        const audioSrc = MALAY_AUDIO[audioKey];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!text || !window.speechSynthesis) return;
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language === "th" ? "th-TH" : language === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = language === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore
@@ -81,7 +108,7 @@ export default function P4LightSituation() {
           <h1 className="text-3xl font-extrabold text-blue-700 sm:text-4xl">{content.title}</h1>
           <button
             type="button"
-            onClick={() => speak(content.title)}
+            onClick={() => speak(content.title, "title")}
             className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-base text-blue-700 shadow-[0_4px_10px_rgba(14,116,144,0.2)] transition hover:bg-blue-200"
             aria-label="Speak title"
           >
@@ -97,7 +124,7 @@ export default function P4LightSituation() {
           ))}
           <button
             type="button"
-            onClick={() => speak(content.paragraphs.join(" "))}
+            onClick={() => speak(content.paragraphs.join(" "), "paragraphs")}
             className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-100 text-base text-sky-700 shadow-[0_4px_10px_rgba(14,116,144,0.2)] transition hover:bg-sky-200"
             aria-label="Speak content"
           >

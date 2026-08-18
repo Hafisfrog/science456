@@ -4,6 +4,11 @@ import HomeButton from "../../../HomeButton";
 import "./P4GravityExp2Action.css";
 import "../exp1/P4GravityExp1Materials.css";
 
+const MALAY_ACTION_AUDIO = {
+  chooseTitle: "/audio/p4/19.1.mp3",
+  recordTitle: "/audio/p4/19.2.mp3",
+};
+
 export default function P4GravityExp2Action() {
   const navigate = useNavigate();
 
@@ -12,15 +17,25 @@ export default function P4GravityExp2Action() {
 
   const [lang, setLang] = useState("th");
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+  };
 
   const speak = (msg) => {
     try {
+      stopAudio();
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
 
       const utterance = new SpeechSynthesisUtterance(msg);
-      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
       speakingRef.current = true;
       setIsSpeaking(true);
 
@@ -42,12 +57,41 @@ export default function P4GravityExp2Action() {
 
   const stopSpeak = () => {
     try {
-      if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
+      stopAudio();
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
       speakingRef.current = false;
       setIsSpeaking(false);
     } catch {
       // ignore speech errors
+    }
+  };
+
+  const speakPart = (msg, audioKey) => {
+    try {
+      if (lang === "ms") {
+        stopSpeak();
+        const audioSrc = MALAY_ACTION_AUDIO[audioKey];
+        if (!audioSrc) return;
+        speakingRef.current = true;
+        setIsSpeaking(true);
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingRef.current = false;
+          setIsSpeaking(false);
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+          setIsSpeaking(false);
+        });
+        return;
+      }
+
+      speak(msg);
+    } catch {
+      // ignore audio errors
     }
   };
 
@@ -86,7 +130,7 @@ export default function P4GravityExp2Action() {
         speak: "ฟัง",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         placedOnScale: "วางบนเครื่องชั่ง",
         recordedMark: "บันทึกแล้ว",
         stop: "หยุดเสียง",
@@ -126,7 +170,7 @@ export default function P4GravityExp2Action() {
         speak: "Listen",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         placedOnScale: "Placed on scale",
         recordedMark: "Recorded",
         stop: "Stop audio",
@@ -135,42 +179,42 @@ export default function P4GravityExp2Action() {
       },
       ms: {
         topTitle:
-          "Buwak kajiye sebenar: pilih beno → letok atah timenge spring → catat nilai beghak",
-        chooseTitle: "Pilih alat/beno",
+          "บูวะ ปือจูบอแอ ซือบือนา; ปีเละฮ บือนอ → ลือเตาะ อาตะฮ ตีแมแง สปริง → ตานอ บือระ บือราปอ",
+        chooseTitle: "ปีเละฮ อาละ-อาละ / บือนอ",
         // chooseSub: "Pilih satu keping untuk diletakkan pada penimbang",
-        selected: "Beno hak pilih",
-        mass: "Jisim",
-        weight: "Berat",
+        selected: "บือนอ เฮาะ ปีเละฮ",
+        mass: "บือระบือนอ",
+        weight: "บือระ",
         // hint: "Berat bergantung pada jisim dan graviti Bumi.",
-        recordTitle: "Catat hasil",
+        recordTitle: "ตานอ ฮาเซ",
         // recordSub: "Simpan nilai untuk perbandingan",
-        colObj: "Beno",
-        colMass: "Jisim",
-        colW: "Beghak",
-        empty: "Tidok ado maklumat.\nTeka \"Catat nilai beghak \" untuk tamoh bagheh.",
-        save: "+ Simpan berat",
-        clear: "Set semula jadwal",
-        viewAll: "Tengok hasil semuwo",
-        back: "Pusing semula",
-        next: "Teruh  ",
+        colObj: "บือนอ",
+        colMass: "จีซีม",
+        colW: "บือระ",
+        empty: "ยัง ตีเดาะ อาดอ",
+        save: "+ ซิมปัน บือระ",
+        clear: "บูวะ เซอมูลา ยาดูวา",
+        viewAll: "แตเงาะ ฮาเซ สือมูวอ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         note:
           "Pilih dan rekod beberapa keping supaya anda dapat melihat bahawa jisim yang lebih besar memberi berat yang lebih besar.",
-        groupBall: "Bola",
-        groupBocce: "Buwoh Petong",
-        groupFeather: "Bulu Burung",
-        piece1: "Beno yang 1",
-        piece2: "Beno yang 2",
-        piece3: "Beno yang 3",
+        groupBall: "บอลา",
+        groupBocce: "บูเวาะฮ เปต็อง",
+        groupFeather: "บูลู บูรง",
+        piece1: "บือนอ เฮาะ 1",
+        piece2: "บือนอ เฮาะ 2",
+        piece3: "บือนอ เฮาะ 3",
         approxMass: "Anggaran jisim",
         speakAll: "Dengar satu halaman",
         speak: "Dengar",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         placedOnScale: "Diletakkan pada penimbang",
         recordedMark: "Direkod",
         stop: "Henti audio",
-        unitNewton: "newton",
+        unitNewton: "นิวต่อน",
         noteLabel: "Nota",
       },
     }),
@@ -363,7 +407,7 @@ export default function P4GravityExp2Action() {
               <button
                 className="exp2a-miniIcon"
                 type="button"
-                onClick={() => speak(`${t.chooseTitle}`)}
+                onClick={() => speakPart(`${t.chooseTitle}`, "chooseTitle")}
                 title={t.speak}
                 aria-label={t.speak}
                 disabled={isSpeaking}
@@ -501,7 +545,7 @@ export default function P4GravityExp2Action() {
               <button
                 className="exp2a-miniIcon"
                 type="button"
-                onClick={() => speak(`${t.recordTitle}`)}
+                onClick={() => speakPart(`${t.recordTitle}`, "recordTitle")}
                 title={t.speak}
                 aria-label={t.speak}
                 disabled={isSpeaking}

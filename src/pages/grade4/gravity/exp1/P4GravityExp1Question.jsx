@@ -1,10 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
+
+const MALAY_QUESTION_AUDIO = "/audio/p4/10.1.mp3";
+const MALAY_START_AUDIO = "/audio/p4/11.1.mp3";
 
 export default function P4GravityExp1Question() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const BACK_PATH = "/p4/gravity/exp1/steps";
   const NEXT_PATH = "/p4/gravity/exp1/action";
@@ -21,7 +25,7 @@ export default function P4GravityExp1Question() {
         soundTitle: "ฟังเสียง",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
       en: {
         title: "Think & Ask",
@@ -33,31 +37,70 @@ export default function P4GravityExp1Question() {
         soundTitle: "Sound",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
       ms: {
-        title: "Pertanyae yang menarek",
-        q: "Kalu lepah beno, beno nok geghok ko aghoh mano?\nApo dayo buwakwi beno jatuh ko tanoh?",
-        hintBtn: "Mari cari jawapan",
-        startBtn: "Mula kajiye",
-        backBtn: "« Pusing semula",
-        nextBtn: "Teruh »",
+        title: "ซออาแล ปากะ ปีเก",
+        q: "กาลู ลือปะฮ บือนอ, บือนอ เนาะ กือเราะ โกะ ยาแล มานอ?\nกาปอ บูวะ วี บือนอ ตู ยาโตะฮ ตาเนาะฮ?",
+        // hintBtn: "Mari cari jawapan",
+        startBtn: "มูลา บูวะ ปือจูบอแอ",
+        backBtn: "« ฮูโนกือเละ",
+        nextBtn: "ตือรุฮ »",
         soundTitle: "Bunyi",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
     };
   }, []);
 
   const t = content[lang];
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const playQuestionAudio = () => {
     try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audio = new Audio(MALAY_QUESTION_AUDIO);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(`${t.title}\n${t.q}`);
-      utter.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utter.lang = lang === "th" ? "th-TH" : "en-US";
+      window.speechSynthesis.speak(utter);
+    } catch {
+      // ignore
+    }
+  };
+
+  const playStartAudio = () => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audio = new Audio(MALAY_START_AUDIO);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
+      const utter = new SpeechSynthesisUtterance(t.startBtn);
+      utter.lang = lang === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(utter);
     } catch {
       // ignore
@@ -65,7 +108,7 @@ export default function P4GravityExp1Question() {
   };
 
   const handleStart = () => {
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    stopAudio();
     navigate(NEXT_PATH);
   };
 
@@ -74,7 +117,7 @@ export default function P4GravityExp1Question() {
   };
 
   const goBack = () => {
-    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    stopAudio();
     navigate(BACK_PATH);
   };
 
@@ -158,10 +201,17 @@ export default function P4GravityExp1Question() {
           </div> */}
         </div>
 
-        <button
+        <div
           className="absolute left-1/2 top-[54%] z-[12] flex w-[min(380px,24vw)] -translate-x-1/2 flex-col items-center gap-4 rounded-[28px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,.98),rgba(241,247,255,.96))] px-6 py-5 text-slate-900 shadow-[0_18px_40px_rgba(15,23,42,.22)] transition hover:-translate-x-1/2 hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(15,23,42,.28)] active:translate-y-[1px] max-[1100px]:w-[min(350px,28vw)] max-[900px]:top-[62%] max-[900px]:w-[min(320px,32vw)] max-[700px]:top-[55%] max-[700px]:w-[min(280px,calc(100%-40px))] max-[700px]:gap-3 max-[700px]:rounded-[24px] max-[700px]:px-5 max-[700px]:py-4"
           onClick={handleStart}
-          type="button"
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              handleStart();
+            }
+          }}
+          role="button"
+          tabIndex={0}
         >
           <div className="flex h-[74px] w-[74px] items-center justify-center rounded-full bg-[linear-gradient(180deg,#dbeafe,#c7dbff)] text-[36px] font-black text-slate-900 shadow-[inset_0_-6px_0_rgba(148,163,184,.35),0_8px_16px_rgba(148,163,184,.20)] max-[700px]:h-[62px] max-[700px]:w-[62px] max-[700px]:text-[30px]">
             {"\u25B6"}
@@ -169,7 +219,7 @@ export default function P4GravityExp1Question() {
           <div className="text-center text-[26px] font-black leading-none tracking-[-0.02em] text-slate-900 max-[900px]:text-[22px] max-[700px]:text-[18px]">
             {t.startBtn}
           </div>
-        </button>
+        </div>
 
         <div className="absolute bottom-[18px] right-[18px] z-[7] flex items-center gap-3 max-[720px]:left-[12px] max-[720px]:right-[12px] max-[720px]:bottom-[12px] max-[720px]:gap-2">
           <button

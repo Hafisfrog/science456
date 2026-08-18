@@ -1,9 +1,34 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+const VOICE_MAP = {
+  th: "th-TH",
+  en: "en-US",
+  ms: "ms-MY",
+};
+
+const MALAY_GRAVITY_CARD_AUDIO = [
+  "/audio/p4/3.1.mp3",
+  "/audio/p4/3.2.mp3",
+  "/audio/p4/3.3.mp3",
+];
+
+function speakText(text, lang) {
+  if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = lang;
+  utterance.rate = 0.95;
+
+  window.speechSynthesis.speak(utterance);
+}
 
 export default function P4Gravity() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const copy = useMemo(() => {
     return {
@@ -19,7 +44,7 @@ export default function P4Gravity() {
         exp3Desc: "แรงดึงดูดของโลกกับแรงดึงดูดของดวงจันทร์",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
       en: {
         title: "Earth's Gravity",
@@ -33,26 +58,62 @@ export default function P4Gravity() {
         exp3Desc: "Earth's Gravity vs Moon's Gravity",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
       ms: {
-        title: "Dayo Tarik Bumi",
-        sub: "Pilih Kajiye",
-        back: "Pusing semula",
-        exp1Title: "Kajiye 1",
-        exp1Desc: "Hasil Dayo Tarik",
-        exp2Title: "Kajiye 2",
-        exp2Desc: "Dayo Tarekke Bumi dengan Beghak Beno",
-        exp3Title: "Kajiye 3",
-        exp3Desc: "Dayo Tarekke Bumi dengan Dayo Tarekke Bule",
+        title: "แร็ง บูมี ตาเระ บือนอ",
+        sub: "ปีเละฮ ปือจูบอแอ",
+        back: "ฮูโนกือเละ",
+        exp1Title: "ปือจูบอแอ 1",
+        exp1Desc: "ฮาเซ แร็ง บูมี ตาเระ บือนอ",
+        exp2Title: "ปือจูบอแอ 2",
+        exp2Desc: "แร็ง บูมี ตาเระ บือนอ ดืองา บือระ เฮาะ บือนอ",
+        exp3Title: "ปือจูบอแอ 3",
+        exp3Desc: "แร็ง บูมี ตาเระ บือนอ ดืองาแร็ง บูแล ตาเระ บือนอ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
       },
     };
   }, []);
 
   const t = copy[lang];
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const playCardAudio = useCallback(
+    (text, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_GRAVITY_CARD_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(text, VOICE_MAP[lang]);
+    },
+    [lang, stopAudio]
+  );
 
   const cardClass =
     "cursor-pointer overflow-hidden rounded-[22px] bg-white shadow-[0_10px_20px_rgba(0,0,0,.08)] transition duration-150 hover:-translate-y-1.5 hover:shadow-[0_18px_30px_rgba(0,0,0,.14)]";
@@ -114,6 +175,18 @@ export default function P4Gravity() {
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp1Title}</div>
               <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp1Desc}</div>
+              <button
+                type="button"
+                className="mt-4 rounded-[14px] bg-[#e0f2fe] px-4 py-2 text-[18px] font-extrabold text-[#1e3a8a] shadow-[0_6px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-0.5 hover:bg-[#bfdbfe]"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  playCardAudio(`${t.exp1Title} ${t.exp1Desc}`, 0);
+                }}
+                aria-label={t.exp1Title}
+                title={t.exp1Title}
+              >
+                {"\u{1F50A}"}
+              </button>
             </div>
           </div>
 
@@ -122,6 +195,18 @@ export default function P4Gravity() {
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp2Title}</div>
               <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp2Desc}</div>
+              <button
+                type="button"
+                className="mt-4 rounded-[14px] bg-[#e0f2fe] px-4 py-2 text-[18px] font-extrabold text-[#1e3a8a] shadow-[0_6px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-0.5 hover:bg-[#bfdbfe]"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  playCardAudio(`${t.exp2Title} ${t.exp2Desc}`, 1);
+                }}
+                aria-label={t.exp2Title}
+                title={t.exp2Title}
+              >
+                {"\u{1F50A}"}
+              </button>
             </div>
           </div>
 
@@ -130,6 +215,18 @@ export default function P4Gravity() {
             <div className="p-4">
               <div className="text-[30px] font-extrabold text-gray-900 max-[900px]:text-[26px] max-[640px]:text-[22px]">{t.exp3Title}</div>
               <div className="mt-2 text-[18px] font-medium text-gray-700 max-[900px]:text-[16px] max-[640px]:text-[15px]">{t.exp3Desc}</div>
+              <button
+                type="button"
+                className="mt-4 rounded-[14px] bg-[#e0f2fe] px-4 py-2 text-[18px] font-extrabold text-[#1e3a8a] shadow-[0_6px_14px_rgba(0,0,0,.12)] transition hover:-translate-y-0.5 hover:bg-[#bfdbfe]"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  playCardAudio(`${t.exp3Title} ${t.exp3Desc}`, 2);
+                }}
+                aria-label={t.exp3Title}
+                title={t.exp3Title}
+              >
+                {"\u{1F50A}"}
+              </button>
             </div>
           </div>
         </div>

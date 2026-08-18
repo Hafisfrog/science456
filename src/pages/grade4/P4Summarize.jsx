@@ -2,8 +2,6 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./P4Summarize.css";
 
-const SPEAKER_ICON = "\u{1F50A}";
-
 export default function P4Summarize() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -53,7 +51,7 @@ export default function P4Summarize() {
         distanceFar: "ระยะไกล\nแรงโน้มถ่วงน้อย",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         back: "ย้อนกลับ",
         next: "จบบทเรียน",
         // listenAll: "ฟังทั้งหมด",
@@ -88,44 +86,44 @@ export default function P4Summarize() {
         distanceFar: "Far\nWeaker gravity",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         back: "Back",
         next: "Next",
         // listenAll: "Listen all",
       },
       ms: {
-        title: "Kesimpule Isi Peting: Dayo Tarekke Bumi",
-        leftTitle: "Hasil Hok Dayo Tarek",
-        rightTitle: "Faktor Hok Ngaruh Ko Dayo Tarekke",
+        title: "กือซีปูแล อีซี เปอติง: แร็ง บูมี ตาเระ บือนอ",
+        leftTitle: "ฮาเซ แร็ง ตาเระ บูมี",
+        rightTitle: "ซือบะ เฮาะ วี กือแซ ปาดอ แร็ง ตาเระ บือนอ",
         leftBlocks: [
           {
-            title: "Sentiasa buwakwi semuwo beno jatuh ko bumi",
-            body: "Dayo tarekke semuwo beno cari pusat bumi.",
+            title: "บูวะ วี ตียะ บือนอ ยาโตะฮ โกะ บูมี เซาะมอ",
+            body: "ยาดี แร็ง ตาเระ ตียะ ๆ มาโซะ สารี ปูซัต บูมี",
           },
           {
-            title: "Buwakwi beno ado nilai beghak",
-            body: "Buleh ukur nilai beghak hok beno dengan guno timenge spring.",
+            title: "บูวะ วี บือนอ ตู บือระ",
+            body: "บูเละฮ อูโก บือระ บือนอ ดืองา กูนอ แกโล สปริง",
           },
           {
-            title: "Buwakwi kito dan beno lain-lain buleh duduk atah bumi",
-            body: "Tarek segalo beno tokse wi naye naik ko langit.",
+            title: "บูวะ วี กีตอ ดืองา บือนอ ลา-เอ็ง บูเละฮ ดูโดะ อาตะฮ บูมี",
+            body: "ตาเระ ซือมอ บือนอ เตาะเซ วี นาแย นา-อิ โกะ อาตะฮ ลางิ",
           },
         ],
-        massTitle: "Jisim Hok Beno",
-        massBody: "Beno hok jisim banyok ado dayo tarekke banyok daripado beno hok ado jisim sikit.",
-        massLeftTop: "Jisim banyok",
-        massLeftBottom: "Dayo tarekke banyok",
-        massRightTop: "Jisim sikit",
-        massRightBottom: "Dayo tarekke sikit",
-        distanceTitle: "Jaghok jauh dari pusat bumi",
-        distanceBody: "Kalu beno duduk jauh dari pusat bumi lebih banyok, dayo tarek nok turun sikit.",
-        distanceNear: "Jaghok Dekat\nDayo Tarek",
-        distanceFar: "Jaghok Jauh\nDayo Tarek Sikit",
+        massTitle: "จีซีม บือนอ",
+        massBody: "บือนอ จีซีม บาเยาะ อาดอ ตาเระ บาเยาะ ดารีอาปอ บือนอ เฮาะ อาดอ จีซีม ซีกิ",
+        massLeftTop: "จีซีม บือนอ บาเญาะ",
+        massLeftBottom: "แร็ง ตาเระ บือนอ บาเญาะ ",
+        massRightTop: "จีซีม บือนอ ซีกิ",
+        massRightBottom: "แร็ง ตาเระ บือนอ ซีกิ",
+        distanceTitle: "ยาเราะ ยา-โอะฮ ดารี ปูซะ บูมี",
+        distanceBody: "กาลู บือนอ ดูโดะ ยา-โอะฮ ดารี ปูซะ บูมี บาเญาะ,แร็ง ตาเระ บือนอ เนาะ กูแร ซีกิ",
+        distanceNear: "ยาเราะ เดอกัต\nแฆง ตาแฆะ บือนอ บาญอ",
+        distanceFar: "ยาเราะ ยา-โอะฮ\nแร็ง ตาเระ บือนอ ซีกิ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
-        back: "Pusing semula ",
-        next: "Teruh",
+        chipMs: "มลายูถิ่น",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         // listenAll: "Dengar semua",
       },
     }),
@@ -133,26 +131,6 @@ export default function P4Summarize() {
   );
 
   const t = content[lang];
-
-  const speak = (text) => {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
-    window.speechSynthesis.speak(utterance);
-  };
-
-  const renderSpeakButton = (text) => (
-    <button
-      className="p4sum-inlineSpeak"
-      type="button"
-      onClick={() => speak(text)}
-      title={t.listenAll}
-      // aria-label={t.listenAll}
-    >
-      {SPEAKER_ICON}
-    </button>
-  );
 
   return (
     <div className="p4sum-page">
@@ -172,7 +150,6 @@ export default function P4Summarize() {
               <div className="p4sum-copy">
                 <h2>{t.leftBlocks[0].title}</h2>
                 <p>{t.leftBlocks[0].body}</p>
-                {renderSpeakButton(`${t.leftBlocks[0].title}. ${t.leftBlocks[0].body}`)}
               </div>
             </article>
 
@@ -183,7 +160,6 @@ export default function P4Summarize() {
               <div className="p4sum-copy">
                 <h3>{t.leftBlocks[1].title}</h3>
                 <p>{t.leftBlocks[1].body}</p>
-                {renderSpeakButton(`${t.leftBlocks[1].title}. ${t.leftBlocks[1].body}`)}
               </div>
             </article>
 
@@ -194,7 +170,6 @@ export default function P4Summarize() {
               <div className="p4sum-copy">
                 <h3>{t.leftBlocks[2].title}</h3>
                 <p>{t.leftBlocks[2].body}</p>
-                {renderSpeakButton(`${t.leftBlocks[2].title}. ${t.leftBlocks[2].body}`)}
               </div>
             </article>
           </section>
@@ -212,7 +187,6 @@ export default function P4Summarize() {
               <div className="p4sum-copy p4sum-copy-right">
                 <h2>{t.massTitle}</h2>
                 <p>{t.massBody}</p>
-                {renderSpeakButton(`${t.massTitle}. ${t.massBody}`)}
               </div>
 
               <div className="p4sum-massDiagram">
@@ -232,7 +206,6 @@ export default function P4Summarize() {
               <div className="p4sum-copy p4sum-copy-right">
                 <h3>{t.distanceTitle}</h3>
                 <p>{t.distanceBody}</p>
-                {renderSpeakButton(`${t.distanceTitle}. ${t.distanceBody}`)}
               </div>
 
               <div className="p4sum-distanceDiagram">
@@ -285,20 +258,14 @@ export default function P4Summarize() {
         <button
           className="rounded-[18px] bg-white/92 px-[18px] py-[14px] text-[20px] font-black text-slate-900 shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[10px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"
-          onClick={() => {
-            window.speechSynthesis?.cancel();
-            navigate(-1);
-          }}
+          onClick={() => navigate(-1)}
         >
           « {t.back}
         </button>
         <button
           className="rounded-[18px] bg-[linear-gradient(135deg,#ef4444,#b91c1c)] px-[18px] py-[14px] text-[20px] font-black text-white shadow-[0_22px_46px_rgba(0,0,0,.22)] transition hover:-translate-y-0.5 hover:shadow-[0_28px_56px_rgba(0,0,0,.26)] active:translate-y-[1px] max-[720px]:rounded-[12px] max-[720px]:px-[12px] max-[720px]:py-[10px] max-[720px]:text-[15px]"
           type="button"
-          onClick={() => {
-            window.speechSynthesis?.cancel();
-            navigate("/p4");
-          }}
+          onClick={() => navigate("/p4")}
         >
           {t.next} »
         </button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
@@ -14,7 +14,7 @@ const UI = {
     start: "เริ่มการทดลอง",
     next: "ต่อไป",
     back: "ย้อนกลับ",
-    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+    langLabel: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
     speakText:
       "คำถามชวนคิด ข้อที่ 1 ทำไมวัสดุแต่ละชนิดจึงทำให้เรามองเห็นสิ่งของข้างในได้ชัดเจนไม่เท่ากัน",
   },
@@ -29,12 +29,12 @@ const UI = {
       "Thinking question number one. Why do different materials allow us to see objects inside with different clarity?",
   },
   ms: {
-    title: "Pertanyae Ajok Pikir",
+    title: "ซออาแล ปากะ ปีเกร์",
     question:
-      "Gano alat setiyak jenih buwakwi kito napok hok dale tok samo cerak?",
-    start: "Mula Kajiye",
-    next: "Teruh",
-    back: "Pusing semula",
+      "บะปอ อาละ ตียะ-ตียะ ยือนิฮ, เฮาะ โดะ ดาแล กอเตาะ บูวะ วี กีตอ นาเปาะ เตาะ ซามอ จือระ ?",
+    start: "มูลา ปือจูบอแอ",
+    next: "ตือรุฮ",
+    back: "ฮูโนกือเละ",
     langLabel: { th: "Thai", en: "Inggeris", ms: "Melayu" },
     speakText:
       "Soalan pemikiran nombor satu. Mengapa bahan yang berbeza membolehkan kita melihat objek di dalam dengan tahap kejelasan yang berbeza?",
@@ -49,6 +49,7 @@ const LANG_CONFIG = {
 
 const BOX_TONES = ["brightness-110", "brightness-95", "brightness-75"];
 const hasPersonImage = Boolean(PERSON_IMAGE_SRC);
+const MALAY_TITLE_AUDIO = "/audio/p4/36.1.mp3";
 
 function ImageSlot({ src, alt, className }) {
   const [hasError, setHasError] = useState(false);
@@ -107,9 +108,27 @@ function StartExperimentButton({ label, onClick, className = "" }) {
 export default function P4LightThinking() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
   const content = UI[language] ?? UI.th;
 
   const speak = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+
+    if (language === "ms") {
+      const audio = new Audio(MALAY_TITLE_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     if (
       typeof window === "undefined" ||
       typeof SpeechSynthesisUtterance === "undefined" ||
@@ -122,7 +141,6 @@ export default function P4LightThinking() {
     utterance.lang = LANG_CONFIG[language]?.voice ?? "th-TH";
     utterance.rate = 0.9;
     utterance.pitch = 1;
-    window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   };
 

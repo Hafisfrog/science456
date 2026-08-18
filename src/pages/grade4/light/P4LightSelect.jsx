@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
@@ -7,47 +7,47 @@ const MATERIALS = [
   {
     id: 1,
     img: "/images/materials/l1.png",
-    name: { th: "กระจกใส", en: "Clear Glass", ms: "Cuming" },
+    name: { th: "กระจกใส", en: "Clear Glass", ms: "จูมิง ยือรือนิฮ" },
   },
   {
     id: 2,
     img: "/images/materials/l10.png",
-    name: { th: "แก้วใส", en: "Clear Cup", ms: "Gelah" },
+    name: { th: "แก้วใส", en: "Clear Cup", ms: "กือละฮ" },
   },
   {
     id: 3,
     img: "/images/materials/l3.png",
-    name: { th: "พลาสติกใส", en: "Clear Plastic", ms: "Plastik" },
+    name: { th: "พลาสติกใส", en: "Clear Plastic", ms: "ปลาสติก" },
   },
   {
     id: 4,
     img: "/images/materials/l8.png",
-    name: { th: "หมอก", en: "Fog", ms: "Kabok" },
+    name: { th: "หมอก", en: "Fog", ms: "กาโบะ" },
   },
   {
     id: 5,
     img: "/images/materials/l4.png",
-    name: { th: "กระดาษไข", en: "Wax Paper", ms: "Ketah Minyok" },
+    name: { th: "กระดาษไข", en: "Wax Paper", ms: "กือรือตะฮ มีเญาะ" },
   },
   {
     id: 6,
     img: "/images/materials/l2.png",
-    name: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "Cuming Gelak" },
+    name: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "จูมิง กือลาบู" },
   },
   {
     id: 7,
     img: "/images/materials/l5.png",
-    name: { th: "แผ่นไม้", en: "Wooden Board", ms: "Pape" },
+    name: { th: "แผ่นไม้", en: "Wooden Board", ms: "ปาแป" },
   },
   {
     id: 8,
     img: "/images/materials/l7.webp",
-    name: { th: "ผนังปูน", en: "Cement Wall", ms: "Dineng" },
+    name: { th: "ผนังปูน", en: "Cement Wall", ms: "ดีเน็ง" },
   },
   {
     id: 9,
     img: "/images/materials/l6.png",
-    name: { th: "เหล็ก", en: "Steel", ms: "Besi" },
+    name: { th: "เหล็ก", en: "Steel", ms: "บือซี" },
   },
 ];
 
@@ -69,32 +69,66 @@ const UI = {
       "This materials page includes transparent, translucent, and opaque items used in the medium of light experiment.",
   },
   ms: {
-    title: "Kajiye 4 Tajuk Perantaro Cahayo",
-    label: "Beno",
-    back: "Pusing semula",
-    next: "Teruh",
+    title: "ปือจูบอแอ 4 ตาโยะ บือนอ เฮาะ จายอ บูเละฮ ลาล",
+    label: "อาละ-อาละ",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
     speakText:
       "Halaman bahan ini mengandungi objek lut sinar, separa lut sinar, dan legap untuk eksperimen medium cahaya.",
   },
 };
 
 const LANGUAGE_LABELS = {
-  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายู" },
+  th: { th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" },
   en: { th: "Thai", en: "English", ms: "Malay" },
   ms: { th: "Thai", en: "Inggeris", ms: "Melayu" },
 };
 
+const MALAY_MATERIAL_AUDIO = [
+  "/audio/p4/34.1.mp3",
+  "/audio/p4/34.2.mp3",
+  "/audio/p4/34.3.mp3",
+  "/audio/p4/34.4.mp3",
+  "/audio/p4/34.5.mp3",
+  "/audio/p4/34.6.mp3",
+  "/audio/p4/34.7.mp3",
+  "/audio/p4/34.8.mp3",
+  "/audio/p4/34.9.mp3",
+];
+
 export default function P4LightSelect() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
   const ui = UI[language] ?? UI.th;
 
-  const speakMaterial = (text) => {
-    try {
-      if (!text || !window.speechSynthesis) return;
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
       window.speechSynthesis.cancel();
+    }
+  };
+
+  const speakMaterial = (text, index) => {
+    try {
+      stopAudio();
+
+      if (language === "ms") {
+        const audioSrc = MALAY_MATERIAL_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!text || !window.speechSynthesis) return;
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = language === "th" ? "th-TH" : language === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = language === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore
@@ -122,7 +156,7 @@ export default function P4LightSelect() {
         </div>
 
         <div className="mx-auto grid w-full max-w-[920px] grid-cols-3 justify-items-center gap-5">
-          {MATERIALS.map((material) => (
+          {MATERIALS.map((material, index) => (
             <div
               key={material.id}
               className="w-full max-w-[270px] rounded-xl border border-sky-200 bg-sky-50/95 p-2.5 text-center shadow-[0_6px_14px_rgba(14,116,144,0.22)] transition-transform duration-200 hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(14,116,144,0.32)]"
@@ -141,7 +175,7 @@ export default function P4LightSelect() {
                 <button
                   type="button"
                   className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-sky-100 text-sm text-sky-700 shadow-[0_4px_8px_rgba(14,116,144,0.2)] transition hover:-translate-y-0.5 hover:bg-sky-200 sm:h-9 sm:w-9 sm:text-base"
-                  onClick={() => speakMaterial(material.name[language] ?? material.name.th)}
+                  onClick={() => speakMaterial(material.name[language] ?? material.name.th, index)}
                   aria-label={`Speak ${material.name[language] ?? material.name.th}`}
                 >
                   {"\uD83D\uDD0A"}

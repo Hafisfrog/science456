@@ -1,5 +1,6 @@
 ﻿﻿import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useRef } from "react";
 import "./P4.css";
 
 const VOICE_MAP = {
@@ -7,6 +8,8 @@ const VOICE_MAP = {
   en: "en-US",
   ms: "ms-MY",
 };
+
+const MALAY_CARD_AUDIO = ["/audio/p4/2.1.mp3", "/audio/p4/2.2.mp3"];
 
 function speakText(text, lang) {
   if (!text || typeof window === "undefined" || !("speechSynthesis" in window)) return;
@@ -23,6 +26,7 @@ function speakText(text, lang) {
 export default function P4() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const copy = useMemo(
     () => ({
@@ -33,7 +37,7 @@ export default function P4() {
         back: "ย้อนกลับ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         cards: [
           {
             title: "แรงโน้มถ่วงของโลก",
@@ -56,7 +60,7 @@ export default function P4() {
         back: "Back",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         cards: [
           {
             title: "Earth's Gravity",
@@ -73,22 +77,22 @@ export default function P4() {
         ],
       },
       ms: {
-        title: "Sains Kelah 4",
-        subtitle: "Pilih Unit Pembelajare",
-        home: "Pilih tahun",
-        back: "Pusing semula",
+        title: "วิตายาซะ กือละฮ 4",
+        subtitle: "ปีเละฮ ยูนิ ปือลายาแร",
+        // home: "Pilih tahun",
+        back: "ฮูโนกือเละ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         cards: [
           {
-            title: "Dayo Tarekke Bumi",
+            title: "แร็ง บูมี ตาแระ บือนอ",
             image: "/images/p4/gravity.jpg",
             alt: "Graviti Bumi",
             onClick: () => navigate("/p4/gravity/objectives"),
           },
           {
-            title: "Perantaro Cahayo",
+            title: "บือนอ เฮาะ จายอ บูเละฮ ลาลู",
             image: "/images/p4/light.jpg",
             alt: "Medium Cahaya",
             onClick: () => navigate("/p4/light/objective"),
@@ -100,6 +104,42 @@ export default function P4() {
   );
 
   const t = copy[lang];
+
+  const stopAudio = useCallback(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.currentTime = 0;
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      stopAudio();
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [stopAudio]);
+
+  const playCardAudio = useCallback(
+    (title, index) => {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_CARD_AUDIO[index];
+        if (!audioSrc) return;
+        if (typeof window !== "undefined" && "speechSynthesis" in window) {
+          window.speechSynthesis.cancel();
+        }
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      speakText(title, VOICE_MAP[lang]);
+    },
+    [lang, stopAudio]
+  );
 
   return (
     <div className="p4-page">
@@ -145,7 +185,7 @@ export default function P4() {
         </header>
 
         <section className="p4-grid">
-          {t.cards.map((card) => (
+          {t.cards.map((card, index) => (
             <div key={card.title} className="p4-card" onClick={card.onClick}>
               <img src={card.image} alt={card.alt} className="p4-card-img" />
 
@@ -156,7 +196,7 @@ export default function P4() {
                   className="p4-sound-btn"
                   onClick={(event) => {
                     event.stopPropagation();
-                    speakText(card.title, VOICE_MAP[lang]);
+                    playCardAudio(card.title, index);
                   }}
                   aria-label={card.title}
                   title={card.title}

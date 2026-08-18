@@ -8,8 +8,11 @@ import "../exp1/P4GravityExp1Materials.css";
 const VOCAB = [
   {
     th: "มวลของวัตถุ",
-    ms: "Jisim beno",
+    ms: "จีซีม เฮาะ บาแร",
     en: "Mass of an object",
+    audio: {
+      ms: "/audio/p4/15.1.mp3",
+    },
     // audio: {
     //   th: "/audio/p4/gravity/gravity_th.mp3",
     //   ms: "/audio/p4/gravity/gravity_ms.mp3",
@@ -18,8 +21,11 @@ const VOCAB = [
   },
   {
     th: "แรงดึงดูดของโลก",
-    ms: "Dayo tarekke graviti Bumi",
+    ms: "แร็ง บูมี ตาเระ บือนอ",
     en: "Earth’s gravity",
+    audio: {
+      ms: "/audio/p4/15.2.mp3",
+    },
     // audio: {
     //   th: "/audio/p4/gravity/center_th.mp3",
     //   ms: "/audio/p4/gravity/center_ms.mp3",
@@ -28,8 +34,11 @@ const VOCAB = [
   },
   {
     th: "เครื่องชั่งสปริง",
-    ms: "Timbange spring",
+    ms: "แกโล สปริง",
     en: "Spring Scale",
+    audio: {
+      ms: "/audio/p4/15.3.mp3",
+    },
     // audio: {
     //   th: "/audio/p4/gravity/weight_th.mp3",
     //   ms: "/audio/p4/gravity/weight_ms.mp3",
@@ -38,8 +47,11 @@ const VOCAB = [
   },
   {
     th: "การยืดของสปริง",
-    ms: "Renge spring",
+    ms: "ปาแญแง สปริง",
     en: "Spring Extension",
+    audio: {
+      ms: "/audio/p4/15.4.mp3",
+    },
     // audio: {
     //   th: "/audio/p4/gravity/mass_th.mp3",
     //   ms: "/audio/p4/gravity/mass_ms.mp3",

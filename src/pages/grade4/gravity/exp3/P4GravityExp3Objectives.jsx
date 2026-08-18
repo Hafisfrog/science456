@@ -1,6 +1,11 @@
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const MALAY_OBJECTIVE_AUDIO = [
+  "/audio/p4/22.1.mp3",
+  "/audio/p4/22.2.mp3",
+];
+
 export default function P4GravityExp3Objectives() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -24,7 +29,7 @@ export default function P4GravityExp3Objectives() {
         speak: "ฟัง",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       en: {
         heading: "Experiment 3",
@@ -39,22 +44,22 @@ export default function P4GravityExp3Objectives() {
         speak: "Listen",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       ms: {
-        heading: "Kajiye 3",
-        title: "Tajuk Dayo Tarekke Bumi dengan Dayo Tarekke Bule",
-        section: "Tujuwe Pembelajare",
+        heading: "ปือจูบอแอ 3",
+        title: "ตาโยะ; แร็ง บูมี ตาเระ บือนอ ดืองา แร็ง บูแล ตาเระ บือนอ",
+        section: "ตูยูแว เปิมเบอลาจาแร",
         objectives: [
-          "Cari perbezae hok dayo tarekke bumi ngan bule.",
-          "Buleh baneng beghak beno hok jenih samo pado tepat hok bezo.",
+          "จารี ปือเบซอแอ แร็ง บูมี ตาเระ บือนอ ดืองา แร็ง บูแล ตาเระ บือนอ",
+          "บูเละฮ บาเน็ง บือระ บือนอ เฮาะ ซือรูปอ ยือนิฮ บีลอ โดะ ดี ตือปะ ลา-เอ็ง ลา-เอ็ง",
         ],
-        back: "Pusing semula",
-        next: "Teruh",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         speak: "Dengar",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
     };
   }, []);
@@ -81,6 +86,28 @@ export default function P4GravityExp3Objectives() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // Ignore speech synthesis errors.
+    }
+  };
+
+  const speakObjective = (text, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_OBJECTIVE_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // Ignore audio playback errors.
     }
   };
 
@@ -138,14 +165,14 @@ export default function P4GravityExp3Objectives() {
                 {t.title}
               </h1>
             </div>
-            <button
+            {/* <button
               className="grid h-[54px] w-[54px] shrink-0 place-items-center rounded-2xl border-none bg-white/90 text-[22px] shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)] max-[640px]:h-11 max-[640px]:w-11 max-[640px]:text-lg"
               onClick={() => speakText(`${t.heading} ${t.title}`)}
               type="button"
               title={t.speak}
             >
               {"\uD83D\uDD0A"}
-            </button>
+            </button> */}
           </div>
         </header>
 
@@ -170,7 +197,7 @@ export default function P4GravityExp3Objectives() {
                 </div>
                 <button
                   className="grid h-[44px] w-[44px] shrink-0 place-items-center rounded-[14px] border-none bg-[#eef7ff] text-lg shadow-[0_12px_20px_rgba(0,0,0,.14)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.18)] max-[640px]:h-9 max-[640px]:w-9 max-[640px]:text-sm"
-                  onClick={() => speakText(objective)}
+                  onClick={() => speakObjective(objective, index)}
                   type="button"
                   title={t.speak}
                 >

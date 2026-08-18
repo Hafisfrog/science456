@@ -4,6 +4,13 @@ import HomeButton from "../../../HomeButton";
 import "../exp1/P4GravityExp1Materials.css";
 import "./P4GravityExp2Materials.css";
 
+const MALAY_MATERIAL_AUDIO = [
+  "/audio/p4/16.1.mp3",
+  "/audio/p4/16.2.mp3",
+  "/audio/p4/16.3.mp3",
+  "/audio/p4/16.4.mp3",
+];
+
 export default function P4GravityExp2Materials() {
   const navigate = useNavigate();
 
@@ -12,6 +19,7 @@ export default function P4GravityExp2Materials() {
 
   const [lang, setLang] = useState("th");
   const speakingKeyRef = useRef(null);
+  const audioRef = useRef(null);
 
   const assets = useMemo(() => {
     return {
@@ -32,7 +40,7 @@ export default function P4GravityExp2Materials() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         items: [
           { key: "ball", name: "ลูกบอล" },
           { key: "bocce", name: "ลูกเปตอง" },
@@ -47,7 +55,7 @@ export default function P4GravityExp2Materials() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         items: [
           { key: "ball", name: "Ball" },
           { key: "bocce", name: "Bocce Ball" },
@@ -56,18 +64,18 @@ export default function P4GravityExp2Materials() {
         ],
       },
       ms: {
-        title: "Kajiye 2 Tajuk Dayo Tarekke Bumi dengan Beghak Beno",
-        badge: "Beno",
-        back: "Pusing semula",
-        next: "Teruh  ",
+        title: "ปือจูบอแอ 2 ตาโยะ; แร็ง บูมี ตาเระ บือนอ ดืองา บือระ บือนอ",
+        badge: "อาละ-อาละ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         items: [
-          { key: "ball", name: "Bola" },
-          { key: "bocce", name: "Buwoh petong  " },
-          { key: "feather", name: "Bulu burung" },
-          { key: "springScale", name: "Timenge spring" },
+          { key: "ball", name: "บอลา" },
+          { key: "bocce", name: "บูเวาะฮ เปต็อง" },
+          { key: "feather", name: "บูลู บูรง" },
+          { key: "springScale", name: "แกโล สปริง" },
         ],
       },
     };
@@ -79,9 +87,39 @@ export default function P4GravityExp2Materials() {
 
   const stopSpeak = () => {
     try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
       if (!window.speechSynthesis) return;
       window.speechSynthesis.cancel();
       speakingKeyRef.current = null;
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakMaterial = (msg, key, index) => {
+    try {
+      stopSpeak();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_MATERIAL_AUDIO[index];
+        if (!audioSrc) return;
+        speakingKeyRef.current = key;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingKeyRef.current = null;
+        };
+        audio.play().catch(() => {
+          speakingKeyRef.current = null;
+        });
+        return;
+      }
+
+      speak(msg, key);
     } catch {
       // ignore
     }
@@ -155,7 +193,7 @@ export default function P4GravityExp2Materials() {
       <div className="exp1m-center">
         <div className="max-h-full overflow-y-auto px-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <div className="exp1m-grid">
-            {t.items.map((it) => (
+            {t.items.map((it, index) => (
               <div key={it.key} className="exp1m-card">
                 <div className="exp1m-cardInner">
                   <div className="exp1m-imgBox">
@@ -177,7 +215,7 @@ export default function P4GravityExp2Materials() {
                     <button
                       className={`exp1m-itemSpeak ${isSpeaking(it.key) ? "speaking" : ""}`}
                       type="button"
-                      onClick={() => speak(it.name, it.key)}
+                      onClick={() => speakMaterial(it.name, it.key, index)}
                       title="Speak"
                     >
                       🔊

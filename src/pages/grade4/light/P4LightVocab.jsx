@@ -6,54 +6,54 @@ import { LightNavButtons } from "./LightControls";
 const VOCAB = [
   {
     th: "ตัวกลางของแสง",
-    ms: "Medium Cahaya",
+    ms: "บือนอ จายอ บูเละฮ ลาลู",
     en: "Light Medium",
     audio: {
       th: "/audio/p4/light/medium_th.mp3",
-      ms: "/audio/p4/light/medium_ms.mp3",
+      ms: "/audio/p4/32.1.mp3",
       en: "/audio/p4/light/medium_en.mp3",
     },
   },
   {
     th: "วัตถุโปร่งใส",
-    ms: "Objek Lut Sinar",
+    ms: "บือนอ เฮาะ จาห์ยอ บูเละฮ เตอมุฮ",
     en: "Transparent Object",
     audio: {
       th: "/audio/p4/light/transparent_th.mp3",
-      ms: "/audio/p4/light/transparent_ms.mp3",
+      ms: "/audio/p4/32.2.mp3",
       en: "/audio/p4/light/transparent_en.mp3",
     },
   },
   {
     th: "วัตถุโปร่งแสง",
-    ms: "Objek Lut Separa",
+    ms: "บือนอ เฮาะ จาห์ยอ บูเละฮ ลาลู ซีกิ",
     en: "Translucent Object",
     audio: {
       th: "/audio/p4/light/translucent_th.mp3",
-      ms: "/audio/p4/light/translucent_ms.mp3",
+      ms: "/audio/p4/32.3.mp3",
       en: "/audio/p4/light/translucent_en.mp3",
     },
   },
   {
     th: "วัตถุทึบแสง",
-    ms: "Objek Legap",
+    ms: "บือนอ เฮาะ จาห์ยอ เตาะ บูเละฮ ลาลู ลาซง",
     en: "Opaque Object",
     audio: {
       th: "/audio/p4/light/opaque_th.mp3",
-      ms: "/audio/p4/light/opaque_ms.mp3",
+      ms: "/audio/p4/32.4.mp3",
       en: "/audio/p4/light/opaque_en.mp3",
     },
   },
-  {
-    th: "แหล่งกำเนิดแสง",
-    ms: "Sumber Cahaya",
-    en: "Light Source",
-    audio: {
-      th: "/audio/p4/light/source_th.mp3",
-      ms: "/audio/p4/light/source_ms.mp3",
-      en: "/audio/p4/light/source_en.mp3",
-    },
-  },
+  // {
+  //   th: "แหล่งกำเนิดแสง",
+  //   ms: "จาห์ยอ",
+  //   en: "Light Source",
+  //   audio: {
+  //     th: "/audio/p4/light/source_th.mp3",
+  //     ms: "/audio/p4/32.5.mp3",
+  //     en: "/audio/p4/light/source_en.mp3",
+  //   },
+  // },
 ];
 
 const MALAY_VOICE_NAME_RE = /(malay|melayu|bahasa malaysia|bahasa melayu|malaysia)/i;

@@ -1,11 +1,14 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import "./P4GravityExp1Result.css";
 
+const MALAY_SUMMARY_AUDIO = "/audio/p4/11.1.mp3";
+
 export default function P4GravityExp1Result() {
   const navigate = useNavigate();
   const location = useLocation();
+  const audioRef = useRef(null);
 
   const CLASSROOM_PATH = "/p4/gravity/exp1/answer";
   const RETRY_PATH = "/p4/gravity/exp1/action";
@@ -38,7 +41,7 @@ export default function P4GravityExp1Result() {
         empty: "ไม่พบวัตถุที่เลือก กรุณากลับไปเลือกวัตถุใหม่",
         th: "ไทย",
         en: "อังกฤษ",
-        ms: "มลายู",
+        ms: "มลายูถิ่น",
       },
       en: {
         title: "Experiment Results",
@@ -59,28 +62,28 @@ export default function P4GravityExp1Result() {
         empty: "No selected objects were found. Please go back and choose objects again.",
         th: "ไทย",
         en: "อังกฤษ",
-        ms: "มลายู",
+        ms: "มลายูถิ่น",
       },
       ms: {
-        title: "Hasil Kajiye",
-        subtitle: "Label khusus beno yang kamu pilih.",
-        height: "Tingi",
-        objCol: "Beno",
-        resultCol: "Hasil Kajiye",
-        timeCol: "Maso (Detik)",
-        dirCol: "Aghoh Geghok",
-        hitGround: "Jatuh Ko Tanoh",
-        summaryTitle: "Kesimpule Hasil Kajiye",
+        title: "ฮาเซ ปือจูบอแอ",
+        subtitle: "ยาดูวา อาแก ตูโญะ บือนอ เฮาะ กามู ปีเละฮ ซายอ",
+        height: "ตีงี",
+        objCol: "บือนอ",
+        resultCol: "ฮาเซ ปือจูบอแอ",
+        timeCol: "มาซอ(เดอติ)",
+        dirCol: "อาเราะฮ กือเราะ",
+        hitGround: "ยาโตะฮตาเนาะฮ",
+        summaryTitle: "กือซีปูแล ฮาเซ ปือจูบอแอ",
         summary:
-          "Jiko kito lepah beno dari tepat tingi atau lepa naik ko langit, beno tu nok  jatuh ko tanoh kerano bumi ado tarekke sehinggo buleh tarek beno-beno wi jatuh ko tanoh.",
+          "กาลู กีตอ ลือปะฮ บือนอ ดารีตือปะ ตีงี, อาตาวอ แลปา นา-อิ ลางิ, บือนอ ตู เนาะ ยาโตะฮ ตาเนาะฮ, ซือบะบูมี อาดอ แร็ง ตาเระ ซาปา บูเละฮ ตาเระ บือนอ-บือนอ วี ยาโตะฮ ตาเนาะฮ.",
         listen: "Dengar",
-        back: "Pusing semula",
-        retry: "Cuba Lagi",
-        next: "Teruh",
+        back: "ฮูโนกือเละ",
+        retry: "บูวะ ปือจูบอแอ ซือมูลา",
+        next: "ตือรุฮ",
         empty: "Tiada objek yang dipilih. Sila kembali dan pilih objek sekali lagi.",
         th: "ไทย",
         en: "อังกฤษ",
-        ms: "มลายู",
+        ms: "มลายูถิ่น",
       },
     }),
     []
@@ -108,14 +111,14 @@ export default function P4GravityExp1Result() {
   const rows = useMemo(
     () =>
       [
-        { key: "ball", name: { th: "ลูกบอล", en: "Ball", ms: "Bola" }, img: assets.ball, motion: "straight" },
+        { key: "ball", name: { th: "ลูกบอล", en: "Ball", ms: "บอลา" }, img: assets.ball, motion: "straight" },
         {
           key: "bocce",
-          name: { th: "ลูกเปตอง", en: "Bocce Ball", ms: "Bola Bocce" },
+          name: { th: "ลูกเปตอง", en: "Bocce Ball", ms: "บูเวาะฮ เปต็อง" },
           img: assets.bocce,
           motion: "straight",
         },
-        { key: "feather", name: { th: "ขนนก", en: "Feather", ms: "Bulu" }, img: assets.feather, motion: "feather" },
+        { key: "feather", name: { th: "ขนนก", en: "Feather", ms: "บูลู บูรง" }, img: assets.feather, motion: "feather" },
       ].filter((item) => selected?.[item.key]),
     [assets.ball, assets.bocce, assets.feather, selected]
   );
@@ -143,9 +146,24 @@ export default function P4GravityExp1Result() {
 
   const speakSummary = () => {
     try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+
+      if (lang === "ms") {
+        const audio = new Audio(MALAY_SUMMARY_AUDIO);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
       const utterance = new SpeechSynthesisUtterance(t.summary);
-      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
-      window.speechSynthesis.cancel();
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore speech errors

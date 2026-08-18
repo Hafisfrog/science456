@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
@@ -8,6 +8,8 @@ const SPEECH_LOCALES = {
   en: "en-US",
   ms: "ms-MY",
 };
+
+const MALAY_TITLE_AUDIO = "/audio/p4/38.1.mp3";
 
 const MATERIAL_NAMES = {
   "/images/materials/l1.png": { th: "กระจกใส", en: "Clear Glass", ms: "Kaca Jernih" },
@@ -73,18 +75,18 @@ const UI = {
     next: "Next",
   },
   ms: {
-    title: "Kesimpule Hasil Kajiye",
+    title: "กือซีปูแล ฮาเซ ปือจูบอแอ",
     intro1:
-      "Lepah kito buwak kegiate hasil adalah jiko amek beno mari sekat cahayo, setiyak jenih beno cahayo nak temuh secaro berbeza,",
-    intro2: "buleh bagi beno ikut jenih hok sekat cahayo, sebagai berikut.",
-    lineTransparent: "Beno hok cahayo buleh temus dengan baik seperti, cuming, plastik, gelah.",
-    lineTranslucent: "Beno hok cahayo buleh temuh sebahagiye sahajo seperti, cuming gelak, ketah minyok dan kabok.",
-    lineOpaque: "Beno hok tak beri cahayo temuh seperi, pape, besi dan dineng.",
+      "กาลู อาเมะ บือนอ มารีซือกะยาแล จะฮายอ, ตียะ-ตียะ ยือนิฮ บือนอจะฮายอเนาะ ลาลูเตาะ ซูปอ,",
+    intro2: "บูเละฮบากีบือนอ อีโกะ ยือนิฮ เฮาะ ซือกะ จายอ, ซือปือตี",
+    lineTransparent: "บือนอ เฮาะ จาฮายอ บูเละฮ ลาลูดืองา มูเดาะห ซือปือตี, จูมิง, ปลาสติก ดัน กือละฮ.",
+    lineTranslucent: "บือนอ เฮาะ จาฮายอ บูเละฮ ลาลูซีกิ ซือปือตี, จูมิง กือลาบู, กือรือตะฮ มีเญาะ ดัน กาโบะ.",
+    lineOpaque: "บือนอ จาฮายอ เตาะ บูเละฮ ลาลูลาซง ซือปือตี, ปาแป, บือซีดัน ดีเน็ง.",
     andWord: "dan",
     listenSummary: "🔊 Dengar ringkasan",
     noMalayVoice: "Suara Bahasa Melayu (ms-MY) tidak ditemui pada peranti ini, bacaan dihentikan untuk elak sebutan tersalah.",
-    back: "Pusing semula",
-    next: "Teruh",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -106,6 +108,7 @@ export default function P4LightSummary() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
   const allResults = useMemo(() => state?.allResults ?? [], [state]);
   const ui = UI[language] ?? UI.th;
 
@@ -170,6 +173,23 @@ export default function P4LightSummary() {
   };
 
   const speakSummary = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+
+    if (typeof window !== "undefined" && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+
+    if (language === "ms") {
+      const audio = new Audio(MALAY_TITLE_AUDIO);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     if (
       typeof window === "undefined" ||
       typeof SpeechSynthesisUtterance === "undefined" ||
@@ -316,7 +336,7 @@ export default function P4LightSummary() {
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
-          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" }}
         />
       </div>
 

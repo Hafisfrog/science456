@@ -4,6 +4,11 @@ import HomeButton from "../../../HomeButton";
 import "../exp1/P4GravityExp1Answer.css";
 import "../exp1/P4GravityExp1Materials.css";
 
+const MALAY_ANSWER_AUDIO = {
+  q1: "/audio/p4/21.1.mp3",
+  a1: "/audio/p4/21.2.mp3",
+};
+
 export default function P4GravityExp2Answer() {
   const navigate = useNavigate();
 
@@ -34,7 +39,7 @@ export default function P4GravityExp2Answer() {
         next: "ต่อไป",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         reveal: "เฉลยคำตอบ",
         hide: "ซ่อนคำตอบ",
       },
@@ -50,25 +55,25 @@ export default function P4GravityExp2Answer() {
         next: "Next",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
+        chipMs: "มลายูถิ่น",
         reveal: "Show answer",
         hide: "Hide answer",
       },
       ms: {
-        title: "Pertanyae ada jawape",
+        title: "ซออาแล อาดอ ยาวะแป",
         // sub: "Baca penjelasan ini dan cuba terangkan semula dengan kata-kata sendiri.",
-        q1: "1. Gano beno semuwo jenih jatuh ko tanoh dan sebab apo beno semuwo jenis nilai beghak tok samo?",
+        q1: "1. บะปอ บือนอ ตียะ ยือนิฮ ยาโตะฮ โกะ ตาเนาะฮ, ลือปะฮตู ซือบะ กาปอ บือนอ ตียะ-ตียะ ยือนิฮ บือระเตาะ ซามอ?",
         a1:
-          "Segalo jenih beno jatuh ko bumi sebab ado dayo tarekke bumi.\nBeno hok nilai beghak tok samo, sebab segalo jenih beno ada jisim tok samo.",
+          "ตียะ ยือนิฮ บือนอ ยาโตะฮ โกะบูมี ซือบะ อาดอ แร็ง บูมี ตาเระ บือนอ.\nบือนอ บือระ เตาะ ซามอ ซือบะ ตียะ-ตียะ ยือนิฮ บือนอ อาดอ จีซีม เตาะ ซามอ.",
         speakAll: "Dengar semua",
         speak: "Dengar",
-        back: "Pusing semula",
-        next: "Teruh  ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ  ",
         chipTh: "ไทย",
         chipEn: "อังกฤษ",
-        chipMs: "มลายู",
-        reveal: "Tunjuk jawape",
-        hide: "Sorok jawape",
+        chipMs: "มลายูถิ่น",
+        reveal: "ยาวะแป",
+        hide: "ซูซุ ยาวะแป",
       },
     }),
     []
@@ -76,14 +81,27 @@ export default function P4GravityExp2Answer() {
 
   const t = text[lang];
   const speakingRef = useRef(false);
+  const audioRef = useRef(null);
+
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    speakingRef.current = false;
+  };
 
   const speak = (msg) => {
     try {
+      stopAudio();
       if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
 
       const utterance = new SpeechSynthesisUtterance(msg);
-      utterance.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
       speakingRef.current = true;
       utterance.onend = () => {
         speakingRef.current = false;
@@ -92,6 +110,30 @@ export default function P4GravityExp2Answer() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // ignore speech errors
+    }
+  };
+
+  const speakPart = (msg, audioKey) => {
+    try {
+      if (lang === "ms") {
+        stopAudio();
+        const audioSrc = MALAY_ANSWER_AUDIO[audioKey];
+        if (!audioSrc) return;
+        speakingRef.current = true;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
+      speak(msg);
+    } catch {
+      // ignore audio errors
     }
   };
 
@@ -174,7 +216,7 @@ export default function P4GravityExp2Answer() {
               <div className="ans2-card yellow">
                 <div className="ans2-cardTop">
                   <div className="ans2-q">{t.q1}</div>
-                  <button className="ans2-miniSpeak" type="button" onClick={() => speak(t.q1)} title={t.speak}>
+                  <button className="ans2-miniSpeak" type="button" onClick={() => speakPart(t.q1, "q1")} title={t.speak}>
                     {"\uD83D\uDD0A"}
                   </button>
                 </div>
@@ -185,7 +227,7 @@ export default function P4GravityExp2Answer() {
                 </div>
                 {revealedAnswers.q1 && (
                   <div className="ans2-a">
-                    <button className="ans2-answerSpeak" type="button" onClick={() => speak(t.a1)} title={t.speak}>
+                    <button className="ans2-answerSpeak" type="button" onClick={() => speakPart(t.a1, "a1")} title={t.speak}>
                       {"\uD83D\uDD0A"}
                     </button>
                     {t.a1.split("\n").map((line, idx) => (

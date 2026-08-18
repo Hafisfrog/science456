@@ -1,6 +1,12 @@
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const MALAY_OBJECTIVE_AUDIO = [
+  "/audio/p4/4.1.mp3",
+  "/audio/p4/4.2.mp3",
+  "/audio/p4/4.3.mp3",
+];
+
 export default function P4GravityExp1Objectives() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -25,7 +31,7 @@ export default function P4GravityExp1Objectives() {
         speak: "ฟัง",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       en: {
         heading: "Experiment 1",
@@ -41,23 +47,23 @@ export default function P4GravityExp1Objectives() {
         speak: "Listen",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       ms: {
-        heading: "Eksperimen 1",
-        title: "Kesan Graviti",
-        section: "Objektif Pembelajaran",
+        heading: "กือละฮ 4",
+        title: "แร็ง บูมี ตาเระ บือนอ",
+        section: "ตูยูแว ปืมบือลายาแร",
         objectives: [
-          "Memerhati kesan graviti Bumi terhadap objek.",
-          "Menerangkan kesan graviti terhadap objek.",
-          "Membandingkan kejatuhan objek yang berlainan jenis.",
+          "รอยะ ฮาเซ แร็ง ตาเระ บือนอ",
+          "ปือราตีฮาเซ แร็ง ตาเระ บือนอ",
+          "บูวะ ปือจูบอแอ ฮาเซ แร็ง ตาเระ บือนอ อีโกะ ตียะ-ตียะ จารอ",
         ],
-        back: "Kembali",
-        next: "Seterusnya",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         speak: "Dengar",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
     };
   }, []);
@@ -84,6 +90,28 @@ export default function P4GravityExp1Objectives() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // Ignore speech synthesis errors.
+    }
+  };
+
+  const speakObjective = (text, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_OBJECTIVE_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // Ignore audio playback errors.
     }
   };
 
@@ -136,14 +164,14 @@ export default function P4GravityExp1Objectives() {
             <h1 className="m-0 text-[48px] font-black leading-tight text-black drop-shadow-[0_6px_10px_rgba(255,255,255,.65)] max-[900px]:text-[36px] max-[640px]:text-[27px]">
               {t.title}
             </h1>
-            <button
+            {/* <button
               className="grid h-[54px] w-[54px] place-items-center rounded-2xl border-none bg-white/90 text-[22px] shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)] max-[640px]:h-11 max-[640px]:w-11 max-[640px]:text-lg"
               onClick={() => speakText(`${t.heading} ${t.title}`)}
               type="button"
               title={t.speak}
             >
               {"\uD83D\uDD0A"}
-            </button>
+            </button> */}
           </div>
         </header>
 
@@ -168,7 +196,7 @@ export default function P4GravityExp1Objectives() {
                 </div>
                 <button
                   className="grid h-[46px] w-[46px] shrink-0 place-items-center rounded-[14px] border-none bg-[#eef7ff] text-xl shadow-[0_12px_20px_rgba(0,0,0,.14)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.18)] max-[640px]:h-10 max-[640px]:w-10 max-[640px]:text-base"
-                  onClick={() => speakText(objective)}
+                  onClick={() => speakObjective(objective, index)}
                   type="button"
                   title={t.speak}
                 >

@@ -19,24 +19,27 @@ export default function Start() {
       <div className="pointer-events-none absolute -right-28 -top-36 h-[26rem] w-[26rem] rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(255,255,255,0.75),rgba(255,202,153,0.35))] opacity-80" />
       <div className="pointer-events-none absolute -bottom-36 -left-40 h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.75),rgba(141,210,255,0.35))] opacity-90" />
 
-      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1400px] flex-col items-center justify-center gap-8 px-6 py-8 md:flex-row md:gap-12 md:px-10 lg:px-14">
-        <div className="flex flex-1 items-center justify-center">
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1360px] items-center gap-7 px-5 py-8 sm:px-8 md:grid-cols-[minmax(300px,0.9fr)_minmax(0,1fr)] md:gap-10 lg:px-12">
+        <div className="flex min-w-0 items-end justify-center md:justify-end">
           <img
             src="/images/start-labb.png"
             alt="Virtual Science Lab"
-            className="h-auto w-[min(420px,78%)] drop-shadow-[0_22px_35px_rgba(23,60,110,0.2)]"
+            className="h-auto w-[min(430px,76vw)] drop-shadow-[0_22px_35px_rgba(23,60,110,0.22)] md:w-[min(470px,100%)]"
           />
         </div>
 
-        <div className="w-full max-w-[620px] flex-1 rounded-[42px] border border-white/80 bg-white/80 p-7 text-left shadow-[0_24px_60px_rgba(23,60,110,0.15)] sm:p-15">
-          <h1 className="mb-3 whitespace-nowrap text-[2.8rem] font-extrabold leading-none tracking-[0.5px] text-[#2c70c9] sm:text-[3.4rem]">
-            Virtual Science Lab
+        <div className="mx-auto w-full min-w-0 max-w-[720px] overflow-hidden rounded-[34px] border border-white/80 bg-white/85 px-6 py-7 text-center shadow-[0_24px_60px_rgba(23,60,110,0.16)] backdrop-blur-sm sm:rounded-[42px] sm:px-9 sm:py-10 md:mx-0 md:text-left lg:px-12">
+          <h1 className="mb-4 max-w-full text-balance break-words text-[clamp(2.1rem,5vw,4.25rem)] font-extrabold leading-[1.04] tracking-normal text-[#2c70c9]">
+            Virtual Lab Combined with Multilingual Innovation
           </h1>
-          <p className="mb-8 text-lg leading-relaxed text-slate-600 sm:text-2xl">ห้องปฏิบัติการทางวิทยาศาสตร์เสมือนจริง</p>
+          <p className="mx-auto mb-7 max-w-[36rem] text-lg font-semibold leading-relaxed text-slate-600 sm:text-2xl md:mx-0">
+            นวัตกรรมปฏิบัติการทางวิทยาศาสตร์เสมือนจริงร่วมกับพหุภาษา
+          </p>
 
           <button
-            className="inline-flex rounded-full bg-gradient-to-br from-[#ff6b4a] to-[#ff8b5b] px-14 py-4 text-2xl font-bold text-white shadow-[0_14px_30px_rgba(255,107,74,0.35)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(255,107,74,0.45)] active:translate-y-[2px] active:shadow-[0_10px_24px_rgba(255,107,74,0.35)]"
+            className="inline-flex min-w-[150px] justify-center rounded-full bg-gradient-to-br from-[#ff6b4a] to-[#ff8b5b] px-12 py-4 text-2xl font-bold text-white shadow-[0_14px_30px_rgba(255,107,74,0.35)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(255,107,74,0.45)] active:translate-y-[2px] active:shadow-[0_10px_24px_rgba(255,107,74,0.35)]"
             onClick={() => navigate("/grades")}
+            type="button"
           >
             เริ่ม
           </button>

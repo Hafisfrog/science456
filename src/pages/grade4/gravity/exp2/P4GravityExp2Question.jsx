@@ -3,9 +3,12 @@ import { useNavigate } from "react-router-dom";
 import HomeButton from "../../../HomeButton";
 import "../exp1/P4GravityExp1Materials.css";
 
+const MALAY_QUESTION_AUDIO = "/audio/p4/18.1.mp3";
+
 export default function P4GravityExp2Question() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
+  const audioRef = useRef(null);
 
   const BACK_PATH = "/p4/gravity/exp2/steps";
   const ACTION_PATH = "/p4/gravity/exp2/action";
@@ -24,7 +27,7 @@ export default function P4GravityExp2Question() {
         q1: "เคยสงสัยหรือไม่ว่า ทำไมวัตถุทุกชนิดจึงตกลงสู่พื้นโลก และเหตุใดวัตถุแต่ละชนิดจึงมีน้ำหนักไม่เท่ากัน ?",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
         btnHint: "มาหาคำตอบ\nกัน",
         btnStart: "เริ่มการทดลอง",
         back: "ย้อนกลับ",
@@ -36,7 +39,7 @@ export default function P4GravityExp2Question() {
         q1: "Have you ever wondered why all objects fall to the ground, and why different objects have different weights?",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
         btnHint: "Find\nthe answer",
         btnStart: "Start Experiment",
         back: "Back",
@@ -44,15 +47,15 @@ export default function P4GravityExp2Question() {
         speak: "Listen",
       },
       ms: {
-        title: "Pertanyae yang menarek",
-        q1: "Pernoh pikir dok, gano beno semuwo jenih jatuh ko bumi dan sebab apo beno setiyak jenih nilai beghak tok samo?",
+        title: "ซออาแล ปากะ ปีเก",
+        q1: "แบซอ ปีเก เกอเดาะ, บะปอ บือนอ ตียะ ยือนิฮ ยาโตะฮ บูมี, ลือปะฮ ตู ซือบะ กาปอ บือนอ ตียะยือนิฮ บือระ เตาะ ซามอ?",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
         btnHint: "Cari\njawapan",
-        btnStart: "Mula kajiye",
-        back: "Pusing semula",
-        next: "Teruh  ",
+        btnStart: "มูลา บูวะ ปือจูบอแอ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ  ",
         speak: "Dengar soalan",
       },
     };
@@ -61,12 +64,38 @@ export default function P4GravityExp2Question() {
   const t = text[lang];
   const speakingRef = useRef(false);
 
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    speakingRef.current = false;
+  };
+
   const speak = (msg) => {
     try {
+      stopAudio();
+
+      if (lang === "ms") {
+        speakingRef.current = true;
+        const audio = new Audio(MALAY_QUESTION_AUDIO);
+        audioRef.current = audio;
+        audio.onended = () => {
+          speakingRef.current = false;
+        };
+        audio.play().catch(() => {
+          speakingRef.current = false;
+        });
+        return;
+      }
+
       if (!window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
       const u = new SpeechSynthesisUtterance(msg);
-      u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      u.lang = lang === "th" ? "th-TH" : "en-US";
       u.rate = 0.98;
       speakingRef.current = true;
       u.onend = () => (speakingRef.current = false);

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import HomeButton from "../../HomeButton";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { LightLanguageSwitcher, LightNavButtons } from "./LightControls";
 
 const SPEECH_LOCALES = {
@@ -23,16 +23,28 @@ const MATERIAL_NAMES = {
 };
 
 const MATERIAL_NAMES_BY_ID = {
-  1: { th: "กระจกใส", en: "Clear Glass", ms: "Cuming" },
-  2: { th: "แก้วใส", en: "Clear Cup", ms: "Gelah" },
-  3: { th: "พลาสติกใส", en: "Clear Plastic", ms: "Plastik" },
-  4: { th: "หมอก", en: "Fog", ms: "Kabok" },
-  5: { th: "กระดาษไข", en: "Wax Paper", ms: "Ketah Minyok" },
-  6: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "Cuming Gelak" },
-  7: { th: "แผ่นไม้", en: "Wooden Board", ms: "Pape" },
-  8: { th: "ผนังปูน", en: "Cement Wall", ms: "Dineng" },
-  9: { th: "เหล็ก", en: "Steel", ms: "Besi" },
+  1: { th: "กระจกใส", en: "Clear Glass", ms: "จูมิง ยือรือนิฮ" },
+  2: { th: "แก้วใส", en: "Clear Cup", ms: "กือละฮ" },
+  3: { th: "พลาสติกใส", en: "Clear Plastic", ms: "ปลาสติก" },
+  4: { th: "หมอก", en: "Fog", ms: "กาโบะ" },
+  5: { th: "กระดาษไข", en: "Wax Paper", ms: "กือรือตะฮ มีเญาะ" },
+  6: { th: "กระจกฝ้า", en: "Frosted Glass", ms: "จูมิง กือลาบู" },
+  7: { th: "แผ่นไม้", en: "Wooden Board", ms: "ปาแป" },
+  8: { th: "ผนังปูน", en: "Cement Wall", ms: "ดีเน็ง" },
+  9: { th: "เหล็ก", en: "Steel", ms: "บือซี" },
 };
+
+const MALAY_MATERIAL_AUDIO = [
+  "/audio/p4/34.1.mp3",
+  "/audio/p4/34.2.mp3",
+  "/audio/p4/34.3.mp3",
+  "/audio/p4/34.4.mp3",
+  "/audio/p4/34.5.mp3",
+  "/audio/p4/34.6.mp3",
+  "/audio/p4/34.7.mp3",
+  "/audio/p4/34.8.mp3",
+  "/audio/p4/34.9.mp3",
+];
 
 const UI = {
   th: {
@@ -88,16 +100,16 @@ const UI = {
   ms: {
     title: "📋 Rekod Eksperimen 4",
     subtitle: (count) => `Topik: Medium Cahaya • Jumlah ${count} kali eksperimen`,
-    tableTitle: "Hasil Kajiye",
-    objectName: "Namo Beno",
-    lightPass: "Cahayo Boleh Temuh",
-    classifyAs: "Bagi Beno Jadi",
-    passGood: "Temuh Dengan Baik",
-    passSome: "Temuh Sebahagiye",
-    passNone: "Tok Buleh Temuh",
-    transparent: "Perantaro Jenih",
-    translucent: "Perantaro Separa Telus ",
-    opaque: "Beno Legap Cahayo",
+    tableTitle: "ฮาเซ ปือจูบอแอ",
+    objectName: "นามอ บือนอ",
+    lightPass: "จายอ บูเละฮ ลาลู",
+    classifyAs: "บากีบือนอ ตู ยาดี",
+    passGood: "เตอมุฮ ดืองา มูเดาะห",
+    passSome: "เตอมุฮซีกิ",
+    passNone: "เตาะบูเละฮลาลู",
+    transparent: "บือนอ เฮาะจาห์ยอ บูเละฮ เตอมุฮ",
+    translucent: "บือนอ เฮาะจาห์ยอ บูเละฮ ลาลู ซีกิ ",
+    opaque: "บือนอ เฮาะจาห์ยอเตาะ บูเละฮ ลาลูลาซง",
     summaryTitle: "📌 Ringkasan Eksperimen",
     summaryItems: [
       "• Objek lutsinar membenarkan cahaya melalui dengan baik dan boleh dilihat jelas.",
@@ -106,9 +118,9 @@ const UI = {
     ],
     speakLabel: "🔊 Dengar ringkasan (Thai / English / Malay)",
     rowSpeak: "Dengar",
-    addMore: "Cuba Semula",
-    back: "Pusing semula",
-    next: "Teruh",
+    addMore: "บูวะ ซือมูลา",
+    back: "ฮูโนกือเละ",
+    next: "ตือรุฮ",
   },
 };
 
@@ -116,6 +128,7 @@ export default function P4LightRecord() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [language, setLanguage] = useState("th");
+  const audioRef = useRef(null);
 
   const pendingResults = useMemo(() => state?.pendingResults ?? [], [state]);
   const uniqueResults = useMemo(() => {
@@ -177,7 +190,30 @@ export default function P4LightRecord() {
   const tableCellClass = `${tableBorderClass} bg-white/42`;
   const tableHeaderTopClass = `${tableBorderClass} bg-[#d7e6f1]/92 text-[#17344d]`;
   const tableHeaderSubClass = `${tableBorderClass} bg-[#e6f0f7]/92 text-[#23445f]`;
+  const stopAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  };
+
   const speakRowResult = (item) => {
+    stopAudio();
+
+    if (language === "ms") {
+      const materialId = Number(item.material?.id);
+      const audioSrc = MALAY_MATERIAL_AUDIO[materialId - 1];
+      if (!audioSrc) return;
+      const audio = new Audio(audioSrc);
+      audioRef.current = audio;
+      audio.play().catch(() => {});
+      return;
+    }
+
     if (
       typeof window === "undefined" ||
       typeof SpeechSynthesisUtterance === "undefined" ||
@@ -343,7 +379,7 @@ export default function P4LightRecord() {
         <LightLanguageSwitcher
           value={language}
           onChange={setLanguage}
-          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายู" }}
+          labels={{ th: "ไทย", en: "อังกฤษ", ms: "มลายูถิ่น" }}
         />
       </div>
 

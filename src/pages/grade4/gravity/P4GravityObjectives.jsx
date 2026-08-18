@@ -1,6 +1,12 @@
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const MALAY_OBJECTIVE_AUDIO = [
+  "/audio/p4/4.1.mp3",
+  "/audio/p4/4.2.mp3",
+  "/audio/p4/4.3.mp3",
+];
+
 export default function P4GravityObjectives() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -20,7 +26,7 @@ export default function P4GravityObjectives() {
         speak: "ฟัง",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       en: {
         grade: "Grade 4",
@@ -34,21 +40,21 @@ export default function P4GravityObjectives() {
         speak: "Listen",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       ms: {
-        grade: "Tahun 4",
-        title: "Dayo Tarekke Bumi",
-        section: "Tujuwe Pembelajare",
-        obj1: "Sebuk hasil dayo tarik beno.",
-        obj2: "Perati hasil dayo tarik beno.",
-        obj3: "Kajiye hasil dayo tarikke pado beno setiyak langkoh.",
-        back: "Pusing semula ",
-        next: "Teruh",
+        grade: "กือละฮ 4",
+        title: "แร็ง บูมี ตาเระ บือนอ",
+        section: "ตูยูแว ปืมบือลายาแร",
+        obj1: "รอยะ ฮาเซ แร็ง ตาเระ บือนอ",
+        obj2: "ปือราตีฮาเซ แร็ง ตาเระ บือนอ",
+        obj3: "บูวะ ปือจูบอแอ ฮาเซ แร็ง ตาเระ บือนอ อีโกะ ตียะ-ตียะ จารอ",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         speak: "Dengar",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
     };
   }, []);
@@ -72,6 +78,28 @@ export default function P4GravityObjectives() {
       if (!window.speechSynthesis) return;
       const u = new SpeechSynthesisUtterance(text);
       u.lang = lang === "th" ? "th-TH" : lang === "ms" ? "ms-MY" : "en-US";
+      window.speechSynthesis.speak(u);
+    } catch {
+      // ignore
+    }
+  };
+
+  const speakObjective = (text, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_OBJECTIVE_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = lang === "th" ? "th-TH" : "en-US";
       window.speechSynthesis.speak(u);
     } catch {
       // ignore
@@ -125,14 +153,14 @@ export default function P4GravityObjectives() {
             <h1 className="m-0 text-6xl font-black text-[#eef5ff] drop-shadow-[0_10px_24px_rgba(8,15,35,0.55)] max-[900px]:text-[42px] max-[640px]:text-[34px]">
               {t.title}
             </h1>
-            <button
+            {/* <button
               className="h-[54px] w-[54px] cursor-pointer rounded-2xl border-none bg-white/90 text-[22px] shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)] max-[640px]:h-12 max-[640px]:w-12"
               onClick={() => speakText(t.title)}
               type="button"
               title={t.speak}
             >
               {"\uD83D\uDD0A"}
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -152,7 +180,7 @@ export default function P4GravityObjectives() {
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(objectives[0])}
+              onClick={() => speakObjective(objectives[0], 0)}
               type="button"
               title={t.speak}
             >
@@ -169,7 +197,7 @@ export default function P4GravityObjectives() {
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(objectives[1])}
+              onClick={() => speakObjective(objectives[1], 1)}
               type="button"
               title={t.speak}
             >
@@ -186,7 +214,7 @@ export default function P4GravityObjectives() {
             </div>
             <button
               className="h-[46px] w-[46px] cursor-pointer rounded-[14px] border-none bg-white/90 text-xl shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)]"
-              onClick={() => speakText(objectives[2])}
+              onClick={() => speakObjective(objectives[2], 2)}
               type="button"
               title={t.speak}
             >

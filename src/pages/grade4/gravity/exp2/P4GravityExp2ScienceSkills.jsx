@@ -1,6 +1,14 @@
 import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const MALAY_SKILL_AUDIO = [
+  "/audio/p4/14.1.mp3",
+  "/audio/p4/14.2.mp3",
+  "/audio/p4/14.3.mp3",
+  "/audio/p4/14.4.mp3",
+  "/audio/p4/14.5.mp3",
+];
+
 export default function P4GravityExp2ScienceSkills() {
   const navigate = useNavigate();
   const [lang, setLang] = useState("th");
@@ -27,7 +35,7 @@ export default function P4GravityExp2ScienceSkills() {
         speak: "ฟัง",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       en: {
         heading: "Experiment 2",
@@ -45,25 +53,25 @@ export default function P4GravityExp2ScienceSkills() {
         speak: "Listen",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
       ms: {
-        heading: "Kajiye  2",
-        title: "Tajuk Dayo Tarekke Bumi dengan Beghak Beno",
-        section: "Kemahire Proses Sains",
+        heading: "ปือจูบอแอ 2",
+        title: "ตาโยะ; แร็ง บูมี ตาเระ บือนอ ดืองา บือระ บือนอ",
+        section: "กือมาฮีแร ดาแล ปือจูบอแอ วิตายาซะ",
         skills: [
-          "Kemahire Perati",
-          "Kemahire Ukur",
-          "Bagi Ikut Jenih",
-          "Kemahire guno jumloh",
-          "Kemahire kaji",
+          "กือมาฮีแร ปือราตี",
+          "กือมาฮีแร อูโก",
+          "กือมาฮีแร บากีอีโกะ ยือนิฮ",
+          "กือมาฮีแร กูนอ ยุมเลาะฮ",
+          "กือมาฮีแร บูวะ ปือจูบอแอ",
         ],
-        back: "Pusing semula",
-        next: "Teruh",
+        back: "ฮูโนกือเละ",
+        next: "ตือรุฮ",
         speak: "Dengar",
         langTh: "ไทย",
         langEn: "อังกฤษ",
-        langMs: "มลายู",
+        langMs: "มลายูถิ่น",
       },
     };
   }, []);
@@ -90,6 +98,28 @@ export default function P4GravityExp2ScienceSkills() {
       window.speechSynthesis.speak(utterance);
     } catch {
       // Ignore speech synthesis errors.
+    }
+  };
+
+  const speakSkill = (text, index) => {
+    try {
+      stopAudio();
+
+      if (lang === "ms") {
+        const audioSrc = MALAY_SKILL_AUDIO[index];
+        if (!audioSrc) return;
+        const audio = new Audio(audioSrc);
+        audioRef.current = audio;
+        audio.play().catch(() => {});
+        return;
+      }
+
+      if (!window.speechSynthesis) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = lang === "th" ? "th-TH" : "en-US";
+      window.speechSynthesis.speak(utterance);
+    } catch {
+      // Ignore audio playback errors.
     }
   };
 
@@ -147,14 +177,14 @@ export default function P4GravityExp2ScienceSkills() {
                 {t.title}
               </h1>
             </div>
-            <button
+            {/* <button
               className="grid h-[54px] w-[54px] shrink-0 place-items-center rounded-2xl border-none bg-white/90 text-[22px] shadow-[0_12px_22px_rgba(0,0,0,.16)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.20)] max-[640px]:h-11 max-[640px]:w-11 max-[640px]:text-lg"
               onClick={() => speakText(`${t.heading} ${t.title}`)}
               type="button"
               title={t.speak}
             >
               {"\uD83D\uDD0A"}
-            </button>
+            </button> */}
           </div>
         </header>
 
@@ -181,7 +211,7 @@ export default function P4GravityExp2ScienceSkills() {
                 </div>
                 <button
                   className="grid h-[42px] w-[42px] shrink-0 place-items-center rounded-[14px] border-none bg-[#eef7ff] text-base shadow-[0_12px_20px_rgba(0,0,0,.14)] transition duration-150 hover:-translate-y-0.5 hover:shadow-[0_16px_26px_rgba(0,0,0,.18)] max-[640px]:h-9 max-[640px]:w-9 max-[640px]:text-sm"
-                  onClick={() => speakText(skill)}
+                  onClick={() => speakSkill(skill, index)}
                   type="button"
                   title={t.speak}
                 >
